@@ -1,0 +1,90 @@
+@media all {
+  :local(.wrapper) {
+    position: absolute;
+    top: 0;
+    right: -30%;
+    width: 30%;
+    height: 100%;
+    transition: 0.25s;
+    padding: 56px 8px 8px 8px;
+    background-color: rgba(244, 244, 244, 1);
+    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
+    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
+    overflow-y: auto;
+  }
+  :local(.slidein) {
+    right: 0;
+    transition: 0.25s;
+  }
+  :local(.treeinfo) {
+    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;           /* TWEENER - IE 10 */
+    display: -webkit-flex;          /* NEW - Chrome */
+    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    border-radius: 2px;
+    padding: 0 0 8px 0;
+  }
+  :local(.treeinfo .icon) {
+    /*
+    -webkit-filter: drop-shadow(0px 0px 1px rgba(94, 78, 81, 0.75));
+    filter: drop-shadow( 0px 0px 1px rgba(94, 78, 81, 0.75));
+    */
+    width: 36px;
+    height: 36px;
+    margin: 8px;
+  }
+  :local(.treeinfo .name) {
+    -webkit-flex-grow: 1;           /* NEW - Chrome */
+    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    font-size: x-large;
+    font-weight: 700;
+    color: rgba(94, 78, 81, 1);
+    margin: auto;
+    margin-right: 8px;
+  }
+  :local(.treeinfo .close) {
+
+    font-size: xx-large;
+    font-weight: 700;
+    color: rgba(94, 78, 81, 1);
+  }
+  :local(.treeinfo .close span) {
+    cursor: pointer;
+  }
+  :local(.basicinfo) {
+    border-radius: 2px;
+    background-color: rgba(94, 78, 81, 1);
+    padding: 4px 12px 12px 12px;
+  }
+  .span[name="close"] {
+  }
+}
+
+@media screen and (max-device-width: 667px) {
+  :local(.wrapper) {
+    right: -50%;
+    width: 50%;
+  }
+  :local(.slidein) {
+    right: 0;
+    transition: 0.25s;
+  }
+}
+
+@media screen and (max-device-aspect-ratio: 1/1) {
+  :local(.wrapper) {
+    position: absolute;
+    right: -100%;
+    width: 100%;
+    opacity: 0.85;
+    padding-bottom: 120px;
+  }
+  :local(.slidein) {
+    right: 0;
+    transition: 0.25s;
+  }
+}

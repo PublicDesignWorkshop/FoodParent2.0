@@ -1,0 +1,51 @@
+{
+  "name": "foodparent",
+  "version": "2.0.0",
+  "description": "food parenting application",
+  "main": "client.js",
+  "scripts": {
+    "dev": " concurrently  \"npm run dts:w\" \"npm run tsc:w\" \"npm run watch\" ",
+    "build": " concurrently \"npm run dts:w\" \"npm run tsc:w\" \"npm run publish\" ",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "watch": "webpack -d --watch",
+    "publish": "webpack -p",
+    "dts": "tcm src",
+    "dts:w": "tcm -w src"
+  },
+  "author": "Karl Kim (captainwhale52@gmail.com)",
+  "license": "MIT",
+  "dependencies": {
+    "alt": "0.18.4",
+    "alt-container": "1.0.2",
+    "babel-core": "6.4.5",
+    "babel-loader": "6.2.2",
+    "babel-preset-es2015": "6.3.13",
+    "babel-preset-react": "6.3.13",
+    "font-awesome": "4.6.1",
+    "jquery": "2.2.2",
+    "json-loader": "0.5.4",
+    "leaflet": "0.7.7",
+    "leaflet.markercluster": "0.4.0",
+    "moment": "2.13.0",
+    "react": "0.14.7",
+    "react-dom": "0.14.7",
+    "react-fontawesome": "0.3.3",
+    "react-router": "2.3.0",
+    "react-select": "1.0.0-beta12",
+    "underscore": "1.8.3"
+  },
+  "devDependencies": {
+    "typescript": "1.8.0",
+    "typings": "0.7.9",
+    "classnames": "2.2.3",
+    "exports-loader": "0.6.3",
+    "file-loader": "0.8.5",
+    "imports-loader": "0.6.5",
+    "concurrently": "2.0.0",
+    "css-loader": "0.23.1",
+    "style-loader": "0.13.1",
+    "url-loader": "0.5.7",
+    "webpack": "1.12.13"
+  }
+}
