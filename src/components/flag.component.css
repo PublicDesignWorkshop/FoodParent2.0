@@ -1,0 +1,157 @@
+@media all {
+  :local(.wrapper) {
+    font-family: 'Open Sans', sans-serif;
+    font-size: small;
+  }
+  :local(.name) {
+    padding: 0 0 0 8px;
+    min-height: 22px;
+    letter-spacing: 1px;
+  }
+  :local(.label) {
+    font-weight: 700;
+    padding-top: 8px;
+  }
+  :local(.label:not(:first-child)) {
+    padding-top: 8px;
+  }
+  :local(.edit) {
+    width: 100%;
+    padding: 6px 3px;
+  }
+
+  .Select-control {
+    border-color: rgba(94, 78, 81, 1);
+    border-radius: 2px;
+    border: 1px solid rgba(94, 78, 81, 1);
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(94, 78, 81, 1);
+    cursor: default;
+    display: table;
+    height: 36px;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+  .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {
+    bottom: 0;
+    color: rgba(255, 255, 255, 1);
+    left: 0;
+    line-height: 34px;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .Select--multi .Select-value {
+    background-color: rgba(94, 78, 81, 1);
+    border-radius: 2px;
+    border: 1px solid rgba(255, 255, 255, 1);
+    color: rgba(255, 255, 255, 1);
+    display: inline-block;
+    font-size: small;
+    line-height: 1.4;
+    margin-left: 5px;
+    margin-top: 5px;
+    vertical-align: top;
+    outline: none;
+  }
+  .is-searchable.is-open > .Select-control {
+    cursor: text;
+  }
+  .is-open > .Select-control {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    background: rgba(94, 78, 81, 1);
+    border-color: #b3b3b3 #ccc #d9d9d9;
+  }
+  .is-open > .Select-control > .Select-arrow {
+    border-color: transparent transparent rgba(255, 255, 255, 1);
+    border-width: 0 5px 5px;
+  }
+  .is-searchable.is-focused:not(.is-open) > .Select-control {
+    cursor: text;
+  }
+  .is-focused:not(.is-open) > .Select-control {
+    border-color: #007eff;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);
+  }
+  .Select--multi .Select-value-icon {
+    cursor: pointer;
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+    border-right: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 3px 6px 3px 8px;
+    font-weight: 700;
+  }
+  .Select-clear-zone {
+    -webkit-animation: Select-animation-fadeIn 200ms;
+    -o-animation: Select-animation-fadeIn 200ms;
+    animation: Select-animation-fadeIn 200ms;
+    color: rgba(255, 255, 255, 1);
+    cursor: pointer;
+    display: table-cell;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 17px;
+    font-weight: 700;
+  }
+  .Select-arrow {
+    border-color: rgba(255, 255, 255, 1) transparent transparent;
+    border-style: solid;
+    border-width: 5px 5px 2.5px;
+    display: inline-block;
+    height: 0;
+    width: 0;
+  }
+  .Select-arrow-zone:hover > .Select-arrow {
+    border-top-color: rgba(255, 255, 255, 1);
+  }
+  .is-open .Select-arrow,
+  .Select-arrow-zone:hover > .Select-arrow {
+    border-top-color: rgba(255, 255, 255, 1);
+  }
+  .Select--multi .Select-value-icon:hover,
+  .Select--multi .Select-value-icon:focus {
+    background-color: rgba(94, 78, 81, 1);
+    color: #D0021B;
+  }
+  .is-focused:not(.is-open) > .Select-control {
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);
+  }
+  .Select--multi .Select-value {
+    background-color: rgba(94, 78, 81, 1);
+    border-radius: 2px;
+    border: 1px solid rgba(255, 255, 255, 1);
+    color: rgba(255, 255, 255, 1);
+    display: inline-block;
+    font-size: small;
+    line-height: 1.4;
+    margin: 4px;
+    vertical-align: top;
+    outline: none;
+  }
+  .Select-option.is-focused {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #333;
+  }
+  .Select.is-disabled > .Select-control {
+    background-color: rgba(94, 78, 81, 1);
+  }
+  .Select--multi.is-disabled .Select-value {
+    background-color: rgba(94, 78, 81, 1);
+    border: none;
+    color: rgba(255, 255, 255, 1);
+  }
+}
+@media only screen and (orientation: portrait) {
+
+}

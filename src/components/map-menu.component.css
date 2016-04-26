@@ -1,0 +1,50 @@
+@media all {
+  :local(.wrapper) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 48px;
+    height: 100%;
+    padding: 108px 0 0 0;
+    overflow-y: auto;
+    pointer-events: none;
+  }
+  :local(.button) {
+    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;           /* TWEENER - IE 10 */
+    display: -webkit-flex;          /* NEW - Chrome */
+    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    -moz-user-select: all;
+    -ms-user-select: all;
+    -webkit-user-select: all;
+    user-select: all;
+
+    width: 48px;
+    height: 48px;
+    background-color: rgba(94, 78, 81, 1);
+    border-color: rgba(255, 255, 255, 1);
+    border-right: 2px solid rgba(255, 255, 255, 1);
+    font-size: x-large;
+    cursor: pointer;
+    pointer-events: all;
+  }
+  :local(.button) .fa {
+    margin: auto;
+  }
+  :local(.button:hover) {
+    color: rgba(107, 170, 119, 1);
+  }
+  :local(.buttontop) {
+    border-top: 2px solid rgba(255, 255, 255, 1);
+  }
+}
+
+@media screen and (max-device-width: 667px) {
+
+}
+
+@media screen and (max-device-aspect-ratio: 1/1) {
+
+}
