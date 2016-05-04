@@ -22,6 +22,8 @@ export interface IMapProps {
   zoom: number;
   onRender: Function;
   onZoom: Function;
+  position: L.LatLng;
+  offGeo: Function;
 }
 export interface IMapStatus {
 
@@ -30,6 +32,8 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   private map: L.Map;
   private layer: L.MarkerClusterGroup;
   private markers: Array<L.Marker>;
+  private userMarker: L.Circle;
+  private userCenterMarker: L.Circle;
   private selected: L.Marker;
   private position: L.LatLng;
   static contextTypes: any;
@@ -70,6 +74,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
     if (nextProps.trees.length != 0 && nextProps.foods.length != 0) {
       self.renderMarkers(nextProps.trees, nextProps);
       self.map.setZoom(nextProps.zoom);
+      self.renderUserLocation(nextProps.position);
     }
   }
   private renderMarkers = (trees: Array<TreeModel>, props: IMapProps) => {
@@ -156,6 +161,45 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       self.layer.removeLayer(marker);
   }
 
+  private renderUserLocation(position: L.LatLng): void {
+    let self: MapComponent = this;
+    if (position) {
+      if (self.userMarker) {
+        self.userMarker.setLatLng(position);
+      } else {
+        self.userMarker = new L.Circle(position, 10, {
+          stroke: true,
+          color: "rgb(0, 0, 0)",
+          opacity: 0.75,
+          weight: 4,
+        });
+        self.map.addLayer(self.userMarker);
+      }
+      if (self.userCenterMarker) {
+        self.userCenterMarker.setLatLng(position);
+      } else {
+        self.userCenterMarker = new L.Circle(position, 1, {
+          stroke: true,
+          color: "rgb(0, 0, 0)",
+          opacity: 0.75,
+          fill: true,
+          fillColor: "rgb(0, 0, 0)",
+          fillOpacity: 0.75,
+          weight: 4,
+        });
+        self.map.addLayer(self.userCenterMarker);
+      }
+      self.context.router.push({pathname: Settings.uBaseName + '/'});
+      //self.props.onZoom(Settings.iFocusZoom);
+      setTimeout(function() {
+        var point: L.Point = L.CRS.EPSG3857.latLngToPoint(position, self.props.zoom);
+        var rMap = ReactDOM.findDOMNode(self.refs['map']);
+        self.map.panTo(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
+      }, 250);
+      self.props.offGeo();
+    }
+  }
+
   private afterRenderMap = () => {
     let self: MapComponent = this;
     self.layer = new L.MarkerClusterGroup();
@@ -185,7 +229,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
         }
         self.map.panTo(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
         //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
-      }, 500);
+      }, 250);
     });
     self.map.on('popupclose', function (event: any) {
       self.selected = null;

@@ -46,8 +46,6 @@ export default class LocationComponent extends React.Component<ILocationProps, I
   private updateProps = (props: ILocationProps) => {
     let self: LocationComponent = this;
     if (props.tree) {
-      console.log(props.tree.getLat());
-      console.log(props.tree.getLng());
       self.setState({latitude: props.tree.getLat().toFixed(Settings.iMarkerPrecision), longitude: props.tree.getLng().toFixed(Settings.iMarkerPrecision), editingLatitude: false, editingLongitude: false});
     }
   }

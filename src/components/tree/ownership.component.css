@@ -151,6 +151,10 @@
   :local(.wrapper) .Select-input {
     display: none !important;
   }
+
+  :local(.wrapper) .Select.is-disabled > .Select-control {
+    background-color: rgba(94, 78, 81, 1);
+  }
 }
 
 

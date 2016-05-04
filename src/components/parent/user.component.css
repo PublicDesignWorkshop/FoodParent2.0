@@ -49,7 +49,7 @@
     margin-right: 8px;
   }
   :local(.userinfo .close) {
-    font-size: x-large;
+    font-size: xx-large;
     font-weight: 700;
     color: rgba(94, 78, 81, 1);
   }
@@ -130,7 +130,7 @@
     position: fixed;
     right: -100%;
     width: 100%;
-    opacity: 0.85;
+    opacity: 0.95;
     padding-bottom: 120px;
   }
   :local(.slidein) {

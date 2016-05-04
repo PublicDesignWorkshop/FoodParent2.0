@@ -4,8 +4,8 @@ import * as ReactDOM from 'react-dom';
 import * as styles from './app.component.css';
 import NavComponent from './nav.component';
 import LoaderComponent from './loader.component';
-import LoginComponent from './login.component';
-import UserComponent from './user.component';
+import LoginComponent from './parent/login.component';
+import UserComponent from './parent/user.component';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 

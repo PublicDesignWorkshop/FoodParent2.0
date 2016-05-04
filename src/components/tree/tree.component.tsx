@@ -70,44 +70,51 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
 
   render() {
     let self: TreeComponent = this;
-    var tree: TreeModel = treeStore.getTree(self.props.treeId);
-    var food: FoodModel = foodStore.getFood(tree.getFoodId());
-    return (
-      <div className={styles.wrapper}>
-        <div className={styles.treeinfo}>
-          <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
-          <div className={styles.name}>{food.getName() + ' #' + tree.getId()}</div>
-          <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
-            self.context.router.push({pathname: Settings.uBaseName + '/'});
-            self.setState({bOpen: false, editable: self.state.editable});
-          }}/></div>
-        </div>
-        <div className={styles.basicinfo}>
-          <AltContainer stores={
-            {
-              flags: function (props) {
-                return {
-                  store: flagStore,
-                  value: flagStore.getState().flags
-                };
-              },
-              ownership: function (props) {
-                return {
-                  store: ownershipStore,
-                  value: ownershipStore.getState().ownerships
-                };
+    if (self.props.treeId) {
+      var tree: TreeModel = treeStore.getTree(self.props.treeId);
+      var food: FoodModel = foodStore.getFood(tree.getFoodId());
+      return (
+        <div className={styles.wrapper}>
+          <div className={styles.treeinfo}>
+            <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
+            <div className={styles.name}>{food.getName() + ' #' + tree.getId()}</div>
+            <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
+              self.context.router.push({pathname: Settings.uBaseName + '/'});
+              self.setState({bOpen: false, editable: self.state.editable});
+            }}/></div>
+          </div>
+          <div className={styles.basicinfo}>
+            <AltContainer stores={
+              {
+                flags: function (props) {
+                  return {
+                    store: flagStore,
+                    value: flagStore.getState().flags
+                  };
+                },
+                ownership: function (props) {
+                  return {
+                    store: ownershipStore,
+                    value: ownershipStore.getState().ownerships
+                  };
+                }
               }
-            }
-          }>
-            <LocationComponent tree={tree} editable={self.state.editable} />
-            <AddressComponent tree={tree} editable={self.state.editable} />
-            <DescriptionComponent tree={tree} editable={self.state.editable} />
-            <FlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} />
-            <OwnershipComponent tree={tree} editable={self.state.editable} />
-          </AltContainer>
+            }>
+              <LocationComponent tree={tree} editable={self.state.editable} />
+              <AddressComponent tree={tree} editable={self.state.editable} />
+              <DescriptionComponent tree={tree} editable={self.state.editable} />
+              <FlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} />
+              <OwnershipComponent tree={tree} editable={self.state.editable} />
+            </AltContainer>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className={styles.wrapper}>
+        </div>
+      );
+    }
   }
 }
 

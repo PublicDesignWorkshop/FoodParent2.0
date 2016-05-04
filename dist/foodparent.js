@@ -53,7 +53,7 @@
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	var routes_1 = __webpack_require__(/*! ./routes */ 218);
-	__webpack_require__(/*! ./client.css */ 420);
+	__webpack_require__(/*! ./client.css */ 433);
 	ReactDOM.render(React.createElement(react_router_1.Router, { history: react_router_1.browserHistory }, routes_1.default), document.getElementById('app'));
 	//# sourceMappingURL=client.js.map
 
@@ -25747,7 +25747,7 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	var app_component_1 = __webpack_require__(/*! ./components/app.component */ 219);
-	var trees_component_1 = __webpack_require__(/*! ./components/trees.component */ 266);
+	var trees_component_1 = __webpack_require__(/*! ./components/trees.component */ 236);
 	var Settings = __webpack_require__(/*! ./constraints/settings.json */ 225);
 	var RouteMap = React.createElement(react_router_1.Route, { path: Settings.uBaseNameForWebPack, component: app_component_1.default }, React.createElement(react_router_1.IndexRoute, { component: trees_component_1.default }), React.createElement(react_router_1.Route, { path: "trees/:treeId", component: trees_component_1.default }));
 	Object.defineProperty(exports, "__esModule", { value: true });
@@ -25775,10 +25775,10 @@
 	var styles = __webpack_require__(/*! ./app.component.css */ 220);
 	var nav_component_1 = __webpack_require__(/*! ./nav.component */ 224);
 	var loader_component_1 = __webpack_require__(/*! ./loader.component */ 230);
-	var login_component_1 = __webpack_require__(/*! ./login.component */ 233);
-	var user_component_1 = __webpack_require__(/*! ./user.component */ 262);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
-	var authentication_1 = __webpack_require__(/*! ./../utils/authentication */ 257);
+	var login_component_1 = __webpack_require__(/*! ./parent/login.component */ 435);
+	var user_component_1 = __webpack_require__(/*! ./parent/user.component */ 444);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 233);
+	var authentication_1 = __webpack_require__(/*! ./../utils/authentication */ 235);
 	(function (LogInStatus) {
 	    LogInStatus[LogInStatus["GUEST"] = 0] = "GUEST";
 	    LogInStatus[LogInStatus["PARENT"] = 1] = "PARENT";
@@ -26334,7 +26334,7 @@
 		"iDefaultZoom": 13,
 		"iMaxZoom": 20,
 		"iMinZoom": 5,
-		"iFocusZoom": 15,
+		"iFocusZoom": 18,
 		"sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
 		"uReverseGeoCoding": "//nominatim.openstreetmap.org/reverse?format=json&zoom=18&addressdetails=1",
 		"iMarkerPrecision": 5
@@ -26532,2277 +26532,36 @@
 
 /***/ },
 /* 233 */
-/*!*******************************************!*\
-  !*** ./src/components/login.component.js ***!
-  \*******************************************/
+/*!*************************************!*\
+  !*** ./src/utils/loadingtracker.js ***!
+  \*************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var React = __webpack_require__(/*! react */ 1);
-	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
-	var Select = __webpack_require__(/*! react-select */ 243);
-	__webpack_require__(/*! ./../../~/react-select/dist/react-select.css */ 250);
+	var $ = __webpack_require__(/*! jquery */ 234);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./login.component.css */ 252);
-	var login_parent_component_1 = __webpack_require__(/*! ./login-parent.component */ 254);
-	var login_manager_component_1 = __webpack_require__(/*! ./login-manager.component */ 259);
-	
-	var LoginComponent = function (_React$Component) {
-	    _inherits(LoginComponent, _React$Component);
-	
-	    function LoginComponent(props) {
-	        _classCallCheck(this, LoginComponent);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LoginComponent).call(this, props));
-	
-	        _this.updateProps = function (props) {
-	            var self = _this;
-	            if (props.bOpen == "true") {
-	                self.setState({ bOpen: true, bManagerMode: self.state.bManagerMode });
-	            } else {
-	                self.setState({ bOpen: false, bManagerMode: self.state.bManagerMode });
-	            }
-	        };
-	        _this.updateAttribute = function () {
-	            var self = _this;
-	        };
-	        _this.updateLoginMode = function (selected) {
-	            var self = _this;
-	            if (selected) {
-	                self.selected = selected;
-	                if (parseInt(selected.value) == 0) {
-	                    self.setState({ bOpen: self.state.bOpen, bManagerMode: true });
-	                } else {
-	                    self.setState({ bOpen: self.state.bOpen, bManagerMode: false });
-	                }
-	            }
-	        };
-	        var self = _this;
-	        _this.state = {
-	            bOpen: false,
-	            bManagerMode: false
-	        };
-	        return _this;
+	var loadings = new Array();
+	function addLoading() {
+	    loadings.push(true);
+	    if ($('#loader').hasClass('hide')) {
+	        $('#loader').removeClass('hide');
 	    }
-	
-	    _createClass(LoginComponent, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var self = this;
-	            self.options = new Array();
-	            self.options.push({ value: 0, label: "MANAGER SIGN-IN" });
-	            self.options.push({ value: 1, label: "PARENT SIGN-IN" });
-	            self.selected = self.options[1];
-	            self.updateProps(self.props);
+	}
+	exports.addLoading = addLoading;
+	function removeLoading() {
+	    loadings.pop();
+	    if (!loadings.length) {
+	        if (!$('#loader').hasClass('hide')) {
+	            $('#loader').addClass('hide');
 	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            var self = this;
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var self = this;
-	            self.updateProps(nextProps);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var self = this;
-	            if (self.state.bOpen) {
-	                if (self.state.bManagerMode) {
-	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.siginininfo }, React.createElement("div", { className: styles.icon }, React.createElement(FontAwesome, { className: '', name: 'user' })), React.createElement(Select, { className: styles.name, name: "loginmode-select", multi: false, searchable: false, scrollMenuIntoView: false, options: self.options, value: self.selected, onChange: self.updateLoginMode, placeholder: "select login mode..." }), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
-	                            self.context.router.goBack();
-	                        } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement(login_manager_component_1.default, null)));
-	                } else {
-	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.siginininfo }, React.createElement("div", { className: styles.icon }, React.createElement(FontAwesome, { className: '', name: 'user' })), React.createElement(Select, { className: styles.name, name: "loginmode-select", multi: false, searchable: false, scrollMenuIntoView: false, options: self.options, value: self.selected, onChange: self.updateLoginMode, placeholder: "select login mode..." }), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
-	                            self.context.router.goBack();
-	                        } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement(login_parent_component_1.default, null)));
-	                }
-	            } else {
-	                return React.createElement("div", { className: styles.wrapper });
-	            }
-	        }
-	    }]);
-	
-	    return LoginComponent;
-	}(React.Component);
-	
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.default = LoginComponent;
-	LoginComponent.contextTypes = {
-	    router: function router() {
-	        return React.PropTypes.func.isRequired;
 	    }
-	};
-	//# sourceMappingURL=login.component.js.map
+	}
+	exports.removeLoading = removeLoading;
+	//# sourceMappingURL=loadingtracker.js.map
 
 /***/ },
 /* 234 */
-/*!******************************************!*\
-  !*** ./~/react-fontawesome/lib/index.js ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	/**
-	 * A React component for the font-awesome icon library.
-	 *
-	 *
-	 * @param {Boolean} [border=false] Whether or not to show a border radius
-	 * @param {String} [className] An extra set of CSS classes to add to the component
-	 * @param {Boolean} [fixedWidth=false] Make buttons fixed width
-	 * @param {String} [flip=false] Flip the icon's orientation.
-	 * @param {Boolean} [inverse=false]Inverse the icon's color
-	 * @param {String} name Name of the icon to use
-	 * @param {Boolean} [pulse=false] Rotate icon with 8 steps (rather than smoothly)
-	 * @param {Number} [rotate] The degress to rotate the icon by
-	 * @param {String} [size] The icon scaling size
-	 * @param {Boolean} [spin=false] Spin the icon
-	 * @param {String} [stack] Stack an icon on top of another
-	 * @module FontAwesome
-	 * @type {ReactClass}
-	 */
-	exports['default'] = _react2['default'].createClass({
-	
-	  displayName: 'FontAwesome',
-	
-	  propTypes: {
-	    border: _react2['default'].PropTypes.bool,
-	    className: _react2['default'].PropTypes.string,
-	    fixedWidth: _react2['default'].PropTypes.bool,
-	    flip: _react2['default'].PropTypes.oneOf(['horizontal', 'vertical']),
-	    inverse: _react2['default'].PropTypes.bool,
-	    name: _react2['default'].PropTypes.string.isRequired,
-	    pulse: _react2['default'].PropTypes.bool,
-	    rotate: _react2['default'].PropTypes.oneOf([90, 180, 270]),
-	    size: _react2['default'].PropTypes.oneOf(['lg', '2x', '3x', '4x', '5x']),
-	    spin: _react2['default'].PropTypes.bool,
-	    stack: _react2['default'].PropTypes.oneOf(['1x', '2x'])
-	  },
-	
-	  render: function render() {
-	    var className = 'fa fa-' + this.props.name;
-	
-	    if (this.props.size) {
-	      className += ' fa-' + this.props.size;
-	    }
-	
-	    if (this.props.spin) {
-	      className += ' fa-spin';
-	    }
-	
-	    if (this.props.pulse) {
-	      className += ' fa-pulse';
-	    }
-	
-	    if (this.props.border) {
-	      className += ' fa-border';
-	    }
-	
-	    if (this.props.fixedWidth) {
-	      className += ' fa-fw';
-	    }
-	
-	    if (this.props.inverse) {
-	      className += ' fa-inverse';
-	    }
-	
-	    if (this.props.flip) {
-	      className += ' fa-flip-' + this.props.flip;
-	    }
-	
-	    if (this.props.rotate) {
-	      className += ' fa-rotate-' + this.props.rotate;
-	    }
-	
-	    if (this.props.stack) {
-	      className += ' fa-stack-' + this.props.stack;
-	    }
-	
-	    if (this.props.className) {
-	      className += ' ' + this.props.className;
-	    }
-	
-	    return _react2['default'].createElement('span', _extends({}, this.props, {
-	      className: className
-	    }));
-	  }
-	});
-	module.exports = exports['default'];
-
-/***/ },
-/* 235 */
-/*!*********************************************!*\
-  !*** ./~/font-awesome/css/font-awesome.css ***!
-  \*********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !./../../css-loader!./font-awesome.css */ 236);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../css-loader/index.js!./font-awesome.css", function() {
-				var newContent = require("!!./../../css-loader/index.js!./font-awesome.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 236 */
-/*!************************************************************!*\
-  !*** ./~/css-loader!./~/font-awesome/css/font-awesome.css ***!
-  \************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 222)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "/*!\n *  Font Awesome 4.6.1 by @davegandy - http://fontawesome.io - @fontawesome\n *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)\n */\n/* FONT PATH\n * -------------------------- */\n@font-face {\n  font-family: 'FontAwesome';\n  src: url(" + __webpack_require__(/*! ../fonts/fontawesome-webfont.eot?v=4.6.1 */ 237) + ");\n  src: url(" + __webpack_require__(/*! ../fonts/fontawesome-webfont.eot */ 238) + "?#iefix&v=4.6.1) format('embedded-opentype'), url(" + __webpack_require__(/*! ../fonts/fontawesome-webfont.woff2?v=4.6.1 */ 239) + ") format('woff2'), url(" + __webpack_require__(/*! ../fonts/fontawesome-webfont.woff?v=4.6.1 */ 240) + ") format('woff'), url(" + __webpack_require__(/*! ../fonts/fontawesome-webfont.ttf?v=4.6.1 */ 241) + ") format('truetype'), url(" + __webpack_require__(/*! ../fonts/fontawesome-webfont.svg?v=4.6.1 */ 242) + "#fontawesomeregular) format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n.fa {\n  display: inline-block;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n/* makes the font 33% larger relative to the icon container */\n.fa-lg {\n  font-size: 1.33333333em;\n  line-height: 0.75em;\n  vertical-align: -15%;\n}\n.fa-2x {\n  font-size: 2em;\n}\n.fa-3x {\n  font-size: 3em;\n}\n.fa-4x {\n  font-size: 4em;\n}\n.fa-5x {\n  font-size: 5em;\n}\n.fa-fw {\n  width: 1.28571429em;\n  text-align: center;\n}\n.fa-ul {\n  padding-left: 0;\n  margin-left: 2.14285714em;\n  list-style-type: none;\n}\n.fa-ul > li {\n  position: relative;\n}\n.fa-li {\n  position: absolute;\n  left: -2.14285714em;\n  width: 2.14285714em;\n  top: 0.14285714em;\n  text-align: center;\n}\n.fa-li.fa-lg {\n  left: -1.85714286em;\n}\n.fa-border {\n  padding: .2em .25em .15em;\n  border: solid 0.08em #eeeeee;\n  border-radius: .1em;\n}\n.fa-pull-left {\n  float: left;\n}\n.fa-pull-right {\n  float: right;\n}\n.fa.fa-pull-left {\n  margin-right: .3em;\n}\n.fa.fa-pull-right {\n  margin-left: .3em;\n}\n/* Deprecated as of 4.4.0 */\n.pull-right {\n  float: right;\n}\n.pull-left {\n  float: left;\n}\n.fa.pull-left {\n  margin-right: .3em;\n}\n.fa.pull-right {\n  margin-left: .3em;\n}\n.fa-spin {\n  -webkit-animation: fa-spin 2s infinite linear;\n  animation: fa-spin 2s infinite linear;\n}\n.fa-pulse {\n  -webkit-animation: fa-spin 1s infinite steps(8);\n  animation: fa-spin 1s infinite steps(8);\n}\n@-webkit-keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n  }\n}\n@keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n  }\n}\n.fa-rotate-90 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=1)\";\n  -webkit-transform: rotate(90deg);\n  -ms-transform: rotate(90deg);\n  transform: rotate(90deg);\n}\n.fa-rotate-180 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=2)\";\n  -webkit-transform: rotate(180deg);\n  -ms-transform: rotate(180deg);\n  transform: rotate(180deg);\n}\n.fa-rotate-270 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=3)\";\n  -webkit-transform: rotate(270deg);\n  -ms-transform: rotate(270deg);\n  transform: rotate(270deg);\n}\n.fa-flip-horizontal {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)\";\n  -webkit-transform: scale(-1, 1);\n  -ms-transform: scale(-1, 1);\n  transform: scale(-1, 1);\n}\n.fa-flip-vertical {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)\";\n  -webkit-transform: scale(1, -1);\n  -ms-transform: scale(1, -1);\n  transform: scale(1, -1);\n}\n:root .fa-rotate-90,\n:root .fa-rotate-180,\n:root .fa-rotate-270,\n:root .fa-flip-horizontal,\n:root .fa-flip-vertical {\n  filter: none;\n}\n.fa-stack {\n  position: relative;\n  display: inline-block;\n  width: 2em;\n  height: 2em;\n  line-height: 2em;\n  vertical-align: middle;\n}\n.fa-stack-1x,\n.fa-stack-2x {\n  position: absolute;\n  left: 0;\n  width: 100%;\n  text-align: center;\n}\n.fa-stack-1x {\n  line-height: inherit;\n}\n.fa-stack-2x {\n  font-size: 2em;\n}\n.fa-inverse {\n  color: #ffffff;\n}\n/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen\n   readers do not read off random characters that represent icons */\n.fa-glass:before {\n  content: \"\\F000\";\n}\n.fa-music:before {\n  content: \"\\F001\";\n}\n.fa-search:before {\n  content: \"\\F002\";\n}\n.fa-envelope-o:before {\n  content: \"\\F003\";\n}\n.fa-heart:before {\n  content: \"\\F004\";\n}\n.fa-star:before {\n  content: \"\\F005\";\n}\n.fa-star-o:before {\n  content: \"\\F006\";\n}\n.fa-user:before {\n  content: \"\\F007\";\n}\n.fa-film:before {\n  content: \"\\F008\";\n}\n.fa-th-large:before {\n  content: \"\\F009\";\n}\n.fa-th:before {\n  content: \"\\F00A\";\n}\n.fa-th-list:before {\n  content: \"\\F00B\";\n}\n.fa-check:before {\n  content: \"\\F00C\";\n}\n.fa-remove:before,\n.fa-close:before,\n.fa-times:before {\n  content: \"\\F00D\";\n}\n.fa-search-plus:before {\n  content: \"\\F00E\";\n}\n.fa-search-minus:before {\n  content: \"\\F010\";\n}\n.fa-power-off:before {\n  content: \"\\F011\";\n}\n.fa-signal:before {\n  content: \"\\F012\";\n}\n.fa-gear:before,\n.fa-cog:before {\n  content: \"\\F013\";\n}\n.fa-trash-o:before {\n  content: \"\\F014\";\n}\n.fa-home:before {\n  content: \"\\F015\";\n}\n.fa-file-o:before {\n  content: \"\\F016\";\n}\n.fa-clock-o:before {\n  content: \"\\F017\";\n}\n.fa-road:before {\n  content: \"\\F018\";\n}\n.fa-download:before {\n  content: \"\\F019\";\n}\n.fa-arrow-circle-o-down:before {\n  content: \"\\F01A\";\n}\n.fa-arrow-circle-o-up:before {\n  content: \"\\F01B\";\n}\n.fa-inbox:before {\n  content: \"\\F01C\";\n}\n.fa-play-circle-o:before {\n  content: \"\\F01D\";\n}\n.fa-rotate-right:before,\n.fa-repeat:before {\n  content: \"\\F01E\";\n}\n.fa-refresh:before {\n  content: \"\\F021\";\n}\n.fa-list-alt:before {\n  content: \"\\F022\";\n}\n.fa-lock:before {\n  content: \"\\F023\";\n}\n.fa-flag:before {\n  content: \"\\F024\";\n}\n.fa-headphones:before {\n  content: \"\\F025\";\n}\n.fa-volume-off:before {\n  content: \"\\F026\";\n}\n.fa-volume-down:before {\n  content: \"\\F027\";\n}\n.fa-volume-up:before {\n  content: \"\\F028\";\n}\n.fa-qrcode:before {\n  content: \"\\F029\";\n}\n.fa-barcode:before {\n  content: \"\\F02A\";\n}\n.fa-tag:before {\n  content: \"\\F02B\";\n}\n.fa-tags:before {\n  content: \"\\F02C\";\n}\n.fa-book:before {\n  content: \"\\F02D\";\n}\n.fa-bookmark:before {\n  content: \"\\F02E\";\n}\n.fa-print:before {\n  content: \"\\F02F\";\n}\n.fa-camera:before {\n  content: \"\\F030\";\n}\n.fa-font:before {\n  content: \"\\F031\";\n}\n.fa-bold:before {\n  content: \"\\F032\";\n}\n.fa-italic:before {\n  content: \"\\F033\";\n}\n.fa-text-height:before {\n  content: \"\\F034\";\n}\n.fa-text-width:before {\n  content: \"\\F035\";\n}\n.fa-align-left:before {\n  content: \"\\F036\";\n}\n.fa-align-center:before {\n  content: \"\\F037\";\n}\n.fa-align-right:before {\n  content: \"\\F038\";\n}\n.fa-align-justify:before {\n  content: \"\\F039\";\n}\n.fa-list:before {\n  content: \"\\F03A\";\n}\n.fa-dedent:before,\n.fa-outdent:before {\n  content: \"\\F03B\";\n}\n.fa-indent:before {\n  content: \"\\F03C\";\n}\n.fa-video-camera:before {\n  content: \"\\F03D\";\n}\n.fa-photo:before,\n.fa-image:before,\n.fa-picture-o:before {\n  content: \"\\F03E\";\n}\n.fa-pencil:before {\n  content: \"\\F040\";\n}\n.fa-map-marker:before {\n  content: \"\\F041\";\n}\n.fa-adjust:before {\n  content: \"\\F042\";\n}\n.fa-tint:before {\n  content: \"\\F043\";\n}\n.fa-edit:before,\n.fa-pencil-square-o:before {\n  content: \"\\F044\";\n}\n.fa-share-square-o:before {\n  content: \"\\F045\";\n}\n.fa-check-square-o:before {\n  content: \"\\F046\";\n}\n.fa-arrows:before {\n  content: \"\\F047\";\n}\n.fa-step-backward:before {\n  content: \"\\F048\";\n}\n.fa-fast-backward:before {\n  content: \"\\F049\";\n}\n.fa-backward:before {\n  content: \"\\F04A\";\n}\n.fa-play:before {\n  content: \"\\F04B\";\n}\n.fa-pause:before {\n  content: \"\\F04C\";\n}\n.fa-stop:before {\n  content: \"\\F04D\";\n}\n.fa-forward:before {\n  content: \"\\F04E\";\n}\n.fa-fast-forward:before {\n  content: \"\\F050\";\n}\n.fa-step-forward:before {\n  content: \"\\F051\";\n}\n.fa-eject:before {\n  content: \"\\F052\";\n}\n.fa-chevron-left:before {\n  content: \"\\F053\";\n}\n.fa-chevron-right:before {\n  content: \"\\F054\";\n}\n.fa-plus-circle:before {\n  content: \"\\F055\";\n}\n.fa-minus-circle:before {\n  content: \"\\F056\";\n}\n.fa-times-circle:before {\n  content: \"\\F057\";\n}\n.fa-check-circle:before {\n  content: \"\\F058\";\n}\n.fa-question-circle:before {\n  content: \"\\F059\";\n}\n.fa-info-circle:before {\n  content: \"\\F05A\";\n}\n.fa-crosshairs:before {\n  content: \"\\F05B\";\n}\n.fa-times-circle-o:before {\n  content: \"\\F05C\";\n}\n.fa-check-circle-o:before {\n  content: \"\\F05D\";\n}\n.fa-ban:before {\n  content: \"\\F05E\";\n}\n.fa-arrow-left:before {\n  content: \"\\F060\";\n}\n.fa-arrow-right:before {\n  content: \"\\F061\";\n}\n.fa-arrow-up:before {\n  content: \"\\F062\";\n}\n.fa-arrow-down:before {\n  content: \"\\F063\";\n}\n.fa-mail-forward:before,\n.fa-share:before {\n  content: \"\\F064\";\n}\n.fa-expand:before {\n  content: \"\\F065\";\n}\n.fa-compress:before {\n  content: \"\\F066\";\n}\n.fa-plus:before {\n  content: \"\\F067\";\n}\n.fa-minus:before {\n  content: \"\\F068\";\n}\n.fa-asterisk:before {\n  content: \"\\F069\";\n}\n.fa-exclamation-circle:before {\n  content: \"\\F06A\";\n}\n.fa-gift:before {\n  content: \"\\F06B\";\n}\n.fa-leaf:before {\n  content: \"\\F06C\";\n}\n.fa-fire:before {\n  content: \"\\F06D\";\n}\n.fa-eye:before {\n  content: \"\\F06E\";\n}\n.fa-eye-slash:before {\n  content: \"\\F070\";\n}\n.fa-warning:before,\n.fa-exclamation-triangle:before {\n  content: \"\\F071\";\n}\n.fa-plane:before {\n  content: \"\\F072\";\n}\n.fa-calendar:before {\n  content: \"\\F073\";\n}\n.fa-random:before {\n  content: \"\\F074\";\n}\n.fa-comment:before {\n  content: \"\\F075\";\n}\n.fa-magnet:before {\n  content: \"\\F076\";\n}\n.fa-chevron-up:before {\n  content: \"\\F077\";\n}\n.fa-chevron-down:before {\n  content: \"\\F078\";\n}\n.fa-retweet:before {\n  content: \"\\F079\";\n}\n.fa-shopping-cart:before {\n  content: \"\\F07A\";\n}\n.fa-folder:before {\n  content: \"\\F07B\";\n}\n.fa-folder-open:before {\n  content: \"\\F07C\";\n}\n.fa-arrows-v:before {\n  content: \"\\F07D\";\n}\n.fa-arrows-h:before {\n  content: \"\\F07E\";\n}\n.fa-bar-chart-o:before,\n.fa-bar-chart:before {\n  content: \"\\F080\";\n}\n.fa-twitter-square:before {\n  content: \"\\F081\";\n}\n.fa-facebook-square:before {\n  content: \"\\F082\";\n}\n.fa-camera-retro:before {\n  content: \"\\F083\";\n}\n.fa-key:before {\n  content: \"\\F084\";\n}\n.fa-gears:before,\n.fa-cogs:before {\n  content: \"\\F085\";\n}\n.fa-comments:before {\n  content: \"\\F086\";\n}\n.fa-thumbs-o-up:before {\n  content: \"\\F087\";\n}\n.fa-thumbs-o-down:before {\n  content: \"\\F088\";\n}\n.fa-star-half:before {\n  content: \"\\F089\";\n}\n.fa-heart-o:before {\n  content: \"\\F08A\";\n}\n.fa-sign-out:before {\n  content: \"\\F08B\";\n}\n.fa-linkedin-square:before {\n  content: \"\\F08C\";\n}\n.fa-thumb-tack:before {\n  content: \"\\F08D\";\n}\n.fa-external-link:before {\n  content: \"\\F08E\";\n}\n.fa-sign-in:before {\n  content: \"\\F090\";\n}\n.fa-trophy:before {\n  content: \"\\F091\";\n}\n.fa-github-square:before {\n  content: \"\\F092\";\n}\n.fa-upload:before {\n  content: \"\\F093\";\n}\n.fa-lemon-o:before {\n  content: \"\\F094\";\n}\n.fa-phone:before {\n  content: \"\\F095\";\n}\n.fa-square-o:before {\n  content: \"\\F096\";\n}\n.fa-bookmark-o:before {\n  content: \"\\F097\";\n}\n.fa-phone-square:before {\n  content: \"\\F098\";\n}\n.fa-twitter:before {\n  content: \"\\F099\";\n}\n.fa-facebook-f:before,\n.fa-facebook:before {\n  content: \"\\F09A\";\n}\n.fa-github:before {\n  content: \"\\F09B\";\n}\n.fa-unlock:before {\n  content: \"\\F09C\";\n}\n.fa-credit-card:before {\n  content: \"\\F09D\";\n}\n.fa-feed:before,\n.fa-rss:before {\n  content: \"\\F09E\";\n}\n.fa-hdd-o:before {\n  content: \"\\F0A0\";\n}\n.fa-bullhorn:before {\n  content: \"\\F0A1\";\n}\n.fa-bell:before {\n  content: \"\\F0F3\";\n}\n.fa-certificate:before {\n  content: \"\\F0A3\";\n}\n.fa-hand-o-right:before {\n  content: \"\\F0A4\";\n}\n.fa-hand-o-left:before {\n  content: \"\\F0A5\";\n}\n.fa-hand-o-up:before {\n  content: \"\\F0A6\";\n}\n.fa-hand-o-down:before {\n  content: \"\\F0A7\";\n}\n.fa-arrow-circle-left:before {\n  content: \"\\F0A8\";\n}\n.fa-arrow-circle-right:before {\n  content: \"\\F0A9\";\n}\n.fa-arrow-circle-up:before {\n  content: \"\\F0AA\";\n}\n.fa-arrow-circle-down:before {\n  content: \"\\F0AB\";\n}\n.fa-globe:before {\n  content: \"\\F0AC\";\n}\n.fa-wrench:before {\n  content: \"\\F0AD\";\n}\n.fa-tasks:before {\n  content: \"\\F0AE\";\n}\n.fa-filter:before {\n  content: \"\\F0B0\";\n}\n.fa-briefcase:before {\n  content: \"\\F0B1\";\n}\n.fa-arrows-alt:before {\n  content: \"\\F0B2\";\n}\n.fa-group:before,\n.fa-users:before {\n  content: \"\\F0C0\";\n}\n.fa-chain:before,\n.fa-link:before {\n  content: \"\\F0C1\";\n}\n.fa-cloud:before {\n  content: \"\\F0C2\";\n}\n.fa-flask:before {\n  content: \"\\F0C3\";\n}\n.fa-cut:before,\n.fa-scissors:before {\n  content: \"\\F0C4\";\n}\n.fa-copy:before,\n.fa-files-o:before {\n  content: \"\\F0C5\";\n}\n.fa-paperclip:before {\n  content: \"\\F0C6\";\n}\n.fa-save:before,\n.fa-floppy-o:before {\n  content: \"\\F0C7\";\n}\n.fa-square:before {\n  content: \"\\F0C8\";\n}\n.fa-navicon:before,\n.fa-reorder:before,\n.fa-bars:before {\n  content: \"\\F0C9\";\n}\n.fa-list-ul:before {\n  content: \"\\F0CA\";\n}\n.fa-list-ol:before {\n  content: \"\\F0CB\";\n}\n.fa-strikethrough:before {\n  content: \"\\F0CC\";\n}\n.fa-underline:before {\n  content: \"\\F0CD\";\n}\n.fa-table:before {\n  content: \"\\F0CE\";\n}\n.fa-magic:before {\n  content: \"\\F0D0\";\n}\n.fa-truck:before {\n  content: \"\\F0D1\";\n}\n.fa-pinterest:before {\n  content: \"\\F0D2\";\n}\n.fa-pinterest-square:before {\n  content: \"\\F0D3\";\n}\n.fa-google-plus-square:before {\n  content: \"\\F0D4\";\n}\n.fa-google-plus:before {\n  content: \"\\F0D5\";\n}\n.fa-money:before {\n  content: \"\\F0D6\";\n}\n.fa-caret-down:before {\n  content: \"\\F0D7\";\n}\n.fa-caret-up:before {\n  content: \"\\F0D8\";\n}\n.fa-caret-left:before {\n  content: \"\\F0D9\";\n}\n.fa-caret-right:before {\n  content: \"\\F0DA\";\n}\n.fa-columns:before {\n  content: \"\\F0DB\";\n}\n.fa-unsorted:before,\n.fa-sort:before {\n  content: \"\\F0DC\";\n}\n.fa-sort-down:before,\n.fa-sort-desc:before {\n  content: \"\\F0DD\";\n}\n.fa-sort-up:before,\n.fa-sort-asc:before {\n  content: \"\\F0DE\";\n}\n.fa-envelope:before {\n  content: \"\\F0E0\";\n}\n.fa-linkedin:before {\n  content: \"\\F0E1\";\n}\n.fa-rotate-left:before,\n.fa-undo:before {\n  content: \"\\F0E2\";\n}\n.fa-legal:before,\n.fa-gavel:before {\n  content: \"\\F0E3\";\n}\n.fa-dashboard:before,\n.fa-tachometer:before {\n  content: \"\\F0E4\";\n}\n.fa-comment-o:before {\n  content: \"\\F0E5\";\n}\n.fa-comments-o:before {\n  content: \"\\F0E6\";\n}\n.fa-flash:before,\n.fa-bolt:before {\n  content: \"\\F0E7\";\n}\n.fa-sitemap:before {\n  content: \"\\F0E8\";\n}\n.fa-umbrella:before {\n  content: \"\\F0E9\";\n}\n.fa-paste:before,\n.fa-clipboard:before {\n  content: \"\\F0EA\";\n}\n.fa-lightbulb-o:before {\n  content: \"\\F0EB\";\n}\n.fa-exchange:before {\n  content: \"\\F0EC\";\n}\n.fa-cloud-download:before {\n  content: \"\\F0ED\";\n}\n.fa-cloud-upload:before {\n  content: \"\\F0EE\";\n}\n.fa-user-md:before {\n  content: \"\\F0F0\";\n}\n.fa-stethoscope:before {\n  content: \"\\F0F1\";\n}\n.fa-suitcase:before {\n  content: \"\\F0F2\";\n}\n.fa-bell-o:before {\n  content: \"\\F0A2\";\n}\n.fa-coffee:before {\n  content: \"\\F0F4\";\n}\n.fa-cutlery:before {\n  content: \"\\F0F5\";\n}\n.fa-file-text-o:before {\n  content: \"\\F0F6\";\n}\n.fa-building-o:before {\n  content: \"\\F0F7\";\n}\n.fa-hospital-o:before {\n  content: \"\\F0F8\";\n}\n.fa-ambulance:before {\n  content: \"\\F0F9\";\n}\n.fa-medkit:before {\n  content: \"\\F0FA\";\n}\n.fa-fighter-jet:before {\n  content: \"\\F0FB\";\n}\n.fa-beer:before {\n  content: \"\\F0FC\";\n}\n.fa-h-square:before {\n  content: \"\\F0FD\";\n}\n.fa-plus-square:before {\n  content: \"\\F0FE\";\n}\n.fa-angle-double-left:before {\n  content: \"\\F100\";\n}\n.fa-angle-double-right:before {\n  content: \"\\F101\";\n}\n.fa-angle-double-up:before {\n  content: \"\\F102\";\n}\n.fa-angle-double-down:before {\n  content: \"\\F103\";\n}\n.fa-angle-left:before {\n  content: \"\\F104\";\n}\n.fa-angle-right:before {\n  content: \"\\F105\";\n}\n.fa-angle-up:before {\n  content: \"\\F106\";\n}\n.fa-angle-down:before {\n  content: \"\\F107\";\n}\n.fa-desktop:before {\n  content: \"\\F108\";\n}\n.fa-laptop:before {\n  content: \"\\F109\";\n}\n.fa-tablet:before {\n  content: \"\\F10A\";\n}\n.fa-mobile-phone:before,\n.fa-mobile:before {\n  content: \"\\F10B\";\n}\n.fa-circle-o:before {\n  content: \"\\F10C\";\n}\n.fa-quote-left:before {\n  content: \"\\F10D\";\n}\n.fa-quote-right:before {\n  content: \"\\F10E\";\n}\n.fa-spinner:before {\n  content: \"\\F110\";\n}\n.fa-circle:before {\n  content: \"\\F111\";\n}\n.fa-mail-reply:before,\n.fa-reply:before {\n  content: \"\\F112\";\n}\n.fa-github-alt:before {\n  content: \"\\F113\";\n}\n.fa-folder-o:before {\n  content: \"\\F114\";\n}\n.fa-folder-open-o:before {\n  content: \"\\F115\";\n}\n.fa-smile-o:before {\n  content: \"\\F118\";\n}\n.fa-frown-o:before {\n  content: \"\\F119\";\n}\n.fa-meh-o:before {\n  content: \"\\F11A\";\n}\n.fa-gamepad:before {\n  content: \"\\F11B\";\n}\n.fa-keyboard-o:before {\n  content: \"\\F11C\";\n}\n.fa-flag-o:before {\n  content: \"\\F11D\";\n}\n.fa-flag-checkered:before {\n  content: \"\\F11E\";\n}\n.fa-terminal:before {\n  content: \"\\F120\";\n}\n.fa-code:before {\n  content: \"\\F121\";\n}\n.fa-mail-reply-all:before,\n.fa-reply-all:before {\n  content: \"\\F122\";\n}\n.fa-star-half-empty:before,\n.fa-star-half-full:before,\n.fa-star-half-o:before {\n  content: \"\\F123\";\n}\n.fa-location-arrow:before {\n  content: \"\\F124\";\n}\n.fa-crop:before {\n  content: \"\\F125\";\n}\n.fa-code-fork:before {\n  content: \"\\F126\";\n}\n.fa-unlink:before,\n.fa-chain-broken:before {\n  content: \"\\F127\";\n}\n.fa-question:before {\n  content: \"\\F128\";\n}\n.fa-info:before {\n  content: \"\\F129\";\n}\n.fa-exclamation:before {\n  content: \"\\F12A\";\n}\n.fa-superscript:before {\n  content: \"\\F12B\";\n}\n.fa-subscript:before {\n  content: \"\\F12C\";\n}\n.fa-eraser:before {\n  content: \"\\F12D\";\n}\n.fa-puzzle-piece:before {\n  content: \"\\F12E\";\n}\n.fa-microphone:before {\n  content: \"\\F130\";\n}\n.fa-microphone-slash:before {\n  content: \"\\F131\";\n}\n.fa-shield:before {\n  content: \"\\F132\";\n}\n.fa-calendar-o:before {\n  content: \"\\F133\";\n}\n.fa-fire-extinguisher:before {\n  content: \"\\F134\";\n}\n.fa-rocket:before {\n  content: \"\\F135\";\n}\n.fa-maxcdn:before {\n  content: \"\\F136\";\n}\n.fa-chevron-circle-left:before {\n  content: \"\\F137\";\n}\n.fa-chevron-circle-right:before {\n  content: \"\\F138\";\n}\n.fa-chevron-circle-up:before {\n  content: \"\\F139\";\n}\n.fa-chevron-circle-down:before {\n  content: \"\\F13A\";\n}\n.fa-html5:before {\n  content: \"\\F13B\";\n}\n.fa-css3:before {\n  content: \"\\F13C\";\n}\n.fa-anchor:before {\n  content: \"\\F13D\";\n}\n.fa-unlock-alt:before {\n  content: \"\\F13E\";\n}\n.fa-bullseye:before {\n  content: \"\\F140\";\n}\n.fa-ellipsis-h:before {\n  content: \"\\F141\";\n}\n.fa-ellipsis-v:before {\n  content: \"\\F142\";\n}\n.fa-rss-square:before {\n  content: \"\\F143\";\n}\n.fa-play-circle:before {\n  content: \"\\F144\";\n}\n.fa-ticket:before {\n  content: \"\\F145\";\n}\n.fa-minus-square:before {\n  content: \"\\F146\";\n}\n.fa-minus-square-o:before {\n  content: \"\\F147\";\n}\n.fa-level-up:before {\n  content: \"\\F148\";\n}\n.fa-level-down:before {\n  content: \"\\F149\";\n}\n.fa-check-square:before {\n  content: \"\\F14A\";\n}\n.fa-pencil-square:before {\n  content: \"\\F14B\";\n}\n.fa-external-link-square:before {\n  content: \"\\F14C\";\n}\n.fa-share-square:before {\n  content: \"\\F14D\";\n}\n.fa-compass:before {\n  content: \"\\F14E\";\n}\n.fa-toggle-down:before,\n.fa-caret-square-o-down:before {\n  content: \"\\F150\";\n}\n.fa-toggle-up:before,\n.fa-caret-square-o-up:before {\n  content: \"\\F151\";\n}\n.fa-toggle-right:before,\n.fa-caret-square-o-right:before {\n  content: \"\\F152\";\n}\n.fa-euro:before,\n.fa-eur:before {\n  content: \"\\F153\";\n}\n.fa-gbp:before {\n  content: \"\\F154\";\n}\n.fa-dollar:before,\n.fa-usd:before {\n  content: \"\\F155\";\n}\n.fa-rupee:before,\n.fa-inr:before {\n  content: \"\\F156\";\n}\n.fa-cny:before,\n.fa-rmb:before,\n.fa-yen:before,\n.fa-jpy:before {\n  content: \"\\F157\";\n}\n.fa-ruble:before,\n.fa-rouble:before,\n.fa-rub:before {\n  content: \"\\F158\";\n}\n.fa-won:before,\n.fa-krw:before {\n  content: \"\\F159\";\n}\n.fa-bitcoin:before,\n.fa-btc:before {\n  content: \"\\F15A\";\n}\n.fa-file:before {\n  content: \"\\F15B\";\n}\n.fa-file-text:before {\n  content: \"\\F15C\";\n}\n.fa-sort-alpha-asc:before {\n  content: \"\\F15D\";\n}\n.fa-sort-alpha-desc:before {\n  content: \"\\F15E\";\n}\n.fa-sort-amount-asc:before {\n  content: \"\\F160\";\n}\n.fa-sort-amount-desc:before {\n  content: \"\\F161\";\n}\n.fa-sort-numeric-asc:before {\n  content: \"\\F162\";\n}\n.fa-sort-numeric-desc:before {\n  content: \"\\F163\";\n}\n.fa-thumbs-up:before {\n  content: \"\\F164\";\n}\n.fa-thumbs-down:before {\n  content: \"\\F165\";\n}\n.fa-youtube-square:before {\n  content: \"\\F166\";\n}\n.fa-youtube:before {\n  content: \"\\F167\";\n}\n.fa-xing:before {\n  content: \"\\F168\";\n}\n.fa-xing-square:before {\n  content: \"\\F169\";\n}\n.fa-youtube-play:before {\n  content: \"\\F16A\";\n}\n.fa-dropbox:before {\n  content: \"\\F16B\";\n}\n.fa-stack-overflow:before {\n  content: \"\\F16C\";\n}\n.fa-instagram:before {\n  content: \"\\F16D\";\n}\n.fa-flickr:before {\n  content: \"\\F16E\";\n}\n.fa-adn:before {\n  content: \"\\F170\";\n}\n.fa-bitbucket:before {\n  content: \"\\F171\";\n}\n.fa-bitbucket-square:before {\n  content: \"\\F172\";\n}\n.fa-tumblr:before {\n  content: \"\\F173\";\n}\n.fa-tumblr-square:before {\n  content: \"\\F174\";\n}\n.fa-long-arrow-down:before {\n  content: \"\\F175\";\n}\n.fa-long-arrow-up:before {\n  content: \"\\F176\";\n}\n.fa-long-arrow-left:before {\n  content: \"\\F177\";\n}\n.fa-long-arrow-right:before {\n  content: \"\\F178\";\n}\n.fa-apple:before {\n  content: \"\\F179\";\n}\n.fa-windows:before {\n  content: \"\\F17A\";\n}\n.fa-android:before {\n  content: \"\\F17B\";\n}\n.fa-linux:before {\n  content: \"\\F17C\";\n}\n.fa-dribbble:before {\n  content: \"\\F17D\";\n}\n.fa-skype:before {\n  content: \"\\F17E\";\n}\n.fa-foursquare:before {\n  content: \"\\F180\";\n}\n.fa-trello:before {\n  content: \"\\F181\";\n}\n.fa-female:before {\n  content: \"\\F182\";\n}\n.fa-male:before {\n  content: \"\\F183\";\n}\n.fa-gittip:before,\n.fa-gratipay:before {\n  content: \"\\F184\";\n}\n.fa-sun-o:before {\n  content: \"\\F185\";\n}\n.fa-moon-o:before {\n  content: \"\\F186\";\n}\n.fa-archive:before {\n  content: \"\\F187\";\n}\n.fa-bug:before {\n  content: \"\\F188\";\n}\n.fa-vk:before {\n  content: \"\\F189\";\n}\n.fa-weibo:before {\n  content: \"\\F18A\";\n}\n.fa-renren:before {\n  content: \"\\F18B\";\n}\n.fa-pagelines:before {\n  content: \"\\F18C\";\n}\n.fa-stack-exchange:before {\n  content: \"\\F18D\";\n}\n.fa-arrow-circle-o-right:before {\n  content: \"\\F18E\";\n}\n.fa-arrow-circle-o-left:before {\n  content: \"\\F190\";\n}\n.fa-toggle-left:before,\n.fa-caret-square-o-left:before {\n  content: \"\\F191\";\n}\n.fa-dot-circle-o:before {\n  content: \"\\F192\";\n}\n.fa-wheelchair:before {\n  content: \"\\F193\";\n}\n.fa-vimeo-square:before {\n  content: \"\\F194\";\n}\n.fa-turkish-lira:before,\n.fa-try:before {\n  content: \"\\F195\";\n}\n.fa-plus-square-o:before {\n  content: \"\\F196\";\n}\n.fa-space-shuttle:before {\n  content: \"\\F197\";\n}\n.fa-slack:before {\n  content: \"\\F198\";\n}\n.fa-envelope-square:before {\n  content: \"\\F199\";\n}\n.fa-wordpress:before {\n  content: \"\\F19A\";\n}\n.fa-openid:before {\n  content: \"\\F19B\";\n}\n.fa-institution:before,\n.fa-bank:before,\n.fa-university:before {\n  content: \"\\F19C\";\n}\n.fa-mortar-board:before,\n.fa-graduation-cap:before {\n  content: \"\\F19D\";\n}\n.fa-yahoo:before {\n  content: \"\\F19E\";\n}\n.fa-google:before {\n  content: \"\\F1A0\";\n}\n.fa-reddit:before {\n  content: \"\\F1A1\";\n}\n.fa-reddit-square:before {\n  content: \"\\F1A2\";\n}\n.fa-stumbleupon-circle:before {\n  content: \"\\F1A3\";\n}\n.fa-stumbleupon:before {\n  content: \"\\F1A4\";\n}\n.fa-delicious:before {\n  content: \"\\F1A5\";\n}\n.fa-digg:before {\n  content: \"\\F1A6\";\n}\n.fa-pied-piper:before {\n  content: \"\\F1A7\";\n}\n.fa-pied-piper-alt:before {\n  content: \"\\F1A8\";\n}\n.fa-drupal:before {\n  content: \"\\F1A9\";\n}\n.fa-joomla:before {\n  content: \"\\F1AA\";\n}\n.fa-language:before {\n  content: \"\\F1AB\";\n}\n.fa-fax:before {\n  content: \"\\F1AC\";\n}\n.fa-building:before {\n  content: \"\\F1AD\";\n}\n.fa-child:before {\n  content: \"\\F1AE\";\n}\n.fa-paw:before {\n  content: \"\\F1B0\";\n}\n.fa-spoon:before {\n  content: \"\\F1B1\";\n}\n.fa-cube:before {\n  content: \"\\F1B2\";\n}\n.fa-cubes:before {\n  content: \"\\F1B3\";\n}\n.fa-behance:before {\n  content: \"\\F1B4\";\n}\n.fa-behance-square:before {\n  content: \"\\F1B5\";\n}\n.fa-steam:before {\n  content: \"\\F1B6\";\n}\n.fa-steam-square:before {\n  content: \"\\F1B7\";\n}\n.fa-recycle:before {\n  content: \"\\F1B8\";\n}\n.fa-automobile:before,\n.fa-car:before {\n  content: \"\\F1B9\";\n}\n.fa-cab:before,\n.fa-taxi:before {\n  content: \"\\F1BA\";\n}\n.fa-tree:before {\n  content: \"\\F1BB\";\n}\n.fa-spotify:before {\n  content: \"\\F1BC\";\n}\n.fa-deviantart:before {\n  content: \"\\F1BD\";\n}\n.fa-soundcloud:before {\n  content: \"\\F1BE\";\n}\n.fa-database:before {\n  content: \"\\F1C0\";\n}\n.fa-file-pdf-o:before {\n  content: \"\\F1C1\";\n}\n.fa-file-word-o:before {\n  content: \"\\F1C2\";\n}\n.fa-file-excel-o:before {\n  content: \"\\F1C3\";\n}\n.fa-file-powerpoint-o:before {\n  content: \"\\F1C4\";\n}\n.fa-file-photo-o:before,\n.fa-file-picture-o:before,\n.fa-file-image-o:before {\n  content: \"\\F1C5\";\n}\n.fa-file-zip-o:before,\n.fa-file-archive-o:before {\n  content: \"\\F1C6\";\n}\n.fa-file-sound-o:before,\n.fa-file-audio-o:before {\n  content: \"\\F1C7\";\n}\n.fa-file-movie-o:before,\n.fa-file-video-o:before {\n  content: \"\\F1C8\";\n}\n.fa-file-code-o:before {\n  content: \"\\F1C9\";\n}\n.fa-vine:before {\n  content: \"\\F1CA\";\n}\n.fa-codepen:before {\n  content: \"\\F1CB\";\n}\n.fa-jsfiddle:before {\n  content: \"\\F1CC\";\n}\n.fa-life-bouy:before,\n.fa-life-buoy:before,\n.fa-life-saver:before,\n.fa-support:before,\n.fa-life-ring:before {\n  content: \"\\F1CD\";\n}\n.fa-circle-o-notch:before {\n  content: \"\\F1CE\";\n}\n.fa-ra:before,\n.fa-rebel:before {\n  content: \"\\F1D0\";\n}\n.fa-ge:before,\n.fa-empire:before {\n  content: \"\\F1D1\";\n}\n.fa-git-square:before {\n  content: \"\\F1D2\";\n}\n.fa-git:before {\n  content: \"\\F1D3\";\n}\n.fa-y-combinator-square:before,\n.fa-yc-square:before,\n.fa-hacker-news:before {\n  content: \"\\F1D4\";\n}\n.fa-tencent-weibo:before {\n  content: \"\\F1D5\";\n}\n.fa-qq:before {\n  content: \"\\F1D6\";\n}\n.fa-wechat:before,\n.fa-weixin:before {\n  content: \"\\F1D7\";\n}\n.fa-send:before,\n.fa-paper-plane:before {\n  content: \"\\F1D8\";\n}\n.fa-send-o:before,\n.fa-paper-plane-o:before {\n  content: \"\\F1D9\";\n}\n.fa-history:before {\n  content: \"\\F1DA\";\n}\n.fa-circle-thin:before {\n  content: \"\\F1DB\";\n}\n.fa-header:before {\n  content: \"\\F1DC\";\n}\n.fa-paragraph:before {\n  content: \"\\F1DD\";\n}\n.fa-sliders:before {\n  content: \"\\F1DE\";\n}\n.fa-share-alt:before {\n  content: \"\\F1E0\";\n}\n.fa-share-alt-square:before {\n  content: \"\\F1E1\";\n}\n.fa-bomb:before {\n  content: \"\\F1E2\";\n}\n.fa-soccer-ball-o:before,\n.fa-futbol-o:before {\n  content: \"\\F1E3\";\n}\n.fa-tty:before {\n  content: \"\\F1E4\";\n}\n.fa-binoculars:before {\n  content: \"\\F1E5\";\n}\n.fa-plug:before {\n  content: \"\\F1E6\";\n}\n.fa-slideshare:before {\n  content: \"\\F1E7\";\n}\n.fa-twitch:before {\n  content: \"\\F1E8\";\n}\n.fa-yelp:before {\n  content: \"\\F1E9\";\n}\n.fa-newspaper-o:before {\n  content: \"\\F1EA\";\n}\n.fa-wifi:before {\n  content: \"\\F1EB\";\n}\n.fa-calculator:before {\n  content: \"\\F1EC\";\n}\n.fa-paypal:before {\n  content: \"\\F1ED\";\n}\n.fa-google-wallet:before {\n  content: \"\\F1EE\";\n}\n.fa-cc-visa:before {\n  content: \"\\F1F0\";\n}\n.fa-cc-mastercard:before {\n  content: \"\\F1F1\";\n}\n.fa-cc-discover:before {\n  content: \"\\F1F2\";\n}\n.fa-cc-amex:before {\n  content: \"\\F1F3\";\n}\n.fa-cc-paypal:before {\n  content: \"\\F1F4\";\n}\n.fa-cc-stripe:before {\n  content: \"\\F1F5\";\n}\n.fa-bell-slash:before {\n  content: \"\\F1F6\";\n}\n.fa-bell-slash-o:before {\n  content: \"\\F1F7\";\n}\n.fa-trash:before {\n  content: \"\\F1F8\";\n}\n.fa-copyright:before {\n  content: \"\\F1F9\";\n}\n.fa-at:before {\n  content: \"\\F1FA\";\n}\n.fa-eyedropper:before {\n  content: \"\\F1FB\";\n}\n.fa-paint-brush:before {\n  content: \"\\F1FC\";\n}\n.fa-birthday-cake:before {\n  content: \"\\F1FD\";\n}\n.fa-area-chart:before {\n  content: \"\\F1FE\";\n}\n.fa-pie-chart:before {\n  content: \"\\F200\";\n}\n.fa-line-chart:before {\n  content: \"\\F201\";\n}\n.fa-lastfm:before {\n  content: \"\\F202\";\n}\n.fa-lastfm-square:before {\n  content: \"\\F203\";\n}\n.fa-toggle-off:before {\n  content: \"\\F204\";\n}\n.fa-toggle-on:before {\n  content: \"\\F205\";\n}\n.fa-bicycle:before {\n  content: \"\\F206\";\n}\n.fa-bus:before {\n  content: \"\\F207\";\n}\n.fa-ioxhost:before {\n  content: \"\\F208\";\n}\n.fa-angellist:before {\n  content: \"\\F209\";\n}\n.fa-cc:before {\n  content: \"\\F20A\";\n}\n.fa-shekel:before,\n.fa-sheqel:before,\n.fa-ils:before {\n  content: \"\\F20B\";\n}\n.fa-meanpath:before {\n  content: \"\\F20C\";\n}\n.fa-buysellads:before {\n  content: \"\\F20D\";\n}\n.fa-connectdevelop:before {\n  content: \"\\F20E\";\n}\n.fa-dashcube:before {\n  content: \"\\F210\";\n}\n.fa-forumbee:before {\n  content: \"\\F211\";\n}\n.fa-leanpub:before {\n  content: \"\\F212\";\n}\n.fa-sellsy:before {\n  content: \"\\F213\";\n}\n.fa-shirtsinbulk:before {\n  content: \"\\F214\";\n}\n.fa-simplybuilt:before {\n  content: \"\\F215\";\n}\n.fa-skyatlas:before {\n  content: \"\\F216\";\n}\n.fa-cart-plus:before {\n  content: \"\\F217\";\n}\n.fa-cart-arrow-down:before {\n  content: \"\\F218\";\n}\n.fa-diamond:before {\n  content: \"\\F219\";\n}\n.fa-ship:before {\n  content: \"\\F21A\";\n}\n.fa-user-secret:before {\n  content: \"\\F21B\";\n}\n.fa-motorcycle:before {\n  content: \"\\F21C\";\n}\n.fa-street-view:before {\n  content: \"\\F21D\";\n}\n.fa-heartbeat:before {\n  content: \"\\F21E\";\n}\n.fa-venus:before {\n  content: \"\\F221\";\n}\n.fa-mars:before {\n  content: \"\\F222\";\n}\n.fa-mercury:before {\n  content: \"\\F223\";\n}\n.fa-intersex:before,\n.fa-transgender:before {\n  content: \"\\F224\";\n}\n.fa-transgender-alt:before {\n  content: \"\\F225\";\n}\n.fa-venus-double:before {\n  content: \"\\F226\";\n}\n.fa-mars-double:before {\n  content: \"\\F227\";\n}\n.fa-venus-mars:before {\n  content: \"\\F228\";\n}\n.fa-mars-stroke:before {\n  content: \"\\F229\";\n}\n.fa-mars-stroke-v:before {\n  content: \"\\F22A\";\n}\n.fa-mars-stroke-h:before {\n  content: \"\\F22B\";\n}\n.fa-neuter:before {\n  content: \"\\F22C\";\n}\n.fa-genderless:before {\n  content: \"\\F22D\";\n}\n.fa-facebook-official:before {\n  content: \"\\F230\";\n}\n.fa-pinterest-p:before {\n  content: \"\\F231\";\n}\n.fa-whatsapp:before {\n  content: \"\\F232\";\n}\n.fa-server:before {\n  content: \"\\F233\";\n}\n.fa-user-plus:before {\n  content: \"\\F234\";\n}\n.fa-user-times:before {\n  content: \"\\F235\";\n}\n.fa-hotel:before,\n.fa-bed:before {\n  content: \"\\F236\";\n}\n.fa-viacoin:before {\n  content: \"\\F237\";\n}\n.fa-train:before {\n  content: \"\\F238\";\n}\n.fa-subway:before {\n  content: \"\\F239\";\n}\n.fa-medium:before {\n  content: \"\\F23A\";\n}\n.fa-yc:before,\n.fa-y-combinator:before {\n  content: \"\\F23B\";\n}\n.fa-optin-monster:before {\n  content: \"\\F23C\";\n}\n.fa-opencart:before {\n  content: \"\\F23D\";\n}\n.fa-expeditedssl:before {\n  content: \"\\F23E\";\n}\n.fa-battery-4:before,\n.fa-battery-full:before {\n  content: \"\\F240\";\n}\n.fa-battery-3:before,\n.fa-battery-three-quarters:before {\n  content: \"\\F241\";\n}\n.fa-battery-2:before,\n.fa-battery-half:before {\n  content: \"\\F242\";\n}\n.fa-battery-1:before,\n.fa-battery-quarter:before {\n  content: \"\\F243\";\n}\n.fa-battery-0:before,\n.fa-battery-empty:before {\n  content: \"\\F244\";\n}\n.fa-mouse-pointer:before {\n  content: \"\\F245\";\n}\n.fa-i-cursor:before {\n  content: \"\\F246\";\n}\n.fa-object-group:before {\n  content: \"\\F247\";\n}\n.fa-object-ungroup:before {\n  content: \"\\F248\";\n}\n.fa-sticky-note:before {\n  content: \"\\F249\";\n}\n.fa-sticky-note-o:before {\n  content: \"\\F24A\";\n}\n.fa-cc-jcb:before {\n  content: \"\\F24B\";\n}\n.fa-cc-diners-club:before {\n  content: \"\\F24C\";\n}\n.fa-clone:before {\n  content: \"\\F24D\";\n}\n.fa-balance-scale:before {\n  content: \"\\F24E\";\n}\n.fa-hourglass-o:before {\n  content: \"\\F250\";\n}\n.fa-hourglass-1:before,\n.fa-hourglass-start:before {\n  content: \"\\F251\";\n}\n.fa-hourglass-2:before,\n.fa-hourglass-half:before {\n  content: \"\\F252\";\n}\n.fa-hourglass-3:before,\n.fa-hourglass-end:before {\n  content: \"\\F253\";\n}\n.fa-hourglass:before {\n  content: \"\\F254\";\n}\n.fa-hand-grab-o:before,\n.fa-hand-rock-o:before {\n  content: \"\\F255\";\n}\n.fa-hand-stop-o:before,\n.fa-hand-paper-o:before {\n  content: \"\\F256\";\n}\n.fa-hand-scissors-o:before {\n  content: \"\\F257\";\n}\n.fa-hand-lizard-o:before {\n  content: \"\\F258\";\n}\n.fa-hand-spock-o:before {\n  content: \"\\F259\";\n}\n.fa-hand-pointer-o:before {\n  content: \"\\F25A\";\n}\n.fa-hand-peace-o:before {\n  content: \"\\F25B\";\n}\n.fa-trademark:before {\n  content: \"\\F25C\";\n}\n.fa-registered:before {\n  content: \"\\F25D\";\n}\n.fa-creative-commons:before {\n  content: \"\\F25E\";\n}\n.fa-gg:before {\n  content: \"\\F260\";\n}\n.fa-gg-circle:before {\n  content: \"\\F261\";\n}\n.fa-tripadvisor:before {\n  content: \"\\F262\";\n}\n.fa-odnoklassniki:before {\n  content: \"\\F263\";\n}\n.fa-odnoklassniki-square:before {\n  content: \"\\F264\";\n}\n.fa-get-pocket:before {\n  content: \"\\F265\";\n}\n.fa-wikipedia-w:before {\n  content: \"\\F266\";\n}\n.fa-safari:before {\n  content: \"\\F267\";\n}\n.fa-chrome:before {\n  content: \"\\F268\";\n}\n.fa-firefox:before {\n  content: \"\\F269\";\n}\n.fa-opera:before {\n  content: \"\\F26A\";\n}\n.fa-internet-explorer:before {\n  content: \"\\F26B\";\n}\n.fa-tv:before,\n.fa-television:before {\n  content: \"\\F26C\";\n}\n.fa-contao:before {\n  content: \"\\F26D\";\n}\n.fa-500px:before {\n  content: \"\\F26E\";\n}\n.fa-amazon:before {\n  content: \"\\F270\";\n}\n.fa-calendar-plus-o:before {\n  content: \"\\F271\";\n}\n.fa-calendar-minus-o:before {\n  content: \"\\F272\";\n}\n.fa-calendar-times-o:before {\n  content: \"\\F273\";\n}\n.fa-calendar-check-o:before {\n  content: \"\\F274\";\n}\n.fa-industry:before {\n  content: \"\\F275\";\n}\n.fa-map-pin:before {\n  content: \"\\F276\";\n}\n.fa-map-signs:before {\n  content: \"\\F277\";\n}\n.fa-map-o:before {\n  content: \"\\F278\";\n}\n.fa-map:before {\n  content: \"\\F279\";\n}\n.fa-commenting:before {\n  content: \"\\F27A\";\n}\n.fa-commenting-o:before {\n  content: \"\\F27B\";\n}\n.fa-houzz:before {\n  content: \"\\F27C\";\n}\n.fa-vimeo:before {\n  content: \"\\F27D\";\n}\n.fa-black-tie:before {\n  content: \"\\F27E\";\n}\n.fa-fonticons:before {\n  content: \"\\F280\";\n}\n.fa-reddit-alien:before {\n  content: \"\\F281\";\n}\n.fa-edge:before {\n  content: \"\\F282\";\n}\n.fa-credit-card-alt:before {\n  content: \"\\F283\";\n}\n.fa-codiepie:before {\n  content: \"\\F284\";\n}\n.fa-modx:before {\n  content: \"\\F285\";\n}\n.fa-fort-awesome:before {\n  content: \"\\F286\";\n}\n.fa-usb:before {\n  content: \"\\F287\";\n}\n.fa-product-hunt:before {\n  content: \"\\F288\";\n}\n.fa-mixcloud:before {\n  content: \"\\F289\";\n}\n.fa-scribd:before {\n  content: \"\\F28A\";\n}\n.fa-pause-circle:before {\n  content: \"\\F28B\";\n}\n.fa-pause-circle-o:before {\n  content: \"\\F28C\";\n}\n.fa-stop-circle:before {\n  content: \"\\F28D\";\n}\n.fa-stop-circle-o:before {\n  content: \"\\F28E\";\n}\n.fa-shopping-bag:before {\n  content: \"\\F290\";\n}\n.fa-shopping-basket:before {\n  content: \"\\F291\";\n}\n.fa-hashtag:before {\n  content: \"\\F292\";\n}\n.fa-bluetooth:before {\n  content: \"\\F293\";\n}\n.fa-bluetooth-b:before {\n  content: \"\\F294\";\n}\n.fa-percent:before {\n  content: \"\\F295\";\n}\n.fa-gitlab:before {\n  content: \"\\F296\";\n}\n.fa-wpbeginner:before {\n  content: \"\\F297\";\n}\n.fa-wpforms:before {\n  content: \"\\F298\";\n}\n.fa-envira:before {\n  content: \"\\F299\";\n}\n.fa-universal-access:before {\n  content: \"\\F29A\";\n}\n.fa-wheelchair-alt:before {\n  content: \"\\F29B\";\n}\n.fa-question-circle-o:before {\n  content: \"\\F29C\";\n}\n.fa-blind:before {\n  content: \"\\F29D\";\n}\n.fa-audio-description:before {\n  content: \"\\F29E\";\n}\n.fa-volume-control-phone:before {\n  content: \"\\F2A0\";\n}\n.fa-braille:before {\n  content: \"\\F2A1\";\n}\n.fa-assistive-listening-systems:before {\n  content: \"\\F2A2\";\n}\n.fa-asl-interpreting:before,\n.fa-american-sign-language-interpreting:before {\n  content: \"\\F2A3\";\n}\n.fa-deafness:before,\n.fa-hard-of-hearing:before,\n.fa-deaf:before {\n  content: \"\\F2A4\";\n}\n.fa-glide:before {\n  content: \"\\F2A5\";\n}\n.fa-glide-g:before {\n  content: \"\\F2A6\";\n}\n.fa-signing:before,\n.fa-sign-language:before {\n  content: \"\\F2A7\";\n}\n.fa-low-vision:before {\n  content: \"\\F2A8\";\n}\n.fa-viadeo:before {\n  content: \"\\F2A9\";\n}\n.fa-viadeo-square:before {\n  content: \"\\F2AA\";\n}\n.fa-snapchat:before {\n  content: \"\\F2AB\";\n}\n.fa-snapchat-ghost:before {\n  content: \"\\F2AC\";\n}\n.fa-snapchat-square:before {\n  content: \"\\F2AD\";\n}\n.sr-only {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  padding: 0;\n  margin: -1px;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n}\n.sr-only-focusable:active,\n.sr-only-focusable:focus {\n  position: static;\n  width: auto;\n  height: auto;\n  margin: 0;\n  overflow: visible;\n  clip: auto;\n}\n", ""]);
-	
-	// exports
-
-
-/***/ },
-/* 237 */
-/*!**************************************************************!*\
-  !*** ./~/font-awesome/fonts/fontawesome-webfont.eot?v=4.6.1 ***!
-  \**************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
-
-/***/ },
-/* 238 */
-/*!******************************************************!*\
-  !*** ./~/font-awesome/fonts/fontawesome-webfont.eot ***!
-  \******************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
-
-/***/ },
-/* 239 */
-/*!****************************************************************!*\
-  !*** ./~/font-awesome/fonts/fontawesome-webfont.woff2?v=4.6.1 ***!
-  \****************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff2";
-
-/***/ },
-/* 240 */
-/*!***************************************************************!*\
-  !*** ./~/font-awesome/fonts/fontawesome-webfont.woff?v=4.6.1 ***!
-  \***************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff";
-
-/***/ },
-/* 241 */
-/*!**************************************************************!*\
-  !*** ./~/font-awesome/fonts/fontawesome-webfont.ttf?v=4.6.1 ***!
-  \**************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.ttf";
-
-/***/ },
-/* 242 */
-/*!**************************************************************!*\
-  !*** ./~/font-awesome/fonts/fontawesome-webfont.svg?v=4.6.1 ***!
-  \**************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.svg";
-
-/***/ },
-/* 243 */
-/*!**************************************!*\
-  !*** ./~/react-select/lib/Select.js ***!
-  \**************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-		value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(/*! react-dom */ 158);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _reactInputAutosize = __webpack_require__(/*! react-input-autosize */ 244);
-	
-	var _reactInputAutosize2 = _interopRequireDefault(_reactInputAutosize);
-	
-	var _classnames = __webpack_require__(/*! classnames */ 245);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _utilsStripDiacritics = __webpack_require__(/*! ./utils/stripDiacritics */ 246);
-	
-	var _utilsStripDiacritics2 = _interopRequireDefault(_utilsStripDiacritics);
-	
-	var _Async = __webpack_require__(/*! ./Async */ 247);
-	
-	var _Async2 = _interopRequireDefault(_Async);
-	
-	var _Option = __webpack_require__(/*! ./Option */ 248);
-	
-	var _Option2 = _interopRequireDefault(_Option);
-	
-	var _Value = __webpack_require__(/*! ./Value */ 249);
-	
-	var _Value2 = _interopRequireDefault(_Value);
-	
-	function stringifyValue(value) {
-		if (typeof value === 'object') {
-			return JSON.stringify(value);
-		} else {
-			return value;
-		}
-	}
-	
-	var stringOrNode = _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.node]);
-	
-	var Select = _react2['default'].createClass({
-	
-		displayName: 'Select',
-	
-		propTypes: {
-			addLabelText: _react2['default'].PropTypes.string, // placeholder displayed when you want to add a label on a multi-value input
-			allowCreate: _react2['default'].PropTypes.bool, // whether to allow creation of new entries
-			autoBlur: _react2['default'].PropTypes.bool,
-			autofocus: _react2['default'].PropTypes.bool, // autofocus the component on mount
-			autosize: _react2['default'].PropTypes.bool, // whether to enable autosizing or not
-			backspaceRemoves: _react2['default'].PropTypes.bool, // whether backspace removes an item if there is no text input
-			className: _react2['default'].PropTypes.string, // className for the outer element
-			clearAllText: stringOrNode, // title for the "clear" control when multi: true
-			clearValueText: stringOrNode, // title for the "clear" control
-			clearable: _react2['default'].PropTypes.bool, // should it be possible to reset value
-			delimiter: _react2['default'].PropTypes.string, // delimiter to use to join multiple values for the hidden field value
-			disabled: _react2['default'].PropTypes.bool, // whether the Select is disabled or not
-			escapeClearsValue: _react2['default'].PropTypes.bool, // whether escape clears the value when the menu is closed
-			filterOption: _react2['default'].PropTypes.func, // method to filter a single option (option, filterString)
-			filterOptions: _react2['default'].PropTypes.any, // boolean to enable default filtering or function to filter the options array ([options], filterString, [values])
-			ignoreAccents: _react2['default'].PropTypes.bool, // whether to strip diacritics when filtering
-			ignoreCase: _react2['default'].PropTypes.bool, // whether to perform case-insensitive filtering
-			inputProps: _react2['default'].PropTypes.object, // custom attributes for the Input
-			isLoading: _react2['default'].PropTypes.bool, // whether the Select is loading externally or not (such as options being loaded)
-			joinValues: _react2['default'].PropTypes.bool, // joins multiple values into a single form field with the delimiter (legacy mode)
-			labelKey: _react2['default'].PropTypes.string, // path of the label value in option objects
-			matchPos: _react2['default'].PropTypes.string, // (any|start) match the start or entire string when filtering
-			matchProp: _react2['default'].PropTypes.string, // (any|label|value) which option property to filter on
-			menuBuffer: _react2['default'].PropTypes.number, // optional buffer (in px) between the bottom of the viewport and the bottom of the menu
-			menuContainerStyle: _react2['default'].PropTypes.object, // optional style to apply to the menu container
-			menuRenderer: _react2['default'].PropTypes.func, // renders a custom menu with options
-			menuStyle: _react2['default'].PropTypes.object, // optional style to apply to the menu
-			multi: _react2['default'].PropTypes.bool, // multi-value input
-			name: _react2['default'].PropTypes.string, // generates a hidden <input /> tag with this field name for html forms
-			newOptionCreator: _react2['default'].PropTypes.func, // factory to create new options when allowCreate set
-			noResultsText: stringOrNode, // placeholder displayed when there are no matching search results
-			onBlur: _react2['default'].PropTypes.func, // onBlur handler: function (event) {}
-			onBlurResetsInput: _react2['default'].PropTypes.bool, // whether input is cleared on blur
-			onChange: _react2['default'].PropTypes.func, // onChange handler: function (newValue) {}
-			onClose: _react2['default'].PropTypes.func, // fires when the menu is closed
-			onFocus: _react2['default'].PropTypes.func, // onFocus handler: function (event) {}
-			onInputChange: _react2['default'].PropTypes.func, // onInputChange handler: function (inputValue) {}
-			onMenuScrollToBottom: _react2['default'].PropTypes.func, // fires when the menu is scrolled to the bottom; can be used to paginate options
-			onOpen: _react2['default'].PropTypes.func, // fires when the menu is opened
-			onValueClick: _react2['default'].PropTypes.func, // onClick handler for value labels: function (value, event) {}
-			openAfterFocus: _react2['default'].PropTypes.bool, // boolean to enable opening dropdown when focused
-			optionClassName: _react2['default'].PropTypes.string, // additional class(es) to apply to the <Option /> elements
-			optionComponent: _react2['default'].PropTypes.func, // option component to render in dropdown
-			optionRenderer: _react2['default'].PropTypes.func, // optionRenderer: function (option) {}
-			options: _react2['default'].PropTypes.array, // array of options
-			placeholder: stringOrNode, // field placeholder, displayed when there's no value
-			required: _react2['default'].PropTypes.bool, // applies HTML5 required attribute when needed
-			scrollMenuIntoView: _react2['default'].PropTypes.bool, // boolean to enable the viewport to shift so that the full menu fully visible when engaged
-			searchable: _react2['default'].PropTypes.bool, // whether to enable searching feature or not
-			simpleValue: _react2['default'].PropTypes.bool, // pass the value to onChange as a simple value (legacy pre 1.0 mode), defaults to false
-			style: _react2['default'].PropTypes.object, // optional style to apply to the control
-			tabIndex: _react2['default'].PropTypes.string, // optional tab index of the control
-			value: _react2['default'].PropTypes.any, // initial field value
-			valueComponent: _react2['default'].PropTypes.func, // value component to render
-			valueKey: _react2['default'].PropTypes.string, // path of the label value in option objects
-			valueRenderer: _react2['default'].PropTypes.func, // valueRenderer: function (option) {}
-			wrapperStyle: _react2['default'].PropTypes.object },
-	
-		// optional style to apply to the component wrapper
-		statics: { Async: _Async2['default'] },
-	
-		getDefaultProps: function getDefaultProps() {
-			return {
-				addLabelText: 'Add "{label}"?',
-				autosize: true,
-				allowCreate: false,
-				backspaceRemoves: true,
-				clearable: true,
-				clearAllText: 'Clear all',
-				clearValueText: 'Clear value',
-				delimiter: ',',
-				disabled: false,
-				escapeClearsValue: true,
-				filterOptions: true,
-				ignoreAccents: true,
-				ignoreCase: true,
-				inputProps: {},
-				isLoading: false,
-				joinValues: false,
-				labelKey: 'label',
-				matchPos: 'any',
-				matchProp: 'any',
-				menuBuffer: 0,
-				multi: false,
-				noResultsText: 'No results found',
-				onBlurResetsInput: true,
-				openAfterFocus: false,
-				optionComponent: _Option2['default'],
-				placeholder: 'Select...',
-				required: false,
-				scrollMenuIntoView: true,
-				searchable: true,
-				simpleValue: false,
-				valueComponent: _Value2['default'],
-				valueKey: 'value'
-			};
-		},
-	
-		getInitialState: function getInitialState() {
-			return {
-				inputValue: '',
-				isFocused: false,
-				isLoading: false,
-				isOpen: false,
-				isPseudoFocused: false,
-				required: this.props.required && this.handleRequired(this.props.value, this.props.multi)
-			};
-		},
-	
-		componentDidMount: function componentDidMount() {
-			if (this.props.autofocus) {
-				this.focus();
-			}
-		},
-	
-		componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-			if (this.props.value !== nextProps.value && nextProps.required) {
-				this.setState({
-					required: this.handleRequired(nextProps.value, nextProps.multi)
-				});
-			}
-		},
-	
-		componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
-			if (nextState.isOpen !== this.state.isOpen) {
-				var handler = nextState.isOpen ? nextProps.onOpen : nextProps.onClose;
-				handler && handler();
-			}
-		},
-	
-		componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
-			// focus to the selected option
-			if (this.refs.menu && this.refs.focused && this.state.isOpen && !this.hasScrolledToOption) {
-				var focusedOptionNode = _reactDom2['default'].findDOMNode(this.refs.focused);
-				var menuNode = _reactDom2['default'].findDOMNode(this.refs.menu);
-				menuNode.scrollTop = focusedOptionNode.offsetTop;
-				this.hasScrolledToOption = true;
-			} else if (!this.state.isOpen) {
-				this.hasScrolledToOption = false;
-			}
-	
-			if (prevState.inputValue !== this.state.inputValue && this.props.onInputChange) {
-				this.props.onInputChange(this.state.inputValue);
-			}
-			if (this._scrollToFocusedOptionOnUpdate && this.refs.focused && this.refs.menu) {
-				this._scrollToFocusedOptionOnUpdate = false;
-				var focusedDOM = _reactDom2['default'].findDOMNode(this.refs.focused);
-				var menuDOM = _reactDom2['default'].findDOMNode(this.refs.menu);
-				var focusedRect = focusedDOM.getBoundingClientRect();
-				var menuRect = menuDOM.getBoundingClientRect();
-				if (focusedRect.bottom > menuRect.bottom || focusedRect.top < menuRect.top) {
-					menuDOM.scrollTop = focusedDOM.offsetTop + focusedDOM.clientHeight - menuDOM.offsetHeight;
-				}
-			}
-			if (this.props.scrollMenuIntoView && this.refs.menuContainer) {
-				var menuContainerRect = this.refs.menuContainer.getBoundingClientRect();
-				if (window.innerHeight < menuContainerRect.bottom + this.props.menuBuffer) {
-					window.scrollTo(0, window.scrollY + menuContainerRect.bottom + this.props.menuBuffer - window.innerHeight);
-				}
-			}
-			if (prevProps.disabled !== this.props.disabled) {
-				this.setState({ isFocused: false }); // eslint-disable-line react/no-did-update-set-state
-			}
-		},
-	
-		focus: function focus() {
-			if (!this.refs.input) return;
-			this.refs.input.focus();
-	
-			if (this.props.openAfterFocus) {
-				this.setState({
-					isOpen: true
-				});
-			}
-		},
-	
-		blurInput: function blurInput() {
-			if (!this.refs.input) return;
-			this.refs.input.blur();
-		},
-	
-		handleTouchMove: function handleTouchMove(event) {
-			// Set a flag that the view is being dragged
-			this.dragging = true;
-		},
-	
-		handleTouchStart: function handleTouchStart(event) {
-			// Set a flag that the view is not being dragged
-			this.dragging = false;
-		},
-	
-		handleTouchEnd: function handleTouchEnd(event) {
-			// Check if the view is being dragged, In this case
-			// we don't want to fire the click event (because the user only wants to scroll)
-			if (this.dragging) return;
-	
-			// Fire the mouse events
-			this.handleMouseDown(event);
-		},
-	
-		handleTouchEndClearValue: function handleTouchEndClearValue(event) {
-			// Check if the view is being dragged, In this case
-			// we don't want to fire the click event (because the user only wants to scroll)
-			if (this.dragging) return;
-	
-			// Clear the value
-			this.clearValue(event);
-		},
-	
-		handleMouseDown: function handleMouseDown(event) {
-			// if the event was triggered by a mousedown and not the primary
-			// button, or if the component is disabled, ignore it.
-			if (this.props.disabled || event.type === 'mousedown' && event.button !== 0) {
-				return;
-			}
-	
-			// prevent default event handlers
-			event.stopPropagation();
-			event.preventDefault();
-	
-			// for the non-searchable select, toggle the menu
-			if (!this.props.searchable) {
-				this.focus();
-				return this.setState({
-					isOpen: !this.state.isOpen
-				});
-			}
-	
-			if (this.state.isFocused) {
-				// if the input is focused, ensure the menu is open
-				this.setState({
-					isOpen: true,
-					isPseudoFocused: false
-				});
-			} else {
-				// otherwise, focus the input and open the menu
-				this._openAfterFocus = true;
-				this.focus();
-			}
-		},
-	
-		handleMouseDownOnArrow: function handleMouseDownOnArrow(event) {
-			// if the event was triggered by a mousedown and not the primary
-			// button, or if the component is disabled, ignore it.
-			if (this.props.disabled || event.type === 'mousedown' && event.button !== 0) {
-				return;
-			}
-			// If the menu isn't open, let the event bubble to the main handleMouseDown
-			if (!this.state.isOpen) {
-				return;
-			}
-			// prevent default event handlers
-			event.stopPropagation();
-			event.preventDefault();
-			// close the menu
-			this.closeMenu();
-		},
-	
-		handleMouseDownOnMenu: function handleMouseDownOnMenu(event) {
-			// if the event was triggered by a mousedown and not the primary
-			// button, or if the component is disabled, ignore it.
-			if (this.props.disabled || event.type === 'mousedown' && event.button !== 0) {
-				return;
-			}
-			event.stopPropagation();
-			event.preventDefault();
-	
-			this._openAfterFocus = true;
-			this.focus();
-		},
-	
-		closeMenu: function closeMenu() {
-			this.setState({
-				isOpen: false,
-				isPseudoFocused: this.state.isFocused && !this.props.multi,
-				inputValue: ''
-			});
-			this.hasScrolledToOption = false;
-		},
-	
-		handleInputFocus: function handleInputFocus(event) {
-			var isOpen = this.state.isOpen || this._openAfterFocus;
-			if (this.props.onFocus) {
-				this.props.onFocus(event);
-			}
-			this.setState({
-				isFocused: true,
-				isOpen: isOpen
-			});
-			this._openAfterFocus = false;
-		},
-	
-		handleInputBlur: function handleInputBlur(event) {
-			if (this.refs.menu && document.activeElement.isEqualNode(this.refs.menu)) {
-				return;
-			}
-	
-			if (this.props.onBlur) {
-				this.props.onBlur(event);
-			}
-			var onBlurredState = {
-				isFocused: false,
-				isOpen: false,
-				isPseudoFocused: false
-			};
-			if (this.props.onBlurResetsInput) {
-				onBlurredState.inputValue = '';
-			}
-			this.setState(onBlurredState);
-		},
-	
-		handleInputChange: function handleInputChange(event) {
-			this.setState({
-				isOpen: true,
-				isPseudoFocused: false,
-				inputValue: event.target.value
-			});
-		},
-	
-		handleKeyDown: function handleKeyDown(event) {
-			if (this.props.disabled) return;
-			switch (event.keyCode) {
-				case 8:
-					// backspace
-					if (!this.state.inputValue && this.props.backspaceRemoves) {
-						event.preventDefault();
-						this.popValue();
-					}
-					return;
-				case 9:
-					// tab
-					if (event.shiftKey || !this.state.isOpen) {
-						return;
-					}
-					this.selectFocusedOption();
-					return;
-				case 13:
-					// enter
-					if (!this.state.isOpen) return;
-					event.stopPropagation();
-					this.selectFocusedOption();
-					break;
-				case 27:
-					// escape
-					if (this.state.isOpen) {
-						this.closeMenu();
-					} else if (this.props.clearable && this.props.escapeClearsValue) {
-						this.clearValue(event);
-					}
-					break;
-				case 38:
-					// up
-					this.focusPreviousOption();
-					break;
-				case 40:
-					// down
-					this.focusNextOption();
-					break;
-				// case 188: // ,
-				// 	if (this.props.allowCreate && this.props.multi) {
-				// 		event.preventDefault();
-				// 		event.stopPropagation();
-				// 		this.selectFocusedOption();
-				// 	} else {
-				// 		return;
-				// 	}
-				// break;
-				default:
-					return;
-			}
-			event.preventDefault();
-		},
-	
-		handleValueClick: function handleValueClick(option, event) {
-			if (!this.props.onValueClick) return;
-			this.props.onValueClick(option, event);
-		},
-	
-		handleMenuScroll: function handleMenuScroll(event) {
-			if (!this.props.onMenuScrollToBottom) return;
-			var target = event.target;
-	
-			if (target.scrollHeight > target.offsetHeight && !(target.scrollHeight - target.offsetHeight - target.scrollTop)) {
-				this.props.onMenuScrollToBottom();
-			}
-		},
-	
-		handleRequired: function handleRequired(value, multi) {
-			if (!value) return true;
-			return multi ? value.length === 0 : Object.keys(value).length === 0;
-		},
-	
-		getOptionLabel: function getOptionLabel(op) {
-			return op[this.props.labelKey];
-		},
-	
-		getValueArray: function getValueArray() {
-			var value = this.props.value;
-			if (this.props.multi) {
-				if (typeof value === 'string') value = value.split(this.props.delimiter);
-				if (!Array.isArray(value)) {
-					if (value === null || value === undefined) return [];
-					value = [value];
-				}
-				return value.map(this.expandValue).filter(function (i) {
-					return i;
-				});
-			}
-			var expandedValue = this.expandValue(value);
-			return expandedValue ? [expandedValue] : [];
-		},
-	
-		expandValue: function expandValue(value) {
-			if (typeof value !== 'string' && typeof value !== 'number') return value;
-			var _props = this.props;
-			var options = _props.options;
-			var valueKey = _props.valueKey;
-	
-			if (!options) return;
-			for (var i = 0; i < options.length; i++) {
-				if (options[i][valueKey] === value) return options[i];
-			}
-		},
-	
-		setValue: function setValue(value) {
-			var _this = this;
-	
-			if (this.props.autoBlur) {
-				this.blurInput();
-			}
-			if (!this.props.onChange) return;
-			if (this.props.required) {
-				var required = this.handleRequired(value, this.props.multi);
-				this.setState({ required: required });
-			}
-			if (this.props.simpleValue && value) {
-				value = this.props.multi ? value.map(function (i) {
-					return i[_this.props.valueKey];
-				}).join(this.props.delimiter) : value[this.props.valueKey];
-			}
-			this.props.onChange(value);
-		},
-	
-		selectValue: function selectValue(value) {
-			this.hasScrolledToOption = false;
-			if (this.props.multi) {
-				this.addValue(value);
-				this.setState({
-					inputValue: ''
-				});
-			} else {
-				this.setValue(value);
-				this.setState({
-					isOpen: false,
-					inputValue: '',
-					isPseudoFocused: this.state.isFocused
-				});
-			}
-		},
-	
-		addValue: function addValue(value) {
-			var valueArray = this.getValueArray();
-			this.setValue(valueArray.concat(value));
-		},
-	
-		popValue: function popValue() {
-			var valueArray = this.getValueArray();
-			if (!valueArray.length) return;
-			if (valueArray[valueArray.length - 1].clearableValue === false) return;
-			this.setValue(valueArray.slice(0, valueArray.length - 1));
-		},
-	
-		removeValue: function removeValue(value) {
-			var valueArray = this.getValueArray();
-			this.setValue(valueArray.filter(function (i) {
-				return i !== value;
-			}));
-			this.focus();
-		},
-	
-		clearValue: function clearValue(event) {
-			// if the event was triggered by a mousedown and not the primary
-			// button, ignore it.
-			if (event && event.type === 'mousedown' && event.button !== 0) {
-				return;
-			}
-			event.stopPropagation();
-			event.preventDefault();
-			this.setValue(null);
-			this.setState({
-				isOpen: false,
-				inputValue: ''
-			}, this.focus);
-		},
-	
-		focusOption: function focusOption(option) {
-			this.setState({
-				focusedOption: option
-			});
-		},
-	
-		focusNextOption: function focusNextOption() {
-			this.focusAdjacentOption('next');
-		},
-	
-		focusPreviousOption: function focusPreviousOption() {
-			this.focusAdjacentOption('previous');
-		},
-	
-		focusAdjacentOption: function focusAdjacentOption(dir) {
-			var options = this._visibleOptions.filter(function (i) {
-				return !i.disabled;
-			});
-			this._scrollToFocusedOptionOnUpdate = true;
-			if (!this.state.isOpen) {
-				this.setState({
-					isOpen: true,
-					inputValue: '',
-					focusedOption: this._focusedOption || options[dir === 'next' ? 0 : options.length - 1]
-				});
-				return;
-			}
-			if (!options.length) return;
-			var focusedIndex = -1;
-			for (var i = 0; i < options.length; i++) {
-				if (this._focusedOption === options[i]) {
-					focusedIndex = i;
-					break;
-				}
-			}
-			var focusedOption = options[0];
-			if (dir === 'next' && focusedIndex > -1 && focusedIndex < options.length - 1) {
-				focusedOption = options[focusedIndex + 1];
-			} else if (dir === 'previous') {
-				if (focusedIndex > 0) {
-					focusedOption = options[focusedIndex - 1];
-				} else {
-					focusedOption = options[options.length - 1];
-				}
-			}
-			this.setState({
-				focusedOption: focusedOption
-			});
-		},
-	
-		selectFocusedOption: function selectFocusedOption() {
-			// if (this.props.allowCreate && !this.state.focusedOption) {
-			// 	return this.selectValue(this.state.inputValue);
-			// }
-			if (this._focusedOption) {
-				return this.selectValue(this._focusedOption);
-			}
-		},
-	
-		renderLoading: function renderLoading() {
-			if (!this.props.isLoading) return;
-			return _react2['default'].createElement(
-				'span',
-				{ className: 'Select-loading-zone', 'aria-hidden': 'true' },
-				_react2['default'].createElement('span', { className: 'Select-loading' })
-			);
-		},
-	
-		renderValue: function renderValue(valueArray, isOpen) {
-			var _this2 = this;
-	
-			var renderLabel = this.props.valueRenderer || this.getOptionLabel;
-			var ValueComponent = this.props.valueComponent;
-			if (!valueArray.length) {
-				return !this.state.inputValue ? _react2['default'].createElement(
-					'div',
-					{ className: 'Select-placeholder' },
-					this.props.placeholder
-				) : null;
-			}
-			var onClick = this.props.onValueClick ? this.handleValueClick : null;
-			if (this.props.multi) {
-				return valueArray.map(function (value, i) {
-					return _react2['default'].createElement(
-						ValueComponent,
-						{
-							disabled: _this2.props.disabled || value.clearableValue === false,
-							key: 'value-' + i + '-' + value[_this2.props.valueKey],
-							onClick: onClick,
-							onRemove: _this2.removeValue,
-							value: value
-						},
-						renderLabel(value)
-					);
-				});
-			} else if (!this.state.inputValue) {
-				if (isOpen) onClick = null;
-				return _react2['default'].createElement(
-					ValueComponent,
-					{
-						disabled: this.props.disabled,
-						onClick: onClick,
-						value: valueArray[0]
-					},
-					renderLabel(valueArray[0])
-				);
-			}
-		},
-	
-		renderInput: function renderInput(valueArray) {
-			var className = (0, _classnames2['default'])('Select-input', this.props.inputProps.className);
-			if (this.props.disabled || !this.props.searchable) {
-				return _react2['default'].createElement('div', _extends({}, this.props.inputProps, {
-					className: className,
-					tabIndex: this.props.tabIndex || 0,
-					onBlur: this.handleInputBlur,
-					onFocus: this.handleInputFocus,
-					ref: 'input',
-					style: { border: 0, width: 1, display: 'inline-block' } }));
-			}
-			if (this.props.autosize) {
-				return _react2['default'].createElement(_reactInputAutosize2['default'], _extends({}, this.props.inputProps, {
-					className: className,
-					tabIndex: this.props.tabIndex,
-					onBlur: this.handleInputBlur,
-					onChange: this.handleInputChange,
-					onFocus: this.handleInputFocus,
-					minWidth: '5',
-					ref: 'input',
-					required: this.state.required,
-					value: this.state.inputValue
-				}));
-			}
-			return _react2['default'].createElement(
-				'div',
-				{ className: className },
-				_react2['default'].createElement('input', _extends({}, this.props.inputProps, {
-					tabIndex: this.props.tabIndex,
-					onBlur: this.handleInputBlur,
-					onChange: this.handleInputChange,
-					onFocus: this.handleInputFocus,
-					ref: 'input',
-					required: this.state.required,
-					value: this.state.inputValue
-				}))
-			);
-		},
-	
-		renderClear: function renderClear() {
-			if (!this.props.clearable || !this.props.value || this.props.multi && !this.props.value.length || this.props.disabled || this.props.isLoading) return;
-			return _react2['default'].createElement(
-				'span',
-				{ className: 'Select-clear-zone', title: this.props.multi ? this.props.clearAllText : this.props.clearValueText,
-					'aria-label': this.props.multi ? this.props.clearAllText : this.props.clearValueText,
-					onMouseDown: this.clearValue,
-					onTouchStart: this.handleTouchStart,
-					onTouchMove: this.handleTouchMove,
-					onTouchEnd: this.handleTouchEndClearValue },
-				_react2['default'].createElement('span', { className: 'Select-clear', dangerouslySetInnerHTML: { __html: '&times;' } })
-			);
-		},
-	
-		renderArrow: function renderArrow() {
-			return _react2['default'].createElement(
-				'span',
-				{ className: 'Select-arrow-zone', onMouseDown: this.handleMouseDownOnArrow },
-				_react2['default'].createElement('span', { className: 'Select-arrow', onMouseDown: this.handleMouseDownOnArrow })
-			);
-		},
-	
-		filterOptions: function filterOptions(excludeOptions) {
-			var _this3 = this;
-	
-			var filterValue = this.state.inputValue;
-			var options = this.props.options || [];
-			if (typeof this.props.filterOptions === 'function') {
-				return this.props.filterOptions.call(this, options, filterValue, excludeOptions);
-			} else if (this.props.filterOptions) {
-				if (this.props.ignoreAccents) {
-					filterValue = (0, _utilsStripDiacritics2['default'])(filterValue);
-				}
-				if (this.props.ignoreCase) {
-					filterValue = filterValue.toLowerCase();
-				}
-				if (excludeOptions) excludeOptions = excludeOptions.map(function (i) {
-					return i[_this3.props.valueKey];
-				});
-				return options.filter(function (option) {
-					if (excludeOptions && excludeOptions.indexOf(option[_this3.props.valueKey]) > -1) return false;
-					if (_this3.props.filterOption) return _this3.props.filterOption.call(_this3, option, filterValue);
-					if (!filterValue) return true;
-					var valueTest = String(option[_this3.props.valueKey]);
-					var labelTest = String(option[_this3.props.labelKey]);
-					if (_this3.props.ignoreAccents) {
-						if (_this3.props.matchProp !== 'label') valueTest = (0, _utilsStripDiacritics2['default'])(valueTest);
-						if (_this3.props.matchProp !== 'value') labelTest = (0, _utilsStripDiacritics2['default'])(labelTest);
-					}
-					if (_this3.props.ignoreCase) {
-						if (_this3.props.matchProp !== 'label') valueTest = valueTest.toLowerCase();
-						if (_this3.props.matchProp !== 'value') labelTest = labelTest.toLowerCase();
-					}
-					return _this3.props.matchPos === 'start' ? _this3.props.matchProp !== 'label' && valueTest.substr(0, filterValue.length) === filterValue || _this3.props.matchProp !== 'value' && labelTest.substr(0, filterValue.length) === filterValue : _this3.props.matchProp !== 'label' && valueTest.indexOf(filterValue) >= 0 || _this3.props.matchProp !== 'value' && labelTest.indexOf(filterValue) >= 0;
-				});
-			} else {
-				return options;
-			}
-		},
-	
-		renderMenu: function renderMenu(options, valueArray, focusedOption) {
-			var _this4 = this;
-	
-			if (options && options.length) {
-				if (this.props.menuRenderer) {
-					return this.props.menuRenderer({
-						focusedOption: focusedOption,
-						focusOption: this.focusOption,
-						labelKey: this.props.labelKey,
-						options: options,
-						selectValue: this.selectValue,
-						valueArray: valueArray
-					});
-				} else {
-					var _ret = (function () {
-						var Option = _this4.props.optionComponent;
-						var renderLabel = _this4.props.optionRenderer || _this4.getOptionLabel;
-	
-						return {
-							v: options.map(function (option, i) {
-								var isSelected = valueArray && valueArray.indexOf(option) > -1;
-								var isFocused = option === focusedOption;
-								var optionRef = isFocused ? 'focused' : null;
-								var optionClass = (0, _classnames2['default'])(_this4.props.optionClassName, {
-									'Select-option': true,
-									'is-selected': isSelected,
-									'is-focused': isFocused,
-									'is-disabled': option.disabled
-								});
-	
-								return _react2['default'].createElement(
-									Option,
-									{
-										className: optionClass,
-										isDisabled: option.disabled,
-										isFocused: isFocused,
-										key: 'option-' + i + '-' + option[_this4.props.valueKey],
-										onSelect: _this4.selectValue,
-										onFocus: _this4.focusOption,
-										option: option,
-										isSelected: isSelected,
-										ref: optionRef
-									},
-									renderLabel(option)
-								);
-							})
-						};
-					})();
-	
-					if (typeof _ret === 'object') return _ret.v;
-				}
-			} else if (this.props.noResultsText) {
-				return _react2['default'].createElement(
-					'div',
-					{ className: 'Select-noresults' },
-					this.props.noResultsText
-				);
-			} else {
-				return null;
-			}
-		},
-	
-		renderHiddenField: function renderHiddenField(valueArray) {
-			var _this5 = this;
-	
-			if (!this.props.name) return;
-			if (this.props.joinValues) {
-				var value = valueArray.map(function (i) {
-					return stringifyValue(i[_this5.props.valueKey]);
-				}).join(this.props.delimiter);
-				return _react2['default'].createElement('input', {
-					type: 'hidden',
-					ref: 'value',
-					name: this.props.name,
-					value: value,
-					disabled: this.props.disabled });
-			}
-			return valueArray.map(function (item, index) {
-				return _react2['default'].createElement('input', { key: 'hidden.' + index,
-					type: 'hidden',
-					ref: 'value' + index,
-					name: _this5.props.name,
-					value: stringifyValue(item[_this5.props.valueKey]),
-					disabled: _this5.props.disabled });
-			});
-		},
-	
-		getFocusableOption: function getFocusableOption(selectedOption) {
-			var options = this._visibleOptions;
-			if (!options.length) return;
-			var focusedOption = this.state.focusedOption || selectedOption;
-			if (focusedOption && options.indexOf(focusedOption) > -1) return focusedOption;
-			for (var i = 0; i < options.length; i++) {
-				if (!options[i].disabled) return options[i];
-			}
-		},
-	
-		render: function render() {
-			var valueArray = this.getValueArray();
-			var options = this._visibleOptions = this.filterOptions(this.props.multi ? valueArray : null);
-			var isOpen = this.state.isOpen;
-			if (this.props.multi && !options.length && valueArray.length && !this.state.inputValue) isOpen = false;
-			var focusedOption = this._focusedOption = this.getFocusableOption(valueArray[0]);
-			var className = (0, _classnames2['default'])('Select', this.props.className, {
-				'Select--multi': this.props.multi,
-				'is-disabled': this.props.disabled,
-				'is-focused': this.state.isFocused,
-				'is-loading': this.props.isLoading,
-				'is-open': isOpen,
-				'is-pseudo-focused': this.state.isPseudoFocused,
-				'is-searchable': this.props.searchable,
-				'has-value': valueArray.length
-			});
-			return _react2['default'].createElement(
-				'div',
-				{ ref: 'wrapper', className: className, style: this.props.wrapperStyle },
-				this.renderHiddenField(valueArray),
-				_react2['default'].createElement(
-					'div',
-					{ ref: 'control',
-						className: 'Select-control',
-						style: this.props.style,
-						onKeyDown: this.handleKeyDown,
-						onMouseDown: this.handleMouseDown,
-						onTouchEnd: this.handleTouchEnd,
-						onTouchStart: this.handleTouchStart,
-						onTouchMove: this.handleTouchMove },
-					this.renderValue(valueArray, isOpen),
-					this.renderInput(valueArray),
-					this.renderLoading(),
-					this.renderClear(),
-					this.renderArrow()
-				),
-				isOpen ? _react2['default'].createElement(
-					'div',
-					{ ref: 'menuContainer', className: 'Select-menu-outer', style: this.props.menuContainerStyle },
-					_react2['default'].createElement(
-						'div',
-						{ ref: 'menu', className: 'Select-menu',
-							style: this.props.menuStyle,
-							onScroll: this.handleMenuScroll,
-							onMouseDown: this.handleMouseDownOnMenu },
-						this.renderMenu(options, !this.props.multi ? valueArray : null, focusedOption)
-					)
-				) : null
-			);
-		}
-	
-	});
-	
-	exports['default'] = Select;
-	module.exports = exports['default'];
-
-/***/ },
-/* 244 */
-/*!*****************************************************!*\
-  !*** ./~/react-input-autosize/lib/AutosizeInput.js ***!
-  \*****************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var React = __webpack_require__(/*! react */ 1);
-	
-	var sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'pre' };
-	
-	var nextFrame = typeof window !== 'undefined' ? (function () {
-		return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
-			window.setTimeout(callback, 1000 / 60);
-		};
-	})().bind(window) : undefined; // If window is undefined, then we can't define a nextFrame function
-	
-	var AutosizeInput = React.createClass({
-		displayName: 'AutosizeInput',
-	
-		propTypes: {
-			value: React.PropTypes.any, // field value
-			defaultValue: React.PropTypes.any, // default field value
-			onChange: React.PropTypes.func, // onChange handler: function(newValue) {}
-			style: React.PropTypes.object, // css styles for the outer element
-			className: React.PropTypes.string, // className for the outer element
-			minWidth: React.PropTypes.oneOfType([// minimum width for input element
-			React.PropTypes.number, React.PropTypes.string]),
-			inputStyle: React.PropTypes.object, // css styles for the input element
-			inputClassName: React.PropTypes.string // className for the input element
-		},
-		getDefaultProps: function getDefaultProps() {
-			return {
-				minWidth: 1
-			};
-		},
-		getInitialState: function getInitialState() {
-			return {
-				inputWidth: this.props.minWidth
-			};
-		},
-		componentDidMount: function componentDidMount() {
-			this.copyInputStyles();
-			this.updateInputWidth();
-		},
-		componentDidUpdate: function componentDidUpdate() {
-			this.updateInputWidth();
-		},
-		copyInputStyles: function copyInputStyles() {
-			if (!this.isMounted() || !window.getComputedStyle) {
-				return;
-			}
-			var inputStyle = window.getComputedStyle(this.refs.input);
-			if (!inputStyle) {
-				return;
-			}
-			var widthNode = this.refs.sizer;
-			widthNode.style.fontSize = inputStyle.fontSize;
-			widthNode.style.fontFamily = inputStyle.fontFamily;
-			widthNode.style.fontWeight = inputStyle.fontWeight;
-			widthNode.style.fontStyle = inputStyle.fontStyle;
-			widthNode.style.letterSpacing = inputStyle.letterSpacing;
-			if (this.props.placeholder) {
-				var placeholderNode = this.refs.placeholderSizer;
-				placeholderNode.style.fontSize = inputStyle.fontSize;
-				placeholderNode.style.fontFamily = inputStyle.fontFamily;
-				placeholderNode.style.fontWeight = inputStyle.fontWeight;
-				placeholderNode.style.fontStyle = inputStyle.fontStyle;
-				placeholderNode.style.letterSpacing = inputStyle.letterSpacing;
-			}
-		},
-		updateInputWidth: function updateInputWidth() {
-			if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
-				return;
-			}
-			var newInputWidth = undefined;
-			if (this.props.placeholder) {
-				newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
-			} else {
-				newInputWidth = this.refs.sizer.scrollWidth + 2;
-			}
-			if (newInputWidth < this.props.minWidth) {
-				newInputWidth = this.props.minWidth;
-			}
-			if (newInputWidth !== this.state.inputWidth) {
-				this.setState({
-					inputWidth: newInputWidth
-				});
-			}
-		},
-		getInput: function getInput() {
-			return this.refs.input;
-		},
-		focus: function focus() {
-			this.refs.input.focus();
-		},
-		blur: function blur() {
-			this.refs.input.blur();
-		},
-		select: function select() {
-			this.refs.input.select();
-		},
-		render: function render() {
-			var sizerValue = this.props.defaultValue || this.props.value || '';
-			var wrapperStyle = this.props.style || {};
-			if (!wrapperStyle.display) wrapperStyle.display = 'inline-block';
-			var inputStyle = _extends({}, this.props.inputStyle);
-			inputStyle.width = this.state.inputWidth + 'px';
-			inputStyle.boxSizing = 'content-box';
-			var placeholder = this.props.placeholder ? React.createElement(
-				'div',
-				{ ref: 'placeholderSizer', style: sizerStyle },
-				this.props.placeholder
-			) : null;
-			return React.createElement(
-				'div',
-				{ className: this.props.className, style: wrapperStyle },
-				React.createElement('input', _extends({}, this.props, { ref: 'input', className: this.props.inputClassName, style: inputStyle })),
-				React.createElement(
-					'div',
-					{ ref: 'sizer', style: sizerStyle },
-					sizerValue
-				),
-				placeholder
-			);
-		}
-	});
-	
-	module.exports = AutosizeInput;
-
-/***/ },
-/* 245 */
-/*!*******************************!*\
-  !*** ./~/classnames/index.js ***!
-  \*******************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2016 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-	/* global define */
-	
-	(function () {
-		'use strict';
-	
-		var hasOwn = {}.hasOwnProperty;
-	
-		function classNames () {
-			var classes = [];
-	
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-	
-				var argType = typeof arg;
-	
-				if (argType === 'string' || argType === 'number') {
-					classes.push(arg);
-				} else if (Array.isArray(arg)) {
-					classes.push(classNames.apply(null, arg));
-				} else if (argType === 'object') {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
-					}
-				}
-			}
-	
-			return classes.join(' ');
-		}
-	
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true) {
-			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
-	}());
-
-
-/***/ },
-/* 246 */
-/*!*****************************************************!*\
-  !*** ./~/react-select/lib/utils/stripDiacritics.js ***!
-  \*****************************************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	var map = [{ 'base': 'A', 'letters': /[\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F]/g }, { 'base': 'AA', 'letters': /[\uA732]/g }, { 'base': 'AE', 'letters': /[\u00C6\u01FC\u01E2]/g }, { 'base': 'AO', 'letters': /[\uA734]/g }, { 'base': 'AU', 'letters': /[\uA736]/g }, { 'base': 'AV', 'letters': /[\uA738\uA73A]/g }, { 'base': 'AY', 'letters': /[\uA73C]/g }, { 'base': 'B', 'letters': /[\u0042\u24B7\uFF22\u1E02\u1E04\u1E06\u0243\u0182\u0181]/g }, { 'base': 'C', 'letters': /[\u0043\u24B8\uFF23\u0106\u0108\u010A\u010C\u00C7\u1E08\u0187\u023B\uA73E]/g }, { 'base': 'D', 'letters': /[\u0044\u24B9\uFF24\u1E0A\u010E\u1E0C\u1E10\u1E12\u1E0E\u0110\u018B\u018A\u0189\uA779]/g }, { 'base': 'DZ', 'letters': /[\u01F1\u01C4]/g }, { 'base': 'Dz', 'letters': /[\u01F2\u01C5]/g }, { 'base': 'E', 'letters': /[\u0045\u24BA\uFF25\u00C8\u00C9\u00CA\u1EC0\u1EBE\u1EC4\u1EC2\u1EBC\u0112\u1E14\u1E16\u0114\u0116\u00CB\u1EBA\u011A\u0204\u0206\u1EB8\u1EC6\u0228\u1E1C\u0118\u1E18\u1E1A\u0190\u018E]/g }, { 'base': 'F', 'letters': /[\u0046\u24BB\uFF26\u1E1E\u0191\uA77B]/g }, { 'base': 'G', 'letters': /[\u0047\u24BC\uFF27\u01F4\u011C\u1E20\u011E\u0120\u01E6\u0122\u01E4\u0193\uA7A0\uA77D\uA77E]/g }, { 'base': 'H', 'letters': /[\u0048\u24BD\uFF28\u0124\u1E22\u1E26\u021E\u1E24\u1E28\u1E2A\u0126\u2C67\u2C75\uA78D]/g }, { 'base': 'I', 'letters': /[\u0049\u24BE\uFF29\u00CC\u00CD\u00CE\u0128\u012A\u012C\u0130\u00CF\u1E2E\u1EC8\u01CF\u0208\u020A\u1ECA\u012E\u1E2C\u0197]/g }, { 'base': 'J', 'letters': /[\u004A\u24BF\uFF2A\u0134\u0248]/g }, { 'base': 'K', 'letters': /[\u004B\u24C0\uFF2B\u1E30\u01E8\u1E32\u0136\u1E34\u0198\u2C69\uA740\uA742\uA744\uA7A2]/g }, { 'base': 'L', 'letters': /[\u004C\u24C1\uFF2C\u013F\u0139\u013D\u1E36\u1E38\u013B\u1E3C\u1E3A\u0141\u023D\u2C62\u2C60\uA748\uA746\uA780]/g }, { 'base': 'LJ', 'letters': /[\u01C7]/g }, { 'base': 'Lj', 'letters': /[\u01C8]/g }, { 'base': 'M', 'letters': /[\u004D\u24C2\uFF2D\u1E3E\u1E40\u1E42\u2C6E\u019C]/g }, { 'base': 'N', 'letters': /[\u004E\u24C3\uFF2E\u01F8\u0143\u00D1\u1E44\u0147\u1E46\u0145\u1E4A\u1E48\u0220\u019D\uA790\uA7A4]/g }, { 'base': 'NJ', 'letters': /[\u01CA]/g }, { 'base': 'Nj', 'letters': /[\u01CB]/g }, { 'base': 'O', 'letters': /[\u004F\u24C4\uFF2F\u00D2\u00D3\u00D4\u1ED2\u1ED0\u1ED6\u1ED4\u00D5\u1E4C\u022C\u1E4E\u014C\u1E50\u1E52\u014E\u022E\u0230\u00D6\u022A\u1ECE\u0150\u01D1\u020C\u020E\u01A0\u1EDC\u1EDA\u1EE0\u1EDE\u1EE2\u1ECC\u1ED8\u01EA\u01EC\u00D8\u01FE\u0186\u019F\uA74A\uA74C]/g }, { 'base': 'OI', 'letters': /[\u01A2]/g }, { 'base': 'OO', 'letters': /[\uA74E]/g }, { 'base': 'OU', 'letters': /[\u0222]/g }, { 'base': 'P', 'letters': /[\u0050\u24C5\uFF30\u1E54\u1E56\u01A4\u2C63\uA750\uA752\uA754]/g }, { 'base': 'Q', 'letters': /[\u0051\u24C6\uFF31\uA756\uA758\u024A]/g }, { 'base': 'R', 'letters': /[\u0052\u24C7\uFF32\u0154\u1E58\u0158\u0210\u0212\u1E5A\u1E5C\u0156\u1E5E\u024C\u2C64\uA75A\uA7A6\uA782]/g }, { 'base': 'S', 'letters': /[\u0053\u24C8\uFF33\u1E9E\u015A\u1E64\u015C\u1E60\u0160\u1E66\u1E62\u1E68\u0218\u015E\u2C7E\uA7A8\uA784]/g }, { 'base': 'T', 'letters': /[\u0054\u24C9\uFF34\u1E6A\u0164\u1E6C\u021A\u0162\u1E70\u1E6E\u0166\u01AC\u01AE\u023E\uA786]/g }, { 'base': 'TZ', 'letters': /[\uA728]/g }, { 'base': 'U', 'letters': /[\u0055\u24CA\uFF35\u00D9\u00DA\u00DB\u0168\u1E78\u016A\u1E7A\u016C\u00DC\u01DB\u01D7\u01D5\u01D9\u1EE6\u016E\u0170\u01D3\u0214\u0216\u01AF\u1EEA\u1EE8\u1EEE\u1EEC\u1EF0\u1EE4\u1E72\u0172\u1E76\u1E74\u0244]/g }, { 'base': 'V', 'letters': /[\u0056\u24CB\uFF36\u1E7C\u1E7E\u01B2\uA75E\u0245]/g }, { 'base': 'VY', 'letters': /[\uA760]/g }, { 'base': 'W', 'letters': /[\u0057\u24CC\uFF37\u1E80\u1E82\u0174\u1E86\u1E84\u1E88\u2C72]/g }, { 'base': 'X', 'letters': /[\u0058\u24CD\uFF38\u1E8A\u1E8C]/g }, { 'base': 'Y', 'letters': /[\u0059\u24CE\uFF39\u1EF2\u00DD\u0176\u1EF8\u0232\u1E8E\u0178\u1EF6\u1EF4\u01B3\u024E\u1EFE]/g }, { 'base': 'Z', 'letters': /[\u005A\u24CF\uFF3A\u0179\u1E90\u017B\u017D\u1E92\u1E94\u01B5\u0224\u2C7F\u2C6B\uA762]/g }, { 'base': 'a', 'letters': /[\u0061\u24D0\uFF41\u1E9A\u00E0\u00E1\u00E2\u1EA7\u1EA5\u1EAB\u1EA9\u00E3\u0101\u0103\u1EB1\u1EAF\u1EB5\u1EB3\u0227\u01E1\u00E4\u01DF\u1EA3\u00E5\u01FB\u01CE\u0201\u0203\u1EA1\u1EAD\u1EB7\u1E01\u0105\u2C65\u0250]/g }, { 'base': 'aa', 'letters': /[\uA733]/g }, { 'base': 'ae', 'letters': /[\u00E6\u01FD\u01E3]/g }, { 'base': 'ao', 'letters': /[\uA735]/g }, { 'base': 'au', 'letters': /[\uA737]/g }, { 'base': 'av', 'letters': /[\uA739\uA73B]/g }, { 'base': 'ay', 'letters': /[\uA73D]/g }, { 'base': 'b', 'letters': /[\u0062\u24D1\uFF42\u1E03\u1E05\u1E07\u0180\u0183\u0253]/g }, { 'base': 'c', 'letters': /[\u0063\u24D2\uFF43\u0107\u0109\u010B\u010D\u00E7\u1E09\u0188\u023C\uA73F\u2184]/g }, { 'base': 'd', 'letters': /[\u0064\u24D3\uFF44\u1E0B\u010F\u1E0D\u1E11\u1E13\u1E0F\u0111\u018C\u0256\u0257\uA77A]/g }, { 'base': 'dz', 'letters': /[\u01F3\u01C6]/g }, { 'base': 'e', 'letters': /[\u0065\u24D4\uFF45\u00E8\u00E9\u00EA\u1EC1\u1EBF\u1EC5\u1EC3\u1EBD\u0113\u1E15\u1E17\u0115\u0117\u00EB\u1EBB\u011B\u0205\u0207\u1EB9\u1EC7\u0229\u1E1D\u0119\u1E19\u1E1B\u0247\u025B\u01DD]/g }, { 'base': 'f', 'letters': /[\u0066\u24D5\uFF46\u1E1F\u0192\uA77C]/g }, { 'base': 'g', 'letters': /[\u0067\u24D6\uFF47\u01F5\u011D\u1E21\u011F\u0121\u01E7\u0123\u01E5\u0260\uA7A1\u1D79\uA77F]/g }, { 'base': 'h', 'letters': /[\u0068\u24D7\uFF48\u0125\u1E23\u1E27\u021F\u1E25\u1E29\u1E2B\u1E96\u0127\u2C68\u2C76\u0265]/g }, { 'base': 'hv', 'letters': /[\u0195]/g }, { 'base': 'i', 'letters': /[\u0069\u24D8\uFF49\u00EC\u00ED\u00EE\u0129\u012B\u012D\u00EF\u1E2F\u1EC9\u01D0\u0209\u020B\u1ECB\u012F\u1E2D\u0268\u0131]/g }, { 'base': 'j', 'letters': /[\u006A\u24D9\uFF4A\u0135\u01F0\u0249]/g }, { 'base': 'k', 'letters': /[\u006B\u24DA\uFF4B\u1E31\u01E9\u1E33\u0137\u1E35\u0199\u2C6A\uA741\uA743\uA745\uA7A3]/g }, { 'base': 'l', 'letters': /[\u006C\u24DB\uFF4C\u0140\u013A\u013E\u1E37\u1E39\u013C\u1E3D\u1E3B\u017F\u0142\u019A\u026B\u2C61\uA749\uA781\uA747]/g }, { 'base': 'lj', 'letters': /[\u01C9]/g }, { 'base': 'm', 'letters': /[\u006D\u24DC\uFF4D\u1E3F\u1E41\u1E43\u0271\u026F]/g }, { 'base': 'n', 'letters': /[\u006E\u24DD\uFF4E\u01F9\u0144\u00F1\u1E45\u0148\u1E47\u0146\u1E4B\u1E49\u019E\u0272\u0149\uA791\uA7A5]/g }, { 'base': 'nj', 'letters': /[\u01CC]/g }, { 'base': 'o', 'letters': /[\u006F\u24DE\uFF4F\u00F2\u00F3\u00F4\u1ED3\u1ED1\u1ED7\u1ED5\u00F5\u1E4D\u022D\u1E4F\u014D\u1E51\u1E53\u014F\u022F\u0231\u00F6\u022B\u1ECF\u0151\u01D2\u020D\u020F\u01A1\u1EDD\u1EDB\u1EE1\u1EDF\u1EE3\u1ECD\u1ED9\u01EB\u01ED\u00F8\u01FF\u0254\uA74B\uA74D\u0275]/g }, { 'base': 'oi', 'letters': /[\u01A3]/g }, { 'base': 'ou', 'letters': /[\u0223]/g }, { 'base': 'oo', 'letters': /[\uA74F]/g }, { 'base': 'p', 'letters': /[\u0070\u24DF\uFF50\u1E55\u1E57\u01A5\u1D7D\uA751\uA753\uA755]/g }, { 'base': 'q', 'letters': /[\u0071\u24E0\uFF51\u024B\uA757\uA759]/g }, { 'base': 'r', 'letters': /[\u0072\u24E1\uFF52\u0155\u1E59\u0159\u0211\u0213\u1E5B\u1E5D\u0157\u1E5F\u024D\u027D\uA75B\uA7A7\uA783]/g }, { 'base': 's', 'letters': /[\u0073\u24E2\uFF53\u00DF\u015B\u1E65\u015D\u1E61\u0161\u1E67\u1E63\u1E69\u0219\u015F\u023F\uA7A9\uA785\u1E9B]/g }, { 'base': 't', 'letters': /[\u0074\u24E3\uFF54\u1E6B\u1E97\u0165\u1E6D\u021B\u0163\u1E71\u1E6F\u0167\u01AD\u0288\u2C66\uA787]/g }, { 'base': 'tz', 'letters': /[\uA729]/g }, { 'base': 'u', 'letters': /[\u0075\u24E4\uFF55\u00F9\u00FA\u00FB\u0169\u1E79\u016B\u1E7B\u016D\u00FC\u01DC\u01D8\u01D6\u01DA\u1EE7\u016F\u0171\u01D4\u0215\u0217\u01B0\u1EEB\u1EE9\u1EEF\u1EED\u1EF1\u1EE5\u1E73\u0173\u1E77\u1E75\u0289]/g }, { 'base': 'v', 'letters': /[\u0076\u24E5\uFF56\u1E7D\u1E7F\u028B\uA75F\u028C]/g }, { 'base': 'vy', 'letters': /[\uA761]/g }, { 'base': 'w', 'letters': /[\u0077\u24E6\uFF57\u1E81\u1E83\u0175\u1E87\u1E85\u1E98\u1E89\u2C73]/g }, { 'base': 'x', 'letters': /[\u0078\u24E7\uFF58\u1E8B\u1E8D]/g }, { 'base': 'y', 'letters': /[\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF]/g }, { 'base': 'z', 'letters': /[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g }];
-	
-	module.exports = function stripDiacritics(str) {
-		for (var i = 0; i < map.length; i++) {
-			str = str.replace(map[i].letters, map[i].base);
-		}
-		return str;
-	};
-
-/***/ },
-/* 247 */
-/*!*************************************!*\
-  !*** ./~/react-select/lib/Async.js ***!
-  \*************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Select = __webpack_require__(/*! ./Select */ 243);
-	
-	var _Select2 = _interopRequireDefault(_Select);
-	
-	var _utilsStripDiacritics = __webpack_require__(/*! ./utils/stripDiacritics */ 246);
-	
-	var _utilsStripDiacritics2 = _interopRequireDefault(_utilsStripDiacritics);
-	
-	var requestId = 0;
-	
-	function initCache(cache) {
-		if (cache && typeof cache !== 'object') {
-			cache = {};
-		}
-		return cache ? cache : null;
-	}
-	
-	function updateCache(cache, input, data) {
-		if (!cache) return;
-		cache[input] = data;
-	}
-	
-	function getFromCache(cache, input) {
-		if (!cache) return;
-		for (var i = input.length; i >= 0; --i) {
-			var cacheKey = input.slice(0, i);
-			if (cache[cacheKey] && (input === cacheKey || cache[cacheKey].complete)) {
-				return cache[cacheKey];
-			}
-		}
-	}
-	
-	function thenPromise(promise, callback) {
-		if (!promise || typeof promise.then !== 'function') return;
-		return promise.then(function (data) {
-			callback(null, data);
-		}, function (err) {
-			callback(err);
-		});
-	}
-	
-	var stringOrNode = _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.node]);
-	
-	var Async = _react2['default'].createClass({
-		displayName: 'Async',
-	
-		propTypes: {
-			cache: _react2['default'].PropTypes.any, // object to use to cache results, can be null to disable cache
-			ignoreAccents: _react2['default'].PropTypes.bool, // whether to strip diacritics when filtering (shared with Select)
-			ignoreCase: _react2['default'].PropTypes.bool, // whether to perform case-insensitive filtering (shared with Select)
-			isLoading: _react2['default'].PropTypes.bool, // overrides the isLoading state when set to true
-			loadOptions: _react2['default'].PropTypes.func.isRequired, // function to call to load options asynchronously
-			loadingPlaceholder: _react2['default'].PropTypes.string, // replaces the placeholder while options are loading
-			minimumInput: _react2['default'].PropTypes.number, // the minimum number of characters that trigger loadOptions
-			noResultsText: _react2['default'].PropTypes.string, // placeholder displayed when there are no matching search results (shared with Select)
-			placeholder: stringOrNode, // field placeholder, displayed when there's no value (shared with Select)
-			searchPromptText: _react2['default'].PropTypes.string, // label to prompt for search input
-			searchingText: _react2['default'].PropTypes.string },
-		// message to display while options are loading
-		getDefaultProps: function getDefaultProps() {
-			return {
-				cache: true,
-				ignoreAccents: true,
-				ignoreCase: true,
-				loadingPlaceholder: 'Loading...',
-				minimumInput: 0,
-				searchingText: 'Searching...',
-				searchPromptText: 'Type to search'
-			};
-		},
-		getInitialState: function getInitialState() {
-			return {
-				cache: initCache(this.props.cache),
-				isLoading: false,
-				options: []
-			};
-		},
-		componentWillMount: function componentWillMount() {
-			this._lastInput = '';
-		},
-		componentDidMount: function componentDidMount() {
-			this.loadOptions('');
-		},
-		componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-			if (nextProps.cache !== this.props.cache) {
-				this.setState({
-					cache: initCache(nextProps.cache)
-				});
-			}
-		},
-		focus: function focus() {
-			this.refs.select.focus();
-		},
-		resetState: function resetState() {
-			this._currentRequestId = -1;
-			this.setState({
-				isLoading: false,
-				options: []
-			});
-		},
-		getResponseHandler: function getResponseHandler(input) {
-			var _this = this;
-	
-			var _requestId = this._currentRequestId = requestId++;
-			return function (err, data) {
-				if (err) throw err;
-				if (!_this.isMounted()) return;
-				updateCache(_this.state.cache, input, data);
-				if (_requestId !== _this._currentRequestId) return;
-				_this.setState({
-					isLoading: false,
-					options: data && data.options || []
-				});
-			};
-		},
-		loadOptions: function loadOptions(input) {
-			if (this.props.ignoreAccents) input = (0, _utilsStripDiacritics2['default'])(input);
-			if (this.props.ignoreCase) input = input.toLowerCase();
-			this._lastInput = input;
-			if (input.length < this.props.minimumInput) {
-				return this.resetState();
-			}
-			var cacheResult = getFromCache(this.state.cache, input);
-			if (cacheResult) {
-				return this.setState({
-					options: cacheResult.options
-				});
-			}
-			this.setState({
-				isLoading: true
-			});
-			var responseHandler = this.getResponseHandler(input);
-			return thenPromise(this.props.loadOptions(input, responseHandler), responseHandler);
-		},
-		render: function render() {
-			var noResultsText = this.props.noResultsText;
-			var _state = this.state;
-			var isLoading = _state.isLoading;
-			var options = _state.options;
-	
-			if (this.props.isLoading) isLoading = true;
-			var placeholder = isLoading ? this.props.loadingPlaceholder : this.props.placeholder;
-			if (!options.length) {
-				if (this._lastInput.length < this.props.minimumInput) noResultsText = this.props.searchPromptText;
-				if (isLoading) noResultsText = this.props.searchingText;
-			}
-			return _react2['default'].createElement(_Select2['default'], _extends({}, this.props, {
-				ref: 'select',
-				isLoading: isLoading,
-				noResultsText: noResultsText,
-				onInputChange: this.loadOptions,
-				options: options,
-				placeholder: placeholder
-			}));
-		}
-	});
-	
-	module.exports = Async;
-
-/***/ },
-/* 248 */
-/*!**************************************!*\
-  !*** ./~/react-select/lib/Option.js ***!
-  \**************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _classnames = __webpack_require__(/*! classnames */ 245);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var Option = _react2['default'].createClass({
-		displayName: 'Option',
-	
-		propTypes: {
-			children: _react2['default'].PropTypes.node,
-			className: _react2['default'].PropTypes.string, // className (based on mouse position)
-			isDisabled: _react2['default'].PropTypes.bool, // the option is disabled
-			isFocused: _react2['default'].PropTypes.bool, // the option is focused
-			isSelected: _react2['default'].PropTypes.bool, // the option is selected
-			onFocus: _react2['default'].PropTypes.func, // method to handle mouseEnter on option element
-			onSelect: _react2['default'].PropTypes.func, // method to handle click on option element
-			onUnfocus: _react2['default'].PropTypes.func, // method to handle mouseLeave on option element
-			option: _react2['default'].PropTypes.object.isRequired },
-		// object that is base for that option
-		blockEvent: function blockEvent(event) {
-			event.preventDefault();
-			event.stopPropagation();
-			if (event.target.tagName !== 'A' || !('href' in event.target)) {
-				return;
-			}
-			if (event.target.target) {
-				window.open(event.target.href, event.target.target);
-			} else {
-				window.location.href = event.target.href;
-			}
-		},
-	
-		handleMouseDown: function handleMouseDown(event) {
-			event.preventDefault();
-			event.stopPropagation();
-			this.props.onSelect(this.props.option, event);
-		},
-	
-		handleMouseEnter: function handleMouseEnter(event) {
-			this.onFocus(event);
-		},
-	
-		handleMouseMove: function handleMouseMove(event) {
-			this.onFocus(event);
-		},
-	
-		handleTouchEnd: function handleTouchEnd(event) {
-			// Check if the view is being dragged, In this case
-			// we don't want to fire the click event (because the user only wants to scroll)
-			if (this.dragging) return;
-	
-			this.handleMouseDown(event);
-		},
-	
-		handleTouchMove: function handleTouchMove(event) {
-			// Set a flag that the view is being dragged
-			this.dragging = true;
-		},
-	
-		handleTouchStart: function handleTouchStart(event) {
-			// Set a flag that the view is not being dragged
-			this.dragging = false;
-		},
-	
-		onFocus: function onFocus(event) {
-			if (!this.props.isFocused) {
-				this.props.onFocus(this.props.option, event);
-			}
-		},
-		render: function render() {
-			var option = this.props.option;
-	
-			var className = (0, _classnames2['default'])(this.props.className, option.className);
-	
-			return option.disabled ? _react2['default'].createElement(
-				'div',
-				{ className: className,
-					onMouseDown: this.blockEvent,
-					onClick: this.blockEvent },
-				this.props.children
-			) : _react2['default'].createElement(
-				'div',
-				{ className: className,
-					style: option.style,
-					onMouseDown: this.handleMouseDown,
-					onMouseEnter: this.handleMouseEnter,
-					onMouseMove: this.handleMouseMove,
-					onTouchStart: this.handleTouchStart,
-					onTouchMove: this.handleTouchMove,
-					onTouchEnd: this.handleTouchEnd,
-					title: option.title },
-				this.props.children
-			);
-		}
-	});
-	
-	module.exports = Option;
-
-/***/ },
-/* 249 */
-/*!*************************************!*\
-  !*** ./~/react-select/lib/Value.js ***!
-  \*************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _classnames = __webpack_require__(/*! classnames */ 245);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var Value = _react2['default'].createClass({
-	
-		displayName: 'Value',
-	
-		propTypes: {
-			children: _react2['default'].PropTypes.node,
-			disabled: _react2['default'].PropTypes.bool, // disabled prop passed to ReactSelect
-			onClick: _react2['default'].PropTypes.func, // method to handle click on value label
-			onRemove: _react2['default'].PropTypes.func, // method to handle removal of the value
-			value: _react2['default'].PropTypes.object.isRequired },
-	
-		// the option object for this value
-		handleMouseDown: function handleMouseDown(event) {
-			if (event.type === 'mousedown' && event.button !== 0) {
-				return;
-			}
-			if (this.props.onClick) {
-				event.stopPropagation();
-				this.props.onClick(this.props.value, event);
-				return;
-			}
-			if (this.props.value.href) {
-				event.stopPropagation();
-			}
-		},
-	
-		onRemove: function onRemove(event) {
-			event.preventDefault();
-			event.stopPropagation();
-			this.props.onRemove(this.props.value);
-		},
-	
-		handleTouchEndRemove: function handleTouchEndRemove(event) {
-			// Check if the view is being dragged, In this case
-			// we don't want to fire the click event (because the user only wants to scroll)
-			if (this.dragging) return;
-	
-			// Fire the mouse events
-			this.onRemove(event);
-		},
-	
-		handleTouchMove: function handleTouchMove(event) {
-			// Set a flag that the view is being dragged
-			this.dragging = true;
-		},
-	
-		handleTouchStart: function handleTouchStart(event) {
-			// Set a flag that the view is not being dragged
-			this.dragging = false;
-		},
-	
-		renderRemoveIcon: function renderRemoveIcon() {
-			if (this.props.disabled || !this.props.onRemove) return;
-			return _react2['default'].createElement(
-				'span',
-				{ className: 'Select-value-icon',
-					onMouseDown: this.onRemove,
-					onTouchEnd: this.handleTouchEndRemove,
-					onTouchStart: this.handleTouchStart,
-					onTouchMove: this.handleTouchMove },
-				'×'
-			);
-		},
-	
-		renderLabel: function renderLabel() {
-			var className = 'Select-value-label';
-			return this.props.onClick || this.props.value.href ? _react2['default'].createElement(
-				'a',
-				{ className: className, href: this.props.value.href, target: this.props.value.target, onMouseDown: this.handleMouseDown, onTouchEnd: this.handleMouseDown },
-				this.props.children
-			) : _react2['default'].createElement(
-				'span',
-				{ className: className },
-				this.props.children
-			);
-		},
-	
-		render: function render() {
-			return _react2['default'].createElement(
-				'div',
-				{ className: (0, _classnames2['default'])('Select-value', this.props.value.className),
-					style: this.props.value.style,
-					title: this.props.value.title
-				},
-				this.renderRemoveIcon(),
-				this.renderLabel()
-			);
-		}
-	
-	});
-	
-	module.exports = Value;
-
-/***/ },
-/* 250 */
-/*!**********************************************!*\
-  !*** ./~/react-select/dist/react-select.css ***!
-  \**********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !./../../css-loader!./react-select.css */ 251);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../css-loader/index.js!./react-select.css", function() {
-				var newContent = require("!!./../../css-loader/index.js!./react-select.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 251 */
-/*!*************************************************************!*\
-  !*** ./~/css-loader!./~/react-select/dist/react-select.css ***!
-  \*************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 222)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "/**\n * React Select\n * ============\n * Created by Jed Watson and Joss Mackison for KeystoneJS, http://www.keystonejs.com/\n * https://twitter.com/jedwatson https://twitter.com/jossmackison https://twitter.com/keystonejs\n * MIT License: https://github.com/keystonejs/react-select\n*/\n.Select {\n  position: relative;\n}\n.Select,\n.Select div,\n.Select input,\n.Select span {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.Select.is-disabled > .Select-control {\n  background-color: #f9f9f9;\n}\n.Select.is-disabled > .Select-control:hover {\n  box-shadow: none;\n}\n.Select.is-disabled .Select-arrow-zone {\n  cursor: default;\n  pointer-events: none;\n}\n.Select-control {\n  background-color: #fff;\n  border-color: #d9d9d9 #ccc #b3b3b3;\n  border-radius: 4px;\n  border: 1px solid #ccc;\n  color: #333;\n  cursor: default;\n  display: table;\n  height: 36px;\n  outline: none;\n  overflow: hidden;\n  position: relative;\n  width: 100%;\n}\n.Select-control:hover {\n  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);\n}\n.is-searchable.is-open > .Select-control {\n  cursor: text;\n}\n.is-open > .Select-control {\n  border-bottom-right-radius: 0;\n  border-bottom-left-radius: 0;\n  background: #fff;\n  border-color: #b3b3b3 #ccc #d9d9d9;\n}\n.is-open > .Select-control > .Select-arrow {\n  border-color: transparent transparent #999;\n  border-width: 0 5px 5px;\n}\n.is-searchable.is-focused:not(.is-open) > .Select-control {\n  cursor: text;\n}\n.is-focused:not(.is-open) > .Select-control {\n  border-color: #007eff;\n  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\n}\n.Select-placeholder,\n:not(.Select--multi) > .Select-control .Select-value {\n  bottom: 0;\n  color: #aaa;\n  left: 0;\n  line-height: 34px;\n  padding-left: 10px;\n  padding-right: 10px;\n  position: absolute;\n  right: 0;\n  top: 0;\n  max-width: 100%;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\n  color: #333;\n}\n.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label {\n  cursor: pointer;\n  text-decoration: none;\n}\n.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:hover,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:hover,\n.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:focus,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:focus {\n  color: #007eff;\n  outline: none;\n  text-decoration: underline;\n}\n.Select-input {\n  height: 34px;\n  padding-left: 10px;\n  padding-right: 10px;\n  vertical-align: middle;\n}\n.Select-input > input {\n  width: 100%;\n  background: none transparent;\n  border: 0 none;\n  box-shadow: none;\n  cursor: default;\n  display: inline-block;\n  font-family: inherit;\n  font-size: inherit;\n  height: 34px;\n  margin: 0;\n  outline: none;\n  padding: 0;\n  -webkit-appearance: none;\n}\n.is-focused .Select-input > input {\n  cursor: text;\n}\n.has-value.is-pseudo-focused .Select-input {\n  opacity: 0;\n}\n.Select-control:not(.is-searchable) > .Select-input {\n  outline: none;\n}\n.Select-loading-zone {\n  cursor: pointer;\n  display: table-cell;\n  position: relative;\n  text-align: center;\n  vertical-align: middle;\n  width: 16px;\n}\n.Select-loading {\n  -webkit-animation: Select-animation-spin 400ms infinite linear;\n  -o-animation: Select-animation-spin 400ms infinite linear;\n  animation: Select-animation-spin 400ms infinite linear;\n  width: 16px;\n  height: 16px;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 2px solid #ccc;\n  border-right-color: #333;\n  display: inline-block;\n  position: relative;\n  vertical-align: middle;\n}\n.Select-clear-zone {\n  -webkit-animation: Select-animation-fadeIn 200ms;\n  -o-animation: Select-animation-fadeIn 200ms;\n  animation: Select-animation-fadeIn 200ms;\n  color: #999;\n  cursor: pointer;\n  display: table-cell;\n  position: relative;\n  text-align: center;\n  vertical-align: middle;\n  width: 17px;\n}\n.Select-clear-zone:hover {\n  color: #D0021B;\n}\n.Select-clear {\n  display: inline-block;\n  font-size: 18px;\n  line-height: 1;\n}\n.Select--multi .Select-clear-zone {\n  width: 17px;\n}\n.Select-arrow-zone {\n  cursor: pointer;\n  display: table-cell;\n  position: relative;\n  text-align: center;\n  vertical-align: middle;\n  width: 25px;\n  padding-right: 5px;\n}\n.Select-arrow {\n  border-color: #999 transparent transparent;\n  border-style: solid;\n  border-width: 5px 5px 2.5px;\n  display: inline-block;\n  height: 0;\n  width: 0;\n}\n.is-open .Select-arrow,\n.Select-arrow-zone:hover > .Select-arrow {\n  border-top-color: #666;\n}\n@-webkit-keyframes Select-animation-fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes Select-animation-fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n.Select-menu-outer {\n  border-bottom-right-radius: 4px;\n  border-bottom-left-radius: 4px;\n  background-color: #fff;\n  border: 1px solid #ccc;\n  border-top-color: #e6e6e6;\n  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);\n  box-sizing: border-box;\n  margin-top: -1px;\n  max-height: 200px;\n  position: absolute;\n  top: 100%;\n  width: 100%;\n  z-index: 1;\n  -webkit-overflow-scrolling: touch;\n}\n.Select-menu {\n  max-height: 198px;\n  overflow-y: auto;\n}\n.Select-option {\n  box-sizing: border-box;\n  background-color: #fff;\n  color: #666666;\n  cursor: pointer;\n  display: block;\n  padding: 8px 10px;\n}\n.Select-option:last-child {\n  border-bottom-right-radius: 4px;\n  border-bottom-left-radius: 4px;\n}\n.Select-option.is-focused {\n  background-color: rgba(0, 126, 255, 0.08);\n  color: #333;\n}\n.Select-option.is-disabled {\n  color: #cccccc;\n  cursor: default;\n}\n.Select-noresults {\n  box-sizing: border-box;\n  color: #999999;\n  cursor: default;\n  display: block;\n  padding: 8px 10px;\n}\n.Select--multi .Select-input {\n  vertical-align: middle;\n  margin-left: 10px;\n  padding: 0;\n}\n.Select--multi.has-value .Select-input {\n  margin-left: 5px;\n}\n.Select--multi .Select-value {\n  background-color: rgba(0, 126, 255, 0.08);\n  border-radius: 2px;\n  border: 1px solid rgba(0, 126, 255, 0.24);\n  color: #007eff;\n  display: inline-block;\n  font-size: 0.9em;\n  line-height: 1.4;\n  margin-left: 5px;\n  margin-top: 5px;\n  vertical-align: top;\n}\n.Select--multi .Select-value-icon,\n.Select--multi .Select-value-label {\n  display: inline-block;\n  vertical-align: middle;\n}\n.Select--multi .Select-value-label {\n  border-bottom-right-radius: 2px;\n  border-top-right-radius: 2px;\n  cursor: default;\n  padding: 2px 5px;\n}\n.Select--multi a.Select-value-label {\n  color: #007eff;\n  cursor: pointer;\n  text-decoration: none;\n}\n.Select--multi a.Select-value-label:hover {\n  text-decoration: underline;\n}\n.Select--multi .Select-value-icon {\n  cursor: pointer;\n  border-bottom-left-radius: 2px;\n  border-top-left-radius: 2px;\n  border-right: 1px solid rgba(0, 126, 255, 0.24);\n  padding: 1px 5px 3px;\n}\n.Select--multi .Select-value-icon:hover,\n.Select--multi .Select-value-icon:focus {\n  background-color: rgba(0, 113, 230, 0.08);\n  color: #0071e6;\n}\n.Select--multi .Select-value-icon:active {\n  background-color: rgba(0, 126, 255, 0.24);\n}\n.Select--multi.is-disabled .Select-value {\n  background-color: #fcfcfc;\n  border: 1px solid #e3e3e3;\n  color: #333;\n}\n.Select--multi.is-disabled .Select-value-icon {\n  cursor: not-allowed;\n  border-right: 1px solid #e3e3e3;\n}\n.Select--multi.is-disabled .Select-value-icon:hover,\n.Select--multi.is-disabled .Select-value-icon:focus,\n.Select--multi.is-disabled .Select-value-icon:active {\n  background-color: #fcfcfc;\n}\n@keyframes Select-animation-spin {\n  to {\n    transform: rotate(1turn);\n  }\n}\n@-webkit-keyframes Select-animation-spin {\n  to {\n    -webkit-transform: rotate(1turn);\n  }\n}\n", ""]);
-	
-	// exports
-
-
-/***/ },
-/* 252 */
-/*!********************************************!*\
-  !*** ./src/components/login.component.css ***!
-  \********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./login.component.css */ 253);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./login.component.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./login.component.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 253 */
-/*!***********************************************************!*\
-  !*** ./~/css-loader!./src/components/login.component.css ***!
-  \***********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "@media all {\r\n  ._2cvxI4pLTemeeoeZKRMLZC {\r\n    position: absolute;\r\n    top: 0;\r\n    right: -30%;\r\n    width: 30%;\r\n    height: 100%;\r\n    padding: 56px 8px 8px 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n  ._17eaOi4ss_ae9xJ3c5pp3v {\r\n    right: 0;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    min-height: 60px;\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .cHwHs1WAhNVISonpoh743 {\r\n    width: 32px;\r\n    margin: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-size: 235%;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP ._3Re4p9UQjBybh38h_Q2V5U {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP ._1ykYnidxhB-gc2ArFCRznH {\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP ._1ykYnidxhB-gc2ArFCRznH span {\r\n    cursor: pointer;\r\n  }\r\n  .MMgYrBxQrSJ2jxwQGXtj6 {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n\r\n  ._3DbKWG9mFEaa3ZVM4eIubv {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1X59MTHwAELLhsX1F2LdgY {\r\n    display: block;\r\n    padding: 0 0 0 4px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._2bh-oyo-GsX9HbvepVKhEQ {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    margin: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n\r\n\r\n  ._34rvmPEzc2bgryUa49jfbP .Select-control {\r\n    border-color: rgba(244, 244, 244, 1);\r\n    border-radius: 2px;\r\n    border: none;\r\n    color: rgba(94, 78, 81, 1);\r\n    background-color: rgba(244, 244, 244, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .Select-placeholder,\r\n  ._34rvmPEzc2bgryUa49jfbP :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(94, 78, 81, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .Select--multi .Select-value {\r\n    background-color: rgba(244, 244, 244, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(94, 78, 81, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(244, 244, 244, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(94, 78, 81, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 6px 3px 8px;\r\n    font-weight: 700;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(244, 244, 244, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .Select-arrow {\r\n    border-color: rgba(94, 78, 81, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .is-open .Select-arrow,\r\n  ._34rvmPEzc2bgryUa49jfbP .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .Select--multi .Select-value-icon:hover,\r\n  ._34rvmPEzc2bgryUa49jfbP .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .is-focused:not(.is-open) > .Select-control {\r\n    border-color: none;\r\n    box-shadow: none;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .Select--multi .Select-value {\r\n    background-color: rgba(244, 244, 244, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(244, 244, 244, 1);\r\n    color: rgba(94, 78, 81, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._34rvmPEzc2bgryUa49jfbP .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label,\r\n  ._34rvmPEzc2bgryUa49jfbP .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n\r\n\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n  ._2cvxI4pLTemeeoeZKRMLZC {\r\n    position: absolute;\r\n    right: -50%;\r\n    width: 50%;\r\n  }\r\n  ._17eaOi4ss_ae9xJ3c5pp3v {\r\n    right: 0;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._2cvxI4pLTemeeoeZKRMLZC {\r\n    position: absolute;\r\n    right: -100%;\r\n    width: 100%;\r\n    opacity: 0.85;\r\n    padding-bottom: 120px;\r\n  }\r\n  ._17eaOi4ss_ae9xJ3c5pp3v {\r\n    right: 0;\r\n  }\r\n}\r\n", ""]);
-	
-	// exports
-	exports.locals = {
-		"wrapper": "_2cvxI4pLTemeeoeZKRMLZC",
-		"slidein": "_17eaOi4ss_ae9xJ3c5pp3v",
-		"siginininfo": "_34rvmPEzc2bgryUa49jfbP",
-		"icon": "cHwHs1WAhNVISonpoh743",
-		"name": "_3Re4p9UQjBybh38h_Q2V5U",
-		"close": "_1ykYnidxhB-gc2ArFCRznH",
-		"basicinfo": "MMgYrBxQrSJ2jxwQGXtj6",
-		"contactlabel": "_3DbKWG9mFEaa3ZVM4eIubv",
-		"contactname": "_1X59MTHwAELLhsX1F2LdgY",
-		"contactinput": "_2bh-oyo-GsX9HbvepVKhEQ"
-	};
-
-/***/ },
-/* 254 */
-/*!**************************************************!*\
-  !*** ./src/components/login-parent.component.js ***!
-  \**************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var React = __webpack_require__(/*! react */ 1);
-	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./login-parent.component.css */ 255);
-	var authentication_1 = __webpack_require__(/*! ./../utils/authentication */ 257);
-	
-	var LoginParentComponent = function (_React$Component) {
-	    _inherits(LoginParentComponent, _React$Component);
-	
-	    function LoginParentComponent(props) {
-	        _classCallCheck(this, LoginParentComponent);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LoginParentComponent).call(this, props));
-	
-	        _this.updateProps = function (props) {
-	            var self = _this;
-	        };
-	        _this.submitLogin = function () {
-	            var self = _this;
-	            if (authentication_1.checkValidEmailAddress(self.state.contact.trim())) {
-	                authentication_1.processLogin(self.state.contact.trim(), self.state.contact.trim(), function (response) {
-	                    console.warn("login success");
-	                    self.context.router.push({ pathname: window.location.pathname });
-	                }, function (response) {
-	                    console.warn("login failed");
-	                }, function (response) {});
-	            } else {}
-	        };
-	        var self = _this;
-	        _this.state = {
-	            contact: "",
-	            password: ""
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(LoginParentComponent, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var self = this;
-	            self.updateProps(self.props);
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            var self = this;
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var self = this;
-	            self.updateProps(nextProps);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var self = this;
-	            return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'caret-right' }), React.createElement("label", { htmlFor: "parentin-contact" }, " Parent Contact")), React.createElement("div", { className: styles.contactname }, React.createElement("input", { autoFocus: true, type: "email", className: styles.contactinput, id: "parentin-contact", key: "parentin-contact", placeholder: "enter e-mail address...", value: self.state.contact, autoComplete: true, onChange: function onChange(event) {
-	                    self.setState({ contact: event.target.value, password: event.target.value });
-	                }, onKeyPress: function onKeyPress(event) {
-	                    if (event.key == 'Enter') {
-	                        self.submitLogin();
-	                    }
-	                }, onBlur: function onBlur() {
-	                    //self.submitLogin();
-	                } })), React.createElement("div", { className: styles.buttongroup, onClick: function onClick() {
-	                    self.submitLogin();
-	                } }, React.createElement("div", { className: styles.button }, "SIGN IN")));
-	        }
-	    }]);
-	
-	    return LoginParentComponent;
-	}(React.Component);
-	
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.default = LoginParentComponent;
-	LoginParentComponent.contextTypes = {
-	    router: function router() {
-	        return React.PropTypes.func.isRequired;
-	    }
-	};
-	//# sourceMappingURL=login-parent.component.js.map
-
-/***/ },
-/* 255 */
-/*!***************************************************!*\
-  !*** ./src/components/login-parent.component.css ***!
-  \***************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./login-parent.component.css */ 256);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./login-parent.component.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./login-parent.component.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 256 */
-/*!******************************************************************!*\
-  !*** ./~/css-loader!./src/components/login-parent.component.css ***!
-  \******************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "@media all {\r\n  ._23E22cefDpi-4kCSX6OFk- {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: medium;\r\n  }\r\n\r\n  ._3KXP2fgopJH7x6sRZD3teZ {\r\n    font-weight: 700;\r\n    padding: 8px 0 4px 0;\r\n  }\r\n  ._2YNYQmXwpq_GZKal8kKV2W {\r\n    display: block;\r\n    padding: 0;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._2wWLi6dDgVKrOQEjbb346I {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  .saPP18rl8v2wr3EiRhujg {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    padding: 16px 0 4px 0;\r\n    font-size: small;\r\n  }\r\n  ._2KkwRdB86O8gmhmUWtxz0r {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    padding: 4px;\r\n    border-radius: 2px;\r\n    border: 2px solid rgba(255, 255, 255, 1);\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n  }\r\n  ._2KkwRdB86O8gmhmUWtxz0r:hover {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n}\r\n", ""]);
-	
-	// exports
-	exports.locals = {
-		"wrapper": "_23E22cefDpi-4kCSX6OFk-",
-		"contactlabel": "_3KXP2fgopJH7x6sRZD3teZ",
-		"contactname": "_2YNYQmXwpq_GZKal8kKV2W",
-		"contactinput": "_2wWLi6dDgVKrOQEjbb346I",
-		"buttongroup": "saPP18rl8v2wr3EiRhujg",
-		"button": "_2KkwRdB86O8gmhmUWtxz0r"
-	};
-
-/***/ },
-/* 257 */
-/*!*************************************!*\
-  !*** ./src/utils/authentication.js ***!
-  \*************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var $ = __webpack_require__(/*! jquery */ 258);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	function checkValidEmailAddress(emailAddress) {
-	    var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
-	    return pattern.test(emailAddress);
-	}
-	exports.checkValidEmailAddress = checkValidEmailAddress;
-	;
-	function fetchUser(userId, _success, fail, _error) {
-	    $.ajax({
-	        url: Settings.uBaseName + Settings.uServer + "person.php",
-	        type: "GET",
-	        data: {
-	            'id': userId
-	        },
-	        cache: false,
-	        dataType: "json",
-	        success: function success(response, textStatus, jqXHR) {
-	            if (parseInt(response.code) == 400) {
-	                if (response.result.length) {
-	                    if (_success) {
-	                        _success(response.result[0]);
-	                    }
-	                }
-	            } else {
-	                if (fail) {
-	                    fail(response.code);
-	                }
-	            }
-	        },
-	        error: function error(jqXHR, textStatus, errorThrown) {
-	            if (_error) {
-	                fail(jqXHR);
-	            }
-	        }
-	    });
-	}
-	exports.fetchUser = fetchUser;
-	function processLogout(_success2, fail, _error2) {
-	    $.ajax({
-	        url: Settings.uBaseName + Settings.uServer + "logout.php",
-	        type: "GET",
-	        data: {},
-	        cache: false,
-	        dataType: "json",
-	        success: function success(response, textStatus, jqXHR) {
-	            if (parseInt(response.code) == 400) {
-	                if (_success2) {
-	                    _success2(response);
-	                }
-	            } else {
-	                if (fail) {
-	                    fail(response);
-	                }
-	            }
-	        },
-	        error: function error(jqXHR, textStatus, errorThrown) {
-	            if (_error2) {
-	                fail(jqXHR);
-	            }
-	        }
-	    });
-	}
-	exports.processLogout = processLogout;
-	function processLogin(contact, password, _success3, fail, _error3) {
-	    $.ajax({
-	        url: Settings.uBaseName + Settings.uServer + "login.php",
-	        type: "POST",
-	        data: {
-	            'contact': contact,
-	            'p': password
-	        },
-	        cache: false,
-	        dataType: "json",
-	        success: function success(response, textStatus, jqXHR) {
-	            if (parseInt(response.code) == 400) {
-	                if (_success3) {
-	                    _success3(response);
-	                }
-	            } else {
-	                if (fail) {
-	                    fail(response);
-	                }
-	            }
-	        },
-	        error: function error(jqXHR, textStatus, errorThrown) {
-	            if (_error3) {
-	                fail(jqXHR);
-	            }
-	        }
-	    });
-	}
-	exports.processLogin = processLogin;
-	function checkLogin(_success4, fail, _error4) {
-	    $.ajax({
-	        url: Settings.uBaseName + Settings.uServer + "logincheck.php",
-	        type: "POST",
-	        data: {},
-	        cache: false,
-	        dataType: "json",
-	        processData: false,
-	        contentType: false,
-	        success: function success(response, textStatus, jqXHR) {
-	            if (parseInt(response.code) == 400) {
-	                if (_success4) {
-	                    _success4(response);
-	                }
-	            } else {
-	                if (fail) {
-	                    fail(response);
-	                }
-	            }
-	        },
-	        error: function error(jqXHR, textStatus, errorThrown) {
-	            if (_error4) {
-	                fail(jqXHR);
-	            }
-	        }
-	    });
-	}
-	exports.checkLogin = checkLogin;
-	function checkAdmin(_success5, fail, _error5) {
-	    $.ajax({
-	        url: Settings.uBaseName + Settings.uServer + "admincheck.php",
-	        type: "POST",
-	        data: {},
-	        cache: false,
-	        dataType: "json",
-	        processData: false,
-	        contentType: false,
-	        success: function success(response, textStatus, jqXHR) {
-	            if (parseInt(response.code) == 400) {
-	                if (_success5) {
-	                    _success5(response);
-	                }
-	            } else {
-	                if (fail) {
-	                    fail(response);
-	                }
-	            }
-	        },
-	        error: function error(jqXHR, textStatus, errorThrown) {
-	            if (_error5) {
-	                fail(jqXHR);
-	            }
-	        }
-	    });
-	}
-	exports.checkAdmin = checkAdmin;
-	//# sourceMappingURL=authentication.js.map
-
-/***/ },
-/* 258 */
 /*!*********************************!*\
   !*** ./~/jquery/dist/jquery.js ***!
   \*********************************/
@@ -38653,381 +36412,167 @@
 
 
 /***/ },
-/* 259 */
-/*!***************************************************!*\
-  !*** ./src/components/login-manager.component.js ***!
-  \***************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var React = __webpack_require__(/*! react */ 1);
-	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./login-manager.component.css */ 260);
-	var authentication_1 = __webpack_require__(/*! ./../utils/authentication */ 257);
-	
-	var LoginManagerComponent = function (_React$Component) {
-	    _inherits(LoginManagerComponent, _React$Component);
-	
-	    function LoginManagerComponent(props) {
-	        _classCallCheck(this, LoginManagerComponent);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LoginManagerComponent).call(this, props));
-	
-	        _this.updateProps = function (props) {
-	            var self = _this;
-	        };
-	        _this.submitLogin = function () {
-	            var self = _this;
-	            if (authentication_1.checkValidEmailAddress(self.state.contact.trim())) {
-	                authentication_1.processLogin(self.state.contact.trim(), self.state.password.trim(), function (response) {
-	                    console.warn("login success");
-	                    self.context.router.push({ pathname: window.location.pathname });
-	                }, function (response) {
-	                    console.warn("login failed");
-	                }, function (response) {});
-	            } else {}
-	        };
-	        var self = _this;
-	        _this.state = {
-	            contact: "",
-	            password: ""
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(LoginManagerComponent, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var self = this;
-	            self.updateProps(self.props);
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            var self = this;
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var self = this;
-	            self.updateProps(nextProps);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var self = this;
-	            return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'caret-right' }), React.createElement("label", { htmlFor: "managerin-contact" }, " Manager Contact")), React.createElement("div", { className: styles.contactname }, React.createElement("input", { autoFocus: true, type: "email", className: styles.contactinput, id: "managerin-contact", key: "managerin-contact", placeholder: "enter e-mail address...", ref: function ref(element) {
-	                    return self.contactInput = element;
-	                }, value: self.state.contact, autoComplete: true, onChange: function onChange(event) {
-	                    self.setState({ contact: event.target.value, password: self.state.password });
-	                }, onKeyPress: function onKeyPress(event) {
-	                    if (event.key == 'Enter') {
-	                        self.passwordInput.focus();
-	                    }
-	                }, onBlur: function onBlur() {
-	                    //self.submitLogin();
-	                } })), React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'caret-right' }), React.createElement("label", { htmlFor: "managerin-contact" }, " Manager Password")), React.createElement("div", { className: styles.contactname }, React.createElement("input", { autoFocus: true, type: "password", className: styles.contactinput, id: "managerin-password", key: "managerin-password", placeholder: "enter password...", ref: function ref(element) {
-	                    return self.passwordInput = element;
-	                }, value: self.state.password, onChange: function onChange(event) {
-	                    self.setState({ contact: self.state.contact, password: event.target.value });
-	                }, onKeyPress: function onKeyPress(event) {
-	                    if (event.key == 'Enter') {
-	                        self.submitLogin();
-	                    }
-	                }, onBlur: function onBlur() {
-	                    //self.submitLogin();
-	                } })), React.createElement("div", { className: styles.buttongroup, onClick: function onClick() {
-	                    self.submitLogin();
-	                } }, React.createElement("div", { className: styles.button }, "SIGN IN")));
-	        }
-	    }]);
-	
-	    return LoginManagerComponent;
-	}(React.Component);
-	
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.default = LoginManagerComponent;
-	LoginManagerComponent.contextTypes = {
-	    router: function router() {
-	        return React.PropTypes.func.isRequired;
-	    }
-	};
-	//# sourceMappingURL=login-manager.component.js.map
-
-/***/ },
-/* 260 */
-/*!****************************************************!*\
-  !*** ./src/components/login-manager.component.css ***!
-  \****************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./login-manager.component.css */ 261);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./login-manager.component.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./login-manager.component.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 261 */
-/*!*******************************************************************!*\
-  !*** ./~/css-loader!./src/components/login-manager.component.css ***!
-  \*******************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "@media all {\r\n  ._2Xt6D8P_uShNMbjo8nRrcD {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: medium;\r\n  }\r\n\r\n  .fYkPSRS04v3Yol2iFTTbx {\r\n    font-weight: 700;\r\n    padding: 8px 0 0 0;\r\n  }\r\n  ._3AzgrJ7_aceGrZxLgsjXc1 {\r\n    display: block;\r\n    padding: 0;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  .VJ4qIbrGLj5umjYm6pKm8 {\r\n    width: 100%;\r\n    margin: 4px 0;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  .h3PDYzFKxgmSZC0tgIbG3 {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    padding: 16px 0 4px 0;\r\n    font-size: small;\r\n  }\r\n  ._3PzMk3JyOOzQmpuzzzCm8Y {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    padding: 4px;\r\n    border-radius: 2px;\r\n    border: 2px solid rgba(255, 255, 255, 1);\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n  }\r\n  ._3PzMk3JyOOzQmpuzzzCm8Y:hover {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n}\r\n", ""]);
-	
-	// exports
-	exports.locals = {
-		"wrapper": "_2Xt6D8P_uShNMbjo8nRrcD",
-		"contactlabel": "fYkPSRS04v3Yol2iFTTbx",
-		"contactname": "_3AzgrJ7_aceGrZxLgsjXc1",
-		"contactinput": "VJ4qIbrGLj5umjYm6pKm8",
-		"buttongroup": "h3PDYzFKxgmSZC0tgIbG3",
-		"button": "_3PzMk3JyOOzQmpuzzzCm8Y"
-	};
-
-/***/ },
-/* 262 */
-/*!******************************************!*\
-  !*** ./src/components/user.component.js ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var React = __webpack_require__(/*! react */ 1);
-	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
-	__webpack_require__(/*! ./../../~/react-select/dist/react-select.css */ 250);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./user.component.css */ 263);
-	var authentication_1 = __webpack_require__(/*! ./../utils/authentication */ 257);
-	var app_component_1 = __webpack_require__(/*! ./app.component */ 219);
-	
-	var UserComponent = function (_React$Component) {
-	    _inherits(UserComponent, _React$Component);
-	
-	    function UserComponent(props) {
-	        _classCallCheck(this, UserComponent);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UserComponent).call(this, props));
-	
-	        _this.updateProps = function (props) {
-	            var self = _this;
-	            if (props.login == app_component_1.LogInStatus.GUEST) {
-	                self.authentication = "Guest";
-	            } else if (props.login == app_component_1.LogInStatus.PARENT) {
-	                self.authentication = "Parent";
-	            } else if (props.login == app_component_1.LogInStatus.MANAGER) {
-	                self.authentication = "Manager";
-	            } else if (props.login == app_component_1.LogInStatus.ADMIN) {
-	                self.authentication = "Admin";
-	            }
-	            authentication_1.fetchUser(props.userId, function (response) {
-	                self.setState({ name: response.name, contact: response.contact, address: response.address, bOpen: self.state.bOpen });
-	            }, function (response) {}, function (response) {});
-	            if (props.bOpen == "true") {
-	                self.setState({ name: self.state.name, contact: self.state.contact, address: self.state.address, bOpen: true });
-	            } else {
-	                self.setState({ name: self.state.name, contact: self.state.contact, address: self.state.address, bOpen: false });
-	            }
-	        };
-	        _this.updateAttribute = function () {
-	            var self = _this;
-	        };
-	        _this.submitLogout = function () {
-	            var self = _this;
-	            authentication_1.processLogout(function (response) {
-	                console.warn("logout success");
-	                self.context.router.push({ pathname: window.location.pathname });
-	            }, function (response) {}, function (response) {});
-	        };
-	        var self = _this;
-	        _this.state = {
-	            name: "",
-	            contact: "",
-	            address: "",
-	            bOpen: false
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(UserComponent, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var self = this;
-	            self.updateProps(self.props);
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            var self = this;
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var self = this;
-	            self.updateProps(nextProps);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var self = this;
-	            if (self.state.bOpen) {
-	                return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.userinfo }, React.createElement("div", { className: styles.icon }, React.createElement(FontAwesome, { className: '', name: 'user' })), React.createElement("div", { className: styles.name }, "PARENT INFO"), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
-	                        self.context.router.goBack();
-	                    } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'at' }), " E-mail Address"), React.createElement("div", { className: styles.contactname }, self.state.contact), React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'long-arrow-right' }), " Name"), React.createElement("div", { className: styles.contactname }, self.state.name), React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'long-arrow-right' }), " Role"), React.createElement("div", { className: styles.contactname }, self.authentication), React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'long-arrow-right' }), " Neighborhood"), React.createElement("div", { className: styles.contactname }, self.state.address)), React.createElement("div", { className: styles.buttongroup, onClick: function onClick() {
-	                        self.submitLogout();
-	                    } }, React.createElement("div", { className: styles.button }, "SIGN OUT")));
-	            } else {
-	                return React.createElement("div", { className: styles.wrapper });
-	            }
-	        }
-	    }]);
-	
-	    return UserComponent;
-	}(React.Component);
-	
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.default = UserComponent;
-	UserComponent.contextTypes = {
-	    router: function router() {
-	        return React.PropTypes.func.isRequired;
-	    }
-	};
-	//# sourceMappingURL=user.component.js.map
-
-/***/ },
-/* 263 */
-/*!*******************************************!*\
-  !*** ./src/components/user.component.css ***!
-  \*******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./user.component.css */ 264);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./user.component.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./user.component.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 264 */
-/*!**********************************************************!*\
-  !*** ./~/css-loader!./src/components/user.component.css ***!
-  \**********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "@media all {\r\n  ._1zxGVwFT1wh7T1LVbbdErQ {\r\n    position: fixed;\r\n    top: 0;\r\n    right: -30%;\r\n    width: 30%;\r\n    height: 100%;\r\n    transition: 0.75s;\r\n    padding: 56px 8px 8px 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n  .Kp4YnmPIkcudYAky3Iuhz {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n  ._162cund1WehnJmO3OQHoOd {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    min-height: 60px;\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  ._162cund1WehnJmO3OQHoOd ._2RgMhfsWd1ULh_bv-u-pH7 {\r\n\r\n\r\n    width: 32px;\r\n    margin: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-size: 235%;\r\n  }\r\n  ._162cund1WehnJmO3OQHoOd ._18sPIwZlTuLA6AYImtwNLe {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  ._162cund1WehnJmO3OQHoOd .c4YnR-qWdnb0lAc94AShw {\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._162cund1WehnJmO3OQHoOd .c4YnR-qWdnb0lAc94AShw span {\r\n    cursor: pointer;\r\n  }\r\n  .evMJBZGYvavqX1EUWY8fj {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n    color: rgba(255, 255, 255, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n\r\n  .G_FovVNwovQmnPI_1P-Yv {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._1tKCUugC27ug-UY53DEO2y {\r\n    display: inline-block;\r\n    padding: 2px 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._3si5VRGDADYUUt_YfXPm1k {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    margin: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n\r\n  ._2THHFikqFDKSrO6SeglRm0 {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    padding: 16px 0 4px 0;\r\n    font-size: small;\r\n  }\r\n  ._3iQZFVdJfnajzu1VG5unAm {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    padding: 4px;\r\n    border-radius: 2px;\r\n    border: 2px solid rgba(94, 78, 81, 1);\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._3iQZFVdJfnajzu1VG5unAm:hover {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n  ._1zxGVwFT1wh7T1LVbbdErQ {\r\n    right: -50%;\r\n    width: 50%;\r\n  }\r\n  .Kp4YnmPIkcudYAky3Iuhz {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1zxGVwFT1wh7T1LVbbdErQ {\r\n    position: fixed;\r\n    right: -100%;\r\n    width: 100%;\r\n    opacity: 0.85;\r\n    padding-bottom: 120px;\r\n  }\r\n  .Kp4YnmPIkcudYAky3Iuhz {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n", ""]);
-	
-	// exports
-	exports.locals = {
-		"wrapper": "_1zxGVwFT1wh7T1LVbbdErQ",
-		"slidein": "Kp4YnmPIkcudYAky3Iuhz",
-		"userinfo": "_162cund1WehnJmO3OQHoOd",
-		"icon": "_2RgMhfsWd1ULh_bv-u-pH7",
-		"name": "_18sPIwZlTuLA6AYImtwNLe",
-		"close": "c4YnR-qWdnb0lAc94AShw",
-		"basicinfo": "evMJBZGYvavqX1EUWY8fj",
-		"contactlabel": "G_FovVNwovQmnPI_1P-Yv",
-		"contactname": "_1tKCUugC27ug-UY53DEO2y",
-		"contactinput": "_3si5VRGDADYUUt_YfXPm1k",
-		"buttongroup": "_2THHFikqFDKSrO6SeglRm0",
-		"button": "_3iQZFVdJfnajzu1VG5unAm"
-	};
-
-/***/ },
-/* 265 */
+/* 235 */
 /*!*************************************!*\
-  !*** ./src/utils/loadingtracker.js ***!
+  !*** ./src/utils/authentication.js ***!
   \*************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 258);
+	var $ = __webpack_require__(/*! jquery */ 234);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var loadings = new Array();
-	function addLoading() {
-	    loadings.push(true);
-	    if ($('#loader').hasClass('hide')) {
-	        $('#loader').removeClass('hide');
-	    }
+	function checkValidEmailAddress(emailAddress) {
+	    var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+	    return pattern.test(emailAddress);
 	}
-	exports.addLoading = addLoading;
-	function removeLoading() {
-	    loadings.pop();
-	    if (!loadings.length) {
-	        if (!$('#loader').hasClass('hide')) {
-	            $('#loader').addClass('hide');
+	exports.checkValidEmailAddress = checkValidEmailAddress;
+	;
+	function fetchUser(userId, _success, fail, _error) {
+	    $.ajax({
+	        url: Settings.uBaseName + Settings.uServer + "person.php",
+	        type: "GET",
+	        data: {
+	            'id': userId
+	        },
+	        cache: false,
+	        dataType: "json",
+	        success: function success(response, textStatus, jqXHR) {
+	            if (parseInt(response.code) == 400) {
+	                if (response.result.length) {
+	                    if (_success) {
+	                        _success(response.result[0]);
+	                    }
+	                }
+	            } else {
+	                if (fail) {
+	                    fail(response.code);
+	                }
+	            }
+	        },
+	        error: function error(jqXHR, textStatus, errorThrown) {
+	            if (_error) {
+	                fail(jqXHR);
+	            }
 	        }
-	    }
+	    });
 	}
-	exports.removeLoading = removeLoading;
-	//# sourceMappingURL=loadingtracker.js.map
+	exports.fetchUser = fetchUser;
+	function processLogout(_success2, fail, _error2) {
+	    $.ajax({
+	        url: Settings.uBaseName + Settings.uServer + "logout.php",
+	        type: "GET",
+	        data: {},
+	        cache: false,
+	        dataType: "json",
+	        success: function success(response, textStatus, jqXHR) {
+	            if (parseInt(response.code) == 400) {
+	                if (_success2) {
+	                    _success2(response);
+	                }
+	            } else {
+	                if (fail) {
+	                    fail(response);
+	                }
+	            }
+	        },
+	        error: function error(jqXHR, textStatus, errorThrown) {
+	            if (_error2) {
+	                fail(jqXHR);
+	            }
+	        }
+	    });
+	}
+	exports.processLogout = processLogout;
+	function processLogin(contact, password, _success3, fail, _error3) {
+	    $.ajax({
+	        url: Settings.uBaseName + Settings.uServer + "login.php",
+	        type: "POST",
+	        data: {
+	            'contact': contact,
+	            'p': password
+	        },
+	        cache: false,
+	        dataType: "json",
+	        success: function success(response, textStatus, jqXHR) {
+	            if (parseInt(response.code) == 400) {
+	                if (_success3) {
+	                    _success3(response);
+	                }
+	            } else {
+	                if (fail) {
+	                    fail(response);
+	                }
+	            }
+	        },
+	        error: function error(jqXHR, textStatus, errorThrown) {
+	            if (_error3) {
+	                fail(jqXHR);
+	            }
+	        }
+	    });
+	}
+	exports.processLogin = processLogin;
+	function checkLogin(_success4, fail, _error4) {
+	    $.ajax({
+	        url: Settings.uBaseName + Settings.uServer + "logincheck.php",
+	        type: "POST",
+	        data: {},
+	        cache: false,
+	        dataType: "json",
+	        processData: false,
+	        contentType: false,
+	        success: function success(response, textStatus, jqXHR) {
+	            if (parseInt(response.code) == 400) {
+	                if (_success4) {
+	                    _success4(response);
+	                }
+	            } else {
+	                if (fail) {
+	                    fail(response);
+	                }
+	            }
+	        },
+	        error: function error(jqXHR, textStatus, errorThrown) {
+	            if (_error4) {
+	                fail(jqXHR);
+	            }
+	        }
+	    });
+	}
+	exports.checkLogin = checkLogin;
+	function checkAdmin(_success5, fail, _error5) {
+	    $.ajax({
+	        url: Settings.uBaseName + Settings.uServer + "admincheck.php",
+	        type: "POST",
+	        data: {},
+	        cache: false,
+	        dataType: "json",
+	        processData: false,
+	        contentType: false,
+	        success: function success(response, textStatus, jqXHR) {
+	            if (parseInt(response.code) == 400) {
+	                if (_success5) {
+	                    _success5(response);
+	                }
+	            } else {
+	                if (fail) {
+	                    fail(response);
+	                }
+	            }
+	        },
+	        error: function error(jqXHR, textStatus, errorThrown) {
+	            if (_error5) {
+	                fail(jqXHR);
+	            }
+	        }
+	    });
+	}
+	exports.checkAdmin = checkAdmin;
+	//# sourceMappingURL=authentication.js.map
 
 /***/ },
-/* 266 */
+/* 236 */
 /*!*******************************************!*\
   !*** ./src/components/trees.component.js ***!
   \*******************************************/
@@ -39044,14 +36589,15 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(/*! react */ 1);
-	var AltContainer = __webpack_require__(/*! alt-container */ 267);
+	var L = __webpack_require__(/*! leaflet */ 373);
+	var AltContainer = __webpack_require__(/*! alt-container */ 237);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./trees.component.css */ 279);
-	__webpack_require__(/*! ./../../~/leaflet/dist/leaflet.css */ 281);
-	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 285);
-	var food_store_1 = __webpack_require__(/*! ./../stores/food.store */ 408);
-	var map_component_1 = __webpack_require__(/*! ./map.component */ 411);
-	var trees_panel_component_1 = __webpack_require__(/*! ./trees-panel.component */ 417);
+	var styles = __webpack_require__(/*! ./trees.component.css */ 249);
+	__webpack_require__(/*! ./../../~/leaflet/dist/leaflet.css */ 251);
+	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 255);
+	var food_store_1 = __webpack_require__(/*! ./../stores/food.store */ 378);
+	var map_component_1 = __webpack_require__(/*! ./map.component */ 381);
+	var trees_panel_component_1 = __webpack_require__(/*! ./trees-panel.component */ 387);
 	
 	var TreesComponent = function (_React$Component) {
 	    _inherits(TreesComponent, _React$Component);
@@ -39094,11 +36640,20 @@
 	            var self = _this;
 	            self.setState({ zoom: zoom });
 	        };
+	        _this.onGeo = function (position) {
+	            var self = _this;
+	            self.setState({ position: new L.LatLng(position.coords.latitude, position.coords.longitude) });
+	        };
+	        _this.offGeo = function () {
+	            var self = _this;
+	            self.setState({ position: null });
+	        };
 	        var self = _this;
 	        _this.state = {
 	            treeId: null,
 	            trees: null,
-	            zoom: Settings.iDefaultZoom
+	            zoom: Settings.iDefaultZoom,
+	            position: null
 	        };
 	        return _this;
 	    }
@@ -39139,7 +36694,7 @@
 	                            value: tree_store_1.treeStore.getState().trees
 	                        };
 	                    }
-	                } }, React.createElement(map_component_1.default, { treeId: self.state.treeId, foods: food_store_1.foodStore.getState().foods, trees: tree_store_1.treeStore.getState().trees, onRender: self.onMapRender, zoom: self.state.zoom, onZoom: self.onZoom }), React.createElement(trees_panel_component_1.default, { treeId: self.state.treeId, foods: food_store_1.foodStore.getState().foods, trees: tree_store_1.treeStore.getState().trees, zoom: self.state.zoom, onZoom: self.onZoom })));
+	                } }, React.createElement(map_component_1.default, { treeId: self.state.treeId, foods: food_store_1.foodStore.getState().foods, trees: tree_store_1.treeStore.getState().trees, onRender: self.onMapRender, zoom: self.state.zoom, onZoom: self.onZoom, position: self.state.position, offGeo: self.offGeo }), React.createElement(trees_panel_component_1.default, { treeId: self.state.treeId, foods: food_store_1.foodStore.getState().foods, trees: tree_store_1.treeStore.getState().trees, zoom: self.state.zoom, onZoom: self.onZoom, onGeo: self.onGeo })));
 	        }
 	    }]);
 	
@@ -39151,7 +36706,7 @@
 	//# sourceMappingURL=trees.component.js.map
 
 /***/ },
-/* 267 */
+/* 237 */
 /*!*********************************************!*\
   !*** ./~/alt-container/lib/AltContainer.js ***!
   \*********************************************/
@@ -39234,7 +36789,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _objectAssign = __webpack_require__(/*! object.assign */ 268);
+	var _objectAssign = __webpack_require__(/*! object.assign */ 238);
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
@@ -39441,7 +36996,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 268 */
+/* 238 */
 /*!**********************************!*\
   !*** ./~/object.assign/index.js ***!
   \**********************************/
@@ -39449,11 +37004,11 @@
 
 	'use strict';
 	
-	var defineProperties = __webpack_require__(/*! define-properties */ 269);
+	var defineProperties = __webpack_require__(/*! define-properties */ 239);
 	
-	var implementation = __webpack_require__(/*! ./implementation */ 273);
-	var getPolyfill = __webpack_require__(/*! ./polyfill */ 277);
-	var shim = __webpack_require__(/*! ./shim */ 278);
+	var implementation = __webpack_require__(/*! ./implementation */ 243);
+	var getPolyfill = __webpack_require__(/*! ./polyfill */ 247);
+	var shim = __webpack_require__(/*! ./shim */ 248);
 	
 	defineProperties(implementation, {
 		implementation: implementation,
@@ -39465,7 +37020,7 @@
 
 
 /***/ },
-/* 269 */
+/* 239 */
 /*!**************************************!*\
   !*** ./~/define-properties/index.js ***!
   \**************************************/
@@ -39473,8 +37028,8 @@
 
 	'use strict';
 	
-	var keys = __webpack_require__(/*! object-keys */ 270);
-	var foreach = __webpack_require__(/*! foreach */ 272);
+	var keys = __webpack_require__(/*! object-keys */ 240);
+	var foreach = __webpack_require__(/*! foreach */ 242);
 	var hasSymbols = typeof Symbol === 'function' && typeof Symbol() === 'symbol';
 	
 	var toStr = Object.prototype.toString;
@@ -39530,7 +37085,7 @@
 
 
 /***/ },
-/* 270 */
+/* 240 */
 /*!********************************!*\
   !*** ./~/object-keys/index.js ***!
   \********************************/
@@ -39542,7 +37097,7 @@
 	var has = Object.prototype.hasOwnProperty;
 	var toStr = Object.prototype.toString;
 	var slice = Array.prototype.slice;
-	var isArgs = __webpack_require__(/*! ./isArguments */ 271);
+	var isArgs = __webpack_require__(/*! ./isArguments */ 241);
 	var hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString');
 	var hasProtoEnumBug = function () {}.propertyIsEnumerable('prototype');
 	var dontEnums = [
@@ -39667,7 +37222,7 @@
 
 
 /***/ },
-/* 271 */
+/* 241 */
 /*!**************************************!*\
   !*** ./~/object-keys/isArguments.js ***!
   \**************************************/
@@ -39693,7 +37248,7 @@
 
 
 /***/ },
-/* 272 */
+/* 242 */
 /*!****************************!*\
   !*** ./~/foreach/index.js ***!
   \****************************/
@@ -39724,7 +37279,7 @@
 
 
 /***/ },
-/* 273 */
+/* 243 */
 /*!*******************************************!*\
   !*** ./~/object.assign/implementation.js ***!
   \*******************************************/
@@ -39733,12 +37288,12 @@
 	'use strict';
 	
 	// modified from https://github.com/es-shims/es6-shim
-	var keys = __webpack_require__(/*! object-keys */ 270);
-	var bind = __webpack_require__(/*! function-bind */ 274);
+	var keys = __webpack_require__(/*! object-keys */ 240);
+	var bind = __webpack_require__(/*! function-bind */ 244);
 	var canBeObject = function (obj) {
 		return typeof obj !== 'undefined' && obj !== null;
 	};
-	var hasSymbols = __webpack_require__(/*! ./hasSymbols */ 276)();
+	var hasSymbols = __webpack_require__(/*! ./hasSymbols */ 246)();
 	var toObject = Object;
 	var push = bind.call(Function.call, Array.prototype.push);
 	var propIsEnumerable = bind.call(Function.call, Object.prototype.propertyIsEnumerable);
@@ -39772,19 +37327,19 @@
 
 
 /***/ },
-/* 274 */
+/* 244 */
 /*!**********************************!*\
   !*** ./~/function-bind/index.js ***!
   \**********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var implementation = __webpack_require__(/*! ./implementation */ 275);
+	var implementation = __webpack_require__(/*! ./implementation */ 245);
 	
 	module.exports = Function.prototype.bind || implementation;
 
 
 /***/ },
-/* 275 */
+/* 245 */
 /*!*******************************************!*\
   !*** ./~/function-bind/implementation.js ***!
   \*******************************************/
@@ -39841,7 +37396,7 @@
 
 
 /***/ },
-/* 276 */
+/* 246 */
 /*!***************************************!*\
   !*** ./~/object.assign/hasSymbols.js ***!
   \***************************************/
@@ -39849,7 +37404,7 @@
 
 	'use strict';
 	
-	var keys = __webpack_require__(/*! object-keys */ 270);
+	var keys = __webpack_require__(/*! object-keys */ 240);
 	
 	module.exports = function hasSymbols() {
 		if (typeof Symbol !== 'function' || typeof Object.getOwnPropertySymbols !== 'function') { return false; }
@@ -39887,7 +37442,7 @@
 
 
 /***/ },
-/* 277 */
+/* 247 */
 /*!*************************************!*\
   !*** ./~/object.assign/polyfill.js ***!
   \*************************************/
@@ -39895,7 +37450,7 @@
 
 	'use strict';
 	
-	var implementation = __webpack_require__(/*! ./implementation */ 273);
+	var implementation = __webpack_require__(/*! ./implementation */ 243);
 	
 	var lacksProperEnumerationOrder = function () {
 		if (!Object.assign) {
@@ -39946,7 +37501,7 @@
 
 
 /***/ },
-/* 278 */
+/* 248 */
 /*!*********************************!*\
   !*** ./~/object.assign/shim.js ***!
   \*********************************/
@@ -39954,8 +37509,8 @@
 
 	'use strict';
 	
-	var define = __webpack_require__(/*! define-properties */ 269);
-	var getPolyfill = __webpack_require__(/*! ./polyfill */ 277);
+	var define = __webpack_require__(/*! define-properties */ 239);
+	var getPolyfill = __webpack_require__(/*! ./polyfill */ 247);
 	
 	module.exports = function shimAssign() {
 		var polyfill = getPolyfill();
@@ -39969,7 +37524,7 @@
 
 
 /***/ },
-/* 279 */
+/* 249 */
 /*!********************************************!*\
   !*** ./src/components/trees.component.css ***!
   \********************************************/
@@ -39978,7 +37533,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./trees.component.css */ 280);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./trees.component.css */ 250);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -39998,7 +37553,7 @@
 	}
 
 /***/ },
-/* 280 */
+/* 250 */
 /*!***********************************************************!*\
   !*** ./~/css-loader!./src/components/trees.component.css ***!
   \***********************************************************/
@@ -40018,7 +37573,7 @@
 	};
 
 /***/ },
-/* 281 */
+/* 251 */
 /*!************************************!*\
   !*** ./~/leaflet/dist/leaflet.css ***!
   \************************************/
@@ -40027,7 +37582,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../css-loader!./leaflet.css */ 282);
+	var content = __webpack_require__(/*! !./../../css-loader!./leaflet.css */ 252);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 223)(content, {});
@@ -40047,7 +37602,7 @@
 	}
 
 /***/ },
-/* 282 */
+/* 252 */
 /*!***************************************************!*\
   !*** ./~/css-loader!./~/leaflet/dist/leaflet.css ***!
   \***************************************************/
@@ -40058,13 +37613,13 @@
 	
 	
 	// module
-	exports.push([module.id, "/* required styles */\r\n\r\n.leaflet-map-pane,\r\n.leaflet-tile,\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow,\r\n.leaflet-tile-pane,\r\n.leaflet-tile-container,\r\n.leaflet-overlay-pane,\r\n.leaflet-shadow-pane,\r\n.leaflet-marker-pane,\r\n.leaflet-popup-pane,\r\n.leaflet-overlay-pane svg,\r\n.leaflet-zoom-box,\r\n.leaflet-image-layer,\r\n.leaflet-layer {\r\n\tposition: absolute;\r\n\tleft: 0;\r\n\ttop: 0;\r\n\t}\r\n.leaflet-container {\r\n\toverflow: hidden;\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n\t}\r\n.leaflet-tile,\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow {\r\n\t-webkit-user-select: none;\r\n\t   -moz-user-select: none;\r\n\t        user-select: none;\r\n\t-webkit-user-drag: none;\r\n\t}\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow {\r\n\tdisplay: block;\r\n\t}\r\n/* map is broken in FF if you have max-width: 100% on tiles */\r\n.leaflet-container img {\r\n\tmax-width: none !important;\r\n\t}\r\n/* stupid Android 2 doesn't understand \"max-width: none\" properly */\r\n.leaflet-container img.leaflet-image-layer {\r\n\tmax-width: 15000px !important;\r\n\t}\r\n.leaflet-tile {\r\n\tfilter: inherit;\r\n\tvisibility: hidden;\r\n\t}\r\n.leaflet-tile-loaded {\r\n\tvisibility: inherit;\r\n\t}\r\n.leaflet-zoom-box {\r\n\twidth: 0;\r\n\theight: 0;\r\n\t}\r\n/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */\r\n.leaflet-overlay-pane svg {\r\n\t-moz-user-select: none;\r\n\t}\r\n\r\n.leaflet-tile-pane    { z-index: 2; }\r\n.leaflet-objects-pane { z-index: 3; }\r\n.leaflet-overlay-pane { z-index: 4; }\r\n.leaflet-shadow-pane  { z-index: 5; }\r\n.leaflet-marker-pane  { z-index: 6; }\r\n.leaflet-popup-pane   { z-index: 7; }\r\n\r\n.leaflet-vml-shape {\r\n\twidth: 1px;\r\n\theight: 1px;\r\n\t}\r\n.lvml {\r\n\tbehavior: url(#default#VML);\r\n\tdisplay: inline-block;\r\n\tposition: absolute;\r\n\t}\r\n\r\n\r\n/* control positioning */\r\n\r\n.leaflet-control {\r\n\tposition: relative;\r\n\tz-index: 7;\r\n\tpointer-events: auto;\r\n\t}\r\n.leaflet-top,\r\n.leaflet-bottom {\r\n\tposition: absolute;\r\n\tz-index: 1000;\r\n\tpointer-events: none;\r\n\t}\r\n.leaflet-top {\r\n\ttop: 0;\r\n\t}\r\n.leaflet-right {\r\n\tright: 0;\r\n\t}\r\n.leaflet-bottom {\r\n\tbottom: 0;\r\n\t}\r\n.leaflet-left {\r\n\tleft: 0;\r\n\t}\r\n.leaflet-control {\r\n\tfloat: left;\r\n\tclear: both;\r\n\t}\r\n.leaflet-right .leaflet-control {\r\n\tfloat: right;\r\n\t}\r\n.leaflet-top .leaflet-control {\r\n\tmargin-top: 10px;\r\n\t}\r\n.leaflet-bottom .leaflet-control {\r\n\tmargin-bottom: 10px;\r\n\t}\r\n.leaflet-left .leaflet-control {\r\n\tmargin-left: 10px;\r\n\t}\r\n.leaflet-right .leaflet-control {\r\n\tmargin-right: 10px;\r\n\t}\r\n\r\n\r\n/* zoom and fade animations */\r\n\r\n.leaflet-fade-anim .leaflet-tile,\r\n.leaflet-fade-anim .leaflet-popup {\r\n\topacity: 0;\r\n\t-webkit-transition: opacity 0.2s linear;\r\n\t   -moz-transition: opacity 0.2s linear;\r\n\t     -o-transition: opacity 0.2s linear;\r\n\t        transition: opacity 0.2s linear;\r\n\t}\r\n.leaflet-fade-anim .leaflet-tile-loaded,\r\n.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {\r\n\topacity: 1;\r\n\t}\r\n\r\n.leaflet-zoom-anim .leaflet-zoom-animated {\r\n\t-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t     -o-transition:      -o-transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t}\r\n.leaflet-zoom-anim .leaflet-tile,\r\n.leaflet-pan-anim .leaflet-tile,\r\n.leaflet-touching .leaflet-zoom-animated {\r\n\t-webkit-transition: none;\r\n\t   -moz-transition: none;\r\n\t     -o-transition: none;\r\n\t        transition: none;\r\n\t}\r\n\r\n.leaflet-zoom-anim .leaflet-zoom-hide {\r\n\tvisibility: hidden;\r\n\t}\r\n\r\n\r\n/* cursors */\r\n\r\n.leaflet-clickable {\r\n\tcursor: pointer;\r\n\t}\r\n.leaflet-container {\r\n\tcursor: -webkit-grab;\r\n\tcursor:    -moz-grab;\r\n\t}\r\n.leaflet-popup-pane,\r\n.leaflet-control {\r\n\tcursor: auto;\r\n\t}\r\n.leaflet-dragging .leaflet-container,\r\n.leaflet-dragging .leaflet-clickable {\r\n\tcursor: move;\r\n\tcursor: -webkit-grabbing;\r\n\tcursor:    -moz-grabbing;\r\n\t}\r\n\r\n\r\n/* visual tweaks */\r\n\r\n.leaflet-container {\r\n\tbackground: #ddd;\r\n\toutline: 0;\r\n\t}\r\n.leaflet-container a {\r\n\tcolor: #0078A8;\r\n\t}\r\n.leaflet-container a.leaflet-active {\r\n\toutline: 2px solid orange;\r\n\t}\r\n.leaflet-zoom-box {\r\n\tborder: 2px dotted #38f;\r\n\tbackground: rgba(255,255,255,0.5);\r\n\t}\r\n\r\n\r\n/* general typography */\r\n.leaflet-container {\r\n\tfont: 12px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif;\r\n\t}\r\n\r\n\r\n/* general toolbar styles */\r\n\r\n.leaflet-bar {\r\n\tbox-shadow: 0 1px 5px rgba(0,0,0,0.65);\r\n\tborder-radius: 4px;\r\n\t}\r\n.leaflet-bar a,\r\n.leaflet-bar a:hover {\r\n\tbackground-color: #fff;\r\n\tborder-bottom: 1px solid #ccc;\r\n\twidth: 26px;\r\n\theight: 26px;\r\n\tline-height: 26px;\r\n\tdisplay: block;\r\n\ttext-align: center;\r\n\ttext-decoration: none;\r\n\tcolor: black;\r\n\t}\r\n.leaflet-bar a,\r\n.leaflet-control-layers-toggle {\r\n\tbackground-position: 50% 50%;\r\n\tbackground-repeat: no-repeat;\r\n\tdisplay: block;\r\n\t}\r\n.leaflet-bar a:hover {\r\n\tbackground-color: #f4f4f4;\r\n\t}\r\n.leaflet-bar a:first-child {\r\n\tborder-top-left-radius: 4px;\r\n\tborder-top-right-radius: 4px;\r\n\t}\r\n.leaflet-bar a:last-child {\r\n\tborder-bottom-left-radius: 4px;\r\n\tborder-bottom-right-radius: 4px;\r\n\tborder-bottom: none;\r\n\t}\r\n.leaflet-bar a.leaflet-disabled {\r\n\tcursor: default;\r\n\tbackground-color: #f4f4f4;\r\n\tcolor: #bbb;\r\n\t}\r\n\r\n.leaflet-touch .leaflet-bar a {\r\n\twidth: 30px;\r\n\theight: 30px;\r\n\tline-height: 30px;\r\n\t}\r\n\r\n\r\n/* zoom control */\r\n\r\n.leaflet-control-zoom-in,\r\n.leaflet-control-zoom-out {\r\n\tfont: bold 18px 'Lucida Console', Monaco, monospace;\r\n\ttext-indent: 1px;\r\n\t}\r\n.leaflet-control-zoom-out {\r\n\tfont-size: 20px;\r\n\t}\r\n\r\n.leaflet-touch .leaflet-control-zoom-in {\r\n\tfont-size: 22px;\r\n\t}\r\n.leaflet-touch .leaflet-control-zoom-out {\r\n\tfont-size: 24px;\r\n\t}\r\n\r\n\r\n/* layers control */\r\n\r\n.leaflet-control-layers {\r\n\tbox-shadow: 0 1px 5px rgba(0,0,0,0.4);\r\n\tbackground: #fff;\r\n\tborder-radius: 5px;\r\n\t}\r\n.leaflet-control-layers-toggle {\r\n\tbackground-image: url(" + __webpack_require__(/*! ./images/layers.png */ 283) + ");\r\n\twidth: 36px;\r\n\theight: 36px;\r\n\t}\r\n.leaflet-retina .leaflet-control-layers-toggle {\r\n\tbackground-image: url(" + __webpack_require__(/*! ./images/layers-2x.png */ 284) + ");\r\n\tbackground-size: 26px 26px;\r\n\t}\r\n.leaflet-touch .leaflet-control-layers-toggle {\r\n\twidth: 44px;\r\n\theight: 44px;\r\n\t}\r\n.leaflet-control-layers .leaflet-control-layers-list,\r\n.leaflet-control-layers-expanded .leaflet-control-layers-toggle {\r\n\tdisplay: none;\r\n\t}\r\n.leaflet-control-layers-expanded .leaflet-control-layers-list {\r\n\tdisplay: block;\r\n\tposition: relative;\r\n\t}\r\n.leaflet-control-layers-expanded {\r\n\tpadding: 6px 10px 6px 6px;\r\n\tcolor: #333;\r\n\tbackground: #fff;\r\n\t}\r\n.leaflet-control-layers-selector {\r\n\tmargin-top: 2px;\r\n\tposition: relative;\r\n\ttop: 1px;\r\n\t}\r\n.leaflet-control-layers label {\r\n\tdisplay: block;\r\n\t}\r\n.leaflet-control-layers-separator {\r\n\theight: 0;\r\n\tborder-top: 1px solid #ddd;\r\n\tmargin: 5px -10px 5px -6px;\r\n\t}\r\n\r\n\r\n/* attribution and scale controls */\r\n\r\n.leaflet-container .leaflet-control-attribution {\r\n\tbackground: #fff;\r\n\tbackground: rgba(255, 255, 255, 0.7);\r\n\tmargin: 0;\r\n\t}\r\n.leaflet-control-attribution,\r\n.leaflet-control-scale-line {\r\n\tpadding: 0 5px;\r\n\tcolor: #333;\r\n\t}\r\n.leaflet-control-attribution a {\r\n\ttext-decoration: none;\r\n\t}\r\n.leaflet-control-attribution a:hover {\r\n\ttext-decoration: underline;\r\n\t}\r\n.leaflet-container .leaflet-control-attribution,\r\n.leaflet-container .leaflet-control-scale {\r\n\tfont-size: 11px;\r\n\t}\r\n.leaflet-left .leaflet-control-scale {\r\n\tmargin-left: 5px;\r\n\t}\r\n.leaflet-bottom .leaflet-control-scale {\r\n\tmargin-bottom: 5px;\r\n\t}\r\n.leaflet-control-scale-line {\r\n\tborder: 2px solid #777;\r\n\tborder-top: none;\r\n\tline-height: 1.1;\r\n\tpadding: 2px 5px 1px;\r\n\tfont-size: 11px;\r\n\twhite-space: nowrap;\r\n\toverflow: hidden;\r\n\t-moz-box-sizing: content-box;\r\n\t     box-sizing: content-box;\r\n\r\n\tbackground: #fff;\r\n\tbackground: rgba(255, 255, 255, 0.5);\r\n\t}\r\n.leaflet-control-scale-line:not(:first-child) {\r\n\tborder-top: 2px solid #777;\r\n\tborder-bottom: none;\r\n\tmargin-top: -2px;\r\n\t}\r\n.leaflet-control-scale-line:not(:first-child):not(:last-child) {\r\n\tborder-bottom: 2px solid #777;\r\n\t}\r\n\r\n.leaflet-touch .leaflet-control-attribution,\r\n.leaflet-touch .leaflet-control-layers,\r\n.leaflet-touch .leaflet-bar {\r\n\tbox-shadow: none;\r\n\t}\r\n.leaflet-touch .leaflet-control-layers,\r\n.leaflet-touch .leaflet-bar {\r\n\tborder: 2px solid rgba(0,0,0,0.2);\r\n\tbackground-clip: padding-box;\r\n\t}\r\n\r\n\r\n/* popup */\r\n\r\n.leaflet-popup {\r\n\tposition: absolute;\r\n\ttext-align: center;\r\n\t}\r\n.leaflet-popup-content-wrapper {\r\n\tpadding: 1px;\r\n\ttext-align: left;\r\n\tborder-radius: 12px;\r\n\t}\r\n.leaflet-popup-content {\r\n\tmargin: 13px 19px;\r\n\tline-height: 1.4;\r\n\t}\r\n.leaflet-popup-content p {\r\n\tmargin: 18px 0;\r\n\t}\r\n.leaflet-popup-tip-container {\r\n\tmargin: 0 auto;\r\n\twidth: 40px;\r\n\theight: 20px;\r\n\tposition: relative;\r\n\toverflow: hidden;\r\n\t}\r\n.leaflet-popup-tip {\r\n\twidth: 17px;\r\n\theight: 17px;\r\n\tpadding: 1px;\r\n\r\n\tmargin: -10px auto 0;\r\n\r\n\t-webkit-transform: rotate(45deg);\r\n\t   -moz-transform: rotate(45deg);\r\n\t    -ms-transform: rotate(45deg);\r\n\t     -o-transform: rotate(45deg);\r\n\t        transform: rotate(45deg);\r\n\t}\r\n.leaflet-popup-content-wrapper,\r\n.leaflet-popup-tip {\r\n\tbackground: white;\r\n\r\n\tbox-shadow: 0 3px 14px rgba(0,0,0,0.4);\r\n\t}\r\n.leaflet-container a.leaflet-popup-close-button {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tright: 0;\r\n\tpadding: 4px 4px 0 0;\r\n\ttext-align: center;\r\n\twidth: 18px;\r\n\theight: 14px;\r\n\tfont: 16px/14px Tahoma, Verdana, sans-serif;\r\n\tcolor: #c3c3c3;\r\n\ttext-decoration: none;\r\n\tfont-weight: bold;\r\n\tbackground: transparent;\r\n\t}\r\n.leaflet-container a.leaflet-popup-close-button:hover {\r\n\tcolor: #999;\r\n\t}\r\n.leaflet-popup-scrolled {\r\n\toverflow: auto;\r\n\tborder-bottom: 1px solid #ddd;\r\n\tborder-top: 1px solid #ddd;\r\n\t}\r\n\r\n.leaflet-oldie .leaflet-popup-content-wrapper {\r\n\tzoom: 1;\r\n\t}\r\n.leaflet-oldie .leaflet-popup-tip {\r\n\twidth: 24px;\r\n\tmargin: 0 auto;\r\n\r\n\t-ms-filter: \"progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)\";\r\n\tfilter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);\r\n\t}\r\n.leaflet-oldie .leaflet-popup-tip-container {\r\n\tmargin-top: -1px;\r\n\t}\r\n\r\n.leaflet-oldie .leaflet-control-zoom,\r\n.leaflet-oldie .leaflet-control-layers,\r\n.leaflet-oldie .leaflet-popup-content-wrapper,\r\n.leaflet-oldie .leaflet-popup-tip {\r\n\tborder: 1px solid #999;\r\n\t}\r\n\r\n\r\n/* div icon */\r\n\r\n.leaflet-div-icon {\r\n\tbackground: #fff;\r\n\tborder: 1px solid #666;\r\n\t}\r\n", ""]);
+	exports.push([module.id, "/* required styles */\r\n\r\n.leaflet-map-pane,\r\n.leaflet-tile,\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow,\r\n.leaflet-tile-pane,\r\n.leaflet-tile-container,\r\n.leaflet-overlay-pane,\r\n.leaflet-shadow-pane,\r\n.leaflet-marker-pane,\r\n.leaflet-popup-pane,\r\n.leaflet-overlay-pane svg,\r\n.leaflet-zoom-box,\r\n.leaflet-image-layer,\r\n.leaflet-layer {\r\n\tposition: absolute;\r\n\tleft: 0;\r\n\ttop: 0;\r\n\t}\r\n.leaflet-container {\r\n\toverflow: hidden;\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n\t}\r\n.leaflet-tile,\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow {\r\n\t-webkit-user-select: none;\r\n\t   -moz-user-select: none;\r\n\t        user-select: none;\r\n\t-webkit-user-drag: none;\r\n\t}\r\n.leaflet-marker-icon,\r\n.leaflet-marker-shadow {\r\n\tdisplay: block;\r\n\t}\r\n/* map is broken in FF if you have max-width: 100% on tiles */\r\n.leaflet-container img {\r\n\tmax-width: none !important;\r\n\t}\r\n/* stupid Android 2 doesn't understand \"max-width: none\" properly */\r\n.leaflet-container img.leaflet-image-layer {\r\n\tmax-width: 15000px !important;\r\n\t}\r\n.leaflet-tile {\r\n\tfilter: inherit;\r\n\tvisibility: hidden;\r\n\t}\r\n.leaflet-tile-loaded {\r\n\tvisibility: inherit;\r\n\t}\r\n.leaflet-zoom-box {\r\n\twidth: 0;\r\n\theight: 0;\r\n\t}\r\n/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */\r\n.leaflet-overlay-pane svg {\r\n\t-moz-user-select: none;\r\n\t}\r\n\r\n.leaflet-tile-pane    { z-index: 2; }\r\n.leaflet-objects-pane { z-index: 3; }\r\n.leaflet-overlay-pane { z-index: 4; }\r\n.leaflet-shadow-pane  { z-index: 5; }\r\n.leaflet-marker-pane  { z-index: 6; }\r\n.leaflet-popup-pane   { z-index: 7; }\r\n\r\n.leaflet-vml-shape {\r\n\twidth: 1px;\r\n\theight: 1px;\r\n\t}\r\n.lvml {\r\n\tbehavior: url(#default#VML);\r\n\tdisplay: inline-block;\r\n\tposition: absolute;\r\n\t}\r\n\r\n\r\n/* control positioning */\r\n\r\n.leaflet-control {\r\n\tposition: relative;\r\n\tz-index: 7;\r\n\tpointer-events: auto;\r\n\t}\r\n.leaflet-top,\r\n.leaflet-bottom {\r\n\tposition: absolute;\r\n\tz-index: 1000;\r\n\tpointer-events: none;\r\n\t}\r\n.leaflet-top {\r\n\ttop: 0;\r\n\t}\r\n.leaflet-right {\r\n\tright: 0;\r\n\t}\r\n.leaflet-bottom {\r\n\tbottom: 0;\r\n\t}\r\n.leaflet-left {\r\n\tleft: 0;\r\n\t}\r\n.leaflet-control {\r\n\tfloat: left;\r\n\tclear: both;\r\n\t}\r\n.leaflet-right .leaflet-control {\r\n\tfloat: right;\r\n\t}\r\n.leaflet-top .leaflet-control {\r\n\tmargin-top: 10px;\r\n\t}\r\n.leaflet-bottom .leaflet-control {\r\n\tmargin-bottom: 10px;\r\n\t}\r\n.leaflet-left .leaflet-control {\r\n\tmargin-left: 10px;\r\n\t}\r\n.leaflet-right .leaflet-control {\r\n\tmargin-right: 10px;\r\n\t}\r\n\r\n\r\n/* zoom and fade animations */\r\n\r\n.leaflet-fade-anim .leaflet-tile,\r\n.leaflet-fade-anim .leaflet-popup {\r\n\topacity: 0;\r\n\t-webkit-transition: opacity 0.2s linear;\r\n\t   -moz-transition: opacity 0.2s linear;\r\n\t     -o-transition: opacity 0.2s linear;\r\n\t        transition: opacity 0.2s linear;\r\n\t}\r\n.leaflet-fade-anim .leaflet-tile-loaded,\r\n.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {\r\n\topacity: 1;\r\n\t}\r\n\r\n.leaflet-zoom-anim .leaflet-zoom-animated {\r\n\t-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t     -o-transition:      -o-transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);\r\n\t}\r\n.leaflet-zoom-anim .leaflet-tile,\r\n.leaflet-pan-anim .leaflet-tile,\r\n.leaflet-touching .leaflet-zoom-animated {\r\n\t-webkit-transition: none;\r\n\t   -moz-transition: none;\r\n\t     -o-transition: none;\r\n\t        transition: none;\r\n\t}\r\n\r\n.leaflet-zoom-anim .leaflet-zoom-hide {\r\n\tvisibility: hidden;\r\n\t}\r\n\r\n\r\n/* cursors */\r\n\r\n.leaflet-clickable {\r\n\tcursor: pointer;\r\n\t}\r\n.leaflet-container {\r\n\tcursor: -webkit-grab;\r\n\tcursor:    -moz-grab;\r\n\t}\r\n.leaflet-popup-pane,\r\n.leaflet-control {\r\n\tcursor: auto;\r\n\t}\r\n.leaflet-dragging .leaflet-container,\r\n.leaflet-dragging .leaflet-clickable {\r\n\tcursor: move;\r\n\tcursor: -webkit-grabbing;\r\n\tcursor:    -moz-grabbing;\r\n\t}\r\n\r\n\r\n/* visual tweaks */\r\n\r\n.leaflet-container {\r\n\tbackground: #ddd;\r\n\toutline: 0;\r\n\t}\r\n.leaflet-container a {\r\n\tcolor: #0078A8;\r\n\t}\r\n.leaflet-container a.leaflet-active {\r\n\toutline: 2px solid orange;\r\n\t}\r\n.leaflet-zoom-box {\r\n\tborder: 2px dotted #38f;\r\n\tbackground: rgba(255,255,255,0.5);\r\n\t}\r\n\r\n\r\n/* general typography */\r\n.leaflet-container {\r\n\tfont: 12px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif;\r\n\t}\r\n\r\n\r\n/* general toolbar styles */\r\n\r\n.leaflet-bar {\r\n\tbox-shadow: 0 1px 5px rgba(0,0,0,0.65);\r\n\tborder-radius: 4px;\r\n\t}\r\n.leaflet-bar a,\r\n.leaflet-bar a:hover {\r\n\tbackground-color: #fff;\r\n\tborder-bottom: 1px solid #ccc;\r\n\twidth: 26px;\r\n\theight: 26px;\r\n\tline-height: 26px;\r\n\tdisplay: block;\r\n\ttext-align: center;\r\n\ttext-decoration: none;\r\n\tcolor: black;\r\n\t}\r\n.leaflet-bar a,\r\n.leaflet-control-layers-toggle {\r\n\tbackground-position: 50% 50%;\r\n\tbackground-repeat: no-repeat;\r\n\tdisplay: block;\r\n\t}\r\n.leaflet-bar a:hover {\r\n\tbackground-color: #f4f4f4;\r\n\t}\r\n.leaflet-bar a:first-child {\r\n\tborder-top-left-radius: 4px;\r\n\tborder-top-right-radius: 4px;\r\n\t}\r\n.leaflet-bar a:last-child {\r\n\tborder-bottom-left-radius: 4px;\r\n\tborder-bottom-right-radius: 4px;\r\n\tborder-bottom: none;\r\n\t}\r\n.leaflet-bar a.leaflet-disabled {\r\n\tcursor: default;\r\n\tbackground-color: #f4f4f4;\r\n\tcolor: #bbb;\r\n\t}\r\n\r\n.leaflet-touch .leaflet-bar a {\r\n\twidth: 30px;\r\n\theight: 30px;\r\n\tline-height: 30px;\r\n\t}\r\n\r\n\r\n/* zoom control */\r\n\r\n.leaflet-control-zoom-in,\r\n.leaflet-control-zoom-out {\r\n\tfont: bold 18px 'Lucida Console', Monaco, monospace;\r\n\ttext-indent: 1px;\r\n\t}\r\n.leaflet-control-zoom-out {\r\n\tfont-size: 20px;\r\n\t}\r\n\r\n.leaflet-touch .leaflet-control-zoom-in {\r\n\tfont-size: 22px;\r\n\t}\r\n.leaflet-touch .leaflet-control-zoom-out {\r\n\tfont-size: 24px;\r\n\t}\r\n\r\n\r\n/* layers control */\r\n\r\n.leaflet-control-layers {\r\n\tbox-shadow: 0 1px 5px rgba(0,0,0,0.4);\r\n\tbackground: #fff;\r\n\tborder-radius: 5px;\r\n\t}\r\n.leaflet-control-layers-toggle {\r\n\tbackground-image: url(" + __webpack_require__(/*! ./images/layers.png */ 253) + ");\r\n\twidth: 36px;\r\n\theight: 36px;\r\n\t}\r\n.leaflet-retina .leaflet-control-layers-toggle {\r\n\tbackground-image: url(" + __webpack_require__(/*! ./images/layers-2x.png */ 254) + ");\r\n\tbackground-size: 26px 26px;\r\n\t}\r\n.leaflet-touch .leaflet-control-layers-toggle {\r\n\twidth: 44px;\r\n\theight: 44px;\r\n\t}\r\n.leaflet-control-layers .leaflet-control-layers-list,\r\n.leaflet-control-layers-expanded .leaflet-control-layers-toggle {\r\n\tdisplay: none;\r\n\t}\r\n.leaflet-control-layers-expanded .leaflet-control-layers-list {\r\n\tdisplay: block;\r\n\tposition: relative;\r\n\t}\r\n.leaflet-control-layers-expanded {\r\n\tpadding: 6px 10px 6px 6px;\r\n\tcolor: #333;\r\n\tbackground: #fff;\r\n\t}\r\n.leaflet-control-layers-selector {\r\n\tmargin-top: 2px;\r\n\tposition: relative;\r\n\ttop: 1px;\r\n\t}\r\n.leaflet-control-layers label {\r\n\tdisplay: block;\r\n\t}\r\n.leaflet-control-layers-separator {\r\n\theight: 0;\r\n\tborder-top: 1px solid #ddd;\r\n\tmargin: 5px -10px 5px -6px;\r\n\t}\r\n\r\n\r\n/* attribution and scale controls */\r\n\r\n.leaflet-container .leaflet-control-attribution {\r\n\tbackground: #fff;\r\n\tbackground: rgba(255, 255, 255, 0.7);\r\n\tmargin: 0;\r\n\t}\r\n.leaflet-control-attribution,\r\n.leaflet-control-scale-line {\r\n\tpadding: 0 5px;\r\n\tcolor: #333;\r\n\t}\r\n.leaflet-control-attribution a {\r\n\ttext-decoration: none;\r\n\t}\r\n.leaflet-control-attribution a:hover {\r\n\ttext-decoration: underline;\r\n\t}\r\n.leaflet-container .leaflet-control-attribution,\r\n.leaflet-container .leaflet-control-scale {\r\n\tfont-size: 11px;\r\n\t}\r\n.leaflet-left .leaflet-control-scale {\r\n\tmargin-left: 5px;\r\n\t}\r\n.leaflet-bottom .leaflet-control-scale {\r\n\tmargin-bottom: 5px;\r\n\t}\r\n.leaflet-control-scale-line {\r\n\tborder: 2px solid #777;\r\n\tborder-top: none;\r\n\tline-height: 1.1;\r\n\tpadding: 2px 5px 1px;\r\n\tfont-size: 11px;\r\n\twhite-space: nowrap;\r\n\toverflow: hidden;\r\n\t-moz-box-sizing: content-box;\r\n\t     box-sizing: content-box;\r\n\r\n\tbackground: #fff;\r\n\tbackground: rgba(255, 255, 255, 0.5);\r\n\t}\r\n.leaflet-control-scale-line:not(:first-child) {\r\n\tborder-top: 2px solid #777;\r\n\tborder-bottom: none;\r\n\tmargin-top: -2px;\r\n\t}\r\n.leaflet-control-scale-line:not(:first-child):not(:last-child) {\r\n\tborder-bottom: 2px solid #777;\r\n\t}\r\n\r\n.leaflet-touch .leaflet-control-attribution,\r\n.leaflet-touch .leaflet-control-layers,\r\n.leaflet-touch .leaflet-bar {\r\n\tbox-shadow: none;\r\n\t}\r\n.leaflet-touch .leaflet-control-layers,\r\n.leaflet-touch .leaflet-bar {\r\n\tborder: 2px solid rgba(0,0,0,0.2);\r\n\tbackground-clip: padding-box;\r\n\t}\r\n\r\n\r\n/* popup */\r\n\r\n.leaflet-popup {\r\n\tposition: absolute;\r\n\ttext-align: center;\r\n\t}\r\n.leaflet-popup-content-wrapper {\r\n\tpadding: 1px;\r\n\ttext-align: left;\r\n\tborder-radius: 12px;\r\n\t}\r\n.leaflet-popup-content {\r\n\tmargin: 13px 19px;\r\n\tline-height: 1.4;\r\n\t}\r\n.leaflet-popup-content p {\r\n\tmargin: 18px 0;\r\n\t}\r\n.leaflet-popup-tip-container {\r\n\tmargin: 0 auto;\r\n\twidth: 40px;\r\n\theight: 20px;\r\n\tposition: relative;\r\n\toverflow: hidden;\r\n\t}\r\n.leaflet-popup-tip {\r\n\twidth: 17px;\r\n\theight: 17px;\r\n\tpadding: 1px;\r\n\r\n\tmargin: -10px auto 0;\r\n\r\n\t-webkit-transform: rotate(45deg);\r\n\t   -moz-transform: rotate(45deg);\r\n\t    -ms-transform: rotate(45deg);\r\n\t     -o-transform: rotate(45deg);\r\n\t        transform: rotate(45deg);\r\n\t}\r\n.leaflet-popup-content-wrapper,\r\n.leaflet-popup-tip {\r\n\tbackground: white;\r\n\r\n\tbox-shadow: 0 3px 14px rgba(0,0,0,0.4);\r\n\t}\r\n.leaflet-container a.leaflet-popup-close-button {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tright: 0;\r\n\tpadding: 4px 4px 0 0;\r\n\ttext-align: center;\r\n\twidth: 18px;\r\n\theight: 14px;\r\n\tfont: 16px/14px Tahoma, Verdana, sans-serif;\r\n\tcolor: #c3c3c3;\r\n\ttext-decoration: none;\r\n\tfont-weight: bold;\r\n\tbackground: transparent;\r\n\t}\r\n.leaflet-container a.leaflet-popup-close-button:hover {\r\n\tcolor: #999;\r\n\t}\r\n.leaflet-popup-scrolled {\r\n\toverflow: auto;\r\n\tborder-bottom: 1px solid #ddd;\r\n\tborder-top: 1px solid #ddd;\r\n\t}\r\n\r\n.leaflet-oldie .leaflet-popup-content-wrapper {\r\n\tzoom: 1;\r\n\t}\r\n.leaflet-oldie .leaflet-popup-tip {\r\n\twidth: 24px;\r\n\tmargin: 0 auto;\r\n\r\n\t-ms-filter: \"progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)\";\r\n\tfilter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);\r\n\t}\r\n.leaflet-oldie .leaflet-popup-tip-container {\r\n\tmargin-top: -1px;\r\n\t}\r\n\r\n.leaflet-oldie .leaflet-control-zoom,\r\n.leaflet-oldie .leaflet-control-layers,\r\n.leaflet-oldie .leaflet-popup-content-wrapper,\r\n.leaflet-oldie .leaflet-popup-tip {\r\n\tborder: 1px solid #999;\r\n\t}\r\n\r\n\r\n/* div icon */\r\n\r\n.leaflet-div-icon {\r\n\tbackground: #fff;\r\n\tborder: 1px solid #666;\r\n\t}\r\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 283 */
+/* 253 */
 /*!******************************************!*\
   !*** ./~/leaflet/dist/images/layers.png ***!
   \******************************************/
@@ -40073,7 +37628,7 @@
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAVbSURBVEiJrZZfSFt3FMe/v3tvbmLUZleNKSHE/LGRiNbGRovTtrA9lcFkpcOnMvawwhhjrb3soQ8djGFhXMQNRqEvY3R9kJVuPpRRWQebcdKYxkaHqcHchKJ2rVo1WhNz//z2UOLUadVuv9fvOedzfuec3x9CKcV+1qVLlwgAdHV17cuR7AfU29tb43a73wWAVCr1Q0dHx8T/Curu7i5ubGw843K5ms1mMwBgdXUV6XQ6HI1Gb3Z2dj7/z6C+vr6T1dXVp6xWa+l2+uzs7PLk5OTP7e3tv70S6Pr1647q6uoOt9vtYRjmpcnouo5UKiVPTk72nj17dmpPIEmS+IaGhnaPx3O8tLSU3ahRSotyudzrAGAymf4ghGQ36svLy5osywOxWKxPFMX8jqBbt241ejyed+x2e9nWjPL5fK2iKC2UUiMAEELWDAbDEM/z41ttZ2Zmnsmy/OPp06ejm0DXrl2rqK2tPeNyuQ7zPL9pi5qmVaytrZ3Qdf3gdiVhGOYvo9H4O8uyc1sSI+l0enR8fPzmuXPn5sjt27ff8nq9bwiCYNpSJsPa2lqzqqr1AF7eJEDnOG7MaDSGCSHKRmFhYSGXTCZ/Zd1u93dOp3NJEAS9ICqK4snlcm/puu4EQHaBAADRdf2gqqo1hJBllmUXCsLjx4+L7t69e4Ztamqaffjw4QepVOr5oUOHDKqqvqkoShAAvwfA1sVrmlataVqlqqqzvb29lnA43KwoymeEUoqenp7XdF3vW11dPX7s2DHi9XpfgfHPSiaTuHfvHjWbzQMMw7SfP39+kUSj0ZOU0qsA/EtLSwiHwygpKUFraysOHDiwL0Amk8Hg4CBWVlbQ3NwMi8UCAHFCyIesw+H43uFwuAwGg9lkMsHj8SCfzyMUCkFRFNhsNux2YDVNQzQaRSgUgsvlwtGjR2EyvZitbDbL9Pf3H2YDgcD8xMREk67rCZvN5iSEkLKyMrjdbsiyjJGREVgslh13NzU1hf7+fui6jra2NlitVhBCQCmlo6OjoYGBASWbzX5BKKW4cuWKhRDyk67rJ4LBIFNRUbEeaHZ2FpFIBDabDS0tLSgqKipkiqGhITx58gTBYBBWq3XdZ25uDpFIhLIsO8jzfPuFCxeekTt37rQCuAqgfmVlBfF4HOXl5Thy5Ah4/sXgUUoRj8chyzIaGhoAALFYDB6PB36/H4S8OAH5fB4PHjzA/Pw8/H4/SkpKACAB4CPW6/XeqKysrOI4rpjnedjtdmSzWUSjURgMBgiCAEIIrFYrHA4HxsfHsbi4iNbWVtjt9nWILMsYGhpCeXk5ampqYDQaC3AyPDxcSy5evPg2IaTL6XTO+3y+NkIIAwCKoiCRSEBVVTQ1Ne3Yo0wmg+HhYXAcB5/PB4PBUJBoMpkclGW5lFJ6mVBKIYpiMYDLHMedCgQCnCAI/oL1wsICEokEHA4H6uvr1ydQ13WMjY1hamoKPp8PgiBshE/ev38/oyjKLwA+lyTp+abbWxTFOgDfCIKAQCAQ4DiutNCjdDqNp0+fIhAIAABGRkZQWVkJl8u1Xj5N01Zjsdjw3NwcBfCxJEl/FmL/6z0SRZEAeJ8QIvp8vsWqqqqWgpbL5RCPxwEAfr9//awAwPT0dDgejxfput4D4FtJkjYF3vGFFUWxHMCXRqPxcDAYtBYXF1dtZ5fNZmcikcijbDY7DuBTSZLmt7Pb9c8gimIbIeQrm82Wqaura2EYxggAlFI1Ho8PTk9PmymlnZIkhV4WZ0+/IFEUOQCdDMO8V19fn2NZ1hCLxaimaTcAdEuSpO4WY1//OlEUnQC+BkABfCJJ0qO9+v4NmO9xnZob3WcAAAAASUVORK5CYII="
 
 /***/ },
-/* 284 */
+/* 254 */
 /*!*********************************************!*\
   !*** ./~/leaflet/dist/images/layers-2x.png ***!
   \*********************************************/
@@ -40082,7 +37637,7 @@
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAYAAADFeBvrAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAbrwAAG68BXhqRHAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAArPSURBVGiB3Zp7TFvXHce/916/eBhCDInJwDjGBhvjQHi5SclaKRL5Z1Wl/rEq/WNr11TJmkpMw900pLVrplJ1cadFarp0zdZmmpZpf3SqNrUKfSnKgwI2sQPGBmNjAsUOxCW8bGzfe8/+SEAkMfa1A5m075/2+f3O+Z7X595zLkUIwf+T6EdRSWdnp7izs1P8KOqitnqE3n///QMajeYZAPD7/R8fPXr00lbWt2WGTp48qdRoNC/s2bNHXVhYyALA/Py86Pr16wG/3//hq6++GtqKejfdUGdnJ6XT6Q4bDIZWjUaTNLnf76fcbvdlr9d7vqura1MbsKmGTp8+XadWqw/v3bu3UCQS8anKsixLX7t2bT4QCJw/fvy4c7PasCmGTpw4Ia+qqnrRZDIZSkpK2ExiZ2dnRYODg+7R0dE/v/baa4sP25aHNnT27Nkf6HS6QwaD4aF2TLfbzXu93gtHjhz5z8PkydrQqVOnKtVq9Y/q6uqUubm5GY3KRopEIiKn0xkKBAJ/bW9v92WTI2NDnZ2dYoPB8ILRaGwoKyvjsqk0naamphiXyzXgdrs/7OrqSmQSm5GhM2fOHNBoNM/U1dVJKYoSFEgIEcVisWYAkEql/RRFCRpNQgjldDpjfr//42PHjglmlyBDJ0+eVO7evfsndXV1FatMEaJEIqGOx+MHCCFyAKAoalEikVwSi8UBoTnm5+dFTqdzYnx8/C9C2JXS0CpT9Hr9gcrKypTb8HrxPJ+/srJygOf53cn+p2l6XCaTXaJpekloTp/PR3s8nkvp2LWhoXfffbderVYfbmhoKEjHlPVtjcVidSzLNhFCUj67URSVEIlENqlU6gQgKD/LsvTAwMBCIBA4/8orrziS5r3f0IkTJ+Q6ne6IyWQy7NixQ/CCZFm2NB6PP8Hz/HahMQBA0/R3EonkokgkCgqNmZmZEQ8ODrq9Xu/Z+9l1j6EPPvjgKZ1Od6impoYSmpzneVksFtvHcZxBaEwyMQzjlkqlPTRNrwiNGR4eJl6v98JLL73079XfKEIITp06VVlRUfHj+vr6nZkwJR6P6xOJxH5CiCxTA8lEUdSKWCy+KpFIPEJjIpGIyOFw3JyYmDjX3t7uo86dO3fUaDQ2lJeXCzbCcdz2WCz2BM/zpdk1PbVomg5KpdKLDMN8JzRmcnJS5HK5Bhi9Xv9RcXHx7V27dqUd6rtMMcfj8YOEkIKHa3bKeuQsy9bwPC9mGCZEUVTaTWNsbKzQbrc/RXV0dBAAMYVCcfnpp5+eKC4uTmrsfqY8KqVj161bt2SffPJJRTgcbgUgZVpbW3sIIQei0Wij0+ksmZubW9DpdEsUdWdf4Hk+PxqNHmRZtgWA9NFZWZOU4zgdy7LFd0crDgCEEHz66aelX3zxxfcjkUg9gAmapg8zV65c8fX09PwpHo/zhJC22dnZ2oGBARQUFCwVFBTUxOPxQ4QQxf/AyD0ihBSxLFtDCCFerzdy/vz5PcFg8CAhRAqgSy6XP/fmm2+O3LNtd3R0VFEU9R6AgyKRiNfr9fS+ffsgFj+S8420SiQS6Onpgcfj4VmWpQF8SQh5+Z133hldLSNaH/Dss8+GGYYJ3Lhxg9jtdnpoaAiTk5NoampCdXX1IzewXiMjI7DZbJifn4dMJqPNZjNRqVQBjuPC68utjhA1MDDwPIDfASgG7vSGw+HA2NgYAEClUmH//v0oKip6pEbm5uZw9epV3LhxAwCg1WpRX1+/ftbcAvCLhoaGjwAQyuFwGDmOOwOgNVnCcDiMvr4+zM3NQSaTwWg0orm5GTS9tUd6PM+jv78fLpcLKysrKCoqQktLCxSKDZfzZYZhjjFarfYfKpWqmabppAslNzcXWq0WMpkMwWAQU1NTCAQCyM/Px7Zt27bEzMTEBD7//HP4fD5QFIWGhgaYzWbk5uZuGMNxXPHXX39tYkwm07nh4eGZ3Nxcz/bt27+XrDBFUVAoFNBoNIhEIggGg/D5fLh9+zaUSuWmbRqRSAQXL15EX18flpeXoVKp8OSTT0KpVGIVI8nk8/n6uru7xYuLi3WrHDr07bffmvx+f295eTktkUiSwlMsFkOlUqGkpAQzMzMIBoPwer0AAKVS+VBmHA4HvvrqK4RCIeTl5aG1tRU1NTUpO2t5eXn6s88+Gx4fHzcDmKVp+jBFCMEbb7whW1xc/BWAXwJgKysrbS0tLY9TFCXaKBnP8xgaGoLb7QbHcSgtLcW+ffsyNhYKhdDT04NgMAiGYWAwGFBbW5tyjRJC2L6+vis+n68Jd3bqt+Vy+Vuvv/76yoYcysvLi5nNZmm6Bi4sLMBmsyEUCkEsFkOv1+Oxxx5LOw0TiQS++eYbeDweJBIJKJVKNDU1oaAg9SNiKBRCb28vu7y8LEISDt1jqLu7ezuAt0Oh0IsjIyNUPB5HeXk5mpubIZWmfuqZmJiA3W7HysoKCgsLU7LrPqagsbERFRUVKfPHYjH09/djcnISEokE1dXVUCqV/wLQ3tbWNvmAoe7u7ucBnMRdDrEsC6/Xu5bAZDKhqqoq5eJMxy4BTHlAhBCMjo5icHAQqx2s0+kgEq2thiUAvwFwqq2tjaUuXLhQA+CPAL6fLOHCwgJcLhcWFxeFsADAg+yqra0FAAwNDQllygN55HI5jEZjqil5HcBPmerq6r/t2LFjL8MwOclKSaVSlJWVQSKRIBQKwefzIRqNYufOnRsu3GTsmp6eFswUlmVht9ths9mQSCRQVVUFo9EImWzjF2OO4+ROp1NPdXR0JAAsaLVat0ajeXzDCNyZxx6PBzdv3kROTg727t0LtVqdKgTRaBR2ux0A0NjYiJycpP22pkAggGvXrq11ml6vT7t+p6en+10uVykhpIzq6OhoA/AegEqxWOxsamrKl8vllakShMNhDA8Pr1VqNpuRn5+fstJ0WlpaQm9v71pn1dTUpJ2S0Wh02mazTUajUTMAH4CXKUIILBaLDMAqh+iSkpIre/bsaWEYZsN5wfM8/H4/AoEAKIqCwWCAyWRKuWkkEyEEg4ODcLvdIIRArVZDo9Gk5ZDb7b4yNTW1xiEAb1mt1ns5ZLFYqnBntA5SFDVlNBqDu3btak7VoOXlZXg8HoTDYeTn56OlpUUwXEOhEPr6+rC0tASFQgG9Xo+8vLyUMeFweNDhcEg5jqsC8CWAl61Wa3IOrTP2HIDfA9iZk5PT29TUVJ6Tk7MrXeNGRkYghF0bMCWlkUQiMWe324cWFhZaAcwA+LnVav37/eU2PAq2WCyFALoAHAMQLSsrsxkMhpSPQ+nYJYApSeX3+y+PjY3VANgG4AyATqvVOp+sbNrbB4vF0nw3SQPDMKP19fUxhUJhShWTjF0AMmEKAGBxcdFns9mWEolEHYABAMesVmt/qhhB1ykWi4UBcBzAbwHICwoKLjc2NtaKxeINX18JIZicnMTY2Bh4/s6xGk3T0Gq1KC8vT7l5cBwXuX79et/s7OzjAKIAfg3gtNVqTXvBltGFl8ViKQXwBwA/BPCdVqsd1mg0Sd90V7XKLgAZMwXAPwH8zGq1Cj7Iz+qO1WKxZMyudErGFKvV2p1pnqwvjbNhVzKlYko27Xroa/1s2LWqdEzJRpv2JUkm7BLKlGy0qZ/GCGFXJkzJRlvyNVYydkkkktxMmZKNtuzzsvvZBYADEEEGTMlGW/4B4Dp2ARkyJRv9F9vsxWD/43R9AAAAAElFTkSuQmCC"
 
 /***/ },
-/* 285 */
+/* 255 */
 /*!**********************************!*\
   !*** ./src/stores/tree.store.js ***!
   \**********************************/
@@ -40098,13 +37653,13 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var alt_1 = __webpack_require__(/*! ./../alt */ 286);
-	var moment = __webpack_require__(/*! moment */ 300);
-	var L = __webpack_require__(/*! leaflet */ 403);
+	var alt_1 = __webpack_require__(/*! ./../alt */ 256);
+	var moment = __webpack_require__(/*! moment */ 270);
+	var L = __webpack_require__(/*! leaflet */ 373);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var tree_actions_1 = __webpack_require__(/*! ./../actions/tree.actions */ 404);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 406);
-	var tree_source_1 = __webpack_require__(/*! ./../sources/tree.source */ 407);
+	var tree_actions_1 = __webpack_require__(/*! ./../actions/tree.actions */ 374);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 376);
+	var tree_source_1 = __webpack_require__(/*! ./../sources/tree.source */ 377);
 	
 	var TreeModel = function () {
 	    function TreeModel(props) {
@@ -40322,7 +37877,7 @@
 	//# sourceMappingURL=tree.store.js.map
 
 /***/ },
-/* 286 */
+/* 256 */
 /*!********************!*\
   !*** ./src/alt.js ***!
   \********************/
@@ -40330,13 +37885,13 @@
 
 	"use strict";
 	
-	var Alt = __webpack_require__(/*! alt */ 287);
+	var Alt = __webpack_require__(/*! alt */ 257);
 	var altInstance = new Alt();
 	exports.alt = altInstance;
 	//# sourceMappingURL=alt.js.map
 
 /***/ },
-/* 287 */
+/* 257 */
 /*!****************************!*\
   !*** ./~/alt/lib/index.js ***!
   \****************************/
@@ -40348,25 +37903,25 @@
 	  value: true
 	});
 	
-	var _flux = __webpack_require__(/*! flux */ 288);
+	var _flux = __webpack_require__(/*! flux */ 258);
 	
-	var _StateFunctions = __webpack_require__(/*! ./utils/StateFunctions */ 291);
+	var _StateFunctions = __webpack_require__(/*! ./utils/StateFunctions */ 261);
 	
 	var StateFunctions = _interopRequireWildcard(_StateFunctions);
 	
-	var _functions = __webpack_require__(/*! ./functions */ 292);
+	var _functions = __webpack_require__(/*! ./functions */ 262);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
-	var _store = __webpack_require__(/*! ./store */ 293);
+	var _store = __webpack_require__(/*! ./store */ 263);
 	
 	var store = _interopRequireWildcard(_store);
 	
-	var _AltUtils = __webpack_require__(/*! ./utils/AltUtils */ 294);
+	var _AltUtils = __webpack_require__(/*! ./utils/AltUtils */ 264);
 	
 	var utils = _interopRequireWildcard(_AltUtils);
 	
-	var _actions = __webpack_require__(/*! ./actions */ 298);
+	var _actions = __webpack_require__(/*! ./actions */ 268);
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
@@ -40721,7 +38276,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 288 */
+/* 258 */
 /*!*************************!*\
   !*** ./~/flux/index.js ***!
   \*************************/
@@ -40736,11 +38291,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(/*! ./lib/Dispatcher */ 289);
+	module.exports.Dispatcher = __webpack_require__(/*! ./lib/Dispatcher */ 259);
 
 
 /***/ },
-/* 289 */
+/* 259 */
 /*!**********************************!*\
   !*** ./~/flux/lib/Dispatcher.js ***!
   \**********************************/
@@ -40765,7 +38320,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 290);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 260);
 	
 	var _prefix = 'ID_';
 	
@@ -40980,7 +38535,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/process/browser.js */ 4)))
 
 /***/ },
-/* 290 */
+/* 260 */
 /*!*********************************!*\
   !*** ./~/fbjs/lib/invariant.js ***!
   \*********************************/
@@ -41038,7 +38593,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/process/browser.js */ 4)))
 
 /***/ },
-/* 291 */
+/* 261 */
 /*!*******************************************!*\
   !*** ./~/alt/lib/utils/StateFunctions.js ***!
   \*******************************************/
@@ -41054,7 +38609,7 @@
 	exports.saveInitialSnapshot = saveInitialSnapshot;
 	exports.filterSnapshots = filterSnapshots;
 	
-	var _functions = __webpack_require__(/*! ../functions */ 292);
+	var _functions = __webpack_require__(/*! ../functions */ 262);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
@@ -41118,7 +38673,7 @@
 	}
 
 /***/ },
-/* 292 */
+/* 262 */
 /*!********************************!*\
   !*** ./~/alt/lib/functions.js ***!
   \********************************/
@@ -41162,7 +38717,7 @@
 	}
 
 /***/ },
-/* 293 */
+/* 263 */
 /*!**********************************!*\
   !*** ./~/alt/lib/store/index.js ***!
   \**********************************/
@@ -41178,19 +38733,19 @@
 	exports.createStoreFromObject = createStoreFromObject;
 	exports.createStoreFromClass = createStoreFromClass;
 	
-	var _AltUtils = __webpack_require__(/*! ../utils/AltUtils */ 294);
+	var _AltUtils = __webpack_require__(/*! ../utils/AltUtils */ 264);
 	
 	var utils = _interopRequireWildcard(_AltUtils);
 	
-	var _functions = __webpack_require__(/*! ../functions */ 292);
+	var _functions = __webpack_require__(/*! ../functions */ 262);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
-	var _AltStore = __webpack_require__(/*! ./AltStore */ 295);
+	var _AltStore = __webpack_require__(/*! ./AltStore */ 265);
 	
 	var _AltStore2 = _interopRequireDefault(_AltStore);
 	
-	var _StoreMixin = __webpack_require__(/*! ./StoreMixin */ 297);
+	var _StoreMixin = __webpack_require__(/*! ./StoreMixin */ 267);
 	
 	var _StoreMixin2 = _interopRequireDefault(_StoreMixin);
 	
@@ -41382,7 +38937,7 @@
 	}
 
 /***/ },
-/* 294 */
+/* 264 */
 /*!*************************************!*\
   !*** ./~/alt/lib/utils/AltUtils.js ***!
   \*************************************/
@@ -41404,7 +38959,7 @@
 	exports.fsa = fsa;
 	exports.dispatch = dispatch;
 	
-	var _functions = __webpack_require__(/*! ../functions */ 292);
+	var _functions = __webpack_require__(/*! ../functions */ 262);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
@@ -41506,7 +39061,7 @@
 	function NoopClass() {}
 
 /***/ },
-/* 295 */
+/* 265 */
 /*!*************************************!*\
   !*** ./~/alt/lib/store/AltStore.js ***!
   \*************************************/
@@ -41518,11 +39073,11 @@
 	  value: true
 	});
 	
-	var _functions = __webpack_require__(/*! ../functions */ 292);
+	var _functions = __webpack_require__(/*! ../functions */ 262);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
-	var _transmitter = __webpack_require__(/*! transmitter */ 296);
+	var _transmitter = __webpack_require__(/*! transmitter */ 266);
 	
 	var _transmitter2 = _interopRequireDefault(_transmitter);
 	
@@ -41665,7 +39220,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 296 */
+/* 266 */
 /*!*******************************************!*\
   !*** ./~/transmitter/dist/transmitter.js ***!
   \*******************************************/
@@ -41716,7 +39271,7 @@
 
 
 /***/ },
-/* 297 */
+/* 267 */
 /*!***************************************!*\
   !*** ./~/alt/lib/store/StoreMixin.js ***!
   \***************************************/
@@ -41728,11 +39283,11 @@
 	  value: true
 	});
 	
-	var _transmitter = __webpack_require__(/*! transmitter */ 296);
+	var _transmitter = __webpack_require__(/*! transmitter */ 266);
 	
 	var _transmitter2 = _interopRequireDefault(_transmitter);
 	
-	var _functions = __webpack_require__(/*! ../functions */ 292);
+	var _functions = __webpack_require__(/*! ../functions */ 262);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
@@ -41960,7 +39515,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 298 */
+/* 268 */
 /*!************************************!*\
   !*** ./~/alt/lib/actions/index.js ***!
   \************************************/
@@ -41973,15 +39528,15 @@
 	});
 	exports['default'] = makeAction;
 	
-	var _functions = __webpack_require__(/*! ../functions */ 292);
+	var _functions = __webpack_require__(/*! ../functions */ 262);
 	
 	var fn = _interopRequireWildcard(_functions);
 	
-	var _AltUtils = __webpack_require__(/*! ../utils/AltUtils */ 294);
+	var _AltUtils = __webpack_require__(/*! ../utils/AltUtils */ 264);
 	
 	var utils = _interopRequireWildcard(_AltUtils);
 	
-	var _isPromise = __webpack_require__(/*! is-promise */ 299);
+	var _isPromise = __webpack_require__(/*! is-promise */ 269);
 	
 	var _isPromise2 = _interopRequireDefault(_isPromise);
 	
@@ -42050,7 +39605,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 299 */
+/* 269 */
 /*!*******************************!*\
   !*** ./~/is-promise/index.js ***!
   \*******************************/
@@ -42064,7 +39619,7 @@
 
 
 /***/ },
-/* 300 */
+/* 270 */
 /*!****************************!*\
   !*** ./~/moment/moment.js ***!
   \****************************/
@@ -42468,7 +40023,7 @@
 	                module && module.exports) {
 	            try {
 	                oldLocale = globalLocale._abbr;
-	                __webpack_require__(/*! ./locale */ 302)("./" + name);
+	                __webpack_require__(/*! ./locale */ 272)("./" + name);
 	                // because defineLocale currently also sets the global locale, we
 	                // want to undo that for lazy loaded locales
 	                locale_locales__getSetGlobalLocale(oldLocale);
@@ -46110,10 +43665,10 @@
 	    return _moment;
 	
 	}));
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/module.js */ 301)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/module.js */ 271)(module)))
 
 /***/ },
-/* 301 */
+/* 271 */
 /*!***********************************!*\
   !*** (webpack)/buildin/module.js ***!
   \***********************************/
@@ -46132,213 +43687,213 @@
 
 
 /***/ },
-/* 302 */
+/* 272 */
 /*!**********************************!*\
   !*** ./~/moment/locale ^\.\/.*$ ***!
   \**********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 303,
-		"./af.js": 303,
-		"./ar": 304,
-		"./ar-ma": 305,
-		"./ar-ma.js": 305,
-		"./ar-sa": 306,
-		"./ar-sa.js": 306,
-		"./ar-tn": 307,
-		"./ar-tn.js": 307,
-		"./ar.js": 304,
-		"./az": 308,
-		"./az.js": 308,
-		"./be": 309,
-		"./be.js": 309,
-		"./bg": 310,
-		"./bg.js": 310,
-		"./bn": 311,
-		"./bn.js": 311,
-		"./bo": 312,
-		"./bo.js": 312,
-		"./br": 313,
-		"./br.js": 313,
-		"./bs": 314,
-		"./bs.js": 314,
-		"./ca": 315,
-		"./ca.js": 315,
-		"./cs": 316,
-		"./cs.js": 316,
-		"./cv": 317,
-		"./cv.js": 317,
-		"./cy": 318,
-		"./cy.js": 318,
-		"./da": 319,
-		"./da.js": 319,
-		"./de": 320,
-		"./de-at": 321,
-		"./de-at.js": 321,
-		"./de.js": 320,
-		"./dv": 322,
-		"./dv.js": 322,
-		"./el": 323,
-		"./el.js": 323,
-		"./en-au": 324,
-		"./en-au.js": 324,
-		"./en-ca": 325,
-		"./en-ca.js": 325,
-		"./en-gb": 326,
-		"./en-gb.js": 326,
-		"./en-ie": 327,
-		"./en-ie.js": 327,
-		"./en-nz": 328,
-		"./en-nz.js": 328,
-		"./eo": 329,
-		"./eo.js": 329,
-		"./es": 330,
-		"./es.js": 330,
-		"./et": 331,
-		"./et.js": 331,
-		"./eu": 332,
-		"./eu.js": 332,
-		"./fa": 333,
-		"./fa.js": 333,
-		"./fi": 334,
-		"./fi.js": 334,
-		"./fo": 335,
-		"./fo.js": 335,
-		"./fr": 336,
-		"./fr-ca": 337,
-		"./fr-ca.js": 337,
-		"./fr-ch": 338,
-		"./fr-ch.js": 338,
-		"./fr.js": 336,
-		"./fy": 339,
-		"./fy.js": 339,
-		"./gd": 340,
-		"./gd.js": 340,
-		"./gl": 341,
-		"./gl.js": 341,
-		"./he": 342,
-		"./he.js": 342,
-		"./hi": 343,
-		"./hi.js": 343,
-		"./hr": 344,
-		"./hr.js": 344,
-		"./hu": 345,
-		"./hu.js": 345,
-		"./hy-am": 346,
-		"./hy-am.js": 346,
-		"./id": 347,
-		"./id.js": 347,
-		"./is": 348,
-		"./is.js": 348,
-		"./it": 349,
-		"./it.js": 349,
-		"./ja": 350,
-		"./ja.js": 350,
-		"./jv": 351,
-		"./jv.js": 351,
-		"./ka": 352,
-		"./ka.js": 352,
-		"./kk": 353,
-		"./kk.js": 353,
-		"./km": 354,
-		"./km.js": 354,
-		"./ko": 355,
-		"./ko.js": 355,
-		"./ky": 356,
-		"./ky.js": 356,
-		"./lb": 357,
-		"./lb.js": 357,
-		"./lo": 358,
-		"./lo.js": 358,
-		"./lt": 359,
-		"./lt.js": 359,
-		"./lv": 360,
-		"./lv.js": 360,
-		"./me": 361,
-		"./me.js": 361,
-		"./mk": 362,
-		"./mk.js": 362,
-		"./ml": 363,
-		"./ml.js": 363,
-		"./mr": 364,
-		"./mr.js": 364,
-		"./ms": 365,
-		"./ms-my": 366,
-		"./ms-my.js": 366,
-		"./ms.js": 365,
-		"./my": 367,
-		"./my.js": 367,
-		"./nb": 368,
-		"./nb.js": 368,
-		"./ne": 369,
-		"./ne.js": 369,
-		"./nl": 370,
-		"./nl.js": 370,
-		"./nn": 371,
-		"./nn.js": 371,
-		"./pa-in": 372,
-		"./pa-in.js": 372,
-		"./pl": 373,
-		"./pl.js": 373,
-		"./pt": 374,
-		"./pt-br": 375,
-		"./pt-br.js": 375,
-		"./pt.js": 374,
-		"./ro": 376,
-		"./ro.js": 376,
-		"./ru": 377,
-		"./ru.js": 377,
-		"./se": 378,
-		"./se.js": 378,
-		"./si": 379,
-		"./si.js": 379,
-		"./sk": 380,
-		"./sk.js": 380,
-		"./sl": 381,
-		"./sl.js": 381,
-		"./sq": 382,
-		"./sq.js": 382,
-		"./sr": 383,
-		"./sr-cyrl": 384,
-		"./sr-cyrl.js": 384,
-		"./sr.js": 383,
-		"./ss": 385,
-		"./ss.js": 385,
-		"./sv": 386,
-		"./sv.js": 386,
-		"./sw": 387,
-		"./sw.js": 387,
-		"./ta": 388,
-		"./ta.js": 388,
-		"./te": 389,
-		"./te.js": 389,
-		"./th": 390,
-		"./th.js": 390,
-		"./tl-ph": 391,
-		"./tl-ph.js": 391,
-		"./tlh": 392,
-		"./tlh.js": 392,
-		"./tr": 393,
-		"./tr.js": 393,
-		"./tzl": 394,
-		"./tzl.js": 394,
-		"./tzm": 395,
-		"./tzm-latn": 396,
-		"./tzm-latn.js": 396,
-		"./tzm.js": 395,
-		"./uk": 397,
-		"./uk.js": 397,
-		"./uz": 398,
-		"./uz.js": 398,
-		"./vi": 399,
-		"./vi.js": 399,
-		"./x-pseudo": 400,
-		"./x-pseudo.js": 400,
-		"./zh-cn": 401,
-		"./zh-cn.js": 401,
-		"./zh-tw": 402,
-		"./zh-tw.js": 402
+		"./af": 273,
+		"./af.js": 273,
+		"./ar": 274,
+		"./ar-ma": 275,
+		"./ar-ma.js": 275,
+		"./ar-sa": 276,
+		"./ar-sa.js": 276,
+		"./ar-tn": 277,
+		"./ar-tn.js": 277,
+		"./ar.js": 274,
+		"./az": 278,
+		"./az.js": 278,
+		"./be": 279,
+		"./be.js": 279,
+		"./bg": 280,
+		"./bg.js": 280,
+		"./bn": 281,
+		"./bn.js": 281,
+		"./bo": 282,
+		"./bo.js": 282,
+		"./br": 283,
+		"./br.js": 283,
+		"./bs": 284,
+		"./bs.js": 284,
+		"./ca": 285,
+		"./ca.js": 285,
+		"./cs": 286,
+		"./cs.js": 286,
+		"./cv": 287,
+		"./cv.js": 287,
+		"./cy": 288,
+		"./cy.js": 288,
+		"./da": 289,
+		"./da.js": 289,
+		"./de": 290,
+		"./de-at": 291,
+		"./de-at.js": 291,
+		"./de.js": 290,
+		"./dv": 292,
+		"./dv.js": 292,
+		"./el": 293,
+		"./el.js": 293,
+		"./en-au": 294,
+		"./en-au.js": 294,
+		"./en-ca": 295,
+		"./en-ca.js": 295,
+		"./en-gb": 296,
+		"./en-gb.js": 296,
+		"./en-ie": 297,
+		"./en-ie.js": 297,
+		"./en-nz": 298,
+		"./en-nz.js": 298,
+		"./eo": 299,
+		"./eo.js": 299,
+		"./es": 300,
+		"./es.js": 300,
+		"./et": 301,
+		"./et.js": 301,
+		"./eu": 302,
+		"./eu.js": 302,
+		"./fa": 303,
+		"./fa.js": 303,
+		"./fi": 304,
+		"./fi.js": 304,
+		"./fo": 305,
+		"./fo.js": 305,
+		"./fr": 306,
+		"./fr-ca": 307,
+		"./fr-ca.js": 307,
+		"./fr-ch": 308,
+		"./fr-ch.js": 308,
+		"./fr.js": 306,
+		"./fy": 309,
+		"./fy.js": 309,
+		"./gd": 310,
+		"./gd.js": 310,
+		"./gl": 311,
+		"./gl.js": 311,
+		"./he": 312,
+		"./he.js": 312,
+		"./hi": 313,
+		"./hi.js": 313,
+		"./hr": 314,
+		"./hr.js": 314,
+		"./hu": 315,
+		"./hu.js": 315,
+		"./hy-am": 316,
+		"./hy-am.js": 316,
+		"./id": 317,
+		"./id.js": 317,
+		"./is": 318,
+		"./is.js": 318,
+		"./it": 319,
+		"./it.js": 319,
+		"./ja": 320,
+		"./ja.js": 320,
+		"./jv": 321,
+		"./jv.js": 321,
+		"./ka": 322,
+		"./ka.js": 322,
+		"./kk": 323,
+		"./kk.js": 323,
+		"./km": 324,
+		"./km.js": 324,
+		"./ko": 325,
+		"./ko.js": 325,
+		"./ky": 326,
+		"./ky.js": 326,
+		"./lb": 327,
+		"./lb.js": 327,
+		"./lo": 328,
+		"./lo.js": 328,
+		"./lt": 329,
+		"./lt.js": 329,
+		"./lv": 330,
+		"./lv.js": 330,
+		"./me": 331,
+		"./me.js": 331,
+		"./mk": 332,
+		"./mk.js": 332,
+		"./ml": 333,
+		"./ml.js": 333,
+		"./mr": 334,
+		"./mr.js": 334,
+		"./ms": 335,
+		"./ms-my": 336,
+		"./ms-my.js": 336,
+		"./ms.js": 335,
+		"./my": 337,
+		"./my.js": 337,
+		"./nb": 338,
+		"./nb.js": 338,
+		"./ne": 339,
+		"./ne.js": 339,
+		"./nl": 340,
+		"./nl.js": 340,
+		"./nn": 341,
+		"./nn.js": 341,
+		"./pa-in": 342,
+		"./pa-in.js": 342,
+		"./pl": 343,
+		"./pl.js": 343,
+		"./pt": 344,
+		"./pt-br": 345,
+		"./pt-br.js": 345,
+		"./pt.js": 344,
+		"./ro": 346,
+		"./ro.js": 346,
+		"./ru": 347,
+		"./ru.js": 347,
+		"./se": 348,
+		"./se.js": 348,
+		"./si": 349,
+		"./si.js": 349,
+		"./sk": 350,
+		"./sk.js": 350,
+		"./sl": 351,
+		"./sl.js": 351,
+		"./sq": 352,
+		"./sq.js": 352,
+		"./sr": 353,
+		"./sr-cyrl": 354,
+		"./sr-cyrl.js": 354,
+		"./sr.js": 353,
+		"./ss": 355,
+		"./ss.js": 355,
+		"./sv": 356,
+		"./sv.js": 356,
+		"./sw": 357,
+		"./sw.js": 357,
+		"./ta": 358,
+		"./ta.js": 358,
+		"./te": 359,
+		"./te.js": 359,
+		"./th": 360,
+		"./th.js": 360,
+		"./tl-ph": 361,
+		"./tl-ph.js": 361,
+		"./tlh": 362,
+		"./tlh.js": 362,
+		"./tr": 363,
+		"./tr.js": 363,
+		"./tzl": 364,
+		"./tzl.js": 364,
+		"./tzm": 365,
+		"./tzm-latn": 366,
+		"./tzm-latn.js": 366,
+		"./tzm.js": 365,
+		"./uk": 367,
+		"./uk.js": 367,
+		"./uz": 368,
+		"./uz.js": 368,
+		"./vi": 369,
+		"./vi.js": 369,
+		"./x-pseudo": 370,
+		"./x-pseudo.js": 370,
+		"./zh-cn": 371,
+		"./zh-cn.js": 371,
+		"./zh-tw": 372,
+		"./zh-tw.js": 372
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -46351,11 +43906,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 302;
+	webpackContext.id = 272;
 
 
 /***/ },
-/* 303 */
+/* 273 */
 /*!*******************************!*\
   !*** ./~/moment/locale/af.js ***!
   \*******************************/
@@ -46366,7 +43921,7 @@
 	//! author : Werner Mollentze : https://github.com/wernerm
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46435,7 +43990,7 @@
 	}));
 
 /***/ },
-/* 304 */
+/* 274 */
 /*!*******************************!*\
   !*** ./~/moment/locale/ar.js ***!
   \*******************************/
@@ -46448,7 +44003,7 @@
 	//! Native plural forms: forabi https://github.com/forabi
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46579,7 +44134,7 @@
 	}));
 
 /***/ },
-/* 305 */
+/* 275 */
 /*!**********************************!*\
   !*** ./~/moment/locale/ar-ma.js ***!
   \**********************************/
@@ -46591,7 +44146,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46646,7 +44201,7 @@
 	}));
 
 /***/ },
-/* 306 */
+/* 276 */
 /*!**********************************!*\
   !*** ./~/moment/locale/ar-sa.js ***!
   \**********************************/
@@ -46657,7 +44212,7 @@
 	//! author : Suhail Alkowaileet : https://github.com/xsoh
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46757,7 +44312,7 @@
 	}));
 
 /***/ },
-/* 307 */
+/* 277 */
 /*!**********************************!*\
   !*** ./~/moment/locale/ar-tn.js ***!
   \**********************************/
@@ -46767,7 +44322,7 @@
 	//! locale  : Tunisian Arabic (ar-tn)
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46822,7 +44377,7 @@
 	}));
 
 /***/ },
-/* 308 */
+/* 278 */
 /*!*******************************!*\
   !*** ./~/moment/locale/az.js ***!
   \*******************************/
@@ -46833,7 +44388,7 @@
 	//! author : topchiyev : https://github.com/topchiyev
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46934,7 +44489,7 @@
 	}));
 
 /***/ },
-/* 309 */
+/* 279 */
 /*!*******************************!*\
   !*** ./~/moment/locale/be.js ***!
   \*******************************/
@@ -46947,7 +44502,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47075,7 +44630,7 @@
 	}));
 
 /***/ },
-/* 310 */
+/* 280 */
 /*!*******************************!*\
   !*** ./~/moment/locale/bg.js ***!
   \*******************************/
@@ -47086,7 +44641,7 @@
 	//! author : Krasen Borisov : https://github.com/kraz
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47172,7 +44727,7 @@
 	}));
 
 /***/ },
-/* 311 */
+/* 281 */
 /*!*******************************!*\
   !*** ./~/moment/locale/bn.js ***!
   \*******************************/
@@ -47183,7 +44738,7 @@
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47298,7 +44853,7 @@
 	}));
 
 /***/ },
-/* 312 */
+/* 282 */
 /*!*******************************!*\
   !*** ./~/moment/locale/bo.js ***!
   \*******************************/
@@ -47309,7 +44864,7 @@
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47424,7 +44979,7 @@
 	}));
 
 /***/ },
-/* 313 */
+/* 283 */
 /*!*******************************!*\
   !*** ./~/moment/locale/br.js ***!
   \*******************************/
@@ -47435,7 +44990,7 @@
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47539,7 +45094,7 @@
 	}));
 
 /***/ },
-/* 314 */
+/* 284 */
 /*!*******************************!*\
   !*** ./~/moment/locale/bs.js ***!
   \*******************************/
@@ -47551,7 +45106,7 @@
 	//! based on (hr) translation by Bojan Marković
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47689,7 +45244,7 @@
 	}));
 
 /***/ },
-/* 315 */
+/* 285 */
 /*!*******************************!*\
   !*** ./~/moment/locale/ca.js ***!
   \*******************************/
@@ -47700,7 +45255,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47777,7 +45332,7 @@
 	}));
 
 /***/ },
-/* 316 */
+/* 286 */
 /*!*******************************!*\
   !*** ./~/moment/locale/cs.js ***!
   \*******************************/
@@ -47788,7 +45343,7 @@
 	//! author : petrbela : https://github.com/petrbela
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47955,7 +45510,7 @@
 	}));
 
 /***/ },
-/* 317 */
+/* 287 */
 /*!*******************************!*\
   !*** ./~/moment/locale/cv.js ***!
   \*******************************/
@@ -47966,7 +45521,7 @@
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48025,7 +45580,7 @@
 	}));
 
 /***/ },
-/* 318 */
+/* 288 */
 /*!*******************************!*\
   !*** ./~/moment/locale/cy.js ***!
   \*******************************/
@@ -48036,7 +45591,7 @@
 	//! author : Robert Allen
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48112,7 +45667,7 @@
 	}));
 
 /***/ },
-/* 319 */
+/* 289 */
 /*!*******************************!*\
   !*** ./~/moment/locale/da.js ***!
   \*******************************/
@@ -48123,7 +45678,7 @@
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48179,7 +45734,7 @@
 	}));
 
 /***/ },
-/* 320 */
+/* 290 */
 /*!*******************************!*\
   !*** ./~/moment/locale/de.js ***!
   \*******************************/
@@ -48192,7 +45747,7 @@
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48264,7 +45819,7 @@
 	}));
 
 /***/ },
-/* 321 */
+/* 291 */
 /*!**********************************!*\
   !*** ./~/moment/locale/de-at.js ***!
   \**********************************/
@@ -48278,7 +45833,7 @@
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48350,7 +45905,7 @@
 	}));
 
 /***/ },
-/* 322 */
+/* 292 */
 /*!*******************************!*\
   !*** ./~/moment/locale/dv.js ***!
   \*******************************/
@@ -48361,7 +45916,7 @@
 	//! author : Jawish Hameed : https://github.com/jawish
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48456,7 +46011,7 @@
 	}));
 
 /***/ },
-/* 323 */
+/* 293 */
 /*!*******************************!*\
   !*** ./~/moment/locale/el.js ***!
   \*******************************/
@@ -48467,7 +46022,7 @@
 	//! author : Aggelos Karalias : https://github.com/mehiel
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48561,7 +46116,7 @@
 	}));
 
 /***/ },
-/* 324 */
+/* 294 */
 /*!**********************************!*\
   !*** ./~/moment/locale/en-au.js ***!
   \**********************************/
@@ -48571,7 +46126,7 @@
 	//! locale : australian english (en-au)
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48634,7 +46189,7 @@
 	}));
 
 /***/ },
-/* 325 */
+/* 295 */
 /*!**********************************!*\
   !*** ./~/moment/locale/en-ca.js ***!
   \**********************************/
@@ -48645,7 +46200,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48704,7 +46259,7 @@
 	}));
 
 /***/ },
-/* 326 */
+/* 296 */
 /*!**********************************!*\
   !*** ./~/moment/locale/en-gb.js ***!
   \**********************************/
@@ -48715,7 +46270,7 @@
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48778,7 +46333,7 @@
 	}));
 
 /***/ },
-/* 327 */
+/* 297 */
 /*!**********************************!*\
   !*** ./~/moment/locale/en-ie.js ***!
   \**********************************/
@@ -48789,7 +46344,7 @@
 	//! author : Chris Cartlidge : https://github.com/chriscartlidge
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48852,7 +46407,7 @@
 	}));
 
 /***/ },
-/* 328 */
+/* 298 */
 /*!**********************************!*\
   !*** ./~/moment/locale/en-nz.js ***!
   \**********************************/
@@ -48862,7 +46417,7 @@
 	//! locale : New Zealand english (en-nz)
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48925,7 +46480,7 @@
 	}));
 
 /***/ },
-/* 329 */
+/* 299 */
 /*!*******************************!*\
   !*** ./~/moment/locale/eo.js ***!
   \*******************************/
@@ -48938,7 +46493,7 @@
 	//!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49005,7 +46560,7 @@
 	}));
 
 /***/ },
-/* 330 */
+/* 300 */
 /*!*******************************!*\
   !*** ./~/moment/locale/es.js ***!
   \*******************************/
@@ -49016,7 +46571,7 @@
 	//! author : Julio Napurí : https://github.com/julionc
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49093,7 +46648,7 @@
 	}));
 
 /***/ },
-/* 331 */
+/* 301 */
 /*!*******************************!*\
   !*** ./~/moment/locale/et.js ***!
   \*******************************/
@@ -49105,7 +46660,7 @@
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49180,7 +46735,7 @@
 	}));
 
 /***/ },
-/* 332 */
+/* 302 */
 /*!*******************************!*\
   !*** ./~/moment/locale/eu.js ***!
   \*******************************/
@@ -49191,7 +46746,7 @@
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49253,7 +46808,7 @@
 	}));
 
 /***/ },
-/* 333 */
+/* 303 */
 /*!*******************************!*\
   !*** ./~/moment/locale/fa.js ***!
   \*******************************/
@@ -49264,7 +46819,7 @@
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49366,7 +46921,7 @@
 	}));
 
 /***/ },
-/* 334 */
+/* 304 */
 /*!*******************************!*\
   !*** ./~/moment/locale/fi.js ***!
   \*******************************/
@@ -49377,7 +46932,7 @@
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49480,7 +47035,7 @@
 	}));
 
 /***/ },
-/* 335 */
+/* 305 */
 /*!*******************************!*\
   !*** ./~/moment/locale/fo.js ***!
   \*******************************/
@@ -49491,7 +47046,7 @@
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49547,7 +47102,7 @@
 	}));
 
 /***/ },
-/* 336 */
+/* 306 */
 /*!*******************************!*\
   !*** ./~/moment/locale/fr.js ***!
   \*******************************/
@@ -49558,7 +47113,7 @@
 	//! author : John Fischer : https://github.com/jfroffice
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49618,7 +47173,7 @@
 	}));
 
 /***/ },
-/* 337 */
+/* 307 */
 /*!**********************************!*\
   !*** ./~/moment/locale/fr-ca.js ***!
   \**********************************/
@@ -49629,7 +47184,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49685,7 +47240,7 @@
 	}));
 
 /***/ },
-/* 338 */
+/* 308 */
 /*!**********************************!*\
   !*** ./~/moment/locale/fr-ch.js ***!
   \**********************************/
@@ -49696,7 +47251,7 @@
 	//! author : Gaspard Bucher : https://github.com/gaspard
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49756,7 +47311,7 @@
 	}));
 
 /***/ },
-/* 339 */
+/* 309 */
 /*!*******************************!*\
   !*** ./~/moment/locale/fy.js ***!
   \*******************************/
@@ -49767,7 +47322,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49836,7 +47391,7 @@
 	}));
 
 /***/ },
-/* 340 */
+/* 310 */
 /*!*******************************!*\
   !*** ./~/moment/locale/gd.js ***!
   \*******************************/
@@ -49847,7 +47402,7 @@
 	//! author : Jon Ashdown : https://github.com/jonashdown
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49919,7 +47474,7 @@
 	}));
 
 /***/ },
-/* 341 */
+/* 311 */
 /*!*******************************!*\
   !*** ./~/moment/locale/gl.js ***!
   \*******************************/
@@ -49930,7 +47485,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50003,7 +47558,7 @@
 	}));
 
 /***/ },
-/* 342 */
+/* 312 */
 /*!*******************************!*\
   !*** ./~/moment/locale/he.js ***!
   \*******************************/
@@ -50016,7 +47571,7 @@
 	//! author : Tal Ater : https://github.com/TalAter
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50109,7 +47664,7 @@
 	}));
 
 /***/ },
-/* 343 */
+/* 313 */
 /*!*******************************!*\
   !*** ./~/moment/locale/hi.js ***!
   \*******************************/
@@ -50120,7 +47675,7 @@
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50240,7 +47795,7 @@
 	}));
 
 /***/ },
-/* 344 */
+/* 314 */
 /*!*******************************!*\
   !*** ./~/moment/locale/hr.js ***!
   \*******************************/
@@ -50251,7 +47806,7 @@
 	//! author : Bojan Marković : https://github.com/bmarkovic
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50392,7 +47947,7 @@
 	}));
 
 /***/ },
-/* 345 */
+/* 315 */
 /*!*******************************!*\
   !*** ./~/moment/locale/hu.js ***!
   \*******************************/
@@ -50403,7 +47958,7 @@
 	//! author : Adam Brunner : https://github.com/adambrunner
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50508,7 +48063,7 @@
 	}));
 
 /***/ },
-/* 346 */
+/* 316 */
 /*!**********************************!*\
   !*** ./~/moment/locale/hy-am.js ***!
   \**********************************/
@@ -50519,7 +48074,7 @@
 	//! author : Armendarabyan : https://github.com/armendarabyan
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50610,7 +48165,7 @@
 	}));
 
 /***/ },
-/* 347 */
+/* 317 */
 /*!*******************************!*\
   !*** ./~/moment/locale/id.js ***!
   \*******************************/
@@ -50622,7 +48177,7 @@
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50700,7 +48255,7 @@
 	}));
 
 /***/ },
-/* 348 */
+/* 318 */
 /*!*******************************!*\
   !*** ./~/moment/locale/is.js ***!
   \*******************************/
@@ -50711,7 +48266,7 @@
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50834,7 +48389,7 @@
 	}));
 
 /***/ },
-/* 349 */
+/* 319 */
 /*!*******************************!*\
   !*** ./~/moment/locale/it.js ***!
   \*******************************/
@@ -50846,7 +48401,7 @@
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50911,7 +48466,7 @@
 	}));
 
 /***/ },
-/* 350 */
+/* 320 */
 /*!*******************************!*\
   !*** ./~/moment/locale/ja.js ***!
   \*******************************/
@@ -50922,7 +48477,7 @@
 	//! author : LI Long : https://github.com/baryon
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50994,7 +48549,7 @@
 	}));
 
 /***/ },
-/* 351 */
+/* 321 */
 /*!*******************************!*\
   !*** ./~/moment/locale/jv.js ***!
   \*******************************/
@@ -51006,7 +48561,7 @@
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51084,7 +48639,7 @@
 	}));
 
 /***/ },
-/* 352 */
+/* 322 */
 /*!*******************************!*\
   !*** ./~/moment/locale/ka.js ***!
   \*******************************/
@@ -51095,7 +48650,7 @@
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51180,7 +48735,7 @@
 	}));
 
 /***/ },
-/* 353 */
+/* 323 */
 /*!*******************************!*\
   !*** ./~/moment/locale/kk.js ***!
   \*******************************/
@@ -51191,7 +48746,7 @@
 	//! authors : Nurlan Rakhimzhanov : https://github.com/nurlan
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51274,7 +48829,7 @@
 	}));
 
 /***/ },
-/* 354 */
+/* 324 */
 /*!*******************************!*\
   !*** ./~/moment/locale/km.js ***!
   \*******************************/
@@ -51285,7 +48840,7 @@
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51339,7 +48894,7 @@
 	}));
 
 /***/ },
-/* 355 */
+/* 325 */
 /*!*******************************!*\
   !*** ./~/moment/locale/ko.js ***!
   \*******************************/
@@ -51354,7 +48909,7 @@
 	//! - Jeeeyul Lee <jeeeyul@gmail.com>
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51414,7 +48969,7 @@
 	}));
 
 /***/ },
-/* 356 */
+/* 326 */
 /*!*******************************!*\
   !*** ./~/moment/locale/ky.js ***!
   \*******************************/
@@ -51425,7 +48980,7 @@
 	//! author : Chyngyz Arystan uulu : https://github.com/chyngyz
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51509,7 +49064,7 @@
 	}));
 
 /***/ },
-/* 357 */
+/* 327 */
 /*!*******************************!*\
   !*** ./~/moment/locale/lb.js ***!
   \*******************************/
@@ -51520,7 +49075,7 @@
 	//! author : mweimerskirch : https://github.com/mweimerskirch, David Raison : https://github.com/kwisatz
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51652,7 +49207,7 @@
 	}));
 
 /***/ },
-/* 358 */
+/* 328 */
 /*!*******************************!*\
   !*** ./~/moment/locale/lo.js ***!
   \*******************************/
@@ -51663,7 +49218,7 @@
 	//! author : Ryan Hart : https://github.com/ryanhart2
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51729,7 +49284,7 @@
 	}));
 
 /***/ },
-/* 359 */
+/* 329 */
 /*!*******************************!*\
   !*** ./~/moment/locale/lt.js ***!
   \*******************************/
@@ -51740,7 +49295,7 @@
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51852,7 +49407,7 @@
 	}));
 
 /***/ },
-/* 360 */
+/* 330 */
 /*!*******************************!*\
   !*** ./~/moment/locale/lv.js ***!
   \*******************************/
@@ -51864,7 +49419,7 @@
 	//! author : Jānis Elmeris : https://github.com/JanisE
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51956,7 +49511,7 @@
 	}));
 
 /***/ },
-/* 361 */
+/* 331 */
 /*!*******************************!*\
   !*** ./~/moment/locale/me.js ***!
   \*******************************/
@@ -51967,7 +49522,7 @@
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52074,7 +49629,7 @@
 	}));
 
 /***/ },
-/* 362 */
+/* 332 */
 /*!*******************************!*\
   !*** ./~/moment/locale/mk.js ***!
   \*******************************/
@@ -52085,7 +49640,7 @@
 	//! author : Borislav Mickov : https://github.com/B0k0
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52171,7 +49726,7 @@
 	}));
 
 /***/ },
-/* 363 */
+/* 333 */
 /*!*******************************!*\
   !*** ./~/moment/locale/ml.js ***!
   \*******************************/
@@ -52182,7 +49737,7 @@
 	//! author : Floyd Pink : https://github.com/floydpink
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52259,7 +49814,7 @@
 	}));
 
 /***/ },
-/* 364 */
+/* 334 */
 /*!*******************************!*\
   !*** ./~/moment/locale/mr.js ***!
   \*******************************/
@@ -52271,7 +49826,7 @@
 	//! author : Vivek Athalye : https://github.com/vnathalye
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52425,7 +49980,7 @@
 	}));
 
 /***/ },
-/* 365 */
+/* 335 */
 /*!*******************************!*\
   !*** ./~/moment/locale/ms.js ***!
   \*******************************/
@@ -52436,7 +49991,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52514,7 +50069,7 @@
 	}));
 
 /***/ },
-/* 366 */
+/* 336 */
 /*!**********************************!*\
   !*** ./~/moment/locale/ms-my.js ***!
   \**********************************/
@@ -52525,7 +50080,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52603,7 +50158,7 @@
 	}));
 
 /***/ },
-/* 367 */
+/* 337 */
 /*!*******************************!*\
   !*** ./~/moment/locale/my.js ***!
   \*******************************/
@@ -52614,7 +50169,7 @@
 	//! author : Squar team, mysquar.com
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52703,7 +50258,7 @@
 	}));
 
 /***/ },
-/* 368 */
+/* 338 */
 /*!*******************************!*\
   !*** ./~/moment/locale/nb.js ***!
   \*******************************/
@@ -52715,7 +50270,7 @@
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52773,7 +50328,7 @@
 	}));
 
 /***/ },
-/* 369 */
+/* 339 */
 /*!*******************************!*\
   !*** ./~/moment/locale/ne.js ***!
   \*******************************/
@@ -52784,7 +50339,7 @@
 	//! author : suvash : https://github.com/suvash
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52903,7 +50458,7 @@
 	}));
 
 /***/ },
-/* 370 */
+/* 340 */
 /*!*******************************!*\
   !*** ./~/moment/locale/nl.js ***!
   \*******************************/
@@ -52914,7 +50469,7 @@
 	//! author : Joris Röling : https://github.com/jjupiter
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52983,7 +50538,7 @@
 	}));
 
 /***/ },
-/* 371 */
+/* 341 */
 /*!*******************************!*\
   !*** ./~/moment/locale/nn.js ***!
   \*******************************/
@@ -52994,7 +50549,7 @@
 	//! author : https://github.com/mechuwind
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53050,7 +50605,7 @@
 	}));
 
 /***/ },
-/* 372 */
+/* 342 */
 /*!**********************************!*\
   !*** ./~/moment/locale/pa-in.js ***!
   \**********************************/
@@ -53061,7 +50616,7 @@
 	//! author : Harpreet Singh : https://github.com/harpreetkhalsagtbit
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53181,7 +50736,7 @@
 	}));
 
 /***/ },
-/* 373 */
+/* 343 */
 /*!*******************************!*\
   !*** ./~/moment/locale/pl.js ***!
   \*******************************/
@@ -53192,7 +50747,7 @@
 	//! author : Rafal Hirsz : https://github.com/evoL
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53293,7 +50848,7 @@
 	}));
 
 /***/ },
-/* 374 */
+/* 344 */
 /*!*******************************!*\
   !*** ./~/moment/locale/pt.js ***!
   \*******************************/
@@ -53304,7 +50859,7 @@
 	//! author : Jefferson : https://github.com/jalex79
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53365,7 +50920,7 @@
 	}));
 
 /***/ },
-/* 375 */
+/* 345 */
 /*!**********************************!*\
   !*** ./~/moment/locale/pt-br.js ***!
   \**********************************/
@@ -53376,7 +50931,7 @@
 	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53433,7 +50988,7 @@
 	}));
 
 /***/ },
-/* 376 */
+/* 346 */
 /*!*******************************!*\
   !*** ./~/moment/locale/ro.js ***!
   \*******************************/
@@ -53445,7 +51000,7 @@
 	//! author : Valentin Agachi : https://github.com/avaly
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53515,7 +51070,7 @@
 	}));
 
 /***/ },
-/* 377 */
+/* 347 */
 /*!*******************************!*\
   !*** ./~/moment/locale/ru.js ***!
   \*******************************/
@@ -53528,7 +51083,7 @@
 	//! author : Коренберг Марк : https://github.com/socketpair
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53697,7 +51252,7 @@
 	}));
 
 /***/ },
-/* 378 */
+/* 348 */
 /*!*******************************!*\
   !*** ./~/moment/locale/se.js ***!
   \*******************************/
@@ -53708,7 +51263,7 @@
 	//! authors : Bård Rolstad Henriksen : https://github.com/karamell
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53765,7 +51320,7 @@
 	}));
 
 /***/ },
-/* 379 */
+/* 349 */
 /*!*******************************!*\
   !*** ./~/moment/locale/si.js ***!
   \*******************************/
@@ -53776,7 +51331,7 @@
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53843,7 +51398,7 @@
 	}));
 
 /***/ },
-/* 380 */
+/* 350 */
 /*!*******************************!*\
   !*** ./~/moment/locale/sk.js ***!
   \*******************************/
@@ -53855,7 +51410,7 @@
 	//! based on work of petrbela : https://github.com/petrbela
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -54000,7 +51555,7 @@
 	}));
 
 /***/ },
-/* 381 */
+/* 351 */
 /*!*******************************!*\
   !*** ./~/moment/locale/sl.js ***!
   \*******************************/
@@ -54011,7 +51566,7 @@
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -54169,7 +51724,7 @@
 	}));
 
 /***/ },
-/* 382 */
+/* 352 */
 /*!*******************************!*\
   !*** ./~/moment/locale/sq.js ***!
   \*******************************/
@@ -54182,7 +51737,7 @@
 	//! author : Oerd Cukalla : https://github.com/oerd (fixes)
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -54246,7 +51801,7 @@
 	}));
 
 /***/ },
-/* 383 */
+/* 353 */
 /*!*******************************!*\
   !*** ./~/moment/locale/sr.js ***!
   \*******************************/
@@ -54257,7 +51812,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -54363,7 +51918,7 @@
 	}));
 
 /***/ },
-/* 384 */
+/* 354 */
 /*!************************************!*\
   !*** ./~/moment/locale/sr-cyrl.js ***!
   \************************************/
@@ -54374,7 +51929,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -54480,7 +52035,7 @@
 	}));
 
 /***/ },
-/* 385 */
+/* 355 */
 /*!*******************************!*\
   !*** ./~/moment/locale/ss.js ***!
   \*******************************/
@@ -54491,7 +52046,7 @@
 	//! author : Nicolai Davies<mail@nicolai.io> : https://github.com/nicolaidavies
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -54576,7 +52131,7 @@
 	}));
 
 /***/ },
-/* 386 */
+/* 356 */
 /*!*******************************!*\
   !*** ./~/moment/locale/sv.js ***!
   \*******************************/
@@ -54587,7 +52142,7 @@
 	//! author : Jens Alm : https://github.com/ulmus
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -54652,7 +52207,7 @@
 	}));
 
 /***/ },
-/* 387 */
+/* 357 */
 /*!*******************************!*\
   !*** ./~/moment/locale/sw.js ***!
   \*******************************/
@@ -54663,7 +52218,7 @@
 	//! author : Fahad Kassim : https://github.com/fadsel
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -54718,7 +52273,7 @@
 	}));
 
 /***/ },
-/* 388 */
+/* 358 */
 /*!*******************************!*\
   !*** ./~/moment/locale/ta.js ***!
   \*******************************/
@@ -54729,7 +52284,7 @@
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -54854,7 +52409,7 @@
 	}));
 
 /***/ },
-/* 389 */
+/* 359 */
 /*!*******************************!*\
   !*** ./~/moment/locale/te.js ***!
   \*******************************/
@@ -54865,7 +52420,7 @@
 	//! author : Krishna Chaitanya Thota : https://github.com/kcthota
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -54950,7 +52505,7 @@
 	}));
 
 /***/ },
-/* 390 */
+/* 360 */
 /*!*******************************!*\
   !*** ./~/moment/locale/th.js ***!
   \*******************************/
@@ -54961,7 +52516,7 @@
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -55024,7 +52579,7 @@
 	}));
 
 /***/ },
-/* 391 */
+/* 361 */
 /*!**********************************!*\
   !*** ./~/moment/locale/tl-ph.js ***!
   \**********************************/
@@ -55035,7 +52590,7 @@
 	//! author : Dan Hagman
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -55093,7 +52648,7 @@
 	}));
 
 /***/ },
-/* 392 */
+/* 362 */
 /*!********************************!*\
   !*** ./~/moment/locale/tlh.js ***!
   \********************************/
@@ -55104,7 +52659,7 @@
 	//! author : Dominika Kruk : https://github.com/amaranthrose
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -55220,7 +52775,7 @@
 	}));
 
 /***/ },
-/* 393 */
+/* 363 */
 /*!*******************************!*\
   !*** ./~/moment/locale/tr.js ***!
   \*******************************/
@@ -55232,7 +52787,7 @@
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -55317,7 +52872,7 @@
 	}));
 
 /***/ },
-/* 394 */
+/* 364 */
 /*!********************************!*\
   !*** ./~/moment/locale/tzl.js ***!
   \********************************/
@@ -55328,7 +52883,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v with the help of Iustì Canun
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -55415,7 +52970,7 @@
 	}));
 
 /***/ },
-/* 395 */
+/* 365 */
 /*!********************************!*\
   !*** ./~/moment/locale/tzm.js ***!
   \********************************/
@@ -55426,7 +52981,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -55480,7 +53035,7 @@
 	}));
 
 /***/ },
-/* 396 */
+/* 366 */
 /*!*************************************!*\
   !*** ./~/moment/locale/tzm-latn.js ***!
   \*************************************/
@@ -55491,7 +53046,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -55545,7 +53100,7 @@
 	}));
 
 /***/ },
-/* 397 */
+/* 367 */
 /*!*******************************!*\
   !*** ./~/moment/locale/uk.js ***!
   \*******************************/
@@ -55557,7 +53112,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -55698,7 +53253,7 @@
 	}));
 
 /***/ },
-/* 398 */
+/* 368 */
 /*!*******************************!*\
   !*** ./~/moment/locale/uz.js ***!
   \*******************************/
@@ -55709,7 +53264,7 @@
 	//! author : Sardor Muminov : https://github.com/muminoff
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -55763,7 +53318,7 @@
 	}));
 
 /***/ },
-/* 399 */
+/* 369 */
 /*!*******************************!*\
   !*** ./~/moment/locale/vi.js ***!
   \*******************************/
@@ -55774,7 +53329,7 @@
 	//! author : Bang Nguyen : https://github.com/bangnk
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -55849,7 +53404,7 @@
 	}));
 
 /***/ },
-/* 400 */
+/* 370 */
 /*!*************************************!*\
   !*** ./~/moment/locale/x-pseudo.js ***!
   \*************************************/
@@ -55860,7 +53415,7 @@
 	//! author : Andrew Hood : https://github.com/andrewhood125
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -55924,7 +53479,7 @@
 	}));
 
 /***/ },
-/* 401 */
+/* 371 */
 /*!**********************************!*\
   !*** ./~/moment/locale/zh-cn.js ***!
   \**********************************/
@@ -55936,7 +53491,7 @@
 	//! author : Zeno Zeng : https://github.com/zenozeng
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -56058,7 +53613,7 @@
 	}));
 
 /***/ },
-/* 402 */
+/* 372 */
 /*!**********************************!*\
   !*** ./~/moment/locale/zh-tw.js ***!
   \**********************************/
@@ -56069,7 +53624,7 @@
 	//! author : Ben : https://github.com/ben-lin
 	
 	;(function (global, factory) {
-	    true ? factory(__webpack_require__(/*! ../moment */ 300)) :
+	    true ? factory(__webpack_require__(/*! ../moment */ 270)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -56166,7 +53721,7 @@
 	}));
 
 /***/ },
-/* 403 */
+/* 373 */
 /*!***************************************!*\
   !*** ./~/leaflet/dist/leaflet-src.js ***!
   \***************************************/
@@ -65343,7 +62898,7 @@
 
 
 /***/ },
-/* 404 */
+/* 374 */
 /*!*************************************!*\
   !*** ./src/actions/tree.actions.js ***!
   \*************************************/
@@ -65359,9 +62914,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var alt_1 = __webpack_require__(/*! ./../alt */ 286);
-	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 405);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
+	var alt_1 = __webpack_require__(/*! ./../alt */ 256);
+	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 375);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 233);
 	
 	var TreeActions = function (_abstract_actions_1$A) {
 	    _inherits(TreeActions, _abstract_actions_1$A);
@@ -65419,7 +62974,7 @@
 	//# sourceMappingURL=tree.actions.js.map
 
 /***/ },
-/* 405 */
+/* 375 */
 /*!*****************************************!*\
   !*** ./src/actions/abstract.actions.js ***!
   \*****************************************/
@@ -65437,7 +62992,7 @@
 	//# sourceMappingURL=abstract.actions.js.map
 
 /***/ },
-/* 406 */
+/* 376 */
 /*!**************************************!*\
   !*** ./src/stores/abstract.store.js ***!
   \**************************************/
@@ -65455,7 +63010,7 @@
 	//# sourceMappingURL=abstract.store.js.map
 
 /***/ },
-/* 407 */
+/* 377 */
 /*!************************************!*\
   !*** ./src/sources/tree.source.js ***!
   \************************************/
@@ -65463,9 +63018,9 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 258);
+	var $ = __webpack_require__(/*! jquery */ 234);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var tree_actions_1 = __webpack_require__(/*! ./../actions/tree.actions */ 404);
+	var tree_actions_1 = __webpack_require__(/*! ./../actions/tree.actions */ 374);
 	var TreeSource = {
 	    fetchTrees: function fetchTrees() {
 	        return {
@@ -65536,7 +63091,7 @@
 	//# sourceMappingURL=tree.source.js.map
 
 /***/ },
-/* 408 */
+/* 378 */
 /*!**********************************!*\
   !*** ./src/stores/food.store.js ***!
   \**********************************/
@@ -65552,11 +63107,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var alt_1 = __webpack_require__(/*! ./../alt */ 286);
-	var moment = __webpack_require__(/*! moment */ 300);
-	var food_actions_1 = __webpack_require__(/*! ./../actions/food.actions */ 409);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 406);
-	var food_source_1 = __webpack_require__(/*! ./../sources/food.source */ 410);
+	var alt_1 = __webpack_require__(/*! ./../alt */ 256);
+	var moment = __webpack_require__(/*! moment */ 270);
+	var food_actions_1 = __webpack_require__(/*! ./../actions/food.actions */ 379);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 376);
+	var food_source_1 = __webpack_require__(/*! ./../sources/food.source */ 380);
 	
 	var FoodModel = function () {
 	    function FoodModel(props) {
@@ -65669,7 +63224,7 @@
 	//# sourceMappingURL=food.store.js.map
 
 /***/ },
-/* 409 */
+/* 379 */
 /*!*************************************!*\
   !*** ./src/actions/food.actions.js ***!
   \*************************************/
@@ -65685,9 +63240,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var alt_1 = __webpack_require__(/*! ./../alt */ 286);
-	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 405);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
+	var alt_1 = __webpack_require__(/*! ./../alt */ 256);
+	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 375);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 233);
 	
 	var FoodActions = function (_abstract_actions_1$A) {
 	    _inherits(FoodActions, _abstract_actions_1$A);
@@ -65741,7 +63296,7 @@
 	//# sourceMappingURL=food.actions.js.map
 
 /***/ },
-/* 410 */
+/* 380 */
 /*!************************************!*\
   !*** ./src/sources/food.source.js ***!
   \************************************/
@@ -65749,9 +63304,9 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 258);
+	var $ = __webpack_require__(/*! jquery */ 234);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var food_actions_1 = __webpack_require__(/*! ./../actions/food.actions */ 409);
+	var food_actions_1 = __webpack_require__(/*! ./../actions/food.actions */ 379);
 	var FoodSource = {
 	    fetchFoods: function fetchFoods() {
 	        return {
@@ -65788,7 +63343,7 @@
 	//# sourceMappingURL=food.source.js.map
 
 /***/ },
-/* 411 */
+/* 381 */
 /*!*****************************************!*\
   !*** ./src/components/map.component.js ***!
   \*****************************************/
@@ -65806,14 +63361,14 @@
 	
 	var React = __webpack_require__(/*! react */ 1);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
-	var L = __webpack_require__(/*! leaflet */ 403);
-	__webpack_require__(/*! leaflet.markercluster */ 412);
-	var _ = __webpack_require__(/*! underscore */ 413);
+	var L = __webpack_require__(/*! leaflet */ 373);
+	__webpack_require__(/*! leaflet.markercluster */ 382);
+	var _ = __webpack_require__(/*! underscore */ 383);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./trees.component.css */ 279);
-	__webpack_require__(/*! ./../../~/leaflet/dist/leaflet.css */ 281);
-	var food_store_1 = __webpack_require__(/*! ./../stores/food.store */ 408);
-	var marker_component_1 = __webpack_require__(/*! ./marker.component */ 414);
+	var styles = __webpack_require__(/*! ./trees.component.css */ 249);
+	__webpack_require__(/*! ./../../~/leaflet/dist/leaflet.css */ 251);
+	var food_store_1 = __webpack_require__(/*! ./../stores/food.store */ 378);
+	var marker_component_1 = __webpack_require__(/*! ./marker.component */ 384);
 	
 	var MapComponent = function (_React$Component) {
 	    _inherits(MapComponent, _React$Component);
@@ -65901,7 +63456,7 @@
 	                    } else {}
 	                    self.map.panTo(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
 	                    //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
-	                }, 500);
+	                }, 250);
 	            });
 	            self.map.on('popupclose', function (event) {
 	                self.selected = null;
@@ -65954,6 +63509,7 @@
 	            if (nextProps.trees.length != 0 && nextProps.foods.length != 0) {
 	                self.renderMarkers(nextProps.trees, nextProps);
 	                self.map.setZoom(nextProps.zoom);
+	                self.renderUserLocation(nextProps.position);
 	            }
 	        }
 	    }, {
@@ -65992,6 +63548,46 @@
 	            self.layer.removeLayer(marker);
 	        }
 	    }, {
+	        key: 'renderUserLocation',
+	        value: function renderUserLocation(position) {
+	            var self = this;
+	            if (position) {
+	                if (self.userMarker) {
+	                    self.userMarker.setLatLng(position);
+	                } else {
+	                    self.userMarker = new L.Circle(position, 10, {
+	                        stroke: true,
+	                        color: "rgb(0, 0, 0)",
+	                        opacity: 0.75,
+	                        weight: 4
+	                    });
+	                    self.map.addLayer(self.userMarker);
+	                }
+	                if (self.userCenterMarker) {
+	                    self.userCenterMarker.setLatLng(position);
+	                } else {
+	                    self.userCenterMarker = new L.Circle(position, 1, {
+	                        stroke: true,
+	                        color: "rgb(0, 0, 0)",
+	                        opacity: 0.75,
+	                        fill: true,
+	                        fillColor: "rgb(0, 0, 0)",
+	                        fillOpacity: 0.75,
+	                        weight: 4
+	                    });
+	                    self.map.addLayer(self.userCenterMarker);
+	                }
+	                self.context.router.push({ pathname: Settings.uBaseName + '/' });
+	                //self.props.onZoom(Settings.iFocusZoom);
+	                setTimeout(function () {
+	                    var point = L.CRS.EPSG3857.latLngToPoint(position, self.props.zoom);
+	                    var rMap = ReactDOM.findDOMNode(self.refs['map']);
+	                    self.map.panTo(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
+	                }, 250);
+	                self.props.offGeo();
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var self = this;
@@ -66012,7 +63608,7 @@
 	//# sourceMappingURL=map.component.js.map
 
 /***/ },
-/* 412 */
+/* 382 */
 /*!***************************************************************!*\
   !*** ./~/leaflet.markercluster/dist/leaflet.markercluster.js ***!
   \***************************************************************/
@@ -66026,7 +63622,7 @@
 	!function(t,e){L.MarkerClusterGroup=L.FeatureGroup.extend({options:{maxClusterRadius:80,iconCreateFunction:null,spiderfyOnMaxZoom:!0,showCoverageOnHover:!0,zoomToBoundsOnClick:!0,singleMarkerMode:!1,disableClusteringAtZoom:null,removeOutsideVisibleBounds:!0,animateAddingMarkers:!1,spiderfyDistanceMultiplier:1,polygonOptions:{}},initialize:function(t){L.Util.setOptions(this,t),this.options.iconCreateFunction||(this.options.iconCreateFunction=this._defaultIconCreateFunction),this._featureGroup=L.featureGroup(),this._featureGroup.on(L.FeatureGroup.EVENTS,this._propagateEvent,this),this._nonPointGroup=L.featureGroup(),this._nonPointGroup.on(L.FeatureGroup.EVENTS,this._propagateEvent,this),this._inZoomAnimation=0,this._needsClustering=[],this._needsRemoving=[],this._currentShownBounds=null,this._queue=[]},addLayer:function(t){if(t instanceof L.LayerGroup){var e=[];for(var i in t._layers)e.push(t._layers[i]);return this.addLayers(e)}if(!t.getLatLng)return this._nonPointGroup.addLayer(t),this;if(!this._map)return this._needsClustering.push(t),this;if(this.hasLayer(t))return this;this._unspiderfy&&this._unspiderfy(),this._addLayer(t,this._maxZoom);var n=t,s=this._map.getZoom();if(t.__parent)for(;n.__parent._zoom>=s;)n=n.__parent;return this._currentShownBounds.contains(n.getLatLng())&&(this.options.animateAddingMarkers?this._animationAddLayer(t,n):this._animationAddLayerNonAnimated(t,n)),this},removeLayer:function(t){if(t instanceof L.LayerGroup){var e=[];for(var i in t._layers)e.push(t._layers[i]);return this.removeLayers(e)}return t.getLatLng?this._map?t.__parent?(this._unspiderfy&&(this._unspiderfy(),this._unspiderfyLayer(t)),this._removeLayer(t,!0),this._featureGroup.hasLayer(t)&&(this._featureGroup.removeLayer(t),t.setOpacity&&t.setOpacity(1)),this):this:(!this._arraySplice(this._needsClustering,t)&&this.hasLayer(t)&&this._needsRemoving.push(t),this):(this._nonPointGroup.removeLayer(t),this)},addLayers:function(t){var e,i,n,s=this._map,r=this._featureGroup,o=this._nonPointGroup;for(e=0,i=t.length;i>e;e++)if(n=t[e],n.getLatLng){if(!this.hasLayer(n))if(s){if(this._addLayer(n,this._maxZoom),n.__parent&&2===n.__parent.getChildCount()){var a=n.__parent.getAllChildMarkers(),h=a[0]===n?a[1]:a[0];r.removeLayer(h)}}else this._needsClustering.push(n)}else o.addLayer(n);return s&&(r.eachLayer(function(t){t instanceof L.MarkerCluster&&t._iconNeedsUpdate&&t._updateIcon()}),this._topClusterLevel._recursivelyAddChildrenToMap(null,this._zoom,this._currentShownBounds)),this},removeLayers:function(t){var e,i,n,s=this._featureGroup,r=this._nonPointGroup;if(!this._map){for(e=0,i=t.length;i>e;e++)n=t[e],this._arraySplice(this._needsClustering,n),r.removeLayer(n);return this}for(e=0,i=t.length;i>e;e++)n=t[e],n.__parent?(this._removeLayer(n,!0,!0),s.hasLayer(n)&&(s.removeLayer(n),n.setOpacity&&n.setOpacity(1))):r.removeLayer(n);return this._topClusterLevel._recursivelyAddChildrenToMap(null,this._zoom,this._currentShownBounds),s.eachLayer(function(t){t instanceof L.MarkerCluster&&t._updateIcon()}),this},clearLayers:function(){return this._map||(this._needsClustering=[],delete this._gridClusters,delete this._gridUnclustered),this._noanimationUnspiderfy&&this._noanimationUnspiderfy(),this._featureGroup.clearLayers(),this._nonPointGroup.clearLayers(),this.eachLayer(function(t){delete t.__parent}),this._map&&this._generateInitialClusters(),this},getBounds:function(){var t=new L.LatLngBounds;if(this._topClusterLevel)t.extend(this._topClusterLevel._bounds);else for(var e=this._needsClustering.length-1;e>=0;e--)t.extend(this._needsClustering[e].getLatLng());return t.extend(this._nonPointGroup.getBounds()),t},eachLayer:function(t,e){var i,n=this._needsClustering.slice();for(this._topClusterLevel&&this._topClusterLevel.getAllChildMarkers(n),i=n.length-1;i>=0;i--)t.call(e,n[i]);this._nonPointGroup.eachLayer(t,e)},getLayers:function(){var t=[];return this.eachLayer(function(e){t.push(e)}),t},getLayer:function(t){var e=null;return this.eachLayer(function(i){L.stamp(i)===t&&(e=i)}),e},hasLayer:function(t){if(!t)return!1;var e,i=this._needsClustering;for(e=i.length-1;e>=0;e--)if(i[e]===t)return!0;for(i=this._needsRemoving,e=i.length-1;e>=0;e--)if(i[e]===t)return!1;return!(!t.__parent||t.__parent._group!==this)||this._nonPointGroup.hasLayer(t)},zoomToShowLayer:function(t,e){var i=function(){if((t._icon||t.__parent._icon)&&!this._inZoomAnimation)if(this._map.off("moveend",i,this),this.off("animationend",i,this),t._icon)e();else if(t.__parent._icon){var n=function(){this.off("spiderfied",n,this),e()};this.on("spiderfied",n,this),t.__parent.spiderfy()}};t._icon&&this._map.getBounds().contains(t.getLatLng())?e():t.__parent._zoom<this._map.getZoom()?(this._map.on("moveend",i,this),this._map.panTo(t.getLatLng())):(this._map.on("moveend",i,this),this.on("animationend",i,this),this._map.setView(t.getLatLng(),t.__parent._zoom+1),t.__parent.zoomToBounds())},onAdd:function(t){this._map=t;var e,i,n;if(!isFinite(this._map.getMaxZoom()))throw"Map has no maxZoom specified";for(this._featureGroup.onAdd(t),this._nonPointGroup.onAdd(t),this._gridClusters||this._generateInitialClusters(),e=0,i=this._needsRemoving.length;i>e;e++)n=this._needsRemoving[e],this._removeLayer(n,!0);for(this._needsRemoving=[],e=0,i=this._needsClustering.length;i>e;e++)n=this._needsClustering[e],n.getLatLng?n.__parent||this._addLayer(n,this._maxZoom):this._featureGroup.addLayer(n);this._needsClustering=[],this._map.on("zoomend",this._zoomEnd,this),this._map.on("moveend",this._moveEnd,this),this._spiderfierOnAdd&&this._spiderfierOnAdd(),this._bindEvents(),this._zoom=this._map.getZoom(),this._currentShownBounds=this._getExpandedVisibleBounds(),this._topClusterLevel._recursivelyAddChildrenToMap(null,this._zoom,this._currentShownBounds)},onRemove:function(t){t.off("zoomend",this._zoomEnd,this),t.off("moveend",this._moveEnd,this),this._unbindEvents(),this._map._mapPane.className=this._map._mapPane.className.replace(" leaflet-cluster-anim",""),this._spiderfierOnRemove&&this._spiderfierOnRemove(),this._hideCoverage(),this._featureGroup.onRemove(t),this._nonPointGroup.onRemove(t),this._featureGroup.clearLayers(),this._map=null},getVisibleParent:function(t){for(var e=t;e&&!e._icon;)e=e.__parent;return e||null},_arraySplice:function(t,e){for(var i=t.length-1;i>=0;i--)if(t[i]===e)return t.splice(i,1),!0},_removeLayer:function(t,e,i){var n=this._gridClusters,s=this._gridUnclustered,r=this._featureGroup,o=this._map;if(e)for(var a=this._maxZoom;a>=0&&s[a].removeObject(t,o.project(t.getLatLng(),a));a--);var h,_=t.__parent,u=_._markers;for(this._arraySplice(u,t);_&&(_._childCount--,!(_._zoom<0));)e&&_._childCount<=1?(h=_._markers[0]===t?_._markers[1]:_._markers[0],n[_._zoom].removeObject(_,o.project(_._cLatLng,_._zoom)),s[_._zoom].addObject(h,o.project(h.getLatLng(),_._zoom)),this._arraySplice(_.__parent._childClusters,_),_.__parent._markers.push(h),h.__parent=_.__parent,_._icon&&(r.removeLayer(_),i||r.addLayer(h))):(_._recalculateBounds(),i&&_._icon||_._updateIcon()),_=_.__parent;delete t.__parent},_isOrIsParent:function(t,e){for(;e;){if(t===e)return!0;e=e.parentNode}return!1},_propagateEvent:function(t){if(t.layer instanceof L.MarkerCluster){if(t.originalEvent&&this._isOrIsParent(t.layer._icon,t.originalEvent.relatedTarget))return;t.type="cluster"+t.type}this.fire(t.type,t)},_defaultIconCreateFunction:function(t){var e=t.getChildCount(),i=" marker-cluster-";return i+=10>e?"small":100>e?"medium":"large",new L.DivIcon({html:"<div><span>"+e+"</span></div>",className:"marker-cluster"+i,iconSize:new L.Point(40,40)})},_bindEvents:function(){var t=this._map,e=this.options.spiderfyOnMaxZoom,i=this.options.showCoverageOnHover,n=this.options.zoomToBoundsOnClick;(e||n)&&this.on("clusterclick",this._zoomOrSpiderfy,this),i&&(this.on("clustermouseover",this._showCoverage,this),this.on("clustermouseout",this._hideCoverage,this),t.on("zoomend",this._hideCoverage,this))},_zoomOrSpiderfy:function(t){var e=this._map;e.getMaxZoom()===e.getZoom()?this.options.spiderfyOnMaxZoom&&t.layer.spiderfy():this.options.zoomToBoundsOnClick&&t.layer.zoomToBounds(),t.originalEvent&&13===t.originalEvent.keyCode&&e._container.focus()},_showCoverage:function(t){var e=this._map;this._inZoomAnimation||(this._shownPolygon&&e.removeLayer(this._shownPolygon),t.layer.getChildCount()>2&&t.layer!==this._spiderfied&&(this._shownPolygon=new L.Polygon(t.layer.getConvexHull(),this.options.polygonOptions),e.addLayer(this._shownPolygon)))},_hideCoverage:function(){this._shownPolygon&&(this._map.removeLayer(this._shownPolygon),this._shownPolygon=null)},_unbindEvents:function(){var t=this.options.spiderfyOnMaxZoom,e=this.options.showCoverageOnHover,i=this.options.zoomToBoundsOnClick,n=this._map;(t||i)&&this.off("clusterclick",this._zoomOrSpiderfy,this),e&&(this.off("clustermouseover",this._showCoverage,this),this.off("clustermouseout",this._hideCoverage,this),n.off("zoomend",this._hideCoverage,this))},_zoomEnd:function(){this._map&&(this._mergeSplitClusters(),this._zoom=this._map._zoom,this._currentShownBounds=this._getExpandedVisibleBounds())},_moveEnd:function(){if(!this._inZoomAnimation){var t=this._getExpandedVisibleBounds();this._topClusterLevel._recursivelyRemoveChildrenFromMap(this._currentShownBounds,this._zoom,t),this._topClusterLevel._recursivelyAddChildrenToMap(null,this._map._zoom,t),this._currentShownBounds=t}},_generateInitialClusters:function(){var t=this._map.getMaxZoom(),e=this.options.maxClusterRadius;this.options.disableClusteringAtZoom&&(t=this.options.disableClusteringAtZoom-1),this._maxZoom=t,this._gridClusters={},this._gridUnclustered={};for(var i=t;i>=0;i--)this._gridClusters[i]=new L.DistanceGrid(e),this._gridUnclustered[i]=new L.DistanceGrid(e);this._topClusterLevel=new L.MarkerCluster(this,-1)},_addLayer:function(t,e){var i,n,s=this._gridClusters,r=this._gridUnclustered;for(this.options.singleMarkerMode&&(t.options.icon=this.options.iconCreateFunction({getChildCount:function(){return 1},getAllChildMarkers:function(){return[t]}}));e>=0;e--){i=this._map.project(t.getLatLng(),e);var o=s[e].getNearObject(i);if(o)return o._addChild(t),t.__parent=o,void 0;if(o=r[e].getNearObject(i)){var a=o.__parent;a&&this._removeLayer(o,!1);var h=new L.MarkerCluster(this,e,o,t);s[e].addObject(h,this._map.project(h._cLatLng,e)),o.__parent=h,t.__parent=h;var _=h;for(n=e-1;n>a._zoom;n--)_=new L.MarkerCluster(this,n,_),s[n].addObject(_,this._map.project(o.getLatLng(),n));for(a._addChild(_),n=e;n>=0&&r[n].removeObject(o,this._map.project(o.getLatLng(),n));n--);return}r[e].addObject(t,i)}this._topClusterLevel._addChild(t),t.__parent=this._topClusterLevel},_enqueue:function(t){this._queue.push(t),this._queueTimeout||(this._queueTimeout=setTimeout(L.bind(this._processQueue,this),300))},_processQueue:function(){for(var t=0;t<this._queue.length;t++)this._queue[t].call(this);this._queue.length=0,clearTimeout(this._queueTimeout),this._queueTimeout=null},_mergeSplitClusters:function(){this._processQueue(),this._zoom<this._map._zoom&&this._currentShownBounds.contains(this._getExpandedVisibleBounds())?(this._animationStart(),this._topClusterLevel._recursivelyRemoveChildrenFromMap(this._currentShownBounds,this._zoom,this._getExpandedVisibleBounds()),this._animationZoomIn(this._zoom,this._map._zoom)):this._zoom>this._map._zoom?(this._animationStart(),this._animationZoomOut(this._zoom,this._map._zoom)):this._moveEnd()},_getExpandedVisibleBounds:function(){if(!this.options.removeOutsideVisibleBounds)return this.getBounds();var t=this._map,e=t.getBounds(),i=e._southWest,n=e._northEast,s=L.Browser.mobile?0:Math.abs(i.lat-n.lat),r=L.Browser.mobile?0:Math.abs(i.lng-n.lng);return new L.LatLngBounds(new L.LatLng(i.lat-s,i.lng-r,!0),new L.LatLng(n.lat+s,n.lng+r,!0))},_animationAddLayerNonAnimated:function(t,e){if(e===t)this._featureGroup.addLayer(t);else if(2===e._childCount){e._addToMap();var i=e.getAllChildMarkers();this._featureGroup.removeLayer(i[0]),this._featureGroup.removeLayer(i[1])}else e._updateIcon()}}),L.MarkerClusterGroup.include(L.DomUtil.TRANSITION?{_animationStart:function(){this._map._mapPane.className+=" leaflet-cluster-anim",this._inZoomAnimation++},_animationEnd:function(){this._map&&(this._map._mapPane.className=this._map._mapPane.className.replace(" leaflet-cluster-anim","")),this._inZoomAnimation--,this.fire("animationend")},_animationZoomIn:function(t,e){var i,n=this._getExpandedVisibleBounds(),s=this._featureGroup;this._topClusterLevel._recursively(n,t,0,function(r){var o,a=r._latlng,h=r._markers;for(n.contains(a)||(a=null),r._isSingleParent()&&t+1===e?(s.removeLayer(r),r._recursivelyAddChildrenToMap(null,e,n)):(r.setOpacity(0),r._recursivelyAddChildrenToMap(a,e,n)),i=h.length-1;i>=0;i--)o=h[i],n.contains(o._latlng)||s.removeLayer(o)}),this._forceLayout(),this._topClusterLevel._recursivelyBecomeVisible(n,e),s.eachLayer(function(t){t instanceof L.MarkerCluster||!t._icon||t.setOpacity(1)}),this._topClusterLevel._recursively(n,t,e,function(t){t._recursivelyRestoreChildPositions(e)}),this._enqueue(function(){this._topClusterLevel._recursively(n,t,0,function(t){s.removeLayer(t),t.setOpacity(1)}),this._animationEnd()})},_animationZoomOut:function(t,e){this._animationZoomOutSingle(this._topClusterLevel,t-1,e),this._topClusterLevel._recursivelyAddChildrenToMap(null,e,this._getExpandedVisibleBounds()),this._topClusterLevel._recursivelyRemoveChildrenFromMap(this._currentShownBounds,t,this._getExpandedVisibleBounds())},_animationZoomOutSingle:function(t,e,i){var n=this._getExpandedVisibleBounds();t._recursivelyAnimateChildrenInAndAddSelfToMap(n,e+1,i);var s=this;this._forceLayout(),t._recursivelyBecomeVisible(n,i),this._enqueue(function(){if(1===t._childCount){var r=t._markers[0];r.setLatLng(r.getLatLng()),r.setOpacity(1)}else t._recursively(n,i,0,function(t){t._recursivelyRemoveChildrenFromMap(n,e+1)});s._animationEnd()})},_animationAddLayer:function(t,e){var i=this,n=this._featureGroup;n.addLayer(t),e!==t&&(e._childCount>2?(e._updateIcon(),this._forceLayout(),this._animationStart(),t._setPos(this._map.latLngToLayerPoint(e.getLatLng())),t.setOpacity(0),this._enqueue(function(){n.removeLayer(t),t.setOpacity(1),i._animationEnd()})):(this._forceLayout(),i._animationStart(),i._animationZoomOutSingle(e,this._map.getMaxZoom(),this._map.getZoom())))},_forceLayout:function(){L.Util.falseFn(e.body.offsetWidth)}}:{_animationStart:function(){},_animationZoomIn:function(t,e){this._topClusterLevel._recursivelyRemoveChildrenFromMap(this._currentShownBounds,t),this._topClusterLevel._recursivelyAddChildrenToMap(null,e,this._getExpandedVisibleBounds())},_animationZoomOut:function(t,e){this._topClusterLevel._recursivelyRemoveChildrenFromMap(this._currentShownBounds,t),this._topClusterLevel._recursivelyAddChildrenToMap(null,e,this._getExpandedVisibleBounds())},_animationAddLayer:function(t,e){this._animationAddLayerNonAnimated(t,e)}}),L.markerClusterGroup=function(t){return new L.MarkerClusterGroup(t)},L.MarkerCluster=L.Marker.extend({initialize:function(t,e,i,n){L.Marker.prototype.initialize.call(this,i?i._cLatLng||i.getLatLng():new L.LatLng(0,0),{icon:this}),this._group=t,this._zoom=e,this._markers=[],this._childClusters=[],this._childCount=0,this._iconNeedsUpdate=!0,this._bounds=new L.LatLngBounds,i&&this._addChild(i),n&&this._addChild(n)},getAllChildMarkers:function(t){t=t||[];for(var e=this._childClusters.length-1;e>=0;e--)this._childClusters[e].getAllChildMarkers(t);for(var i=this._markers.length-1;i>=0;i--)t.push(this._markers[i]);return t},getChildCount:function(){return this._childCount},zoomToBounds:function(){for(var t,e=this._childClusters.slice(),i=this._group._map,n=i.getBoundsZoom(this._bounds),s=this._zoom+1,r=i.getZoom();e.length>0&&n>s;){s++;var o=[];for(t=0;t<e.length;t++)o=o.concat(e[t]._childClusters);e=o}n>s?this._group._map.setView(this._latlng,s):r>=n?this._group._map.setView(this._latlng,r+1):this._group._map.fitBounds(this._bounds)},getBounds:function(){var t=new L.LatLngBounds;return t.extend(this._bounds),t},_updateIcon:function(){this._iconNeedsUpdate=!0,this._icon&&this.setIcon(this)},createIcon:function(){return this._iconNeedsUpdate&&(this._iconObj=this._group.options.iconCreateFunction(this),this._iconNeedsUpdate=!1),this._iconObj.createIcon()},createShadow:function(){return this._iconObj.createShadow()},_addChild:function(t,e){this._iconNeedsUpdate=!0,this._expandBounds(t),t instanceof L.MarkerCluster?(e||(this._childClusters.push(t),t.__parent=this),this._childCount+=t._childCount):(e||this._markers.push(t),this._childCount++),this.__parent&&this.__parent._addChild(t,!0)},_expandBounds:function(t){var e,i=t._wLatLng||t._latlng;t instanceof L.MarkerCluster?(this._bounds.extend(t._bounds),e=t._childCount):(this._bounds.extend(i),e=1),this._cLatLng||(this._cLatLng=t._cLatLng||i);var n=this._childCount+e;this._wLatLng?(this._wLatLng.lat=(i.lat*e+this._wLatLng.lat*this._childCount)/n,this._wLatLng.lng=(i.lng*e+this._wLatLng.lng*this._childCount)/n):this._latlng=this._wLatLng=new L.LatLng(i.lat,i.lng)},_addToMap:function(t){t&&(this._backupLatlng=this._latlng,this.setLatLng(t)),this._group._featureGroup.addLayer(this)},_recursivelyAnimateChildrenIn:function(t,e,i){this._recursively(t,0,i-1,function(t){var i,n,s=t._markers;for(i=s.length-1;i>=0;i--)n=s[i],n._icon&&(n._setPos(e),n.setOpacity(0))},function(t){var i,n,s=t._childClusters;for(i=s.length-1;i>=0;i--)n=s[i],n._icon&&(n._setPos(e),n.setOpacity(0))})},_recursivelyAnimateChildrenInAndAddSelfToMap:function(t,e,i){this._recursively(t,i,0,function(n){n._recursivelyAnimateChildrenIn(t,n._group._map.latLngToLayerPoint(n.getLatLng()).round(),e),n._isSingleParent()&&e-1===i?(n.setOpacity(1),n._recursivelyRemoveChildrenFromMap(t,e)):n.setOpacity(0),n._addToMap()})},_recursivelyBecomeVisible:function(t,e){this._recursively(t,0,e,null,function(t){t.setOpacity(1)})},_recursivelyAddChildrenToMap:function(t,e,i){this._recursively(i,-1,e,function(n){if(e!==n._zoom)for(var s=n._markers.length-1;s>=0;s--){var r=n._markers[s];i.contains(r._latlng)&&(t&&(r._backupLatlng=r.getLatLng(),r.setLatLng(t),r.setOpacity&&r.setOpacity(0)),n._group._featureGroup.addLayer(r))}},function(e){e._addToMap(t)})},_recursivelyRestoreChildPositions:function(t){for(var e=this._markers.length-1;e>=0;e--){var i=this._markers[e];i._backupLatlng&&(i.setLatLng(i._backupLatlng),delete i._backupLatlng)}if(t-1===this._zoom)for(var n=this._childClusters.length-1;n>=0;n--)this._childClusters[n]._restorePosition();else for(var s=this._childClusters.length-1;s>=0;s--)this._childClusters[s]._recursivelyRestoreChildPositions(t)},_restorePosition:function(){this._backupLatlng&&(this.setLatLng(this._backupLatlng),delete this._backupLatlng)},_recursivelyRemoveChildrenFromMap:function(t,e,i){var n,s;this._recursively(t,-1,e-1,function(t){for(s=t._markers.length-1;s>=0;s--)n=t._markers[s],i&&i.contains(n._latlng)||(t._group._featureGroup.removeLayer(n),n.setOpacity&&n.setOpacity(1))},function(t){for(s=t._childClusters.length-1;s>=0;s--)n=t._childClusters[s],i&&i.contains(n._latlng)||(t._group._featureGroup.removeLayer(n),n.setOpacity&&n.setOpacity(1))})},_recursively:function(t,e,i,n,s){var r,o,a=this._childClusters,h=this._zoom;if(e>h)for(r=a.length-1;r>=0;r--)o=a[r],t.intersects(o._bounds)&&o._recursively(t,e,i,n,s);else if(n&&n(this),s&&this._zoom===i&&s(this),i>h)for(r=a.length-1;r>=0;r--)o=a[r],t.intersects(o._bounds)&&o._recursively(t,e,i,n,s)},_recalculateBounds:function(){var t,e=this._markers,i=this._childClusters;for(this._bounds=new L.LatLngBounds,delete this._wLatLng,t=e.length-1;t>=0;t--)this._expandBounds(e[t]);for(t=i.length-1;t>=0;t--)this._expandBounds(i[t])},_isSingleParent:function(){return this._childClusters.length>0&&this._childClusters[0]._childCount===this._childCount}}),L.DistanceGrid=function(t){this._cellSize=t,this._sqCellSize=t*t,this._grid={},this._objectPoint={}},L.DistanceGrid.prototype={addObject:function(t,e){var i=this._getCoord(e.x),n=this._getCoord(e.y),s=this._grid,r=s[n]=s[n]||{},o=r[i]=r[i]||[],a=L.Util.stamp(t);this._objectPoint[a]=e,o.push(t)},updateObject:function(t,e){this.removeObject(t),this.addObject(t,e)},removeObject:function(t,e){var i,n,s=this._getCoord(e.x),r=this._getCoord(e.y),o=this._grid,a=o[r]=o[r]||{},h=a[s]=a[s]||[];for(delete this._objectPoint[L.Util.stamp(t)],i=0,n=h.length;n>i;i++)if(h[i]===t)return h.splice(i,1),1===n&&delete a[s],!0},eachObject:function(t,e){var i,n,s,r,o,a,h,_=this._grid;for(i in _){o=_[i];for(n in o)for(a=o[n],s=0,r=a.length;r>s;s++)h=t.call(e,a[s]),h&&(s--,r--)}},getNearObject:function(t){var e,i,n,s,r,o,a,h,_=this._getCoord(t.x),u=this._getCoord(t.y),l=this._objectPoint,d=this._sqCellSize,p=null;for(e=u-1;u+1>=e;e++)if(s=this._grid[e])for(i=_-1;_+1>=i;i++)if(r=s[i])for(n=0,o=r.length;o>n;n++)a=r[n],h=this._sqDist(l[L.Util.stamp(a)],t),d>h&&(d=h,p=a);return p},_getCoord:function(t){return Math.floor(t/this._cellSize)},_sqDist:function(t,e){var i=e.x-t.x,n=e.y-t.y;return i*i+n*n}},function(){L.QuickHull={getDistant:function(t,e){var i=e[1].lat-e[0].lat,n=e[0].lng-e[1].lng;return n*(t.lat-e[0].lat)+i*(t.lng-e[0].lng)},findMostDistantPointFromBaseLine:function(t,e){var i,n,s,r=0,o=null,a=[];for(i=e.length-1;i>=0;i--)n=e[i],s=this.getDistant(n,t),s>0&&(a.push(n),s>r&&(r=s,o=n));return{maxPoint:o,newPoints:a}},buildConvexHull:function(t,e){var i=[],n=this.findMostDistantPointFromBaseLine(t,e);return n.maxPoint?(i=i.concat(this.buildConvexHull([t[0],n.maxPoint],n.newPoints)),i=i.concat(this.buildConvexHull([n.maxPoint,t[1]],n.newPoints))):[t[0]]},getConvexHull:function(t){var e,i=!1,n=!1,s=null,r=null;for(e=t.length-1;e>=0;e--){var o=t[e];(i===!1||o.lat>i)&&(s=o,i=o.lat),(n===!1||o.lat<n)&&(r=o,n=o.lat)}var a=[].concat(this.buildConvexHull([r,s],t),this.buildConvexHull([s,r],t));return a}}}(),L.MarkerCluster.include({getConvexHull:function(){var t,e,i=this.getAllChildMarkers(),n=[];for(e=i.length-1;e>=0;e--)t=i[e].getLatLng(),n.push(t);return L.QuickHull.getConvexHull(n)}}),L.MarkerCluster.include({_2PI:2*Math.PI,_circleFootSeparation:25,_circleStartAngle:Math.PI/6,_spiralFootSeparation:28,_spiralLengthStart:11,_spiralLengthFactor:5,_circleSpiralSwitchover:9,spiderfy:function(){if(this._group._spiderfied!==this&&!this._group._inZoomAnimation){var t,e=this.getAllChildMarkers(),i=this._group,n=i._map,s=n.latLngToLayerPoint(this._latlng);this._group._unspiderfy(),this._group._spiderfied=this,e.length>=this._circleSpiralSwitchover?t=this._generatePointsSpiral(e.length,s):(s.y+=10,t=this._generatePointsCircle(e.length,s)),this._animationSpiderfy(e,t)}},unspiderfy:function(t){this._group._inZoomAnimation||(this._animationUnspiderfy(t),this._group._spiderfied=null)},_generatePointsCircle:function(t,e){var i,n,s=this._group.options.spiderfyDistanceMultiplier*this._circleFootSeparation*(2+t),r=s/this._2PI,o=this._2PI/t,a=[];for(a.length=t,i=t-1;i>=0;i--)n=this._circleStartAngle+i*o,a[i]=new L.Point(e.x+r*Math.cos(n),e.y+r*Math.sin(n))._round();return a},_generatePointsSpiral:function(t,e){var i,n=this._group.options.spiderfyDistanceMultiplier*this._spiralLengthStart,s=this._group.options.spiderfyDistanceMultiplier*this._spiralFootSeparation,r=this._group.options.spiderfyDistanceMultiplier*this._spiralLengthFactor,o=0,a=[];for(a.length=t,i=t-1;i>=0;i--)o+=s/n+5e-4*i,a[i]=new L.Point(e.x+n*Math.cos(o),e.y+n*Math.sin(o))._round(),n+=this._2PI*r/o;return a},_noanimationUnspiderfy:function(){var t,e,i=this._group,n=i._map,s=i._featureGroup,r=this.getAllChildMarkers();for(this.setOpacity(1),e=r.length-1;e>=0;e--)t=r[e],s.removeLayer(t),t._preSpiderfyLatlng&&(t.setLatLng(t._preSpiderfyLatlng),delete t._preSpiderfyLatlng),t.setZIndexOffset&&t.setZIndexOffset(0),t._spiderLeg&&(n.removeLayer(t._spiderLeg),delete t._spiderLeg);i._spiderfied=null}}),L.MarkerCluster.include(L.DomUtil.TRANSITION?{SVG_ANIMATION:function(){return e.createElementNS("http://www.w3.org/2000/svg","animate").toString().indexOf("SVGAnimate")>-1}(),_animationSpiderfy:function(t,i){var n,s,r,o,a=this,h=this._group,_=h._map,u=h._featureGroup,l=_.latLngToLayerPoint(this._latlng);for(n=t.length-1;n>=0;n--)s=t[n],s.setOpacity?(s.setZIndexOffset(1e6),s.setOpacity(0),u.addLayer(s),s._setPos(l)):u.addLayer(s);h._forceLayout(),h._animationStart();var d=L.Path.SVG?0:.3,p=L.Path.SVG_NS;for(n=t.length-1;n>=0;n--)if(o=_.layerPointToLatLng(i[n]),s=t[n],s._preSpiderfyLatlng=s._latlng,s.setLatLng(o),s.setOpacity&&s.setOpacity(1),r=new L.Polyline([a._latlng,o],{weight:1.5,color:"#222",opacity:d}),_.addLayer(r),s._spiderLeg=r,L.Path.SVG&&this.SVG_ANIMATION){var c=r._path.getTotalLength();r._path.setAttribute("stroke-dasharray",c+","+c);var m=e.createElementNS(p,"animate");m.setAttribute("attributeName","stroke-dashoffset"),m.setAttribute("begin","indefinite"),m.setAttribute("from",c),m.setAttribute("to",0),m.setAttribute("dur",.25),r._path.appendChild(m),m.beginElement(),m=e.createElementNS(p,"animate"),m.setAttribute("attributeName","stroke-opacity"),m.setAttribute("attributeName","stroke-opacity"),m.setAttribute("begin","indefinite"),m.setAttribute("from",0),m.setAttribute("to",.5),m.setAttribute("dur",.25),r._path.appendChild(m),m.beginElement()}if(a.setOpacity(.3),L.Path.SVG)for(this._group._forceLayout(),n=t.length-1;n>=0;n--)s=t[n]._spiderLeg,s.options.opacity=.5,s._path.setAttribute("stroke-opacity",.5);setTimeout(function(){h._animationEnd(),h.fire("spiderfied")},200)},_animationUnspiderfy:function(t){var e,i,n,s=this._group,r=s._map,o=s._featureGroup,a=t?r._latLngToNewLayerPoint(this._latlng,t.zoom,t.center):r.latLngToLayerPoint(this._latlng),h=this.getAllChildMarkers(),_=L.Path.SVG&&this.SVG_ANIMATION;for(s._animationStart(),this.setOpacity(1),i=h.length-1;i>=0;i--)e=h[i],e._preSpiderfyLatlng&&(e.setLatLng(e._preSpiderfyLatlng),delete e._preSpiderfyLatlng,e.setOpacity?(e._setPos(a),e.setOpacity(0)):o.removeLayer(e),_&&(n=e._spiderLeg._path.childNodes[0],n.setAttribute("to",n.getAttribute("from")),n.setAttribute("from",0),n.beginElement(),n=e._spiderLeg._path.childNodes[1],n.setAttribute("from",.5),n.setAttribute("to",0),n.setAttribute("stroke-opacity",0),n.beginElement(),e._spiderLeg._path.setAttribute("stroke-opacity",0)));setTimeout(function(){var t=0;for(i=h.length-1;i>=0;i--)e=h[i],e._spiderLeg&&t++;for(i=h.length-1;i>=0;i--)e=h[i],e._spiderLeg&&(e.setOpacity&&(e.setOpacity(1),e.setZIndexOffset(0)),t>1&&o.removeLayer(e),r.removeLayer(e._spiderLeg),delete e._spiderLeg);s._animationEnd()},200)}}:{_animationSpiderfy:function(t,e){var i,n,s,r,o=this._group,a=o._map,h=o._featureGroup;for(i=t.length-1;i>=0;i--)r=a.layerPointToLatLng(e[i]),n=t[i],n._preSpiderfyLatlng=n._latlng,n.setLatLng(r),n.setZIndexOffset&&n.setZIndexOffset(1e6),h.addLayer(n),s=new L.Polyline([this._latlng,r],{weight:1.5,color:"#222"}),a.addLayer(s),n._spiderLeg=s;this.setOpacity(.3),o.fire("spiderfied")},_animationUnspiderfy:function(){this._noanimationUnspiderfy()}}),L.MarkerClusterGroup.include({_spiderfied:null,_spiderfierOnAdd:function(){this._map.on("click",this._unspiderfyWrapper,this),this._map.options.zoomAnimation&&this._map.on("zoomstart",this._unspiderfyZoomStart,this),this._map.on("zoomend",this._noanimationUnspiderfy,this),L.Path.SVG&&!L.Browser.touch&&this._map._initPathRoot()},_spiderfierOnRemove:function(){this._map.off("click",this._unspiderfyWrapper,this),this._map.off("zoomstart",this._unspiderfyZoomStart,this),this._map.off("zoomanim",this._unspiderfyZoomAnim,this),this._unspiderfy()},_unspiderfyZoomStart:function(){this._map&&this._map.on("zoomanim",this._unspiderfyZoomAnim,this)},_unspiderfyZoomAnim:function(t){L.DomUtil.hasClass(this._map._mapPane,"leaflet-touching")||(this._map.off("zoomanim",this._unspiderfyZoomAnim,this),this._unspiderfy(t))},_unspiderfyWrapper:function(){this._unspiderfy()},_unspiderfy:function(t){this._spiderfied&&this._spiderfied.unspiderfy(t)},_noanimationUnspiderfy:function(){this._spiderfied&&this._spiderfied._noanimationUnspiderfy()},_unspiderfyLayer:function(t){t._spiderLeg&&(this._featureGroup.removeLayer(t),t.setOpacity(1),t.setZIndexOffset(0),this._map.removeLayer(t._spiderLeg),delete t._spiderLeg)}})}(window,document);
 
 /***/ },
-/* 413 */
+/* 383 */
 /*!************************************!*\
   !*** ./~/underscore/underscore.js ***!
   \************************************/
@@ -67583,7 +65179,7 @@
 
 
 /***/ },
-/* 414 */
+/* 384 */
 /*!********************************************!*\
   !*** ./src/components/marker.component.js ***!
   \********************************************/
@@ -67591,9 +65187,9 @@
 
 	"use strict";
 	
-	var L = __webpack_require__(/*! leaflet */ 403);
+	var L = __webpack_require__(/*! leaflet */ 373);
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
-	__webpack_require__(/*! ./marker.component.css */ 415);
+	__webpack_require__(/*! ./marker.component.css */ 385);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
 	var MarkerComponent;
 	(function (MarkerComponent) {
@@ -67648,7 +65244,7 @@
 	//# sourceMappingURL=marker.component.js.map
 
 /***/ },
-/* 415 */
+/* 385 */
 /*!*********************************************!*\
   !*** ./src/components/marker.component.css ***!
   \*********************************************/
@@ -67657,7 +65253,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./marker.component.css */ 416);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./marker.component.css */ 386);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -67677,7 +65273,7 @@
 	}
 
 /***/ },
-/* 416 */
+/* 386 */
 /*!************************************************************!*\
   !*** ./~/css-loader!./src/components/marker.component.css ***!
   \************************************************************/
@@ -67696,7 +65292,7 @@
 	};
 
 /***/ },
-/* 417 */
+/* 387 */
 /*!*************************************************!*\
   !*** ./src/components/trees-panel.component.js ***!
   \*************************************************/
@@ -67713,14 +65309,14 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(/*! react */ 1);
-	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
+	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 389);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./trees-panel.component.css */ 418);
-	var tree_component_1 = __webpack_require__(/*! ./tree/tree.component */ 422);
-	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 285);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
-	var authentication_1 = __webpack_require__(/*! ./../utils/authentication */ 257);
+	var styles = __webpack_require__(/*! ./trees-panel.component.css */ 397);
+	var tree_component_1 = __webpack_require__(/*! ./tree/tree.component */ 399);
+	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 255);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 233);
+	var authentication_1 = __webpack_require__(/*! ./../utils/authentication */ 235);
 	var app_component_1 = __webpack_require__(/*! ./app.component */ 219);
 	
 	var TreesPanelComponent = function (_React$Component) {
@@ -67797,21 +65393,57 @@
 	        value: function render() {
 	            var self = this;
 	            if (self.state.open) {
-	                return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement("div", { className: styles.button + " " + styles.buttontop }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                        var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-	                        self.props.onZoom(zoom);
-	                    } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                        var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-	                        self.props.onZoom(zoom);
-	                    } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button }, React.createElement(FontAwesome, { className: '', name: 'filter' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus' }))), React.createElement("div", { className: styles.right }, React.createElement(tree_component_1.default, { login: self.state.login, userId: self.state.userId, treeId: self.props.treeId, foods: self.props.foods, trees: self.props.trees })));
+	                if (self.state.login == app_component_1.LogInStatus.MANAGER) {
+	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement("div", { className: styles.button + " " + styles.buttontop, onClick: function onClick() {
+	                            if (navigator.geolocation) {
+	                                navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
+	                            }
+	                        } }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                            var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
+	                            self.props.onZoom(zoom);
+	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                            var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
+	                            self.props.onZoom(zoom);
+	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button }, React.createElement(FontAwesome, { className: '', name: 'filter' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus' }))), React.createElement("div", { className: styles.right }, React.createElement(tree_component_1.default, { login: self.state.login, userId: self.state.userId, treeId: self.props.treeId, foods: self.props.foods, trees: self.props.trees })));
+	                } else {
+	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement("div", { className: styles.button + " " + styles.buttontop, onClick: function onClick() {
+	                            if (navigator.geolocation) {
+	                                navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
+	                            }
+	                        } }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                            var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
+	                            self.props.onZoom(zoom);
+	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                            var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
+	                            self.props.onZoom(zoom);
+	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus' }))), React.createElement("div", { className: styles.right }, React.createElement(tree_component_1.default, { login: self.state.login, userId: self.state.userId, treeId: self.props.treeId, foods: self.props.foods, trees: self.props.trees })));
+	                }
 	            } else {
-	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left }, React.createElement("div", { className: styles.button + " " + styles.buttontop }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                        var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-	                        self.props.onZoom(zoom);
-	                    } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                        var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-	                        self.props.onZoom(zoom);
-	                    } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button }, React.createElement(FontAwesome, { className: '', name: 'filter' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus' }))), React.createElement("div", { className: styles.right }));
+	                if (self.state.login == app_component_1.LogInStatus.MANAGER) {
+	                    return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left }, React.createElement("div", { className: styles.button + " " + styles.buttontop, onClick: function onClick() {
+	                            if (navigator.geolocation) {
+	                                navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
+	                            }
+	                        } }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                            var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
+	                            self.props.onZoom(zoom);
+	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                            var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
+	                            self.props.onZoom(zoom);
+	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button }, React.createElement(FontAwesome, { className: '', name: 'filter' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus' }))), React.createElement("div", { className: styles.right }));
+	                } else {
+	                    return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left }, React.createElement("div", { className: styles.button + " " + styles.buttontop, onClick: function onClick() {
+	                            if (navigator.geolocation) {
+	                                navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
+	                            }
+	                        } }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                            var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
+	                            self.props.onZoom(zoom);
+	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                            var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
+	                            self.props.onZoom(zoom);
+	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus' }))), React.createElement("div", { className: styles.right }));
+	                }
 	            }
 	        }
 	    }]);
@@ -67829,7 +65461,214 @@
 	//# sourceMappingURL=trees-panel.component.js.map
 
 /***/ },
-/* 418 */
+/* 388 */
+/*!******************************************!*\
+  !*** ./~/react-fontawesome/lib/index.js ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	/**
+	 * A React component for the font-awesome icon library.
+	 *
+	 *
+	 * @param {Boolean} [border=false] Whether or not to show a border radius
+	 * @param {String} [className] An extra set of CSS classes to add to the component
+	 * @param {Boolean} [fixedWidth=false] Make buttons fixed width
+	 * @param {String} [flip=false] Flip the icon's orientation.
+	 * @param {Boolean} [inverse=false]Inverse the icon's color
+	 * @param {String} name Name of the icon to use
+	 * @param {Boolean} [pulse=false] Rotate icon with 8 steps (rather than smoothly)
+	 * @param {Number} [rotate] The degress to rotate the icon by
+	 * @param {String} [size] The icon scaling size
+	 * @param {Boolean} [spin=false] Spin the icon
+	 * @param {String} [stack] Stack an icon on top of another
+	 * @module FontAwesome
+	 * @type {ReactClass}
+	 */
+	exports['default'] = _react2['default'].createClass({
+	
+	  displayName: 'FontAwesome',
+	
+	  propTypes: {
+	    border: _react2['default'].PropTypes.bool,
+	    className: _react2['default'].PropTypes.string,
+	    fixedWidth: _react2['default'].PropTypes.bool,
+	    flip: _react2['default'].PropTypes.oneOf(['horizontal', 'vertical']),
+	    inverse: _react2['default'].PropTypes.bool,
+	    name: _react2['default'].PropTypes.string.isRequired,
+	    pulse: _react2['default'].PropTypes.bool,
+	    rotate: _react2['default'].PropTypes.oneOf([90, 180, 270]),
+	    size: _react2['default'].PropTypes.oneOf(['lg', '2x', '3x', '4x', '5x']),
+	    spin: _react2['default'].PropTypes.bool,
+	    stack: _react2['default'].PropTypes.oneOf(['1x', '2x'])
+	  },
+	
+	  render: function render() {
+	    var className = 'fa fa-' + this.props.name;
+	
+	    if (this.props.size) {
+	      className += ' fa-' + this.props.size;
+	    }
+	
+	    if (this.props.spin) {
+	      className += ' fa-spin';
+	    }
+	
+	    if (this.props.pulse) {
+	      className += ' fa-pulse';
+	    }
+	
+	    if (this.props.border) {
+	      className += ' fa-border';
+	    }
+	
+	    if (this.props.fixedWidth) {
+	      className += ' fa-fw';
+	    }
+	
+	    if (this.props.inverse) {
+	      className += ' fa-inverse';
+	    }
+	
+	    if (this.props.flip) {
+	      className += ' fa-flip-' + this.props.flip;
+	    }
+	
+	    if (this.props.rotate) {
+	      className += ' fa-rotate-' + this.props.rotate;
+	    }
+	
+	    if (this.props.stack) {
+	      className += ' fa-stack-' + this.props.stack;
+	    }
+	
+	    if (this.props.className) {
+	      className += ' ' + this.props.className;
+	    }
+	
+	    return _react2['default'].createElement('span', _extends({}, this.props, {
+	      className: className
+	    }));
+	  }
+	});
+	module.exports = exports['default'];
+
+/***/ },
+/* 389 */
+/*!*********************************************!*\
+  !*** ./~/font-awesome/css/font-awesome.css ***!
+  \*********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../css-loader!./font-awesome.css */ 390);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../css-loader/index.js!./font-awesome.css", function() {
+				var newContent = require("!!./../../css-loader/index.js!./font-awesome.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 390 */
+/*!************************************************************!*\
+  !*** ./~/css-loader!./~/font-awesome/css/font-awesome.css ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "/*!\n *  Font Awesome 4.6.1 by @davegandy - http://fontawesome.io - @fontawesome\n *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)\n */\n/* FONT PATH\n * -------------------------- */\n@font-face {\n  font-family: 'FontAwesome';\n  src: url(" + __webpack_require__(/*! ../fonts/fontawesome-webfont.eot?v=4.6.1 */ 391) + ");\n  src: url(" + __webpack_require__(/*! ../fonts/fontawesome-webfont.eot */ 392) + "?#iefix&v=4.6.1) format('embedded-opentype'), url(" + __webpack_require__(/*! ../fonts/fontawesome-webfont.woff2?v=4.6.1 */ 393) + ") format('woff2'), url(" + __webpack_require__(/*! ../fonts/fontawesome-webfont.woff?v=4.6.1 */ 394) + ") format('woff'), url(" + __webpack_require__(/*! ../fonts/fontawesome-webfont.ttf?v=4.6.1 */ 395) + ") format('truetype'), url(" + __webpack_require__(/*! ../fonts/fontawesome-webfont.svg?v=4.6.1 */ 396) + "#fontawesomeregular) format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n.fa {\n  display: inline-block;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n/* makes the font 33% larger relative to the icon container */\n.fa-lg {\n  font-size: 1.33333333em;\n  line-height: 0.75em;\n  vertical-align: -15%;\n}\n.fa-2x {\n  font-size: 2em;\n}\n.fa-3x {\n  font-size: 3em;\n}\n.fa-4x {\n  font-size: 4em;\n}\n.fa-5x {\n  font-size: 5em;\n}\n.fa-fw {\n  width: 1.28571429em;\n  text-align: center;\n}\n.fa-ul {\n  padding-left: 0;\n  margin-left: 2.14285714em;\n  list-style-type: none;\n}\n.fa-ul > li {\n  position: relative;\n}\n.fa-li {\n  position: absolute;\n  left: -2.14285714em;\n  width: 2.14285714em;\n  top: 0.14285714em;\n  text-align: center;\n}\n.fa-li.fa-lg {\n  left: -1.85714286em;\n}\n.fa-border {\n  padding: .2em .25em .15em;\n  border: solid 0.08em #eeeeee;\n  border-radius: .1em;\n}\n.fa-pull-left {\n  float: left;\n}\n.fa-pull-right {\n  float: right;\n}\n.fa.fa-pull-left {\n  margin-right: .3em;\n}\n.fa.fa-pull-right {\n  margin-left: .3em;\n}\n/* Deprecated as of 4.4.0 */\n.pull-right {\n  float: right;\n}\n.pull-left {\n  float: left;\n}\n.fa.pull-left {\n  margin-right: .3em;\n}\n.fa.pull-right {\n  margin-left: .3em;\n}\n.fa-spin {\n  -webkit-animation: fa-spin 2s infinite linear;\n  animation: fa-spin 2s infinite linear;\n}\n.fa-pulse {\n  -webkit-animation: fa-spin 1s infinite steps(8);\n  animation: fa-spin 1s infinite steps(8);\n}\n@-webkit-keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n  }\n}\n@keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n  }\n}\n.fa-rotate-90 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=1)\";\n  -webkit-transform: rotate(90deg);\n  -ms-transform: rotate(90deg);\n  transform: rotate(90deg);\n}\n.fa-rotate-180 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=2)\";\n  -webkit-transform: rotate(180deg);\n  -ms-transform: rotate(180deg);\n  transform: rotate(180deg);\n}\n.fa-rotate-270 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=3)\";\n  -webkit-transform: rotate(270deg);\n  -ms-transform: rotate(270deg);\n  transform: rotate(270deg);\n}\n.fa-flip-horizontal {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)\";\n  -webkit-transform: scale(-1, 1);\n  -ms-transform: scale(-1, 1);\n  transform: scale(-1, 1);\n}\n.fa-flip-vertical {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)\";\n  -webkit-transform: scale(1, -1);\n  -ms-transform: scale(1, -1);\n  transform: scale(1, -1);\n}\n:root .fa-rotate-90,\n:root .fa-rotate-180,\n:root .fa-rotate-270,\n:root .fa-flip-horizontal,\n:root .fa-flip-vertical {\n  filter: none;\n}\n.fa-stack {\n  position: relative;\n  display: inline-block;\n  width: 2em;\n  height: 2em;\n  line-height: 2em;\n  vertical-align: middle;\n}\n.fa-stack-1x,\n.fa-stack-2x {\n  position: absolute;\n  left: 0;\n  width: 100%;\n  text-align: center;\n}\n.fa-stack-1x {\n  line-height: inherit;\n}\n.fa-stack-2x {\n  font-size: 2em;\n}\n.fa-inverse {\n  color: #ffffff;\n}\n/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen\n   readers do not read off random characters that represent icons */\n.fa-glass:before {\n  content: \"\\F000\";\n}\n.fa-music:before {\n  content: \"\\F001\";\n}\n.fa-search:before {\n  content: \"\\F002\";\n}\n.fa-envelope-o:before {\n  content: \"\\F003\";\n}\n.fa-heart:before {\n  content: \"\\F004\";\n}\n.fa-star:before {\n  content: \"\\F005\";\n}\n.fa-star-o:before {\n  content: \"\\F006\";\n}\n.fa-user:before {\n  content: \"\\F007\";\n}\n.fa-film:before {\n  content: \"\\F008\";\n}\n.fa-th-large:before {\n  content: \"\\F009\";\n}\n.fa-th:before {\n  content: \"\\F00A\";\n}\n.fa-th-list:before {\n  content: \"\\F00B\";\n}\n.fa-check:before {\n  content: \"\\F00C\";\n}\n.fa-remove:before,\n.fa-close:before,\n.fa-times:before {\n  content: \"\\F00D\";\n}\n.fa-search-plus:before {\n  content: \"\\F00E\";\n}\n.fa-search-minus:before {\n  content: \"\\F010\";\n}\n.fa-power-off:before {\n  content: \"\\F011\";\n}\n.fa-signal:before {\n  content: \"\\F012\";\n}\n.fa-gear:before,\n.fa-cog:before {\n  content: \"\\F013\";\n}\n.fa-trash-o:before {\n  content: \"\\F014\";\n}\n.fa-home:before {\n  content: \"\\F015\";\n}\n.fa-file-o:before {\n  content: \"\\F016\";\n}\n.fa-clock-o:before {\n  content: \"\\F017\";\n}\n.fa-road:before {\n  content: \"\\F018\";\n}\n.fa-download:before {\n  content: \"\\F019\";\n}\n.fa-arrow-circle-o-down:before {\n  content: \"\\F01A\";\n}\n.fa-arrow-circle-o-up:before {\n  content: \"\\F01B\";\n}\n.fa-inbox:before {\n  content: \"\\F01C\";\n}\n.fa-play-circle-o:before {\n  content: \"\\F01D\";\n}\n.fa-rotate-right:before,\n.fa-repeat:before {\n  content: \"\\F01E\";\n}\n.fa-refresh:before {\n  content: \"\\F021\";\n}\n.fa-list-alt:before {\n  content: \"\\F022\";\n}\n.fa-lock:before {\n  content: \"\\F023\";\n}\n.fa-flag:before {\n  content: \"\\F024\";\n}\n.fa-headphones:before {\n  content: \"\\F025\";\n}\n.fa-volume-off:before {\n  content: \"\\F026\";\n}\n.fa-volume-down:before {\n  content: \"\\F027\";\n}\n.fa-volume-up:before {\n  content: \"\\F028\";\n}\n.fa-qrcode:before {\n  content: \"\\F029\";\n}\n.fa-barcode:before {\n  content: \"\\F02A\";\n}\n.fa-tag:before {\n  content: \"\\F02B\";\n}\n.fa-tags:before {\n  content: \"\\F02C\";\n}\n.fa-book:before {\n  content: \"\\F02D\";\n}\n.fa-bookmark:before {\n  content: \"\\F02E\";\n}\n.fa-print:before {\n  content: \"\\F02F\";\n}\n.fa-camera:before {\n  content: \"\\F030\";\n}\n.fa-font:before {\n  content: \"\\F031\";\n}\n.fa-bold:before {\n  content: \"\\F032\";\n}\n.fa-italic:before {\n  content: \"\\F033\";\n}\n.fa-text-height:before {\n  content: \"\\F034\";\n}\n.fa-text-width:before {\n  content: \"\\F035\";\n}\n.fa-align-left:before {\n  content: \"\\F036\";\n}\n.fa-align-center:before {\n  content: \"\\F037\";\n}\n.fa-align-right:before {\n  content: \"\\F038\";\n}\n.fa-align-justify:before {\n  content: \"\\F039\";\n}\n.fa-list:before {\n  content: \"\\F03A\";\n}\n.fa-dedent:before,\n.fa-outdent:before {\n  content: \"\\F03B\";\n}\n.fa-indent:before {\n  content: \"\\F03C\";\n}\n.fa-video-camera:before {\n  content: \"\\F03D\";\n}\n.fa-photo:before,\n.fa-image:before,\n.fa-picture-o:before {\n  content: \"\\F03E\";\n}\n.fa-pencil:before {\n  content: \"\\F040\";\n}\n.fa-map-marker:before {\n  content: \"\\F041\";\n}\n.fa-adjust:before {\n  content: \"\\F042\";\n}\n.fa-tint:before {\n  content: \"\\F043\";\n}\n.fa-edit:before,\n.fa-pencil-square-o:before {\n  content: \"\\F044\";\n}\n.fa-share-square-o:before {\n  content: \"\\F045\";\n}\n.fa-check-square-o:before {\n  content: \"\\F046\";\n}\n.fa-arrows:before {\n  content: \"\\F047\";\n}\n.fa-step-backward:before {\n  content: \"\\F048\";\n}\n.fa-fast-backward:before {\n  content: \"\\F049\";\n}\n.fa-backward:before {\n  content: \"\\F04A\";\n}\n.fa-play:before {\n  content: \"\\F04B\";\n}\n.fa-pause:before {\n  content: \"\\F04C\";\n}\n.fa-stop:before {\n  content: \"\\F04D\";\n}\n.fa-forward:before {\n  content: \"\\F04E\";\n}\n.fa-fast-forward:before {\n  content: \"\\F050\";\n}\n.fa-step-forward:before {\n  content: \"\\F051\";\n}\n.fa-eject:before {\n  content: \"\\F052\";\n}\n.fa-chevron-left:before {\n  content: \"\\F053\";\n}\n.fa-chevron-right:before {\n  content: \"\\F054\";\n}\n.fa-plus-circle:before {\n  content: \"\\F055\";\n}\n.fa-minus-circle:before {\n  content: \"\\F056\";\n}\n.fa-times-circle:before {\n  content: \"\\F057\";\n}\n.fa-check-circle:before {\n  content: \"\\F058\";\n}\n.fa-question-circle:before {\n  content: \"\\F059\";\n}\n.fa-info-circle:before {\n  content: \"\\F05A\";\n}\n.fa-crosshairs:before {\n  content: \"\\F05B\";\n}\n.fa-times-circle-o:before {\n  content: \"\\F05C\";\n}\n.fa-check-circle-o:before {\n  content: \"\\F05D\";\n}\n.fa-ban:before {\n  content: \"\\F05E\";\n}\n.fa-arrow-left:before {\n  content: \"\\F060\";\n}\n.fa-arrow-right:before {\n  content: \"\\F061\";\n}\n.fa-arrow-up:before {\n  content: \"\\F062\";\n}\n.fa-arrow-down:before {\n  content: \"\\F063\";\n}\n.fa-mail-forward:before,\n.fa-share:before {\n  content: \"\\F064\";\n}\n.fa-expand:before {\n  content: \"\\F065\";\n}\n.fa-compress:before {\n  content: \"\\F066\";\n}\n.fa-plus:before {\n  content: \"\\F067\";\n}\n.fa-minus:before {\n  content: \"\\F068\";\n}\n.fa-asterisk:before {\n  content: \"\\F069\";\n}\n.fa-exclamation-circle:before {\n  content: \"\\F06A\";\n}\n.fa-gift:before {\n  content: \"\\F06B\";\n}\n.fa-leaf:before {\n  content: \"\\F06C\";\n}\n.fa-fire:before {\n  content: \"\\F06D\";\n}\n.fa-eye:before {\n  content: \"\\F06E\";\n}\n.fa-eye-slash:before {\n  content: \"\\F070\";\n}\n.fa-warning:before,\n.fa-exclamation-triangle:before {\n  content: \"\\F071\";\n}\n.fa-plane:before {\n  content: \"\\F072\";\n}\n.fa-calendar:before {\n  content: \"\\F073\";\n}\n.fa-random:before {\n  content: \"\\F074\";\n}\n.fa-comment:before {\n  content: \"\\F075\";\n}\n.fa-magnet:before {\n  content: \"\\F076\";\n}\n.fa-chevron-up:before {\n  content: \"\\F077\";\n}\n.fa-chevron-down:before {\n  content: \"\\F078\";\n}\n.fa-retweet:before {\n  content: \"\\F079\";\n}\n.fa-shopping-cart:before {\n  content: \"\\F07A\";\n}\n.fa-folder:before {\n  content: \"\\F07B\";\n}\n.fa-folder-open:before {\n  content: \"\\F07C\";\n}\n.fa-arrows-v:before {\n  content: \"\\F07D\";\n}\n.fa-arrows-h:before {\n  content: \"\\F07E\";\n}\n.fa-bar-chart-o:before,\n.fa-bar-chart:before {\n  content: \"\\F080\";\n}\n.fa-twitter-square:before {\n  content: \"\\F081\";\n}\n.fa-facebook-square:before {\n  content: \"\\F082\";\n}\n.fa-camera-retro:before {\n  content: \"\\F083\";\n}\n.fa-key:before {\n  content: \"\\F084\";\n}\n.fa-gears:before,\n.fa-cogs:before {\n  content: \"\\F085\";\n}\n.fa-comments:before {\n  content: \"\\F086\";\n}\n.fa-thumbs-o-up:before {\n  content: \"\\F087\";\n}\n.fa-thumbs-o-down:before {\n  content: \"\\F088\";\n}\n.fa-star-half:before {\n  content: \"\\F089\";\n}\n.fa-heart-o:before {\n  content: \"\\F08A\";\n}\n.fa-sign-out:before {\n  content: \"\\F08B\";\n}\n.fa-linkedin-square:before {\n  content: \"\\F08C\";\n}\n.fa-thumb-tack:before {\n  content: \"\\F08D\";\n}\n.fa-external-link:before {\n  content: \"\\F08E\";\n}\n.fa-sign-in:before {\n  content: \"\\F090\";\n}\n.fa-trophy:before {\n  content: \"\\F091\";\n}\n.fa-github-square:before {\n  content: \"\\F092\";\n}\n.fa-upload:before {\n  content: \"\\F093\";\n}\n.fa-lemon-o:before {\n  content: \"\\F094\";\n}\n.fa-phone:before {\n  content: \"\\F095\";\n}\n.fa-square-o:before {\n  content: \"\\F096\";\n}\n.fa-bookmark-o:before {\n  content: \"\\F097\";\n}\n.fa-phone-square:before {\n  content: \"\\F098\";\n}\n.fa-twitter:before {\n  content: \"\\F099\";\n}\n.fa-facebook-f:before,\n.fa-facebook:before {\n  content: \"\\F09A\";\n}\n.fa-github:before {\n  content: \"\\F09B\";\n}\n.fa-unlock:before {\n  content: \"\\F09C\";\n}\n.fa-credit-card:before {\n  content: \"\\F09D\";\n}\n.fa-feed:before,\n.fa-rss:before {\n  content: \"\\F09E\";\n}\n.fa-hdd-o:before {\n  content: \"\\F0A0\";\n}\n.fa-bullhorn:before {\n  content: \"\\F0A1\";\n}\n.fa-bell:before {\n  content: \"\\F0F3\";\n}\n.fa-certificate:before {\n  content: \"\\F0A3\";\n}\n.fa-hand-o-right:before {\n  content: \"\\F0A4\";\n}\n.fa-hand-o-left:before {\n  content: \"\\F0A5\";\n}\n.fa-hand-o-up:before {\n  content: \"\\F0A6\";\n}\n.fa-hand-o-down:before {\n  content: \"\\F0A7\";\n}\n.fa-arrow-circle-left:before {\n  content: \"\\F0A8\";\n}\n.fa-arrow-circle-right:before {\n  content: \"\\F0A9\";\n}\n.fa-arrow-circle-up:before {\n  content: \"\\F0AA\";\n}\n.fa-arrow-circle-down:before {\n  content: \"\\F0AB\";\n}\n.fa-globe:before {\n  content: \"\\F0AC\";\n}\n.fa-wrench:before {\n  content: \"\\F0AD\";\n}\n.fa-tasks:before {\n  content: \"\\F0AE\";\n}\n.fa-filter:before {\n  content: \"\\F0B0\";\n}\n.fa-briefcase:before {\n  content: \"\\F0B1\";\n}\n.fa-arrows-alt:before {\n  content: \"\\F0B2\";\n}\n.fa-group:before,\n.fa-users:before {\n  content: \"\\F0C0\";\n}\n.fa-chain:before,\n.fa-link:before {\n  content: \"\\F0C1\";\n}\n.fa-cloud:before {\n  content: \"\\F0C2\";\n}\n.fa-flask:before {\n  content: \"\\F0C3\";\n}\n.fa-cut:before,\n.fa-scissors:before {\n  content: \"\\F0C4\";\n}\n.fa-copy:before,\n.fa-files-o:before {\n  content: \"\\F0C5\";\n}\n.fa-paperclip:before {\n  content: \"\\F0C6\";\n}\n.fa-save:before,\n.fa-floppy-o:before {\n  content: \"\\F0C7\";\n}\n.fa-square:before {\n  content: \"\\F0C8\";\n}\n.fa-navicon:before,\n.fa-reorder:before,\n.fa-bars:before {\n  content: \"\\F0C9\";\n}\n.fa-list-ul:before {\n  content: \"\\F0CA\";\n}\n.fa-list-ol:before {\n  content: \"\\F0CB\";\n}\n.fa-strikethrough:before {\n  content: \"\\F0CC\";\n}\n.fa-underline:before {\n  content: \"\\F0CD\";\n}\n.fa-table:before {\n  content: \"\\F0CE\";\n}\n.fa-magic:before {\n  content: \"\\F0D0\";\n}\n.fa-truck:before {\n  content: \"\\F0D1\";\n}\n.fa-pinterest:before {\n  content: \"\\F0D2\";\n}\n.fa-pinterest-square:before {\n  content: \"\\F0D3\";\n}\n.fa-google-plus-square:before {\n  content: \"\\F0D4\";\n}\n.fa-google-plus:before {\n  content: \"\\F0D5\";\n}\n.fa-money:before {\n  content: \"\\F0D6\";\n}\n.fa-caret-down:before {\n  content: \"\\F0D7\";\n}\n.fa-caret-up:before {\n  content: \"\\F0D8\";\n}\n.fa-caret-left:before {\n  content: \"\\F0D9\";\n}\n.fa-caret-right:before {\n  content: \"\\F0DA\";\n}\n.fa-columns:before {\n  content: \"\\F0DB\";\n}\n.fa-unsorted:before,\n.fa-sort:before {\n  content: \"\\F0DC\";\n}\n.fa-sort-down:before,\n.fa-sort-desc:before {\n  content: \"\\F0DD\";\n}\n.fa-sort-up:before,\n.fa-sort-asc:before {\n  content: \"\\F0DE\";\n}\n.fa-envelope:before {\n  content: \"\\F0E0\";\n}\n.fa-linkedin:before {\n  content: \"\\F0E1\";\n}\n.fa-rotate-left:before,\n.fa-undo:before {\n  content: \"\\F0E2\";\n}\n.fa-legal:before,\n.fa-gavel:before {\n  content: \"\\F0E3\";\n}\n.fa-dashboard:before,\n.fa-tachometer:before {\n  content: \"\\F0E4\";\n}\n.fa-comment-o:before {\n  content: \"\\F0E5\";\n}\n.fa-comments-o:before {\n  content: \"\\F0E6\";\n}\n.fa-flash:before,\n.fa-bolt:before {\n  content: \"\\F0E7\";\n}\n.fa-sitemap:before {\n  content: \"\\F0E8\";\n}\n.fa-umbrella:before {\n  content: \"\\F0E9\";\n}\n.fa-paste:before,\n.fa-clipboard:before {\n  content: \"\\F0EA\";\n}\n.fa-lightbulb-o:before {\n  content: \"\\F0EB\";\n}\n.fa-exchange:before {\n  content: \"\\F0EC\";\n}\n.fa-cloud-download:before {\n  content: \"\\F0ED\";\n}\n.fa-cloud-upload:before {\n  content: \"\\F0EE\";\n}\n.fa-user-md:before {\n  content: \"\\F0F0\";\n}\n.fa-stethoscope:before {\n  content: \"\\F0F1\";\n}\n.fa-suitcase:before {\n  content: \"\\F0F2\";\n}\n.fa-bell-o:before {\n  content: \"\\F0A2\";\n}\n.fa-coffee:before {\n  content: \"\\F0F4\";\n}\n.fa-cutlery:before {\n  content: \"\\F0F5\";\n}\n.fa-file-text-o:before {\n  content: \"\\F0F6\";\n}\n.fa-building-o:before {\n  content: \"\\F0F7\";\n}\n.fa-hospital-o:before {\n  content: \"\\F0F8\";\n}\n.fa-ambulance:before {\n  content: \"\\F0F9\";\n}\n.fa-medkit:before {\n  content: \"\\F0FA\";\n}\n.fa-fighter-jet:before {\n  content: \"\\F0FB\";\n}\n.fa-beer:before {\n  content: \"\\F0FC\";\n}\n.fa-h-square:before {\n  content: \"\\F0FD\";\n}\n.fa-plus-square:before {\n  content: \"\\F0FE\";\n}\n.fa-angle-double-left:before {\n  content: \"\\F100\";\n}\n.fa-angle-double-right:before {\n  content: \"\\F101\";\n}\n.fa-angle-double-up:before {\n  content: \"\\F102\";\n}\n.fa-angle-double-down:before {\n  content: \"\\F103\";\n}\n.fa-angle-left:before {\n  content: \"\\F104\";\n}\n.fa-angle-right:before {\n  content: \"\\F105\";\n}\n.fa-angle-up:before {\n  content: \"\\F106\";\n}\n.fa-angle-down:before {\n  content: \"\\F107\";\n}\n.fa-desktop:before {\n  content: \"\\F108\";\n}\n.fa-laptop:before {\n  content: \"\\F109\";\n}\n.fa-tablet:before {\n  content: \"\\F10A\";\n}\n.fa-mobile-phone:before,\n.fa-mobile:before {\n  content: \"\\F10B\";\n}\n.fa-circle-o:before {\n  content: \"\\F10C\";\n}\n.fa-quote-left:before {\n  content: \"\\F10D\";\n}\n.fa-quote-right:before {\n  content: \"\\F10E\";\n}\n.fa-spinner:before {\n  content: \"\\F110\";\n}\n.fa-circle:before {\n  content: \"\\F111\";\n}\n.fa-mail-reply:before,\n.fa-reply:before {\n  content: \"\\F112\";\n}\n.fa-github-alt:before {\n  content: \"\\F113\";\n}\n.fa-folder-o:before {\n  content: \"\\F114\";\n}\n.fa-folder-open-o:before {\n  content: \"\\F115\";\n}\n.fa-smile-o:before {\n  content: \"\\F118\";\n}\n.fa-frown-o:before {\n  content: \"\\F119\";\n}\n.fa-meh-o:before {\n  content: \"\\F11A\";\n}\n.fa-gamepad:before {\n  content: \"\\F11B\";\n}\n.fa-keyboard-o:before {\n  content: \"\\F11C\";\n}\n.fa-flag-o:before {\n  content: \"\\F11D\";\n}\n.fa-flag-checkered:before {\n  content: \"\\F11E\";\n}\n.fa-terminal:before {\n  content: \"\\F120\";\n}\n.fa-code:before {\n  content: \"\\F121\";\n}\n.fa-mail-reply-all:before,\n.fa-reply-all:before {\n  content: \"\\F122\";\n}\n.fa-star-half-empty:before,\n.fa-star-half-full:before,\n.fa-star-half-o:before {\n  content: \"\\F123\";\n}\n.fa-location-arrow:before {\n  content: \"\\F124\";\n}\n.fa-crop:before {\n  content: \"\\F125\";\n}\n.fa-code-fork:before {\n  content: \"\\F126\";\n}\n.fa-unlink:before,\n.fa-chain-broken:before {\n  content: \"\\F127\";\n}\n.fa-question:before {\n  content: \"\\F128\";\n}\n.fa-info:before {\n  content: \"\\F129\";\n}\n.fa-exclamation:before {\n  content: \"\\F12A\";\n}\n.fa-superscript:before {\n  content: \"\\F12B\";\n}\n.fa-subscript:before {\n  content: \"\\F12C\";\n}\n.fa-eraser:before {\n  content: \"\\F12D\";\n}\n.fa-puzzle-piece:before {\n  content: \"\\F12E\";\n}\n.fa-microphone:before {\n  content: \"\\F130\";\n}\n.fa-microphone-slash:before {\n  content: \"\\F131\";\n}\n.fa-shield:before {\n  content: \"\\F132\";\n}\n.fa-calendar-o:before {\n  content: \"\\F133\";\n}\n.fa-fire-extinguisher:before {\n  content: \"\\F134\";\n}\n.fa-rocket:before {\n  content: \"\\F135\";\n}\n.fa-maxcdn:before {\n  content: \"\\F136\";\n}\n.fa-chevron-circle-left:before {\n  content: \"\\F137\";\n}\n.fa-chevron-circle-right:before {\n  content: \"\\F138\";\n}\n.fa-chevron-circle-up:before {\n  content: \"\\F139\";\n}\n.fa-chevron-circle-down:before {\n  content: \"\\F13A\";\n}\n.fa-html5:before {\n  content: \"\\F13B\";\n}\n.fa-css3:before {\n  content: \"\\F13C\";\n}\n.fa-anchor:before {\n  content: \"\\F13D\";\n}\n.fa-unlock-alt:before {\n  content: \"\\F13E\";\n}\n.fa-bullseye:before {\n  content: \"\\F140\";\n}\n.fa-ellipsis-h:before {\n  content: \"\\F141\";\n}\n.fa-ellipsis-v:before {\n  content: \"\\F142\";\n}\n.fa-rss-square:before {\n  content: \"\\F143\";\n}\n.fa-play-circle:before {\n  content: \"\\F144\";\n}\n.fa-ticket:before {\n  content: \"\\F145\";\n}\n.fa-minus-square:before {\n  content: \"\\F146\";\n}\n.fa-minus-square-o:before {\n  content: \"\\F147\";\n}\n.fa-level-up:before {\n  content: \"\\F148\";\n}\n.fa-level-down:before {\n  content: \"\\F149\";\n}\n.fa-check-square:before {\n  content: \"\\F14A\";\n}\n.fa-pencil-square:before {\n  content: \"\\F14B\";\n}\n.fa-external-link-square:before {\n  content: \"\\F14C\";\n}\n.fa-share-square:before {\n  content: \"\\F14D\";\n}\n.fa-compass:before {\n  content: \"\\F14E\";\n}\n.fa-toggle-down:before,\n.fa-caret-square-o-down:before {\n  content: \"\\F150\";\n}\n.fa-toggle-up:before,\n.fa-caret-square-o-up:before {\n  content: \"\\F151\";\n}\n.fa-toggle-right:before,\n.fa-caret-square-o-right:before {\n  content: \"\\F152\";\n}\n.fa-euro:before,\n.fa-eur:before {\n  content: \"\\F153\";\n}\n.fa-gbp:before {\n  content: \"\\F154\";\n}\n.fa-dollar:before,\n.fa-usd:before {\n  content: \"\\F155\";\n}\n.fa-rupee:before,\n.fa-inr:before {\n  content: \"\\F156\";\n}\n.fa-cny:before,\n.fa-rmb:before,\n.fa-yen:before,\n.fa-jpy:before {\n  content: \"\\F157\";\n}\n.fa-ruble:before,\n.fa-rouble:before,\n.fa-rub:before {\n  content: \"\\F158\";\n}\n.fa-won:before,\n.fa-krw:before {\n  content: \"\\F159\";\n}\n.fa-bitcoin:before,\n.fa-btc:before {\n  content: \"\\F15A\";\n}\n.fa-file:before {\n  content: \"\\F15B\";\n}\n.fa-file-text:before {\n  content: \"\\F15C\";\n}\n.fa-sort-alpha-asc:before {\n  content: \"\\F15D\";\n}\n.fa-sort-alpha-desc:before {\n  content: \"\\F15E\";\n}\n.fa-sort-amount-asc:before {\n  content: \"\\F160\";\n}\n.fa-sort-amount-desc:before {\n  content: \"\\F161\";\n}\n.fa-sort-numeric-asc:before {\n  content: \"\\F162\";\n}\n.fa-sort-numeric-desc:before {\n  content: \"\\F163\";\n}\n.fa-thumbs-up:before {\n  content: \"\\F164\";\n}\n.fa-thumbs-down:before {\n  content: \"\\F165\";\n}\n.fa-youtube-square:before {\n  content: \"\\F166\";\n}\n.fa-youtube:before {\n  content: \"\\F167\";\n}\n.fa-xing:before {\n  content: \"\\F168\";\n}\n.fa-xing-square:before {\n  content: \"\\F169\";\n}\n.fa-youtube-play:before {\n  content: \"\\F16A\";\n}\n.fa-dropbox:before {\n  content: \"\\F16B\";\n}\n.fa-stack-overflow:before {\n  content: \"\\F16C\";\n}\n.fa-instagram:before {\n  content: \"\\F16D\";\n}\n.fa-flickr:before {\n  content: \"\\F16E\";\n}\n.fa-adn:before {\n  content: \"\\F170\";\n}\n.fa-bitbucket:before {\n  content: \"\\F171\";\n}\n.fa-bitbucket-square:before {\n  content: \"\\F172\";\n}\n.fa-tumblr:before {\n  content: \"\\F173\";\n}\n.fa-tumblr-square:before {\n  content: \"\\F174\";\n}\n.fa-long-arrow-down:before {\n  content: \"\\F175\";\n}\n.fa-long-arrow-up:before {\n  content: \"\\F176\";\n}\n.fa-long-arrow-left:before {\n  content: \"\\F177\";\n}\n.fa-long-arrow-right:before {\n  content: \"\\F178\";\n}\n.fa-apple:before {\n  content: \"\\F179\";\n}\n.fa-windows:before {\n  content: \"\\F17A\";\n}\n.fa-android:before {\n  content: \"\\F17B\";\n}\n.fa-linux:before {\n  content: \"\\F17C\";\n}\n.fa-dribbble:before {\n  content: \"\\F17D\";\n}\n.fa-skype:before {\n  content: \"\\F17E\";\n}\n.fa-foursquare:before {\n  content: \"\\F180\";\n}\n.fa-trello:before {\n  content: \"\\F181\";\n}\n.fa-female:before {\n  content: \"\\F182\";\n}\n.fa-male:before {\n  content: \"\\F183\";\n}\n.fa-gittip:before,\n.fa-gratipay:before {\n  content: \"\\F184\";\n}\n.fa-sun-o:before {\n  content: \"\\F185\";\n}\n.fa-moon-o:before {\n  content: \"\\F186\";\n}\n.fa-archive:before {\n  content: \"\\F187\";\n}\n.fa-bug:before {\n  content: \"\\F188\";\n}\n.fa-vk:before {\n  content: \"\\F189\";\n}\n.fa-weibo:before {\n  content: \"\\F18A\";\n}\n.fa-renren:before {\n  content: \"\\F18B\";\n}\n.fa-pagelines:before {\n  content: \"\\F18C\";\n}\n.fa-stack-exchange:before {\n  content: \"\\F18D\";\n}\n.fa-arrow-circle-o-right:before {\n  content: \"\\F18E\";\n}\n.fa-arrow-circle-o-left:before {\n  content: \"\\F190\";\n}\n.fa-toggle-left:before,\n.fa-caret-square-o-left:before {\n  content: \"\\F191\";\n}\n.fa-dot-circle-o:before {\n  content: \"\\F192\";\n}\n.fa-wheelchair:before {\n  content: \"\\F193\";\n}\n.fa-vimeo-square:before {\n  content: \"\\F194\";\n}\n.fa-turkish-lira:before,\n.fa-try:before {\n  content: \"\\F195\";\n}\n.fa-plus-square-o:before {\n  content: \"\\F196\";\n}\n.fa-space-shuttle:before {\n  content: \"\\F197\";\n}\n.fa-slack:before {\n  content: \"\\F198\";\n}\n.fa-envelope-square:before {\n  content: \"\\F199\";\n}\n.fa-wordpress:before {\n  content: \"\\F19A\";\n}\n.fa-openid:before {\n  content: \"\\F19B\";\n}\n.fa-institution:before,\n.fa-bank:before,\n.fa-university:before {\n  content: \"\\F19C\";\n}\n.fa-mortar-board:before,\n.fa-graduation-cap:before {\n  content: \"\\F19D\";\n}\n.fa-yahoo:before {\n  content: \"\\F19E\";\n}\n.fa-google:before {\n  content: \"\\F1A0\";\n}\n.fa-reddit:before {\n  content: \"\\F1A1\";\n}\n.fa-reddit-square:before {\n  content: \"\\F1A2\";\n}\n.fa-stumbleupon-circle:before {\n  content: \"\\F1A3\";\n}\n.fa-stumbleupon:before {\n  content: \"\\F1A4\";\n}\n.fa-delicious:before {\n  content: \"\\F1A5\";\n}\n.fa-digg:before {\n  content: \"\\F1A6\";\n}\n.fa-pied-piper:before {\n  content: \"\\F1A7\";\n}\n.fa-pied-piper-alt:before {\n  content: \"\\F1A8\";\n}\n.fa-drupal:before {\n  content: \"\\F1A9\";\n}\n.fa-joomla:before {\n  content: \"\\F1AA\";\n}\n.fa-language:before {\n  content: \"\\F1AB\";\n}\n.fa-fax:before {\n  content: \"\\F1AC\";\n}\n.fa-building:before {\n  content: \"\\F1AD\";\n}\n.fa-child:before {\n  content: \"\\F1AE\";\n}\n.fa-paw:before {\n  content: \"\\F1B0\";\n}\n.fa-spoon:before {\n  content: \"\\F1B1\";\n}\n.fa-cube:before {\n  content: \"\\F1B2\";\n}\n.fa-cubes:before {\n  content: \"\\F1B3\";\n}\n.fa-behance:before {\n  content: \"\\F1B4\";\n}\n.fa-behance-square:before {\n  content: \"\\F1B5\";\n}\n.fa-steam:before {\n  content: \"\\F1B6\";\n}\n.fa-steam-square:before {\n  content: \"\\F1B7\";\n}\n.fa-recycle:before {\n  content: \"\\F1B8\";\n}\n.fa-automobile:before,\n.fa-car:before {\n  content: \"\\F1B9\";\n}\n.fa-cab:before,\n.fa-taxi:before {\n  content: \"\\F1BA\";\n}\n.fa-tree:before {\n  content: \"\\F1BB\";\n}\n.fa-spotify:before {\n  content: \"\\F1BC\";\n}\n.fa-deviantart:before {\n  content: \"\\F1BD\";\n}\n.fa-soundcloud:before {\n  content: \"\\F1BE\";\n}\n.fa-database:before {\n  content: \"\\F1C0\";\n}\n.fa-file-pdf-o:before {\n  content: \"\\F1C1\";\n}\n.fa-file-word-o:before {\n  content: \"\\F1C2\";\n}\n.fa-file-excel-o:before {\n  content: \"\\F1C3\";\n}\n.fa-file-powerpoint-o:before {\n  content: \"\\F1C4\";\n}\n.fa-file-photo-o:before,\n.fa-file-picture-o:before,\n.fa-file-image-o:before {\n  content: \"\\F1C5\";\n}\n.fa-file-zip-o:before,\n.fa-file-archive-o:before {\n  content: \"\\F1C6\";\n}\n.fa-file-sound-o:before,\n.fa-file-audio-o:before {\n  content: \"\\F1C7\";\n}\n.fa-file-movie-o:before,\n.fa-file-video-o:before {\n  content: \"\\F1C8\";\n}\n.fa-file-code-o:before {\n  content: \"\\F1C9\";\n}\n.fa-vine:before {\n  content: \"\\F1CA\";\n}\n.fa-codepen:before {\n  content: \"\\F1CB\";\n}\n.fa-jsfiddle:before {\n  content: \"\\F1CC\";\n}\n.fa-life-bouy:before,\n.fa-life-buoy:before,\n.fa-life-saver:before,\n.fa-support:before,\n.fa-life-ring:before {\n  content: \"\\F1CD\";\n}\n.fa-circle-o-notch:before {\n  content: \"\\F1CE\";\n}\n.fa-ra:before,\n.fa-rebel:before {\n  content: \"\\F1D0\";\n}\n.fa-ge:before,\n.fa-empire:before {\n  content: \"\\F1D1\";\n}\n.fa-git-square:before {\n  content: \"\\F1D2\";\n}\n.fa-git:before {\n  content: \"\\F1D3\";\n}\n.fa-y-combinator-square:before,\n.fa-yc-square:before,\n.fa-hacker-news:before {\n  content: \"\\F1D4\";\n}\n.fa-tencent-weibo:before {\n  content: \"\\F1D5\";\n}\n.fa-qq:before {\n  content: \"\\F1D6\";\n}\n.fa-wechat:before,\n.fa-weixin:before {\n  content: \"\\F1D7\";\n}\n.fa-send:before,\n.fa-paper-plane:before {\n  content: \"\\F1D8\";\n}\n.fa-send-o:before,\n.fa-paper-plane-o:before {\n  content: \"\\F1D9\";\n}\n.fa-history:before {\n  content: \"\\F1DA\";\n}\n.fa-circle-thin:before {\n  content: \"\\F1DB\";\n}\n.fa-header:before {\n  content: \"\\F1DC\";\n}\n.fa-paragraph:before {\n  content: \"\\F1DD\";\n}\n.fa-sliders:before {\n  content: \"\\F1DE\";\n}\n.fa-share-alt:before {\n  content: \"\\F1E0\";\n}\n.fa-share-alt-square:before {\n  content: \"\\F1E1\";\n}\n.fa-bomb:before {\n  content: \"\\F1E2\";\n}\n.fa-soccer-ball-o:before,\n.fa-futbol-o:before {\n  content: \"\\F1E3\";\n}\n.fa-tty:before {\n  content: \"\\F1E4\";\n}\n.fa-binoculars:before {\n  content: \"\\F1E5\";\n}\n.fa-plug:before {\n  content: \"\\F1E6\";\n}\n.fa-slideshare:before {\n  content: \"\\F1E7\";\n}\n.fa-twitch:before {\n  content: \"\\F1E8\";\n}\n.fa-yelp:before {\n  content: \"\\F1E9\";\n}\n.fa-newspaper-o:before {\n  content: \"\\F1EA\";\n}\n.fa-wifi:before {\n  content: \"\\F1EB\";\n}\n.fa-calculator:before {\n  content: \"\\F1EC\";\n}\n.fa-paypal:before {\n  content: \"\\F1ED\";\n}\n.fa-google-wallet:before {\n  content: \"\\F1EE\";\n}\n.fa-cc-visa:before {\n  content: \"\\F1F0\";\n}\n.fa-cc-mastercard:before {\n  content: \"\\F1F1\";\n}\n.fa-cc-discover:before {\n  content: \"\\F1F2\";\n}\n.fa-cc-amex:before {\n  content: \"\\F1F3\";\n}\n.fa-cc-paypal:before {\n  content: \"\\F1F4\";\n}\n.fa-cc-stripe:before {\n  content: \"\\F1F5\";\n}\n.fa-bell-slash:before {\n  content: \"\\F1F6\";\n}\n.fa-bell-slash-o:before {\n  content: \"\\F1F7\";\n}\n.fa-trash:before {\n  content: \"\\F1F8\";\n}\n.fa-copyright:before {\n  content: \"\\F1F9\";\n}\n.fa-at:before {\n  content: \"\\F1FA\";\n}\n.fa-eyedropper:before {\n  content: \"\\F1FB\";\n}\n.fa-paint-brush:before {\n  content: \"\\F1FC\";\n}\n.fa-birthday-cake:before {\n  content: \"\\F1FD\";\n}\n.fa-area-chart:before {\n  content: \"\\F1FE\";\n}\n.fa-pie-chart:before {\n  content: \"\\F200\";\n}\n.fa-line-chart:before {\n  content: \"\\F201\";\n}\n.fa-lastfm:before {\n  content: \"\\F202\";\n}\n.fa-lastfm-square:before {\n  content: \"\\F203\";\n}\n.fa-toggle-off:before {\n  content: \"\\F204\";\n}\n.fa-toggle-on:before {\n  content: \"\\F205\";\n}\n.fa-bicycle:before {\n  content: \"\\F206\";\n}\n.fa-bus:before {\n  content: \"\\F207\";\n}\n.fa-ioxhost:before {\n  content: \"\\F208\";\n}\n.fa-angellist:before {\n  content: \"\\F209\";\n}\n.fa-cc:before {\n  content: \"\\F20A\";\n}\n.fa-shekel:before,\n.fa-sheqel:before,\n.fa-ils:before {\n  content: \"\\F20B\";\n}\n.fa-meanpath:before {\n  content: \"\\F20C\";\n}\n.fa-buysellads:before {\n  content: \"\\F20D\";\n}\n.fa-connectdevelop:before {\n  content: \"\\F20E\";\n}\n.fa-dashcube:before {\n  content: \"\\F210\";\n}\n.fa-forumbee:before {\n  content: \"\\F211\";\n}\n.fa-leanpub:before {\n  content: \"\\F212\";\n}\n.fa-sellsy:before {\n  content: \"\\F213\";\n}\n.fa-shirtsinbulk:before {\n  content: \"\\F214\";\n}\n.fa-simplybuilt:before {\n  content: \"\\F215\";\n}\n.fa-skyatlas:before {\n  content: \"\\F216\";\n}\n.fa-cart-plus:before {\n  content: \"\\F217\";\n}\n.fa-cart-arrow-down:before {\n  content: \"\\F218\";\n}\n.fa-diamond:before {\n  content: \"\\F219\";\n}\n.fa-ship:before {\n  content: \"\\F21A\";\n}\n.fa-user-secret:before {\n  content: \"\\F21B\";\n}\n.fa-motorcycle:before {\n  content: \"\\F21C\";\n}\n.fa-street-view:before {\n  content: \"\\F21D\";\n}\n.fa-heartbeat:before {\n  content: \"\\F21E\";\n}\n.fa-venus:before {\n  content: \"\\F221\";\n}\n.fa-mars:before {\n  content: \"\\F222\";\n}\n.fa-mercury:before {\n  content: \"\\F223\";\n}\n.fa-intersex:before,\n.fa-transgender:before {\n  content: \"\\F224\";\n}\n.fa-transgender-alt:before {\n  content: \"\\F225\";\n}\n.fa-venus-double:before {\n  content: \"\\F226\";\n}\n.fa-mars-double:before {\n  content: \"\\F227\";\n}\n.fa-venus-mars:before {\n  content: \"\\F228\";\n}\n.fa-mars-stroke:before {\n  content: \"\\F229\";\n}\n.fa-mars-stroke-v:before {\n  content: \"\\F22A\";\n}\n.fa-mars-stroke-h:before {\n  content: \"\\F22B\";\n}\n.fa-neuter:before {\n  content: \"\\F22C\";\n}\n.fa-genderless:before {\n  content: \"\\F22D\";\n}\n.fa-facebook-official:before {\n  content: \"\\F230\";\n}\n.fa-pinterest-p:before {\n  content: \"\\F231\";\n}\n.fa-whatsapp:before {\n  content: \"\\F232\";\n}\n.fa-server:before {\n  content: \"\\F233\";\n}\n.fa-user-plus:before {\n  content: \"\\F234\";\n}\n.fa-user-times:before {\n  content: \"\\F235\";\n}\n.fa-hotel:before,\n.fa-bed:before {\n  content: \"\\F236\";\n}\n.fa-viacoin:before {\n  content: \"\\F237\";\n}\n.fa-train:before {\n  content: \"\\F238\";\n}\n.fa-subway:before {\n  content: \"\\F239\";\n}\n.fa-medium:before {\n  content: \"\\F23A\";\n}\n.fa-yc:before,\n.fa-y-combinator:before {\n  content: \"\\F23B\";\n}\n.fa-optin-monster:before {\n  content: \"\\F23C\";\n}\n.fa-opencart:before {\n  content: \"\\F23D\";\n}\n.fa-expeditedssl:before {\n  content: \"\\F23E\";\n}\n.fa-battery-4:before,\n.fa-battery-full:before {\n  content: \"\\F240\";\n}\n.fa-battery-3:before,\n.fa-battery-three-quarters:before {\n  content: \"\\F241\";\n}\n.fa-battery-2:before,\n.fa-battery-half:before {\n  content: \"\\F242\";\n}\n.fa-battery-1:before,\n.fa-battery-quarter:before {\n  content: \"\\F243\";\n}\n.fa-battery-0:before,\n.fa-battery-empty:before {\n  content: \"\\F244\";\n}\n.fa-mouse-pointer:before {\n  content: \"\\F245\";\n}\n.fa-i-cursor:before {\n  content: \"\\F246\";\n}\n.fa-object-group:before {\n  content: \"\\F247\";\n}\n.fa-object-ungroup:before {\n  content: \"\\F248\";\n}\n.fa-sticky-note:before {\n  content: \"\\F249\";\n}\n.fa-sticky-note-o:before {\n  content: \"\\F24A\";\n}\n.fa-cc-jcb:before {\n  content: \"\\F24B\";\n}\n.fa-cc-diners-club:before {\n  content: \"\\F24C\";\n}\n.fa-clone:before {\n  content: \"\\F24D\";\n}\n.fa-balance-scale:before {\n  content: \"\\F24E\";\n}\n.fa-hourglass-o:before {\n  content: \"\\F250\";\n}\n.fa-hourglass-1:before,\n.fa-hourglass-start:before {\n  content: \"\\F251\";\n}\n.fa-hourglass-2:before,\n.fa-hourglass-half:before {\n  content: \"\\F252\";\n}\n.fa-hourglass-3:before,\n.fa-hourglass-end:before {\n  content: \"\\F253\";\n}\n.fa-hourglass:before {\n  content: \"\\F254\";\n}\n.fa-hand-grab-o:before,\n.fa-hand-rock-o:before {\n  content: \"\\F255\";\n}\n.fa-hand-stop-o:before,\n.fa-hand-paper-o:before {\n  content: \"\\F256\";\n}\n.fa-hand-scissors-o:before {\n  content: \"\\F257\";\n}\n.fa-hand-lizard-o:before {\n  content: \"\\F258\";\n}\n.fa-hand-spock-o:before {\n  content: \"\\F259\";\n}\n.fa-hand-pointer-o:before {\n  content: \"\\F25A\";\n}\n.fa-hand-peace-o:before {\n  content: \"\\F25B\";\n}\n.fa-trademark:before {\n  content: \"\\F25C\";\n}\n.fa-registered:before {\n  content: \"\\F25D\";\n}\n.fa-creative-commons:before {\n  content: \"\\F25E\";\n}\n.fa-gg:before {\n  content: \"\\F260\";\n}\n.fa-gg-circle:before {\n  content: \"\\F261\";\n}\n.fa-tripadvisor:before {\n  content: \"\\F262\";\n}\n.fa-odnoklassniki:before {\n  content: \"\\F263\";\n}\n.fa-odnoklassniki-square:before {\n  content: \"\\F264\";\n}\n.fa-get-pocket:before {\n  content: \"\\F265\";\n}\n.fa-wikipedia-w:before {\n  content: \"\\F266\";\n}\n.fa-safari:before {\n  content: \"\\F267\";\n}\n.fa-chrome:before {\n  content: \"\\F268\";\n}\n.fa-firefox:before {\n  content: \"\\F269\";\n}\n.fa-opera:before {\n  content: \"\\F26A\";\n}\n.fa-internet-explorer:before {\n  content: \"\\F26B\";\n}\n.fa-tv:before,\n.fa-television:before {\n  content: \"\\F26C\";\n}\n.fa-contao:before {\n  content: \"\\F26D\";\n}\n.fa-500px:before {\n  content: \"\\F26E\";\n}\n.fa-amazon:before {\n  content: \"\\F270\";\n}\n.fa-calendar-plus-o:before {\n  content: \"\\F271\";\n}\n.fa-calendar-minus-o:before {\n  content: \"\\F272\";\n}\n.fa-calendar-times-o:before {\n  content: \"\\F273\";\n}\n.fa-calendar-check-o:before {\n  content: \"\\F274\";\n}\n.fa-industry:before {\n  content: \"\\F275\";\n}\n.fa-map-pin:before {\n  content: \"\\F276\";\n}\n.fa-map-signs:before {\n  content: \"\\F277\";\n}\n.fa-map-o:before {\n  content: \"\\F278\";\n}\n.fa-map:before {\n  content: \"\\F279\";\n}\n.fa-commenting:before {\n  content: \"\\F27A\";\n}\n.fa-commenting-o:before {\n  content: \"\\F27B\";\n}\n.fa-houzz:before {\n  content: \"\\F27C\";\n}\n.fa-vimeo:before {\n  content: \"\\F27D\";\n}\n.fa-black-tie:before {\n  content: \"\\F27E\";\n}\n.fa-fonticons:before {\n  content: \"\\F280\";\n}\n.fa-reddit-alien:before {\n  content: \"\\F281\";\n}\n.fa-edge:before {\n  content: \"\\F282\";\n}\n.fa-credit-card-alt:before {\n  content: \"\\F283\";\n}\n.fa-codiepie:before {\n  content: \"\\F284\";\n}\n.fa-modx:before {\n  content: \"\\F285\";\n}\n.fa-fort-awesome:before {\n  content: \"\\F286\";\n}\n.fa-usb:before {\n  content: \"\\F287\";\n}\n.fa-product-hunt:before {\n  content: \"\\F288\";\n}\n.fa-mixcloud:before {\n  content: \"\\F289\";\n}\n.fa-scribd:before {\n  content: \"\\F28A\";\n}\n.fa-pause-circle:before {\n  content: \"\\F28B\";\n}\n.fa-pause-circle-o:before {\n  content: \"\\F28C\";\n}\n.fa-stop-circle:before {\n  content: \"\\F28D\";\n}\n.fa-stop-circle-o:before {\n  content: \"\\F28E\";\n}\n.fa-shopping-bag:before {\n  content: \"\\F290\";\n}\n.fa-shopping-basket:before {\n  content: \"\\F291\";\n}\n.fa-hashtag:before {\n  content: \"\\F292\";\n}\n.fa-bluetooth:before {\n  content: \"\\F293\";\n}\n.fa-bluetooth-b:before {\n  content: \"\\F294\";\n}\n.fa-percent:before {\n  content: \"\\F295\";\n}\n.fa-gitlab:before {\n  content: \"\\F296\";\n}\n.fa-wpbeginner:before {\n  content: \"\\F297\";\n}\n.fa-wpforms:before {\n  content: \"\\F298\";\n}\n.fa-envira:before {\n  content: \"\\F299\";\n}\n.fa-universal-access:before {\n  content: \"\\F29A\";\n}\n.fa-wheelchair-alt:before {\n  content: \"\\F29B\";\n}\n.fa-question-circle-o:before {\n  content: \"\\F29C\";\n}\n.fa-blind:before {\n  content: \"\\F29D\";\n}\n.fa-audio-description:before {\n  content: \"\\F29E\";\n}\n.fa-volume-control-phone:before {\n  content: \"\\F2A0\";\n}\n.fa-braille:before {\n  content: \"\\F2A1\";\n}\n.fa-assistive-listening-systems:before {\n  content: \"\\F2A2\";\n}\n.fa-asl-interpreting:before,\n.fa-american-sign-language-interpreting:before {\n  content: \"\\F2A3\";\n}\n.fa-deafness:before,\n.fa-hard-of-hearing:before,\n.fa-deaf:before {\n  content: \"\\F2A4\";\n}\n.fa-glide:before {\n  content: \"\\F2A5\";\n}\n.fa-glide-g:before {\n  content: \"\\F2A6\";\n}\n.fa-signing:before,\n.fa-sign-language:before {\n  content: \"\\F2A7\";\n}\n.fa-low-vision:before {\n  content: \"\\F2A8\";\n}\n.fa-viadeo:before {\n  content: \"\\F2A9\";\n}\n.fa-viadeo-square:before {\n  content: \"\\F2AA\";\n}\n.fa-snapchat:before {\n  content: \"\\F2AB\";\n}\n.fa-snapchat-ghost:before {\n  content: \"\\F2AC\";\n}\n.fa-snapchat-square:before {\n  content: \"\\F2AD\";\n}\n.sr-only {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  padding: 0;\n  margin: -1px;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n}\n.sr-only-focusable:active,\n.sr-only-focusable:focus {\n  position: static;\n  width: auto;\n  height: auto;\n  margin: 0;\n  overflow: visible;\n  clip: auto;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 391 */
+/*!**************************************************************!*\
+  !*** ./~/font-awesome/fonts/fontawesome-webfont.eot?v=4.6.1 ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
+
+/***/ },
+/* 392 */
+/*!******************************************************!*\
+  !*** ./~/font-awesome/fonts/fontawesome-webfont.eot ***!
+  \******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
+
+/***/ },
+/* 393 */
+/*!****************************************************************!*\
+  !*** ./~/font-awesome/fonts/fontawesome-webfont.woff2?v=4.6.1 ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff2";
+
+/***/ },
+/* 394 */
+/*!***************************************************************!*\
+  !*** ./~/font-awesome/fonts/fontawesome-webfont.woff?v=4.6.1 ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff";
+
+/***/ },
+/* 395 */
+/*!**************************************************************!*\
+  !*** ./~/font-awesome/fonts/fontawesome-webfont.ttf?v=4.6.1 ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.ttf";
+
+/***/ },
+/* 396 */
+/*!**************************************************************!*\
+  !*** ./~/font-awesome/fonts/fontawesome-webfont.svg?v=4.6.1 ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.svg";
+
+/***/ },
+/* 397 */
 /*!**************************************************!*\
   !*** ./src/components/trees-panel.component.css ***!
   \**************************************************/
@@ -67838,7 +65677,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-panel.component.css */ 419);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-panel.component.css */ 398);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -67858,7 +65697,7 @@
 	}
 
 /***/ },
-/* 419 */
+/* 398 */
 /*!*****************************************************************!*\
   !*** ./~/css-loader!./src/components/trees-panel.component.css ***!
   \*****************************************************************/
@@ -67883,56 +65722,7 @@
 	};
 
 /***/ },
-/* 420 */
-/*!************************!*\
-  !*** ./src/client.css ***!
-  \************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 421);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./client.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./client.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 421 */
-/*!***************************************!*\
-  !*** ./~/css-loader!./src/client.css ***!
-  \***************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 222)();
-	// imports
-	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic);", ""]);
-	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,700,300italic);", ""]);
-	
-	// module
-	exports.push([module.id, "@media all {\r\n  * {\r\n    margin: 0;\r\n    padding: 0;\r\n    -moz-box-sizing: border-box;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n    -webkit-tap-highlight-color: rgba(0,0,0,0);\r\n    \r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n  }\r\n  html {\r\n    width: 100%;\r\n    height: 100%;\r\n  }\r\n  body {\r\n    width: 100%;\r\n    height: 100%;\r\n    color: rgba(255, 255, 255, 1);\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: medium;\r\n    overflow: hidden;\r\n  }\r\n  a {\r\n    text-decoration: none;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n  }\r\n  #BG6p6R6pCMzH6rLXugbI3, #app {\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow: hidden;\r\n  }\r\n  .hidden {\r\n    display: none;\r\n  }\r\n  .hide {\r\n    opacity : 0;\r\n    transition: opacity 1.3s;\r\n  }\r\n  input {\r\n    -moz-user-select: all;\r\n    -ms-user-select: all;\r\n    -webkit-user-select: all;\r\n    user-select: all;\r\n  }\r\n}\r\n", ""]);
-	
-	// exports
-	exports.locals = {
-		"app": "BG6p6R6pCMzH6rLXugbI3"
-	};
-
-/***/ },
-/* 422 */
+/* 399 */
 /*!***********************************************!*\
   !*** ./src/components/tree/tree.component.js ***!
   \***********************************************/
@@ -67949,20 +65739,20 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(/*! react */ 1);
-	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
-	var AltContainer = __webpack_require__(/*! alt-container */ 267);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 389);
+	var AltContainer = __webpack_require__(/*! alt-container */ 237);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./tree.component.css */ 423);
-	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 285);
-	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 408);
-	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 425);
-	var ownership_store_1 = __webpack_require__(/*! ./../../stores/ownership.store */ 428);
-	var address_component_1 = __webpack_require__(/*! ./address.component */ 431);
-	var description_component_1 = __webpack_require__(/*! ./description.component */ 435);
-	var flag_component_1 = __webpack_require__(/*! ./flag.component */ 438);
-	var ownership_component_1 = __webpack_require__(/*! ./ownership.component */ 441);
-	var location_component_1 = __webpack_require__(/*! ./location.component */ 444);
+	var styles = __webpack_require__(/*! ./tree.component.css */ 400);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 255);
+	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 378);
+	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 402);
+	var ownership_store_1 = __webpack_require__(/*! ./../../stores/ownership.store */ 405);
+	var address_component_1 = __webpack_require__(/*! ./address.component */ 408);
+	var description_component_1 = __webpack_require__(/*! ./description.component */ 412);
+	var flag_component_1 = __webpack_require__(/*! ./flag.component */ 415);
+	var ownership_component_1 = __webpack_require__(/*! ./ownership.component */ 427);
+	var location_component_1 = __webpack_require__(/*! ./location.component */ 430);
 	var app_component_1 = __webpack_require__(/*! ./../app.component */ 219);
 	
 	var TreeComponent = function (_React$Component) {
@@ -68019,25 +65809,29 @@
 	        key: 'render',
 	        value: function render() {
 	            var self = this;
-	            var tree = tree_store_1.treeStore.getTree(self.props.treeId);
-	            var food = food_store_1.foodStore.getFood(tree.getFoodId());
-	            return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.treeinfo }, React.createElement("img", { className: styles.icon, src: Settings.uBaseName + Settings.uStaticImage + food.getIcon() }), React.createElement("div", { className: styles.name }, food.getName() + ' #' + tree.getId()), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
-	                    self.context.router.push({ pathname: Settings.uBaseName + '/' });
-	                    self.setState({ bOpen: false, editable: self.state.editable });
-	                } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement(AltContainer, { stores: {
-	                    flags: function flags(props) {
-	                        return {
-	                            store: flag_store_1.flagStore,
-	                            value: flag_store_1.flagStore.getState().flags
-	                        };
-	                    },
-	                    ownership: function ownership(props) {
-	                        return {
-	                            store: ownership_store_1.ownershipStore,
-	                            value: ownership_store_1.ownershipStore.getState().ownerships
-	                        };
-	                    }
-	                } }, React.createElement(location_component_1.default, { tree: tree, editable: self.state.editable }), React.createElement(address_component_1.default, { tree: tree, editable: self.state.editable }), React.createElement(description_component_1.default, { tree: tree, editable: self.state.editable }), React.createElement(flag_component_1.default, { tree: tree, flags: flag_store_1.flagStore.getState().flags, editable: self.state.editable }), React.createElement(ownership_component_1.default, { tree: tree, editable: self.state.editable }))));
+	            if (self.props.treeId) {
+	                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
+	                var food = food_store_1.foodStore.getFood(tree.getFoodId());
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.treeinfo }, React.createElement("img", { className: styles.icon, src: Settings.uBaseName + Settings.uStaticImage + food.getIcon() }), React.createElement("div", { className: styles.name }, food.getName() + ' #' + tree.getId()), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
+	                        self.context.router.push({ pathname: Settings.uBaseName + '/' });
+	                        self.setState({ bOpen: false, editable: self.state.editable });
+	                    } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement(AltContainer, { stores: {
+	                        flags: function flags(props) {
+	                            return {
+	                                store: flag_store_1.flagStore,
+	                                value: flag_store_1.flagStore.getState().flags
+	                            };
+	                        },
+	                        ownership: function ownership(props) {
+	                            return {
+	                                store: ownership_store_1.ownershipStore,
+	                                value: ownership_store_1.ownershipStore.getState().ownerships
+	                            };
+	                        }
+	                    } }, React.createElement(location_component_1.default, { tree: tree, editable: self.state.editable }), React.createElement(address_component_1.default, { tree: tree, editable: self.state.editable }), React.createElement(description_component_1.default, { tree: tree, editable: self.state.editable }), React.createElement(flag_component_1.default, { tree: tree, flags: flag_store_1.flagStore.getState().flags, editable: self.state.editable }), React.createElement(ownership_component_1.default, { tree: tree, editable: self.state.editable }))));
+	            } else {
+	                return React.createElement("div", { className: styles.wrapper });
+	            }
 	        }
 	    }]);
 	
@@ -68054,7 +65848,7 @@
 	//# sourceMappingURL=tree.component.js.map
 
 /***/ },
-/* 423 */
+/* 400 */
 /*!************************************************!*\
   !*** ./src/components/tree/tree.component.css ***!
   \************************************************/
@@ -68063,7 +65857,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./tree.component.css */ 424);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./tree.component.css */ 401);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -68083,7 +65877,7 @@
 	}
 
 /***/ },
-/* 424 */
+/* 401 */
 /*!***************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/tree.component.css ***!
   \***************************************************************/
@@ -68107,7 +65901,7 @@
 	};
 
 /***/ },
-/* 425 */
+/* 402 */
 /*!**********************************!*\
   !*** ./src/stores/flag.store.js ***!
   \**********************************/
@@ -68123,10 +65917,10 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var alt_1 = __webpack_require__(/*! ./../alt */ 286);
-	var flag_actions_1 = __webpack_require__(/*! ./../actions/flag.actions */ 426);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 406);
-	var flag_source_1 = __webpack_require__(/*! ./../sources/flag.source */ 427);
+	var alt_1 = __webpack_require__(/*! ./../alt */ 256);
+	var flag_actions_1 = __webpack_require__(/*! ./../actions/flag.actions */ 403);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 376);
+	var flag_source_1 = __webpack_require__(/*! ./../sources/flag.source */ 404);
 	
 	var FlagModel = function () {
 	    function FlagModel(props) {
@@ -68224,7 +66018,7 @@
 	//# sourceMappingURL=flag.store.js.map
 
 /***/ },
-/* 426 */
+/* 403 */
 /*!*************************************!*\
   !*** ./src/actions/flag.actions.js ***!
   \*************************************/
@@ -68240,9 +66034,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var alt_1 = __webpack_require__(/*! ./../alt */ 286);
-	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 405);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
+	var alt_1 = __webpack_require__(/*! ./../alt */ 256);
+	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 375);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 233);
 	
 	var FlagActions = function (_abstract_actions_1$A) {
 	    _inherits(FlagActions, _abstract_actions_1$A);
@@ -68296,7 +66090,7 @@
 	//# sourceMappingURL=flag.actions.js.map
 
 /***/ },
-/* 427 */
+/* 404 */
 /*!************************************!*\
   !*** ./src/sources/flag.source.js ***!
   \************************************/
@@ -68304,9 +66098,9 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 258);
+	var $ = __webpack_require__(/*! jquery */ 234);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var flag_actions_1 = __webpack_require__(/*! ./../actions/flag.actions */ 426);
+	var flag_actions_1 = __webpack_require__(/*! ./../actions/flag.actions */ 403);
 	var FlagSource = {
 	    fetchFlags: function fetchFlags() {
 	        return {
@@ -68343,7 +66137,7 @@
 	//# sourceMappingURL=flag.source.js.map
 
 /***/ },
-/* 428 */
+/* 405 */
 /*!***************************************!*\
   !*** ./src/stores/ownership.store.js ***!
   \***************************************/
@@ -68359,10 +66153,10 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var alt_1 = __webpack_require__(/*! ./../alt */ 286);
-	var ownership_actions_1 = __webpack_require__(/*! ./../actions/ownership.actions */ 429);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 406);
-	var ownership_source_1 = __webpack_require__(/*! ./../sources/ownership.source */ 430);
+	var alt_1 = __webpack_require__(/*! ./../alt */ 256);
+	var ownership_actions_1 = __webpack_require__(/*! ./../actions/ownership.actions */ 406);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 376);
+	var ownership_source_1 = __webpack_require__(/*! ./../sources/ownership.source */ 407);
 	
 	var OwnershipModel = function () {
 	    function OwnershipModel(props) {
@@ -68460,7 +66254,7 @@
 	//# sourceMappingURL=ownership.store.js.map
 
 /***/ },
-/* 429 */
+/* 406 */
 /*!******************************************!*\
   !*** ./src/actions/ownership.actions.js ***!
   \******************************************/
@@ -68476,9 +66270,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var alt_1 = __webpack_require__(/*! ./../alt */ 286);
-	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 405);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
+	var alt_1 = __webpack_require__(/*! ./../alt */ 256);
+	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 375);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 233);
 	
 	var OwnershipActions = function (_abstract_actions_1$A) {
 	    _inherits(OwnershipActions, _abstract_actions_1$A);
@@ -68532,7 +66326,7 @@
 	//# sourceMappingURL=ownership.actions.js.map
 
 /***/ },
-/* 430 */
+/* 407 */
 /*!*****************************************!*\
   !*** ./src/sources/ownership.source.js ***!
   \*****************************************/
@@ -68540,9 +66334,9 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 258);
+	var $ = __webpack_require__(/*! jquery */ 234);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var ownership_actions_1 = __webpack_require__(/*! ./../actions/ownership.actions */ 429);
+	var ownership_actions_1 = __webpack_require__(/*! ./../actions/ownership.actions */ 406);
 	var OwnershipSource = {
 	    fetchOwnerships: function fetchOwnerships() {
 	        return {
@@ -68579,7 +66373,7 @@
 	//# sourceMappingURL=ownership.source.js.map
 
 /***/ },
-/* 431 */
+/* 408 */
 /*!**************************************************!*\
   !*** ./src/components/tree/address.component.js ***!
   \**************************************************/
@@ -68596,13 +66390,13 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(/*! react */ 1);
-	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 389);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./address.component.css */ 432);
-	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 285);
-	var reversegeolocation_1 = __webpack_require__(/*! ./../../utils/reversegeolocation */ 434);
-	var loadingtracker_1 = __webpack_require__(/*! ./../../utils/loadingtracker */ 265);
+	var styles = __webpack_require__(/*! ./address.component.css */ 409);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 255);
+	var reversegeolocation_1 = __webpack_require__(/*! ./../../utils/reversegeolocation */ 411);
+	var loadingtracker_1 = __webpack_require__(/*! ./../../utils/loadingtracker */ 233);
 	
 	var AddressComponent = function (_React$Component) {
 	    _inherits(AddressComponent, _React$Component);
@@ -68621,6 +66415,8 @@
 	                    loadingtracker_1.addLoading();
 	                    reversegeolocation_1.reverseGeocoding(props.tree.getLocation(), function (response) {
 	                        self.setState({ address: response.road + ", " + response.county + ", " + response.state + ", " + response.country + ", " + response.postcode, editing: false });
+	                        self.props.tree.setAddress(self.state.address);
+	                        tree_store_1.treeStore.updateTree(self.props.tree);
 	                        loadingtracker_1.removeLoading();
 	                    }, function () {
 	                        loadingtracker_1.removeLoading();
@@ -68705,7 +66501,7 @@
 	//# sourceMappingURL=address.component.js.map
 
 /***/ },
-/* 432 */
+/* 409 */
 /*!***************************************************!*\
   !*** ./src/components/tree/address.component.css ***!
   \***************************************************/
@@ -68714,7 +66510,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./address.component.css */ 433);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./address.component.css */ 410);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -68734,7 +66530,7 @@
 	}
 
 /***/ },
-/* 433 */
+/* 410 */
 /*!******************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/address.component.css ***!
   \******************************************************************/
@@ -68757,7 +66553,7 @@
 	};
 
 /***/ },
-/* 434 */
+/* 411 */
 /*!*****************************************!*\
   !*** ./src/utils/reversegeolocation.js ***!
   \*****************************************/
@@ -68765,7 +66561,7 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 258);
+	var $ = __webpack_require__(/*! jquery */ 234);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
 	function reverseGeocoding(coordinate, success, error) {
 	    var jqxhr = $.getJSON(Settings.uReverseGeoCoding + "&lat=" + coordinate.lat + "&lon=" + coordinate.lng, function (data) {
@@ -68791,7 +66587,7 @@
 	//# sourceMappingURL=reversegeolocation.js.map
 
 /***/ },
-/* 435 */
+/* 412 */
 /*!******************************************************!*\
   !*** ./src/components/tree/description.component.js ***!
   \******************************************************/
@@ -68808,11 +66604,11 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(/*! react */ 1);
-	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 389);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./description.component.css */ 436);
-	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 285);
+	var styles = __webpack_require__(/*! ./description.component.css */ 413);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 255);
 	
 	var DescriptionComponent = function (_React$Component) {
 	    _inherits(DescriptionComponent, _React$Component);
@@ -68902,7 +66698,7 @@
 	//# sourceMappingURL=description.component.js.map
 
 /***/ },
-/* 436 */
+/* 413 */
 /*!*******************************************************!*\
   !*** ./src/components/tree/description.component.css ***!
   \*******************************************************/
@@ -68911,7 +66707,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./description.component.css */ 437);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./description.component.css */ 414);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -68931,7 +66727,7 @@
 	}
 
 /***/ },
-/* 437 */
+/* 414 */
 /*!**********************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/description.component.css ***!
   \**********************************************************************/
@@ -68954,7 +66750,7 @@
 	};
 
 /***/ },
-/* 438 */
+/* 415 */
 /*!***********************************************!*\
   !*** ./src/components/tree/flag.component.js ***!
   \***********************************************/
@@ -68971,14 +66767,14 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(/*! react */ 1);
-	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
-	var Select = __webpack_require__(/*! react-select */ 243);
-	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 250);
-	var $ = __webpack_require__(/*! jquery */ 258);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 389);
+	var Select = __webpack_require__(/*! react-select */ 416);
+	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 423);
+	var $ = __webpack_require__(/*! jquery */ 234);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./flag.component.css */ 439);
-	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 285);
+	var styles = __webpack_require__(/*! ./flag.component.css */ 425);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 255);
 	
 	var FlagComponent = function (_React$Component) {
 	    _inherits(FlagComponent, _React$Component);
@@ -69060,7 +66856,1582 @@
 	//# sourceMappingURL=flag.component.js.map
 
 /***/ },
-/* 439 */
+/* 416 */
+/*!**************************************!*\
+  !*** ./~/react-select/lib/Select.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 158);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _reactInputAutosize = __webpack_require__(/*! react-input-autosize */ 417);
+	
+	var _reactInputAutosize2 = _interopRequireDefault(_reactInputAutosize);
+	
+	var _classnames = __webpack_require__(/*! classnames */ 418);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var _utilsStripDiacritics = __webpack_require__(/*! ./utils/stripDiacritics */ 419);
+	
+	var _utilsStripDiacritics2 = _interopRequireDefault(_utilsStripDiacritics);
+	
+	var _Async = __webpack_require__(/*! ./Async */ 420);
+	
+	var _Async2 = _interopRequireDefault(_Async);
+	
+	var _Option = __webpack_require__(/*! ./Option */ 421);
+	
+	var _Option2 = _interopRequireDefault(_Option);
+	
+	var _Value = __webpack_require__(/*! ./Value */ 422);
+	
+	var _Value2 = _interopRequireDefault(_Value);
+	
+	function stringifyValue(value) {
+		if (typeof value === 'object') {
+			return JSON.stringify(value);
+		} else {
+			return value;
+		}
+	}
+	
+	var stringOrNode = _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.node]);
+	
+	var Select = _react2['default'].createClass({
+	
+		displayName: 'Select',
+	
+		propTypes: {
+			addLabelText: _react2['default'].PropTypes.string, // placeholder displayed when you want to add a label on a multi-value input
+			allowCreate: _react2['default'].PropTypes.bool, // whether to allow creation of new entries
+			autoBlur: _react2['default'].PropTypes.bool,
+			autofocus: _react2['default'].PropTypes.bool, // autofocus the component on mount
+			autosize: _react2['default'].PropTypes.bool, // whether to enable autosizing or not
+			backspaceRemoves: _react2['default'].PropTypes.bool, // whether backspace removes an item if there is no text input
+			className: _react2['default'].PropTypes.string, // className for the outer element
+			clearAllText: stringOrNode, // title for the "clear" control when multi: true
+			clearValueText: stringOrNode, // title for the "clear" control
+			clearable: _react2['default'].PropTypes.bool, // should it be possible to reset value
+			delimiter: _react2['default'].PropTypes.string, // delimiter to use to join multiple values for the hidden field value
+			disabled: _react2['default'].PropTypes.bool, // whether the Select is disabled or not
+			escapeClearsValue: _react2['default'].PropTypes.bool, // whether escape clears the value when the menu is closed
+			filterOption: _react2['default'].PropTypes.func, // method to filter a single option (option, filterString)
+			filterOptions: _react2['default'].PropTypes.any, // boolean to enable default filtering or function to filter the options array ([options], filterString, [values])
+			ignoreAccents: _react2['default'].PropTypes.bool, // whether to strip diacritics when filtering
+			ignoreCase: _react2['default'].PropTypes.bool, // whether to perform case-insensitive filtering
+			inputProps: _react2['default'].PropTypes.object, // custom attributes for the Input
+			isLoading: _react2['default'].PropTypes.bool, // whether the Select is loading externally or not (such as options being loaded)
+			joinValues: _react2['default'].PropTypes.bool, // joins multiple values into a single form field with the delimiter (legacy mode)
+			labelKey: _react2['default'].PropTypes.string, // path of the label value in option objects
+			matchPos: _react2['default'].PropTypes.string, // (any|start) match the start or entire string when filtering
+			matchProp: _react2['default'].PropTypes.string, // (any|label|value) which option property to filter on
+			menuBuffer: _react2['default'].PropTypes.number, // optional buffer (in px) between the bottom of the viewport and the bottom of the menu
+			menuContainerStyle: _react2['default'].PropTypes.object, // optional style to apply to the menu container
+			menuRenderer: _react2['default'].PropTypes.func, // renders a custom menu with options
+			menuStyle: _react2['default'].PropTypes.object, // optional style to apply to the menu
+			multi: _react2['default'].PropTypes.bool, // multi-value input
+			name: _react2['default'].PropTypes.string, // generates a hidden <input /> tag with this field name for html forms
+			newOptionCreator: _react2['default'].PropTypes.func, // factory to create new options when allowCreate set
+			noResultsText: stringOrNode, // placeholder displayed when there are no matching search results
+			onBlur: _react2['default'].PropTypes.func, // onBlur handler: function (event) {}
+			onBlurResetsInput: _react2['default'].PropTypes.bool, // whether input is cleared on blur
+			onChange: _react2['default'].PropTypes.func, // onChange handler: function (newValue) {}
+			onClose: _react2['default'].PropTypes.func, // fires when the menu is closed
+			onFocus: _react2['default'].PropTypes.func, // onFocus handler: function (event) {}
+			onInputChange: _react2['default'].PropTypes.func, // onInputChange handler: function (inputValue) {}
+			onMenuScrollToBottom: _react2['default'].PropTypes.func, // fires when the menu is scrolled to the bottom; can be used to paginate options
+			onOpen: _react2['default'].PropTypes.func, // fires when the menu is opened
+			onValueClick: _react2['default'].PropTypes.func, // onClick handler for value labels: function (value, event) {}
+			openAfterFocus: _react2['default'].PropTypes.bool, // boolean to enable opening dropdown when focused
+			optionClassName: _react2['default'].PropTypes.string, // additional class(es) to apply to the <Option /> elements
+			optionComponent: _react2['default'].PropTypes.func, // option component to render in dropdown
+			optionRenderer: _react2['default'].PropTypes.func, // optionRenderer: function (option) {}
+			options: _react2['default'].PropTypes.array, // array of options
+			placeholder: stringOrNode, // field placeholder, displayed when there's no value
+			required: _react2['default'].PropTypes.bool, // applies HTML5 required attribute when needed
+			scrollMenuIntoView: _react2['default'].PropTypes.bool, // boolean to enable the viewport to shift so that the full menu fully visible when engaged
+			searchable: _react2['default'].PropTypes.bool, // whether to enable searching feature or not
+			simpleValue: _react2['default'].PropTypes.bool, // pass the value to onChange as a simple value (legacy pre 1.0 mode), defaults to false
+			style: _react2['default'].PropTypes.object, // optional style to apply to the control
+			tabIndex: _react2['default'].PropTypes.string, // optional tab index of the control
+			value: _react2['default'].PropTypes.any, // initial field value
+			valueComponent: _react2['default'].PropTypes.func, // value component to render
+			valueKey: _react2['default'].PropTypes.string, // path of the label value in option objects
+			valueRenderer: _react2['default'].PropTypes.func, // valueRenderer: function (option) {}
+			wrapperStyle: _react2['default'].PropTypes.object },
+	
+		// optional style to apply to the component wrapper
+		statics: { Async: _Async2['default'] },
+	
+		getDefaultProps: function getDefaultProps() {
+			return {
+				addLabelText: 'Add "{label}"?',
+				autosize: true,
+				allowCreate: false,
+				backspaceRemoves: true,
+				clearable: true,
+				clearAllText: 'Clear all',
+				clearValueText: 'Clear value',
+				delimiter: ',',
+				disabled: false,
+				escapeClearsValue: true,
+				filterOptions: true,
+				ignoreAccents: true,
+				ignoreCase: true,
+				inputProps: {},
+				isLoading: false,
+				joinValues: false,
+				labelKey: 'label',
+				matchPos: 'any',
+				matchProp: 'any',
+				menuBuffer: 0,
+				multi: false,
+				noResultsText: 'No results found',
+				onBlurResetsInput: true,
+				openAfterFocus: false,
+				optionComponent: _Option2['default'],
+				placeholder: 'Select...',
+				required: false,
+				scrollMenuIntoView: true,
+				searchable: true,
+				simpleValue: false,
+				valueComponent: _Value2['default'],
+				valueKey: 'value'
+			};
+		},
+	
+		getInitialState: function getInitialState() {
+			return {
+				inputValue: '',
+				isFocused: false,
+				isLoading: false,
+				isOpen: false,
+				isPseudoFocused: false,
+				required: this.props.required && this.handleRequired(this.props.value, this.props.multi)
+			};
+		},
+	
+		componentDidMount: function componentDidMount() {
+			if (this.props.autofocus) {
+				this.focus();
+			}
+		},
+	
+		componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+			if (this.props.value !== nextProps.value && nextProps.required) {
+				this.setState({
+					required: this.handleRequired(nextProps.value, nextProps.multi)
+				});
+			}
+		},
+	
+		componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
+			if (nextState.isOpen !== this.state.isOpen) {
+				var handler = nextState.isOpen ? nextProps.onOpen : nextProps.onClose;
+				handler && handler();
+			}
+		},
+	
+		componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+			// focus to the selected option
+			if (this.refs.menu && this.refs.focused && this.state.isOpen && !this.hasScrolledToOption) {
+				var focusedOptionNode = _reactDom2['default'].findDOMNode(this.refs.focused);
+				var menuNode = _reactDom2['default'].findDOMNode(this.refs.menu);
+				menuNode.scrollTop = focusedOptionNode.offsetTop;
+				this.hasScrolledToOption = true;
+			} else if (!this.state.isOpen) {
+				this.hasScrolledToOption = false;
+			}
+	
+			if (prevState.inputValue !== this.state.inputValue && this.props.onInputChange) {
+				this.props.onInputChange(this.state.inputValue);
+			}
+			if (this._scrollToFocusedOptionOnUpdate && this.refs.focused && this.refs.menu) {
+				this._scrollToFocusedOptionOnUpdate = false;
+				var focusedDOM = _reactDom2['default'].findDOMNode(this.refs.focused);
+				var menuDOM = _reactDom2['default'].findDOMNode(this.refs.menu);
+				var focusedRect = focusedDOM.getBoundingClientRect();
+				var menuRect = menuDOM.getBoundingClientRect();
+				if (focusedRect.bottom > menuRect.bottom || focusedRect.top < menuRect.top) {
+					menuDOM.scrollTop = focusedDOM.offsetTop + focusedDOM.clientHeight - menuDOM.offsetHeight;
+				}
+			}
+			if (this.props.scrollMenuIntoView && this.refs.menuContainer) {
+				var menuContainerRect = this.refs.menuContainer.getBoundingClientRect();
+				if (window.innerHeight < menuContainerRect.bottom + this.props.menuBuffer) {
+					window.scrollTo(0, window.scrollY + menuContainerRect.bottom + this.props.menuBuffer - window.innerHeight);
+				}
+			}
+			if (prevProps.disabled !== this.props.disabled) {
+				this.setState({ isFocused: false }); // eslint-disable-line react/no-did-update-set-state
+			}
+		},
+	
+		focus: function focus() {
+			if (!this.refs.input) return;
+			this.refs.input.focus();
+	
+			if (this.props.openAfterFocus) {
+				this.setState({
+					isOpen: true
+				});
+			}
+		},
+	
+		blurInput: function blurInput() {
+			if (!this.refs.input) return;
+			this.refs.input.blur();
+		},
+	
+		handleTouchMove: function handleTouchMove(event) {
+			// Set a flag that the view is being dragged
+			this.dragging = true;
+		},
+	
+		handleTouchStart: function handleTouchStart(event) {
+			// Set a flag that the view is not being dragged
+			this.dragging = false;
+		},
+	
+		handleTouchEnd: function handleTouchEnd(event) {
+			// Check if the view is being dragged, In this case
+			// we don't want to fire the click event (because the user only wants to scroll)
+			if (this.dragging) return;
+	
+			// Fire the mouse events
+			this.handleMouseDown(event);
+		},
+	
+		handleTouchEndClearValue: function handleTouchEndClearValue(event) {
+			// Check if the view is being dragged, In this case
+			// we don't want to fire the click event (because the user only wants to scroll)
+			if (this.dragging) return;
+	
+			// Clear the value
+			this.clearValue(event);
+		},
+	
+		handleMouseDown: function handleMouseDown(event) {
+			// if the event was triggered by a mousedown and not the primary
+			// button, or if the component is disabled, ignore it.
+			if (this.props.disabled || event.type === 'mousedown' && event.button !== 0) {
+				return;
+			}
+	
+			// prevent default event handlers
+			event.stopPropagation();
+			event.preventDefault();
+	
+			// for the non-searchable select, toggle the menu
+			if (!this.props.searchable) {
+				this.focus();
+				return this.setState({
+					isOpen: !this.state.isOpen
+				});
+			}
+	
+			if (this.state.isFocused) {
+				// if the input is focused, ensure the menu is open
+				this.setState({
+					isOpen: true,
+					isPseudoFocused: false
+				});
+			} else {
+				// otherwise, focus the input and open the menu
+				this._openAfterFocus = true;
+				this.focus();
+			}
+		},
+	
+		handleMouseDownOnArrow: function handleMouseDownOnArrow(event) {
+			// if the event was triggered by a mousedown and not the primary
+			// button, or if the component is disabled, ignore it.
+			if (this.props.disabled || event.type === 'mousedown' && event.button !== 0) {
+				return;
+			}
+			// If the menu isn't open, let the event bubble to the main handleMouseDown
+			if (!this.state.isOpen) {
+				return;
+			}
+			// prevent default event handlers
+			event.stopPropagation();
+			event.preventDefault();
+			// close the menu
+			this.closeMenu();
+		},
+	
+		handleMouseDownOnMenu: function handleMouseDownOnMenu(event) {
+			// if the event was triggered by a mousedown and not the primary
+			// button, or if the component is disabled, ignore it.
+			if (this.props.disabled || event.type === 'mousedown' && event.button !== 0) {
+				return;
+			}
+			event.stopPropagation();
+			event.preventDefault();
+	
+			this._openAfterFocus = true;
+			this.focus();
+		},
+	
+		closeMenu: function closeMenu() {
+			this.setState({
+				isOpen: false,
+				isPseudoFocused: this.state.isFocused && !this.props.multi,
+				inputValue: ''
+			});
+			this.hasScrolledToOption = false;
+		},
+	
+		handleInputFocus: function handleInputFocus(event) {
+			var isOpen = this.state.isOpen || this._openAfterFocus;
+			if (this.props.onFocus) {
+				this.props.onFocus(event);
+			}
+			this.setState({
+				isFocused: true,
+				isOpen: isOpen
+			});
+			this._openAfterFocus = false;
+		},
+	
+		handleInputBlur: function handleInputBlur(event) {
+			if (this.refs.menu && document.activeElement.isEqualNode(this.refs.menu)) {
+				return;
+			}
+	
+			if (this.props.onBlur) {
+				this.props.onBlur(event);
+			}
+			var onBlurredState = {
+				isFocused: false,
+				isOpen: false,
+				isPseudoFocused: false
+			};
+			if (this.props.onBlurResetsInput) {
+				onBlurredState.inputValue = '';
+			}
+			this.setState(onBlurredState);
+		},
+	
+		handleInputChange: function handleInputChange(event) {
+			this.setState({
+				isOpen: true,
+				isPseudoFocused: false,
+				inputValue: event.target.value
+			});
+		},
+	
+		handleKeyDown: function handleKeyDown(event) {
+			if (this.props.disabled) return;
+			switch (event.keyCode) {
+				case 8:
+					// backspace
+					if (!this.state.inputValue && this.props.backspaceRemoves) {
+						event.preventDefault();
+						this.popValue();
+					}
+					return;
+				case 9:
+					// tab
+					if (event.shiftKey || !this.state.isOpen) {
+						return;
+					}
+					this.selectFocusedOption();
+					return;
+				case 13:
+					// enter
+					if (!this.state.isOpen) return;
+					event.stopPropagation();
+					this.selectFocusedOption();
+					break;
+				case 27:
+					// escape
+					if (this.state.isOpen) {
+						this.closeMenu();
+					} else if (this.props.clearable && this.props.escapeClearsValue) {
+						this.clearValue(event);
+					}
+					break;
+				case 38:
+					// up
+					this.focusPreviousOption();
+					break;
+				case 40:
+					// down
+					this.focusNextOption();
+					break;
+				// case 188: // ,
+				// 	if (this.props.allowCreate && this.props.multi) {
+				// 		event.preventDefault();
+				// 		event.stopPropagation();
+				// 		this.selectFocusedOption();
+				// 	} else {
+				// 		return;
+				// 	}
+				// break;
+				default:
+					return;
+			}
+			event.preventDefault();
+		},
+	
+		handleValueClick: function handleValueClick(option, event) {
+			if (!this.props.onValueClick) return;
+			this.props.onValueClick(option, event);
+		},
+	
+		handleMenuScroll: function handleMenuScroll(event) {
+			if (!this.props.onMenuScrollToBottom) return;
+			var target = event.target;
+	
+			if (target.scrollHeight > target.offsetHeight && !(target.scrollHeight - target.offsetHeight - target.scrollTop)) {
+				this.props.onMenuScrollToBottom();
+			}
+		},
+	
+		handleRequired: function handleRequired(value, multi) {
+			if (!value) return true;
+			return multi ? value.length === 0 : Object.keys(value).length === 0;
+		},
+	
+		getOptionLabel: function getOptionLabel(op) {
+			return op[this.props.labelKey];
+		},
+	
+		getValueArray: function getValueArray() {
+			var value = this.props.value;
+			if (this.props.multi) {
+				if (typeof value === 'string') value = value.split(this.props.delimiter);
+				if (!Array.isArray(value)) {
+					if (value === null || value === undefined) return [];
+					value = [value];
+				}
+				return value.map(this.expandValue).filter(function (i) {
+					return i;
+				});
+			}
+			var expandedValue = this.expandValue(value);
+			return expandedValue ? [expandedValue] : [];
+		},
+	
+		expandValue: function expandValue(value) {
+			if (typeof value !== 'string' && typeof value !== 'number') return value;
+			var _props = this.props;
+			var options = _props.options;
+			var valueKey = _props.valueKey;
+	
+			if (!options) return;
+			for (var i = 0; i < options.length; i++) {
+				if (options[i][valueKey] === value) return options[i];
+			}
+		},
+	
+		setValue: function setValue(value) {
+			var _this = this;
+	
+			if (this.props.autoBlur) {
+				this.blurInput();
+			}
+			if (!this.props.onChange) return;
+			if (this.props.required) {
+				var required = this.handleRequired(value, this.props.multi);
+				this.setState({ required: required });
+			}
+			if (this.props.simpleValue && value) {
+				value = this.props.multi ? value.map(function (i) {
+					return i[_this.props.valueKey];
+				}).join(this.props.delimiter) : value[this.props.valueKey];
+			}
+			this.props.onChange(value);
+		},
+	
+		selectValue: function selectValue(value) {
+			this.hasScrolledToOption = false;
+			if (this.props.multi) {
+				this.addValue(value);
+				this.setState({
+					inputValue: ''
+				});
+			} else {
+				this.setValue(value);
+				this.setState({
+					isOpen: false,
+					inputValue: '',
+					isPseudoFocused: this.state.isFocused
+				});
+			}
+		},
+	
+		addValue: function addValue(value) {
+			var valueArray = this.getValueArray();
+			this.setValue(valueArray.concat(value));
+		},
+	
+		popValue: function popValue() {
+			var valueArray = this.getValueArray();
+			if (!valueArray.length) return;
+			if (valueArray[valueArray.length - 1].clearableValue === false) return;
+			this.setValue(valueArray.slice(0, valueArray.length - 1));
+		},
+	
+		removeValue: function removeValue(value) {
+			var valueArray = this.getValueArray();
+			this.setValue(valueArray.filter(function (i) {
+				return i !== value;
+			}));
+			this.focus();
+		},
+	
+		clearValue: function clearValue(event) {
+			// if the event was triggered by a mousedown and not the primary
+			// button, ignore it.
+			if (event && event.type === 'mousedown' && event.button !== 0) {
+				return;
+			}
+			event.stopPropagation();
+			event.preventDefault();
+			this.setValue(null);
+			this.setState({
+				isOpen: false,
+				inputValue: ''
+			}, this.focus);
+		},
+	
+		focusOption: function focusOption(option) {
+			this.setState({
+				focusedOption: option
+			});
+		},
+	
+		focusNextOption: function focusNextOption() {
+			this.focusAdjacentOption('next');
+		},
+	
+		focusPreviousOption: function focusPreviousOption() {
+			this.focusAdjacentOption('previous');
+		},
+	
+		focusAdjacentOption: function focusAdjacentOption(dir) {
+			var options = this._visibleOptions.filter(function (i) {
+				return !i.disabled;
+			});
+			this._scrollToFocusedOptionOnUpdate = true;
+			if (!this.state.isOpen) {
+				this.setState({
+					isOpen: true,
+					inputValue: '',
+					focusedOption: this._focusedOption || options[dir === 'next' ? 0 : options.length - 1]
+				});
+				return;
+			}
+			if (!options.length) return;
+			var focusedIndex = -1;
+			for (var i = 0; i < options.length; i++) {
+				if (this._focusedOption === options[i]) {
+					focusedIndex = i;
+					break;
+				}
+			}
+			var focusedOption = options[0];
+			if (dir === 'next' && focusedIndex > -1 && focusedIndex < options.length - 1) {
+				focusedOption = options[focusedIndex + 1];
+			} else if (dir === 'previous') {
+				if (focusedIndex > 0) {
+					focusedOption = options[focusedIndex - 1];
+				} else {
+					focusedOption = options[options.length - 1];
+				}
+			}
+			this.setState({
+				focusedOption: focusedOption
+			});
+		},
+	
+		selectFocusedOption: function selectFocusedOption() {
+			// if (this.props.allowCreate && !this.state.focusedOption) {
+			// 	return this.selectValue(this.state.inputValue);
+			// }
+			if (this._focusedOption) {
+				return this.selectValue(this._focusedOption);
+			}
+		},
+	
+		renderLoading: function renderLoading() {
+			if (!this.props.isLoading) return;
+			return _react2['default'].createElement(
+				'span',
+				{ className: 'Select-loading-zone', 'aria-hidden': 'true' },
+				_react2['default'].createElement('span', { className: 'Select-loading' })
+			);
+		},
+	
+		renderValue: function renderValue(valueArray, isOpen) {
+			var _this2 = this;
+	
+			var renderLabel = this.props.valueRenderer || this.getOptionLabel;
+			var ValueComponent = this.props.valueComponent;
+			if (!valueArray.length) {
+				return !this.state.inputValue ? _react2['default'].createElement(
+					'div',
+					{ className: 'Select-placeholder' },
+					this.props.placeholder
+				) : null;
+			}
+			var onClick = this.props.onValueClick ? this.handleValueClick : null;
+			if (this.props.multi) {
+				return valueArray.map(function (value, i) {
+					return _react2['default'].createElement(
+						ValueComponent,
+						{
+							disabled: _this2.props.disabled || value.clearableValue === false,
+							key: 'value-' + i + '-' + value[_this2.props.valueKey],
+							onClick: onClick,
+							onRemove: _this2.removeValue,
+							value: value
+						},
+						renderLabel(value)
+					);
+				});
+			} else if (!this.state.inputValue) {
+				if (isOpen) onClick = null;
+				return _react2['default'].createElement(
+					ValueComponent,
+					{
+						disabled: this.props.disabled,
+						onClick: onClick,
+						value: valueArray[0]
+					},
+					renderLabel(valueArray[0])
+				);
+			}
+		},
+	
+		renderInput: function renderInput(valueArray) {
+			var className = (0, _classnames2['default'])('Select-input', this.props.inputProps.className);
+			if (this.props.disabled || !this.props.searchable) {
+				return _react2['default'].createElement('div', _extends({}, this.props.inputProps, {
+					className: className,
+					tabIndex: this.props.tabIndex || 0,
+					onBlur: this.handleInputBlur,
+					onFocus: this.handleInputFocus,
+					ref: 'input',
+					style: { border: 0, width: 1, display: 'inline-block' } }));
+			}
+			if (this.props.autosize) {
+				return _react2['default'].createElement(_reactInputAutosize2['default'], _extends({}, this.props.inputProps, {
+					className: className,
+					tabIndex: this.props.tabIndex,
+					onBlur: this.handleInputBlur,
+					onChange: this.handleInputChange,
+					onFocus: this.handleInputFocus,
+					minWidth: '5',
+					ref: 'input',
+					required: this.state.required,
+					value: this.state.inputValue
+				}));
+			}
+			return _react2['default'].createElement(
+				'div',
+				{ className: className },
+				_react2['default'].createElement('input', _extends({}, this.props.inputProps, {
+					tabIndex: this.props.tabIndex,
+					onBlur: this.handleInputBlur,
+					onChange: this.handleInputChange,
+					onFocus: this.handleInputFocus,
+					ref: 'input',
+					required: this.state.required,
+					value: this.state.inputValue
+				}))
+			);
+		},
+	
+		renderClear: function renderClear() {
+			if (!this.props.clearable || !this.props.value || this.props.multi && !this.props.value.length || this.props.disabled || this.props.isLoading) return;
+			return _react2['default'].createElement(
+				'span',
+				{ className: 'Select-clear-zone', title: this.props.multi ? this.props.clearAllText : this.props.clearValueText,
+					'aria-label': this.props.multi ? this.props.clearAllText : this.props.clearValueText,
+					onMouseDown: this.clearValue,
+					onTouchStart: this.handleTouchStart,
+					onTouchMove: this.handleTouchMove,
+					onTouchEnd: this.handleTouchEndClearValue },
+				_react2['default'].createElement('span', { className: 'Select-clear', dangerouslySetInnerHTML: { __html: '&times;' } })
+			);
+		},
+	
+		renderArrow: function renderArrow() {
+			return _react2['default'].createElement(
+				'span',
+				{ className: 'Select-arrow-zone', onMouseDown: this.handleMouseDownOnArrow },
+				_react2['default'].createElement('span', { className: 'Select-arrow', onMouseDown: this.handleMouseDownOnArrow })
+			);
+		},
+	
+		filterOptions: function filterOptions(excludeOptions) {
+			var _this3 = this;
+	
+			var filterValue = this.state.inputValue;
+			var options = this.props.options || [];
+			if (typeof this.props.filterOptions === 'function') {
+				return this.props.filterOptions.call(this, options, filterValue, excludeOptions);
+			} else if (this.props.filterOptions) {
+				if (this.props.ignoreAccents) {
+					filterValue = (0, _utilsStripDiacritics2['default'])(filterValue);
+				}
+				if (this.props.ignoreCase) {
+					filterValue = filterValue.toLowerCase();
+				}
+				if (excludeOptions) excludeOptions = excludeOptions.map(function (i) {
+					return i[_this3.props.valueKey];
+				});
+				return options.filter(function (option) {
+					if (excludeOptions && excludeOptions.indexOf(option[_this3.props.valueKey]) > -1) return false;
+					if (_this3.props.filterOption) return _this3.props.filterOption.call(_this3, option, filterValue);
+					if (!filterValue) return true;
+					var valueTest = String(option[_this3.props.valueKey]);
+					var labelTest = String(option[_this3.props.labelKey]);
+					if (_this3.props.ignoreAccents) {
+						if (_this3.props.matchProp !== 'label') valueTest = (0, _utilsStripDiacritics2['default'])(valueTest);
+						if (_this3.props.matchProp !== 'value') labelTest = (0, _utilsStripDiacritics2['default'])(labelTest);
+					}
+					if (_this3.props.ignoreCase) {
+						if (_this3.props.matchProp !== 'label') valueTest = valueTest.toLowerCase();
+						if (_this3.props.matchProp !== 'value') labelTest = labelTest.toLowerCase();
+					}
+					return _this3.props.matchPos === 'start' ? _this3.props.matchProp !== 'label' && valueTest.substr(0, filterValue.length) === filterValue || _this3.props.matchProp !== 'value' && labelTest.substr(0, filterValue.length) === filterValue : _this3.props.matchProp !== 'label' && valueTest.indexOf(filterValue) >= 0 || _this3.props.matchProp !== 'value' && labelTest.indexOf(filterValue) >= 0;
+				});
+			} else {
+				return options;
+			}
+		},
+	
+		renderMenu: function renderMenu(options, valueArray, focusedOption) {
+			var _this4 = this;
+	
+			if (options && options.length) {
+				if (this.props.menuRenderer) {
+					return this.props.menuRenderer({
+						focusedOption: focusedOption,
+						focusOption: this.focusOption,
+						labelKey: this.props.labelKey,
+						options: options,
+						selectValue: this.selectValue,
+						valueArray: valueArray
+					});
+				} else {
+					var _ret = (function () {
+						var Option = _this4.props.optionComponent;
+						var renderLabel = _this4.props.optionRenderer || _this4.getOptionLabel;
+	
+						return {
+							v: options.map(function (option, i) {
+								var isSelected = valueArray && valueArray.indexOf(option) > -1;
+								var isFocused = option === focusedOption;
+								var optionRef = isFocused ? 'focused' : null;
+								var optionClass = (0, _classnames2['default'])(_this4.props.optionClassName, {
+									'Select-option': true,
+									'is-selected': isSelected,
+									'is-focused': isFocused,
+									'is-disabled': option.disabled
+								});
+	
+								return _react2['default'].createElement(
+									Option,
+									{
+										className: optionClass,
+										isDisabled: option.disabled,
+										isFocused: isFocused,
+										key: 'option-' + i + '-' + option[_this4.props.valueKey],
+										onSelect: _this4.selectValue,
+										onFocus: _this4.focusOption,
+										option: option,
+										isSelected: isSelected,
+										ref: optionRef
+									},
+									renderLabel(option)
+								);
+							})
+						};
+					})();
+	
+					if (typeof _ret === 'object') return _ret.v;
+				}
+			} else if (this.props.noResultsText) {
+				return _react2['default'].createElement(
+					'div',
+					{ className: 'Select-noresults' },
+					this.props.noResultsText
+				);
+			} else {
+				return null;
+			}
+		},
+	
+		renderHiddenField: function renderHiddenField(valueArray) {
+			var _this5 = this;
+	
+			if (!this.props.name) return;
+			if (this.props.joinValues) {
+				var value = valueArray.map(function (i) {
+					return stringifyValue(i[_this5.props.valueKey]);
+				}).join(this.props.delimiter);
+				return _react2['default'].createElement('input', {
+					type: 'hidden',
+					ref: 'value',
+					name: this.props.name,
+					value: value,
+					disabled: this.props.disabled });
+			}
+			return valueArray.map(function (item, index) {
+				return _react2['default'].createElement('input', { key: 'hidden.' + index,
+					type: 'hidden',
+					ref: 'value' + index,
+					name: _this5.props.name,
+					value: stringifyValue(item[_this5.props.valueKey]),
+					disabled: _this5.props.disabled });
+			});
+		},
+	
+		getFocusableOption: function getFocusableOption(selectedOption) {
+			var options = this._visibleOptions;
+			if (!options.length) return;
+			var focusedOption = this.state.focusedOption || selectedOption;
+			if (focusedOption && options.indexOf(focusedOption) > -1) return focusedOption;
+			for (var i = 0; i < options.length; i++) {
+				if (!options[i].disabled) return options[i];
+			}
+		},
+	
+		render: function render() {
+			var valueArray = this.getValueArray();
+			var options = this._visibleOptions = this.filterOptions(this.props.multi ? valueArray : null);
+			var isOpen = this.state.isOpen;
+			if (this.props.multi && !options.length && valueArray.length && !this.state.inputValue) isOpen = false;
+			var focusedOption = this._focusedOption = this.getFocusableOption(valueArray[0]);
+			var className = (0, _classnames2['default'])('Select', this.props.className, {
+				'Select--multi': this.props.multi,
+				'is-disabled': this.props.disabled,
+				'is-focused': this.state.isFocused,
+				'is-loading': this.props.isLoading,
+				'is-open': isOpen,
+				'is-pseudo-focused': this.state.isPseudoFocused,
+				'is-searchable': this.props.searchable,
+				'has-value': valueArray.length
+			});
+			return _react2['default'].createElement(
+				'div',
+				{ ref: 'wrapper', className: className, style: this.props.wrapperStyle },
+				this.renderHiddenField(valueArray),
+				_react2['default'].createElement(
+					'div',
+					{ ref: 'control',
+						className: 'Select-control',
+						style: this.props.style,
+						onKeyDown: this.handleKeyDown,
+						onMouseDown: this.handleMouseDown,
+						onTouchEnd: this.handleTouchEnd,
+						onTouchStart: this.handleTouchStart,
+						onTouchMove: this.handleTouchMove },
+					this.renderValue(valueArray, isOpen),
+					this.renderInput(valueArray),
+					this.renderLoading(),
+					this.renderClear(),
+					this.renderArrow()
+				),
+				isOpen ? _react2['default'].createElement(
+					'div',
+					{ ref: 'menuContainer', className: 'Select-menu-outer', style: this.props.menuContainerStyle },
+					_react2['default'].createElement(
+						'div',
+						{ ref: 'menu', className: 'Select-menu',
+							style: this.props.menuStyle,
+							onScroll: this.handleMenuScroll,
+							onMouseDown: this.handleMouseDownOnMenu },
+						this.renderMenu(options, !this.props.multi ? valueArray : null, focusedOption)
+					)
+				) : null
+			);
+		}
+	
+	});
+	
+	exports['default'] = Select;
+	module.exports = exports['default'];
+
+/***/ },
+/* 417 */
+/*!*****************************************************!*\
+  !*** ./~/react-input-autosize/lib/AutosizeInput.js ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var React = __webpack_require__(/*! react */ 1);
+	
+	var sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'pre' };
+	
+	var nextFrame = typeof window !== 'undefined' ? (function () {
+		return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
+			window.setTimeout(callback, 1000 / 60);
+		};
+	})().bind(window) : undefined; // If window is undefined, then we can't define a nextFrame function
+	
+	var AutosizeInput = React.createClass({
+		displayName: 'AutosizeInput',
+	
+		propTypes: {
+			value: React.PropTypes.any, // field value
+			defaultValue: React.PropTypes.any, // default field value
+			onChange: React.PropTypes.func, // onChange handler: function(newValue) {}
+			style: React.PropTypes.object, // css styles for the outer element
+			className: React.PropTypes.string, // className for the outer element
+			minWidth: React.PropTypes.oneOfType([// minimum width for input element
+			React.PropTypes.number, React.PropTypes.string]),
+			inputStyle: React.PropTypes.object, // css styles for the input element
+			inputClassName: React.PropTypes.string // className for the input element
+		},
+		getDefaultProps: function getDefaultProps() {
+			return {
+				minWidth: 1
+			};
+		},
+		getInitialState: function getInitialState() {
+			return {
+				inputWidth: this.props.minWidth
+			};
+		},
+		componentDidMount: function componentDidMount() {
+			this.copyInputStyles();
+			this.updateInputWidth();
+		},
+		componentDidUpdate: function componentDidUpdate() {
+			this.updateInputWidth();
+		},
+		copyInputStyles: function copyInputStyles() {
+			if (!this.isMounted() || !window.getComputedStyle) {
+				return;
+			}
+			var inputStyle = window.getComputedStyle(this.refs.input);
+			if (!inputStyle) {
+				return;
+			}
+			var widthNode = this.refs.sizer;
+			widthNode.style.fontSize = inputStyle.fontSize;
+			widthNode.style.fontFamily = inputStyle.fontFamily;
+			widthNode.style.fontWeight = inputStyle.fontWeight;
+			widthNode.style.fontStyle = inputStyle.fontStyle;
+			widthNode.style.letterSpacing = inputStyle.letterSpacing;
+			if (this.props.placeholder) {
+				var placeholderNode = this.refs.placeholderSizer;
+				placeholderNode.style.fontSize = inputStyle.fontSize;
+				placeholderNode.style.fontFamily = inputStyle.fontFamily;
+				placeholderNode.style.fontWeight = inputStyle.fontWeight;
+				placeholderNode.style.fontStyle = inputStyle.fontStyle;
+				placeholderNode.style.letterSpacing = inputStyle.letterSpacing;
+			}
+		},
+		updateInputWidth: function updateInputWidth() {
+			if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
+				return;
+			}
+			var newInputWidth = undefined;
+			if (this.props.placeholder) {
+				newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
+			} else {
+				newInputWidth = this.refs.sizer.scrollWidth + 2;
+			}
+			if (newInputWidth < this.props.minWidth) {
+				newInputWidth = this.props.minWidth;
+			}
+			if (newInputWidth !== this.state.inputWidth) {
+				this.setState({
+					inputWidth: newInputWidth
+				});
+			}
+		},
+		getInput: function getInput() {
+			return this.refs.input;
+		},
+		focus: function focus() {
+			this.refs.input.focus();
+		},
+		blur: function blur() {
+			this.refs.input.blur();
+		},
+		select: function select() {
+			this.refs.input.select();
+		},
+		render: function render() {
+			var sizerValue = this.props.defaultValue || this.props.value || '';
+			var wrapperStyle = this.props.style || {};
+			if (!wrapperStyle.display) wrapperStyle.display = 'inline-block';
+			var inputStyle = _extends({}, this.props.inputStyle);
+			inputStyle.width = this.state.inputWidth + 'px';
+			inputStyle.boxSizing = 'content-box';
+			var placeholder = this.props.placeholder ? React.createElement(
+				'div',
+				{ ref: 'placeholderSizer', style: sizerStyle },
+				this.props.placeholder
+			) : null;
+			return React.createElement(
+				'div',
+				{ className: this.props.className, style: wrapperStyle },
+				React.createElement('input', _extends({}, this.props, { ref: 'input', className: this.props.inputClassName, style: inputStyle })),
+				React.createElement(
+					'div',
+					{ ref: 'sizer', style: sizerStyle },
+					sizerValue
+				),
+				placeholder
+			);
+		}
+	});
+	
+	module.exports = AutosizeInput;
+
+/***/ },
+/* 418 */
+/*!*******************************!*\
+  !*** ./~/classnames/index.js ***!
+  \*******************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+	
+	(function () {
+		'use strict';
+	
+		var hasOwn = {}.hasOwnProperty;
+	
+		function classNames () {
+			var classes = [];
+	
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+	
+				var argType = typeof arg;
+	
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+	
+			return classes.join(' ');
+		}
+	
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 419 */
+/*!*****************************************************!*\
+  !*** ./~/react-select/lib/utils/stripDiacritics.js ***!
+  \*****************************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	var map = [{ 'base': 'A', 'letters': /[\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F]/g }, { 'base': 'AA', 'letters': /[\uA732]/g }, { 'base': 'AE', 'letters': /[\u00C6\u01FC\u01E2]/g }, { 'base': 'AO', 'letters': /[\uA734]/g }, { 'base': 'AU', 'letters': /[\uA736]/g }, { 'base': 'AV', 'letters': /[\uA738\uA73A]/g }, { 'base': 'AY', 'letters': /[\uA73C]/g }, { 'base': 'B', 'letters': /[\u0042\u24B7\uFF22\u1E02\u1E04\u1E06\u0243\u0182\u0181]/g }, { 'base': 'C', 'letters': /[\u0043\u24B8\uFF23\u0106\u0108\u010A\u010C\u00C7\u1E08\u0187\u023B\uA73E]/g }, { 'base': 'D', 'letters': /[\u0044\u24B9\uFF24\u1E0A\u010E\u1E0C\u1E10\u1E12\u1E0E\u0110\u018B\u018A\u0189\uA779]/g }, { 'base': 'DZ', 'letters': /[\u01F1\u01C4]/g }, { 'base': 'Dz', 'letters': /[\u01F2\u01C5]/g }, { 'base': 'E', 'letters': /[\u0045\u24BA\uFF25\u00C8\u00C9\u00CA\u1EC0\u1EBE\u1EC4\u1EC2\u1EBC\u0112\u1E14\u1E16\u0114\u0116\u00CB\u1EBA\u011A\u0204\u0206\u1EB8\u1EC6\u0228\u1E1C\u0118\u1E18\u1E1A\u0190\u018E]/g }, { 'base': 'F', 'letters': /[\u0046\u24BB\uFF26\u1E1E\u0191\uA77B]/g }, { 'base': 'G', 'letters': /[\u0047\u24BC\uFF27\u01F4\u011C\u1E20\u011E\u0120\u01E6\u0122\u01E4\u0193\uA7A0\uA77D\uA77E]/g }, { 'base': 'H', 'letters': /[\u0048\u24BD\uFF28\u0124\u1E22\u1E26\u021E\u1E24\u1E28\u1E2A\u0126\u2C67\u2C75\uA78D]/g }, { 'base': 'I', 'letters': /[\u0049\u24BE\uFF29\u00CC\u00CD\u00CE\u0128\u012A\u012C\u0130\u00CF\u1E2E\u1EC8\u01CF\u0208\u020A\u1ECA\u012E\u1E2C\u0197]/g }, { 'base': 'J', 'letters': /[\u004A\u24BF\uFF2A\u0134\u0248]/g }, { 'base': 'K', 'letters': /[\u004B\u24C0\uFF2B\u1E30\u01E8\u1E32\u0136\u1E34\u0198\u2C69\uA740\uA742\uA744\uA7A2]/g }, { 'base': 'L', 'letters': /[\u004C\u24C1\uFF2C\u013F\u0139\u013D\u1E36\u1E38\u013B\u1E3C\u1E3A\u0141\u023D\u2C62\u2C60\uA748\uA746\uA780]/g }, { 'base': 'LJ', 'letters': /[\u01C7]/g }, { 'base': 'Lj', 'letters': /[\u01C8]/g }, { 'base': 'M', 'letters': /[\u004D\u24C2\uFF2D\u1E3E\u1E40\u1E42\u2C6E\u019C]/g }, { 'base': 'N', 'letters': /[\u004E\u24C3\uFF2E\u01F8\u0143\u00D1\u1E44\u0147\u1E46\u0145\u1E4A\u1E48\u0220\u019D\uA790\uA7A4]/g }, { 'base': 'NJ', 'letters': /[\u01CA]/g }, { 'base': 'Nj', 'letters': /[\u01CB]/g }, { 'base': 'O', 'letters': /[\u004F\u24C4\uFF2F\u00D2\u00D3\u00D4\u1ED2\u1ED0\u1ED6\u1ED4\u00D5\u1E4C\u022C\u1E4E\u014C\u1E50\u1E52\u014E\u022E\u0230\u00D6\u022A\u1ECE\u0150\u01D1\u020C\u020E\u01A0\u1EDC\u1EDA\u1EE0\u1EDE\u1EE2\u1ECC\u1ED8\u01EA\u01EC\u00D8\u01FE\u0186\u019F\uA74A\uA74C]/g }, { 'base': 'OI', 'letters': /[\u01A2]/g }, { 'base': 'OO', 'letters': /[\uA74E]/g }, { 'base': 'OU', 'letters': /[\u0222]/g }, { 'base': 'P', 'letters': /[\u0050\u24C5\uFF30\u1E54\u1E56\u01A4\u2C63\uA750\uA752\uA754]/g }, { 'base': 'Q', 'letters': /[\u0051\u24C6\uFF31\uA756\uA758\u024A]/g }, { 'base': 'R', 'letters': /[\u0052\u24C7\uFF32\u0154\u1E58\u0158\u0210\u0212\u1E5A\u1E5C\u0156\u1E5E\u024C\u2C64\uA75A\uA7A6\uA782]/g }, { 'base': 'S', 'letters': /[\u0053\u24C8\uFF33\u1E9E\u015A\u1E64\u015C\u1E60\u0160\u1E66\u1E62\u1E68\u0218\u015E\u2C7E\uA7A8\uA784]/g }, { 'base': 'T', 'letters': /[\u0054\u24C9\uFF34\u1E6A\u0164\u1E6C\u021A\u0162\u1E70\u1E6E\u0166\u01AC\u01AE\u023E\uA786]/g }, { 'base': 'TZ', 'letters': /[\uA728]/g }, { 'base': 'U', 'letters': /[\u0055\u24CA\uFF35\u00D9\u00DA\u00DB\u0168\u1E78\u016A\u1E7A\u016C\u00DC\u01DB\u01D7\u01D5\u01D9\u1EE6\u016E\u0170\u01D3\u0214\u0216\u01AF\u1EEA\u1EE8\u1EEE\u1EEC\u1EF0\u1EE4\u1E72\u0172\u1E76\u1E74\u0244]/g }, { 'base': 'V', 'letters': /[\u0056\u24CB\uFF36\u1E7C\u1E7E\u01B2\uA75E\u0245]/g }, { 'base': 'VY', 'letters': /[\uA760]/g }, { 'base': 'W', 'letters': /[\u0057\u24CC\uFF37\u1E80\u1E82\u0174\u1E86\u1E84\u1E88\u2C72]/g }, { 'base': 'X', 'letters': /[\u0058\u24CD\uFF38\u1E8A\u1E8C]/g }, { 'base': 'Y', 'letters': /[\u0059\u24CE\uFF39\u1EF2\u00DD\u0176\u1EF8\u0232\u1E8E\u0178\u1EF6\u1EF4\u01B3\u024E\u1EFE]/g }, { 'base': 'Z', 'letters': /[\u005A\u24CF\uFF3A\u0179\u1E90\u017B\u017D\u1E92\u1E94\u01B5\u0224\u2C7F\u2C6B\uA762]/g }, { 'base': 'a', 'letters': /[\u0061\u24D0\uFF41\u1E9A\u00E0\u00E1\u00E2\u1EA7\u1EA5\u1EAB\u1EA9\u00E3\u0101\u0103\u1EB1\u1EAF\u1EB5\u1EB3\u0227\u01E1\u00E4\u01DF\u1EA3\u00E5\u01FB\u01CE\u0201\u0203\u1EA1\u1EAD\u1EB7\u1E01\u0105\u2C65\u0250]/g }, { 'base': 'aa', 'letters': /[\uA733]/g }, { 'base': 'ae', 'letters': /[\u00E6\u01FD\u01E3]/g }, { 'base': 'ao', 'letters': /[\uA735]/g }, { 'base': 'au', 'letters': /[\uA737]/g }, { 'base': 'av', 'letters': /[\uA739\uA73B]/g }, { 'base': 'ay', 'letters': /[\uA73D]/g }, { 'base': 'b', 'letters': /[\u0062\u24D1\uFF42\u1E03\u1E05\u1E07\u0180\u0183\u0253]/g }, { 'base': 'c', 'letters': /[\u0063\u24D2\uFF43\u0107\u0109\u010B\u010D\u00E7\u1E09\u0188\u023C\uA73F\u2184]/g }, { 'base': 'd', 'letters': /[\u0064\u24D3\uFF44\u1E0B\u010F\u1E0D\u1E11\u1E13\u1E0F\u0111\u018C\u0256\u0257\uA77A]/g }, { 'base': 'dz', 'letters': /[\u01F3\u01C6]/g }, { 'base': 'e', 'letters': /[\u0065\u24D4\uFF45\u00E8\u00E9\u00EA\u1EC1\u1EBF\u1EC5\u1EC3\u1EBD\u0113\u1E15\u1E17\u0115\u0117\u00EB\u1EBB\u011B\u0205\u0207\u1EB9\u1EC7\u0229\u1E1D\u0119\u1E19\u1E1B\u0247\u025B\u01DD]/g }, { 'base': 'f', 'letters': /[\u0066\u24D5\uFF46\u1E1F\u0192\uA77C]/g }, { 'base': 'g', 'letters': /[\u0067\u24D6\uFF47\u01F5\u011D\u1E21\u011F\u0121\u01E7\u0123\u01E5\u0260\uA7A1\u1D79\uA77F]/g }, { 'base': 'h', 'letters': /[\u0068\u24D7\uFF48\u0125\u1E23\u1E27\u021F\u1E25\u1E29\u1E2B\u1E96\u0127\u2C68\u2C76\u0265]/g }, { 'base': 'hv', 'letters': /[\u0195]/g }, { 'base': 'i', 'letters': /[\u0069\u24D8\uFF49\u00EC\u00ED\u00EE\u0129\u012B\u012D\u00EF\u1E2F\u1EC9\u01D0\u0209\u020B\u1ECB\u012F\u1E2D\u0268\u0131]/g }, { 'base': 'j', 'letters': /[\u006A\u24D9\uFF4A\u0135\u01F0\u0249]/g }, { 'base': 'k', 'letters': /[\u006B\u24DA\uFF4B\u1E31\u01E9\u1E33\u0137\u1E35\u0199\u2C6A\uA741\uA743\uA745\uA7A3]/g }, { 'base': 'l', 'letters': /[\u006C\u24DB\uFF4C\u0140\u013A\u013E\u1E37\u1E39\u013C\u1E3D\u1E3B\u017F\u0142\u019A\u026B\u2C61\uA749\uA781\uA747]/g }, { 'base': 'lj', 'letters': /[\u01C9]/g }, { 'base': 'm', 'letters': /[\u006D\u24DC\uFF4D\u1E3F\u1E41\u1E43\u0271\u026F]/g }, { 'base': 'n', 'letters': /[\u006E\u24DD\uFF4E\u01F9\u0144\u00F1\u1E45\u0148\u1E47\u0146\u1E4B\u1E49\u019E\u0272\u0149\uA791\uA7A5]/g }, { 'base': 'nj', 'letters': /[\u01CC]/g }, { 'base': 'o', 'letters': /[\u006F\u24DE\uFF4F\u00F2\u00F3\u00F4\u1ED3\u1ED1\u1ED7\u1ED5\u00F5\u1E4D\u022D\u1E4F\u014D\u1E51\u1E53\u014F\u022F\u0231\u00F6\u022B\u1ECF\u0151\u01D2\u020D\u020F\u01A1\u1EDD\u1EDB\u1EE1\u1EDF\u1EE3\u1ECD\u1ED9\u01EB\u01ED\u00F8\u01FF\u0254\uA74B\uA74D\u0275]/g }, { 'base': 'oi', 'letters': /[\u01A3]/g }, { 'base': 'ou', 'letters': /[\u0223]/g }, { 'base': 'oo', 'letters': /[\uA74F]/g }, { 'base': 'p', 'letters': /[\u0070\u24DF\uFF50\u1E55\u1E57\u01A5\u1D7D\uA751\uA753\uA755]/g }, { 'base': 'q', 'letters': /[\u0071\u24E0\uFF51\u024B\uA757\uA759]/g }, { 'base': 'r', 'letters': /[\u0072\u24E1\uFF52\u0155\u1E59\u0159\u0211\u0213\u1E5B\u1E5D\u0157\u1E5F\u024D\u027D\uA75B\uA7A7\uA783]/g }, { 'base': 's', 'letters': /[\u0073\u24E2\uFF53\u00DF\u015B\u1E65\u015D\u1E61\u0161\u1E67\u1E63\u1E69\u0219\u015F\u023F\uA7A9\uA785\u1E9B]/g }, { 'base': 't', 'letters': /[\u0074\u24E3\uFF54\u1E6B\u1E97\u0165\u1E6D\u021B\u0163\u1E71\u1E6F\u0167\u01AD\u0288\u2C66\uA787]/g }, { 'base': 'tz', 'letters': /[\uA729]/g }, { 'base': 'u', 'letters': /[\u0075\u24E4\uFF55\u00F9\u00FA\u00FB\u0169\u1E79\u016B\u1E7B\u016D\u00FC\u01DC\u01D8\u01D6\u01DA\u1EE7\u016F\u0171\u01D4\u0215\u0217\u01B0\u1EEB\u1EE9\u1EEF\u1EED\u1EF1\u1EE5\u1E73\u0173\u1E77\u1E75\u0289]/g }, { 'base': 'v', 'letters': /[\u0076\u24E5\uFF56\u1E7D\u1E7F\u028B\uA75F\u028C]/g }, { 'base': 'vy', 'letters': /[\uA761]/g }, { 'base': 'w', 'letters': /[\u0077\u24E6\uFF57\u1E81\u1E83\u0175\u1E87\u1E85\u1E98\u1E89\u2C73]/g }, { 'base': 'x', 'letters': /[\u0078\u24E7\uFF58\u1E8B\u1E8D]/g }, { 'base': 'y', 'letters': /[\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF]/g }, { 'base': 'z', 'letters': /[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g }];
+	
+	module.exports = function stripDiacritics(str) {
+		for (var i = 0; i < map.length; i++) {
+			str = str.replace(map[i].letters, map[i].base);
+		}
+		return str;
+	};
+
+/***/ },
+/* 420 */
+/*!*************************************!*\
+  !*** ./~/react-select/lib/Async.js ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Select = __webpack_require__(/*! ./Select */ 416);
+	
+	var _Select2 = _interopRequireDefault(_Select);
+	
+	var _utilsStripDiacritics = __webpack_require__(/*! ./utils/stripDiacritics */ 419);
+	
+	var _utilsStripDiacritics2 = _interopRequireDefault(_utilsStripDiacritics);
+	
+	var requestId = 0;
+	
+	function initCache(cache) {
+		if (cache && typeof cache !== 'object') {
+			cache = {};
+		}
+		return cache ? cache : null;
+	}
+	
+	function updateCache(cache, input, data) {
+		if (!cache) return;
+		cache[input] = data;
+	}
+	
+	function getFromCache(cache, input) {
+		if (!cache) return;
+		for (var i = input.length; i >= 0; --i) {
+			var cacheKey = input.slice(0, i);
+			if (cache[cacheKey] && (input === cacheKey || cache[cacheKey].complete)) {
+				return cache[cacheKey];
+			}
+		}
+	}
+	
+	function thenPromise(promise, callback) {
+		if (!promise || typeof promise.then !== 'function') return;
+		return promise.then(function (data) {
+			callback(null, data);
+		}, function (err) {
+			callback(err);
+		});
+	}
+	
+	var stringOrNode = _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.node]);
+	
+	var Async = _react2['default'].createClass({
+		displayName: 'Async',
+	
+		propTypes: {
+			cache: _react2['default'].PropTypes.any, // object to use to cache results, can be null to disable cache
+			ignoreAccents: _react2['default'].PropTypes.bool, // whether to strip diacritics when filtering (shared with Select)
+			ignoreCase: _react2['default'].PropTypes.bool, // whether to perform case-insensitive filtering (shared with Select)
+			isLoading: _react2['default'].PropTypes.bool, // overrides the isLoading state when set to true
+			loadOptions: _react2['default'].PropTypes.func.isRequired, // function to call to load options asynchronously
+			loadingPlaceholder: _react2['default'].PropTypes.string, // replaces the placeholder while options are loading
+			minimumInput: _react2['default'].PropTypes.number, // the minimum number of characters that trigger loadOptions
+			noResultsText: _react2['default'].PropTypes.string, // placeholder displayed when there are no matching search results (shared with Select)
+			placeholder: stringOrNode, // field placeholder, displayed when there's no value (shared with Select)
+			searchPromptText: _react2['default'].PropTypes.string, // label to prompt for search input
+			searchingText: _react2['default'].PropTypes.string },
+		// message to display while options are loading
+		getDefaultProps: function getDefaultProps() {
+			return {
+				cache: true,
+				ignoreAccents: true,
+				ignoreCase: true,
+				loadingPlaceholder: 'Loading...',
+				minimumInput: 0,
+				searchingText: 'Searching...',
+				searchPromptText: 'Type to search'
+			};
+		},
+		getInitialState: function getInitialState() {
+			return {
+				cache: initCache(this.props.cache),
+				isLoading: false,
+				options: []
+			};
+		},
+		componentWillMount: function componentWillMount() {
+			this._lastInput = '';
+		},
+		componentDidMount: function componentDidMount() {
+			this.loadOptions('');
+		},
+		componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+			if (nextProps.cache !== this.props.cache) {
+				this.setState({
+					cache: initCache(nextProps.cache)
+				});
+			}
+		},
+		focus: function focus() {
+			this.refs.select.focus();
+		},
+		resetState: function resetState() {
+			this._currentRequestId = -1;
+			this.setState({
+				isLoading: false,
+				options: []
+			});
+		},
+		getResponseHandler: function getResponseHandler(input) {
+			var _this = this;
+	
+			var _requestId = this._currentRequestId = requestId++;
+			return function (err, data) {
+				if (err) throw err;
+				if (!_this.isMounted()) return;
+				updateCache(_this.state.cache, input, data);
+				if (_requestId !== _this._currentRequestId) return;
+				_this.setState({
+					isLoading: false,
+					options: data && data.options || []
+				});
+			};
+		},
+		loadOptions: function loadOptions(input) {
+			if (this.props.ignoreAccents) input = (0, _utilsStripDiacritics2['default'])(input);
+			if (this.props.ignoreCase) input = input.toLowerCase();
+			this._lastInput = input;
+			if (input.length < this.props.minimumInput) {
+				return this.resetState();
+			}
+			var cacheResult = getFromCache(this.state.cache, input);
+			if (cacheResult) {
+				return this.setState({
+					options: cacheResult.options
+				});
+			}
+			this.setState({
+				isLoading: true
+			});
+			var responseHandler = this.getResponseHandler(input);
+			return thenPromise(this.props.loadOptions(input, responseHandler), responseHandler);
+		},
+		render: function render() {
+			var noResultsText = this.props.noResultsText;
+			var _state = this.state;
+			var isLoading = _state.isLoading;
+			var options = _state.options;
+	
+			if (this.props.isLoading) isLoading = true;
+			var placeholder = isLoading ? this.props.loadingPlaceholder : this.props.placeholder;
+			if (!options.length) {
+				if (this._lastInput.length < this.props.minimumInput) noResultsText = this.props.searchPromptText;
+				if (isLoading) noResultsText = this.props.searchingText;
+			}
+			return _react2['default'].createElement(_Select2['default'], _extends({}, this.props, {
+				ref: 'select',
+				isLoading: isLoading,
+				noResultsText: noResultsText,
+				onInputChange: this.loadOptions,
+				options: options,
+				placeholder: placeholder
+			}));
+		}
+	});
+	
+	module.exports = Async;
+
+/***/ },
+/* 421 */
+/*!**************************************!*\
+  !*** ./~/react-select/lib/Option.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _classnames = __webpack_require__(/*! classnames */ 418);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var Option = _react2['default'].createClass({
+		displayName: 'Option',
+	
+		propTypes: {
+			children: _react2['default'].PropTypes.node,
+			className: _react2['default'].PropTypes.string, // className (based on mouse position)
+			isDisabled: _react2['default'].PropTypes.bool, // the option is disabled
+			isFocused: _react2['default'].PropTypes.bool, // the option is focused
+			isSelected: _react2['default'].PropTypes.bool, // the option is selected
+			onFocus: _react2['default'].PropTypes.func, // method to handle mouseEnter on option element
+			onSelect: _react2['default'].PropTypes.func, // method to handle click on option element
+			onUnfocus: _react2['default'].PropTypes.func, // method to handle mouseLeave on option element
+			option: _react2['default'].PropTypes.object.isRequired },
+		// object that is base for that option
+		blockEvent: function blockEvent(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			if (event.target.tagName !== 'A' || !('href' in event.target)) {
+				return;
+			}
+			if (event.target.target) {
+				window.open(event.target.href, event.target.target);
+			} else {
+				window.location.href = event.target.href;
+			}
+		},
+	
+		handleMouseDown: function handleMouseDown(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			this.props.onSelect(this.props.option, event);
+		},
+	
+		handleMouseEnter: function handleMouseEnter(event) {
+			this.onFocus(event);
+		},
+	
+		handleMouseMove: function handleMouseMove(event) {
+			this.onFocus(event);
+		},
+	
+		handleTouchEnd: function handleTouchEnd(event) {
+			// Check if the view is being dragged, In this case
+			// we don't want to fire the click event (because the user only wants to scroll)
+			if (this.dragging) return;
+	
+			this.handleMouseDown(event);
+		},
+	
+		handleTouchMove: function handleTouchMove(event) {
+			// Set a flag that the view is being dragged
+			this.dragging = true;
+		},
+	
+		handleTouchStart: function handleTouchStart(event) {
+			// Set a flag that the view is not being dragged
+			this.dragging = false;
+		},
+	
+		onFocus: function onFocus(event) {
+			if (!this.props.isFocused) {
+				this.props.onFocus(this.props.option, event);
+			}
+		},
+		render: function render() {
+			var option = this.props.option;
+	
+			var className = (0, _classnames2['default'])(this.props.className, option.className);
+	
+			return option.disabled ? _react2['default'].createElement(
+				'div',
+				{ className: className,
+					onMouseDown: this.blockEvent,
+					onClick: this.blockEvent },
+				this.props.children
+			) : _react2['default'].createElement(
+				'div',
+				{ className: className,
+					style: option.style,
+					onMouseDown: this.handleMouseDown,
+					onMouseEnter: this.handleMouseEnter,
+					onMouseMove: this.handleMouseMove,
+					onTouchStart: this.handleTouchStart,
+					onTouchMove: this.handleTouchMove,
+					onTouchEnd: this.handleTouchEnd,
+					title: option.title },
+				this.props.children
+			);
+		}
+	});
+	
+	module.exports = Option;
+
+/***/ },
+/* 422 */
+/*!*************************************!*\
+  !*** ./~/react-select/lib/Value.js ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _classnames = __webpack_require__(/*! classnames */ 418);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var Value = _react2['default'].createClass({
+	
+		displayName: 'Value',
+	
+		propTypes: {
+			children: _react2['default'].PropTypes.node,
+			disabled: _react2['default'].PropTypes.bool, // disabled prop passed to ReactSelect
+			onClick: _react2['default'].PropTypes.func, // method to handle click on value label
+			onRemove: _react2['default'].PropTypes.func, // method to handle removal of the value
+			value: _react2['default'].PropTypes.object.isRequired },
+	
+		// the option object for this value
+		handleMouseDown: function handleMouseDown(event) {
+			if (event.type === 'mousedown' && event.button !== 0) {
+				return;
+			}
+			if (this.props.onClick) {
+				event.stopPropagation();
+				this.props.onClick(this.props.value, event);
+				return;
+			}
+			if (this.props.value.href) {
+				event.stopPropagation();
+			}
+		},
+	
+		onRemove: function onRemove(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			this.props.onRemove(this.props.value);
+		},
+	
+		handleTouchEndRemove: function handleTouchEndRemove(event) {
+			// Check if the view is being dragged, In this case
+			// we don't want to fire the click event (because the user only wants to scroll)
+			if (this.dragging) return;
+	
+			// Fire the mouse events
+			this.onRemove(event);
+		},
+	
+		handleTouchMove: function handleTouchMove(event) {
+			// Set a flag that the view is being dragged
+			this.dragging = true;
+		},
+	
+		handleTouchStart: function handleTouchStart(event) {
+			// Set a flag that the view is not being dragged
+			this.dragging = false;
+		},
+	
+		renderRemoveIcon: function renderRemoveIcon() {
+			if (this.props.disabled || !this.props.onRemove) return;
+			return _react2['default'].createElement(
+				'span',
+				{ className: 'Select-value-icon',
+					onMouseDown: this.onRemove,
+					onTouchEnd: this.handleTouchEndRemove,
+					onTouchStart: this.handleTouchStart,
+					onTouchMove: this.handleTouchMove },
+				'×'
+			);
+		},
+	
+		renderLabel: function renderLabel() {
+			var className = 'Select-value-label';
+			return this.props.onClick || this.props.value.href ? _react2['default'].createElement(
+				'a',
+				{ className: className, href: this.props.value.href, target: this.props.value.target, onMouseDown: this.handleMouseDown, onTouchEnd: this.handleMouseDown },
+				this.props.children
+			) : _react2['default'].createElement(
+				'span',
+				{ className: className },
+				this.props.children
+			);
+		},
+	
+		render: function render() {
+			return _react2['default'].createElement(
+				'div',
+				{ className: (0, _classnames2['default'])('Select-value', this.props.value.className),
+					style: this.props.value.style,
+					title: this.props.value.title
+				},
+				this.renderRemoveIcon(),
+				this.renderLabel()
+			);
+		}
+	
+	});
+	
+	module.exports = Value;
+
+/***/ },
+/* 423 */
+/*!**********************************************!*\
+  !*** ./~/react-select/dist/react-select.css ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../css-loader!./react-select.css */ 424);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../css-loader/index.js!./react-select.css", function() {
+				var newContent = require("!!./../../css-loader/index.js!./react-select.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 424 */
+/*!*************************************************************!*\
+  !*** ./~/css-loader!./~/react-select/dist/react-select.css ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "/**\n * React Select\n * ============\n * Created by Jed Watson and Joss Mackison for KeystoneJS, http://www.keystonejs.com/\n * https://twitter.com/jedwatson https://twitter.com/jossmackison https://twitter.com/keystonejs\n * MIT License: https://github.com/keystonejs/react-select\n*/\n.Select {\n  position: relative;\n}\n.Select,\n.Select div,\n.Select input,\n.Select span {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.Select.is-disabled > .Select-control {\n  background-color: #f9f9f9;\n}\n.Select.is-disabled > .Select-control:hover {\n  box-shadow: none;\n}\n.Select.is-disabled .Select-arrow-zone {\n  cursor: default;\n  pointer-events: none;\n}\n.Select-control {\n  background-color: #fff;\n  border-color: #d9d9d9 #ccc #b3b3b3;\n  border-radius: 4px;\n  border: 1px solid #ccc;\n  color: #333;\n  cursor: default;\n  display: table;\n  height: 36px;\n  outline: none;\n  overflow: hidden;\n  position: relative;\n  width: 100%;\n}\n.Select-control:hover {\n  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);\n}\n.is-searchable.is-open > .Select-control {\n  cursor: text;\n}\n.is-open > .Select-control {\n  border-bottom-right-radius: 0;\n  border-bottom-left-radius: 0;\n  background: #fff;\n  border-color: #b3b3b3 #ccc #d9d9d9;\n}\n.is-open > .Select-control > .Select-arrow {\n  border-color: transparent transparent #999;\n  border-width: 0 5px 5px;\n}\n.is-searchable.is-focused:not(.is-open) > .Select-control {\n  cursor: text;\n}\n.is-focused:not(.is-open) > .Select-control {\n  border-color: #007eff;\n  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\n}\n.Select-placeholder,\n:not(.Select--multi) > .Select-control .Select-value {\n  bottom: 0;\n  color: #aaa;\n  left: 0;\n  line-height: 34px;\n  padding-left: 10px;\n  padding-right: 10px;\n  position: absolute;\n  right: 0;\n  top: 0;\n  max-width: 100%;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\n  color: #333;\n}\n.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label {\n  cursor: pointer;\n  text-decoration: none;\n}\n.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:hover,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:hover,\n.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:focus,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:focus {\n  color: #007eff;\n  outline: none;\n  text-decoration: underline;\n}\n.Select-input {\n  height: 34px;\n  padding-left: 10px;\n  padding-right: 10px;\n  vertical-align: middle;\n}\n.Select-input > input {\n  width: 100%;\n  background: none transparent;\n  border: 0 none;\n  box-shadow: none;\n  cursor: default;\n  display: inline-block;\n  font-family: inherit;\n  font-size: inherit;\n  height: 34px;\n  margin: 0;\n  outline: none;\n  padding: 0;\n  -webkit-appearance: none;\n}\n.is-focused .Select-input > input {\n  cursor: text;\n}\n.has-value.is-pseudo-focused .Select-input {\n  opacity: 0;\n}\n.Select-control:not(.is-searchable) > .Select-input {\n  outline: none;\n}\n.Select-loading-zone {\n  cursor: pointer;\n  display: table-cell;\n  position: relative;\n  text-align: center;\n  vertical-align: middle;\n  width: 16px;\n}\n.Select-loading {\n  -webkit-animation: Select-animation-spin 400ms infinite linear;\n  -o-animation: Select-animation-spin 400ms infinite linear;\n  animation: Select-animation-spin 400ms infinite linear;\n  width: 16px;\n  height: 16px;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 2px solid #ccc;\n  border-right-color: #333;\n  display: inline-block;\n  position: relative;\n  vertical-align: middle;\n}\n.Select-clear-zone {\n  -webkit-animation: Select-animation-fadeIn 200ms;\n  -o-animation: Select-animation-fadeIn 200ms;\n  animation: Select-animation-fadeIn 200ms;\n  color: #999;\n  cursor: pointer;\n  display: table-cell;\n  position: relative;\n  text-align: center;\n  vertical-align: middle;\n  width: 17px;\n}\n.Select-clear-zone:hover {\n  color: #D0021B;\n}\n.Select-clear {\n  display: inline-block;\n  font-size: 18px;\n  line-height: 1;\n}\n.Select--multi .Select-clear-zone {\n  width: 17px;\n}\n.Select-arrow-zone {\n  cursor: pointer;\n  display: table-cell;\n  position: relative;\n  text-align: center;\n  vertical-align: middle;\n  width: 25px;\n  padding-right: 5px;\n}\n.Select-arrow {\n  border-color: #999 transparent transparent;\n  border-style: solid;\n  border-width: 5px 5px 2.5px;\n  display: inline-block;\n  height: 0;\n  width: 0;\n}\n.is-open .Select-arrow,\n.Select-arrow-zone:hover > .Select-arrow {\n  border-top-color: #666;\n}\n@-webkit-keyframes Select-animation-fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes Select-animation-fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n.Select-menu-outer {\n  border-bottom-right-radius: 4px;\n  border-bottom-left-radius: 4px;\n  background-color: #fff;\n  border: 1px solid #ccc;\n  border-top-color: #e6e6e6;\n  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);\n  box-sizing: border-box;\n  margin-top: -1px;\n  max-height: 200px;\n  position: absolute;\n  top: 100%;\n  width: 100%;\n  z-index: 1;\n  -webkit-overflow-scrolling: touch;\n}\n.Select-menu {\n  max-height: 198px;\n  overflow-y: auto;\n}\n.Select-option {\n  box-sizing: border-box;\n  background-color: #fff;\n  color: #666666;\n  cursor: pointer;\n  display: block;\n  padding: 8px 10px;\n}\n.Select-option:last-child {\n  border-bottom-right-radius: 4px;\n  border-bottom-left-radius: 4px;\n}\n.Select-option.is-focused {\n  background-color: rgba(0, 126, 255, 0.08);\n  color: #333;\n}\n.Select-option.is-disabled {\n  color: #cccccc;\n  cursor: default;\n}\n.Select-noresults {\n  box-sizing: border-box;\n  color: #999999;\n  cursor: default;\n  display: block;\n  padding: 8px 10px;\n}\n.Select--multi .Select-input {\n  vertical-align: middle;\n  margin-left: 10px;\n  padding: 0;\n}\n.Select--multi.has-value .Select-input {\n  margin-left: 5px;\n}\n.Select--multi .Select-value {\n  background-color: rgba(0, 126, 255, 0.08);\n  border-radius: 2px;\n  border: 1px solid rgba(0, 126, 255, 0.24);\n  color: #007eff;\n  display: inline-block;\n  font-size: 0.9em;\n  line-height: 1.4;\n  margin-left: 5px;\n  margin-top: 5px;\n  vertical-align: top;\n}\n.Select--multi .Select-value-icon,\n.Select--multi .Select-value-label {\n  display: inline-block;\n  vertical-align: middle;\n}\n.Select--multi .Select-value-label {\n  border-bottom-right-radius: 2px;\n  border-top-right-radius: 2px;\n  cursor: default;\n  padding: 2px 5px;\n}\n.Select--multi a.Select-value-label {\n  color: #007eff;\n  cursor: pointer;\n  text-decoration: none;\n}\n.Select--multi a.Select-value-label:hover {\n  text-decoration: underline;\n}\n.Select--multi .Select-value-icon {\n  cursor: pointer;\n  border-bottom-left-radius: 2px;\n  border-top-left-radius: 2px;\n  border-right: 1px solid rgba(0, 126, 255, 0.24);\n  padding: 1px 5px 3px;\n}\n.Select--multi .Select-value-icon:hover,\n.Select--multi .Select-value-icon:focus {\n  background-color: rgba(0, 113, 230, 0.08);\n  color: #0071e6;\n}\n.Select--multi .Select-value-icon:active {\n  background-color: rgba(0, 126, 255, 0.24);\n}\n.Select--multi.is-disabled .Select-value {\n  background-color: #fcfcfc;\n  border: 1px solid #e3e3e3;\n  color: #333;\n}\n.Select--multi.is-disabled .Select-value-icon {\n  cursor: not-allowed;\n  border-right: 1px solid #e3e3e3;\n}\n.Select--multi.is-disabled .Select-value-icon:hover,\n.Select--multi.is-disabled .Select-value-icon:focus,\n.Select--multi.is-disabled .Select-value-icon:active {\n  background-color: #fcfcfc;\n}\n@keyframes Select-animation-spin {\n  to {\n    transform: rotate(1turn);\n  }\n}\n@-webkit-keyframes Select-animation-spin {\n  to {\n    -webkit-transform: rotate(1turn);\n  }\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 425 */
 /*!************************************************!*\
   !*** ./src/components/tree/flag.component.css ***!
   \************************************************/
@@ -69069,7 +68440,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./flag.component.css */ 440);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./flag.component.css */ 426);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69089,7 +68460,7 @@
 	}
 
 /***/ },
-/* 440 */
+/* 426 */
 /*!***************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/flag.component.css ***!
   \***************************************************************/
@@ -69100,7 +68471,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1cduhYrXjLh96LkhbKOsjk {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .XPtky9cpVMVpekBtJYSrL {\r\n    padding: 0 0 0 8px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._3Qp7IFEz_ujCrLUOEM8UcX {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._3Qp7IFEz_ujCrLUOEM8UcX:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._6rSvE0rZPe-3bF5eDFraj {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n  }\r\n\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-control {\r\n    border-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(255, 255, 255, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(94, 78, 81, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(255, 255, 255, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow {\r\n    border-color: rgba(255, 255, 255, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open .Select-arrow,\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon:hover,\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select.is-disabled > .Select-control {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi.is-disabled .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border: none;\r\n    color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-input {\r\n    display: none !important;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value {\r\n    width: 95%;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1cduhYrXjLh96LkhbKOsjk {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .XPtky9cpVMVpekBtJYSrL {\r\n    padding: 0 0 0 8px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._3Qp7IFEz_ujCrLUOEM8UcX {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._3Qp7IFEz_ujCrLUOEM8UcX:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._6rSvE0rZPe-3bF5eDFraj {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n  }\r\n\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-control {\r\n    border-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(255, 255, 255, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(94, 78, 81, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(255, 255, 255, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow {\r\n    border-color: rgba(255, 255, 255, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open .Select-arrow,\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon:hover,\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select.is-disabled > .Select-control {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi.is-disabled .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border: none;\r\n    color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-input {\r\n    display: none !important;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select.is-disabled > .Select-control {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi:not(.is-disabled) .Select-value {\r\n    width: 95%;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -69111,7 +68482,7 @@
 	};
 
 /***/ },
-/* 441 */
+/* 427 */
 /*!****************************************************!*\
   !*** ./src/components/tree/ownership.component.js ***!
   \****************************************************/
@@ -69128,13 +68499,13 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(/*! react */ 1);
-	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
-	var Select = __webpack_require__(/*! react-select */ 243);
-	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 250);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 389);
+	var Select = __webpack_require__(/*! react-select */ 416);
+	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 423);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./ownership.component.css */ 442);
-	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 285);
+	var styles = __webpack_require__(/*! ./ownership.component.css */ 428);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 255);
 	
 	var OwnsershipComponent = function (_React$Component) {
 	    _inherits(OwnsershipComponent, _React$Component);
@@ -69215,7 +68586,7 @@
 	//# sourceMappingURL=ownership.component.js.map
 
 /***/ },
-/* 442 */
+/* 428 */
 /*!*****************************************************!*\
   !*** ./src/components/tree/ownership.component.css ***!
   \*****************************************************/
@@ -69224,7 +68595,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./ownership.component.css */ 443);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./ownership.component.css */ 429);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69244,7 +68615,7 @@
 	}
 
 /***/ },
-/* 443 */
+/* 429 */
 /*!********************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/ownership.component.css ***!
   \********************************************************************/
@@ -69255,7 +68626,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._28WzHpHejHSGWVRrXUUnEf {\r\n    padding: 0 0 0 8px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._151JDE63T3HVqYBq-DG3ih {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._151JDE63T3HVqYBq-DG3ih:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._2_9TuMduvsyHC0Lgs-fv92 {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n  }\r\n\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-control {\r\n    border-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(255, 255, 255, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(94, 78, 81, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(255, 255, 255, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow {\r\n    border-color: rgba(255, 255, 255, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open .Select-arrow,\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon:hover,\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label, .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\r\n    color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-input {\r\n    display: none !important;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    width: 95%;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._28WzHpHejHSGWVRrXUUnEf {\r\n    padding: 0 0 0 8px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._151JDE63T3HVqYBq-DG3ih {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._151JDE63T3HVqYBq-DG3ih:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._2_9TuMduvsyHC0Lgs-fv92 {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n  }\r\n\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-control {\r\n    border-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(255, 255, 255, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(94, 78, 81, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(255, 255, 255, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow {\r\n    border-color: rgba(255, 255, 255, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open .Select-arrow,\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon:hover,\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label, .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\r\n    color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-input {\r\n    display: none !important;\r\n  }\r\n\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select.is-disabled > .Select-control {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    width: 95%;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -69266,7 +68637,7 @@
 	};
 
 /***/ },
-/* 444 */
+/* 430 */
 /*!***************************************************!*\
   !*** ./src/components/tree/location.component.js ***!
   \***************************************************/
@@ -69283,11 +68654,11 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(/*! react */ 1);
-	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 389);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./location.component.css */ 445);
-	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 285);
+	var styles = __webpack_require__(/*! ./location.component.css */ 431);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 255);
 	
 	var LocationComponent = function (_React$Component) {
 	    _inherits(LocationComponent, _React$Component);
@@ -69300,8 +68671,6 @@
 	        _this.updateProps = function (props) {
 	            var self = _this;
 	            if (props.tree) {
-	                console.log(props.tree.getLat());
-	                console.log(props.tree.getLng());
 	                self.setState({ latitude: props.tree.getLat().toFixed(Settings.iMarkerPrecision), longitude: props.tree.getLng().toFixed(Settings.iMarkerPrecision), editingLatitude: false, editingLongitude: false });
 	            }
 	        };
@@ -69392,7 +68761,7 @@
 	//# sourceMappingURL=location.component.js.map
 
 /***/ },
-/* 445 */
+/* 431 */
 /*!****************************************************!*\
   !*** ./src/components/tree/location.component.css ***!
   \****************************************************/
@@ -69401,7 +68770,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./location.component.css */ 446);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./location.component.css */ 432);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69421,7 +68790,7 @@
 	}
 
 /***/ },
-/* 446 */
+/* 432 */
 /*!*******************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/location.component.css ***!
   \*******************************************************************/
@@ -69442,6 +68811,728 @@
 		"comma": "_1vS_1uzYznnwHezg1SPIDI",
 		"label": "_1a1-nl5LHD1_c9BAQkYFQn",
 		"edit": "_1yxnrkHIIF6FNzBLGUQsC4"
+	};
+
+/***/ },
+/* 433 */
+/*!************************!*\
+  !*** ./src/client.css ***!
+  \************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 434);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./client.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./client.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 434 */
+/*!***************************************!*\
+  !*** ./~/css-loader!./src/client.css ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic);", ""]);
+	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,700,300italic);", ""]);
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  * {\r\n    margin: 0;\r\n    padding: 0;\r\n    -moz-box-sizing: border-box;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n    -webkit-tap-highlight-color: rgba(0,0,0,0);\r\n    \r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n  }\r\n  html {\r\n    width: 100%;\r\n    height: 100%;\r\n  }\r\n  body {\r\n    width: 100%;\r\n    height: 100%;\r\n    color: rgba(255, 255, 255, 1);\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: medium;\r\n    overflow: hidden;\r\n  }\r\n  a {\r\n    text-decoration: none;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n  }\r\n  #BG6p6R6pCMzH6rLXugbI3, #app {\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow: hidden;\r\n  }\r\n  .hidden {\r\n    display: none;\r\n  }\r\n  .hide {\r\n    opacity : 0;\r\n    transition: opacity 1.3s;\r\n  }\r\n  input {\r\n    -moz-user-select: all;\r\n    -ms-user-select: all;\r\n    -webkit-user-select: all;\r\n    user-select: all;\r\n  }\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"app": "BG6p6R6pCMzH6rLXugbI3"
+	};
+
+/***/ },
+/* 435 */
+/*!**************************************************!*\
+  !*** ./src/components/parent/login.component.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 1);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 389);
+	var Select = __webpack_require__(/*! react-select */ 416);
+	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 423);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./login.component.css */ 436);
+	var login_parent_component_1 = __webpack_require__(/*! ./login-parent.component */ 438);
+	var login_manager_component_1 = __webpack_require__(/*! ./login-manager.component */ 441);
+	
+	var LoginComponent = function (_React$Component) {
+	    _inherits(LoginComponent, _React$Component);
+	
+	    function LoginComponent(props) {
+	        _classCallCheck(this, LoginComponent);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LoginComponent).call(this, props));
+	
+	        _this.updateProps = function (props) {
+	            var self = _this;
+	            if (props.bOpen == "true") {
+	                self.setState({ bOpen: true, bManagerMode: self.state.bManagerMode });
+	            } else {
+	                self.setState({ bOpen: false, bManagerMode: self.state.bManagerMode });
+	            }
+	        };
+	        _this.updateAttribute = function () {
+	            var self = _this;
+	        };
+	        _this.updateLoginMode = function (selected) {
+	            var self = _this;
+	            if (selected) {
+	                self.selected = selected;
+	                if (parseInt(selected.value) == 0) {
+	                    self.setState({ bOpen: self.state.bOpen, bManagerMode: true });
+	                } else {
+	                    self.setState({ bOpen: self.state.bOpen, bManagerMode: false });
+	                }
+	            }
+	        };
+	        var self = _this;
+	        _this.state = {
+	            bOpen: false,
+	            bManagerMode: false
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(LoginComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var self = this;
+	            self.options = new Array();
+	            self.options.push({ value: 1, label: "PARENT SIGN-IN" });
+	            self.options.push({ value: 0, label: "MANAGER SIGN-IN" });
+	            self.selected = self.options[0];
+	            self.updateProps(self.props);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var self = this;
+	            self.updateProps(nextProps);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            if (self.state.bOpen) {
+	                if (self.state.bManagerMode) {
+	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.siginininfo }, React.createElement("div", { className: styles.icon }, React.createElement(FontAwesome, { className: '', name: 'user' })), React.createElement(Select, { className: styles.name, name: "loginmode-select", multi: false, searchable: false, scrollMenuIntoView: false, options: self.options, value: self.selected, onChange: self.updateLoginMode, placeholder: "select login mode..." }), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
+	                            self.context.router.goBack();
+	                        } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement(login_manager_component_1.default, null)));
+	                } else {
+	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.siginininfo }, React.createElement("div", { className: styles.icon }, React.createElement(FontAwesome, { className: '', name: 'user' })), React.createElement(Select, { className: styles.name, name: "loginmode-select", multi: false, searchable: false, scrollMenuIntoView: false, options: self.options, value: self.selected, onChange: self.updateLoginMode, placeholder: "select login mode..." }), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
+	                            self.context.router.goBack();
+	                        } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement(login_parent_component_1.default, null)));
+	                }
+	            } else {
+	                return React.createElement("div", { className: styles.wrapper });
+	            }
+	        }
+	    }]);
+	
+	    return LoginComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = LoginComponent;
+	LoginComponent.contextTypes = {
+	    router: function router() {
+	        return React.PropTypes.func.isRequired;
+	    }
+	};
+	//# sourceMappingURL=login.component.js.map
+
+/***/ },
+/* 436 */
+/*!***************************************************!*\
+  !*** ./src/components/parent/login.component.css ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./login.component.css */ 437);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./login.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./login.component.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 437 */
+/*!******************************************************************!*\
+  !*** ./~/css-loader!./src/components/parent/login.component.css ***!
+  \******************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  .oZ1lUuFeTKDDs5XP-XURm {\r\n    position: absolute;\r\n    top: 0;\r\n    right: -30%;\r\n    width: 30%;\r\n    height: 100%;\r\n    padding: 56px 8px 8px 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n  .yzWY85WCCcDtpnmBluj3k {\r\n    right: 0;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    min-height: 60px;\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .z7yi6alqgPWQTUINUxiPR {\r\n    width: 32px;\r\n    margin: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-size: 235%;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn ._2V3FiG91EsxUlcA89cHAfF {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn ._1I9WULzr34DgE7E0i42K_2 {\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn ._1I9WULzr34DgE7E0i42K_2 span {\r\n    cursor: pointer;\r\n  }\r\n  .Saa_GRQ3pl5Q1IsSDcJdb {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n\r\n  ._8DW7wv1u3d9KjPaf_ZmM1 {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .mhgPnbYpB_MXRq03cgD-9 {\r\n    display: block;\r\n    padding: 0 0 0 4px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._3QvzZAVX5Q2yBmqF8RZKr4 {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    margin: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n\r\n\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-control {\r\n    border-color: rgba(244, 244, 244, 1);\r\n    border-radius: 2px;\r\n    border: none;\r\n    color: rgba(94, 78, 81, 1);\r\n    background-color: rgba(244, 244, 244, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-placeholder,\r\n  ._1OdBkmMzXJTceG9dUsm0Rn :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(94, 78, 81, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select--multi .Select-value {\r\n    background-color: rgba(244, 244, 244, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(94, 78, 81, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(244, 244, 244, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(94, 78, 81, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 6px 3px 8px;\r\n    font-weight: 700;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(244, 244, 244, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-arrow {\r\n    border-color: rgba(94, 78, 81, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-open .Select-arrow,\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select--multi .Select-value-icon:hover,\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-focused:not(.is-open) > .Select-control {\r\n    border-color: none;\r\n    box-shadow: none;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select--multi .Select-value {\r\n    background-color: rgba(244, 244, 244, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(244, 244, 244, 1);\r\n    color: rgba(94, 78, 81, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label,\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n\r\n\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n  .oZ1lUuFeTKDDs5XP-XURm {\r\n    position: absolute;\r\n    right: -50%;\r\n    width: 50%;\r\n  }\r\n  .yzWY85WCCcDtpnmBluj3k {\r\n    right: 0;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  .oZ1lUuFeTKDDs5XP-XURm {\r\n    position: absolute;\r\n    right: -100%;\r\n    width: 100%;\r\n    opacity: 0.95;\r\n    padding-bottom: 120px;\r\n  }\r\n  .yzWY85WCCcDtpnmBluj3k {\r\n    right: 0;\r\n  }\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"wrapper": "oZ1lUuFeTKDDs5XP-XURm",
+		"slidein": "yzWY85WCCcDtpnmBluj3k",
+		"siginininfo": "_1OdBkmMzXJTceG9dUsm0Rn",
+		"icon": "z7yi6alqgPWQTUINUxiPR",
+		"name": "_2V3FiG91EsxUlcA89cHAfF",
+		"close": "_1I9WULzr34DgE7E0i42K_2",
+		"basicinfo": "Saa_GRQ3pl5Q1IsSDcJdb",
+		"contactlabel": "_8DW7wv1u3d9KjPaf_ZmM1",
+		"contactname": "mhgPnbYpB_MXRq03cgD-9",
+		"contactinput": "_3QvzZAVX5Q2yBmqF8RZKr4"
+	};
+
+/***/ },
+/* 438 */
+/*!*********************************************************!*\
+  !*** ./src/components/parent/login-parent.component.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 1);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 389);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./login-parent.component.css */ 439);
+	var authentication_1 = __webpack_require__(/*! ./../../utils/authentication */ 235);
+	
+	var LoginParentComponent = function (_React$Component) {
+	    _inherits(LoginParentComponent, _React$Component);
+	
+	    function LoginParentComponent(props) {
+	        _classCallCheck(this, LoginParentComponent);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LoginParentComponent).call(this, props));
+	
+	        _this.updateProps = function (props) {
+	            var self = _this;
+	        };
+	        _this.submitLogin = function () {
+	            var self = _this;
+	            if (authentication_1.checkValidEmailAddress(self.state.contact.trim())) {
+	                authentication_1.processLogin(self.state.contact.trim(), self.state.contact.trim(), function (response) {
+	                    console.warn("login success");
+	                    self.context.router.push({ pathname: window.location.pathname });
+	                }, function (response) {
+	                    console.warn("login failed");
+	                }, function (response) {});
+	            } else {}
+	        };
+	        var self = _this;
+	        _this.state = {
+	            contact: "",
+	            password: ""
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(LoginParentComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var self = this;
+	            self.updateProps(self.props);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var self = this;
+	            self.updateProps(nextProps);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'caret-right' }), React.createElement("label", { htmlFor: "parentin-contact" }, " Parent Contact")), React.createElement("div", { className: styles.contactname }, React.createElement("input", { autoFocus: true, type: "email", className: styles.contactinput, id: "parentin-contact", key: "parentin-contact", placeholder: "enter e-mail address...", value: self.state.contact, autoComplete: true, onChange: function onChange(event) {
+	                    self.setState({ contact: event.target.value, password: event.target.value });
+	                }, onKeyPress: function onKeyPress(event) {
+	                    if (event.key == 'Enter') {
+	                        self.submitLogin();
+	                    }
+	                }, onBlur: function onBlur() {
+	                    //self.submitLogin();
+	                } })), React.createElement("div", { className: styles.buttongroup, onClick: function onClick() {
+	                    self.submitLogin();
+	                } }, React.createElement("div", { className: styles.button }, "SIGN IN")));
+	        }
+	    }]);
+	
+	    return LoginParentComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = LoginParentComponent;
+	LoginParentComponent.contextTypes = {
+	    router: function router() {
+	        return React.PropTypes.func.isRequired;
+	    }
+	};
+	//# sourceMappingURL=login-parent.component.js.map
+
+/***/ },
+/* 439 */
+/*!**********************************************************!*\
+  !*** ./src/components/parent/login-parent.component.css ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./login-parent.component.css */ 440);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./login-parent.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./login-parent.component.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 440 */
+/*!*************************************************************************!*\
+  !*** ./~/css-loader!./src/components/parent/login-parent.component.css ***!
+  \*************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  ._1BS_RMRZFjnhfOsdYKJbKK {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: medium;\r\n  }\r\n\r\n  ._-wM4qTBzH8dmhyaryJdtv {\r\n    font-weight: 700;\r\n    padding: 8px 0 4px 0;\r\n  }\r\n  ._3w9nhXbmsQPwXvtPwGHv_g {\r\n    display: block;\r\n    padding: 0;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  .blpDSi3jxWG5KVPmBgGHJ {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._1ozG4waSlWgJ4wh4ypLw4n {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    padding: 16px 0 4px 0;\r\n    font-size: small;\r\n  }\r\n  ._3NoM1hA3nFyspE453K637H {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    padding: 4px;\r\n    border-radius: 2px;\r\n    border: 2px solid rgba(255, 255, 255, 1);\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n  }\r\n  ._3NoM1hA3nFyspE453K637H:hover {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"wrapper": "_1BS_RMRZFjnhfOsdYKJbKK",
+		"contactlabel": "_-wM4qTBzH8dmhyaryJdtv",
+		"contactname": "_3w9nhXbmsQPwXvtPwGHv_g",
+		"contactinput": "blpDSi3jxWG5KVPmBgGHJ",
+		"buttongroup": "_1ozG4waSlWgJ4wh4ypLw4n",
+		"button": "_3NoM1hA3nFyspE453K637H"
+	};
+
+/***/ },
+/* 441 */
+/*!**********************************************************!*\
+  !*** ./src/components/parent/login-manager.component.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 1);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 389);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./login-manager.component.css */ 442);
+	var authentication_1 = __webpack_require__(/*! ./../../utils/authentication */ 235);
+	
+	var LoginManagerComponent = function (_React$Component) {
+	    _inherits(LoginManagerComponent, _React$Component);
+	
+	    function LoginManagerComponent(props) {
+	        _classCallCheck(this, LoginManagerComponent);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LoginManagerComponent).call(this, props));
+	
+	        _this.updateProps = function (props) {
+	            var self = _this;
+	        };
+	        _this.submitLogin = function () {
+	            var self = _this;
+	            if (authentication_1.checkValidEmailAddress(self.state.contact.trim())) {
+	                authentication_1.processLogin(self.state.contact.trim(), self.state.password.trim(), function (response) {
+	                    console.warn("login success");
+	                    self.context.router.push({ pathname: window.location.pathname });
+	                }, function (response) {
+	                    console.warn("login failed");
+	                }, function (response) {});
+	            } else {}
+	        };
+	        var self = _this;
+	        _this.state = {
+	            contact: "",
+	            password: ""
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(LoginManagerComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var self = this;
+	            self.updateProps(self.props);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var self = this;
+	            self.updateProps(nextProps);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'caret-right' }), React.createElement("label", { htmlFor: "managerin-contact" }, " Manager Contact")), React.createElement("div", { className: styles.contactname }, React.createElement("input", { autoFocus: true, type: "email", className: styles.contactinput, id: "managerin-contact", key: "managerin-contact", placeholder: "enter e-mail address...", ref: function ref(element) {
+	                    return self.contactInput = element;
+	                }, value: self.state.contact, autoComplete: true, onChange: function onChange(event) {
+	                    self.setState({ contact: event.target.value, password: self.state.password });
+	                }, onKeyPress: function onKeyPress(event) {
+	                    if (event.key == 'Enter') {
+	                        self.passwordInput.focus();
+	                    }
+	                }, onBlur: function onBlur() {
+	                    //self.submitLogin();
+	                } })), React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'caret-right' }), React.createElement("label", { htmlFor: "managerin-contact" }, " Manager Password")), React.createElement("div", { className: styles.contactname }, React.createElement("input", { autoFocus: true, type: "password", className: styles.contactinput, id: "managerin-password", key: "managerin-password", placeholder: "enter password...", ref: function ref(element) {
+	                    return self.passwordInput = element;
+	                }, value: self.state.password, onChange: function onChange(event) {
+	                    self.setState({ contact: self.state.contact, password: event.target.value });
+	                }, onKeyPress: function onKeyPress(event) {
+	                    if (event.key == 'Enter') {
+	                        self.submitLogin();
+	                    }
+	                }, onBlur: function onBlur() {
+	                    //self.submitLogin();
+	                } })), React.createElement("div", { className: styles.buttongroup, onClick: function onClick() {
+	                    self.submitLogin();
+	                } }, React.createElement("div", { className: styles.button }, "SIGN IN")));
+	        }
+	    }]);
+	
+	    return LoginManagerComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = LoginManagerComponent;
+	LoginManagerComponent.contextTypes = {
+	    router: function router() {
+	        return React.PropTypes.func.isRequired;
+	    }
+	};
+	//# sourceMappingURL=login-manager.component.js.map
+
+/***/ },
+/* 442 */
+/*!***********************************************************!*\
+  !*** ./src/components/parent/login-manager.component.css ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./login-manager.component.css */ 443);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./login-manager.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./login-manager.component.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 443 */
+/*!**************************************************************************!*\
+  !*** ./~/css-loader!./src/components/parent/login-manager.component.css ***!
+  \**************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  ._2NEwsUmnEdYPVBYg1uMEFR {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: medium;\r\n  }\r\n\r\n  .rYyCgi7yJ1zrLoCvRkIZ_ {\r\n    font-weight: 700;\r\n    padding: 8px 0 0 0;\r\n  }\r\n  ._2lPENQNUHjJ2jKwiKrlR1m {\r\n    display: block;\r\n    padding: 0;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._3FIBZer6sPEzV_mk3QTw-1 {\r\n    width: 100%;\r\n    margin: 4px 0;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._3BTrldn1TPZ8cg3zkp1P5S {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    padding: 16px 0 4px 0;\r\n    font-size: small;\r\n  }\r\n  .Avnano-4FGJz4RFaYw_kf {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    padding: 4px;\r\n    border-radius: 2px;\r\n    border: 2px solid rgba(255, 255, 255, 1);\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n  }\r\n  .Avnano-4FGJz4RFaYw_kf:hover {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"wrapper": "_2NEwsUmnEdYPVBYg1uMEFR",
+		"contactlabel": "rYyCgi7yJ1zrLoCvRkIZ_",
+		"contactname": "_2lPENQNUHjJ2jKwiKrlR1m",
+		"contactinput": "_3FIBZer6sPEzV_mk3QTw-1",
+		"buttongroup": "_3BTrldn1TPZ8cg3zkp1P5S",
+		"button": "Avnano-4FGJz4RFaYw_kf"
+	};
+
+/***/ },
+/* 444 */
+/*!*************************************************!*\
+  !*** ./src/components/parent/user.component.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 1);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 389);
+	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 423);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./user.component.css */ 445);
+	var authentication_1 = __webpack_require__(/*! ./../../utils/authentication */ 235);
+	var app_component_1 = __webpack_require__(/*! ./../app.component */ 219);
+	
+	var UserComponent = function (_React$Component) {
+	    _inherits(UserComponent, _React$Component);
+	
+	    function UserComponent(props) {
+	        _classCallCheck(this, UserComponent);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UserComponent).call(this, props));
+	
+	        _this.updateProps = function (props) {
+	            var self = _this;
+	            if (props.login == app_component_1.LogInStatus.GUEST) {
+	                self.authentication = "Guest";
+	            } else if (props.login == app_component_1.LogInStatus.PARENT) {
+	                self.authentication = "Parent";
+	            } else if (props.login == app_component_1.LogInStatus.MANAGER) {
+	                self.authentication = "Manager";
+	            } else if (props.login == app_component_1.LogInStatus.ADMIN) {
+	                self.authentication = "Admin";
+	            }
+	            authentication_1.fetchUser(props.userId, function (response) {
+	                self.setState({ name: response.name, contact: response.contact, address: response.address, bOpen: self.state.bOpen });
+	            }, function (response) {}, function (response) {});
+	            if (props.bOpen == "true") {
+	                self.setState({ name: self.state.name, contact: self.state.contact, address: self.state.address, bOpen: true });
+	            } else {
+	                self.setState({ name: self.state.name, contact: self.state.contact, address: self.state.address, bOpen: false });
+	            }
+	        };
+	        _this.updateAttribute = function () {
+	            var self = _this;
+	        };
+	        _this.submitLogout = function () {
+	            var self = _this;
+	            authentication_1.processLogout(function (response) {
+	                console.warn("logout success");
+	                self.context.router.push({ pathname: window.location.pathname });
+	            }, function (response) {}, function (response) {});
+	        };
+	        var self = _this;
+	        _this.state = {
+	            name: "",
+	            contact: "",
+	            address: "",
+	            bOpen: false
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(UserComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var self = this;
+	            self.updateProps(self.props);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var self = this;
+	            self.updateProps(nextProps);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            if (self.state.bOpen) {
+	                return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.userinfo }, React.createElement("div", { className: styles.icon }, React.createElement(FontAwesome, { className: '', name: 'user' })), React.createElement("div", { className: styles.name }, "PARENT INFO"), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
+	                        self.context.router.goBack();
+	                    } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'at' }), " E-mail Address"), React.createElement("div", { className: styles.contactname }, self.state.contact), React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'long-arrow-right' }), " Name"), React.createElement("div", { className: styles.contactname }, self.state.name), React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'long-arrow-right' }), " Role"), React.createElement("div", { className: styles.contactname }, self.authentication), React.createElement("div", { className: styles.contactlabel }, React.createElement(FontAwesome, { className: '', name: 'long-arrow-right' }), " Neighborhood"), React.createElement("div", { className: styles.contactname }, self.state.address)), React.createElement("div", { className: styles.buttongroup, onClick: function onClick() {
+	                        self.submitLogout();
+	                    } }, React.createElement("div", { className: styles.button }, "SIGN OUT")));
+	            } else {
+	                return React.createElement("div", { className: styles.wrapper });
+	            }
+	        }
+	    }]);
+	
+	    return UserComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = UserComponent;
+	UserComponent.contextTypes = {
+	    router: function router() {
+	        return React.PropTypes.func.isRequired;
+	    }
+	};
+	//# sourceMappingURL=user.component.js.map
+
+/***/ },
+/* 445 */
+/*!**************************************************!*\
+  !*** ./src/components/parent/user.component.css ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./user.component.css */ 446);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./user.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./user.component.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 446 */
+/*!*****************************************************************!*\
+  !*** ./~/css-loader!./src/components/parent/user.component.css ***!
+  \*****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  .n0-c9gpxuUqDgfvMJUCAy {\r\n    position: fixed;\r\n    top: 0;\r\n    right: -30%;\r\n    width: 30%;\r\n    height: 100%;\r\n    transition: 0.75s;\r\n    padding: 56px 8px 8px 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n  ._45E6T89bdJ_WKdqU9Rcus {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n  ._3d5I472ODDBRejEopwC4CJ {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    min-height: 60px;\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  ._3d5I472ODDBRejEopwC4CJ .Vc_GNUVSao-Kihq6HHo5t {\r\n\r\n\r\n    width: 32px;\r\n    margin: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-size: 235%;\r\n  }\r\n  ._3d5I472ODDBRejEopwC4CJ ._3SiLPw7Zlt2DnFvNhY7xkG {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  ._3d5I472ODDBRejEopwC4CJ ._1S1qNsBrfGoxZ2zu4IThWs {\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._3d5I472ODDBRejEopwC4CJ ._1S1qNsBrfGoxZ2zu4IThWs span {\r\n    cursor: pointer;\r\n  }\r\n  ._2pU5bKPhL1wnCYZXeXvIIw {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n    color: rgba(255, 255, 255, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n\r\n  .lEa6Fz0y0Vq3AWI9WxikF {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._2cLqKzaIYRb2js96Wu1bmK {\r\n    display: inline-block;\r\n    padding: 2px 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._1ALPgpsIWUHojyHKIVFFKg {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    margin: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n\r\n  .l1HkP0QnUsjC3xY08l9cw {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    padding: 16px 0 4px 0;\r\n    font-size: small;\r\n  }\r\n  ._2FSj6KbK9OgWeelywc6aja {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    padding: 4px;\r\n    border-radius: 2px;\r\n    border: 2px solid rgba(94, 78, 81, 1);\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._2FSj6KbK9OgWeelywc6aja:hover {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n  .n0-c9gpxuUqDgfvMJUCAy {\r\n    right: -50%;\r\n    width: 50%;\r\n  }\r\n  ._45E6T89bdJ_WKdqU9Rcus {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  .n0-c9gpxuUqDgfvMJUCAy {\r\n    position: fixed;\r\n    right: -100%;\r\n    width: 100%;\r\n    opacity: 0.95;\r\n    padding-bottom: 120px;\r\n  }\r\n  ._45E6T89bdJ_WKdqU9Rcus {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"wrapper": "n0-c9gpxuUqDgfvMJUCAy",
+		"slidein": "_45E6T89bdJ_WKdqU9Rcus",
+		"userinfo": "_3d5I472ODDBRejEopwC4CJ",
+		"icon": "Vc_GNUVSao-Kihq6HHo5t",
+		"name": "_3SiLPw7Zlt2DnFvNhY7xkG",
+		"close": "_1S1qNsBrfGoxZ2zu4IThWs",
+		"basicinfo": "_2pU5bKPhL1wnCYZXeXvIIw",
+		"contactlabel": "lEa6Fz0y0Vq3AWI9WxikF",
+		"contactname": "_2cLqKzaIYRb2js96Wu1bmK",
+		"contactinput": "_1ALPgpsIWUHojyHKIVFFKg",
+		"buttongroup": "l1HkP0QnUsjC3xY08l9cw",
+		"button": "_2FSj6KbK9OgWeelywc6aja"
 	};
 
 /***/ }

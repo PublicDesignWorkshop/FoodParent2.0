@@ -20,6 +20,7 @@ export interface ITreesPanelProps {
   trees: Array<TreeModel>;
   zoom: number;
   onZoom: Function;
+  onGeo: PositionCallback;
 }
 export interface ITreesPanelStatus {
   login: LogInStatus;
@@ -83,66 +84,142 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
   render() {
     let self: TreesPanelComponent = this;
     if (self.state.open) {
-      return (
-        <div className={styles.wrapper + " " + styles.slidein}>
-          <div className={styles.left}>
-            <div className={styles.button + " " + styles.buttontop}>
-              <FontAwesome className='' name='location-arrow' />
+      if (self.state.login == LogInStatus.MANAGER) {
+        return (
+          <div className={styles.wrapper + " " + styles.slidein}>
+            <div className={styles.left}>
+              <div className={styles.button + " " + styles.buttontop} onClick={()=> {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
+                }
+              }}>
+                <FontAwesome className='' name='location-arrow' />
+              </div>
+              <div className={styles.button} onClick={()=> {
+                let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
+                self.props.onZoom(zoom);
+              }}>
+                <FontAwesome className='' name='search-plus' />
+              </div>
+              <div className={styles.button} onClick={()=> {
+                let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
+                self.props.onZoom(zoom);
+              }}>
+                <FontAwesome className='' name='search-minus' />
+              </div>
+              <div className={styles.button}>
+                <FontAwesome className='' name='filter' />
+              </div>
+              <div className={styles.button + " " + styles.buttonbottom}>
+                <FontAwesome className='' name='plus' />
+              </div>
             </div>
-            <div className={styles.button} onClick={()=> {
-              let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-              self.props.onZoom(zoom);
-            }}>
-              <FontAwesome className='' name='search-plus' />
-            </div>
-            <div className={styles.button} onClick={()=> {
-              let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-              self.props.onZoom(zoom);
-            }}>
-              <FontAwesome className='' name='search-minus' />
-            </div>
-            <div className={styles.button}>
-              <FontAwesome className='' name='filter' />
-            </div>
-            <div className={styles.button + " " + styles.buttonbottom}>
-              <FontAwesome className='' name='plus' />
+            <div className={styles.right}>
+              <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} />
             </div>
           </div>
-          <div className={styles.right}>
-            <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} />
+        );
+      } else {
+        return (
+          <div className={styles.wrapper + " " + styles.slidein}>
+            <div className={styles.left}>
+              <div className={styles.button + " " + styles.buttontop} onClick={()=> {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
+                }
+              }}>
+                <FontAwesome className='' name='location-arrow' />
+              </div>
+              <div className={styles.button} onClick={()=> {
+                let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
+                self.props.onZoom(zoom);
+              }}>
+                <FontAwesome className='' name='search-plus' />
+              </div>
+              <div className={styles.button} onClick={()=> {
+                let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
+                self.props.onZoom(zoom);
+              }}>
+                <FontAwesome className='' name='search-minus' />
+              </div>
+              <div className={styles.button + " " + styles.buttonbottom}>
+                <FontAwesome className='' name='plus' />
+              </div>
+            </div>
+            <div className={styles.right}>
+              <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} />
+            </div>
           </div>
-        </div>
-      );
+        );
+      }
+
     } else {
-      return (
-        <div className={styles.wrapper}>
-          <div className={styles.left}>
-            <div className={styles.button + " " + styles.buttontop}>
-              <FontAwesome className='' name='location-arrow' />
+      if (self.state.login == LogInStatus.MANAGER) {
+        return (
+          <div className={styles.wrapper}>
+            <div className={styles.left}>
+              <div className={styles.button + " " + styles.buttontop} onClick={()=> {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
+                }
+              }}>
+                <FontAwesome className='' name='location-arrow' />
+              </div>
+              <div className={styles.button} onClick={()=> {
+                let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
+                self.props.onZoom(zoom);
+              }}>
+                <FontAwesome className='' name='search-plus' />
+              </div>
+              <div className={styles.button} onClick={()=> {
+                let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
+                self.props.onZoom(zoom);
+              }}>
+                <FontAwesome className='' name='search-minus' />
+              </div>
+              <div className={styles.button}>
+                <FontAwesome className='' name='filter' />
+              </div>
+              <div className={styles.button + " " + styles.buttonbottom}>
+                <FontAwesome className='' name='plus' />
+              </div>
             </div>
-            <div className={styles.button} onClick={()=> {
-              let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-              self.props.onZoom(zoom);
-            }}>
-              <FontAwesome className='' name='search-plus' />
-            </div>
-            <div className={styles.button} onClick={()=> {
-              let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-              self.props.onZoom(zoom);
-            }}>
-              <FontAwesome className='' name='search-minus' />
-            </div>
-            <div className={styles.button}>
-              <FontAwesome className='' name='filter' />
-            </div>
-            <div className={styles.button + " " + styles.buttonbottom}>
-              <FontAwesome className='' name='plus' />
+            <div className={styles.right}>
             </div>
           </div>
-          <div className={styles.right}>
+        );
+      } else {
+        return (
+          <div className={styles.wrapper}>
+            <div className={styles.left}>
+              <div className={styles.button + " " + styles.buttontop} onClick={()=> {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
+                }
+              }}>
+                <FontAwesome className='' name='location-arrow' />
+              </div>
+              <div className={styles.button} onClick={()=> {
+                let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
+                self.props.onZoom(zoom);
+              }}>
+                <FontAwesome className='' name='search-plus' />
+              </div>
+              <div className={styles.button} onClick={()=> {
+                let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
+                self.props.onZoom(zoom);
+              }}>
+                <FontAwesome className='' name='search-minus' />
+              </div>
+              <div className={styles.button + " " + styles.buttonbottom}>
+                <FontAwesome className='' name='plus' />
+              </div>
+            </div>
+            <div className={styles.right}>
+            </div>
           </div>
-        </div>
-      );
+        );
+      }
     }
   }
 }

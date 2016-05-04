@@ -21,6 +21,7 @@ export interface ITreesStatus {
   trees: Array<TreeModel>;
   treeId: number;
   zoom: number;
+  position: null;
 }
 export default class TreesComponent extends React.Component<ITreesProps, ITreesStatus> {
   constructor(props : ITreesProps) {
@@ -30,6 +31,7 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
       treeId: null,
       trees: null,
       zoom: Settings.iDefaultZoom,
+      position: null,
     };
   }
   public componentDidMount() {
@@ -78,6 +80,15 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
     let self: TreesComponent = this;
     self.setState({zoom: zoom});
   }
+  onGeo = (position: Position) => {
+    let self: TreesComponent = this;
+    self.setState({position: new L.LatLng(position.coords.latitude, position.coords.longitude)});
+  }
+  offGeo = () => {
+    let self: TreesComponent = this;
+    self.setState({position: null});
+  }
+
   render() {
     let self: TreesComponent = this;
     return (
@@ -98,8 +109,8 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
             }
           }
         }>
-          <MapComponent treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} onRender={self.onMapRender} zoom={self.state.zoom} onZoom={self.onZoom} />
-          <TreesPanelComponent treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} zoom={self.state.zoom}  onZoom={self.onZoom} />
+          <MapComponent treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} onRender={self.onMapRender} zoom={self.state.zoom} onZoom={self.onZoom} position={self.state.position} offGeo={self.offGeo} />
+          <TreesPanelComponent treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} zoom={self.state.zoom}  onZoom={self.onZoom} onGeo={self.onGeo} />
         </AltContainer>
       </div>
     );

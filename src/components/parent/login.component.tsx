@@ -2,14 +2,14 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
 import * as FontAwesome from 'react-fontawesome';
-import './../../node_modules/font-awesome/css/font-awesome.css';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
 import * as Select from 'react-select';
-import './../../node_modules/react-select/dist/react-select.css';
+import './../../../node_modules/react-select/dist/react-select.css';
 
-var Settings = require('./../constraints/settings.json');
+var Settings = require('./../../constraints/settings.json');
 import * as styles from './login.component.css';
-import { processLogin, checkLogin } from './../utils/authentication';
+import { processLogin, checkLogin } from './../../utils/authentication';
 import LoginParentComponent from './login-parent.component';
 import LoginManagerComponent from './login-manager.component';
 
@@ -40,9 +40,9 @@ export default class LoginComponent extends React.Component<ILoginProps, ILoginS
   public componentDidMount() {
     let self: LoginComponent = this;
     self.options = new Array<ILogInOption>();
-    self.options.push({value: 0, label: "MANAGER SIGN-IN"});
     self.options.push({value: 1, label: "PARENT SIGN-IN"});
-    self.selected = self.options[1];
+    self.options.push({value: 0, label: "MANAGER SIGN-IN"});
+    self.selected = self.options[0];
 
     self.updateProps(self.props);
   }

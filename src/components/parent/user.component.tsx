@@ -2,15 +2,15 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
 import * as FontAwesome from 'react-fontawesome';
-import './../../node_modules/font-awesome/css/font-awesome.css';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
 import * as Select from 'react-select';
-import './../../node_modules/react-select/dist/react-select.css';
+import './../../../node_modules/react-select/dist/react-select.css';
 
-var Settings = require('./../constraints/settings.json');
+var Settings = require('./../../constraints/settings.json');
 import * as styles from './user.component.css';
-import { fetchUser, processLogout } from './../utils/authentication';
-import { LogInStatus } from './app.component';
+import { fetchUser, processLogout } from './../../utils/authentication';
+import { LogInStatus } from './../app.component';
 
 export interface IUserProps {
   login: LogInStatus;
