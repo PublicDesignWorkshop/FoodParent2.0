@@ -5,4 +5,5 @@ dist/dist/*
 npm-debug.log
 src/**/*.js
 src/**/*.js.map
+src/**/*.css.d.ts
 npm-debug.log.*

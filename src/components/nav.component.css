@@ -31,8 +31,7 @@
     text-align: left;
     margin: auto;
     cursor: pointer;
-    padding-left: 12px;
-
+    padding-left: 24px;
   }
   :local(.wrapper .left:hover) {
     color: rgba(107, 170, 119, 1);
@@ -68,13 +67,14 @@
     display: -ms-flexbox;           /* TWEENER - IE 10 */
     display: -webkit-flex;          /* NEW - Chrome */
     display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
-
-    width: 30%;
+    min-width: 30%;
+    max-width: 30%;
     text-align: center;
     cursor: pointer;
     background-color: rgba(107, 170, 119, 1);
     margin: 0 0 4px 0;
     border-bottom-left-radius: 8px;
+    padding: 0 8px;
   }
   :local(.wrapper .right .login) {
     width: 100%;
@@ -84,5 +84,25 @@
   }
   :local(.wrapper .right .login:hover) {
     color: rgba(94, 78, 81, 1);
+  }
+}
+
+
+@media screen and (max-device-width: 667px) {
+
+}
+
+@media screen and (max-device-aspect-ratio: 1/1) {
+  :local(.wrapper .center) {
+    display: none;
+  }
+  :local(.wrapper .right) {
+    max-width: 100%;
+  }
+  :local(.wrapper .left) {
+    -webkit-flex-grow: 1;           /* NEW - Chrome */
+    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    padding-left: 12px;
   }
 }

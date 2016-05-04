@@ -2,18 +2,16 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import * as FontAwesome from 'react-fontawesome';
-import './../../node_modules/font-awesome/css/font-awesome.css';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as Select from 'react-select';
-import './../../node_modules/react-select/dist/react-select.css';
+import './../../../node_modules/react-select/dist/react-select.css';
 import * as $ from 'jquery';
 
-var Settings = require('./../constraints/settings.json');
+var Settings = require('./../../constraints/settings.json');
 import * as styles from './flag.component.css';
-import { TreeModel, treeStore } from './../stores/tree.store';
-import { FoodModel, foodStore } from './../stores/food.store';
-import { FlagModel, flagStore } from './../stores/flag.store';
-import { reverseGeocoding, IReverseGeoLocation } from './../utils/reversegeolocation';
-import { addLoading, removeLoading } from './../utils/loadingtracker';
+import { TreeModel, treeStore } from './../../stores/tree.store';
+import { FlagModel, flagStore } from './../../stores/flag.store';
+import { addLoading, removeLoading } from './../../utils/loadingtracker';
 
 export interface IFlagOption {
   value: number;

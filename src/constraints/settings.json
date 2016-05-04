@@ -8,10 +8,11 @@
     "y": -84.3806
   },
   "uTileMap" : "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
-  "iDefaultZoom": "13",
-  "iMaxZoom": "20",
-  "iMinZoom": "5",
-  "iFocusZoom": "15",
+  "iDefaultZoom": 13,
+  "iMaxZoom": 20,
+  "iMinZoom": 5,
+  "iFocusZoom": 15,
   "sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
-  "uReverseGeoCoding": "//nominatim.openstreetmap.org/reverse?format=json&zoom=18&addressdetails=1"
+  "uReverseGeoCoding": "//nominatim.openstreetmap.org/reverse?format=json&zoom=18&addressdetails=1",
+  "iMarkerPrecision": 5
 }

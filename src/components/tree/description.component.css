@@ -12,6 +12,7 @@
   :local(.label) {
     font-weight: 700;
     padding-top: 8px;
+    padding-bottom: 4px;
   }
   :local(.label:not(:first-child)) {
     padding-top: 8px;
@@ -31,4 +32,8 @@
   :local(.edit:focus) {
     outline: none;
   }
+}
+
+@media only screen and (orientation: portrait) {
+
 }

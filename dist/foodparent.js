@@ -53,7 +53,7 @@
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	var routes_1 = __webpack_require__(/*! ./routes */ 218);
-	__webpack_require__(/*! ./client.css */ 445);
+	__webpack_require__(/*! ./client.css */ 420);
 	ReactDOM.render(React.createElement(react_router_1.Router, { history: react_router_1.browserHistory }, routes_1.default), document.getElementById('app'));
 	//# sourceMappingURL=client.js.map
 
@@ -26331,12 +26331,13 @@
 			"y": -84.3806
 		},
 		"uTileMap": "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
-		"iDefaultZoom": "13",
-		"iMaxZoom": "20",
-		"iMinZoom": "5",
-		"iFocusZoom": "15",
+		"iDefaultZoom": 13,
+		"iMaxZoom": 20,
+		"iMinZoom": 5,
+		"iFocusZoom": 15,
 		"sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
-		"uReverseGeoCoding": "//nominatim.openstreetmap.org/reverse?format=json&zoom=18&addressdetails=1"
+		"uReverseGeoCoding": "//nominatim.openstreetmap.org/reverse?format=json&zoom=18&addressdetails=1",
+		"iMarkerPrecision": 5
 	};
 
 /***/ },
@@ -26380,7 +26381,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  .UEmyZoI673uTwUmgyCJmK {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-flex-direction: row;    /* Safari 6.1+ */\r\n    flex-direction: row;            /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    width: 100%;\r\n    height: 100%;\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-weight: 700;\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.25);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.25);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.25);\r\n  }\r\n\r\n  .UEmyZoI673uTwUmgyCJmK ._1f1vPfE-MEvoKevvgyF-vQ {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-flex-direction: row;    /* Safari 6.1+ */\r\n    flex-direction: row;            /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    text-align: left;\r\n    margin: auto;\r\n    cursor: pointer;\r\n    padding-left: 12px;\r\n\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._1f1vPfE-MEvoKevvgyF-vQ:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._1f1vPfE-MEvoKevvgyF-vQ ._3Ig1beFFIfgbkPREX-6Hn7 {\r\n    font-size: large;\r\n    padding-top: 4px;\r\n    text-align: center;\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._1f1vPfE-MEvoKevvgyF-vQ .WOqFnowugEpspMM6yr0U5:after {\r\n    content: url(" + __webpack_require__(/*! static/images/logo-white-32x32.png */ 228) + ");\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._1f1vPfE-MEvoKevvgyF-vQ:hover .WOqFnowugEpspMM6yr0U5:after {\r\n    content: url(" + __webpack_require__(/*! static/images/logo-green-32x32.png */ 229) + ");\r\n  }\r\n\r\n  .UEmyZoI673uTwUmgyCJmK ._3TxDXrPFWNI3Y_xzKbSuzR {\r\n    -webkit-flex-grow: 4;           /* NEW - Chrome */\r\n    flex-grow: 4;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    text-align: center;\r\n    margin: auto;\r\n    cursor: pointer;\r\n  }\r\n\r\n  .UEmyZoI673uTwUmgyCJmK ._3TxDXrPFWNI3Y_xzKbSuzR:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n\r\n  .UEmyZoI673uTwUmgyCJmK ._3oZU5D9slN7qEpneRy53xQ {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    width: 30%;\r\n    text-align: center;\r\n    cursor: pointer;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    margin: 0 0 4px 0;\r\n    border-bottom-left-radius: 8px;\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._3oZU5D9slN7qEpneRy53xQ .Gqd5v6yhlP4t0TZH9MA3n {\r\n    width: 100%;\r\n    text-align: center;\r\n    margin: auto;\r\n    cursor: pointer;\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._3oZU5D9slN7qEpneRy53xQ .Gqd5v6yhlP4t0TZH9MA3n:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  .UEmyZoI673uTwUmgyCJmK {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-flex-direction: row;    /* Safari 6.1+ */\r\n    flex-direction: row;            /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    width: 100%;\r\n    height: 100%;\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-weight: 700;\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.25);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.25);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.25);\r\n  }\r\n\r\n  .UEmyZoI673uTwUmgyCJmK ._1f1vPfE-MEvoKevvgyF-vQ {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-flex-direction: row;    /* Safari 6.1+ */\r\n    flex-direction: row;            /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    text-align: left;\r\n    margin: auto;\r\n    cursor: pointer;\r\n    padding-left: 24px;\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._1f1vPfE-MEvoKevvgyF-vQ:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._1f1vPfE-MEvoKevvgyF-vQ ._3Ig1beFFIfgbkPREX-6Hn7 {\r\n    font-size: large;\r\n    padding-top: 4px;\r\n    text-align: center;\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._1f1vPfE-MEvoKevvgyF-vQ .WOqFnowugEpspMM6yr0U5:after {\r\n    content: url(" + __webpack_require__(/*! static/images/logo-white-32x32.png */ 228) + ");\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._1f1vPfE-MEvoKevvgyF-vQ:hover .WOqFnowugEpspMM6yr0U5:after {\r\n    content: url(" + __webpack_require__(/*! static/images/logo-green-32x32.png */ 229) + ");\r\n  }\r\n\r\n  .UEmyZoI673uTwUmgyCJmK ._3TxDXrPFWNI3Y_xzKbSuzR {\r\n    -webkit-flex-grow: 4;           /* NEW - Chrome */\r\n    flex-grow: 4;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    text-align: center;\r\n    margin: auto;\r\n    cursor: pointer;\r\n  }\r\n\r\n  .UEmyZoI673uTwUmgyCJmK ._3TxDXrPFWNI3Y_xzKbSuzR:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n\r\n  .UEmyZoI673uTwUmgyCJmK ._3oZU5D9slN7qEpneRy53xQ {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n    min-width: 30%;\r\n    max-width: 30%;\r\n    text-align: center;\r\n    cursor: pointer;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    margin: 0 0 4px 0;\r\n    border-bottom-left-radius: 8px;\r\n    padding: 0 8px;\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._3oZU5D9slN7qEpneRy53xQ .Gqd5v6yhlP4t0TZH9MA3n {\r\n    width: 100%;\r\n    text-align: center;\r\n    margin: auto;\r\n    cursor: pointer;\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._3oZU5D9slN7qEpneRy53xQ .Gqd5v6yhlP4t0TZH9MA3n:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  .UEmyZoI673uTwUmgyCJmK ._3TxDXrPFWNI3Y_xzKbSuzR {\r\n    display: none;\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._3oZU5D9slN7qEpneRy53xQ {\r\n    max-width: 100%;\r\n  }\r\n  .UEmyZoI673uTwUmgyCJmK ._1f1vPfE-MEvoKevvgyF-vQ {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    padding-left: 12px;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -39050,11 +39051,7 @@
 	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 285);
 	var food_store_1 = __webpack_require__(/*! ./../stores/food.store */ 408);
 	var map_component_1 = __webpack_require__(/*! ./map.component */ 411);
-	var tree_component_1 = __webpack_require__(/*! ./tree.component */ 417);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
-	var authentication_1 = __webpack_require__(/*! ./../utils/authentication */ 257);
-	var app_component_1 = __webpack_require__(/*! ./app.component */ 219);
-	var map_menu_component_1 = __webpack_require__(/*! ./map-menu.component */ 442);
+	var trees_panel_component_1 = __webpack_require__(/*! ./trees-panel.component */ 417);
 	
 	var TreesComponent = function (_React$Component) {
 	    _inherits(TreesComponent, _React$Component);
@@ -39070,28 +39067,10 @@
 	            var treeId = null;
 	            if (props.params.treeId) {
 	                treeId = parseInt(props.params.treeId);
+	                self.setState({ treeId: treeId });
+	            } else {
+	                self.setState({ treeId: null });
 	            }
-	            self.setState({ treeId: treeId, trees: self.state.trees, login: self.state.login, userId: self.state.userId, zoom: self.state.zoom });
-	            loadingtracker_1.addLoading();
-	            authentication_1.checkLogin(function (response1) {
-	                authentication_1.checkAdmin(function (response2) {
-	                    console.log("manager");
-	                    loadingtracker_1.removeLoading();
-	                    self.setState({ treeId: treeId, trees: self.state.trees, login: app_component_1.LogInStatus.MANAGER, userId: parseInt(response1.id), zoom: self.state.zoom });
-	                }, function (response) {
-	                    console.log("parent");
-	                    loadingtracker_1.removeLoading();
-	                    self.setState({ treeId: treeId, trees: self.state.trees, login: app_component_1.LogInStatus.PARENT, userId: parseInt(response1.id), zoom: self.state.zoom });
-	                }, function (response) {
-	                    loadingtracker_1.removeLoading();
-	                });
-	            }, function (response) {
-	                loadingtracker_1.removeLoading();
-	                console.log("guest");
-	                self.setState({ treeId: treeId, trees: self.state.trees, login: app_component_1.LogInStatus.GUEST, userId: parseInt(response.id), zoom: self.state.zoom });
-	            }, function (response) {
-	                loadingtracker_1.removeLoading();
-	            });
 	        };
 	        _this.onChange = function (store) {
 	            var self = _this;
@@ -39113,14 +39092,12 @@
 	        };
 	        _this.onZoom = function (zoom) {
 	            var self = _this;
-	            self.setState({ treeId: self.state.treeId, trees: self.state.trees, login: self.state.login, userId: self.state.userId, zoom: zoom });
+	            self.setState({ zoom: zoom });
 	        };
 	        var self = _this;
 	        _this.state = {
 	            treeId: null,
 	            trees: null,
-	            login: app_component_1.LogInStatus.GUEST,
-	            userId: null,
 	            zoom: Settings.iDefaultZoom
 	        };
 	        return _this;
@@ -39162,7 +39139,7 @@
 	                            value: tree_store_1.treeStore.getState().trees
 	                        };
 	                    }
-	                } }, React.createElement(map_component_1.default, { treeId: self.state.treeId, foods: food_store_1.foodStore.getState().foods, trees: tree_store_1.treeStore.getState().trees, onRender: self.onMapRender, zoom: self.state.zoom }), React.createElement(map_menu_component_1.default, { login: self.state.login, onZoom: self.onZoom }), React.createElement(tree_component_1.default, { login: self.state.login, userId: self.state.userId, treeId: self.state.treeId, foods: food_store_1.foodStore.getState().foods, trees: tree_store_1.treeStore.getState().trees })));
+	                } }, React.createElement(map_component_1.default, { treeId: self.state.treeId, foods: food_store_1.foodStore.getState().foods, trees: tree_store_1.treeStore.getState().trees, onRender: self.onMapRender, zoom: self.state.zoom, onZoom: self.onZoom }), React.createElement(trees_panel_component_1.default, { treeId: self.state.treeId, foods: food_store_1.foodStore.getState().foods, trees: tree_store_1.treeStore.getState().trees, zoom: self.state.zoom, onZoom: self.onZoom })));
 	        }
 	    }]);
 	
@@ -40124,6 +40101,7 @@
 	var alt_1 = __webpack_require__(/*! ./../alt */ 286);
 	var moment = __webpack_require__(/*! moment */ 300);
 	var L = __webpack_require__(/*! leaflet */ 403);
+	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
 	var tree_actions_1 = __webpack_require__(/*! ./../actions/tree.actions */ 404);
 	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 406);
 	var tree_source_1 = __webpack_require__(/*! ./../sources/tree.source */ 407);
@@ -40141,8 +40119,8 @@
 	        value: function update(props) {
 	            var self = this;
 	            self.id = parseInt(props.id);
-	            self.lat = parseFloat(props.lat);
-	            self.lng = parseFloat(props.lng);
+	            self.lat = parseFloat(parseFloat(props.lat).toFixed(Settings.iMarkerPrecision));
+	            self.lng = parseFloat(parseFloat(props.lng).toFixed(Settings.iMarkerPrecision));
 	            self.food = parseInt(props.food);
 	            self.type = parseInt(props.type);
 	            self.description = props.description;
@@ -40254,13 +40232,13 @@
 	            this.owner = owner;
 	        }
 	    }, {
-	        key: 'getPublic',
-	        value: function getPublic() {
+	        key: 'getOwnership',
+	        value: function getOwnership() {
 	            return this.public;
 	        }
 	    }, {
-	        key: 'setPublic',
-	        value: function setPublic(pub) {
+	        key: 'setOwnership',
+	        value: function setOwnership(pub) {
 	            this.public = pub;
 	        }
 	    }]);
@@ -60211,7 +60189,7 @@
 			width = Math.min(width, this.options.maxWidth);
 			width = Math.max(width, this.options.minWidth);
 	
-			style.width = (width + 1) + 'px';
+			style.width = (width) + 'px';
 			style.whiteSpace = '';
 	
 			style.height = '';
@@ -61250,7 +61228,7 @@
 			}
 	
 			this._requestUpdate();
-			
+	
 			this.fire('remove');
 			this._map = null;
 		},
@@ -64305,7 +64283,7 @@
 					this.addAttribution(map._layers[i].getAttribution());
 				}
 			}
-			
+	
 			map
 			    .on('layeradd', this._onLayerAdd, this)
 			    .on('layerremove', this._onLayerRemove, this);
@@ -65363,6 +65341,7 @@
 	
 	}(window, document));
 
+
 /***/ },
 /* 404 */
 /*!*************************************!*\
@@ -65910,20 +65889,25 @@
 	            document.querySelector('.leaflet-bottom.leaflet-left').innerHTML = '<div class="leaflet-control-attribution leaflet-control"><div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a></div></div>';
 	            self.map.on("moveend", self.afterMoveMap);
 	            self.map.on('popupopen', function (event) {
-	                var marker = event.popup._source;
-	                self.selected = marker;
-	                self.selected._bringToFront();
-	                // Move the map slight off from the center using CRS projection
-	                var point = L.CRS.EPSG3857.latLngToPoint(self.selected.getLatLng(), self.map.getZoom());
-	                var rMap = ReactDOM.findDOMNode(self.refs['map']);
-	                if (rMap.clientWidth > rMap.clientHeight) {
-	                    point.x += self.map.getSize().x * 0.15;
-	                } else {}
-	                self.map.panTo(L.CRS.EPSG3857.pointToLatLng(point, self.map.getZoom()));
-	                //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
+	                setTimeout(function () {
+	                    var marker = event.popup._source;
+	                    self.selected = marker;
+	                    self.selected._bringToFront();
+	                    // Move the map slight off from the center using CRS projection
+	                    var point = L.CRS.EPSG3857.latLngToPoint(self.selected.getLatLng(), self.props.zoom);
+	                    var rMap = ReactDOM.findDOMNode(self.refs['map']);
+	                    if (rMap.clientWidth > rMap.clientHeight) {
+	                        point.x += self.map.getSize().x * 0.15;
+	                    } else {}
+	                    self.map.panTo(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
+	                    //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
+	                }, 500);
 	            });
 	            self.map.on('popupclose', function (event) {
 	                self.selected = null;
+	            });
+	            self.map.on('zoomend', function (event) {
+	                self.props.onZoom(event.target._zoom);
 	            });
 	            self.props.onRender();
 	        };
@@ -67713,9 +67697,9 @@
 
 /***/ },
 /* 417 */
-/*!******************************************!*\
-  !*** ./src/components/tree.component.js ***!
-  \******************************************/
+/*!*************************************************!*\
+  !*** ./src/components/trees-panel.component.js ***!
+  \*************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -67731,42 +67715,71 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
 	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
-	var AltContainer = __webpack_require__(/*! alt-container */ 267);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./tree.component.css */ 418);
+	var styles = __webpack_require__(/*! ./trees-panel.component.css */ 418);
+	var tree_component_1 = __webpack_require__(/*! ./tree/tree.component */ 422);
 	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 285);
-	var food_store_1 = __webpack_require__(/*! ./../stores/food.store */ 408);
-	var flag_store_1 = __webpack_require__(/*! ./../stores/flag.store */ 420);
-	var ownership_store_1 = __webpack_require__(/*! ./../stores/ownership.store */ 423);
-	var address_component_1 = __webpack_require__(/*! ./address.component */ 426);
-	var description_component_1 = __webpack_require__(/*! ./description.component */ 430);
-	var flag_component_1 = __webpack_require__(/*! ./flag.component */ 433);
-	var pub_component_1 = __webpack_require__(/*! ./pub.component */ 436);
-	var location_component_1 = __webpack_require__(/*! ./location.component */ 439);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
+	var authentication_1 = __webpack_require__(/*! ./../utils/authentication */ 257);
 	var app_component_1 = __webpack_require__(/*! ./app.component */ 219);
 	
-	var TreeComponent = function (_React$Component) {
-	    _inherits(TreeComponent, _React$Component);
+	var TreesPanelComponent = function (_React$Component) {
+	    _inherits(TreesPanelComponent, _React$Component);
 	
-	    function TreeComponent(props) {
-	        _classCallCheck(this, TreeComponent);
+	    function TreesPanelComponent(props) {
+	        _classCallCheck(this, TreesPanelComponent);
 	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TreeComponent).call(this, props));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TreesPanelComponent).call(this, props));
 	
+	        _this.updateProps = function (props) {
+	            var self = _this;
+	            if (props.trees.length != 0 && props.foods.length != 0) {
+	                var tree;
+	
+	                (function () {
+	                    tree = tree_store_1.treeStore.getTree(props.treeId);
+	
+	                    var open = false;
+	                    if (tree) {
+	                        open = true;
+	                    }
+	                    loadingtracker_1.addLoading();
+	                    authentication_1.checkLogin(function (response1) {
+	                        authentication_1.checkAdmin(function (response2) {
+	                            console.log("manager");
+	                            loadingtracker_1.removeLoading();
+	                            self.setState({ login: app_component_1.LogInStatus.MANAGER, userId: parseInt(response1.id), open: open });
+	                        }, function (response) {
+	                            console.log("parent");
+	                            loadingtracker_1.removeLoading();
+	                            self.setState({ login: app_component_1.LogInStatus.PARENT, userId: parseInt(response1.id), open: open });
+	                        }, function (response) {
+	                            loadingtracker_1.removeLoading();
+	                        });
+	                    }, function (response) {
+	                        loadingtracker_1.removeLoading();
+	                        console.log("guest");
+	                        self.setState({ login: app_component_1.LogInStatus.GUEST, userId: parseInt(response.id), open: open });
+	                    }, function (response) {
+	                        loadingtracker_1.removeLoading();
+	                    });
+	                })();
+	            }
+	        };
 	        var self = _this;
 	        _this.state = {
-	            bOpen: false,
-	            bEditable: false
+	            login: app_component_1.LogInStatus.GUEST,
+	            userId: null,
+	            open: false
 	        };
 	        return _this;
 	    }
 	
-	    _createClass(TreeComponent, [{
+	    _createClass(TreesPanelComponent, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var self = this;
-	            flag_store_1.flagStore.fetchFlags();
-	            //ownershipStore.fetchOwnerships();
+	            self.updateProps(self.props);
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
@@ -67777,56 +67790,254 @@
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
 	            var self = this;
-	            if (nextProps.trees.length != 0 && nextProps.foods.length != 0) {
-	                var tree = tree_store_1.treeStore.getTree(nextProps.treeId);
-	                var bOpen = false;
-	                var bEditable = false;
-	                if (tree) {
-	                    bOpen = true;
-	                    if (nextProps.login == app_component_1.LogInStatus.MANAGER || nextProps.login == app_component_1.LogInStatus.ADMIN) {
-	                        bEditable = true;
-	                    } else {
-	                        if (tree.getOwner() == nextProps.userId) {
-	                            bEditable = true;
-	                        }
-	                    }
-	                }
-	                self.setState({ bOpen: bOpen, bEditable: bEditable });
-	            }
+	            self.updateProps(nextProps);
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var self = this;
-	            if (self.state.bOpen) {
-	                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
-	                var food = food_store_1.foodStore.getFood(tree.getFoodId());
-	                return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.treeinfo }, React.createElement("img", { className: styles.icon, src: Settings.uBaseName + Settings.uStaticImage + food.getIcon() }), React.createElement("div", { className: styles.name }, food.getName() + ' #' + tree.getId()), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
-	                        self.context.router.push({ pathname: Settings.uBaseName + '/' });
-	                        self.setState({ bOpen: false, bEditable: self.state.bEditable });
-	                    } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement(AltContainer, { stores: {
-	                        foods: function foods(props) {
-	                            return {
-	                                store: food_store_1.foodStore,
-	                                value: food_store_1.foodStore.getState().foods
-	                            };
-	                        },
-	                        flags: function flags(props) {
-	                            return {
-	                                store: flag_store_1.flagStore,
-	                                value: flag_store_1.flagStore.getState().flags
-	                            };
-	                        },
-	                        ownership: function ownership(props) {
-	                            return {
-	                                store: ownership_store_1.ownershipStore,
-	                                value: ownership_store_1.ownershipStore.getState().ownerships
-	                            };
-	                        }
-	                    } }, React.createElement(location_component_1.default, { tree: tree, editable: self.state.bEditable }), React.createElement(address_component_1.default, { tree: tree, editable: self.state.bEditable }), React.createElement(description_component_1.default, { tree: tree, editable: self.state.bEditable }), React.createElement(flag_component_1.default, { tree: tree, flags: flag_store_1.flagStore.getState().flags, editable: self.state.bEditable }), React.createElement(pub_component_1.default, { tree: tree, editable: self.state.bEditable }))));
+	            if (self.state.open) {
+	                return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement("div", { className: styles.button + " " + styles.buttontop }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                        var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
+	                        self.props.onZoom(zoom);
+	                    } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                        var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
+	                        self.props.onZoom(zoom);
+	                    } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button }, React.createElement(FontAwesome, { className: '', name: 'filter' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus' }))), React.createElement("div", { className: styles.right }, React.createElement(tree_component_1.default, { login: self.state.login, userId: self.state.userId, treeId: self.props.treeId, foods: self.props.foods, trees: self.props.trees })));
 	            } else {
-	                return React.createElement("div", { className: styles.wrapper });
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left }, React.createElement("div", { className: styles.button + " " + styles.buttontop }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                        var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
+	                        self.props.onZoom(zoom);
+	                    } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                        var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
+	                        self.props.onZoom(zoom);
+	                    } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button }, React.createElement(FontAwesome, { className: '', name: 'filter' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus' }))), React.createElement("div", { className: styles.right }));
 	            }
+	        }
+	    }]);
+	
+	    return TreesPanelComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = TreesPanelComponent;
+	TreesPanelComponent.contextTypes = {
+	    router: function router() {
+	        return React.PropTypes.func.isRequired;
+	    }
+	};
+	//# sourceMappingURL=trees-panel.component.js.map
+
+/***/ },
+/* 418 */
+/*!**************************************************!*\
+  !*** ./src/components/trees-panel.component.css ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-panel.component.css */ 419);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./trees-panel.component.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./trees-panel.component.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 419 */
+/*!*****************************************************************!*\
+  !*** ./~/css-loader!./src/components/trees-panel.component.css ***!
+  \*****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    position: absolute;\r\n    top: 0;\r\n    right: -30%;\r\n    width: 30%;\r\n    height: 100%;\r\n    transition: 0.25s;\r\n    padding: 48px 0 0 0;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n\r\n  .DriP8-Em6b0UwHdkRjcUn {\r\n    position: absolute;\r\n    top: 96px;\r\n    left: -48px;\r\n    width: 48px;\r\n  }\r\n\r\n  ._3iETVmpyrHfy60GFk49K53 {\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n\r\n  ._3AVmLJVL5ruKboVvS1zcmY {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -moz-user-select: all;\r\n    -ms-user-select: all;\r\n    -webkit-user-select: all;\r\n    user-select: all;\r\n\r\n    width: 48px;\r\n    height: 48px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-left: 1px solid rgba(0, 0, 0, 0.25);\r\n    font-size: x-large;\r\n    cursor: pointer;\r\n    pointer-events: all;\r\n  }\r\n  ._3AVmLJVL5ruKboVvS1zcmY .fa {\r\n    margin: auto;\r\n  }\r\n  ._3AVmLJVL5ruKboVvS1zcmY:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._3YfXVYMQzhzR1xQ1jOfaYc {\r\n    border-top: 1px solid rgba(0, 0, 0, 0.1);\r\n    border-top-left-radius: 2px;\r\n  }\r\n  ._1ajiO34jiV4lDr28I0OzSA {\r\n    border-bottom: 1px solid rgba(0, 0, 0, 0.1);\r\n    border-bottom-left-radius: 2px;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    right: -50%;\r\n    width: 50%;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    position: absolute;\r\n    right: -100%;\r\n    width: 100%;\r\n    opacity: 0.95;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"wrapper": "_1zOCE_2pIKSzr8MI4JUzlk",
+		"slidein": "_3sdT-x8NzmydUUQlaCHfTR",
+		"left": "DriP8-Em6b0UwHdkRjcUn",
+		"right": "_3iETVmpyrHfy60GFk49K53",
+		"button": "_3AVmLJVL5ruKboVvS1zcmY",
+		"buttontop": "_3YfXVYMQzhzR1xQ1jOfaYc",
+		"buttonbottom": "_1ajiO34jiV4lDr28I0OzSA"
+	};
+
+/***/ },
+/* 420 */
+/*!************************!*\
+  !*** ./src/client.css ***!
+  \************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 421);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./client.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./client.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 421 */
+/*!***************************************!*\
+  !*** ./~/css-loader!./src/client.css ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic);", ""]);
+	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,700,300italic);", ""]);
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  * {\r\n    margin: 0;\r\n    padding: 0;\r\n    -moz-box-sizing: border-box;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n    -webkit-tap-highlight-color: rgba(0,0,0,0);\r\n    \r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n  }\r\n  html {\r\n    width: 100%;\r\n    height: 100%;\r\n  }\r\n  body {\r\n    width: 100%;\r\n    height: 100%;\r\n    color: rgba(255, 255, 255, 1);\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: medium;\r\n    overflow: hidden;\r\n  }\r\n  a {\r\n    text-decoration: none;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n  }\r\n  #BG6p6R6pCMzH6rLXugbI3, #app {\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow: hidden;\r\n  }\r\n  .hidden {\r\n    display: none;\r\n  }\r\n  .hide {\r\n    opacity : 0;\r\n    transition: opacity 1.3s;\r\n  }\r\n  input {\r\n    -moz-user-select: all;\r\n    -ms-user-select: all;\r\n    -webkit-user-select: all;\r\n    user-select: all;\r\n  }\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"app": "BG6p6R6pCMzH6rLXugbI3"
+	};
+
+/***/ },
+/* 422 */
+/*!***********************************************!*\
+  !*** ./src/components/tree/tree.component.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 1);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
+	var AltContainer = __webpack_require__(/*! alt-container */ 267);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./tree.component.css */ 423);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 285);
+	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 408);
+	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 425);
+	var ownership_store_1 = __webpack_require__(/*! ./../../stores/ownership.store */ 428);
+	var address_component_1 = __webpack_require__(/*! ./address.component */ 431);
+	var description_component_1 = __webpack_require__(/*! ./description.component */ 435);
+	var flag_component_1 = __webpack_require__(/*! ./flag.component */ 438);
+	var ownership_component_1 = __webpack_require__(/*! ./ownership.component */ 441);
+	var location_component_1 = __webpack_require__(/*! ./location.component */ 444);
+	var app_component_1 = __webpack_require__(/*! ./../app.component */ 219);
+	
+	var TreeComponent = function (_React$Component) {
+	    _inherits(TreeComponent, _React$Component);
+	
+	    function TreeComponent(props) {
+	        _classCallCheck(this, TreeComponent);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TreeComponent).call(this, props));
+	
+	        _this.updateProps = function (props) {
+	            var self = _this;
+	            if (props.trees.length != 0 && props.foods.length != 0) {
+	                var tree = tree_store_1.treeStore.getTree(props.treeId);
+	                var editable = false;
+	                if (tree) {
+	                    if (props.login == app_component_1.LogInStatus.MANAGER || props.login == app_component_1.LogInStatus.ADMIN) {
+	                        editable = true;
+	                    } else {
+	                        if (tree.getOwner() == props.userId) {
+	                            editable = true;
+	                        }
+	                    }
+	                    self.setState({ editable: editable });
+	                }
+	            }
+	        };
+	        var self = _this;
+	        _this.state = {
+	            editable: false
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(TreeComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var self = this;
+	            flag_store_1.flagStore.fetchFlags();
+	            self.updateProps(self.props);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var self = this;
+	            self.updateProps(nextProps);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            var tree = tree_store_1.treeStore.getTree(self.props.treeId);
+	            var food = food_store_1.foodStore.getFood(tree.getFoodId());
+	            return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.treeinfo }, React.createElement("img", { className: styles.icon, src: Settings.uBaseName + Settings.uStaticImage + food.getIcon() }), React.createElement("div", { className: styles.name }, food.getName() + ' #' + tree.getId()), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
+	                    self.context.router.push({ pathname: Settings.uBaseName + '/' });
+	                    self.setState({ bOpen: false, editable: self.state.editable });
+	                } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement(AltContainer, { stores: {
+	                    flags: function flags(props) {
+	                        return {
+	                            store: flag_store_1.flagStore,
+	                            value: flag_store_1.flagStore.getState().flags
+	                        };
+	                    },
+	                    ownership: function ownership(props) {
+	                        return {
+	                            store: ownership_store_1.ownershipStore,
+	                            value: ownership_store_1.ownershipStore.getState().ownerships
+	                        };
+	                    }
+	                } }, React.createElement(location_component_1.default, { tree: tree, editable: self.state.editable }), React.createElement(address_component_1.default, { tree: tree, editable: self.state.editable }), React.createElement(description_component_1.default, { tree: tree, editable: self.state.editable }), React.createElement(flag_component_1.default, { tree: tree, flags: flag_store_1.flagStore.getState().flags, editable: self.state.editable }), React.createElement(ownership_component_1.default, { tree: tree, editable: self.state.editable }))));
 	        }
 	    }]);
 	
@@ -67843,26 +68054,26 @@
 	//# sourceMappingURL=tree.component.js.map
 
 /***/ },
-/* 418 */
-/*!*******************************************!*\
-  !*** ./src/components/tree.component.css ***!
-  \*******************************************/
+/* 423 */
+/*!************************************************!*\
+  !*** ./src/components/tree/tree.component.css ***!
+  \************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./tree.component.css */ 419);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./tree.component.css */ 424);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./tree.component.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./tree.component.css");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./tree.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./tree.component.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -67872,32 +68083,31 @@
 	}
 
 /***/ },
-/* 419 */
-/*!**********************************************************!*\
-  !*** ./~/css-loader!./src/components/tree.component.css ***!
-  \**********************************************************/
+/* 424 */
+/*!***************************************************************!*\
+  !*** ./~/css-loader!./src/components/tree/tree.component.css ***!
+  \***************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._2MZN7GsJrqApN6BFSfnNN- {\r\n    position: absolute;\r\n    top: 0;\r\n    right: -30%;\r\n    width: 30%;\r\n    height: 100%;\r\n    transition: 0.25s;\r\n    padding: 56px 8px 8px 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n  ._2x57Gvq2_SKG7c1yzDAPIr {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n  ._1527OAWgK8I85S0nSszFWr {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  ._1527OAWgK8I85S0nSszFWr ._1lMqoYhmdD01Z72CCAKXQY {\r\n    /*\r\n    -webkit-filter: drop-shadow(0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    filter: drop-shadow( 0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    */\r\n    width: 36px;\r\n    height: 36px;\r\n    margin: 8px;\r\n  }\r\n  ._1527OAWgK8I85S0nSszFWr ._39WNBrE-rJWlgAYgnzQutA {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  ._1527OAWgK8I85S0nSszFWr .vpT1VmsP_XqUx9DzD3Ykn {\r\n\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1527OAWgK8I85S0nSszFWr .vpT1VmsP_XqUx9DzD3Ykn span {\r\n    cursor: pointer;\r\n  }\r\n  .aQPM8FVdNjnuBPRVsBzcx {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n  ._2MZN7GsJrqApN6BFSfnNN- {\r\n    right: -50%;\r\n    width: 50%;\r\n  }\r\n  ._2x57Gvq2_SKG7c1yzDAPIr {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._2MZN7GsJrqApN6BFSfnNN- {\r\n    position: absolute;\r\n    right: -100%;\r\n    width: 100%;\r\n    opacity: 0.85;\r\n    padding-bottom: 120px;\r\n  }\r\n  ._2x57Gvq2_SKG7c1yzDAPIr {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._16D5PuHDIQwQPEk5BEK7Jq {\r\n    width: 100%;\r\n    height: 100%;\r\n    padding: 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2r9tcLGEMAdI0cC1RgsoJc {\r\n    /*\r\n    -webkit-filter: drop-shadow(0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    filter: drop-shadow( 0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    */\r\n    width: 36px;\r\n    height: 36px;\r\n    margin: 8px;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt .Wo2Ui_tE12dY0WMgg_3NP {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2u50jFKXz0ZDetyuZQLK9h {\r\n\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2u50jFKXz0ZDetyuZQLK9h span {\r\n    cursor: pointer;\r\n  }\r\n  ._2btuClksWCZJkWjoKbAUSl {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
-		"wrapper": "_2MZN7GsJrqApN6BFSfnNN-",
-		"slidein": "_2x57Gvq2_SKG7c1yzDAPIr",
-		"treeinfo": "_1527OAWgK8I85S0nSszFWr",
-		"icon": "_1lMqoYhmdD01Z72CCAKXQY",
-		"name": "_39WNBrE-rJWlgAYgnzQutA",
-		"close": "vpT1VmsP_XqUx9DzD3Ykn",
-		"basicinfo": "aQPM8FVdNjnuBPRVsBzcx"
+		"wrapper": "_16D5PuHDIQwQPEk5BEK7Jq",
+		"treeinfo": "xJtBa_wFfdaNtBD5XLQUt",
+		"icon": "_2r9tcLGEMAdI0cC1RgsoJc",
+		"name": "Wo2Ui_tE12dY0WMgg_3NP",
+		"close": "_2u50jFKXz0ZDetyuZQLK9h",
+		"basicinfo": "_2btuClksWCZJkWjoKbAUSl"
 	};
 
 /***/ },
-/* 420 */
+/* 425 */
 /*!**********************************!*\
   !*** ./src/stores/flag.store.js ***!
   \**********************************/
@@ -67914,9 +68124,9 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var alt_1 = __webpack_require__(/*! ./../alt */ 286);
-	var flag_actions_1 = __webpack_require__(/*! ./../actions/flag.actions */ 421);
+	var flag_actions_1 = __webpack_require__(/*! ./../actions/flag.actions */ 426);
 	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 406);
-	var flag_source_1 = __webpack_require__(/*! ./../sources/flag.source */ 422);
+	var flag_source_1 = __webpack_require__(/*! ./../sources/flag.source */ 427);
 	
 	var FlagModel = function () {
 	    function FlagModel(props) {
@@ -68014,7 +68224,7 @@
 	//# sourceMappingURL=flag.store.js.map
 
 /***/ },
-/* 421 */
+/* 426 */
 /*!*************************************!*\
   !*** ./src/actions/flag.actions.js ***!
   \*************************************/
@@ -68086,7 +68296,7 @@
 	//# sourceMappingURL=flag.actions.js.map
 
 /***/ },
-/* 422 */
+/* 427 */
 /*!************************************!*\
   !*** ./src/sources/flag.source.js ***!
   \************************************/
@@ -68096,7 +68306,7 @@
 	
 	var $ = __webpack_require__(/*! jquery */ 258);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var flag_actions_1 = __webpack_require__(/*! ./../actions/flag.actions */ 421);
+	var flag_actions_1 = __webpack_require__(/*! ./../actions/flag.actions */ 426);
 	var FlagSource = {
 	    fetchFlags: function fetchFlags() {
 	        return {
@@ -68133,7 +68343,7 @@
 	//# sourceMappingURL=flag.source.js.map
 
 /***/ },
-/* 423 */
+/* 428 */
 /*!***************************************!*\
   !*** ./src/stores/ownership.store.js ***!
   \***************************************/
@@ -68150,9 +68360,9 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var alt_1 = __webpack_require__(/*! ./../alt */ 286);
-	var ownership_actions_1 = __webpack_require__(/*! ./../actions/ownership.actions */ 424);
+	var ownership_actions_1 = __webpack_require__(/*! ./../actions/ownership.actions */ 429);
 	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 406);
-	var ownership_source_1 = __webpack_require__(/*! ./../sources/ownership.source */ 425);
+	var ownership_source_1 = __webpack_require__(/*! ./../sources/ownership.source */ 430);
 	
 	var OwnershipModel = function () {
 	    function OwnershipModel(props) {
@@ -68250,7 +68460,7 @@
 	//# sourceMappingURL=ownership.store.js.map
 
 /***/ },
-/* 424 */
+/* 429 */
 /*!******************************************!*\
   !*** ./src/actions/ownership.actions.js ***!
   \******************************************/
@@ -68322,7 +68532,7 @@
 	//# sourceMappingURL=ownership.actions.js.map
 
 /***/ },
-/* 425 */
+/* 430 */
 /*!*****************************************!*\
   !*** ./src/sources/ownership.source.js ***!
   \*****************************************/
@@ -68332,7 +68542,7 @@
 	
 	var $ = __webpack_require__(/*! jquery */ 258);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var ownership_actions_1 = __webpack_require__(/*! ./../actions/ownership.actions */ 424);
+	var ownership_actions_1 = __webpack_require__(/*! ./../actions/ownership.actions */ 429);
 	var OwnershipSource = {
 	    fetchOwnerships: function fetchOwnerships() {
 	        return {
@@ -68369,10 +68579,10 @@
 	//# sourceMappingURL=ownership.source.js.map
 
 /***/ },
-/* 426 */
-/*!*********************************************!*\
-  !*** ./src/components/address.component.js ***!
-  \*********************************************/
+/* 431 */
+/*!**************************************************!*\
+  !*** ./src/components/tree/address.component.js ***!
+  \**************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -68387,12 +68597,12 @@
 	
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./address.component.css */ 427);
-	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 285);
-	var reversegeolocation_1 = __webpack_require__(/*! ./../utils/reversegeolocation */ 429);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./address.component.css */ 432);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 285);
+	var reversegeolocation_1 = __webpack_require__(/*! ./../../utils/reversegeolocation */ 434);
+	var loadingtracker_1 = __webpack_require__(/*! ./../../utils/loadingtracker */ 265);
 	
 	var AddressComponent = function (_React$Component) {
 	    _inherits(AddressComponent, _React$Component);
@@ -68464,9 +68674,7 @@
 	        value: function render() {
 	            var self = this;
 	            if (self.state.editing) {
-	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.label, onClick: function onClick() {
-	                        self.setState({ address: self.state.address, editing: true });
-	                    } }, React.createElement(FontAwesome, { className: '', name: 'map-signs' }), " Address"), React.createElement("div", { className: styles.editname }, React.createElement("input", { autoFocus: true, type: "text", className: styles.edit, key: self.props.tree.getId() + "address", placeholder: "enter address of tree...", value: self.state.address, onChange: function onChange(event) {
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.label }, React.createElement(FontAwesome, { className: '', name: 'map-signs' }), " Address"), React.createElement("div", { className: styles.editname }, React.createElement("input", { autoFocus: true, type: "text", className: styles.edit, key: self.props.tree.getId() + "address", placeholder: "enter address of tree...", value: self.state.address, onChange: function onChange(event) {
 	                        self.setState({ address: event.target.value, editing: self.state.editing });
 	                    }, onKeyPress: function onKeyPress(event) {
 	                        if (event.key == 'Enter') {
@@ -68478,11 +68686,11 @@
 	            } else {
 	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.label, onClick: function onClick() {
 	                        if (self.props.editable) {
-	                            self.setState({ address: self.state.address, editing: true });
+	                            self.setState({ editing: true });
 	                        }
 	                    } }, React.createElement(FontAwesome, { className: '', name: 'map-signs' }), " Address"), React.createElement("div", { className: styles.name, onClick: function onClick() {
 	                        if (self.props.editable) {
-	                            self.setState({ address: self.state.address, editing: true });
+	                            self.setState({ editing: true });
 	                        }
 	                    } }, self.state.address));
 	            }
@@ -68497,26 +68705,26 @@
 	//# sourceMappingURL=address.component.js.map
 
 /***/ },
-/* 427 */
-/*!**********************************************!*\
-  !*** ./src/components/address.component.css ***!
-  \**********************************************/
+/* 432 */
+/*!***************************************************!*\
+  !*** ./src/components/tree/address.component.css ***!
+  \***************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./address.component.css */ 428);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./address.component.css */ 433);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./address.component.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./address.component.css");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./address.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./address.component.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -68526,30 +68734,30 @@
 	}
 
 /***/ },
-/* 428 */
-/*!*************************************************************!*\
-  !*** ./~/css-loader!./src/components/address.component.css ***!
-  \*************************************************************/
+/* 433 */
+/*!******************************************************************!*\
+  !*** ./~/css-loader!./src/components/tree/address.component.css ***!
+  \******************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._2MVEX8kUH0_QzORVIIUIBw {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._2vpdqaPGBeR3xtuTF-Vs19 {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._13otg538Mbt6QD7c-UNwFg {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._13otg538Mbt6QD7c-UNwFg:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._3l1TIq1O45kwgT7HM9A8AZ {\r\n    display: block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  .TDjHL_fsejSk0Uq4Log1l {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  .TDjHL_fsejSk0Uq4Log1l:focus {\r\n    outline: none;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  .CuHDWnA3HLTwt_YL0lVLL {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._3MxALqoTGUaPvUaJaTicTr {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  .aoOYU_HzI8jAXlSctMLuj {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  .aoOYU_HzI8jAXlSctMLuj:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._2chX_qi0zlU_-T14hiKke3 {\r\n    display: block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._2WUqNrrBhHdrfPBsNlXbuJ {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._2WUqNrrBhHdrfPBsNlXbuJ:focus {\r\n    outline: none;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
-		"wrapper": "_2MVEX8kUH0_QzORVIIUIBw",
-		"name": "_2vpdqaPGBeR3xtuTF-Vs19",
-		"label": "_13otg538Mbt6QD7c-UNwFg",
-		"editname": "_3l1TIq1O45kwgT7HM9A8AZ",
-		"edit": "TDjHL_fsejSk0Uq4Log1l"
+		"wrapper": "CuHDWnA3HLTwt_YL0lVLL",
+		"name": "_3MxALqoTGUaPvUaJaTicTr",
+		"label": "aoOYU_HzI8jAXlSctMLuj",
+		"editname": "_2chX_qi0zlU_-T14hiKke3",
+		"edit": "_2WUqNrrBhHdrfPBsNlXbuJ"
 	};
 
 /***/ },
-/* 429 */
+/* 434 */
 /*!*****************************************!*\
   !*** ./src/utils/reversegeolocation.js ***!
   \*****************************************/
@@ -68583,10 +68791,10 @@
 	//# sourceMappingURL=reversegeolocation.js.map
 
 /***/ },
-/* 430 */
-/*!*************************************************!*\
-  !*** ./src/components/description.component.js ***!
-  \*************************************************/
+/* 435 */
+/*!******************************************************!*\
+  !*** ./src/components/tree/description.component.js ***!
+  \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -68601,10 +68809,10 @@
 	
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./description.component.css */ 431);
-	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 285);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./description.component.css */ 436);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 285);
 	
 	var DescriptionComponent = function (_React$Component) {
 	    _inherits(DescriptionComponent, _React$Component);
@@ -68694,26 +68902,26 @@
 	//# sourceMappingURL=description.component.js.map
 
 /***/ },
-/* 431 */
-/*!**************************************************!*\
-  !*** ./src/components/description.component.css ***!
-  \**************************************************/
+/* 436 */
+/*!*******************************************************!*\
+  !*** ./src/components/tree/description.component.css ***!
+  \*******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./description.component.css */ 432);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./description.component.css */ 437);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./description.component.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./description.component.css");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./description.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./description.component.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -68723,33 +68931,33 @@
 	}
 
 /***/ },
-/* 432 */
-/*!*****************************************************************!*\
-  !*** ./~/css-loader!./src/components/description.component.css ***!
-  \*****************************************************************/
+/* 437 */
+/*!**********************************************************************!*\
+  !*** ./~/css-loader!./src/components/tree/description.component.css ***!
+  \**********************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1kxndr72FWUnAuAEdMDFtO {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._3Bk9N7L0VCm8o3MNtzgh8g {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._17NVHW0nk2yEZc4rCTT-IR {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._17NVHW0nk2yEZc4rCTT-IR:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._32gcLqXtJbj6LcbujqzZh2 {\r\n    display: block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._38l3T6n9Vo8BPJqtFVQa1_ {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._38l3T6n9Vo8BPJqtFVQa1_:focus {\r\n    outline: none;\r\n  }\r\n}\r\n\r\n@media only screen and (orientation: portrait) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._2BTdfQ1vKLwBw_5T5F738n {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._2oxPBXpthxKwFIQhAgwKhC {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._3YFXIKvL1anyi7dP4-euJX {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._3YFXIKvL1anyi7dP4-euJX:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  .hWEc6C0VIDkXNu732qY7s {\r\n    display: block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._2Q4eH9IbsYSmFJXLO49XQ2 {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._2Q4eH9IbsYSmFJXLO49XQ2:focus {\r\n    outline: none;\r\n  }\r\n}\r\n\r\n@media only screen and (orientation: portrait) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
-		"wrapper": "_1kxndr72FWUnAuAEdMDFtO",
-		"name": "_3Bk9N7L0VCm8o3MNtzgh8g",
-		"label": "_17NVHW0nk2yEZc4rCTT-IR",
-		"editname": "_32gcLqXtJbj6LcbujqzZh2",
-		"edit": "_38l3T6n9Vo8BPJqtFVQa1_"
+		"wrapper": "_2BTdfQ1vKLwBw_5T5F738n",
+		"name": "_2oxPBXpthxKwFIQhAgwKhC",
+		"label": "_3YFXIKvL1anyi7dP4-euJX",
+		"editname": "hWEc6C0VIDkXNu732qY7s",
+		"edit": "_2Q4eH9IbsYSmFJXLO49XQ2"
 	};
 
 /***/ },
-/* 433 */
-/*!******************************************!*\
-  !*** ./src/components/flag.component.js ***!
-  \******************************************/
+/* 438 */
+/*!***********************************************!*\
+  !*** ./src/components/tree/flag.component.js ***!
+  \***********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -68764,13 +68972,13 @@
 	
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
 	var Select = __webpack_require__(/*! react-select */ 243);
-	__webpack_require__(/*! ./../../~/react-select/dist/react-select.css */ 250);
+	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 250);
 	var $ = __webpack_require__(/*! jquery */ 258);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./flag.component.css */ 434);
-	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 285);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./flag.component.css */ 439);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 285);
 	
 	var FlagComponent = function (_React$Component) {
 	    _inherits(FlagComponent, _React$Component);
@@ -68852,26 +69060,26 @@
 	//# sourceMappingURL=flag.component.js.map
 
 /***/ },
-/* 434 */
-/*!*******************************************!*\
-  !*** ./src/components/flag.component.css ***!
-  \*******************************************/
+/* 439 */
+/*!************************************************!*\
+  !*** ./src/components/tree/flag.component.css ***!
+  \************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./flag.component.css */ 435);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./flag.component.css */ 440);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./flag.component.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./flag.component.css");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./flag.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./flag.component.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -68881,32 +69089,32 @@
 	}
 
 /***/ },
-/* 435 */
-/*!**********************************************************!*\
-  !*** ./~/css-loader!./src/components/flag.component.css ***!
-  \**********************************************************/
+/* 440 */
+/*!***************************************************************!*\
+  !*** ./~/css-loader!./src/components/tree/flag.component.css ***!
+  \***************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._27sF2O0-bLCJuaLNiKMnnD {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._3EW2IQR4g_MkzQmJ_bDdPo {\r\n    padding: 0 0 0 8px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._3eaQNzsk6GdNsdJhKYhby6 {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._3eaQNzsk6GdNsdJhKYhby6:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  .FKtIZ8AEhrxDI4SnoeiNL {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n  }\r\n\r\n  .Select-control {\r\n    border-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(255, 255, 255, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(94, 78, 81, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(255, 255, 255, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 6px 3px 8px;\r\n    font-weight: 700;\r\n  }\r\n  .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n  }\r\n  .Select-arrow {\r\n    border-color: rgba(255, 255, 255, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  .is-open .Select-arrow,\r\n  .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  .Select--multi .Select-value-icon:hover,\r\n  .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  .Select.is-disabled > .Select-control {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  .Select--multi.is-disabled .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border: none;\r\n    color: rgba(255, 255, 255, 1);\r\n  }\r\n}\r\n@media only screen and (orientation: portrait) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1cduhYrXjLh96LkhbKOsjk {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .XPtky9cpVMVpekBtJYSrL {\r\n    padding: 0 0 0 8px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._3Qp7IFEz_ujCrLUOEM8UcX {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._3Qp7IFEz_ujCrLUOEM8UcX:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._6rSvE0rZPe-3bF5eDFraj {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n  }\r\n\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-control {\r\n    border-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(255, 255, 255, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(94, 78, 81, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(255, 255, 255, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow {\r\n    border-color: rgba(255, 255, 255, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open .Select-arrow,\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon:hover,\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select.is-disabled > .Select-control {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi.is-disabled .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border: none;\r\n    color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-input {\r\n    display: none !important;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value {\r\n    width: 95%;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
-		"wrapper": "_27sF2O0-bLCJuaLNiKMnnD",
-		"name": "_3EW2IQR4g_MkzQmJ_bDdPo",
-		"label": "_3eaQNzsk6GdNsdJhKYhby6",
-		"edit": "FKtIZ8AEhrxDI4SnoeiNL"
+		"wrapper": "_1cduhYrXjLh96LkhbKOsjk",
+		"name": "XPtky9cpVMVpekBtJYSrL",
+		"label": "_3Qp7IFEz_ujCrLUOEM8UcX",
+		"edit": "_6rSvE0rZPe-3bF5eDFraj"
 	};
 
 /***/ },
-/* 436 */
-/*!*****************************************!*\
-  !*** ./src/components/pub.component.js ***!
-  \*****************************************/
+/* 441 */
+/*!****************************************************!*\
+  !*** ./src/components/tree/ownership.component.js ***!
+  \****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -68921,20 +69129,20 @@
 	
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
 	var Select = __webpack_require__(/*! react-select */ 243);
-	__webpack_require__(/*! ./../../~/react-select/dist/react-select.css */ 250);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./pub.component.css */ 437);
-	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 285);
+	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 250);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./ownership.component.css */ 442);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 285);
 	
-	var PublicComponent = function (_React$Component) {
-	    _inherits(PublicComponent, _React$Component);
+	var OwnsershipComponent = function (_React$Component) {
+	    _inherits(OwnsershipComponent, _React$Component);
 	
-	    function PublicComponent(props) {
-	        _classCallCheck(this, PublicComponent);
+	    function OwnsershipComponent(props) {
+	        _classCallCheck(this, OwnsershipComponent);
 	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PublicComponent).call(this, props));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(OwnsershipComponent).call(this, props));
 	
 	        _this.updateAttribute = function (selected) {
 	            var self = _this;
@@ -68942,7 +69150,7 @@
 	            if (selected) {
 	                pub = parseInt(selected.value);
 	            }
-	            self.props.tree.setPublic(pub);
+	            self.props.tree.setOwnership(pub);
 	            tree_store_1.treeStore.updateTree(self.props.tree);
 	        };
 	        var self = _this;
@@ -68953,7 +69161,7 @@
 	        return _this;
 	    }
 	
-	    _createClass(PublicComponent, [{
+	    _createClass(OwnsershipComponent, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var self = this;
@@ -68979,7 +69187,7 @@
 	                options.push({ value: 0, label: "private" });
 	                options.push({ value: 1, label: "public" });
 	                var selected = void 0;
-	                if (self.props.tree.getPublic() == 0) {
+	                if (self.props.tree.getOwnership() == 0) {
 	                    selected = options[0];
 	                } else {
 	                    selected = options[1];
@@ -68999,34 +69207,34 @@
 	        }
 	    }]);
 	
-	    return PublicComponent;
+	    return OwnsershipComponent;
 	}(React.Component);
 	
 	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.default = PublicComponent;
-	//# sourceMappingURL=pub.component.js.map
+	exports.default = OwnsershipComponent;
+	//# sourceMappingURL=ownership.component.js.map
 
 /***/ },
-/* 437 */
-/*!******************************************!*\
-  !*** ./src/components/pub.component.css ***!
-  \******************************************/
+/* 442 */
+/*!*****************************************************!*\
+  !*** ./src/components/tree/ownership.component.css ***!
+  \*****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./pub.component.css */ 438);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./ownership.component.css */ 443);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./pub.component.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./pub.component.css");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./ownership.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./ownership.component.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -69036,32 +69244,32 @@
 	}
 
 /***/ },
-/* 438 */
-/*!*********************************************************!*\
-  !*** ./~/css-loader!./src/components/pub.component.css ***!
-  \*********************************************************/
+/* 443 */
+/*!********************************************************************!*\
+  !*** ./~/css-loader!./src/components/tree/ownership.component.css ***!
+  \********************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._3Wbyg_EAGLKjfxblARYpnt {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._23Ss4bhsEwcVtUBao6sVIC {\r\n    padding: 0 0 0 8px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._3EpI9ZpRiU6mnXF58h7ij4 {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._3EpI9ZpRiU6mnXF58h7ij4:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._2ue-5zkLVQPVGUBOpn0Ktn {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n  }\r\n\r\n  .Select-control {\r\n    border-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(255, 255, 255, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(94, 78, 81, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(255, 255, 255, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 6px 3px 8px;\r\n    font-weight: 700;\r\n  }\r\n  .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n  }\r\n  .Select-arrow {\r\n    border-color: rgba(255, 255, 255, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  .is-open .Select-arrow,\r\n  .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  .Select--multi .Select-value-icon:hover,\r\n  .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label, .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\r\n    color: rgba(255, 255, 255, 1);\r\n  }\r\n}\r\n@media only screen and (orientation: portrait) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._28WzHpHejHSGWVRrXUUnEf {\r\n    padding: 0 0 0 8px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._151JDE63T3HVqYBq-DG3ih {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._151JDE63T3HVqYBq-DG3ih:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._2_9TuMduvsyHC0Lgs-fv92 {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n  }\r\n\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-control {\r\n    border-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(255, 255, 255, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(94, 78, 81, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(255, 255, 255, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow {\r\n    border-color: rgba(255, 255, 255, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open .Select-arrow,\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon:hover,\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label, .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\r\n    color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-input {\r\n    display: none !important;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    width: 95%;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
-		"wrapper": "_3Wbyg_EAGLKjfxblARYpnt",
-		"name": "_23Ss4bhsEwcVtUBao6sVIC",
-		"label": "_3EpI9ZpRiU6mnXF58h7ij4",
-		"edit": "_2ue-5zkLVQPVGUBOpn0Ktn"
+		"wrapper": "_1_h9Fw5aSXvAWhAzs8DGrz",
+		"name": "_28WzHpHejHSGWVRrXUUnEf",
+		"label": "_151JDE63T3HVqYBq-DG3ih",
+		"edit": "_2_9TuMduvsyHC0Lgs-fv92"
 	};
 
 /***/ },
-/* 439 */
-/*!**********************************************!*\
-  !*** ./src/components/location.component.js ***!
-  \**********************************************/
+/* 444 */
+/*!***************************************************!*\
+  !*** ./src/components/tree/location.component.js ***!
+  \***************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -69076,10 +69284,10 @@
 	
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./location.component.css */ 440);
-	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 285);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./location.component.css */ 445);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 285);
 	
 	var LocationComponent = function (_React$Component) {
 	    _inherits(LocationComponent, _React$Component);
@@ -69092,15 +69300,16 @@
 	        _this.updateProps = function (props) {
 	            var self = _this;
 	            if (props.tree) {
-	                self.setState({ latitude: props.tree.getLat(), longitude: props.tree.getLng(), editingLatitude: false, editingLongitude: false });
+	                console.log(props.tree.getLat());
+	                console.log(props.tree.getLng());
+	                self.setState({ latitude: props.tree.getLat().toFixed(Settings.iMarkerPrecision), longitude: props.tree.getLng().toFixed(Settings.iMarkerPrecision), editingLatitude: false, editingLongitude: false });
 	            }
 	        };
 	        _this.updateAttribute = function () {
 	            var self = _this;
-	            self.props.tree.setLat(self.state.latitude);
-	            self.props.tree.setLng(self.state.longitude);
+	            self.props.tree.setLat(parseFloat(self.state.latitude));
+	            self.props.tree.setLng(parseFloat(self.state.longitude));
 	            tree_store_1.treeStore.updateTree(self.props.tree);
-	            self.setState({ latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: false, editingLongitude: false });
 	        };
 	        var self = _this;
 	        _this.state = {
@@ -69183,213 +69392,26 @@
 	//# sourceMappingURL=location.component.js.map
 
 /***/ },
-/* 440 */
-/*!***********************************************!*\
-  !*** ./src/components/location.component.css ***!
-  \***********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./location.component.css */ 441);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./location.component.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./location.component.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 441 */
-/*!**************************************************************!*\
-  !*** ./~/css-loader!./src/components/location.component.css ***!
-  \**************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "@media all {\r\n  ._1PSsDczqBc4s8cXE6dnwq5 {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._2gSyEHfVqjDa6exnbwNLxU {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n  }\r\n  ._11OG-mh2J08L227IH7e7o {\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n    margin: auto 0;\r\n  }\r\n  ._2khHnpX-T59HOxX4FthAMf {\r\n    margin: auto 0;\r\n  }\r\n  ._69uOruhuJXu-I4JkeuuJT {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._69uOruhuJXu-I4JkeuuJT:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._10PRH7a7p9t-E5buu5TFT- {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._10PRH7a7p9t-E5buu5TFT-:focus {\r\n    outline: none;\r\n  }\r\n}\r\n\r\n@media only screen and (orientation: portrait) {\r\n\r\n}\r\n", ""]);
-	
-	// exports
-	exports.locals = {
-		"wrapper": "_1PSsDczqBc4s8cXE6dnwq5",
-		"location": "_2gSyEHfVqjDa6exnbwNLxU",
-		"name": "_11OG-mh2J08L227IH7e7o",
-		"comma": "_2khHnpX-T59HOxX4FthAMf",
-		"label": "_69uOruhuJXu-I4JkeuuJT",
-		"edit": "_10PRH7a7p9t-E5buu5TFT-"
-	};
-
-/***/ },
-/* 442 */
-/*!**********************************************!*\
-  !*** ./src/components/map-menu.component.js ***!
-  \**********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var React = __webpack_require__(/*! react */ 1);
-	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
-	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./map-menu.component.css */ 443);
-	var flag_store_1 = __webpack_require__(/*! ./../stores/flag.store */ 420);
-	
-	var MapMenuComponent = function (_React$Component) {
-	    _inherits(MapMenuComponent, _React$Component);
-	
-	    function MapMenuComponent(props) {
-	        _classCallCheck(this, MapMenuComponent);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MapMenuComponent).call(this, props));
-	
-	        var self = _this;
-	        _this.state = {
-	            zoom: Settings.iDefaultZoom
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(MapMenuComponent, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var self = this;
-	            flag_store_1.flagStore.fetchFlags();
-	            //ownershipStore.fetchOwnerships();
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            var self = this;
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var self = this;
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var self = this;
-	            return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.button + " " + styles.buttontop }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                    var zoom = Math.min(Settings.iMaxZoom, self.state.zoom + 1);
-	                    self.props.onZoom(zoom);
-	                    self.setState({ zoom: zoom });
-	                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                    var zoom = Math.max(Settings.iMinZoom, self.state.zoom - 1);
-	                    self.props.onZoom(zoom);
-	                    self.setState({ zoom: zoom });
-	                } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button }, React.createElement(FontAwesome, { className: '', name: 'filter' })), React.createElement("div", { className: styles.button }, React.createElement(FontAwesome, { className: '', name: 'plus' })));
-	        }
-	    }]);
-	
-	    return MapMenuComponent;
-	}(React.Component);
-	
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.default = MapMenuComponent;
-	MapMenuComponent.contextTypes = {
-	    router: function router() {
-	        return React.PropTypes.func.isRequired;
-	    }
-	};
-	//# sourceMappingURL=map-menu.component.js.map
-
-/***/ },
-/* 443 */
-/*!***********************************************!*\
-  !*** ./src/components/map-menu.component.css ***!
-  \***********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./map-menu.component.css */ 444);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./map-menu.component.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./map-menu.component.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 444 */
-/*!**************************************************************!*\
-  !*** ./~/css-loader!./src/components/map-menu.component.css ***!
-  \**************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "@media all {\r\n  ._1Kg3u-GQ_4BXgg1xZw2ONa {\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    width: 48px;\r\n    height: 100%;\r\n    padding: 108px 0 0 0;\r\n    overflow-y: auto;\r\n    pointer-events: none;\r\n  }\r\n  .YtmE0wSwIH-c8_UMC_gdL {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -moz-user-select: all;\r\n    -ms-user-select: all;\r\n    -webkit-user-select: all;\r\n    user-select: all;\r\n\r\n    width: 48px;\r\n    height: 48px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-color: rgba(255, 255, 255, 1);\r\n    border-right: 2px solid rgba(255, 255, 255, 1);\r\n    font-size: x-large;\r\n    cursor: pointer;\r\n    pointer-events: all;\r\n  }\r\n  .YtmE0wSwIH-c8_UMC_gdL .fa {\r\n    margin: auto;\r\n  }\r\n  .YtmE0wSwIH-c8_UMC_gdL:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._3ci74_mLaKSGdZhTnVZ-me {\r\n    border-top: 2px solid rgba(255, 255, 255, 1);\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
-	
-	// exports
-	exports.locals = {
-		"wrapper": "_1Kg3u-GQ_4BXgg1xZw2ONa",
-		"button": "YtmE0wSwIH-c8_UMC_gdL",
-		"buttontop": "_3ci74_mLaKSGdZhTnVZ-me"
-	};
-
-/***/ },
 /* 445 */
-/*!************************!*\
-  !*** ./src/client.css ***!
-  \************************/
+/*!****************************************************!*\
+  !*** ./src/components/tree/location.component.css ***!
+  \****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 446);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./location.component.css */ 446);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 223)(content, {});
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./client.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./client.css");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./location.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./location.component.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -69400,22 +69422,26 @@
 
 /***/ },
 /* 446 */
-/*!***************************************!*\
-  !*** ./~/css-loader!./src/client.css ***!
-  \***************************************/
+/*!*******************************************************************!*\
+  !*** ./~/css-loader!./src/components/tree/location.component.css ***!
+  \*******************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../~/css-loader/lib/css-base.js */ 222)();
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
 	// imports
-	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic);", ""]);
-	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,700,300italic);", ""]);
+	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  * {\r\n    margin: 0;\r\n    padding: 0;\r\n    -moz-box-sizing: border-box;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n    -webkit-tap-highlight-color: rgba(0,0,0,0);\r\n\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n  }\r\n  html {\r\n    width: 100%;\r\n    height: 100%;\r\n  }\r\n  body {\r\n    width: 100%;\r\n    height: 100%;\r\n    color: rgba(255, 255, 255, 1);\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: medium;\r\n    overflow: hidden;\r\n  }\r\n  a {\r\n    text-decoration: none;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n  }\r\n  #BG6p6R6pCMzH6rLXugbI3, #app {\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow: hidden;\r\n  }\r\n  .hidden {\r\n    display: none;\r\n  }\r\n  .hide {\r\n    opacity : 0;\r\n    transition: opacity 1.3s;\r\n  }\r\n  input {\r\n    -moz-user-select: all;\r\n    -ms-user-select: all;\r\n    -webkit-user-select: all;\r\n    user-select: all;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1_LYULPiA2mmm5ByLEs6ZC {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._1QGrFnv1SWTWZRKYwyQ801 {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n  }\r\n  .BqD2YXHb6wnEBHA5rL55B {\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n    margin: auto 0;\r\n  }\r\n  ._1vS_1uzYznnwHezg1SPIDI {\r\n    margin: auto 0;\r\n  }\r\n  ._1a1-nl5LHD1_c9BAQkYFQn {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._1a1-nl5LHD1_c9BAQkYFQn:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._1yxnrkHIIF6FNzBLGUQsC4 {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._1yxnrkHIIF6FNzBLGUQsC4:focus {\r\n    outline: none;\r\n  }\r\n}\r\n\r\n@media only screen and (orientation: portrait) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
-		"app": "BG6p6R6pCMzH6rLXugbI3"
+		"wrapper": "_1_LYULPiA2mmm5ByLEs6ZC",
+		"location": "_1QGrFnv1SWTWZRKYwyQ801",
+		"name": "BqD2YXHb6wnEBHA5rL55B",
+		"comma": "_1vS_1uzYznnwHezg1SPIDI",
+		"label": "_1a1-nl5LHD1_c9BAQkYFQn",
+		"edit": "_1yxnrkHIIF6FNzBLGUQsC4"
 	};
 
 /***/ }

@@ -21,6 +21,7 @@ export interface IMapProps {
   treeId: number;
   zoom: number;
   onRender: Function;
+  onZoom: Function;
 }
 export interface IMapStatus {
 
@@ -169,22 +170,28 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
     document.querySelector('.leaflet-bottom.leaflet-left').innerHTML = '<div class="leaflet-control-attribution leaflet-control"><div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a></div></div>';
     self.map.on("moveend", self.afterMoveMap);
     self.map.on('popupopen', function (event: any) {
-      var marker: L.Marker = event.popup._source;
-      self.selected = marker;
-      self.selected._bringToFront();
-      // Move the map slight off from the center using CRS projection
-      var point: L.Point = L.CRS.EPSG3857.latLngToPoint(self.selected.getLatLng(), self.map.getZoom());
-      var rMap = ReactDOM.findDOMNode(self.refs['map']);
-      if (rMap.clientWidth > rMap.clientHeight) {
-        point.x += self.map.getSize().x * 0.15;
-      } else {
-        //point.y += self.map.getSize().y * 0.15;
-      }
-      self.map.panTo(L.CRS.EPSG3857.pointToLatLng(point, self.map.getZoom()));
-      //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
+      setTimeout(function() {
+        var marker: L.Marker = event.popup._source;
+        self.selected = marker;
+        self.selected._bringToFront();
+
+        // Move the map slight off from the center using CRS projection
+        var point: L.Point = L.CRS.EPSG3857.latLngToPoint(self.selected.getLatLng(), self.props.zoom);
+        var rMap = ReactDOM.findDOMNode(self.refs['map']);
+        if (rMap.clientWidth > rMap.clientHeight) {
+          point.x += self.map.getSize().x * 0.15;
+        } else {
+          //point.y += self.map.getSize().y * 0.15;
+        }
+        self.map.panTo(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
+        //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
+      }, 500);
     });
     self.map.on('popupclose', function (event: any) {
       self.selected = null;
+    });
+    self.map.on('zoomend', function (event: any) {
+      self.props.onZoom(event.target._zoom);
     });
     self.props.onRender();
   }

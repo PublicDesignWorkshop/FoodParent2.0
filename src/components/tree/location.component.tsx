@@ -2,23 +2,21 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import * as FontAwesome from 'react-fontawesome';
-import './../../node_modules/font-awesome/css/font-awesome.css';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 
-var Settings = require('./../constraints/settings.json');
+var Settings = require('./../../constraints/settings.json');
 import * as styles from './location.component.css';
-import { TreeModel, treeStore } from './../stores/tree.store';
-import { FoodModel, foodStore } from './../stores/food.store';
-import { FlagModel, flagStore } from './../stores/flag.store';
-import { reverseGeocoding, IReverseGeoLocation } from './../utils/reversegeolocation';
-import { addLoading, removeLoading } from './../utils/loadingtracker';
+import { TreeModel, treeStore } from './../../stores/tree.store';
+import { reverseGeocoding, IReverseGeoLocation } from './../../utils/reversegeolocation';
+import { addLoading, removeLoading } from './../../utils/loadingtracker';
 
 export interface ILocationProps {
   tree: TreeModel;
   editable: boolean;
 }
 export interface ILocationStatus {
-  latitude: number;
-  longitude: number;
+  latitude: any;
+  longitude: any;
   editingLatitude: boolean;
   editingLongitude: boolean;
 }
@@ -48,16 +46,17 @@ export default class LocationComponent extends React.Component<ILocationProps, I
   private updateProps = (props: ILocationProps) => {
     let self: LocationComponent = this;
     if (props.tree) {
-      self.setState({latitude: props.tree.getLat(), longitude: props.tree.getLng(), editingLatitude: false, editingLongitude: false});
+      console.log(props.tree.getLat());
+      console.log(props.tree.getLng());
+      self.setState({latitude: props.tree.getLat().toFixed(Settings.iMarkerPrecision), longitude: props.tree.getLng().toFixed(Settings.iMarkerPrecision), editingLatitude: false, editingLongitude: false});
     }
   }
 
   private updateAttribute = () => {
     let self: LocationComponent = this;
-    self.props.tree.setLat(self.state.latitude);
-    self.props.tree.setLng(self.state.longitude);
+    self.props.tree.setLat(parseFloat(self.state.latitude));
+    self.props.tree.setLng(parseFloat(self.state.longitude));
     treeStore.updateTree(self.props.tree);
-    self.setState({latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: false, editingLongitude: false});
   }
 
   render() {

@@ -2,15 +2,13 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import * as FontAwesome from 'react-fontawesome';
-import './../../node_modules/font-awesome/css/font-awesome.css';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 
-var Settings = require('./../constraints/settings.json');
+var Settings = require('./../../constraints/settings.json');
 import * as styles from './address.component.css';
-import { TreeModel, treeStore } from './../stores/tree.store';
-import { FoodModel, foodStore } from './../stores/food.store';
-import { FlagModel, flagStore } from './../stores/flag.store';
-import { reverseGeocoding, IReverseGeoLocation } from './../utils/reversegeolocation';
-import { addLoading, removeLoading } from './../utils/loadingtracker';
+import { TreeModel, treeStore } from './../../stores/tree.store';
+import { reverseGeocoding, IReverseGeoLocation } from './../../utils/reversegeolocation';
+import { addLoading, removeLoading } from './../../utils/loadingtracker';
 
 export interface IAddressProps {
   tree: TreeModel;
@@ -80,9 +78,7 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
     if (self.state.editing) {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onClick={()=> {
-            self.setState({address: self.state.address, editing: true});
-          }}>
+          <div className={styles.label}>
             <FontAwesome className='' name='map-signs' /> Address
           </div>
           <div className={styles.editname}>
@@ -108,14 +104,14 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
         <div className={styles.wrapper}>
           <div className={styles.label} onClick={()=> {
             if (self.props.editable) {
-              self.setState({address: self.state.address, editing: true});
+              self.setState({editing: true});
             }
           }}>
             <FontAwesome className='' name='map-signs' /> Address
           </div>
           <div className={styles.name} onClick={()=> {
             if (self.props.editable) {
-              self.setState({address: self.state.address, editing: true});
+              self.setState({editing: true});
             }
           }}>
             {self.state.address}

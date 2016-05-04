@@ -3,6 +3,7 @@ import * as Alt from 'alt';
 import * as moment from 'moment';
 import * as L from 'leaflet';
 
+var Settings = require('./../constraints/settings.json');
 import { treeActions } from './../actions/tree.actions';
 import { AbstractStore } from './../stores/abstract.store';
 import { treeSource } from './../sources/tree.source';
@@ -43,8 +44,8 @@ export class TreeModel {
   public update(props: ITreeProps) {
     let self: TreeModel = this;
     self.id = parseInt(props.id);
-    self.lat = parseFloat(props.lat);
-    self.lng = parseFloat(props.lng);
+    self.lat = parseFloat(parseFloat(props.lat).toFixed(Settings.iMarkerPrecision));
+    self.lng = parseFloat(parseFloat(props.lng).toFixed(Settings.iMarkerPrecision));
     self.food = parseInt(props.food);
     self.type = parseInt(props.type);
     self.description = props.description;
@@ -121,10 +122,10 @@ export class TreeModel {
   public setOwner(owner: number): void {
     this.owner = owner;
   }
-  public getPublic(): number {
+  public getOwnership(): number {
     return this.public;
   }
-  public setPublic(pub: number): void {
+  public setOwnership(pub: number): void {
     this.public = pub;
   }
 }

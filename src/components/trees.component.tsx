@@ -12,11 +12,7 @@ import { foodStore, FoodModel, FoodState } from './../stores/food.store';
 import { treeActions } from './../actions/tree.actions';
 import { foodActions } from './../actions/food.actions';
 import MapComponent from './map.component' ;
-import TreeComponent from './tree.component' ;
-import { addLoading, removeLoading } from './../utils/loadingtracker';
-import { checkLogin, checkAdmin } from './../utils/authentication';
-import { LogInStatus } from './app.component';
-import MapMenuComponent from './map-menu.component';
+import TreesPanelComponent from './trees-panel.component';
 
 export interface ITreesProps {
   params: any;
@@ -24,8 +20,6 @@ export interface ITreesProps {
 export interface ITreesStatus {
   trees: Array<TreeModel>;
   treeId: number;
-  login: LogInStatus;
-  userId: number;
   zoom: number;
 }
 export default class TreesComponent extends React.Component<ITreesProps, ITreesStatus> {
@@ -35,8 +29,6 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
     this.state = {
       treeId: null,
       trees: null,
-      login: LogInStatus.GUEST,
-      userId: null,
       zoom: Settings.iDefaultZoom,
     };
   }
@@ -59,28 +51,10 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
     let treeId = null;
     if (props.params.treeId) {
       treeId = parseInt(props.params.treeId);
+      self.setState({treeId: treeId});
+    } else {
+      self.setState({treeId: null});
     }
-    self.setState({treeId: treeId, trees: self.state.trees, login: self.state.login, userId: self.state.userId, zoom: self.state.zoom});
-    addLoading();
-    checkLogin(function(response1) { // login
-      checkAdmin(function(response2) { // Admin
-        console.log("manager");
-        removeLoading();
-        self.setState({treeId: treeId, trees: self.state.trees, login: LogInStatus.MANAGER, userId: parseInt(response1.id), zoom: self.state.zoom});
-      }, function(response) { // Parent
-        console.log("parent");
-        removeLoading();
-        self.setState({treeId: treeId, trees: self.state.trees, login: LogInStatus.PARENT, userId: parseInt(response1.id), zoom: self.state.zoom});
-      }, function(response) { // Error
-        removeLoading();
-      });
-    }, function(response) { // Not logged in
-      removeLoading();
-      console.log("guest");
-      self.setState({treeId: treeId, trees: self.state.trees, login: LogInStatus.GUEST, userId: parseInt(response.id), zoom: self.state.zoom});
-    }, function(response) { // Error
-      removeLoading();
-    });
   }
   onChange = (store: TreeState) => {
     let self: TreesComponent = this;
@@ -102,7 +76,7 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
   }
   onZoom = (zoom: number) => {
     let self: TreesComponent = this;
-    self.setState({treeId: self.state.treeId, trees: self.state.trees, login: self.state.login, userId: self.state.userId, zoom: zoom});
+    self.setState({zoom: zoom});
   }
   render() {
     let self: TreesComponent = this;
@@ -124,11 +98,9 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
             }
           }
         }>
-          <MapComponent treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} onRender={self.onMapRender} zoom={self.state.zoom} />
-          <MapMenuComponent login={self.state.login} onZoom={self.onZoom} />
-          <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} />
+          <MapComponent treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} onRender={self.onMapRender} zoom={self.state.zoom} onZoom={self.onZoom} />
+          <TreesPanelComponent treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} zoom={self.state.zoom}  onZoom={self.onZoom} />
         </AltContainer>
-
       </div>
     );
   }
