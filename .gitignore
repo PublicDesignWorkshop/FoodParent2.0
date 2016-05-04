@@ -1,7 +1,7 @@
 node_modules/
 tsDist/
-dist/foodparent_test/*
-dist/FoodParent_v2.0/*
+dist/FoodParent2.0/*
+dist/dist/*
 npm-debug.log
 src/**/*.js
 src/**/*.js.map

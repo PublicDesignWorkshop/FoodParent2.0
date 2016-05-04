@@ -7,7 +7,7 @@ import TreesComponent from './components/trees.component';
 var Settings = require('./constraints/settings.json');
 
 var RouteMap = (
-    <Route path={Settings.uBaseName} component={AppComponent}>
+    <Route path={Settings.uBaseNameForWebPack} component={AppComponent}>
         <IndexRoute component={TreesComponent}/>
         <Route path="trees/:treeId" component={TreesComponent}/>
     </Route>

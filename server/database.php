@@ -10,9 +10,9 @@
 
   class database extends dbpass {
     public $host = "localhost";
-    public $username = "root";
+    public $username = "cj";
     public $port = 3306;
-    public $db_name = "foodparent";
+    public $db_name = "tree_parent";
   }
 
 	function getConnection() {
