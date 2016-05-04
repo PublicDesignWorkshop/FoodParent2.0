@@ -7,12 +7,14 @@
     "x": 33.7704,
     "y": -84.3806
   },
-  "uTileMap" : "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+  "uGrayTileMap" : "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+  "uSatTileMap" : "//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   "iDefaultZoom": 13,
   "iMaxZoom": 20,
   "iMinZoom": 5,
   "iFocusZoom": 18,
   "sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
   "uReverseGeoCoding": "//nominatim.openstreetmap.org/reverse?format=json&zoom=18&addressdetails=1",
-  "iMarkerPrecision": 5
+  "iMarkerPrecision": 5,
+  "uTemporaryMarkerIcon": "unknown.svg"
 }

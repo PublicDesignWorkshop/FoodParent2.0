@@ -5,6 +5,7 @@ import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import * as _ from 'underscore';
 import * as $ from 'jquery';
+import * as moment from 'moment';
 
 import Routes from './../routes';
 var Settings = require('./../constraints/settings.json');
@@ -14,6 +15,7 @@ import { TreeModel, treeStore } from './../stores/tree.store';
 import { FoodModel, foodStore } from './../stores/food.store';
 import { treeActions } from './../actions/tree.actions';
 import MarkerComponent from './marker.component';
+import { TreesMode } from './trees.component';
 
 export interface IMapProps {
   foods: Array<FoodModel>;
@@ -24,18 +26,22 @@ export interface IMapProps {
   onZoom: Function;
   position: L.LatLng;
   offGeo: Function;
+  mode: TreesMode;
 }
 export interface IMapStatus {
 
 }
 export default class MapComponent extends React.Component<IMapProps, IMapStatus> {
   private map: L.Map;
+  private grayTileLayer: L.TileLayer;
+  private satTileLayer: L.TileLayer;
   private layer: L.MarkerClusterGroup;
   private markers: Array<L.Marker>;
   private userMarker: L.Circle;
   private userCenterMarker: L.Circle;
   private selected: L.Marker;
   private position: L.LatLng;
+  private newMarker: L.Marker;
   static contextTypes: any;
   constructor(props : IMapProps) {
     super(props);
@@ -56,10 +62,15 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
         zoomAnimation: true,
         markerZoomAnimation: true,
     }).setView(self.position, Settings.iDefaultZoom);
-    L.tileLayer(Settings.uTileMap, {
+    self.grayTileLayer = L.tileLayer(Settings.uGrayTileMap, {
         minZoom: Settings.iMinZoom,
         maxZoom: Settings.iMaxZoom,
-    }).addTo(self.map);
+    });
+    self.satTileLayer = L.tileLayer(Settings.uSatTileMap, {
+        minZoom: Settings.iMinZoom,
+        maxZoom: Settings.iMaxZoom,
+    });
+    self.grayTileLayer.addTo(self.map);
     self.map.invalidateSize(false);
     // fetch trees after map is loaded.
     self.map.whenReady(self.afterRenderMap);
@@ -75,6 +86,51 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       self.renderMarkers(nextProps.trees, nextProps);
       self.map.setZoom(nextProps.zoom);
       self.renderUserLocation(nextProps.position);
+
+      switch(nextProps.mode) {
+        case TreesMode.TREEDETAIL:
+          if (!self.map.hasLayer(self.grayTileLayer)) {
+            self.grayTileLayer.addTo(self.map);
+            self.map.removeLayer(self.satTileLayer);
+          }
+          if (self.newMarker) {
+            self.map.removeLayer(self.newMarker);
+            self.newMarker = null;
+          }
+          break;
+        case TreesMode.TREEADDMARKER:
+          var point: L.Point = L.CRS.EPSG3857.latLngToPoint(self.map.getCenter(), self.props.zoom);
+          var rMap = ReactDOM.findDOMNode(self.refs['map']);
+          if (rMap.clientWidth > rMap.clientHeight) {
+            point.x -= self.map.getSize().x * 0.15;
+          } else {
+            //point.y += self.map.getSize().y * 0.15;
+          }
+          if (!self.map.hasLayer(self.satTileLayer)) {
+            self.satTileLayer.addTo(self.map);
+            self.map.removeLayer(self.grayTileLayer);
+          }
+          if (!self.newMarker) {
+            var tree: TreeModel = new TreeModel({
+              id: "0",
+              lat: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom) + "",
+              lng: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom) + "",
+              food: "1",
+              type: "0",
+              flag: "0",
+              public: "0",
+              description: "",
+              address: "",
+              owner: "0",
+              updated: moment(new Date()).format(Settings.sServerDateFormat),
+            });
+            treeStore.addTree(tree);
+            self.newMarker = MarkerComponent.createTemporaryMarker(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
+            self.map.addLayer(self.newMarker);
+            self.newMarker.openPopup();
+          }
+          break;
+      }
     }
   }
   private renderMarkers = (trees: Array<TreeModel>, props: IMapProps) => {
@@ -124,9 +180,9 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
         }
       }
     }
-    if (!bFound) {
-      self.map.closePopup();
-    }
+    //if (!bFound) {
+    //  self.map.closePopup();
+    //}
   }
 
   private addMarker(tree: TreeModel, editable: boolean): void {

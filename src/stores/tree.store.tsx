@@ -138,6 +138,7 @@ export interface TreeState {
 
 interface TreeExtendedStore extends AltJS.AltStore<TreeState> {
   getTree(id: number): TreeModel;
+  addTree(tree: TreeModel): void;
   fetchTrees(): void;
   updateTree(update: TreeModel): void;
   isLoading(): boolean;
@@ -149,7 +150,9 @@ class TreeStore extends AbstractStore<TreeState> {
   constructor() {
     super();
     let self: TreeStore = this;
-    self.trees = new Array<TreeModel>();
+    if (!self.trees) {
+      self.trees = new Array<TreeModel>();
+    }
     self.errorMessage = null;
     //TODO: pass state generics to make sure methods/actions expect the same type
     self.bindListeners({
@@ -158,14 +161,17 @@ class TreeStore extends AbstractStore<TreeState> {
       handleFailed: treeActions.failed,
     });
     self.exportPublicMethods({
-      getTree: self.getTree
+      getTree: self.getTree,
+      addTree: self.addTree,
     });
     self.exportAsync(treeSource);
   }
   handleFetchTrees(treesProps: Array<ITreeProps>) {
     let self: TreeStore = this;
     console.warn("Handle Fetch Trees");
-    self.trees = new Array<TreeModel>();
+    if (!self.trees) {
+      self.trees = new Array<TreeModel>();
+    }
     treesProps.forEach((props: ITreeProps) => {
       self.trees.push(new TreeModel(props));
     });
@@ -192,6 +198,23 @@ class TreeStore extends AbstractStore<TreeState> {
       }
     }
     return null;
+  }
+  addTree(tree: TreeModel): void {
+    let self: TreeStore = this;
+    if (self.trees) {
+      let i = -1;
+      for(let j = 0; j < self.trees.length; j++) {
+        if(self.trees[j].getId() === tree.getId()) {
+          i = j;
+        }
+      }
+      if (i > -1) {
+        self.trees.splice(i, 1);
+      }
+    } else {
+      self.trees = new Array<TreeModel>();
+    }
+    self.trees.push(tree);
   }
 }
 

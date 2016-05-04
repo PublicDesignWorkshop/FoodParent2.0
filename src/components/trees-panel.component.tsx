@@ -8,11 +8,15 @@ import * as AltContainer from 'alt-container';
 var Settings = require('./../constraints/settings.json');
 import * as styles from './trees-panel.component.css';
 import TreeComponent from './tree/tree.component';
+import TreeAddComponent from './tree/tree-add.component';
+import { TreesMode } from './trees.component';
+import TreesControlsComponent from './trees-controls.component';
 import { TreeModel, treeStore } from './../stores/tree.store';
 import { FoodModel, foodStore } from './../stores/food.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 import { LogInStatus } from './app.component';
+
 
 export interface ITreesPanelProps {
   treeId: number;
@@ -21,6 +25,7 @@ export interface ITreesPanelProps {
   zoom: number;
   onZoom: Function;
   onGeo: PositionCallback;
+  mode: TreesMode;
 }
 export interface ITreesPanelStatus {
   login: LogInStatus;
@@ -83,144 +88,49 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
 
   render() {
     let self: TreesPanelComponent = this;
-    if (self.state.open) {
-      if (self.state.login == LogInStatus.MANAGER) {
-        return (
-          <div className={styles.wrapper + " " + styles.slidein}>
-            <div className={styles.left}>
-              <div className={styles.button + " " + styles.buttontop} onClick={()=> {
-                if (navigator.geolocation) {
-                  navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
-                }
-              }}>
-                <FontAwesome className='' name='location-arrow' />
+    switch(self.props.mode) {
+      case TreesMode.TREEDETAIL:
+        if (self.state.open) {
+          return (
+            <div className={styles.wrapper + " " + styles.slidein}>
+              <div className={styles.left}>
+                <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} />
               </div>
-              <div className={styles.button} onClick={()=> {
-                let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-                self.props.onZoom(zoom);
-              }}>
-                <FontAwesome className='' name='search-plus' />
-              </div>
-              <div className={styles.button} onClick={()=> {
-                let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-                self.props.onZoom(zoom);
-              }}>
-                <FontAwesome className='' name='search-minus' />
-              </div>
-              <div className={styles.button}>
-                <FontAwesome className='' name='filter' />
-              </div>
-              <div className={styles.button + " " + styles.buttonbottom}>
-                <FontAwesome className='' name='plus' />
+              <div className={styles.right}>
+                <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} />
               </div>
             </div>
-            <div className={styles.right}>
-              <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} />
-            </div>
-          </div>
-        );
-      } else {
-        return (
-          <div className={styles.wrapper + " " + styles.slidein}>
-            <div className={styles.left}>
-              <div className={styles.button + " " + styles.buttontop} onClick={()=> {
-                if (navigator.geolocation) {
-                  navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
-                }
-              }}>
-                <FontAwesome className='' name='location-arrow' />
-              </div>
-              <div className={styles.button} onClick={()=> {
-                let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-                self.props.onZoom(zoom);
-              }}>
-                <FontAwesome className='' name='search-plus' />
-              </div>
-              <div className={styles.button} onClick={()=> {
-                let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-                self.props.onZoom(zoom);
-              }}>
-                <FontAwesome className='' name='search-minus' />
-              </div>
-              <div className={styles.button + " " + styles.buttonbottom}>
-                <FontAwesome className='' name='plus' />
+          );
+        } else {
+          return (
+            <div className={styles.wrapper}>
+              <div className={styles.left}>
+                <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} />
               </div>
             </div>
-            <div className={styles.right}>
-              <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} />
-            </div>
-          </div>
-        );
-      }
-
-    } else {
-      if (self.state.login == LogInStatus.MANAGER) {
+          );
+        }
+      case TreesMode.TREEADDMARKER:
         return (
           <div className={styles.wrapper}>
             <div className={styles.left}>
-              <div className={styles.button + " " + styles.buttontop} onClick={()=> {
-                if (navigator.geolocation) {
-                  navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
-                }
-              }}>
-                <FontAwesome className='' name='location-arrow' />
-              </div>
-              <div className={styles.button} onClick={()=> {
-                let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-                self.props.onZoom(zoom);
-              }}>
-                <FontAwesome className='' name='search-plus' />
-              </div>
-              <div className={styles.button} onClick={()=> {
-                let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-                self.props.onZoom(zoom);
-              }}>
-                <FontAwesome className='' name='search-minus' />
-              </div>
-              <div className={styles.button}>
-                <FontAwesome className='' name='filter' />
-              </div>
-              <div className={styles.button + " " + styles.buttonbottom}>
-                <FontAwesome className='' name='plus' />
-              </div>
-            </div>
-            <div className={styles.right}>
+              <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} />
             </div>
           </div>
         );
-      } else {
+      case TreesMode.TREEADDINFO:
         return (
-          <div className={styles.wrapper}>
+          <div className={styles.wrapper + " " + styles.slidein}>
             <div className={styles.left}>
-              <div className={styles.button + " " + styles.buttontop} onClick={()=> {
-                if (navigator.geolocation) {
-                  navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
-                }
-              }}>
-                <FontAwesome className='' name='location-arrow' />
-              </div>
-              <div className={styles.button} onClick={()=> {
-                let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-                self.props.onZoom(zoom);
-              }}>
-                <FontAwesome className='' name='search-plus' />
-              </div>
-              <div className={styles.button} onClick={()=> {
-                let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-                self.props.onZoom(zoom);
-              }}>
-                <FontAwesome className='' name='search-minus' />
-              </div>
-              <div className={styles.button + " " + styles.buttonbottom}>
-                <FontAwesome className='' name='plus' />
-              </div>
+              <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} />
             </div>
             <div className={styles.right}>
+              <TreeAddComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} />
             </div>
           </div>
         );
-      }
     }
+
   }
 }
 

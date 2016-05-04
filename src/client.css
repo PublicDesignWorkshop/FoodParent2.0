@@ -8,7 +8,7 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
-    
+
     -moz-user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
@@ -48,5 +48,9 @@
     -ms-user-select: all;
     -webkit-user-select: all;
     user-select: all;
+  }
+  .leaflet-control,
+  .leaflet-top, .leaflet-bottom {
+    z-index: 0 !important;
   }
 }

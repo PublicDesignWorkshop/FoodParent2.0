@@ -13,15 +13,21 @@ import { treeActions } from './../actions/tree.actions';
 import { foodActions } from './../actions/food.actions';
 import MapComponent from './map.component' ;
 import TreesPanelComponent from './trees-panel.component';
+import TreesMessageComponent from './trees-message.component';
 
+export enum TreesMode {
+  NONE, TREEDETAIL, TREEADDMARKER, TREEADDINFO
+}
 export interface ITreesProps {
   params: any;
+  location: any;
 }
 export interface ITreesStatus {
   trees: Array<TreeModel>;
   treeId: number;
   zoom: number;
   position: null;
+  mode: TreesMode;
 }
 export default class TreesComponent extends React.Component<ITreesProps, ITreesStatus> {
   constructor(props : ITreesProps) {
@@ -32,6 +38,7 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
       trees: null,
       zoom: Settings.iDefaultZoom,
       position: null,
+      mode: TreesMode.TREEDETAIL,
     };
   }
   public componentDidMount() {
@@ -51,12 +58,18 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
     console.warn("--updateProps");
     let self: TreesComponent = this;
     let treeId = null;
-    if (props.params.treeId) {
+    let mode: TreesMode = TreesMode.TREEDETAIL;
+    if (props.params.treeId == "add") {
+      treeId = 0;
+      if (props.location.query.mode == "marker") {
+        mode = TreesMode.TREEADDMARKER;
+      } else if (props.location.query.mode == "info") {
+        mode = TreesMode.TREEADDINFO;
+      }
+    } else if (props.params.treeId) {
       treeId = parseInt(props.params.treeId);
-      self.setState({treeId: treeId});
-    } else {
-      self.setState({treeId: null});
     }
+    self.setState({treeId: treeId, mode: mode});
   }
   onChange = (store: TreeState) => {
     let self: TreesComponent = this;
@@ -109,8 +122,9 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
             }
           }
         }>
-          <MapComponent treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} onRender={self.onMapRender} zoom={self.state.zoom} onZoom={self.onZoom} position={self.state.position} offGeo={self.offGeo} />
-          <TreesPanelComponent treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} zoom={self.state.zoom}  onZoom={self.onZoom} onGeo={self.onGeo} />
+          <MapComponent mode={self.state.mode} treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} onRender={self.onMapRender} zoom={self.state.zoom} onZoom={self.onZoom} position={self.state.position} offGeo={self.offGeo} />
+          <TreesPanelComponent mode={self.state.mode} treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} zoom={self.state.zoom} onZoom={self.onZoom} onGeo={self.onGeo} />
+          <TreesMessageComponent mode={self.state.mode} />
         </AltContainer>
       </div>
     );

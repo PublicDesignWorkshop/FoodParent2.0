@@ -26330,14 +26330,16 @@
 			"x": 33.7704,
 			"y": -84.3806
 		},
-		"uTileMap": "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+		"uGrayTileMap": "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+		"uSatTileMap": "//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 		"iDefaultZoom": 13,
 		"iMaxZoom": 20,
 		"iMinZoom": 5,
 		"iFocusZoom": 18,
 		"sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
 		"uReverseGeoCoding": "//nominatim.openstreetmap.org/reverse?format=json&zoom=18&addressdetails=1",
-		"iMarkerPrecision": 5
+		"iMarkerPrecision": 5,
+		"uTemporaryMarkerIcon": "unknown.svg"
 	};
 
 /***/ },
@@ -36598,6 +36600,14 @@
 	var food_store_1 = __webpack_require__(/*! ./../stores/food.store */ 378);
 	var map_component_1 = __webpack_require__(/*! ./map.component */ 381);
 	var trees_panel_component_1 = __webpack_require__(/*! ./trees-panel.component */ 387);
+	var trees_message_component_1 = __webpack_require__(/*! ./trees-message.component */ 450);
+	(function (TreesMode) {
+	    TreesMode[TreesMode["NONE"] = 0] = "NONE";
+	    TreesMode[TreesMode["TREEDETAIL"] = 1] = "TREEDETAIL";
+	    TreesMode[TreesMode["TREEADDMARKER"] = 2] = "TREEADDMARKER";
+	    TreesMode[TreesMode["TREEADDINFO"] = 3] = "TREEADDINFO";
+	})(exports.TreesMode || (exports.TreesMode = {}));
+	var TreesMode = exports.TreesMode;
 	
 	var TreesComponent = function (_React$Component) {
 	    _inherits(TreesComponent, _React$Component);
@@ -36611,12 +36621,18 @@
 	            console.warn("--updateProps");
 	            var self = _this;
 	            var treeId = null;
-	            if (props.params.treeId) {
+	            var mode = TreesMode.TREEDETAIL;
+	            if (props.params.treeId == "add") {
+	                treeId = 0;
+	                if (props.location.query.mode == "marker") {
+	                    mode = TreesMode.TREEADDMARKER;
+	                } else if (props.location.query.mode == "info") {
+	                    mode = TreesMode.TREEADDINFO;
+	                }
+	            } else if (props.params.treeId) {
 	                treeId = parseInt(props.params.treeId);
-	                self.setState({ treeId: treeId });
-	            } else {
-	                self.setState({ treeId: null });
 	            }
+	            self.setState({ treeId: treeId, mode: mode });
 	        };
 	        _this.onChange = function (store) {
 	            var self = _this;
@@ -36653,7 +36669,8 @@
 	            treeId: null,
 	            trees: null,
 	            zoom: Settings.iDefaultZoom,
-	            position: null
+	            position: null,
+	            mode: TreesMode.TREEDETAIL
 	        };
 	        return _this;
 	    }
@@ -36694,7 +36711,7 @@
 	                            value: tree_store_1.treeStore.getState().trees
 	                        };
 	                    }
-	                } }, React.createElement(map_component_1.default, { treeId: self.state.treeId, foods: food_store_1.foodStore.getState().foods, trees: tree_store_1.treeStore.getState().trees, onRender: self.onMapRender, zoom: self.state.zoom, onZoom: self.onZoom, position: self.state.position, offGeo: self.offGeo }), React.createElement(trees_panel_component_1.default, { treeId: self.state.treeId, foods: food_store_1.foodStore.getState().foods, trees: tree_store_1.treeStore.getState().trees, zoom: self.state.zoom, onZoom: self.onZoom, onGeo: self.onGeo })));
+	                } }, React.createElement(map_component_1.default, { mode: self.state.mode, treeId: self.state.treeId, foods: food_store_1.foodStore.getState().foods, trees: tree_store_1.treeStore.getState().trees, onRender: self.onMapRender, zoom: self.state.zoom, onZoom: self.onZoom, position: self.state.position, offGeo: self.offGeo }), React.createElement(trees_panel_component_1.default, { mode: self.state.mode, treeId: self.state.treeId, foods: food_store_1.foodStore.getState().foods, trees: tree_store_1.treeStore.getState().trees, zoom: self.state.zoom, onZoom: self.onZoom, onGeo: self.onGeo }), React.createElement(trees_message_component_1.default, { mode: self.state.mode })));
 	        }
 	    }]);
 	
@@ -37812,7 +37829,9 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TreeStore).call(this));
 	
 	        var self = _this;
-	        self.trees = new Array();
+	        if (!self.trees) {
+	            self.trees = new Array();
+	        }
 	        self.errorMessage = null;
 	        //TODO: pass state generics to make sure methods/actions expect the same type
 	        self.bindListeners({
@@ -37821,7 +37840,8 @@
 	            handleFailed: tree_actions_1.treeActions.failed
 	        });
 	        self.exportPublicMethods({
-	            getTree: self.getTree
+	            getTree: self.getTree,
+	            addTree: self.addTree
 	        });
 	        self.exportAsync(tree_source_1.treeSource);
 	        return _this;
@@ -37832,7 +37852,9 @@
 	        value: function handleFetchTrees(treesProps) {
 	            var self = this;
 	            console.warn("Handle Fetch Trees");
-	            self.trees = new Array();
+	            if (!self.trees) {
+	                self.trees = new Array();
+	            }
 	            treesProps.forEach(function (props) {
 	                self.trees.push(new TreeModel(props));
 	            });
@@ -37867,6 +37889,25 @@
 	                }
 	            }
 	            return null;
+	        }
+	    }, {
+	        key: 'addTree',
+	        value: function addTree(tree) {
+	            var self = this;
+	            if (self.trees) {
+	                var i = -1;
+	                for (var j = 0; j < self.trees.length; j++) {
+	                    if (self.trees[j].getId() === tree.getId()) {
+	                        i = j;
+	                    }
+	                }
+	                if (i > -1) {
+	                    self.trees.splice(i, 1);
+	                }
+	            } else {
+	                self.trees = new Array();
+	            }
+	            self.trees.push(tree);
 	        }
 	    }]);
 	
@@ -63364,11 +63405,14 @@
 	var L = __webpack_require__(/*! leaflet */ 373);
 	__webpack_require__(/*! leaflet.markercluster */ 382);
 	var _ = __webpack_require__(/*! underscore */ 383);
+	var moment = __webpack_require__(/*! moment */ 270);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
 	var styles = __webpack_require__(/*! ./trees.component.css */ 249);
 	__webpack_require__(/*! ./../../~/leaflet/dist/leaflet.css */ 251);
+	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 255);
 	var food_store_1 = __webpack_require__(/*! ./../stores/food.store */ 378);
 	var marker_component_1 = __webpack_require__(/*! ./marker.component */ 384);
+	var trees_component_1 = __webpack_require__(/*! ./trees.component */ 236);
 	
 	var MapComponent = function (_React$Component) {
 	    _inherits(MapComponent, _React$Component);
@@ -63426,9 +63470,9 @@
 	                    }
 	                }
 	            }
-	            if (!bFound) {
-	                self.map.closePopup();
-	            }
+	            //if (!bFound) {
+	            //  self.map.closePopup();
+	            //}
 	        };
 	        _this.afterRenderMap = function () {
 	            var self = _this;
@@ -63488,10 +63532,15 @@
 	                zoomAnimation: true,
 	                markerZoomAnimation: true
 	            }).setView(self.position, Settings.iDefaultZoom);
-	            L.tileLayer(Settings.uTileMap, {
+	            self.grayTileLayer = L.tileLayer(Settings.uGrayTileMap, {
 	                minZoom: Settings.iMinZoom,
 	                maxZoom: Settings.iMaxZoom
-	            }).addTo(self.map);
+	            });
+	            self.satTileLayer = L.tileLayer(Settings.uSatTileMap, {
+	                minZoom: Settings.iMinZoom,
+	                maxZoom: Settings.iMaxZoom
+	            });
+	            self.grayTileLayer.addTo(self.map);
 	            self.map.invalidateSize(false);
 	            // fetch trees after map is loaded.
 	            self.map.whenReady(self.afterRenderMap);
@@ -63510,6 +63559,48 @@
 	                self.renderMarkers(nextProps.trees, nextProps);
 	                self.map.setZoom(nextProps.zoom);
 	                self.renderUserLocation(nextProps.position);
+	                switch (nextProps.mode) {
+	                    case trees_component_1.TreesMode.TREEDETAIL:
+	                        if (!self.map.hasLayer(self.grayTileLayer)) {
+	                            self.grayTileLayer.addTo(self.map);
+	                            self.map.removeLayer(self.satTileLayer);
+	                        }
+	                        if (self.newMarker) {
+	                            self.map.removeLayer(self.newMarker);
+	                            self.newMarker = null;
+	                        }
+	                        break;
+	                    case trees_component_1.TreesMode.TREEADDMARKER:
+	                        var point = L.CRS.EPSG3857.latLngToPoint(self.map.getCenter(), self.props.zoom);
+	                        var rMap = ReactDOM.findDOMNode(self.refs['map']);
+	                        if (rMap.clientWidth > rMap.clientHeight) {
+	                            point.x -= self.map.getSize().x * 0.15;
+	                        } else {}
+	                        if (!self.map.hasLayer(self.satTileLayer)) {
+	                            self.satTileLayer.addTo(self.map);
+	                            self.map.removeLayer(self.grayTileLayer);
+	                        }
+	                        if (!self.newMarker) {
+	                            var tree = new tree_store_1.TreeModel({
+	                                id: "0",
+	                                lat: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom) + "",
+	                                lng: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom) + "",
+	                                food: "1",
+	                                type: "0",
+	                                flag: "0",
+	                                public: "0",
+	                                description: "",
+	                                address: "",
+	                                owner: "0",
+	                                updated: moment(new Date()).format(Settings.sServerDateFormat)
+	                            });
+	                            tree_store_1.treeStore.addTree(tree);
+	                            self.newMarker = marker_component_1.default.createTemporaryMarker(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
+	                            self.map.addLayer(self.newMarker);
+	                            self.newMarker.openPopup();
+	                        }
+	                        break;
+	                }
 	            }
 	        }
 	    }, {
@@ -65238,6 +65329,35 @@
 	        return marker;
 	    }
 	    MarkerComponent.createUneditableMarker = createUneditableMarker;
+	    function createTemporaryMarker(position) {
+	        var icon = new L.Icon({
+	            iconUrl: Settings.uBaseName + Settings.uStaticImage + Settings.uTemporaryMarkerIcon,
+	            iconSize: new L.Point(40, 40),
+	            iconAnchor: new L.Point(20, 40),
+	            popupAnchor: new L.Point(1, -36)
+	        });
+	        var template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">New Tree</span></div><div class="marker-right"></div>';
+	        var marker = new L.Marker(position, {
+	            id: 0,
+	            selected: false,
+	            icon: icon,
+	            draggable: true,
+	            riseOnHover: true
+	        }).bindPopup(template, {
+	            closeButton: false,
+	            closeOnClick: false
+	        });
+	        marker.on('click', function () {
+	            marker.openPopup();
+	            //browserHistory.push({pathname: Settings.uBaseName + '/trees/' + tree.getId()});
+	        });
+	        marker.on('dragend', function () {
+	            marker.openPopup();
+	            //browserHistory.push({pathname: Settings.uBaseName + '/trees/' + tree.getId()});
+	        });
+	        return marker;
+	    }
+	    MarkerComponent.createTemporaryMarker = createTemporaryMarker;
 	})(MarkerComponent || (MarkerComponent = {}));
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = MarkerComponent;
@@ -65309,11 +65429,13 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(/*! react */ 1);
-	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
 	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 389);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
 	var styles = __webpack_require__(/*! ./trees-panel.component.css */ 397);
 	var tree_component_1 = __webpack_require__(/*! ./tree/tree.component */ 399);
+	var tree_add_component_1 = __webpack_require__(/*! ./tree/tree-add.component */ 453);
+	var trees_component_1 = __webpack_require__(/*! ./trees.component */ 236);
+	var trees_controls_component_1 = __webpack_require__(/*! ./trees-controls.component */ 447);
 	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 255);
 	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 233);
 	var authentication_1 = __webpack_require__(/*! ./../utils/authentication */ 235);
@@ -65392,58 +65514,17 @@
 	        key: 'render',
 	        value: function render() {
 	            var self = this;
-	            if (self.state.open) {
-	                if (self.state.login == app_component_1.LogInStatus.MANAGER) {
-	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement("div", { className: styles.button + " " + styles.buttontop, onClick: function onClick() {
-	                            if (navigator.geolocation) {
-	                                navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
-	                            }
-	                        } }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                            var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-	                            self.props.onZoom(zoom);
-	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                            var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-	                            self.props.onZoom(zoom);
-	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button }, React.createElement(FontAwesome, { className: '', name: 'filter' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus' }))), React.createElement("div", { className: styles.right }, React.createElement(tree_component_1.default, { login: self.state.login, userId: self.state.userId, treeId: self.props.treeId, foods: self.props.foods, trees: self.props.trees })));
-	                } else {
-	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement("div", { className: styles.button + " " + styles.buttontop, onClick: function onClick() {
-	                            if (navigator.geolocation) {
-	                                navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
-	                            }
-	                        } }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                            var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-	                            self.props.onZoom(zoom);
-	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                            var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-	                            self.props.onZoom(zoom);
-	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus' }))), React.createElement("div", { className: styles.right }, React.createElement(tree_component_1.default, { login: self.state.login, userId: self.state.userId, treeId: self.props.treeId, foods: self.props.foods, trees: self.props.trees })));
-	                }
-	            } else {
-	                if (self.state.login == app_component_1.LogInStatus.MANAGER) {
-	                    return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left }, React.createElement("div", { className: styles.button + " " + styles.buttontop, onClick: function onClick() {
-	                            if (navigator.geolocation) {
-	                                navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
-	                            }
-	                        } }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                            var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-	                            self.props.onZoom(zoom);
-	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                            var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-	                            self.props.onZoom(zoom);
-	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button }, React.createElement(FontAwesome, { className: '', name: 'filter' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus' }))), React.createElement("div", { className: styles.right }));
-	                } else {
-	                    return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left }, React.createElement("div", { className: styles.button + " " + styles.buttontop, onClick: function onClick() {
-	                            if (navigator.geolocation) {
-	                                navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
-	                            }
-	                        } }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                            var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-	                            self.props.onZoom(zoom);
-	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                            var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-	                            self.props.onZoom(zoom);
-	                        } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus' }))), React.createElement("div", { className: styles.right }));
-	                }
+	            switch (self.props.mode) {
+	                case trees_component_1.TreesMode.TREEDETAIL:
+	                    if (self.state.open) {
+	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { login: self.state.login, zoom: self.props.zoom, onZoom: self.props.onZoom, onGeo: self.props.onGeo })), React.createElement("div", { className: styles.right }, React.createElement(tree_component_1.default, { login: self.state.login, userId: self.state.userId, treeId: self.props.treeId, foods: self.props.foods, trees: self.props.trees })));
+	                    } else {
+	                        return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { login: self.state.login, zoom: self.props.zoom, onZoom: self.props.onZoom, onGeo: self.props.onGeo })));
+	                    }
+	                case trees_component_1.TreesMode.TREEADDMARKER:
+	                    return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { login: self.state.login, zoom: self.props.zoom, onZoom: self.props.onZoom, onGeo: self.props.onGeo })));
+	                case trees_component_1.TreesMode.TREEADDINFO:
+	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { login: self.state.login, zoom: self.props.zoom, onZoom: self.props.onZoom, onGeo: self.props.onGeo })), React.createElement("div", { className: styles.right }, React.createElement(tree_add_component_1.default, { login: self.state.login, userId: self.state.userId, treeId: self.props.treeId, foods: self.props.foods, trees: self.props.trees })));
 	            }
 	        }
 	    }]);
@@ -65708,17 +65789,14 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    position: absolute;\r\n    top: 0;\r\n    right: -30%;\r\n    width: 30%;\r\n    height: 100%;\r\n    transition: 0.25s;\r\n    padding: 48px 0 0 0;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n\r\n  .DriP8-Em6b0UwHdkRjcUn {\r\n    position: absolute;\r\n    top: 96px;\r\n    left: -48px;\r\n    width: 48px;\r\n  }\r\n\r\n  ._3iETVmpyrHfy60GFk49K53 {\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n\r\n  ._3AVmLJVL5ruKboVvS1zcmY {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -moz-user-select: all;\r\n    -ms-user-select: all;\r\n    -webkit-user-select: all;\r\n    user-select: all;\r\n\r\n    width: 48px;\r\n    height: 48px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-left: 1px solid rgba(0, 0, 0, 0.25);\r\n    font-size: x-large;\r\n    cursor: pointer;\r\n    pointer-events: all;\r\n  }\r\n  ._3AVmLJVL5ruKboVvS1zcmY .fa {\r\n    margin: auto;\r\n  }\r\n  ._3AVmLJVL5ruKboVvS1zcmY:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._3YfXVYMQzhzR1xQ1jOfaYc {\r\n    border-top: 1px solid rgba(0, 0, 0, 0.1);\r\n    border-top-left-radius: 2px;\r\n  }\r\n  ._1ajiO34jiV4lDr28I0OzSA {\r\n    border-bottom: 1px solid rgba(0, 0, 0, 0.1);\r\n    border-bottom-left-radius: 2px;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    right: -50%;\r\n    width: 50%;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    position: absolute;\r\n    right: -100%;\r\n    width: 100%;\r\n    opacity: 0.95;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    position: absolute;\r\n    top: 0;\r\n    right: -30%;\r\n    width: 30%;\r\n    height: 100%;\r\n    transition: 0.25s;\r\n    padding: 48px 0 0 0;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n\r\n  .DriP8-Em6b0UwHdkRjcUn {\r\n    position: absolute;\r\n    top: 96px;\r\n    left: -48px;\r\n    width: 48px;\r\n  }\r\n\r\n  ._3iETVmpyrHfy60GFk49K53 {\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    right: -50%;\r\n    width: 50%;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    position: absolute;\r\n    right: -100%;\r\n    width: 100%;\r\n    opacity: 0.95;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
 		"wrapper": "_1zOCE_2pIKSzr8MI4JUzlk",
 		"slidein": "_3sdT-x8NzmydUUQlaCHfTR",
 		"left": "DriP8-Em6b0UwHdkRjcUn",
-		"right": "_3iETVmpyrHfy60GFk49K53",
-		"button": "_3AVmLJVL5ruKboVvS1zcmY",
-		"buttontop": "_3YfXVYMQzhzR1xQ1jOfaYc",
-		"buttonbottom": "_1ajiO34jiV4lDr28I0OzSA"
+		"right": "_3iETVmpyrHfy60GFk49K53"
 	};
 
 /***/ },
@@ -68855,7 +68933,7 @@
 	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,700,300italic);", ""]);
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  * {\r\n    margin: 0;\r\n    padding: 0;\r\n    -moz-box-sizing: border-box;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n    -webkit-tap-highlight-color: rgba(0,0,0,0);\r\n    \r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n  }\r\n  html {\r\n    width: 100%;\r\n    height: 100%;\r\n  }\r\n  body {\r\n    width: 100%;\r\n    height: 100%;\r\n    color: rgba(255, 255, 255, 1);\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: medium;\r\n    overflow: hidden;\r\n  }\r\n  a {\r\n    text-decoration: none;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n  }\r\n  #BG6p6R6pCMzH6rLXugbI3, #app {\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow: hidden;\r\n  }\r\n  .hidden {\r\n    display: none;\r\n  }\r\n  .hide {\r\n    opacity : 0;\r\n    transition: opacity 1.3s;\r\n  }\r\n  input {\r\n    -moz-user-select: all;\r\n    -ms-user-select: all;\r\n    -webkit-user-select: all;\r\n    user-select: all;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  * {\r\n    margin: 0;\r\n    padding: 0;\r\n    -moz-box-sizing: border-box;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n    -webkit-tap-highlight-color: rgba(0,0,0,0);\r\n\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n  }\r\n  html {\r\n    width: 100%;\r\n    height: 100%;\r\n  }\r\n  body {\r\n    width: 100%;\r\n    height: 100%;\r\n    color: rgba(255, 255, 255, 1);\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: medium;\r\n    overflow: hidden;\r\n  }\r\n  a {\r\n    text-decoration: none;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n  }\r\n  #BG6p6R6pCMzH6rLXugbI3, #app {\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow: hidden;\r\n  }\r\n  .hidden {\r\n    display: none;\r\n  }\r\n  .hide {\r\n    opacity : 0;\r\n    transition: opacity 1.3s;\r\n  }\r\n  input {\r\n    -moz-user-select: all;\r\n    -ms-user-select: all;\r\n    -webkit-user-select: all;\r\n    user-select: all;\r\n  }\r\n  .leaflet-control,\r\n  .leaflet-top, .leaflet-bottom {\r\n    z-index: 0 !important;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -69533,6 +69611,472 @@
 		"contactinput": "_1ALPgpsIWUHojyHKIVFFKg",
 		"buttongroup": "l1HkP0QnUsjC3xY08l9cw",
 		"button": "_2FSj6KbK9OgWeelywc6aja"
+	};
+
+/***/ },
+/* 447 */
+/*!****************************************************!*\
+  !*** ./src/components/trees-controls.component.js ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 1);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
+	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 389);
+	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./trees-controls.component.css */ 448);
+	var app_component_1 = __webpack_require__(/*! ./app.component */ 219);
+	
+	var TreesControlsComponent = function (_React$Component) {
+	    _inherits(TreesControlsComponent, _React$Component);
+	
+	    function TreesControlsComponent(props) {
+	        _classCallCheck(this, TreesControlsComponent);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TreesControlsComponent).call(this, props));
+	
+	        _this.updateProps = function (props) {
+	            var self = _this;
+	        };
+	        var self = _this;
+	        _this.state = {
+	            login: app_component_1.LogInStatus.GUEST,
+	            userId: null,
+	            open: false
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(TreesControlsComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var self = this;
+	            self.updateProps(self.props);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var self = this;
+	            self.updateProps(nextProps);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            if (self.props.login == app_component_1.LogInStatus.MANAGER || self.props.login == app_component_1.LogInStatus.ADMIN) {
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.button + " " + styles.buttontop, onClick: function onClick() {
+	                        if (navigator.geolocation) {
+	                            navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
+	                        }
+	                    } }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                        var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
+	                        self.props.onZoom(zoom);
+	                    } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                        var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
+	                        self.props.onZoom(zoom);
+	                    } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button }, React.createElement(FontAwesome, { className: '', name: 'filter' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus', onClick: function onClick() {
+	                        self.context.router.push({ pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" } });
+	                    } })));
+	            } else {
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.button + " " + styles.buttontop, onClick: function onClick() {
+	                        if (navigator.geolocation) {
+	                            navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
+	                        }
+	                    } }, React.createElement(FontAwesome, { className: '', name: 'location-arrow' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                        var zoom = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
+	                        self.props.onZoom(zoom);
+	                    } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                        var zoom = Math.max(Settings.iMinZoom, self.props.zoom - 1);
+	                        self.props.onZoom(zoom);
+	                    } }, React.createElement(FontAwesome, { className: '', name: 'search-minus' })), React.createElement("div", { className: styles.button + " " + styles.buttonbottom }, React.createElement(FontAwesome, { className: '', name: 'plus', onClick: function onClick() {
+	                        self.context.router.push({ pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" } });
+	                    } })));
+	            }
+	        }
+	    }]);
+	
+	    return TreesControlsComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = TreesControlsComponent;
+	TreesControlsComponent.contextTypes = {
+	    router: function router() {
+	        return React.PropTypes.func.isRequired;
+	    }
+	};
+	//# sourceMappingURL=trees-controls.component.js.map
+
+/***/ },
+/* 448 */
+/*!*****************************************************!*\
+  !*** ./src/components/trees-controls.component.css ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-controls.component.css */ 449);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./trees-controls.component.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./trees-controls.component.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 449 */
+/*!********************************************************************!*\
+  !*** ./~/css-loader!./src/components/trees-controls.component.css ***!
+  \********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  ._2dW7Fb4U5wc5hWMK2Jt_vf {\r\n    height: 100%;\r\n    height: 100%;\r\n  }\r\n\r\n  ._3qbTU04p4lFO55l2MX4vdz {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -moz-user-select: all;\r\n    -ms-user-select: all;\r\n    -webkit-user-select: all;\r\n    user-select: all;\r\n\r\n    width: 48px;\r\n    height: 48px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-left: 1px solid rgba(0, 0, 0, 0.25);\r\n    font-size: x-large;\r\n    cursor: pointer;\r\n    pointer-events: all;\r\n  }\r\n  ._3qbTU04p4lFO55l2MX4vdz .fa {\r\n    margin: auto;\r\n  }\r\n  ._3qbTU04p4lFO55l2MX4vdz:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._2BHhFaOyuF3Xfz_GdRVoEO {\r\n    border-top: 1px solid rgba(0, 0, 0, 0.1);\r\n    border-top-left-radius: 2px;\r\n  }\r\n  .QSTYRu-ioRqS79ZlYkOmA {\r\n    border-bottom: 1px solid rgba(0, 0, 0, 0.1);\r\n    border-bottom-left-radius: 2px;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"wrapper": "_2dW7Fb4U5wc5hWMK2Jt_vf",
+		"button": "_3qbTU04p4lFO55l2MX4vdz",
+		"buttontop": "_2BHhFaOyuF3Xfz_GdRVoEO",
+		"buttonbottom": "QSTYRu-ioRqS79ZlYkOmA"
+	};
+
+/***/ },
+/* 450 */
+/*!***************************************************!*\
+  !*** ./src/components/trees-message.component.js ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 1);
+	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 389);
+	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./trees-message.component.css */ 451);
+	var trees_component_1 = __webpack_require__(/*! ./trees.component */ 236);
+	
+	var TreesMessageComponent = function (_React$Component) {
+	    _inherits(TreesMessageComponent, _React$Component);
+	
+	    function TreesMessageComponent(props) {
+	        _classCallCheck(this, TreesMessageComponent);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TreesMessageComponent).call(this, props));
+	
+	        _this.updateProps = function (props) {
+	            var self = _this;
+	        };
+	        var self = _this;
+	        _this.state = {};
+	        return _this;
+	    }
+	
+	    _createClass(TreesMessageComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var self = this;
+	            self.updateProps(self.props);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var self = this;
+	            self.updateProps(nextProps);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            switch (self.props.mode) {
+	                case trees_component_1.TreesMode.TREEDETAIL:
+	                    return React.createElement("div", { className: styles.wrapper });
+	                case trees_component_1.TreesMode.TREEADDMARKER:
+	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.message }, React.createElement("strong", null, "Move"), " the ", React.createElement("strong", null, "New Tree"), " to a designated location.", React.createElement("span", { className: styles.button, onClick: function onClick() {
+	                            self.context.router.push({ pathname: Settings.uBaseName + '/trees/add', query: { mode: "info" } });
+	                        } }, "NEXT")));
+	                case trees_component_1.TreesMode.TREEADDINFO:
+	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.message }, React.createElement("strong", null, "Fill out"), " information for the ", React.createElement("strong", null, "New Tree"), ".", React.createElement("span", { className: styles.button }, "SAVE")));
+	            }
+	        }
+	    }]);
+	
+	    return TreesMessageComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = TreesMessageComponent;
+	TreesMessageComponent.contextTypes = {
+	    router: function router() {
+	        return React.PropTypes.func.isRequired;
+	    }
+	};
+	//# sourceMappingURL=trees-message.component.js.map
+
+/***/ },
+/* 451 */
+/*!****************************************************!*\
+  !*** ./src/components/trees-message.component.css ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-message.component.css */ 452);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./trees-message.component.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./trees-message.component.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 452 */
+/*!*******************************************************************!*\
+  !*** ./~/css-loader!./src/components/trees-message.component.css ***!
+  \*******************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  ._3gLJFA_JetQSge_CMRl732 {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    position: absolute;\r\n    bottom: -56px;\r\n    left: 0;\r\n    width: 100%;\r\n    min-height: 56px;\r\n    transition: 0.25s;\r\n    padding: 48px 0 0 0;\r\n    border-bottom-left-radius: 2px;\r\n    border-bottom-right-radius: 2px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    padding: 8px 8px 8px 8px;\r\n    text-align: center;\r\n    border-top: 2px solid rgba(255, 255, 255, 1);\r\n  }\r\n  ._2Xt3Swt5yCozitGedkiKup {\r\n    bottom: 0;\r\n    transition: 0.25s;\r\n  }\r\n  ._1zYNMoRv5bqUwZLPmTan9o {\r\n    margin: auto;\r\n  }\r\n  ._2RA07nzbQU55qCWmi6jtq1 {\r\n    font-weight: 700;\r\n    border-radius: 2px;\r\n    border: 2px solid rgba(255, 255, 255, 0.85);\r\n    padding: 2px 6px;\r\n    margin: 2px 2px 2px 6px;\r\n    cursor: pointer;\r\n  }\r\n  ._2RA07nzbQU55qCWmi6jtq1:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n    border: 2px solid rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"wrapper": "_3gLJFA_JetQSge_CMRl732",
+		"slidein": "_2Xt3Swt5yCozitGedkiKup",
+		"message": "_1zYNMoRv5bqUwZLPmTan9o",
+		"button": "_2RA07nzbQU55qCWmi6jtq1"
+	};
+
+/***/ },
+/* 453 */
+/*!***************************************************!*\
+  !*** ./src/components/tree/tree-add.component.js ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 1);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 388);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 389);
+	var AltContainer = __webpack_require__(/*! alt-container */ 237);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./tree-add.component.css */ 454);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 255);
+	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 378);
+	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 402);
+	var ownership_store_1 = __webpack_require__(/*! ./../../stores/ownership.store */ 405);
+	var app_component_1 = __webpack_require__(/*! ./../app.component */ 219);
+	
+	var TreeAddComponent = function (_React$Component) {
+	    _inherits(TreeAddComponent, _React$Component);
+	
+	    function TreeAddComponent(props) {
+	        _classCallCheck(this, TreeAddComponent);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TreeAddComponent).call(this, props));
+	
+	        _this.updateProps = function (props) {
+	            var self = _this;
+	            if (props.foods.length != 0) {
+	                if (props.login == app_component_1.LogInStatus.MANAGER || props.login == app_component_1.LogInStatus.ADMIN) {} else {}
+	            }
+	        };
+	        var self = _this;
+	        _this.state = {};
+	        return _this;
+	    }
+	
+	    _createClass(TreeAddComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var self = this;
+	            flag_store_1.flagStore.fetchFlags();
+	            self.updateProps(self.props);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var self = this;
+	            self.updateProps(nextProps);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            console.log(self.props.treeId);
+	            if (self.props.treeId) {
+	                console.log(tree_store_1.treeStore.getState().trees.length);
+	                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
+	                console.log(tree);
+	                var food = food_store_1.foodStore.getFood(tree.getFoodId());
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.treeinfo }, React.createElement("img", { className: styles.icon, src: Settings.uBaseName + Settings.uStaticImage + food.getIcon() }), React.createElement("div", { className: styles.name }, food.getName() + ' #' + tree.getId()), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
+	                        self.context.router.push({ pathname: Settings.uBaseName + '/' });
+	                    } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement(AltContainer, { stores: {
+	                        flags: function flags(props) {
+	                            return {
+	                                store: flag_store_1.flagStore,
+	                                value: flag_store_1.flagStore.getState().flags
+	                            };
+	                        },
+	                        ownership: function ownership(props) {
+	                            return {
+	                                store: ownership_store_1.ownershipStore,
+	                                value: ownership_store_1.ownershipStore.getState().ownerships
+	                            };
+	                        }
+	                    } })));
+	            } else {
+	                return React.createElement("div", { className: styles.wrapper });
+	            }
+	        }
+	    }]);
+	
+	    return TreeAddComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = TreeAddComponent;
+	TreeAddComponent.contextTypes = {
+	    router: function router() {
+	        return React.PropTypes.func.isRequired;
+	    }
+	};
+	/*
+	<LocationComponent tree={tree} editable={self.state.editable} />
+	<AddressComponent tree={tree} editable={self.state.editable} />
+	<DescriptionComponent tree={tree} editable={self.state.editable} />
+	<FlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} />
+	<OwnershipComponent tree={tree} editable={self.state.editable} />
+	*/
+	//# sourceMappingURL=tree-add.component.js.map
+
+/***/ },
+/* 454 */
+/*!****************************************************!*\
+  !*** ./src/components/tree/tree-add.component.css ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./tree-add.component.css */ 455);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./tree-add.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./tree-add.component.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 455 */
+/*!*******************************************************************!*\
+  !*** ./~/css-loader!./src/components/tree/tree-add.component.css ***!
+  \*******************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  ._2kr6gwL4X84Q2_HODvqJwe {\r\n    width: 100%;\r\n    height: 100%;\r\n    padding: 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n  .XFoUt0pxMvlPVNH2478Cu {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  .XFoUt0pxMvlPVNH2478Cu ._2wrxsglTd8mDooZoj6GMfg {\r\n    /*\r\n    -webkit-filter: drop-shadow(0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    filter: drop-shadow( 0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    */\r\n    width: 36px;\r\n    height: 36px;\r\n    margin: 8px;\r\n  }\r\n  .XFoUt0pxMvlPVNH2478Cu ._2I2d15ICuaSGV6z5bp4CEn {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  .XFoUt0pxMvlPVNH2478Cu ._1DEZjQvbfWGrJECwEnJMRA {\r\n\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .XFoUt0pxMvlPVNH2478Cu ._1DEZjQvbfWGrJECwEnJMRA span {\r\n    cursor: pointer;\r\n  }\r\n  ._1NOonNTQBcAC4inS0Efdfg {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"wrapper": "_2kr6gwL4X84Q2_HODvqJwe",
+		"treeinfo": "XFoUt0pxMvlPVNH2478Cu",
+		"icon": "_2wrxsglTd8mDooZoj6GMfg",
+		"name": "_2I2d15ICuaSGV6z5bp4CEn",
+		"close": "_1DEZjQvbfWGrJECwEnJMRA",
+		"basicinfo": "_1NOonNTQBcAC4inS0Efdfg"
 	};
 
 /***/ }
