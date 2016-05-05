@@ -16,7 +16,7 @@ import { FoodModel, foodStore } from './../stores/food.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 import { LogInStatus } from './app.component';
-
+import { TileMode } from './map.component';
 
 export interface ITreesPanelProps {
   treeId: number;
@@ -26,11 +26,13 @@ export interface ITreesPanelProps {
   onZoom: Function;
   onGeo: PositionCallback;
   mode: TreesMode;
+  tile: TileMode;
+  onTile: Function;
 }
 export interface ITreesPanelStatus {
-  login: LogInStatus;
-  userId: number;
-  open: boolean;
+  login?: LogInStatus;
+  userId?: number;
+  open?: boolean;
 }
 export default class TreesPanelComponent extends React.Component<ITreesPanelProps, ITreesPanelStatus> {
   static contextTypes: any;
@@ -94,7 +96,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
           return (
             <div className={styles.wrapper + " " + styles.slidein}>
               <div className={styles.left}>
-                <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} />
+                <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} tile={self.props.tile} onTile={self.props.onTile} />
               </div>
               <div className={styles.right}>
                 <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} />
@@ -105,7 +107,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
           return (
             <div className={styles.wrapper}>
               <div className={styles.left}>
-                <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} />
+                <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} tile={self.props.tile} onTile={self.props.onTile} />
               </div>
             </div>
           );
@@ -114,7 +116,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
         return (
           <div className={styles.wrapper}>
             <div className={styles.left}>
-              <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} />
+              <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} tile={self.props.tile} onTile={self.props.onTile} />
             </div>
           </div>
         );
@@ -122,7 +124,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
         return (
           <div className={styles.wrapper + " " + styles.slidein}>
             <div className={styles.left}>
-              <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} />
+              <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} tile={self.props.tile} onTile={self.props.onTile} />
             </div>
             <div className={styles.right}>
               <TreeAddComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} />

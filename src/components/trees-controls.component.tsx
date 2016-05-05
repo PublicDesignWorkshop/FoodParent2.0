@@ -13,12 +13,15 @@ import { FoodModel, foodStore } from './../stores/food.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 import { LogInStatus } from './app.component';
+import { TileMode } from './map.component';
 
 export interface ITreesControlsProps {
   login: LogInStatus;
   zoom: number;
   onZoom: Function;
   onGeo: PositionCallback;
+  tile: TileMode;
+  onTile: Function;
 }
 export interface ITreesControlsStatus {
 
@@ -52,6 +55,11 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
 
   render() {
     let self: TreesControlsComponent = this;
+    let tileIcon = 'map-o';
+    if (self.props.tile == TileMode.SATELLITE) {
+      tileIcon = 'map';
+    }
+
     if (self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.ADMIN) {
       return (
         <div className={styles.wrapper}>
@@ -61,6 +69,15 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
             }
           }}>
             <FontAwesome className='' name='location-arrow' />
+          </div>
+          <div className={styles.button} onClick={()=> {
+            if (self.props.tile == TileMode.GRAY) {
+              self.props.onTile(TileMode.SATELLITE);
+            } else {
+              self.props.onTile(TileMode.GRAY);
+            }
+          }}>
+            <FontAwesome className='' name={tileIcon} />
           </div>
           <div className={styles.button} onClick={()=> {
             let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
@@ -93,6 +110,15 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
             }
           }}>
             <FontAwesome className='' name='location-arrow' />
+          </div>
+          <div className={styles.button} onClick={()=> {
+            if (self.props.tile == TileMode.GRAY) {
+              self.props.onTile(TileMode.SATELLITE);
+            } else {
+              self.props.onTile(TileMode.GRAY);
+            }
+          }}>
+            <FontAwesome className='' name={tileIcon} />
           </div>
           <div className={styles.button} onClick={()=> {
             let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);

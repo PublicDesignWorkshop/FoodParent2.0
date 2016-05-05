@@ -17,6 +17,10 @@ import { treeActions } from './../actions/tree.actions';
 import MarkerComponent from './marker.component';
 import { TreesMode } from './trees.component';
 
+export enum TileMode {
+  GRAY, SATELLITE
+}
+
 export interface IMapProps {
   foods: Array<FoodModel>;
   trees: Array<TreeModel>;
@@ -27,6 +31,7 @@ export interface IMapProps {
   position: L.LatLng;
   offGeo: Function;
   mode: TreesMode;
+  tile: TileMode;
 }
 export interface IMapStatus {
 
@@ -87,12 +92,23 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       self.map.setZoom(nextProps.zoom);
       self.renderUserLocation(nextProps.position);
 
-      switch(nextProps.mode) {
-        case TreesMode.TREEDETAIL:
+      switch(nextProps.tile) {
+        case TileMode.GRAY:
           if (!self.map.hasLayer(self.grayTileLayer)) {
             self.grayTileLayer.addTo(self.map);
             self.map.removeLayer(self.satTileLayer);
           }
+          break;
+        case TileMode.SATELLITE:
+          if (!self.map.hasLayer(self.satTileLayer)) {
+            self.satTileLayer.addTo(self.map);
+            self.map.removeLayer(self.grayTileLayer);
+          }
+          break;
+      }
+
+      switch(nextProps.mode) {
+        case TreesMode.TREEDETAIL:
           if (self.newMarker) {
             self.map.removeLayer(self.newMarker);
             self.newMarker = null;
@@ -106,10 +122,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
           } else {
             //point.y += self.map.getSize().y * 0.15;
           }
-          if (!self.map.hasLayer(self.satTileLayer)) {
-            self.satTileLayer.addTo(self.map);
-            self.map.removeLayer(self.grayTileLayer);
-          }
+
           if (!self.newMarker) {
             var tree: TreeModel = new TreeModel({
               id: "0",

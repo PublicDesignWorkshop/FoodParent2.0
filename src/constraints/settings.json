@@ -8,9 +8,9 @@
     "y": -84.3806
   },
   "uGrayTileMap" : "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
-  "uSatTileMap" : "//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  "uSatTileMap" : "//oatile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg",
   "iDefaultZoom": 13,
-  "iMaxZoom": 20,
+  "iMaxZoom": 18,
   "iMinZoom": 5,
   "iFocusZoom": 18,
   "sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
