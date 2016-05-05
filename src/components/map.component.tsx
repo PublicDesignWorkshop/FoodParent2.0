@@ -126,8 +126,8 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
           if (!self.newMarker) {
             var tree: TreeModel = new TreeModel({
               id: "0",
-              lat: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom) + "",
-              lng: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom) + "",
+              lat: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom).lat + "",
+              lng: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom).lng + "",
               food: "1",
               type: "0",
               flag: "0",
@@ -156,7 +156,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
           bFound = true;
         }
       }
-      if (!bFound) {
+      if (tree.getId() != 0 && !bFound) {
         self.addMarker(tree, false);
       }
     });
@@ -175,7 +175,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       }
       i++;
     }
-
 
     // Open tree info popup if the hash address has an existing tree id
     let bFound: boolean = false;

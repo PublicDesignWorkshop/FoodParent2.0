@@ -19,25 +19,6 @@
     border-radius: 2px;
     padding: 0 0 8px 0;
   }
-  :local(.treeinfo .icon) {
-    /*
-    -webkit-filter: drop-shadow(0px 0px 1px rgba(94, 78, 81, 0.75));
-    filter: drop-shadow( 0px 0px 1px rgba(94, 78, 81, 0.75));
-    */
-    width: 36px;
-    height: 36px;
-    margin: 8px;
-  }
-  :local(.treeinfo .name) {
-    -webkit-flex-grow: 1;           /* NEW - Chrome */
-    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
-
-    font-size: x-large;
-    font-weight: 700;
-    color: rgba(94, 78, 81, 1);
-    margin: auto;
-    margin-right: 8px;
-  }
   :local(.treeinfo .close) {
 
     font-size: xx-large;

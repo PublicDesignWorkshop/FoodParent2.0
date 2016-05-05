@@ -63,7 +63,7 @@ module MarkerComponent {
       popupAnchor: new L.Point(1, -36),
     });
 
-    let template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">New Tree</span></div><div class="marker-right"></div>';
+    let template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">New&nbsp;Tree</span></div><div class="marker-right"></div>';
 
     let marker: L.Marker = new L.Marker(position, {
       id: 0,

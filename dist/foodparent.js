@@ -53,7 +53,7 @@
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	var routes_1 = __webpack_require__(/*! ./routes */ 218);
-	__webpack_require__(/*! ./client.css */ 454);
+	__webpack_require__(/*! ./client.css */ 457);
 	ReactDOM.render(React.createElement(react_router_1.Router, { history: react_router_1.browserHistory }, routes_1.default), document.getElementById('app'));
 	//# sourceMappingURL=client.js.map
 
@@ -28473,7 +28473,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  .oZ1lUuFeTKDDs5XP-XURm {\r\n    position: absolute;\r\n    top: 0;\r\n    right: -30%;\r\n    width: 30%;\r\n    height: 100%;\r\n    padding: 56px 8px 8px 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n  .yzWY85WCCcDtpnmBluj3k {\r\n    right: 0;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    min-height: 60px;\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .z7yi6alqgPWQTUINUxiPR {\r\n    width: 32px;\r\n    margin: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-size: 235%;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn ._2V3FiG91EsxUlcA89cHAfF {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn ._1I9WULzr34DgE7E0i42K_2 {\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn ._1I9WULzr34DgE7E0i42K_2 span {\r\n    cursor: pointer;\r\n  }\r\n  .Saa_GRQ3pl5Q1IsSDcJdb {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n\r\n  ._8DW7wv1u3d9KjPaf_ZmM1 {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .mhgPnbYpB_MXRq03cgD-9 {\r\n    display: block;\r\n    padding: 0 0 0 4px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._3QvzZAVX5Q2yBmqF8RZKr4 {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    margin: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n\r\n\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-control {\r\n    border-color: rgba(244, 244, 244, 1);\r\n    border-radius: 2px;\r\n    border: none;\r\n    color: rgba(94, 78, 81, 1);\r\n    background-color: rgba(244, 244, 244, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-placeholder,\r\n  ._1OdBkmMzXJTceG9dUsm0Rn :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(94, 78, 81, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select--multi .Select-value {\r\n    background-color: rgba(244, 244, 244, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(94, 78, 81, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(244, 244, 244, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(94, 78, 81, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 6px 3px 8px;\r\n    font-weight: 700;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(244, 244, 244, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-arrow {\r\n    border-color: rgba(94, 78, 81, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-open .Select-arrow,\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select--multi .Select-value-icon:hover,\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .is-focused:not(.is-open) > .Select-control {\r\n    border-color: none;\r\n    box-shadow: none;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select--multi .Select-value {\r\n    background-color: rgba(244, 244, 244, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(244, 244, 244, 1);\r\n    color: rgba(94, 78, 81, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label,\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n\r\n\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n  .oZ1lUuFeTKDDs5XP-XURm {\r\n    position: absolute;\r\n    right: -50%;\r\n    width: 50%;\r\n  }\r\n  .yzWY85WCCcDtpnmBluj3k {\r\n    right: 0;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  .oZ1lUuFeTKDDs5XP-XURm {\r\n    position: absolute;\r\n    right: -100%;\r\n    width: 100%;\r\n    opacity: 0.95;\r\n    padding-bottom: 120px;\r\n  }\r\n  .yzWY85WCCcDtpnmBluj3k {\r\n    right: 0;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  .oZ1lUuFeTKDDs5XP-XURm {\r\n    position: absolute;\r\n    top: 0;\r\n    right: -30%;\r\n    width: 30%;\r\n    height: 100%;\r\n    padding: 56px 8px 8px 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n  .yzWY85WCCcDtpnmBluj3k {\r\n    right: 0;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    min-height: 60px;\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn .z7yi6alqgPWQTUINUxiPR {\r\n    width: 32px;\r\n    margin: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-size: 235%;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn ._2V3FiG91EsxUlcA89cHAfF {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn ._1I9WULzr34DgE7E0i42K_2 {\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1OdBkmMzXJTceG9dUsm0Rn ._1I9WULzr34DgE7E0i42K_2 span {\r\n    cursor: pointer;\r\n  }\r\n  .Saa_GRQ3pl5Q1IsSDcJdb {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n\r\n  ._8DW7wv1u3d9KjPaf_ZmM1 {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .mhgPnbYpB_MXRq03cgD-9 {\r\n    display: block;\r\n    padding: 0 0 0 4px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._3QvzZAVX5Q2yBmqF8RZKr4 {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    margin: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n\r\n\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select-control {\r\n    border-color: rgba(244, 244, 244, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(244, 244, 244, 1);\r\n    color: rgba(94, 78, 81, 1);\r\n    background-color: rgba(244, 244, 244, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(94, 78, 81, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(255, 255, 255, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(94, 78, 81, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select-arrow {\r\n    border-color: rgba(94, 78, 81, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .is-open .Select-arrow,\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select--multi .Select-value-icon:hover,\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label, .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select-input {\r\n    display: none !important;\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select.is-disabled > .Select-control {\r\n    background-color: rgba(244, 244, 244, 1);\r\n  }\r\n  .oZ1lUuFeTKDDs5XP-XURm .Select.is-disabled .Select-arrow-zone {\r\n    display: none;\r\n  }\r\n\r\n\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n  .oZ1lUuFeTKDDs5XP-XURm {\r\n    position: absolute;\r\n    right: -50%;\r\n    width: 50%;\r\n  }\r\n  .yzWY85WCCcDtpnmBluj3k {\r\n    right: 0;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  .oZ1lUuFeTKDDs5XP-XURm {\r\n    position: absolute;\r\n    right: -100%;\r\n    width: 100%;\r\n    opacity: 0.95;\r\n    padding-bottom: 120px;\r\n  }\r\n  .yzWY85WCCcDtpnmBluj3k {\r\n    right: 0;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -39055,7 +39055,7 @@
 	var food_store_1 = __webpack_require__(/*! ./../stores/food.store */ 408);
 	var map_component_1 = __webpack_require__(/*! ./map.component */ 411);
 	var trees_panel_component_1 = __webpack_require__(/*! ./trees-panel.component */ 417);
-	var trees_message_component_1 = __webpack_require__(/*! ./trees-message.component */ 451);
+	var trees_message_component_1 = __webpack_require__(/*! ./trees-message.component */ 454);
 	var map_component_2 = __webpack_require__(/*! ./map.component */ 411);
 	(function (TreesMode) {
 	    TreesMode[TreesMode["NONE"] = 0] = "NONE";
@@ -39083,7 +39083,11 @@
 	                if (props.location.query.mode == "marker") {
 	                    mode = TreesMode.TREEADDMARKER;
 	                } else if (props.location.query.mode == "info") {
-	                    mode = TreesMode.TREEADDINFO;
+	                    if (tree_store_1.treeStore.getTree(0)) {
+	                        mode = TreesMode.TREEADDINFO;
+	                    } else {
+	                        self.context.router.replace({ pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" } });
+	                    }
 	                }
 	            } else if (props.params.treeId) {
 	                treeId = parseInt(props.params.treeId);
@@ -39181,6 +39185,11 @@
 	
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = TreesComponent;
+	TreesComponent.contextTypes = {
+	    router: function router() {
+	        return React.PropTypes.func.isRequired;
+	    }
+	};
 	//# sourceMappingURL=trees.component.js.map
 
 /***/ },
@@ -49532,20 +49541,17 @@
 	        key: 'addTree',
 	        value: function addTree(tree) {
 	            var self = this;
-	            if (self.trees) {
-	                var i = -1;
-	                for (var j = 0; j < self.trees.length; j++) {
-	                    if (self.trees[j].getId() === tree.getId()) {
-	                        i = j;
-	                    }
+	            var trees = self.getState().trees;
+	            var i = -1;
+	            for (var j = 0; j < trees.length; j++) {
+	                if (trees[j].getId() === tree.getId()) {
+	                    i = j;
 	                }
-	                if (i > -1) {
-	                    self.trees.splice(i, 1);
-	                }
-	            } else {
-	                self.trees = new Array();
 	            }
-	            self.trees.push(tree);
+	            if (i > -1) {
+	                trees = trees.splice(i, 1);
+	            }
+	            trees.push(tree);
 	        }
 	    }]);
 	
@@ -65898,7 +65904,7 @@
 	                        bFound = true;
 	                    }
 	                }
-	                if (!bFound) {
+	                if (tree.getId() != 0 && !bFound) {
 	                    self.addMarker(tree, false);
 	                }
 	            });
@@ -66055,8 +66061,8 @@
 	                        if (!self.newMarker) {
 	                            var tree = new tree_store_1.TreeModel({
 	                                id: "0",
-	                                lat: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom) + "",
-	                                lng: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom) + "",
+	                                lat: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom).lat + "",
+	                                lng: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom).lng + "",
 	                                food: "1",
 	                                type: "0",
 	                                flag: "0",
@@ -67808,7 +67814,7 @@
 	            iconAnchor: new L.Point(20, 40),
 	            popupAnchor: new L.Point(1, -36)
 	        });
-	        var template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">New Tree</span></div><div class="marker-right"></div>';
+	        var template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">New&nbsp;Tree</span></div><div class="marker-right"></div>';
 	        var marker = new L.Marker(position, {
 	            id: 0,
 	            selected: false,
@@ -67907,7 +67913,7 @@
 	var tree_component_1 = __webpack_require__(/*! ./tree/tree.component */ 420);
 	var tree_add_component_1 = __webpack_require__(/*! ./tree/tree-add.component */ 445);
 	var trees_component_1 = __webpack_require__(/*! ./trees.component */ 266);
-	var trees_controls_component_1 = __webpack_require__(/*! ./trees-controls.component */ 448);
+	var trees_controls_component_1 = __webpack_require__(/*! ./trees-controls.component */ 451);
 	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 286);
 	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
 	var authentication_1 = __webpack_require__(/*! ./../utils/authentication */ 257);
@@ -68091,6 +68097,7 @@
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 408);
 	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 423);
 	var ownership_store_1 = __webpack_require__(/*! ./../../stores/ownership.store */ 426);
+	var food_component_1 = __webpack_require__(/*! ./food.component */ 448);
 	var address_component_1 = __webpack_require__(/*! ./address.component */ 429);
 	var description_component_1 = __webpack_require__(/*! ./description.component */ 433);
 	var flag_component_1 = __webpack_require__(/*! ./flag.component */ 436);
@@ -68155,9 +68162,9 @@
 	            if (self.props.treeId) {
 	                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
 	                var food = food_store_1.foodStore.getFood(tree.getFoodId());
-	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.treeinfo }, React.createElement("img", { className: styles.icon, src: Settings.uBaseName + Settings.uStaticImage + food.getIcon() }), React.createElement("div", { className: styles.name }, food.getName() + ' #' + tree.getId()), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.treeinfo }, React.createElement(food_component_1.default, { tree: tree, foods: self.props.foods, editable: self.state.editable, async: false }), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
 	                        self.context.router.push({ pathname: Settings.uBaseName + '/' });
-	                        self.setState({ bOpen: false, editable: self.state.editable });
+	                        //self.setState({editable: self.state.editable});
 	                    } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement(AltContainer, { stores: {
 	                        flags: function flags(props) {
 	                            return {
@@ -69275,13 +69282,13 @@
 	var styles = __webpack_require__(/*! ./ownership.component.css */ 440);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	
-	var OwnsershipComponent = function (_React$Component) {
-	    _inherits(OwnsershipComponent, _React$Component);
+	var OwnershipComponent = function (_React$Component) {
+	    _inherits(OwnershipComponent, _React$Component);
 	
-	    function OwnsershipComponent(props) {
-	        _classCallCheck(this, OwnsershipComponent);
+	    function OwnershipComponent(props) {
+	        _classCallCheck(this, OwnershipComponent);
 	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(OwnsershipComponent).call(this, props));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(OwnershipComponent).call(this, props));
 	
 	        _this.updateAttribute = function (selected) {
 	            var self = _this;
@@ -69300,7 +69307,7 @@
 	        return _this;
 	    }
 	
-	    _createClass(OwnsershipComponent, [{
+	    _createClass(OwnershipComponent, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var self = this;
@@ -69346,11 +69353,11 @@
 	        }
 	    }]);
 	
-	    return OwnsershipComponent;
+	    return OwnershipComponent;
 	}(React.Component);
 	
 	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.default = OwnsershipComponent;
+	exports.default = OwnershipComponent;
 	//# sourceMappingURL=ownership.component.js.map
 
 /***/ },
@@ -69608,6 +69615,7 @@
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 408);
 	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 423);
 	var ownership_store_1 = __webpack_require__(/*! ./../../stores/ownership.store */ 426);
+	var food_component_1 = __webpack_require__(/*! ./food.component */ 448);
 	var app_component_1 = __webpack_require__(/*! ./../app.component */ 219);
 	
 	var TreeAddComponent = function (_React$Component) {
@@ -69651,13 +69659,10 @@
 	        key: 'render',
 	        value: function render() {
 	            var self = this;
-	            console.log(self.props.treeId);
-	            if (self.props.treeId) {
-	                console.log(tree_store_1.treeStore.getState().trees.length);
+	            if (self.props.treeId != null) {
 	                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
-	                console.log(tree);
 	                var food = food_store_1.foodStore.getFood(tree.getFoodId());
-	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.treeinfo }, React.createElement("img", { className: styles.icon, src: Settings.uBaseName + Settings.uStaticImage + food.getIcon() }), React.createElement("div", { className: styles.name }, food.getName() + ' #' + tree.getId()), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.treeinfo }, React.createElement(food_component_1.default, { tree: tree, foods: self.props.foods, editable: true, async: false }), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
 	                        self.context.router.push({ pathname: Settings.uBaseName + '/' });
 	                    } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement(AltContainer, { stores: {
 	                        flags: function flags(props) {
@@ -69695,6 +69700,10 @@
 	<DescriptionComponent tree={tree} editable={self.state.editable} />
 	<FlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} />
 	<OwnershipComponent tree={tree} editable={self.state.editable} />
+	*/
+	/*
+	<img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
+	<div className={styles.name}>{food.getName() + ' #' + tree.getId()}</div>
 	*/
 	//# sourceMappingURL=tree-add.component.js.map
 
@@ -69739,20 +69748,172 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._2kr6gwL4X84Q2_HODvqJwe {\r\n    width: 100%;\r\n    height: 100%;\r\n    padding: 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n  .XFoUt0pxMvlPVNH2478Cu {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  .XFoUt0pxMvlPVNH2478Cu ._2wrxsglTd8mDooZoj6GMfg {\r\n    /*\r\n    -webkit-filter: drop-shadow(0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    filter: drop-shadow( 0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    */\r\n    width: 36px;\r\n    height: 36px;\r\n    margin: 8px;\r\n  }\r\n  .XFoUt0pxMvlPVNH2478Cu ._2I2d15ICuaSGV6z5bp4CEn {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  .XFoUt0pxMvlPVNH2478Cu ._1DEZjQvbfWGrJECwEnJMRA {\r\n\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .XFoUt0pxMvlPVNH2478Cu ._1DEZjQvbfWGrJECwEnJMRA span {\r\n    cursor: pointer;\r\n  }\r\n  ._1NOonNTQBcAC4inS0Efdfg {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._2kr6gwL4X84Q2_HODvqJwe {\r\n    width: 100%;\r\n    height: 100%;\r\n    padding: 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n  .XFoUt0pxMvlPVNH2478Cu {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  .XFoUt0pxMvlPVNH2478Cu ._1DEZjQvbfWGrJECwEnJMRA {\r\n\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .XFoUt0pxMvlPVNH2478Cu ._1DEZjQvbfWGrJECwEnJMRA span {\r\n    cursor: pointer;\r\n  }\r\n  ._1NOonNTQBcAC4inS0Efdfg {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
 		"wrapper": "_2kr6gwL4X84Q2_HODvqJwe",
 		"treeinfo": "XFoUt0pxMvlPVNH2478Cu",
-		"icon": "_2wrxsglTd8mDooZoj6GMfg",
-		"name": "_2I2d15ICuaSGV6z5bp4CEn",
 		"close": "_1DEZjQvbfWGrJECwEnJMRA",
 		"basicinfo": "_1NOonNTQBcAC4inS0Efdfg"
 	};
 
 /***/ },
 /* 448 */
+/*!***********************************************!*\
+  !*** ./src/components/tree/food.component.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 1);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
+	var Select = __webpack_require__(/*! react-select */ 243);
+	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 250);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./food.component.css */ 449);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
+	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 408);
+	
+	var FoodComponent = function (_React$Component) {
+	    _inherits(FoodComponent, _React$Component);
+	
+	    function FoodComponent(props) {
+	        _classCallCheck(this, FoodComponent);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FoodComponent).call(this, props));
+	
+	        _this.updateAttribute = function (selected) {
+	            var self = _this;
+	            var pub = 0;
+	            if (selected) {
+	                pub = parseInt(selected.value);
+	            }
+	            self.props.tree.setOwnership(pub);
+	            tree_store_1.treeStore.updateTree(self.props.tree);
+	        };
+	        var self = _this;
+	        _this.state = {
+	            options: null,
+	            selected: null
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(FoodComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var self = this;
+	            self.updateProps(self.props);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var self = this;
+	            self.updateProps(nextProps);
+	        }
+	    }, {
+	        key: 'updateProps',
+	        value: function updateProps(props) {
+	            var self = this;
+	            if (props.tree && props.foods) {
+	                var options = new Array();
+	                var selected;
+	                props.foods.forEach(function (food) {
+	                    options.push({ value: food.getId(), label: food.getName() });
+	                    if (props.tree.getFoodId() == food.getId()) {
+	                        selected = { value: food.getId(), label: food.getName() };
+	                    }
+	                });
+	                self.setState({ options: options, selected: selected });
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            var food = food_store_1.foodStore.getFood(self.props.tree.getFoodId());
+	            if (self.props.editable) {
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("img", { className: styles.icon, src: Settings.uBaseName + Settings.uStaticImage + food.getIcon() }), React.createElement("div", { className: styles.name }, React.createElement(Select, { name: "public-select", multi: false, searchable: false, scrollMenuIntoView: false, options: self.state.options, value: self.state.selected, onChange: self.updateAttribute, placeholder: "select ownerships..." })));
+	            } else {
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("img", { className: styles.icon, src: Settings.uBaseName + Settings.uStaticImage + food.getIcon() }), React.createElement("div", { className: styles.name }, React.createElement(Select, { name: "public-select", multi: false, disabled: true, searchable: false, scrollMenuIntoView: false, options: self.state.options, value: self.state.selected, onChange: self.updateAttribute, placeholder: "select ownerships..." })));
+	            }
+	        }
+	    }]);
+	
+	    return FoodComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = FoodComponent;
+	//# sourceMappingURL=food.component.js.map
+
+/***/ },
+/* 449 */
+/*!************************************************!*\
+  !*** ./src/components/tree/food.component.css ***!
+  \************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./food.component.css */ 450);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./food.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./food.component.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 450 */
+/*!***************************************************************!*\
+  !*** ./~/css-loader!./src/components/tree/food.component.css ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  ._1eTYnkNptxNpOCI7bCz4Mc {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    border-radius: 2px;\r\n  }\r\n  ._1unhcS0Eq2VFnIrZtQ0TA0 {\r\n    width: 36px;\r\n    height: 36px;\r\n    margin: 8px;\r\n  }\r\n  .CGrdYJGPteld1Ev56MSy3 {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-control {\r\n    border-color: rgba(244, 244, 244, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(244, 244, 244, 1);\r\n    color: rgba(94, 78, 81, 1);\r\n    background-color: rgba(244, 244, 244, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(94, 78, 81, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(255, 255, 255, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(94, 78, 81, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-arrow {\r\n    border-color: rgba(94, 78, 81, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-open .Select-arrow,\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value-icon:hover,\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label, .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-input {\r\n    display: none !important;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select.is-disabled > .Select-control {\r\n    background-color: rgba(244, 244, 244, 1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select.is-disabled .Select-arrow-zone {\r\n    display: none;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value {\r\n    width: 95%;\r\n  }\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"wrapper": "_1eTYnkNptxNpOCI7bCz4Mc",
+		"icon": "_1unhcS0Eq2VFnIrZtQ0TA0",
+		"name": "CGrdYJGPteld1Ev56MSy3"
+	};
+
+/***/ },
+/* 451 */
 /*!****************************************************!*\
   !*** ./src/components/trees-controls.component.js ***!
   \****************************************************/
@@ -69772,7 +69933,7 @@
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
 	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./trees-controls.component.css */ 449);
+	var styles = __webpack_require__(/*! ./trees-controls.component.css */ 452);
 	var app_component_1 = __webpack_require__(/*! ./app.component */ 219);
 	var map_component_1 = __webpack_require__(/*! ./map.component */ 411);
 	
@@ -69878,7 +70039,7 @@
 	//# sourceMappingURL=trees-controls.component.js.map
 
 /***/ },
-/* 449 */
+/* 452 */
 /*!*****************************************************!*\
   !*** ./src/components/trees-controls.component.css ***!
   \*****************************************************/
@@ -69887,7 +70048,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-controls.component.css */ 450);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-controls.component.css */ 453);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69907,7 +70068,7 @@
 	}
 
 /***/ },
-/* 450 */
+/* 453 */
 /*!********************************************************************!*\
   !*** ./~/css-loader!./src/components/trees-controls.component.css ***!
   \********************************************************************/
@@ -69929,7 +70090,7 @@
 	};
 
 /***/ },
-/* 451 */
+/* 454 */
 /*!***************************************************!*\
   !*** ./src/components/trees-message.component.js ***!
   \***************************************************/
@@ -69948,7 +70109,7 @@
 	var React = __webpack_require__(/*! react */ 1);
 	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./trees-message.component.css */ 452);
+	var styles = __webpack_require__(/*! ./trees-message.component.css */ 455);
 	var trees_component_1 = __webpack_require__(/*! ./trees.component */ 266);
 	
 	var TreesMessageComponent = function (_React$Component) {
@@ -70014,7 +70175,7 @@
 	//# sourceMappingURL=trees-message.component.js.map
 
 /***/ },
-/* 452 */
+/* 455 */
 /*!****************************************************!*\
   !*** ./src/components/trees-message.component.css ***!
   \****************************************************/
@@ -70023,7 +70184,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-message.component.css */ 453);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-message.component.css */ 456);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -70043,7 +70204,7 @@
 	}
 
 /***/ },
-/* 453 */
+/* 456 */
 /*!*******************************************************************!*\
   !*** ./~/css-loader!./src/components/trees-message.component.css ***!
   \*******************************************************************/
@@ -70065,7 +70226,7 @@
 	};
 
 /***/ },
-/* 454 */
+/* 457 */
 /*!************************!*\
   !*** ./src/client.css ***!
   \************************/
@@ -70074,7 +70235,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 455);
+	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 458);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 223)(content, {});
@@ -70094,7 +70255,7 @@
 	}
 
 /***/ },
-/* 455 */
+/* 458 */
 /*!***************************************!*\
   !*** ./~/css-loader!./src/client.css ***!
   \***************************************/

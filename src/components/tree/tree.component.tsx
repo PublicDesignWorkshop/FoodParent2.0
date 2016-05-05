@@ -11,6 +11,7 @@ import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { FlagModel, flagStore } from './../../stores/flag.store';
 import { OwnershipModel, ownershipStore } from './../../stores/ownership.store';
+import FoodComponent from './food.component';
 import AddressComponent from './address.component';
 import DescriptionComponent from './description.component';
 import FlagComponent from './flag.component';
@@ -76,11 +77,10 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
       return (
         <div className={styles.wrapper}>
           <div className={styles.treeinfo}>
-            <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
-            <div className={styles.name}>{food.getName() + ' #' + tree.getId()}</div>
+            <FoodComponent tree={tree} foods={self.props.foods} editable={self.state.editable} async={false} />
             <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
               self.context.router.push({pathname: Settings.uBaseName + '/'});
-              self.setState({bOpen: false, editable: self.state.editable});
+              //self.setState({editable: self.state.editable});
             }}/></div>
           </div>
           <div className={styles.basicinfo}>

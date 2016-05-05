@@ -1,38 +1,22 @@
 @media all {
   :local(.wrapper) {
-    position: absolute;
-    top: 0;
-    right: -30%;
-    width: 30%;
-    height: 100%;
-    padding: 56px 8px 8px 8px;
-    background-color: rgba(244, 244, 244, 1);
-    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
-    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
-    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
-    overflow-y: auto;
-  }
-  :local(.slidein) {
-    right: 0;
-  }
-  :local(.siginininfo) {
     display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
     display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
     display: -ms-flexbox;           /* TWEENER - IE 10 */
     display: -webkit-flex;          /* NEW - Chrome */
     display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
 
-    min-height: 60px;
+    -webkit-flex-grow: 1;           /* NEW - Chrome */
+    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
     border-radius: 2px;
-    padding: 0 0 8px 0;
   }
-  :local(.siginininfo .icon) {
-    width: 32px;
+  :local(.icon) {
+    width: 36px;
+    height: 36px;
     margin: 8px;
-    color: rgba(94, 78, 81, 1);
-    font-size: 235%;
   }
-  :local(.siginininfo .name) {
+  :local(.name) {
     -webkit-flex-grow: 1;           /* NEW - Chrome */
     flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
 
@@ -42,41 +26,6 @@
     margin: auto;
     margin-right: 8px;
   }
-  :local(.siginininfo .close) {
-    font-size: xx-large;
-    font-weight: 700;
-    color: rgba(94, 78, 81, 1);
-  }
-  :local(.siginininfo .close span) {
-    cursor: pointer;
-  }
-  :local(.basicinfo) {
-    border-radius: 2px;
-    background-color: rgba(94, 78, 81, 1);
-    padding: 4px 12px 12px 12px;
-  }
-  .span[name="close"] {
-  }
-
-  :local(.contactlabel) {
-    font-weight: 700;
-    padding-top: 8px;
-    color: rgba(94, 78, 81, 1);
-  }
-  :local(.contactname) {
-    display: block;
-    padding: 0 0 0 4px;
-    min-height: 22px;
-    letter-spacing: 1px;
-  }
-  :local(.contactinput) {
-    width: 100%;
-    padding: 6px 3px;
-    border-radius: 2px;
-    margin: 2px;
-    border: 1px solid rgba(94, 78, 81, 1);
-  }
-
 
   :local(.wrapper) .Select-control {
     border-color: rgba(244, 244, 244, 1);
@@ -215,30 +164,15 @@
   :local(.wrapper) .Select.is-disabled .Select-arrow-zone {
     display: none;
   }
-
-
 }
 
+
 @media screen and (max-device-width: 667px) {
-  :local(.wrapper) {
-    position: absolute;
-    right: -50%;
-    width: 50%;
-  }
-  :local(.slidein) {
-    right: 0;
-  }
+
 }
 
 @media screen and (max-device-aspect-ratio: 1/1) {
-  :local(.wrapper) {
-    position: absolute;
-    right: -100%;
-    width: 100%;
-    opacity: 0.95;
-    padding-bottom: 120px;
-  }
-  :local(.slidein) {
-    right: 0;
+  :local(.wrapper) .Select--multi .Select-value {
+    width: 95%;
   }
 }

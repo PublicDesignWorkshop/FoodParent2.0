@@ -32,6 +32,7 @@ export interface ITreesStatus {
   tile?: TileMode;
 }
 export default class TreesComponent extends React.Component<ITreesProps, ITreesStatus> {
+  static contextTypes: any;
   constructor(props : ITreesProps) {
     super(props);
     let self: TreesComponent = this;
@@ -67,7 +68,11 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
       if (props.location.query.mode == "marker") {
         mode = TreesMode.TREEADDMARKER;
       } else if (props.location.query.mode == "info") {
-        mode = TreesMode.TREEADDINFO;
+        if (treeStore.getTree(0)) {
+          mode = TreesMode.TREEADDINFO;
+        } else {
+          self.context.router.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" }});
+        }
       }
     } else if (props.params.treeId) {
       treeId = parseInt(props.params.treeId);
@@ -138,3 +143,9 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
     );
   }
 }
+
+TreesComponent.contextTypes = {
+  router: function () {
+    return React.PropTypes.func.isRequired;
+  }
+};

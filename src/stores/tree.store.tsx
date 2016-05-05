@@ -201,20 +201,17 @@ class TreeStore extends AbstractStore<TreeState> {
   }
   addTree(tree: TreeModel): void {
     let self: TreeStore = this;
-    if (self.trees) {
-      let i = -1;
-      for(let j = 0; j < self.trees.length; j++) {
-        if(self.trees[j].getId() === tree.getId()) {
-          i = j;
-        }
+    let trees = self.getState().trees;
+    let i = -1;
+    for(let j = 0; j < trees.length; j++) {
+      if(trees[j].getId() === tree.getId()) {
+        i = j;
       }
-      if (i > -1) {
-        self.trees.splice(i, 1);
-      }
-    } else {
-      self.trees = new Array<TreeModel>();
     }
-    self.trees.push(tree);
+    if (i > -1) {
+      trees = trees.splice(i, 1);
+    }
+    trees.push(tree);
   }
 }
 

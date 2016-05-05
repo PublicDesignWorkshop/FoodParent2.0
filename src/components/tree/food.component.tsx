@@ -8,63 +8,65 @@ import './../../../node_modules/react-select/dist/react-select.css';
 import * as $ from 'jquery';
 
 var Settings = require('./../../constraints/settings.json');
-import * as styles from './ownership.component.css';
+import * as styles from './food.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
+import { FoodModel, foodStore } from './../../stores/food.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 
-export interface IOwnershipOption {
+export interface IFoodOption {
   value: number;
   label: string;
 }
 
-export interface IOwnershipProps {
+export interface IFoodProps {
   tree: TreeModel;
+  foods: Array<FoodModel>;
   editable: boolean;
+  async: boolean;
 }
-export interface IOwnershipStatus {
-  options: Array<IOwnershipOption>;
-  selected: IOwnershipOption;
+export interface IFoodStatus {
+  options: Array<IFoodOption>;
+  selected: IFoodOption;
 }
 
-export default class OwnershipComponent extends React.Component<IOwnershipProps, IOwnershipStatus> {
-  constructor(props : IOwnershipProps) {
+export default class FoodComponent extends React.Component<IFoodProps, IFoodStatus> {
+  constructor(props : IFoodProps) {
     super(props);
-    let self: OwnershipComponent = this;
+    let self: FoodComponent = this;
     this.state = {
       options: null,
       selected: null,
     };
   }
   public componentDidMount() {
-    let self: OwnershipComponent = this;
+    let self: FoodComponent = this;
     self.updateProps(self.props);
   }
   public componentWillUnmount() {
-    let self: OwnershipComponent = this;
+    let self: FoodComponent = this;
   }
-  public componentWillReceiveProps (nextProps: IOwnershipProps) {
-    let self: OwnershipComponent = this;
+  public componentWillReceiveProps (nextProps: IFoodProps) {
+    let self: FoodComponent = this;
     self.updateProps(nextProps);
   }
 
-  private updateProps(props: IOwnershipProps) {
-    let self: OwnershipComponent = this;
-    if (props.tree) {
-      let options = new Array<IOwnershipOption>();
-      options.push({value: 0, label: "private"});
-      options.push({value: 1, label: "public"});
-      let selected: IOwnershipOption;
-      if (self.props.tree.getOwnership() == 0) {
-        selected = options[0];
-      } else {
-        selected = options[1];
-      }
+  private updateProps(props: IFoodProps) {
+    let self: FoodComponent = this;
+    if (props.tree && props.foods) {
+      var options = new Array<IFoodOption>();
+      var selected: IFoodOption;
+      props.foods.forEach(food => {
+        options.push({value: food.getId(), label: food.getName()});
+        if (props.tree.getFoodId() == food.getId()) {
+          selected = {value: food.getId(), label: food.getName()};
+        }
+      });
       self.setState({options: options, selected: selected});
     }
   }
 
   private updateAttribute = (selected) => {
-    let self: OwnershipComponent = this;
+    let self: FoodComponent = this;
     var pub = 0;
     if (selected) {
       pub = parseInt(selected.value);
@@ -74,13 +76,12 @@ export default class OwnershipComponent extends React.Component<IOwnershipProps,
   }
 
   render() {
-    let self: OwnershipComponent = this;
+    let self: FoodComponent = this;
+    var food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
     if (self.props.editable) {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label}>
-            <FontAwesome className='' name='home' /> Public
-          </div>
+          <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
           <div className={styles.name}>
             <Select name="public-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
           </div>
@@ -89,9 +90,7 @@ export default class OwnershipComponent extends React.Component<IOwnershipProps,
     } else {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label}>
-            <FontAwesome className='' name='home' /> Public
-          </div>
+        <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
           <div className={styles.name}>
             <Select name="public-select" multi={false} disabled searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
           </div>

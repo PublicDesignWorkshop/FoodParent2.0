@@ -11,6 +11,7 @@ import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { FlagModel, flagStore } from './../../stores/flag.store';
 import { OwnershipModel, ownershipStore } from './../../stores/ownership.store';
+import FoodComponent from './food.component';
 import AddressComponent from './address.component';
 import DescriptionComponent from './description.component';
 import FlagComponent from './flag.component';
@@ -40,7 +41,6 @@ export default class TreeAddComponent extends React.Component<ITreeAddProps, ITr
   }
   public componentDidMount() {
     let self: TreeAddComponent = this;
-
     flagStore.fetchFlags();
     self.updateProps(self.props);
   }
@@ -65,17 +65,13 @@ export default class TreeAddComponent extends React.Component<ITreeAddProps, ITr
 
   render() {
     let self: TreeAddComponent = this;
-    console.log(self.props.treeId);
-    if (self.props.treeId) {
-      console.log(treeStore.getState().trees.length);
+    if (self.props.treeId != null) {
       var tree: TreeModel = treeStore.getTree(self.props.treeId);
-      console.log(tree);
       var food: FoodModel = foodStore.getFood(tree.getFoodId());
       return (
         <div className={styles.wrapper}>
           <div className={styles.treeinfo}>
-            <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
-            <div className={styles.name}>{food.getName() + ' #' + tree.getId()}</div>
+            <FoodComponent tree={tree} foods={self.props.foods} editable={true} async={false} />
             <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
               self.context.router.push({pathname: Settings.uBaseName + '/'});
             }}/></div>
@@ -124,4 +120,9 @@ TreeAddComponent.contextTypes = {
 <DescriptionComponent tree={tree} editable={self.state.editable} />
 <FlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} />
 <OwnershipComponent tree={tree} editable={self.state.editable} />
+*/
+
+/*
+<img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
+<div className={styles.name}>{food.getName() + ' #' + tree.getId()}</div>
 */

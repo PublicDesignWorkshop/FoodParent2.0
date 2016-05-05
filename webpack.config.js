@@ -14,6 +14,7 @@ module.exports = {
     // Directory names to be searched for modules
     modulesDirectories: ['lib', 'node_modules'],
   },
+  devtool: 'eval',
   module: {
     loaders: [
       {
