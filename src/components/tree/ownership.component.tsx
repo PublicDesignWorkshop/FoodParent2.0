@@ -20,10 +20,11 @@ export interface IOwnershipOption {
 export interface IOwnershipProps {
   tree: TreeModel;
   editable: boolean;
+  async: boolean;
 }
 export interface IOwnershipStatus {
-  options: Array<IOwnershipOption>;
-  selected: IOwnershipOption;
+  options?: Array<IOwnershipOption>;
+  selected?: IOwnershipOption;
 }
 
 export default class OwnershipComponent extends React.Component<IOwnershipProps, IOwnershipStatus> {
@@ -65,12 +66,16 @@ export default class OwnershipComponent extends React.Component<IOwnershipProps,
 
   private updateAttribute = (selected) => {
     let self: OwnershipComponent = this;
-    var pub = 0;
+    var ownership = 0;
     if (selected) {
-      pub = parseInt(selected.value);
+      ownership = parseInt(selected.value);
     }
-    self.props.tree.setOwnership(pub);
-    treeStore.updateTree(self.props.tree);
+    self.props.tree.setOwnership(ownership);
+    if (self.props.async) {
+      treeStore.updateTree(self.props.tree);
+    } else {
+      self.setState({selected: selected});
+    }
   }
 
   render() {
@@ -82,7 +87,7 @@ export default class OwnershipComponent extends React.Component<IOwnershipProps,
             <FontAwesome className='' name='home' /> Public
           </div>
           <div className={styles.name}>
-            <Select name="public-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
+            <Select name="ownership-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
           </div>
         </div>
       );
@@ -93,7 +98,7 @@ export default class OwnershipComponent extends React.Component<IOwnershipProps,
             <FontAwesome className='' name='home' /> Public
           </div>
           <div className={styles.name}>
-            <Select name="public-select" multi={false} disabled searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
+            <Select name="ownership-select" multi={false} disabled searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
           </div>
         </div>
       );

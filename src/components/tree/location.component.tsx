@@ -13,12 +13,13 @@ import { addLoading, removeLoading } from './../../utils/loadingtracker';
 export interface ILocationProps {
   tree: TreeModel;
   editable: boolean;
+  async: boolean;
 }
 export interface ILocationStatus {
-  latitude: any;
-  longitude: any;
-  editingLatitude: boolean;
-  editingLongitude: boolean;
+  latitude?: any;
+  longitude?: any;
+  editingLatitude?: boolean;
+  editingLongitude?: boolean;
 }
 export default class LocationComponent extends React.Component<ILocationProps, ILocationStatus> {
   constructor(props : ILocationProps) {
@@ -54,7 +55,11 @@ export default class LocationComponent extends React.Component<ILocationProps, I
     let self: LocationComponent = this;
     self.props.tree.setLat(parseFloat(self.state.latitude));
     self.props.tree.setLng(parseFloat(self.state.longitude));
-    treeStore.updateTree(self.props.tree);
+    if (self.props.async) {
+      treeStore.updateTree(self.props.tree);
+    } else {
+      self.setState({latitude: parseFloat(self.state.latitude).toFixed(Settings.iMarkerPrecision), longitude: parseFloat(self.state.longitude).toFixed(Settings.iMarkerPrecision), editingLatitude: false, editingLongitude: false});
+    }
   }
 
   render() {
@@ -63,7 +68,7 @@ export default class LocationComponent extends React.Component<ILocationProps, I
       return (
         <div className={styles.wrapper}>
           <div className={styles.label} onClick={()=> {
-            self.setState({latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: true, editingLongitude: false});
+            self.setState({editingLatitude: true, editingLongitude: false});
           }}>
             <FontAwesome className='' name='at' /> Location
           </div>
@@ -71,7 +76,7 @@ export default class LocationComponent extends React.Component<ILocationProps, I
             <input autoFocus type="text" className={styles.edit} key={self.props.tree.getId() + "latitude"} placeholder="enter latitude of tree location..."
               value={self.state.latitude}
               onChange={(event: any)=> {
-                self.setState({latitude: event.target.value, longitude: self.state.longitude, editingLatitude: true, editingLongitude: false});
+                self.setState({latitude: event.target.value});
               }}
               onKeyPress={(event)=> {
                 if (event.key == 'Enter') {
@@ -83,7 +88,7 @@ export default class LocationComponent extends React.Component<ILocationProps, I
               }} />
             <div className={styles.comma}>,</div>
             <div className={styles.name} onClick={()=> {
-              self.setState({latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: false, editingLongitude: true});
+              self.setState({editingLatitude: false, editingLongitude: true});
             }}>
               {self.state.longitude}
             </div>
@@ -94,13 +99,13 @@ export default class LocationComponent extends React.Component<ILocationProps, I
       return (
         <div className={styles.wrapper}>
           <div className={styles.label} onClick={()=> {
-            self.setState({latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: false, editingLongitude: true});
+            self.setState({editingLatitude: false, editingLongitude: true});
           }}>
             <FontAwesome className='' name='at' /> Location
           </div>
           <div className={styles.location}>
             <div className={styles.name} onClick={()=> {
-              self.setState({latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: true, editingLongitude: false});
+              self.setState({editingLatitude: true, editingLongitude: false});
             }}>
               {self.state.latitude}
             </div>
@@ -108,7 +113,7 @@ export default class LocationComponent extends React.Component<ILocationProps, I
             <input autoFocus type="text" className={styles.edit} key={self.props.tree.getId() + "longitude"} placeholder="enter longitude of tree location..."
               value={self.state.longitude}
               onChange={(event: any)=> {
-                self.setState({latitude: self.state.latitude, longitude: event.target.value, editingLatitude: false, editingLongitude: true});
+                self.setState({longitude: event.target.value});
               }}
               onKeyPress={(event)=> {
                 if (event.key == 'Enter') {
@@ -130,7 +135,7 @@ export default class LocationComponent extends React.Component<ILocationProps, I
           <div className={styles.location}>
             <div className={styles.name} onClick={()=> {
               if (self.props.editable) {
-                self.setState({latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: true, editingLongitude: false});
+                self.setState({editingLatitude: true, editingLongitude: false});
               }
             }}>
               {self.state.latitude}
@@ -138,7 +143,7 @@ export default class LocationComponent extends React.Component<ILocationProps, I
             <div className={styles.comma}>,</div>
             <div className={styles.name} onClick={()=> {
               if (self.props.editable) {
-                self.setState({latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: false, editingLongitude: true});
+                self.setState({editingLatitude: false, editingLongitude: true});
               }
             }}>
               {self.state.longitude}

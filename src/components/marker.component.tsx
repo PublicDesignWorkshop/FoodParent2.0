@@ -3,8 +3,8 @@ import { browserHistory } from 'react-router';
 
 import './marker.component.css';
 var Settings = require('./../constraints/settings.json');
-import { TreeModel } from './../stores/tree.store';
 import { FoodModel } from './../stores/food.store';
+import { treeStore, TreeModel } from './../stores/tree.store';
 
 module MarkerComponent {
   export function createEditableMarker(food: FoodModel, tree: TreeModel): L.Marker {
@@ -81,7 +81,12 @@ module MarkerComponent {
     });
     marker.on('dragend', function() {
       marker.openPopup();
-      //browserHistory.push({pathname: Settings.uBaseName + '/trees/' + tree.getId()});
+      let tree: TreeModel = treeStore.getTree(marker.options.id);
+      if (tree) {
+        tree.setLat(marker.getLatLng().lat);
+        tree.setLng(marker.getLatLng().lng);
+        browserHistory.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" }});
+      }
     });
     return marker;
   }

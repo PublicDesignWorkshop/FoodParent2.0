@@ -25,8 +25,8 @@ export interface IFoodProps {
   async: boolean;
 }
 export interface IFoodStatus {
-  options: Array<IFoodOption>;
-  selected: IFoodOption;
+  options?: Array<IFoodOption>;
+  selected?: IFoodOption;
 }
 
 export default class FoodComponent extends React.Component<IFoodProps, IFoodStatus> {
@@ -67,12 +67,16 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
 
   private updateAttribute = (selected) => {
     let self: FoodComponent = this;
-    var pub = 0;
+    var foodId = 0;
     if (selected) {
-      pub = parseInt(selected.value);
+      foodId = parseInt(selected.value);
     }
-    self.props.tree.setOwnership(pub);
-    treeStore.updateTree(self.props.tree);
+    self.props.tree.setFoodId(foodId);
+    if (self.props.async) {
+      treeStore.updateTree(self.props.tree);
+    } else {
+      self.setState({selected: selected});
+    }
   }
 
   render() {

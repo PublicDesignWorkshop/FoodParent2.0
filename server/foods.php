@@ -21,7 +21,7 @@
   }
 
   function read() {
-    $sql = "SELECT * FROM `food`";
+    $sql = "SELECT * FROM `food` ORDER BY `name` ASC";
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);

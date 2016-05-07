@@ -38,6 +38,7 @@ let TreeSource: AltJS.Source = {
   updateTree(): AltJS.SourceModel<TreeModel> {
     return {
       remote(state: TreeState, update?: TreeModel) {
+        console.log(update);
         return new Promise<TreeModel>((resolve, reject) => {
           //console.log(tree.toJSON());
           $.ajax({
@@ -61,6 +62,37 @@ let TreeSource: AltJS.Source = {
         return null;
       },
       success: treeActions.updateTree,
+      error: treeActions.failed,
+      loading: treeActions.loading,
+      shouldFetch:() => true
+    };
+  },
+  createTree(): AltJS.SourceModel<TreeModel> {
+    return {
+      remote(state: TreeState, create?: TreeModel) {
+        return new Promise<TreeModel>((resolve, reject) => {
+          //console.log(tree.toJSON());
+          $.ajax({
+            url: Settings.uBaseName + Settings.uServer + "tree.php",
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(create.toJSON()),
+            dataType: "json",
+            success: function(response) {
+              resolve(response);
+            },
+            error: function(response) {
+              console.log(response);
+              reject(response);
+            }
+          });
+        })
+      },
+      local(state: TreeState): TreeModel {
+        //TODO : Figure out why local doesn't work =(
+        return null;
+      },
+      success: treeActions.createTree,
       error: treeActions.failed,
       loading: treeActions.loading,
       shouldFetch:() => true

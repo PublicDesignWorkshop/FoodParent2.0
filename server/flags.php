@@ -21,7 +21,7 @@
   }
 
   function read() {
-    $sql = "SELECT * FROM `flag`";
+    $sql = "SELECT * FROM `flag` ORDER BY `name` ASC";
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);

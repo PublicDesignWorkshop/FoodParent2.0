@@ -62,7 +62,7 @@ export default class TreesMessageComponent extends React.Component<ITreesMessage
             <div className={styles.message}>
               <strong>Move</strong> the <strong>New Tree</strong> to a designated location.
               <span className={styles.button} onClick={()=> {
-                self.context.router.push({pathname: Settings.uBaseName + '/trees/add', query: { mode: "info" }});
+                self.context.router.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "info" }});
               }} >
                 NEXT
               </span>
@@ -74,7 +74,9 @@ export default class TreesMessageComponent extends React.Component<ITreesMessage
           <div className={styles.wrapper + " " + styles.slidein}>
             <div className={styles.message}>
               <strong>Fill out</strong> information for the <strong>New Tree</strong>.
-              <span className={styles.button}>
+              <span className={styles.button} onClick={()=> {
+                self.context.router.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "save" }});
+              }} >
                 SAVE
               </span>
             </div>

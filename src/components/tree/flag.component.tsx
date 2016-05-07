@@ -22,10 +22,11 @@ export interface IFlagProps {
   tree: TreeModel;
   flags: Array<FlagModel>;
   editable: boolean;
+  async: boolean;
 }
 export interface IFlagStatus {
-  options: Array<IFlagOption>;
-  selected: Array<IFlagOption>;
+  options?: Array<IFlagOption>;
+  selected?: Array<IFlagOption>;
 }
 
 export default class FlagComponent extends React.Component<IFlagProps, IFlagStatus> {
@@ -73,7 +74,11 @@ export default class FlagComponent extends React.Component<IFlagProps, IFlagStat
       });
     }
     self.props.tree.setFlags(flags);
-    treeStore.updateTree(self.props.tree);
+    if (self.props.async) {
+      treeStore.updateTree(self.props.tree);
+    } else {
+      self.setState({selected: selected});
+    }
   }
 
   render() {

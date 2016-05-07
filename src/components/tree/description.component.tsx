@@ -12,10 +12,11 @@ import { addLoading, removeLoading } from './../../utils/loadingtracker';
 export interface IDescriptionProps {
   tree: TreeModel;
   editable: boolean;
+  async: boolean;
 }
 export interface IDescriptionStatus {
-  description: string;
-  editing: boolean;
+  description?: string;
+  editing?: boolean;
 }
 export default class DescriptionComponent extends React.Component<IDescriptionProps, IDescriptionStatus> {
   constructor(props : IDescriptionProps) {
@@ -51,7 +52,11 @@ export default class DescriptionComponent extends React.Component<IDescriptionPr
   private updateAttribute = () => {
     let self: DescriptionComponent = this;
     self.props.tree.setDescription(self.state.description);
-    treeStore.updateTree(self.props.tree);
+    if (self.props.async) {
+      treeStore.updateTree(self.props.tree);
+    } else {
+      self.setState({editing: false});
+    }
   }
 
   render() {

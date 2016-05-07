@@ -13,10 +13,11 @@ import { addLoading, removeLoading } from './../../utils/loadingtracker';
 export interface IAddressProps {
   tree: TreeModel;
   editable: boolean;
+  async: boolean;
 }
 export interface IAddressStatus {
-  address: string;
-  editing: boolean;
+  address?: string;
+  editing?: boolean;
 }
 export default class AddressComponent extends React.Component<IAddressProps, IAddressStatus> {
   constructor(props : IAddressProps) {
@@ -49,7 +50,11 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
         reverseGeocoding(props.tree.getLocation(), function(response: IReverseGeoLocation) {
           self.setState({address: response.road + ", " + response.county + ", " + response.state + ", " + response.country + ", " + response.postcode, editing: false});
           self.props.tree.setAddress(self.state.address);
-          treeStore.updateTree(self.props.tree);
+          if (self.props.async) {
+            treeStore.updateTree(self.props.tree);
+          } else {
+            self.setState({editing: false});
+          }
           removeLoading();
         }, function() {
           removeLoading();
@@ -62,13 +67,21 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
     let self: AddressComponent = this;
     if (self.state.address.trim() != "") {
       self.props.tree.setAddress(self.state.address);
-      treeStore.updateTree(self.props.tree);
+      if (self.props.async) {
+        treeStore.updateTree(self.props.tree);
+      } else {
+        self.setState({editing: false});
+      }
     } else {
       reverseGeocoding(self.props.tree.getLocation(), function(response: IReverseGeoLocation) {
         self.setState({address: response.road + ", " + response.county + ", " + response.state + ", " + response.country + ", " + response.postcode, editing: false});
         removeLoading();
         self.props.tree.setAddress(self.state.address);
-        treeStore.updateTree(self.props.tree);
+        if (self.props.async) {
+          treeStore.updateTree(self.props.tree);
+        } else {
+          self.setState({editing: false});
+        }
       }, function() {
         removeLoading();
       });

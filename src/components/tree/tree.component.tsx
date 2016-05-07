@@ -10,7 +10,6 @@ import * as styles from './tree.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { FlagModel, flagStore } from './../../stores/flag.store';
-import { OwnershipModel, ownershipStore } from './../../stores/ownership.store';
 import FoodComponent from './food.component';
 import AddressComponent from './address.component';
 import DescriptionComponent from './description.component';
@@ -77,7 +76,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
       return (
         <div className={styles.wrapper}>
           <div className={styles.treeinfo}>
-            <FoodComponent tree={tree} foods={self.props.foods} editable={self.state.editable} async={false} />
+            <FoodComponent tree={tree} foods={self.props.foods} editable={self.state.editable} async={self.state.editable} />
             <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
               self.context.router.push({pathname: Settings.uBaseName + '/'});
               //self.setState({editable: self.state.editable});
@@ -91,20 +90,14 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
                     store: flagStore,
                     value: flagStore.getState().flags
                   };
-                },
-                ownership: function (props) {
-                  return {
-                    store: ownershipStore,
-                    value: ownershipStore.getState().ownerships
-                  };
                 }
               }
             }>
-              <LocationComponent tree={tree} editable={self.state.editable} />
-              <AddressComponent tree={tree} editable={self.state.editable} />
-              <DescriptionComponent tree={tree} editable={self.state.editable} />
-              <FlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} />
-              <OwnershipComponent tree={tree} editable={self.state.editable} />
+              <LocationComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              <AddressComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              <DescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              <FlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} async={self.state.editable} />
+              <OwnershipComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
             </AltContainer>
           </div>
         </div>

@@ -26322,8 +26322,8 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-		"uBaseName": "/FoodParent2.0",
-		"uBaseNameForWebPack": "/FoodParent2.0/",
+		"uBaseName": "/FoodParent2.1",
+		"uBaseNameForWebPack": "/FoodParent2.1/",
 		"uStaticImage": "/static/images/",
 		"uServer": "/server/",
 		"vPosition": {
@@ -26810,7 +26810,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
+	module.exports = __webpack_require__.p + "/FoodParent2.1/dist/fontawesome-webfont.eot";
 
 /***/ },
 /* 238 */
@@ -26819,7 +26819,7 @@
   \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
+	module.exports = __webpack_require__.p + "/FoodParent2.1/dist/fontawesome-webfont.eot";
 
 /***/ },
 /* 239 */
@@ -26828,7 +26828,7 @@
   \****************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff2";
+	module.exports = __webpack_require__.p + "/FoodParent2.1/dist/fontawesome-webfont.woff2";
 
 /***/ },
 /* 240 */
@@ -26837,7 +26837,7 @@
   \***************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff";
+	module.exports = __webpack_require__.p + "/FoodParent2.1/dist/fontawesome-webfont.woff";
 
 /***/ },
 /* 241 */
@@ -26846,7 +26846,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.ttf";
+	module.exports = __webpack_require__.p + "/FoodParent2.1/dist/fontawesome-webfont.ttf";
 
 /***/ },
 /* 242 */
@@ -26855,7 +26855,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.svg";
+	module.exports = __webpack_require__.p + "/FoodParent2.1/dist/fontawesome-webfont.svg";
 
 /***/ },
 /* 243 */
@@ -39062,6 +39062,7 @@
 	    TreesMode[TreesMode["TREEDETAIL"] = 1] = "TREEDETAIL";
 	    TreesMode[TreesMode["TREEADDMARKER"] = 2] = "TREEADDMARKER";
 	    TreesMode[TreesMode["TREEADDINFO"] = 3] = "TREEADDINFO";
+	    TreesMode[TreesMode["TREEADDSAVE"] = 4] = "TREEADDSAVE";
 	})(exports.TreesMode || (exports.TreesMode = {}));
 	var TreesMode = exports.TreesMode;
 	
@@ -39085,6 +39086,14 @@
 	                } else if (props.location.query.mode == "info") {
 	                    if (tree_store_1.treeStore.getTree(0)) {
 	                        mode = TreesMode.TREEADDINFO;
+	                    } else {
+	                        self.context.router.replace({ pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" } });
+	                    }
+	                } else if (props.location.query.mode == "save") {
+	                    var tree = tree_store_1.treeStore.getTree(0);
+	                    if (tree) {
+	                        tree_store_1.treeStore.createTree(tree);
+	                        self.context.router.replace({ pathname: Settings.uBaseName + '/' });
 	                    } else {
 	                        self.context.router.replace({ pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" } });
 	                    }
@@ -49341,10 +49350,9 @@
 	            self.lat = parseFloat(parseFloat(props.lat).toFixed(Settings.iMarkerPrecision));
 	            self.lng = parseFloat(parseFloat(props.lng).toFixed(Settings.iMarkerPrecision));
 	            self.food = parseInt(props.food);
-	            self.type = parseInt(props.type);
 	            self.description = props.description;
 	            self.address = props.address;
-	            self.public = parseInt(props.public);
+	            self.ownership = parseInt(props.ownership);
 	            self.owner = parseInt(props.owner);
 	            self.updated = moment(props.updated);
 	            self.flags = props.flag.split(',').map(function (flag) {
@@ -49362,11 +49370,10 @@
 	                lat: self.lat,
 	                lng: self.lng,
 	                food: self.food,
-	                type: self.type,
 	                flag: self.flags.toString(),
 	                description: self.description,
 	                address: self.address,
-	                public: self.public,
+	                ownership: self.ownership,
 	                owner: self.owner
 	            };
 	        }
@@ -49379,6 +49386,11 @@
 	        key: 'getFoodId',
 	        value: function getFoodId() {
 	            return this.food;
+	        }
+	    }, {
+	        key: 'setFoodId',
+	        value: function setFoodId(foodId) {
+	            this.food = foodId;
 	        }
 	    }, {
 	        key: 'getLat',
@@ -49453,12 +49465,12 @@
 	    }, {
 	        key: 'getOwnership',
 	        value: function getOwnership() {
-	            return this.public;
+	            return this.ownership;
 	        }
 	    }, {
 	        key: 'setOwnership',
-	        value: function setOwnership(pub) {
-	            this.public = pub;
+	        value: function setOwnership(ownership) {
+	            this.ownership = ownership;
 	        }
 	    }]);
 	
@@ -49484,6 +49496,7 @@
 	        self.bindListeners({
 	            handleFetchTrees: tree_actions_1.treeActions.fetchTrees,
 	            handleUpdateTree: tree_actions_1.treeActions.updateTree,
+	            handleCreateTree: tree_actions_1.treeActions.createTree,
 	            handleFailed: tree_actions_1.treeActions.failed
 	        });
 	        self.exportPublicMethods({
@@ -49520,6 +49533,14 @@
 	            }
 	        }
 	    }, {
+	        key: 'handleCreateTree',
+	        value: function handleCreateTree(treeProps) {
+	            var self = this;
+	            console.warn("Handle Create Tree");
+	            console.log(treeProps);
+	            self.trees.push(new TreeModel(treeProps));
+	        }
+	    }, {
 	        key: 'handleFailed',
 	        value: function handleFailed(errorMessage) {
 	            console.warn("Handle Tree Failed");
@@ -49529,11 +49550,11 @@
 	        key: 'getTree',
 	        value: function getTree(id) {
 	            var self = this;
-	            var trees = self.getState().trees;
-	            for (var i = 0; i < trees.length; i++) {
-	                if (trees[i].id === id) {
-	                    return trees[i];
-	                }
+	            var trees = self.getState().trees.filter(function (tree) {
+	                return tree.getId() == id;
+	            });
+	            if (trees.length == 1) {
+	                return trees[0];
 	            }
 	            return null;
 	        }
@@ -65456,6 +65477,18 @@
 	            //}
 	        }
 	    }, {
+	        key: "createTree",
+	        value: function createTree(tree) {
+	            var self = this;
+	            console.warn("Create Tree");
+	            loadingtracker_1.removeLoading();
+	            return tree;
+	            //return (dispatch) => {
+	            //  // we dispatch an event here so we can have "loading" state.
+	            //  dispatch({tree: tree, updatedTree: updatedTree});
+	            //}
+	        }
+	    }, {
 	        key: "failed",
 	        value: function failed(errorMessage) {
 	            var self = this;
@@ -65563,6 +65596,7 @@
 	    updateTree: function updateTree() {
 	        return {
 	            remote: function remote(state, update) {
+	                console.log(update);
 	                return new Promise(function (resolve, reject) {
 	                    //console.log(tree.toJSON());
 	                    $.ajax({
@@ -65587,6 +65621,40 @@
 	            },
 	
 	            success: tree_actions_1.treeActions.updateTree,
+	            error: tree_actions_1.treeActions.failed,
+	            loading: tree_actions_1.treeActions.loading,
+	            shouldFetch: function shouldFetch() {
+	                return true;
+	            }
+	        };
+	    },
+	    createTree: function createTree() {
+	        return {
+	            remote: function remote(state, create) {
+	                return new Promise(function (resolve, reject) {
+	                    //console.log(tree.toJSON());
+	                    $.ajax({
+	                        url: Settings.uBaseName + Settings.uServer + "tree.php",
+	                        type: 'POST',
+	                        contentType: 'application/json',
+	                        data: JSON.stringify(create.toJSON()),
+	                        dataType: "json",
+	                        success: function success(response) {
+	                            resolve(response);
+	                        },
+	                        error: function error(response) {
+	                            console.log(response);
+	                            reject(response);
+	                        }
+	                    });
+	                });
+	            },
+	            local: function local(state) {
+	                //TODO : Figure out why local doesn't work =(
+	                return null;
+	            },
+	
+	            success: tree_actions_1.treeActions.createTree,
 	            error: tree_actions_1.treeActions.failed,
 	            loading: tree_actions_1.treeActions.loading,
 	            shouldFetch: function shouldFetch() {
@@ -65942,9 +66010,9 @@
 	                    }
 	                }
 	            }
-	            //if (!bFound) {
-	            //  self.map.closePopup();
-	            //}
+	            if (props.treeId != 0 && !bFound) {
+	                self.map.closePopup();
+	            }
 	        };
 	        _this.afterRenderMap = function () {
 	            var self = _this;
@@ -66064,9 +66132,8 @@
 	                                lat: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom).lat + "",
 	                                lng: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom).lng + "",
 	                                food: "1",
-	                                type: "0",
 	                                flag: "0",
-	                                public: "0",
+	                                ownership: "1",
 	                                description: "",
 	                                address: "",
 	                                owner: "0",
@@ -67760,6 +67827,7 @@
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	__webpack_require__(/*! ./marker.component.css */ 415);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
+	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 286);
 	var MarkerComponent;
 	(function (MarkerComponent) {
 	    function createEditableMarker(food, tree) {
@@ -67831,7 +67899,12 @@
 	        });
 	        marker.on('dragend', function () {
 	            marker.openPopup();
-	            //browserHistory.push({pathname: Settings.uBaseName + '/trees/' + tree.getId()});
+	            var tree = tree_store_1.treeStore.getTree(marker.options.id);
+	            if (tree) {
+	                tree.setLat(marker.getLatLng().lat);
+	                tree.setLng(marker.getLatLng().lng);
+	                react_router_1.browserHistory.replace({ pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" } });
+	            }
 	        });
 	        return marker;
 	    }
@@ -67911,7 +67984,7 @@
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
 	var styles = __webpack_require__(/*! ./trees-panel.component.css */ 418);
 	var tree_component_1 = __webpack_require__(/*! ./tree/tree.component */ 420);
-	var tree_add_component_1 = __webpack_require__(/*! ./tree/tree-add.component */ 445);
+	var tree_add_component_1 = __webpack_require__(/*! ./tree/tree-add.component */ 448);
 	var trees_component_1 = __webpack_require__(/*! ./trees.component */ 266);
 	var trees_controls_component_1 = __webpack_require__(/*! ./trees-controls.component */ 451);
 	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 286);
@@ -68096,13 +68169,12 @@
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 408);
 	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 423);
-	var ownership_store_1 = __webpack_require__(/*! ./../../stores/ownership.store */ 426);
-	var food_component_1 = __webpack_require__(/*! ./food.component */ 448);
-	var address_component_1 = __webpack_require__(/*! ./address.component */ 429);
-	var description_component_1 = __webpack_require__(/*! ./description.component */ 433);
-	var flag_component_1 = __webpack_require__(/*! ./flag.component */ 436);
-	var ownership_component_1 = __webpack_require__(/*! ./ownership.component */ 439);
-	var location_component_1 = __webpack_require__(/*! ./location.component */ 442);
+	var food_component_1 = __webpack_require__(/*! ./food.component */ 429);
+	var address_component_1 = __webpack_require__(/*! ./address.component */ 432);
+	var description_component_1 = __webpack_require__(/*! ./description.component */ 436);
+	var flag_component_1 = __webpack_require__(/*! ./flag.component */ 439);
+	var ownership_component_1 = __webpack_require__(/*! ./ownership.component */ 442);
+	var location_component_1 = __webpack_require__(/*! ./location.component */ 445);
 	var app_component_1 = __webpack_require__(/*! ./../app.component */ 219);
 	
 	var TreeComponent = function (_React$Component) {
@@ -68162,7 +68234,7 @@
 	            if (self.props.treeId) {
 	                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
 	                var food = food_store_1.foodStore.getFood(tree.getFoodId());
-	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.treeinfo }, React.createElement(food_component_1.default, { tree: tree, foods: self.props.foods, editable: self.state.editable, async: false }), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.treeinfo }, React.createElement(food_component_1.default, { tree: tree, foods: self.props.foods, editable: self.state.editable, async: self.state.editable }), React.createElement("div", { className: styles.close }, React.createElement(FontAwesome, { className: '', name: 'close', onClick: function onClick() {
 	                        self.context.router.push({ pathname: Settings.uBaseName + '/' });
 	                        //self.setState({editable: self.state.editable});
 	                    } }))), React.createElement("div", { className: styles.basicinfo }, React.createElement(AltContainer, { stores: {
@@ -68171,14 +68243,8 @@
 	                                store: flag_store_1.flagStore,
 	                                value: flag_store_1.flagStore.getState().flags
 	                            };
-	                        },
-	                        ownership: function ownership(props) {
-	                            return {
-	                                store: ownership_store_1.ownershipStore,
-	                                value: ownership_store_1.ownershipStore.getState().ownerships
-	                            };
 	                        }
-	                    } }, React.createElement(location_component_1.default, { tree: tree, editable: self.state.editable }), React.createElement(address_component_1.default, { tree: tree, editable: self.state.editable }), React.createElement(description_component_1.default, { tree: tree, editable: self.state.editable }), React.createElement(flag_component_1.default, { tree: tree, flags: flag_store_1.flagStore.getState().flags, editable: self.state.editable }), React.createElement(ownership_component_1.default, { tree: tree, editable: self.state.editable }))));
+	                    } }, React.createElement(location_component_1.default, { tree: tree, editable: self.state.editable, async: self.state.editable }), React.createElement(address_component_1.default, { tree: tree, editable: self.state.editable, async: self.state.editable }), React.createElement(description_component_1.default, { tree: tree, editable: self.state.editable, async: self.state.editable }), React.createElement(flag_component_1.default, { tree: tree, flags: flag_store_1.flagStore.getState().flags, editable: self.state.editable, async: self.state.editable }), React.createElement(ownership_component_1.default, { tree: tree, editable: self.state.editable, async: self.state.editable }))));
 	            } else {
 	                return React.createElement("div", { className: styles.wrapper });
 	            }
@@ -68487,243 +68553,168 @@
 	//# sourceMappingURL=flag.source.js.map
 
 /***/ },
-/* 426 */
-/*!***************************************!*\
-  !*** ./src/stores/ownership.store.js ***!
-  \***************************************/
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */
+/*!***********************************************!*\
+  !*** ./src/components/tree/food.component.js ***!
+  \***********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var React = __webpack_require__(/*! react */ 1);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
+	var Select = __webpack_require__(/*! react-select */ 243);
+	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 250);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./food.component.css */ 430);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
+	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 408);
 	
-	var alt_1 = __webpack_require__(/*! ./../alt */ 287);
-	var ownership_actions_1 = __webpack_require__(/*! ./../actions/ownership.actions */ 427);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 406);
-	var ownership_source_1 = __webpack_require__(/*! ./../sources/ownership.source */ 428);
+	var FoodComponent = function (_React$Component) {
+	    _inherits(FoodComponent, _React$Component);
 	
-	var OwnershipModel = function () {
-	    function OwnershipModel(props) {
-	        _classCallCheck(this, OwnershipModel);
+	    function FoodComponent(props) {
+	        _classCallCheck(this, FoodComponent);
 	
-	        var self = this;
-	        self.id = parseInt(props.id);
-	        self.name = props.name;
-	    }
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FoodComponent).call(this, props));
 	
-	    _createClass(OwnershipModel, [{
-	        key: 'toJSON',
-	        value: function toJSON() {
-	            var self = this;
-	            return {
-	                id: self.id,
-	                name: self.name
-	            };
-	        }
-	    }, {
-	        key: 'getId',
-	        value: function getId() {
-	            return this.id;
-	        }
-	    }, {
-	        key: 'getName',
-	        value: function getName() {
-	            return this.name;
-	        }
-	    }]);
-	
-	    return OwnershipModel;
-	}();
-	
-	exports.OwnershipModel = OwnershipModel;
-	
-	var OwnershipStore = function (_abstract_store_1$Abs) {
-	    _inherits(OwnershipStore, _abstract_store_1$Abs);
-	
-	    function OwnershipStore() {
-	        _classCallCheck(this, OwnershipStore);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(OwnershipStore).call(this));
-	
+	        _this.updateAttribute = function (selected) {
+	            var self = _this;
+	            var foodId = 0;
+	            if (selected) {
+	                foodId = parseInt(selected.value);
+	            }
+	            self.props.tree.setFoodId(foodId);
+	            if (self.props.async) {
+	                tree_store_1.treeStore.updateTree(self.props.tree);
+	            } else {
+	                self.setState({ selected: selected });
+	            }
+	        };
 	        var self = _this;
-	        self.ownerships = new Array();
-	        self.errorMessage = null;
-	        //TODO: pass state generics to make sure methods/actions expect the same type
-	        self.bindListeners({
-	            handleFetchOwnerships: ownership_actions_1.ownershipActions.fetchOwnerships,
-	            handleFailed: ownership_actions_1.ownershipActions.failed
-	        });
-	        self.exportPublicMethods({
-	            getOwnership: self.getOwnership
-	        });
-	        self.exportAsync(ownership_source_1.ownershipSource);
+	        _this.state = {
+	            options: null,
+	            selected: null
+	        };
 	        return _this;
 	    }
 	
-	    _createClass(OwnershipStore, [{
-	        key: 'handleFetchOwnerships',
-	        value: function handleFetchOwnerships(ownershipsProps) {
+	    _createClass(FoodComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
 	            var self = this;
-	            console.warn("Handle Fetch Ownerships");
-	            self.ownerships = new Array();
-	            ownershipsProps.forEach(function (props) {
-	                self.ownerships.push(new OwnershipModel(props));
-	            });
-	            self.errorMessage = null;
+	            self.updateProps(self.props);
 	        }
 	    }, {
-	        key: 'handleFailed',
-	        value: function handleFailed(errorMessage) {
-	            console.warn("Handle Ownership Failed");
-	            this.errorMessage = errorMessage;
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
 	        }
 	    }, {
-	        key: 'getOwnership',
-	        value: function getOwnership(id) {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
 	            var self = this;
-	            var ownerships = self.getState().ownerships;
-	            for (var i = 0; i < ownerships.length; i++) {
-	                if (ownerships[i].id === id) {
-	                    return ownerships[i];
-	                }
-	            }
-	            return null;
-	        }
-	    }]);
-	
-	    return OwnershipStore;
-	}(abstract_store_1.AbstractStore);
-	
-	exports.ownershipStore = alt_1.alt.createStore(OwnershipStore);
-	//# sourceMappingURL=ownership.store.js.map
-
-/***/ },
-/* 427 */
-/*!******************************************!*\
-  !*** ./src/actions/ownership.actions.js ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var alt_1 = __webpack_require__(/*! ./../alt */ 287);
-	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 405);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
-	
-	var OwnershipActions = function (_abstract_actions_1$A) {
-	    _inherits(OwnershipActions, _abstract_actions_1$A);
-	
-	    function OwnershipActions() {
-	        _classCallCheck(this, OwnershipActions);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(OwnershipActions).apply(this, arguments));
-	    }
-	
-	    _createClass(OwnershipActions, [{
-	        key: "fetchOwnerships",
-	        value: function fetchOwnerships(trees) {
-	            var self = this;
-	            console.warn("Fetch Trees");
-	            loadingtracker_1.removeLoading();
-	            return trees;
+	            self.updateProps(nextProps);
 	        }
 	    }, {
-	        key: "updateOwnership",
-	        value: function updateOwnership(tree) {
+	        key: 'updateProps',
+	        value: function updateProps(props) {
 	            var self = this;
-	            console.warn("Update Ownership");
-	            loadingtracker_1.removeLoading();
-	            return tree;
-	        }
-	    }, {
-	        key: "failed",
-	        value: function failed(errorMessage) {
-	            var self = this;
-	            console.warn("Ownership Failed");
-	            loadingtracker_1.removeLoading();
-	            return errorMessage;
-	        }
-	    }, {
-	        key: "loading",
-	        value: function loading() {
-	            var self = this;
-	            loadingtracker_1.addLoading();
-	            return function (dispatch) {
-	                // we dispatch an event here so we can have "loading" state.
-	                dispatch();
-	            };
-	        }
-	    }]);
-	
-	    return OwnershipActions;
-	}(abstract_actions_1.AbstractActions);
-	
-	exports.ownershipActions = alt_1.alt.createActions(OwnershipActions);
-	//# sourceMappingURL=ownership.actions.js.map
-
-/***/ },
-/* 428 */
-/*!*****************************************!*\
-  !*** ./src/sources/ownership.source.js ***!
-  \*****************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var $ = __webpack_require__(/*! jquery */ 258);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var ownership_actions_1 = __webpack_require__(/*! ./../actions/ownership.actions */ 427);
-	var OwnershipSource = {
-	    fetchOwnerships: function fetchOwnerships() {
-	        return {
-	            remote: function remote(state) {
-	                return new Promise(function (resolve, reject) {
-	                    $.ajax({
-	                        url: Settings.uBaseName + Settings.uServer + "ownerships.php",
-	                        data: {},
-	                        success: function success(response) {
-	                            resolve($.parseJSON(response));
-	                        },
-	                        error: function error(response) {
-	                            console.log(response);
-	                            reject(response);
-	                        }
-	                    });
+	            if (props.tree && props.foods) {
+	                var options = new Array();
+	                var selected;
+	                props.foods.forEach(function (food) {
+	                    options.push({ value: food.getId(), label: food.getName() });
+	                    if (props.tree.getFoodId() == food.getId()) {
+	                        selected = { value: food.getId(), label: food.getName() };
+	                    }
 	                });
-	            },
-	            local: function local(state) {
-	                //TODO : Figure out why local doesn't work =(
-	                return null;
-	            },
-	
-	            success: ownership_actions_1.ownershipActions.fetchOwnerships,
-	            error: ownership_actions_1.ownershipActions.failed,
-	            loading: ownership_actions_1.ownershipActions.loading,
-	            shouldFetch: function shouldFetch() {
-	                return true;
+	                self.setState({ options: options, selected: selected });
 	            }
-	        };
-	    }
-	};
-	exports.ownershipSource = OwnershipSource;
-	//# sourceMappingURL=ownership.source.js.map
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            var food = food_store_1.foodStore.getFood(self.props.tree.getFoodId());
+	            if (self.props.editable) {
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("img", { className: styles.icon, src: Settings.uBaseName + Settings.uStaticImage + food.getIcon() }), React.createElement("div", { className: styles.name }, React.createElement(Select, { name: "public-select", multi: false, searchable: false, scrollMenuIntoView: false, options: self.state.options, value: self.state.selected, onChange: self.updateAttribute, placeholder: "select ownerships..." })));
+	            } else {
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("img", { className: styles.icon, src: Settings.uBaseName + Settings.uStaticImage + food.getIcon() }), React.createElement("div", { className: styles.name }, React.createElement(Select, { name: "public-select", multi: false, disabled: true, searchable: false, scrollMenuIntoView: false, options: self.state.options, value: self.state.selected, onChange: self.updateAttribute, placeholder: "select ownerships..." })));
+	            }
+	        }
+	    }]);
+	
+	    return FoodComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = FoodComponent;
+	//# sourceMappingURL=food.component.js.map
 
 /***/ },
-/* 429 */
+/* 430 */
+/*!************************************************!*\
+  !*** ./src/components/tree/food.component.css ***!
+  \************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./food.component.css */ 431);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./food.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./food.component.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 431 */
+/*!***************************************************************!*\
+  !*** ./~/css-loader!./src/components/tree/food.component.css ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  ._1eTYnkNptxNpOCI7bCz4Mc {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    border-radius: 2px;\r\n  }\r\n  ._1unhcS0Eq2VFnIrZtQ0TA0 {\r\n    width: 36px;\r\n    height: 36px;\r\n    margin: 8px;\r\n  }\r\n  .CGrdYJGPteld1Ev56MSy3 {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n    cursor: pointer;\r\n  }\r\n\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-control {\r\n    border-color: rgba(244, 244, 244, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(244, 244, 244, 1);\r\n    color: rgba(94, 78, 81, 1);\r\n    background-color: rgba(244, 244, 244, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n    cursor: pointer;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(94, 78, 81, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(255, 255, 255, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(94, 78, 81, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-arrow {\r\n    border-color: rgba(94, 78, 81, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-open .Select-arrow,\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value-icon:hover,\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label, .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-input {\r\n    display: none !important;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select.is-disabled > .Select-control {\r\n    background-color: rgba(244, 244, 244, 1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select.is-disabled .Select-arrow-zone {\r\n    display: none;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value {\r\n    width: 95%;\r\n  }\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"wrapper": "_1eTYnkNptxNpOCI7bCz4Mc",
+		"icon": "_1unhcS0Eq2VFnIrZtQ0TA0",
+		"name": "CGrdYJGPteld1Ev56MSy3"
+	};
+
+/***/ },
+/* 432 */
 /*!**************************************************!*\
   !*** ./src/components/tree/address.component.js ***!
   \**************************************************/
@@ -68743,9 +68734,9 @@
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./address.component.css */ 430);
+	var styles = __webpack_require__(/*! ./address.component.css */ 433);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
-	var reversegeolocation_1 = __webpack_require__(/*! ./../../utils/reversegeolocation */ 432);
+	var reversegeolocation_1 = __webpack_require__(/*! ./../../utils/reversegeolocation */ 435);
 	var loadingtracker_1 = __webpack_require__(/*! ./../../utils/loadingtracker */ 265);
 	
 	var AddressComponent = function (_React$Component) {
@@ -68766,7 +68757,11 @@
 	                    reversegeolocation_1.reverseGeocoding(props.tree.getLocation(), function (response) {
 	                        self.setState({ address: response.road + ", " + response.county + ", " + response.state + ", " + response.country + ", " + response.postcode, editing: false });
 	                        self.props.tree.setAddress(self.state.address);
-	                        tree_store_1.treeStore.updateTree(self.props.tree);
+	                        if (self.props.async) {
+	                            tree_store_1.treeStore.updateTree(self.props.tree);
+	                        } else {
+	                            self.setState({ editing: false });
+	                        }
 	                        loadingtracker_1.removeLoading();
 	                    }, function () {
 	                        loadingtracker_1.removeLoading();
@@ -68778,13 +68773,21 @@
 	            var self = _this;
 	            if (self.state.address.trim() != "") {
 	                self.props.tree.setAddress(self.state.address);
-	                tree_store_1.treeStore.updateTree(self.props.tree);
+	                if (self.props.async) {
+	                    tree_store_1.treeStore.updateTree(self.props.tree);
+	                } else {
+	                    self.setState({ editing: false });
+	                }
 	            } else {
 	                reversegeolocation_1.reverseGeocoding(self.props.tree.getLocation(), function (response) {
 	                    self.setState({ address: response.road + ", " + response.county + ", " + response.state + ", " + response.country + ", " + response.postcode, editing: false });
 	                    loadingtracker_1.removeLoading();
 	                    self.props.tree.setAddress(self.state.address);
-	                    tree_store_1.treeStore.updateTree(self.props.tree);
+	                    if (self.props.async) {
+	                        tree_store_1.treeStore.updateTree(self.props.tree);
+	                    } else {
+	                        self.setState({ editing: false });
+	                    }
 	                }, function () {
 	                    loadingtracker_1.removeLoading();
 	                });
@@ -68851,7 +68854,7 @@
 	//# sourceMappingURL=address.component.js.map
 
 /***/ },
-/* 430 */
+/* 433 */
 /*!***************************************************!*\
   !*** ./src/components/tree/address.component.css ***!
   \***************************************************/
@@ -68860,7 +68863,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./address.component.css */ 431);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./address.component.css */ 434);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -68880,7 +68883,7 @@
 	}
 
 /***/ },
-/* 431 */
+/* 434 */
 /*!******************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/address.component.css ***!
   \******************************************************************/
@@ -68903,7 +68906,7 @@
 	};
 
 /***/ },
-/* 432 */
+/* 435 */
 /*!*****************************************!*\
   !*** ./src/utils/reversegeolocation.js ***!
   \*****************************************/
@@ -68937,7 +68940,7 @@
 	//# sourceMappingURL=reversegeolocation.js.map
 
 /***/ },
-/* 433 */
+/* 436 */
 /*!******************************************************!*\
   !*** ./src/components/tree/description.component.js ***!
   \******************************************************/
@@ -68957,7 +68960,7 @@
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./description.component.css */ 434);
+	var styles = __webpack_require__(/*! ./description.component.css */ 437);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	
 	var DescriptionComponent = function (_React$Component) {
@@ -68971,7 +68974,11 @@
 	        _this.updateAttribute = function () {
 	            var self = _this;
 	            self.props.tree.setDescription(self.state.description);
-	            tree_store_1.treeStore.updateTree(self.props.tree);
+	            if (self.props.async) {
+	                tree_store_1.treeStore.updateTree(self.props.tree);
+	            } else {
+	                self.setState({ editing: false });
+	            }
 	        };
 	        var self = _this;
 	        _this.state = {
@@ -69048,7 +69055,7 @@
 	//# sourceMappingURL=description.component.js.map
 
 /***/ },
-/* 434 */
+/* 437 */
 /*!*******************************************************!*\
   !*** ./src/components/tree/description.component.css ***!
   \*******************************************************/
@@ -69057,7 +69064,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./description.component.css */ 435);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./description.component.css */ 438);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69077,7 +69084,7 @@
 	}
 
 /***/ },
-/* 435 */
+/* 438 */
 /*!**********************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/description.component.css ***!
   \**********************************************************************/
@@ -69100,7 +69107,7 @@
 	};
 
 /***/ },
-/* 436 */
+/* 439 */
 /*!***********************************************!*\
   !*** ./src/components/tree/flag.component.js ***!
   \***********************************************/
@@ -69123,7 +69130,7 @@
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 250);
 	var $ = __webpack_require__(/*! jquery */ 258);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./flag.component.css */ 437);
+	var styles = __webpack_require__(/*! ./flag.component.css */ 440);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	
 	var FlagComponent = function (_React$Component) {
@@ -69143,7 +69150,11 @@
 	                });
 	            }
 	            self.props.tree.setFlags(flags);
-	            tree_store_1.treeStore.updateTree(self.props.tree);
+	            if (self.props.async) {
+	                tree_store_1.treeStore.updateTree(self.props.tree);
+	            } else {
+	                self.setState({ selected: selected });
+	            }
 	        };
 	        var self = _this;
 	        _this.state = {
@@ -69206,7 +69217,7 @@
 	//# sourceMappingURL=flag.component.js.map
 
 /***/ },
-/* 437 */
+/* 440 */
 /*!************************************************!*\
   !*** ./src/components/tree/flag.component.css ***!
   \************************************************/
@@ -69215,7 +69226,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./flag.component.css */ 438);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./flag.component.css */ 441);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69235,7 +69246,7 @@
 	}
 
 /***/ },
-/* 438 */
+/* 441 */
 /*!***************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/flag.component.css ***!
   \***************************************************************/
@@ -69246,7 +69257,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1cduhYrXjLh96LkhbKOsjk {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .XPtky9cpVMVpekBtJYSrL {\r\n    padding: 0 0 0 8px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._3Qp7IFEz_ujCrLUOEM8UcX {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._3Qp7IFEz_ujCrLUOEM8UcX:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._6rSvE0rZPe-3bF5eDFraj {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n  }\r\n\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-control {\r\n    border-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(255, 255, 255, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(94, 78, 81, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(255, 255, 255, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow {\r\n    border-color: rgba(255, 255, 255, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open .Select-arrow,\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon:hover,\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select.is-disabled > .Select-control {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi.is-disabled .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border: none;\r\n    color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-input {\r\n    display: none !important;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select.is-disabled > .Select-control {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi:not(.is-disabled) .Select-value {\r\n    width: 95%;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1cduhYrXjLh96LkhbKOsjk {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .XPtky9cpVMVpekBtJYSrL {\r\n    padding: 0 0 0 8px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._3Qp7IFEz_ujCrLUOEM8UcX {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._3Qp7IFEz_ujCrLUOEM8UcX:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._6rSvE0rZPe-3bF5eDFraj {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n  }\r\n\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-control {\r\n    border-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n    cursor: pointer;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(255, 255, 255, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(94, 78, 81, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(255, 255, 255, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow {\r\n    border-color: rgba(255, 255, 255, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-open .Select-arrow,\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon:hover,\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select.is-disabled > .Select-control {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi.is-disabled .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border: none;\r\n    color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select-input {\r\n    display: none !important;\r\n  }\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select.is-disabled > .Select-control {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1cduhYrXjLh96LkhbKOsjk .Select--multi:not(.is-disabled) .Select-value {\r\n    width: 95%;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -69257,7 +69268,7 @@
 	};
 
 /***/ },
-/* 439 */
+/* 442 */
 /*!****************************************************!*\
   !*** ./src/components/tree/ownership.component.js ***!
   \****************************************************/
@@ -69279,7 +69290,7 @@
 	var Select = __webpack_require__(/*! react-select */ 243);
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 250);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./ownership.component.css */ 440);
+	var styles = __webpack_require__(/*! ./ownership.component.css */ 443);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	
 	var OwnershipComponent = function (_React$Component) {
@@ -69292,12 +69303,16 @@
 	
 	        _this.updateAttribute = function (selected) {
 	            var self = _this;
-	            var pub = 0;
+	            var ownership = 0;
 	            if (selected) {
-	                pub = parseInt(selected.value);
+	                ownership = parseInt(selected.value);
 	            }
-	            self.props.tree.setOwnership(pub);
-	            tree_store_1.treeStore.updateTree(self.props.tree);
+	            self.props.tree.setOwnership(ownership);
+	            if (self.props.async) {
+	                tree_store_1.treeStore.updateTree(self.props.tree);
+	            } else {
+	                self.setState({ selected: selected });
+	            }
 	        };
 	        var self = _this;
 	        _this.state = {
@@ -69346,9 +69361,9 @@
 	        value: function render() {
 	            var self = this;
 	            if (self.props.editable) {
-	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.label }, React.createElement(FontAwesome, { className: '', name: 'home' }), " Public"), React.createElement("div", { className: styles.name }, React.createElement(Select, { name: "public-select", multi: false, searchable: false, scrollMenuIntoView: false, options: self.state.options, value: self.state.selected, onChange: self.updateAttribute, placeholder: "select ownerships..." })));
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.label }, React.createElement(FontAwesome, { className: '', name: 'home' }), " Public"), React.createElement("div", { className: styles.name }, React.createElement(Select, { name: "ownership-select", multi: false, searchable: false, scrollMenuIntoView: false, options: self.state.options, value: self.state.selected, onChange: self.updateAttribute, placeholder: "select ownerships..." })));
 	            } else {
-	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.label }, React.createElement(FontAwesome, { className: '', name: 'home' }), " Public"), React.createElement("div", { className: styles.name }, React.createElement(Select, { name: "public-select", multi: false, disabled: true, searchable: false, scrollMenuIntoView: false, options: self.state.options, value: self.state.selected, onChange: self.updateAttribute, placeholder: "select ownerships..." })));
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.label }, React.createElement(FontAwesome, { className: '', name: 'home' }), " Public"), React.createElement("div", { className: styles.name }, React.createElement(Select, { name: "ownership-select", multi: false, disabled: true, searchable: false, scrollMenuIntoView: false, options: self.state.options, value: self.state.selected, onChange: self.updateAttribute, placeholder: "select ownerships..." })));
 	            }
 	        }
 	    }]);
@@ -69361,7 +69376,7 @@
 	//# sourceMappingURL=ownership.component.js.map
 
 /***/ },
-/* 440 */
+/* 443 */
 /*!*****************************************************!*\
   !*** ./src/components/tree/ownership.component.css ***!
   \*****************************************************/
@@ -69370,7 +69385,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./ownership.component.css */ 441);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./ownership.component.css */ 444);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69390,7 +69405,7 @@
 	}
 
 /***/ },
-/* 441 */
+/* 444 */
 /*!********************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/ownership.component.css ***!
   \********************************************************************/
@@ -69401,7 +69416,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._28WzHpHejHSGWVRrXUUnEf {\r\n    padding: 0 0 0 8px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._151JDE63T3HVqYBq-DG3ih {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._151JDE63T3HVqYBq-DG3ih:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._2_9TuMduvsyHC0Lgs-fv92 {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n  }\r\n\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-control {\r\n    border-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(255, 255, 255, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(94, 78, 81, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(255, 255, 255, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow {\r\n    border-color: rgba(255, 255, 255, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open .Select-arrow,\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon:hover,\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label, .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\r\n    color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-input {\r\n    display: none !important;\r\n  }\r\n\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select.is-disabled > .Select-control {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    width: 95%;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._28WzHpHejHSGWVRrXUUnEf {\r\n    padding: 0 0 0 8px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._151JDE63T3HVqYBq-DG3ih {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n  }\r\n  ._151JDE63T3HVqYBq-DG3ih:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._2_9TuMduvsyHC0Lgs-fv92 {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n  }\r\n\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-control {\r\n    border-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n    cursor: pointer;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(255, 255, 255, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(94, 78, 81, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(255, 255, 255, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow {\r\n    border-color: rgba(255, 255, 255, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-open .Select-arrow,\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon:hover,\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label, .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\r\n    color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select-input {\r\n    display: none !important;\r\n  }\r\n\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select.is-disabled > .Select-control {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1_h9Fw5aSXvAWhAzs8DGrz .Select--multi .Select-value {\r\n    width: 95%;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -69412,7 +69427,7 @@
 	};
 
 /***/ },
-/* 442 */
+/* 445 */
 /*!***************************************************!*\
   !*** ./src/components/tree/location.component.js ***!
   \***************************************************/
@@ -69432,7 +69447,7 @@
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./location.component.css */ 443);
+	var styles = __webpack_require__(/*! ./location.component.css */ 446);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	
 	var LocationComponent = function (_React$Component) {
@@ -69453,7 +69468,11 @@
 	            var self = _this;
 	            self.props.tree.setLat(parseFloat(self.state.latitude));
 	            self.props.tree.setLng(parseFloat(self.state.longitude));
-	            tree_store_1.treeStore.updateTree(self.props.tree);
+	            if (self.props.async) {
+	                tree_store_1.treeStore.updateTree(self.props.tree);
+	            } else {
+	                self.setState({ latitude: parseFloat(self.state.latitude).toFixed(Settings.iMarkerPrecision), longitude: parseFloat(self.state.longitude).toFixed(Settings.iMarkerPrecision), editingLatitude: false, editingLongitude: false });
+	            }
 	        };
 	        var self = _this;
 	        _this.state = {
@@ -69488,9 +69507,9 @@
 	            var self = this;
 	            if (self.state.editingLatitude) {
 	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.label, onClick: function onClick() {
-	                        self.setState({ latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: true, editingLongitude: false });
+	                        self.setState({ editingLatitude: true, editingLongitude: false });
 	                    } }, React.createElement(FontAwesome, { className: '', name: 'at' }), " Location"), React.createElement("div", { className: styles.location }, React.createElement("input", { autoFocus: true, type: "text", className: styles.edit, key: self.props.tree.getId() + "latitude", placeholder: "enter latitude of tree location...", value: self.state.latitude, onChange: function onChange(event) {
-	                        self.setState({ latitude: event.target.value, longitude: self.state.longitude, editingLatitude: true, editingLongitude: false });
+	                        self.setState({ latitude: event.target.value });
 	                    }, onKeyPress: function onKeyPress(event) {
 	                        if (event.key == 'Enter') {
 	                            self.updateAttribute();
@@ -69498,15 +69517,15 @@
 	                    }, onBlur: function onBlur() {
 	                        self.updateAttribute();
 	                    } }), React.createElement("div", { className: styles.comma }, ","), React.createElement("div", { className: styles.name, onClick: function onClick() {
-	                        self.setState({ latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: false, editingLongitude: true });
+	                        self.setState({ editingLatitude: false, editingLongitude: true });
 	                    } }, self.state.longitude)));
 	            } else if (self.state.editingLongitude) {
 	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.label, onClick: function onClick() {
-	                        self.setState({ latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: false, editingLongitude: true });
+	                        self.setState({ editingLatitude: false, editingLongitude: true });
 	                    } }, React.createElement(FontAwesome, { className: '', name: 'at' }), " Location"), React.createElement("div", { className: styles.location }, React.createElement("div", { className: styles.name, onClick: function onClick() {
-	                        self.setState({ latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: true, editingLongitude: false });
+	                        self.setState({ editingLatitude: true, editingLongitude: false });
 	                    } }, self.state.latitude), React.createElement("div", { className: styles.comma }, ","), React.createElement("input", { autoFocus: true, type: "text", className: styles.edit, key: self.props.tree.getId() + "longitude", placeholder: "enter longitude of tree location...", value: self.state.longitude, onChange: function onChange(event) {
-	                        self.setState({ latitude: self.state.latitude, longitude: event.target.value, editingLatitude: false, editingLongitude: true });
+	                        self.setState({ longitude: event.target.value });
 	                    }, onKeyPress: function onKeyPress(event) {
 	                        if (event.key == 'Enter') {
 	                            self.updateAttribute();
@@ -69517,11 +69536,11 @@
 	            } else {
 	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.label }, React.createElement(FontAwesome, { className: '', name: 'at' }), " Location"), React.createElement("div", { className: styles.location }, React.createElement("div", { className: styles.name, onClick: function onClick() {
 	                        if (self.props.editable) {
-	                            self.setState({ latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: true, editingLongitude: false });
+	                            self.setState({ editingLatitude: true, editingLongitude: false });
 	                        }
 	                    } }, self.state.latitude), React.createElement("div", { className: styles.comma }, ","), React.createElement("div", { className: styles.name, onClick: function onClick() {
 	                        if (self.props.editable) {
-	                            self.setState({ latitude: self.state.latitude, longitude: self.state.longitude, editingLatitude: false, editingLongitude: true });
+	                            self.setState({ editingLatitude: false, editingLongitude: true });
 	                        }
 	                    } }, self.state.longitude)));
 	            }
@@ -69536,7 +69555,7 @@
 	//# sourceMappingURL=location.component.js.map
 
 /***/ },
-/* 443 */
+/* 446 */
 /*!****************************************************!*\
   !*** ./src/components/tree/location.component.css ***!
   \****************************************************/
@@ -69545,7 +69564,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./location.component.css */ 444);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./location.component.css */ 447);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69565,7 +69584,7 @@
 	}
 
 /***/ },
-/* 444 */
+/* 447 */
 /*!*******************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/location.component.css ***!
   \*******************************************************************/
@@ -69589,7 +69608,7 @@
 	};
 
 /***/ },
-/* 445 */
+/* 448 */
 /*!***************************************************!*\
   !*** ./src/components/tree/tree-add.component.js ***!
   \***************************************************/
@@ -69610,12 +69629,16 @@
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
 	var AltContainer = __webpack_require__(/*! alt-container */ 268);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./tree-add.component.css */ 446);
+	var styles = __webpack_require__(/*! ./tree-add.component.css */ 449);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 408);
 	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 423);
-	var ownership_store_1 = __webpack_require__(/*! ./../../stores/ownership.store */ 426);
-	var food_component_1 = __webpack_require__(/*! ./food.component */ 448);
+	var food_component_1 = __webpack_require__(/*! ./food.component */ 429);
+	var address_component_1 = __webpack_require__(/*! ./address.component */ 432);
+	var description_component_1 = __webpack_require__(/*! ./description.component */ 436);
+	var flag_component_1 = __webpack_require__(/*! ./flag.component */ 439);
+	var ownership_component_1 = __webpack_require__(/*! ./ownership.component */ 442);
+	var location_component_1 = __webpack_require__(/*! ./location.component */ 445);
 	var app_component_1 = __webpack_require__(/*! ./../app.component */ 219);
 	
 	var TreeAddComponent = function (_React$Component) {
@@ -69670,14 +69693,8 @@
 	                                store: flag_store_1.flagStore,
 	                                value: flag_store_1.flagStore.getState().flags
 	                            };
-	                        },
-	                        ownership: function ownership(props) {
-	                            return {
-	                                store: ownership_store_1.ownershipStore,
-	                                value: ownership_store_1.ownershipStore.getState().ownerships
-	                            };
 	                        }
-	                    } })));
+	                    } }, React.createElement(location_component_1.default, { tree: tree, editable: true, async: false }), React.createElement(address_component_1.default, { tree: tree, editable: true, async: false }), React.createElement(description_component_1.default, { tree: tree, editable: true, async: false }), React.createElement(flag_component_1.default, { tree: tree, flags: flag_store_1.flagStore.getState().flags, editable: true, async: false }), React.createElement(ownership_component_1.default, { tree: tree, editable: true, async: false }))));
 	            } else {
 	                return React.createElement("div", { className: styles.wrapper });
 	            }
@@ -69708,7 +69725,7 @@
 	//# sourceMappingURL=tree-add.component.js.map
 
 /***/ },
-/* 446 */
+/* 449 */
 /*!****************************************************!*\
   !*** ./src/components/tree/tree-add.component.css ***!
   \****************************************************/
@@ -69717,7 +69734,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./tree-add.component.css */ 447);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./tree-add.component.css */ 450);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69737,7 +69754,7 @@
 	}
 
 /***/ },
-/* 447 */
+/* 450 */
 /*!*******************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/tree-add.component.css ***!
   \*******************************************************************/
@@ -69756,160 +69773,6 @@
 		"treeinfo": "XFoUt0pxMvlPVNH2478Cu",
 		"close": "_1DEZjQvbfWGrJECwEnJMRA",
 		"basicinfo": "_1NOonNTQBcAC4inS0Efdfg"
-	};
-
-/***/ },
-/* 448 */
-/*!***********************************************!*\
-  !*** ./src/components/tree/food.component.js ***!
-  \***********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var React = __webpack_require__(/*! react */ 1);
-	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
-	var Select = __webpack_require__(/*! react-select */ 243);
-	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 250);
-	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./food.component.css */ 449);
-	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
-	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 408);
-	
-	var FoodComponent = function (_React$Component) {
-	    _inherits(FoodComponent, _React$Component);
-	
-	    function FoodComponent(props) {
-	        _classCallCheck(this, FoodComponent);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FoodComponent).call(this, props));
-	
-	        _this.updateAttribute = function (selected) {
-	            var self = _this;
-	            var pub = 0;
-	            if (selected) {
-	                pub = parseInt(selected.value);
-	            }
-	            self.props.tree.setOwnership(pub);
-	            tree_store_1.treeStore.updateTree(self.props.tree);
-	        };
-	        var self = _this;
-	        _this.state = {
-	            options: null,
-	            selected: null
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(FoodComponent, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var self = this;
-	            self.updateProps(self.props);
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            var self = this;
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            var self = this;
-	            self.updateProps(nextProps);
-	        }
-	    }, {
-	        key: 'updateProps',
-	        value: function updateProps(props) {
-	            var self = this;
-	            if (props.tree && props.foods) {
-	                var options = new Array();
-	                var selected;
-	                props.foods.forEach(function (food) {
-	                    options.push({ value: food.getId(), label: food.getName() });
-	                    if (props.tree.getFoodId() == food.getId()) {
-	                        selected = { value: food.getId(), label: food.getName() };
-	                    }
-	                });
-	                self.setState({ options: options, selected: selected });
-	            }
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var self = this;
-	            var food = food_store_1.foodStore.getFood(self.props.tree.getFoodId());
-	            if (self.props.editable) {
-	                return React.createElement("div", { className: styles.wrapper }, React.createElement("img", { className: styles.icon, src: Settings.uBaseName + Settings.uStaticImage + food.getIcon() }), React.createElement("div", { className: styles.name }, React.createElement(Select, { name: "public-select", multi: false, searchable: false, scrollMenuIntoView: false, options: self.state.options, value: self.state.selected, onChange: self.updateAttribute, placeholder: "select ownerships..." })));
-	            } else {
-	                return React.createElement("div", { className: styles.wrapper }, React.createElement("img", { className: styles.icon, src: Settings.uBaseName + Settings.uStaticImage + food.getIcon() }), React.createElement("div", { className: styles.name }, React.createElement(Select, { name: "public-select", multi: false, disabled: true, searchable: false, scrollMenuIntoView: false, options: self.state.options, value: self.state.selected, onChange: self.updateAttribute, placeholder: "select ownerships..." })));
-	            }
-	        }
-	    }]);
-	
-	    return FoodComponent;
-	}(React.Component);
-	
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.default = FoodComponent;
-	//# sourceMappingURL=food.component.js.map
-
-/***/ },
-/* 449 */
-/*!************************************************!*\
-  !*** ./src/components/tree/food.component.css ***!
-  \************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./food.component.css */ 450);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./food.component.css", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./food.component.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 450 */
-/*!***************************************************************!*\
-  !*** ./~/css-loader!./src/components/tree/food.component.css ***!
-  \***************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "@media all {\r\n  ._1eTYnkNptxNpOCI7bCz4Mc {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    border-radius: 2px;\r\n  }\r\n  ._1unhcS0Eq2VFnIrZtQ0TA0 {\r\n    width: 36px;\r\n    height: 36px;\r\n    margin: 8px;\r\n  }\r\n  .CGrdYJGPteld1Ev56MSy3 {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-control {\r\n    border-color: rgba(244, 244, 244, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(244, 244, 244, 1);\r\n    color: rgba(94, 78, 81, 1);\r\n    background-color: rgba(244, 244, 244, 1);\r\n    cursor: default;\r\n    display: table;\r\n    height: 36px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    position: relative;\r\n    width: 100%;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {\r\n    bottom: 0;\r\n    color: rgba(94, 78, 81, 1);\r\n    left: 0;\r\n    line-height: 34px;\r\n    padding-left: 10px;\r\n    padding-right: 10px;\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    max-width: 100%;\r\n    overflow: hidden;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin-left: 5px;\r\n    margin-top: 5px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-searchable.is-open > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-open > .Select-control {\r\n    border-bottom-right-radius: 0;\r\n    border-bottom-left-radius: 0;\r\n    background: rgba(255, 255, 255, 1);\r\n    border-color: #b3b3b3 #ccc #d9d9d9;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-open > .Select-control > .Select-arrow {\r\n    border-color: transparent transparent rgba(94, 78, 81, 1);\r\n    border-width: 0 5px 5px;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-searchable.is-focused:not(.is-open) > .Select-control {\r\n    cursor: text;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-focused:not(.is-open) > .Select-control {\r\n    border-color: #007eff;\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value-icon {\r\n    cursor: pointer;\r\n    border-bottom-left-radius: 2px;\r\n    border-top-left-radius: 2px;\r\n    border-right: 1px solid rgba(255, 255, 255, 0.5);\r\n    padding: 3px 8px 3px 10px;\r\n    font-weight: 700;\r\n    font-size: medium;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-clear-zone {\r\n    -webkit-animation: Select-animation-fadeIn 200ms;\r\n    -o-animation: Select-animation-fadeIn 200ms;\r\n    animation: Select-animation-fadeIn 200ms;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n    display: table-cell;\r\n    position: relative;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    width: 17px;\r\n    font-weight: 700;\r\n    display: none;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-arrow {\r\n    border-color: rgba(94, 78, 81, 1) transparent transparent;\r\n    border-style: solid;\r\n    border-width: 5px 5px 2.5px;\r\n    display: inline-block;\r\n    height: 0;\r\n    width: 0;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-open .Select-arrow,\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-arrow-zone:hover > .Select-arrow {\r\n    border-top-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value-icon:hover,\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value-icon:focus {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    color: #D0021B;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .is-focused:not(.is-open) > .Select-control {\r\n    border-color: rgba(255, 255, 255, 1);\r\n    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value {\r\n    background-color: rgba(94, 78, 81, 1);\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(255, 255, 255, 1);\r\n    color: rgba(255, 255, 255, 1);\r\n    display: inline-block;\r\n    font-size: small;\r\n    line-height: 1.4;\r\n    margin: 4px;\r\n    vertical-align: top;\r\n    outline: none;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-option.is-focused {\r\n    background-color: rgba(255, 255, 255, 0.08);\r\n    color: #333;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label, .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select-input {\r\n    display: none !important;\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select.is-disabled > .Select-control {\r\n    background-color: rgba(244, 244, 244, 1);\r\n  }\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select.is-disabled .Select-arrow-zone {\r\n    display: none;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1eTYnkNptxNpOCI7bCz4Mc .Select--multi .Select-value {\r\n    width: 95%;\r\n  }\r\n}\r\n", ""]);
-	
-	// exports
-	exports.locals = {
-		"wrapper": "_1eTYnkNptxNpOCI7bCz4Mc",
-		"icon": "_1unhcS0Eq2VFnIrZtQ0TA0",
-		"name": "CGrdYJGPteld1Ev56MSy3"
 	};
 
 /***/ },
@@ -70154,10 +70017,12 @@
 	                    return React.createElement("div", { className: styles.wrapper });
 	                case trees_component_1.TreesMode.TREEADDMARKER:
 	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.message }, React.createElement("strong", null, "Move"), " the ", React.createElement("strong", null, "New Tree"), " to a designated location.", React.createElement("span", { className: styles.button, onClick: function onClick() {
-	                            self.context.router.push({ pathname: Settings.uBaseName + '/trees/add', query: { mode: "info" } });
+	                            self.context.router.replace({ pathname: Settings.uBaseName + '/trees/add', query: { mode: "info" } });
 	                        } }, "NEXT")));
 	                case trees_component_1.TreesMode.TREEADDINFO:
-	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.message }, React.createElement("strong", null, "Fill out"), " information for the ", React.createElement("strong", null, "New Tree"), ".", React.createElement("span", { className: styles.button }, "SAVE")));
+	                    return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.message }, React.createElement("strong", null, "Fill out"), " information for the ", React.createElement("strong", null, "New Tree"), ".", React.createElement("span", { className: styles.button, onClick: function onClick() {
+	                            self.context.router.replace({ pathname: Settings.uBaseName + '/trees/add', query: { mode: "save" } });
+	                        } }, "SAVE")));
 	            }
 	        }
 	    }]);

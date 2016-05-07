@@ -84,16 +84,14 @@ export default class TreeAddComponent extends React.Component<ITreeAddProps, ITr
                     store: flagStore,
                     value: flagStore.getState().flags
                   };
-                },
-                ownership: function (props) {
-                  return {
-                    store: ownershipStore,
-                    value: ownershipStore.getState().ownerships
-                  };
                 }
               }
             }>
-
+              <LocationComponent tree={tree} editable={true} async={false} />
+              <AddressComponent tree={tree} editable={true} async={false} />
+              <DescriptionComponent tree={tree} editable={true} async={false} />
+              <FlagComponent tree={tree} flags={flagStore.getState().flags} editable={true} async={false} />
+              <OwnershipComponent tree={tree} editable={true} async={false} />
             </AltContainer>
           </div>
         </div>

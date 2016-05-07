@@ -4,10 +4,11 @@
   header("Pragma: no-cache");
 
   include_once 'functions.php';
+  sec_session_continue(); // Our custom secure way of starting a PHP session.
 
   switch($_SERVER['REQUEST_METHOD']){
     case 'POST':
-      //create();
+      create();
       break;
     case 'GET':
       read();
@@ -54,16 +55,15 @@
         "lat" => $data->{'lat'},
         "lng" => $data->{'lng'},
         "food" => $data->{'food'},
-        "type" => $data->{'type'},
         "flag" => $data->{'flag'},
         "description" => $data->{'description'},
         "address" => $data->{'address'},
-        "public" => $data->{'public'},
+        "ownership" => $data->{'ownership'},
         "owner" => $data->{'owner'},
         "updated" => date("Y-m-d H:i:s"),
       );
     }
-    $sql = "UPDATE `tree` SET `lat` = :lat, `lng` = :lng, `food` = :food, `type` = :type, `flag` = :flag, `public` = :public, `owner` = :owner, `description` = :description, `address` = :address, `updated` = :updated WHERE (`id` = :id)";
+    $sql = "UPDATE `tree` SET `lat` = :lat, `lng` = :lng, `food` = :food, `flag` = :flag, `ownership` = :ownership, `owner` = :owner, `description` = :description, `address` = :address, `updated` = :updated WHERE (`id` = :id)";
 
     try {
       $pdo = getConnection();
@@ -90,44 +90,49 @@
     }
   }
 
-    function create() {
-        $data = json_decode(file_get_contents('php://input'));
-        $params = array(
-            "lat" => $data->{'lat'},
-            "lng" => $data->{'lng'},
-            "food" => $data->{'food'},
-            "type" => $data->{'type'},
-            "flag" => $data->{'flag'},
-            "owner" => $data->{'owner'},
-            "description" => $data->{'description'},
-            "address" => $data->{'address'},
-            "ownership" => $data->{'ownership'},
-            "updated" => date("Y-m-d H:i:s"),
-        );
-        $sql = "INSERT INTO `tree` VALUES ( NULL, :lat, :lng, :food, :type, :flag, :owner, :description, :address, :ownership, :updated )";
-
-        try {
-            $pdo = getConnection();
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute($params);
-
-            $sql = "SELECT * FROM `tree` WHERE `id` = :id";
-            $params = array(
-                "id" => $pdo->lastInsertId(),
-            );
-            try {
-               $stmt = $pdo->prepare($sql);
-                $stmt->execute($params);
-                $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-                $pdo = null;
-                echo json_encode($result[0]);
-            } catch(PDOException $e) {
-                echo '{"error":{"text":'. $e->getMessage() .'}}';
-            }
-        } catch(PDOException $e) {
-            echo '{"error":{"text":'. $e->getMessage() .'}}';
-        }
+  function create() {
+    $userid = intval($_SESSION['user_id']);
+    $owner = 0;
+    if ($userid) {
+      $owner = $userid;
     }
+
+    $data = json_decode(file_get_contents('php://input'));
+    $params = array(
+      "lat" => $data->{'lat'},
+      "lng" => $data->{'lng'},
+      "food" => $data->{'food'},
+      "flag" => $data->{'flag'},
+      "owner" => $owner,
+      "description" => $data->{'description'},
+      "address" => $data->{'address'},
+      "ownership" => $data->{'ownership'},
+      "updated" => date("Y-m-d H:i:s"),
+      );
+    $sql = "INSERT INTO `tree` VALUES ( NULL, :lat, :lng, :food, :flag, :owner, :description, :address, :ownership, :updated )";
+
+    try {
+      $pdo = getConnection();
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute($params);
+
+      $sql = "SELECT * FROM `tree` WHERE `id` = :id";
+      $params = array(
+        "id" => $pdo->lastInsertId(),
+      );
+      try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $pdo = null;
+        echo json_encode($result[0]);
+      } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+      }
+    } catch(PDOException $e) {
+      echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+  }
 
     function delete() {
         $data = json_decode(file_get_contents('php://input'));

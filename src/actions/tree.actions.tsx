@@ -7,6 +7,7 @@ import { addLoading, removeLoading } from './../utils/loadingtracker';
 interface ITreeActions {
   fetchTrees(trees: Array<TreeModel>);
   updateTree(tree: TreeModel): void;
+  createTree(tree: TreeModel): void;
   failed(errorMessage: any);
   loading(): void;
 }
@@ -21,6 +22,16 @@ class TreeActions extends AbstractActions implements ITreeActions {
   updateTree(tree: TreeModel) {
     let self: TreeActions = this;
     console.warn("Update Tree");
+    removeLoading();
+    return tree;
+    //return (dispatch) => {
+    //  // we dispatch an event here so we can have "loading" state.
+    //  dispatch({tree: tree, updatedTree: updatedTree});
+    //}
+  }
+  createTree(tree: TreeModel) {
+    let self: TreeActions = this;
+    console.warn("Create Tree");
     removeLoading();
     return tree;
     //return (dispatch) => {

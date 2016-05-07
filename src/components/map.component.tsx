@@ -129,9 +129,8 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
               lat: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom).lat + "",
               lng: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom).lng + "",
               food: "1",
-              type: "0",
               flag: "0",
-              public: "0",
+              ownership: "1",
               description: "",
               address: "",
               owner: "0",
@@ -192,9 +191,9 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
         }
       }
     }
-    //if (!bFound) {
-    //  self.map.closePopup();
-    //}
+    if (props.treeId != 0 && !bFound) {
+      self.map.closePopup();
+    }
   }
 
   private addMarker(tree: TreeModel, editable: boolean): void {

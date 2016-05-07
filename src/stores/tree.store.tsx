@@ -14,9 +14,8 @@ export interface ITreeProps {
   lat: string;
   lng: string;
   food: string;
-  type: string;
   flag: string;
-  public: string;
+  ownership: string;
   description: string;
   address: string;
   owner: string;
@@ -28,9 +27,8 @@ export class TreeModel {
   lat: number;
   lng: number;
   food: number;
-  type: number;
   description: string;
-  public: number;
+  ownership: number;
   address: string;
   owner: number;
   updated: moment.Moment;
@@ -47,10 +45,9 @@ export class TreeModel {
     self.lat = parseFloat(parseFloat(props.lat).toFixed(Settings.iMarkerPrecision));
     self.lng = parseFloat(parseFloat(props.lng).toFixed(Settings.iMarkerPrecision));
     self.food = parseInt(props.food);
-    self.type = parseInt(props.type);
     self.description = props.description;
     self.address = props.address;
-    self.public = parseInt(props.public);
+    self.ownership = parseInt(props.ownership);
     self.owner = parseInt(props.owner);
     self.updated = moment(props.updated);
     self.flags = props.flag.split(',').map((flag: string) => {
@@ -66,11 +63,10 @@ export class TreeModel {
       lat: self.lat,
       lng: self.lng,
       food: self.food,
-      type: self.type,
       flag: self.flags.toString(),
       description: self.description,
       address: self.address,
-      public: self.public,
+      ownership: self.ownership,
       owner: self.owner
     }
   }
@@ -79,6 +75,9 @@ export class TreeModel {
   }
   public getFoodId(): number {
     return this.food;
+  }
+  public setFoodId(foodId: number): void {
+    this.food = foodId;
   }
   public getLat(): number {
     return this.lat;
@@ -123,10 +122,10 @@ export class TreeModel {
     this.owner = owner;
   }
   public getOwnership(): number {
-    return this.public;
+    return this.ownership;
   }
-  public setOwnership(pub: number): void {
-    this.public = pub;
+  public setOwnership(ownership: number): void {
+    this.ownership = ownership;
   }
 }
 
@@ -141,6 +140,7 @@ interface TreeExtendedStore extends AltJS.AltStore<TreeState> {
   addTree(tree: TreeModel): void;
   fetchTrees(): void;
   updateTree(update: TreeModel): void;
+  createTree(create: TreeModel): void;
   isLoading(): boolean;
 }
 
@@ -158,6 +158,7 @@ class TreeStore extends AbstractStore<TreeState> {
     self.bindListeners({
       handleFetchTrees: treeActions.fetchTrees,
       handleUpdateTree: treeActions.updateTree,
+      handleCreateTree: treeActions.createTree,
       handleFailed: treeActions.failed,
     });
     self.exportPublicMethods({
@@ -185,17 +186,21 @@ class TreeStore extends AbstractStore<TreeState> {
       trees[0].update(treeProps);
     }
   }
+  handleCreateTree(treeProps: ITreeProps) {
+    let self: TreeStore = this;
+    console.warn("Handle Create Tree");
+    console.log(treeProps);
+    self.trees.push(new TreeModel(treeProps));
+  }
   handleFailed(errorMessage: string) {
     console.warn("Handle Tree Failed");
     this.errorMessage = errorMessage;
   }
   getTree(id: number): TreeModel {
     let self: TreeStore = this;
-    let trees = self.getState().trees;
-    for(var i = 0; i < trees.length; i++) {
-      if(trees[i].id === id) {
-        return trees[i];
-      }
+    let trees = self.getState().trees.filter(tree => tree.getId() == id);
+    if (trees.length == 1) {
+      return trees[0];
     }
     return null;
   }
