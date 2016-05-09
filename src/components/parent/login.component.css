@@ -206,9 +206,6 @@
   :local(.wrapper) .has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label, .has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {
     color: rgba(94, 78, 81, 1);
   }
-  :local(.wrapper) .Select-input {
-    display: none !important;
-  }
   :local(.wrapper) .Select.is-disabled > .Select-control {
     background-color: rgba(244, 244, 244, 1);
   }

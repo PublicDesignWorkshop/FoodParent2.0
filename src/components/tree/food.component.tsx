@@ -87,7 +87,7 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
         <div className={styles.wrapper}>
           <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
           <div className={styles.name}>
-            <Select name="public-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
+            <Select name="food-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
           </div>
         </div>
       );
@@ -96,7 +96,7 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
         <div className={styles.wrapper}>
         <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
           <div className={styles.name}>
-            <Select name="public-select" multi={false} disabled searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
+            <Select name="food-select" multi={false} disabled searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
           </div>
         </div>
       );
