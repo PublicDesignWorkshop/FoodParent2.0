@@ -87,7 +87,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   public componentWillReceiveProps (nextProps: IMapProps) {
     //this.setState({cid: nextProps.cid});
     let self: MapComponent = this;
-    if (nextProps.trees.length != 0 && nextProps.foods.length != 0) {
+    if (nextProps.trees && nextProps.foods.length) {
       self.renderMarkers(nextProps.trees, nextProps);
       self.map.setZoom(nextProps.zoom);
       self.renderUserLocation(nextProps.position);
@@ -122,7 +122,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
           } else {
             //point.y += self.map.getSize().y * 0.15;
           }
-
           if (!self.newMarker) {
             var tree: TreeModel = new TreeModel({
               id: "0",
@@ -130,7 +129,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
               lng: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom).lng + "",
               food: "1",
               flag: "0",
-              ownership: "1",
+              public: "1",
               description: "",
               address: "",
               owner: "0",

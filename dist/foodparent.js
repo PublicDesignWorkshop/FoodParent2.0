@@ -53,7 +53,7 @@
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	var routes_1 = __webpack_require__(/*! ./routes */ 218);
-	__webpack_require__(/*! ./client.css */ 457);
+	__webpack_require__(/*! ./client.css */ 454);
 	ReactDOM.render(React.createElement(react_router_1.Router, { history: react_router_1.browserHistory }, routes_1.default), document.getElementById('app'));
 	//# sourceMappingURL=client.js.map
 
@@ -234,6 +234,9 @@
 	var queueIndex = -1;
 	
 	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
 	    draining = false;
 	    if (currentQueue.length) {
 	        queue = currentQueue.concat(queue);
@@ -26322,8 +26325,8 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-		"uBaseName": "/FoodParent2.1",
-		"uBaseNameForWebPack": "/FoodParent2.1/",
+		"uBaseName": "/FoodParent2.0",
+		"uBaseNameForWebPack": "/FoodParent2.0/",
 		"uStaticImage": "/static/images/",
 		"uServer": "/server/",
 		"vPosition": {
@@ -26810,7 +26813,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.1/dist/fontawesome-webfont.eot";
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
 
 /***/ },
 /* 238 */
@@ -26819,7 +26822,7 @@
   \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.1/dist/fontawesome-webfont.eot";
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
 
 /***/ },
 /* 239 */
@@ -26828,7 +26831,7 @@
   \****************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.1/dist/fontawesome-webfont.woff2";
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff2";
 
 /***/ },
 /* 240 */
@@ -26837,7 +26840,7 @@
   \***************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.1/dist/fontawesome-webfont.woff";
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff";
 
 /***/ },
 /* 241 */
@@ -26846,7 +26849,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.1/dist/fontawesome-webfont.ttf";
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.ttf";
 
 /***/ },
 /* 242 */
@@ -26855,7 +26858,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.1/dist/fontawesome-webfont.svg";
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.svg";
 
 /***/ },
 /* 243 */
@@ -39055,7 +39058,7 @@
 	var food_store_1 = __webpack_require__(/*! ./../stores/food.store */ 408);
 	var map_component_1 = __webpack_require__(/*! ./map.component */ 411);
 	var trees_panel_component_1 = __webpack_require__(/*! ./trees-panel.component */ 417);
-	var trees_message_component_1 = __webpack_require__(/*! ./trees-message.component */ 454);
+	var trees_message_component_1 = __webpack_require__(/*! ./trees-message.component */ 451);
 	var map_component_2 = __webpack_require__(/*! ./map.component */ 411);
 	(function (TreesMode) {
 	    TreesMode[TreesMode["NONE"] = 0] = "NONE";
@@ -43225,7 +43228,7 @@
 			width = Math.min(width, this.options.maxWidth);
 			width = Math.max(width, this.options.minWidth);
 	
-			style.width = (width) + 'px';
+			style.width = (width + 1) + 'px';
 			style.whiteSpace = '';
 	
 			style.height = '';
@@ -44264,7 +44267,7 @@
 			}
 	
 			this._requestUpdate();
-	
+			
 			this.fire('remove');
 			this._map = null;
 		},
@@ -47319,7 +47322,7 @@
 					this.addAttribution(map._layers[i].getAttribution());
 				}
 			}
-	
+			
 			map
 			    .on('layeradd', this._onLayerAdd, this)
 			    .on('layerremove', this._onLayerRemove, this);
@@ -48377,7 +48380,6 @@
 	
 	}(window, document));
 
-
 /***/ },
 /* 268 */
 /*!*********************************************!*\
@@ -49352,7 +49354,7 @@
 	            self.food = parseInt(props.food);
 	            self.description = props.description;
 	            self.address = props.address;
-	            self.ownership = parseInt(props.ownership);
+	            self.ownership = parseInt(props.public);
 	            self.owner = parseInt(props.owner);
 	            self.updated = moment(props.updated);
 	            self.flags = props.flag.split(',').map(function (flag) {
@@ -49373,7 +49375,7 @@
 	                flag: self.flags.toString(),
 	                description: self.description,
 	                address: self.address,
-	                ownership: self.ownership,
+	                public: self.ownership,
 	                owner: self.owner
 	            };
 	        }
@@ -49573,6 +49575,7 @@
 	                trees = trees.splice(i, 1);
 	            }
 	            trees.push(tree);
+	            console.log(trees.length);
 	        }
 	    }]);
 	
@@ -66095,7 +66098,7 @@
 	        value: function componentWillReceiveProps(nextProps) {
 	            //this.setState({cid: nextProps.cid});
 	            var self = this;
-	            if (nextProps.trees.length != 0 && nextProps.foods.length != 0) {
+	            if (nextProps.trees && nextProps.foods.length) {
 	                self.renderMarkers(nextProps.trees, nextProps);
 	                self.map.setZoom(nextProps.zoom);
 	                self.renderUserLocation(nextProps.position);
@@ -66133,7 +66136,7 @@
 	                                lng: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom).lng + "",
 	                                food: "1",
 	                                flag: "0",
-	                                ownership: "1",
+	                                public: "1",
 	                                description: "",
 	                                address: "",
 	                                owner: "0",
@@ -67984,9 +67987,9 @@
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
 	var styles = __webpack_require__(/*! ./trees-panel.component.css */ 418);
 	var tree_component_1 = __webpack_require__(/*! ./tree/tree.component */ 420);
-	var tree_add_component_1 = __webpack_require__(/*! ./tree/tree-add.component */ 448);
+	var tree_add_component_1 = __webpack_require__(/*! ./tree/tree-add.component */ 445);
 	var trees_component_1 = __webpack_require__(/*! ./trees.component */ 266);
-	var trees_controls_component_1 = __webpack_require__(/*! ./trees-controls.component */ 451);
+	var trees_controls_component_1 = __webpack_require__(/*! ./trees-controls.component */ 448);
 	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 286);
 	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
 	var authentication_1 = __webpack_require__(/*! ./../utils/authentication */ 257);
@@ -68169,12 +68172,12 @@
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 408);
 	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 423);
-	var food_component_1 = __webpack_require__(/*! ./food.component */ 429);
-	var address_component_1 = __webpack_require__(/*! ./address.component */ 432);
-	var description_component_1 = __webpack_require__(/*! ./description.component */ 436);
-	var flag_component_1 = __webpack_require__(/*! ./flag.component */ 439);
-	var ownership_component_1 = __webpack_require__(/*! ./ownership.component */ 442);
-	var location_component_1 = __webpack_require__(/*! ./location.component */ 445);
+	var food_component_1 = __webpack_require__(/*! ./food.component */ 426);
+	var address_component_1 = __webpack_require__(/*! ./address.component */ 429);
+	var description_component_1 = __webpack_require__(/*! ./description.component */ 433);
+	var flag_component_1 = __webpack_require__(/*! ./flag.component */ 436);
+	var ownership_component_1 = __webpack_require__(/*! ./ownership.component */ 439);
+	var location_component_1 = __webpack_require__(/*! ./location.component */ 442);
 	var app_component_1 = __webpack_require__(/*! ./../app.component */ 219);
 	
 	var TreeComponent = function (_React$Component) {
@@ -68553,10 +68556,7 @@
 	//# sourceMappingURL=flag.source.js.map
 
 /***/ },
-/* 426 */,
-/* 427 */,
-/* 428 */,
-/* 429 */
+/* 426 */
 /*!***********************************************!*\
   !*** ./src/components/tree/food.component.js ***!
   \***********************************************/
@@ -68577,7 +68577,7 @@
 	var Select = __webpack_require__(/*! react-select */ 243);
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 250);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./food.component.css */ 430);
+	var styles = __webpack_require__(/*! ./food.component.css */ 427);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 408);
 	
@@ -68664,7 +68664,7 @@
 	//# sourceMappingURL=food.component.js.map
 
 /***/ },
-/* 430 */
+/* 427 */
 /*!************************************************!*\
   !*** ./src/components/tree/food.component.css ***!
   \************************************************/
@@ -68673,7 +68673,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./food.component.css */ 431);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./food.component.css */ 428);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -68693,7 +68693,7 @@
 	}
 
 /***/ },
-/* 431 */
+/* 428 */
 /*!***************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/food.component.css ***!
   \***************************************************************/
@@ -68714,7 +68714,7 @@
 	};
 
 /***/ },
-/* 432 */
+/* 429 */
 /*!**************************************************!*\
   !*** ./src/components/tree/address.component.js ***!
   \**************************************************/
@@ -68734,9 +68734,9 @@
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./address.component.css */ 433);
+	var styles = __webpack_require__(/*! ./address.component.css */ 430);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
-	var reversegeolocation_1 = __webpack_require__(/*! ./../../utils/reversegeolocation */ 435);
+	var reversegeolocation_1 = __webpack_require__(/*! ./../../utils/reversegeolocation */ 432);
 	var loadingtracker_1 = __webpack_require__(/*! ./../../utils/loadingtracker */ 265);
 	
 	var AddressComponent = function (_React$Component) {
@@ -68854,7 +68854,7 @@
 	//# sourceMappingURL=address.component.js.map
 
 /***/ },
-/* 433 */
+/* 430 */
 /*!***************************************************!*\
   !*** ./src/components/tree/address.component.css ***!
   \***************************************************/
@@ -68863,7 +68863,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./address.component.css */ 434);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./address.component.css */ 431);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -68883,7 +68883,7 @@
 	}
 
 /***/ },
-/* 434 */
+/* 431 */
 /*!******************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/address.component.css ***!
   \******************************************************************/
@@ -68906,7 +68906,7 @@
 	};
 
 /***/ },
-/* 435 */
+/* 432 */
 /*!*****************************************!*\
   !*** ./src/utils/reversegeolocation.js ***!
   \*****************************************/
@@ -68940,7 +68940,7 @@
 	//# sourceMappingURL=reversegeolocation.js.map
 
 /***/ },
-/* 436 */
+/* 433 */
 /*!******************************************************!*\
   !*** ./src/components/tree/description.component.js ***!
   \******************************************************/
@@ -68960,7 +68960,7 @@
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./description.component.css */ 437);
+	var styles = __webpack_require__(/*! ./description.component.css */ 434);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	
 	var DescriptionComponent = function (_React$Component) {
@@ -69055,7 +69055,7 @@
 	//# sourceMappingURL=description.component.js.map
 
 /***/ },
-/* 437 */
+/* 434 */
 /*!*******************************************************!*\
   !*** ./src/components/tree/description.component.css ***!
   \*******************************************************/
@@ -69064,7 +69064,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./description.component.css */ 438);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./description.component.css */ 435);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69084,7 +69084,7 @@
 	}
 
 /***/ },
-/* 438 */
+/* 435 */
 /*!**********************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/description.component.css ***!
   \**********************************************************************/
@@ -69107,7 +69107,7 @@
 	};
 
 /***/ },
-/* 439 */
+/* 436 */
 /*!***********************************************!*\
   !*** ./src/components/tree/flag.component.js ***!
   \***********************************************/
@@ -69130,7 +69130,7 @@
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 250);
 	var $ = __webpack_require__(/*! jquery */ 258);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./flag.component.css */ 440);
+	var styles = __webpack_require__(/*! ./flag.component.css */ 437);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	
 	var FlagComponent = function (_React$Component) {
@@ -69217,7 +69217,7 @@
 	//# sourceMappingURL=flag.component.js.map
 
 /***/ },
-/* 440 */
+/* 437 */
 /*!************************************************!*\
   !*** ./src/components/tree/flag.component.css ***!
   \************************************************/
@@ -69226,7 +69226,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./flag.component.css */ 441);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./flag.component.css */ 438);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69246,7 +69246,7 @@
 	}
 
 /***/ },
-/* 441 */
+/* 438 */
 /*!***************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/flag.component.css ***!
   \***************************************************************/
@@ -69268,7 +69268,7 @@
 	};
 
 /***/ },
-/* 442 */
+/* 439 */
 /*!****************************************************!*\
   !*** ./src/components/tree/ownership.component.js ***!
   \****************************************************/
@@ -69290,7 +69290,7 @@
 	var Select = __webpack_require__(/*! react-select */ 243);
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 250);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./ownership.component.css */ 443);
+	var styles = __webpack_require__(/*! ./ownership.component.css */ 440);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	
 	var OwnershipComponent = function (_React$Component) {
@@ -69376,7 +69376,7 @@
 	//# sourceMappingURL=ownership.component.js.map
 
 /***/ },
-/* 443 */
+/* 440 */
 /*!*****************************************************!*\
   !*** ./src/components/tree/ownership.component.css ***!
   \*****************************************************/
@@ -69385,7 +69385,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./ownership.component.css */ 444);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./ownership.component.css */ 441);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69405,7 +69405,7 @@
 	}
 
 /***/ },
-/* 444 */
+/* 441 */
 /*!********************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/ownership.component.css ***!
   \********************************************************************/
@@ -69427,7 +69427,7 @@
 	};
 
 /***/ },
-/* 445 */
+/* 442 */
 /*!***************************************************!*\
   !*** ./src/components/tree/location.component.js ***!
   \***************************************************/
@@ -69447,7 +69447,7 @@
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./location.component.css */ 446);
+	var styles = __webpack_require__(/*! ./location.component.css */ 443);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	
 	var LocationComponent = function (_React$Component) {
@@ -69555,7 +69555,7 @@
 	//# sourceMappingURL=location.component.js.map
 
 /***/ },
-/* 446 */
+/* 443 */
 /*!****************************************************!*\
   !*** ./src/components/tree/location.component.css ***!
   \****************************************************/
@@ -69564,7 +69564,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./location.component.css */ 447);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./location.component.css */ 444);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69584,7 +69584,7 @@
 	}
 
 /***/ },
-/* 447 */
+/* 444 */
 /*!*******************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/location.component.css ***!
   \*******************************************************************/
@@ -69608,7 +69608,7 @@
 	};
 
 /***/ },
-/* 448 */
+/* 445 */
 /*!***************************************************!*\
   !*** ./src/components/tree/tree-add.component.js ***!
   \***************************************************/
@@ -69629,16 +69629,16 @@
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
 	var AltContainer = __webpack_require__(/*! alt-container */ 268);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./tree-add.component.css */ 449);
+	var styles = __webpack_require__(/*! ./tree-add.component.css */ 446);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 408);
 	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 423);
-	var food_component_1 = __webpack_require__(/*! ./food.component */ 429);
-	var address_component_1 = __webpack_require__(/*! ./address.component */ 432);
-	var description_component_1 = __webpack_require__(/*! ./description.component */ 436);
-	var flag_component_1 = __webpack_require__(/*! ./flag.component */ 439);
-	var ownership_component_1 = __webpack_require__(/*! ./ownership.component */ 442);
-	var location_component_1 = __webpack_require__(/*! ./location.component */ 445);
+	var food_component_1 = __webpack_require__(/*! ./food.component */ 426);
+	var address_component_1 = __webpack_require__(/*! ./address.component */ 429);
+	var description_component_1 = __webpack_require__(/*! ./description.component */ 433);
+	var flag_component_1 = __webpack_require__(/*! ./flag.component */ 436);
+	var ownership_component_1 = __webpack_require__(/*! ./ownership.component */ 439);
+	var location_component_1 = __webpack_require__(/*! ./location.component */ 442);
 	var app_component_1 = __webpack_require__(/*! ./../app.component */ 219);
 	
 	var TreeAddComponent = function (_React$Component) {
@@ -69725,7 +69725,7 @@
 	//# sourceMappingURL=tree-add.component.js.map
 
 /***/ },
-/* 449 */
+/* 446 */
 /*!****************************************************!*\
   !*** ./src/components/tree/tree-add.component.css ***!
   \****************************************************/
@@ -69734,7 +69734,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./tree-add.component.css */ 450);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./tree-add.component.css */ 447);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69754,7 +69754,7 @@
 	}
 
 /***/ },
-/* 450 */
+/* 447 */
 /*!*******************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/tree-add.component.css ***!
   \*******************************************************************/
@@ -69776,7 +69776,7 @@
 	};
 
 /***/ },
-/* 451 */
+/* 448 */
 /*!****************************************************!*\
   !*** ./src/components/trees-controls.component.js ***!
   \****************************************************/
@@ -69796,7 +69796,7 @@
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
 	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./trees-controls.component.css */ 452);
+	var styles = __webpack_require__(/*! ./trees-controls.component.css */ 449);
 	var app_component_1 = __webpack_require__(/*! ./app.component */ 219);
 	var map_component_1 = __webpack_require__(/*! ./map.component */ 411);
 	
@@ -69902,7 +69902,7 @@
 	//# sourceMappingURL=trees-controls.component.js.map
 
 /***/ },
-/* 452 */
+/* 449 */
 /*!*****************************************************!*\
   !*** ./src/components/trees-controls.component.css ***!
   \*****************************************************/
@@ -69911,7 +69911,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-controls.component.css */ 453);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-controls.component.css */ 450);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -69931,7 +69931,7 @@
 	}
 
 /***/ },
-/* 453 */
+/* 450 */
 /*!********************************************************************!*\
   !*** ./~/css-loader!./src/components/trees-controls.component.css ***!
   \********************************************************************/
@@ -69953,7 +69953,7 @@
 	};
 
 /***/ },
-/* 454 */
+/* 451 */
 /*!***************************************************!*\
   !*** ./src/components/trees-message.component.js ***!
   \***************************************************/
@@ -69972,7 +69972,7 @@
 	var React = __webpack_require__(/*! react */ 1);
 	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./trees-message.component.css */ 455);
+	var styles = __webpack_require__(/*! ./trees-message.component.css */ 452);
 	var trees_component_1 = __webpack_require__(/*! ./trees.component */ 266);
 	
 	var TreesMessageComponent = function (_React$Component) {
@@ -70040,7 +70040,7 @@
 	//# sourceMappingURL=trees-message.component.js.map
 
 /***/ },
-/* 455 */
+/* 452 */
 /*!****************************************************!*\
   !*** ./src/components/trees-message.component.css ***!
   \****************************************************/
@@ -70049,7 +70049,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-message.component.css */ 456);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-message.component.css */ 453);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -70069,7 +70069,7 @@
 	}
 
 /***/ },
-/* 456 */
+/* 453 */
 /*!*******************************************************************!*\
   !*** ./~/css-loader!./src/components/trees-message.component.css ***!
   \*******************************************************************/
@@ -70091,7 +70091,7 @@
 	};
 
 /***/ },
-/* 457 */
+/* 454 */
 /*!************************!*\
   !*** ./src/client.css ***!
   \************************/
@@ -70100,7 +70100,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 458);
+	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 455);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 223)(content, {});
@@ -70120,7 +70120,7 @@
 	}
 
 /***/ },
-/* 458 */
+/* 455 */
 /*!***************************************!*\
   !*** ./~/css-loader!./src/client.css ***!
   \***************************************/

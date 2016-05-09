@@ -15,7 +15,7 @@ export interface ITreeProps {
   lng: string;
   food: string;
   flag: string;
-  ownership: string;
+  public: string;
   description: string;
   address: string;
   owner: string;
@@ -47,7 +47,7 @@ export class TreeModel {
     self.food = parseInt(props.food);
     self.description = props.description;
     self.address = props.address;
-    self.ownership = parseInt(props.ownership);
+    self.ownership = parseInt(props.public);
     self.owner = parseInt(props.owner);
     self.updated = moment(props.updated);
     self.flags = props.flag.split(',').map((flag: string) => {
@@ -66,7 +66,7 @@ export class TreeModel {
       flag: self.flags.toString(),
       description: self.description,
       address: self.address,
-      ownership: self.ownership,
+      public: self.ownership,
       owner: self.owner
     }
   }
@@ -217,6 +217,7 @@ class TreeStore extends AbstractStore<TreeState> {
       trees = trees.splice(i, 1);
     }
     trees.push(tree);
+    console.log(trees.length);
   }
 }
 

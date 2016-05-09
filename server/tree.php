@@ -58,12 +58,12 @@
         "flag" => $data->{'flag'},
         "description" => $data->{'description'},
         "address" => $data->{'address'},
-        "ownership" => $data->{'ownership'},
+        "public" => $data->{'public'},
         "owner" => $data->{'owner'},
         "updated" => date("Y-m-d H:i:s"),
       );
     }
-    $sql = "UPDATE `tree` SET `lat` = :lat, `lng` = :lng, `food` = :food, `flag` = :flag, `ownership` = :ownership, `owner` = :owner, `description` = :description, `address` = :address, `updated` = :updated WHERE (`id` = :id)";
+    $sql = "UPDATE `tree` SET `lat` = :lat, `lng` = :lng, `food` = :food, `flag` = :flag, `public` = :public, `owner` = :owner, `description` = :description, `address` = :address, `updated` = :updated WHERE (`id` = :id)";
 
     try {
       $pdo = getConnection();
@@ -91,10 +91,9 @@
   }
 
   function create() {
-    $userid = intval($_SESSION['user_id']);
     $owner = 0;
-    if ($userid) {
-      $owner = $userid;
+    if ($_SESSION && $_SESSION['user_id']) {
+      $owner = intval($_SESSION['user_id']);;
     }
 
     $data = json_decode(file_get_contents('php://input'));
@@ -106,10 +105,10 @@
       "owner" => $owner,
       "description" => $data->{'description'},
       "address" => $data->{'address'},
-      "ownership" => $data->{'ownership'},
+      "public" => $data->{'public'},
       "updated" => date("Y-m-d H:i:s"),
       );
-    $sql = "INSERT INTO `tree` VALUES ( NULL, :lat, :lng, :food, :flag, :owner, :description, :address, :ownership, :updated )";
+    $sql = "INSERT INTO `tree` VALUES ( NULL, :lat, :lng, :food, :flag, :owner, :description, :address, :public, :updated )";
 
     try {
       $pdo = getConnection();
