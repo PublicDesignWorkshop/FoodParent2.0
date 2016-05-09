@@ -11,6 +11,7 @@ import TreeComponent from './tree/tree.component';
 import TreeAddComponent from './tree/tree-add.component';
 import { TreesMode } from './trees.component';
 import TreesControlsComponent from './trees-controls.component';
+import NoteAddComponent from './note/note-add.component';
 import { TreeModel, treeStore } from './../stores/tree.store';
 import { FoodModel, foodStore } from './../stores/food.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
@@ -100,6 +101,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
               </div>
               <div className={styles.right}>
                 <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} />
+                <NoteAddComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} trees={self.props.trees} />
               </div>
             </div>
           );

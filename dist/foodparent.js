@@ -53,7 +53,7 @@
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	var routes_1 = __webpack_require__(/*! ./routes */ 218);
-	__webpack_require__(/*! ./client.css */ 454);
+	__webpack_require__(/*! ./client.css */ 457);
 	ReactDOM.render(React.createElement(react_router_1.Router, { history: react_router_1.browserHistory }, routes_1.default), document.getElementById('app'));
 	//# sourceMappingURL=client.js.map
 
@@ -26328,6 +26328,7 @@
 		"uBaseName": "/FoodParent2.0",
 		"uBaseNameForWebPack": "/FoodParent2.0/",
 		"uStaticImage": "/static/images/",
+		"uRelativeImageUpload": "./../content/images/",
 		"uServer": "/server/",
 		"vPosition": {
 			"x": 33.7704,
@@ -39104,7 +39105,7 @@
 	var food_store_1 = __webpack_require__(/*! ./../stores/food.store */ 408);
 	var map_component_1 = __webpack_require__(/*! ./map.component */ 411);
 	var trees_panel_component_1 = __webpack_require__(/*! ./trees-panel.component */ 417);
-	var trees_message_component_1 = __webpack_require__(/*! ./trees-message.component */ 451);
+	var trees_message_component_1 = __webpack_require__(/*! ./trees-message.component */ 454);
 	var map_component_2 = __webpack_require__(/*! ./map.component */ 411);
 	(function (TreesMode) {
 	    TreesMode[TreesMode["NONE"] = 0] = "NONE";
@@ -68036,6 +68037,7 @@
 	var tree_add_component_1 = __webpack_require__(/*! ./tree/tree-add.component */ 445);
 	var trees_component_1 = __webpack_require__(/*! ./trees.component */ 266);
 	var trees_controls_component_1 = __webpack_require__(/*! ./trees-controls.component */ 448);
+	var note_add_component_1 = __webpack_require__(/*! ./note/note-add.component */ 451);
 	var tree_store_1 = __webpack_require__(/*! ./../stores/tree.store */ 286);
 	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
 	var authentication_1 = __webpack_require__(/*! ./../utils/authentication */ 257);
@@ -68117,7 +68119,7 @@
 	            switch (self.props.mode) {
 	                case trees_component_1.TreesMode.TREEDETAIL:
 	                    if (self.state.open) {
-	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { login: self.state.login, zoom: self.props.zoom, onZoom: self.props.onZoom, onGeo: self.props.onGeo, tile: self.props.tile, onTile: self.props.onTile })), React.createElement("div", { className: styles.right }, React.createElement(tree_component_1.default, { login: self.state.login, userId: self.state.userId, treeId: self.props.treeId, foods: self.props.foods, trees: self.props.trees })));
+	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { login: self.state.login, zoom: self.props.zoom, onZoom: self.props.onZoom, onGeo: self.props.onGeo, tile: self.props.tile, onTile: self.props.onTile })), React.createElement("div", { className: styles.right }, React.createElement(tree_component_1.default, { login: self.state.login, userId: self.state.userId, treeId: self.props.treeId, foods: self.props.foods, trees: self.props.trees }), React.createElement(note_add_component_1.default, { login: self.state.login, userId: self.state.userId, treeId: self.props.treeId, trees: self.props.trees })));
 	                    } else {
 	                        return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { login: self.state.login, zoom: self.props.zoom, onZoom: self.props.onZoom, onGeo: self.props.onGeo, tile: self.props.tile, onTile: self.props.onTile })));
 	                    }
@@ -68182,7 +68184,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    position: absolute;\r\n    top: 0;\r\n    right: -30%;\r\n    width: 30%;\r\n    height: 100%;\r\n    transition: 0.25s;\r\n    padding: 48px 0 0 0;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n\r\n  .DriP8-Em6b0UwHdkRjcUn {\r\n    position: absolute;\r\n    top: 96px;\r\n    left: -48px;\r\n    width: 48px;\r\n  }\r\n\r\n  ._3iETVmpyrHfy60GFk49K53 {\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    right: -50%;\r\n    width: 50%;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    position: absolute;\r\n    right: -100%;\r\n    width: 100%;\r\n    opacity: 0.95;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    position: absolute;\r\n    top: 0;\r\n    right: -30%;\r\n    width: 30%;\r\n    height: 100%;\r\n    transition: 0.25s;\r\n    padding: 48px 0 0 0;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n\r\n  .DriP8-Em6b0UwHdkRjcUn {\r\n    position: absolute;\r\n    top: 96px;\r\n    left: -48px;\r\n    width: 48px;\r\n  }\r\n\r\n  ._3iETVmpyrHfy60GFk49K53 {\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 736px) {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    right: -50%;\r\n    width: 50%;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n  ._1zOCE_2pIKSzr8MI4JUzlk {\r\n    position: absolute;\r\n    right: -100%;\r\n    width: 100%;\r\n    opacity: 0.95;\r\n  }\r\n  ._3sdT-x8NzmydUUQlaCHfTR {\r\n    right: 0;\r\n    transition: 0.25s;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -68353,7 +68355,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._16D5PuHDIQwQPEk5BEK7Jq {\r\n    width: 100%;\r\n    height: 100%;\r\n    padding: 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);\r\n    overflow-y: auto;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2r9tcLGEMAdI0cC1RgsoJc {\r\n    /*\r\n    -webkit-filter: drop-shadow(0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    filter: drop-shadow( 0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    */\r\n    width: 36px;\r\n    height: 36px;\r\n    margin: 8px;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt .Wo2Ui_tE12dY0WMgg_3NP {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2u50jFKXz0ZDetyuZQLK9h {\r\n\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2u50jFKXz0ZDetyuZQLK9h span {\r\n    cursor: pointer;\r\n  }\r\n  ._2btuClksWCZJkWjoKbAUSl {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._16D5PuHDIQwQPEk5BEK7Jq {\r\n    width: 100%;\r\n    padding: 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2r9tcLGEMAdI0cC1RgsoJc {\r\n    /*\r\n    -webkit-filter: drop-shadow(0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    filter: drop-shadow( 0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    */\r\n    width: 36px;\r\n    height: 36px;\r\n    margin: 8px;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt .Wo2Ui_tE12dY0WMgg_3NP {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2u50jFKXz0ZDetyuZQLK9h {\r\n\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2u50jFKXz0ZDetyuZQLK9h span {\r\n    cursor: pointer;\r\n  }\r\n  ._2btuClksWCZJkWjoKbAUSl {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -70001,6 +70003,145 @@
 /***/ },
 /* 451 */
 /*!***************************************************!*\
+  !*** ./src/components/note/note-add.component.js ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 1);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./note-add.component.css */ 452);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
+	var upload_1 = __webpack_require__(/*! ./../../utils/upload */ 459);
+	
+	var NoteAddComponent = function (_React$Component) {
+	    _inherits(NoteAddComponent, _React$Component);
+	
+	    function NoteAddComponent(props) {
+	        _classCallCheck(this, NoteAddComponent);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(NoteAddComponent).call(this, props));
+	
+	        _this.updateProps = function (props) {
+	            var self = _this;
+	        };
+	        var self = _this;
+	        _this.state = {
+	            editable: false
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(NoteAddComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var self = this;
+	            self.updateProps(self.props);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var self = this;
+	            self.updateProps(nextProps);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            if (self.props.treeId) {
+	                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
+	                        console.log('Selected file:', event.target.files[0]);
+	                        upload_1.uploadImage(event.target.files[0], tree.getId().toString(), function (filename) {
+	                            console.log(filename);
+	                        }, function () {});
+	                    } }), React.createElement("div", { className: styles.inner }));
+	            } else {
+	                return React.createElement("div", { className: styles.wrapper });
+	            }
+	        }
+	    }]);
+	
+	    return NoteAddComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = NoteAddComponent;
+	NoteAddComponent.contextTypes = {
+	    router: function router() {
+	        return React.PropTypes.func.isRequired;
+	    }
+	};
+	//# sourceMappingURL=note-add.component.js.map
+
+/***/ },
+/* 452 */
+/*!****************************************************!*\
+  !*** ./src/components/note/note-add.component.css ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./note-add.component.css */ 453);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./note-add.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./note-add.component.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 453 */
+/*!*******************************************************************!*\
+  !*** ./~/css-loader!./src/components/note/note-add.component.css ***!
+  \*******************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  ._3mylhS5f_8MkZ5YM-qJZfc {\r\n    width: 100%;\r\n    padding: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .FrnCTO3bPgNobD9nrsEPC {\r\n    border-radius: 2px;\r\n    padding: 4px 12px 12px 12px;\r\n  }\r\n\r\n  ._3kY6oVVc6eS6fW6KZV-knN {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 32px;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN::before {\r\n    width: 100%;\r\n    text-align: center;\r\n    content: 'Take Photo';\r\n    display: inline-block;\r\n    border-radius: 2px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    padding: 8px 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN:hover::before {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"wrapper": "_3mylhS5f_8MkZ5YM-qJZfc",
+		"inner": "FrnCTO3bPgNobD9nrsEPC",
+		"upload": "_3kY6oVVc6eS6fW6KZV-knN"
+	};
+
+/***/ },
+/* 454 */
+/*!***************************************************!*\
   !*** ./src/components/trees-message.component.js ***!
   \***************************************************/
 /***/ function(module, exports, __webpack_require__) {
@@ -70018,7 +70159,7 @@
 	var React = __webpack_require__(/*! react */ 1);
 	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./trees-message.component.css */ 452);
+	var styles = __webpack_require__(/*! ./trees-message.component.css */ 455);
 	var trees_component_1 = __webpack_require__(/*! ./trees.component */ 266);
 	
 	var TreesMessageComponent = function (_React$Component) {
@@ -70086,7 +70227,7 @@
 	//# sourceMappingURL=trees-message.component.js.map
 
 /***/ },
-/* 452 */
+/* 455 */
 /*!****************************************************!*\
   !*** ./src/components/trees-message.component.css ***!
   \****************************************************/
@@ -70095,7 +70236,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-message.component.css */ 453);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-message.component.css */ 456);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -70115,7 +70256,7 @@
 	}
 
 /***/ },
-/* 453 */
+/* 456 */
 /*!*******************************************************************!*\
   !*** ./~/css-loader!./src/components/trees-message.component.css ***!
   \*******************************************************************/
@@ -70137,7 +70278,7 @@
 	};
 
 /***/ },
-/* 454 */
+/* 457 */
 /*!************************!*\
   !*** ./src/client.css ***!
   \************************/
@@ -70146,7 +70287,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 455);
+	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 458);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 223)(content, {});
@@ -70166,7 +70307,7 @@
 	}
 
 /***/ },
-/* 455 */
+/* 458 */
 /*!***************************************!*\
   !*** ./~/css-loader!./src/client.css ***!
   \***************************************/
@@ -70178,12 +70319,56 @@
 	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,700,300italic);", ""]);
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  * {\r\n    margin: 0;\r\n    padding: 0;\r\n    -moz-box-sizing: border-box;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n    -webkit-tap-highlight-color: rgba(0,0,0,0);\r\n\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n  }\r\n  html {\r\n    width: 100%;\r\n    height: 100%;\r\n  }\r\n  body {\r\n    width: 100%;\r\n    height: 100%;\r\n    color: rgba(255, 255, 255, 1);\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: medium;\r\n    overflow: hidden;\r\n  }\r\n  a {\r\n    text-decoration: none;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n  }\r\n  #BG6p6R6pCMzH6rLXugbI3, #app {\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow: hidden;\r\n  }\r\n  .hidden {\r\n    display: none;\r\n  }\r\n  .hide {\r\n    opacity : 0;\r\n    transition: opacity 1.3s;\r\n  }\r\n  input {\r\n    -moz-user-select: all;\r\n    -ms-user-select: all;\r\n    -webkit-user-select: all;\r\n    user-select: all;\r\n  }\r\n  .leaflet-control,\r\n  .leaflet-top, .leaflet-bottom {\r\n    z-index: 0 !important;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  * {\r\n    margin: 0;\r\n    padding: 0;\r\n    -moz-box-sizing: border-box;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n    -webkit-tap-highlight-color: rgba(0,0,0,0);\r\n\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n  }\r\n  html {\r\n    width: 100%;\r\n    height: 100%;\r\n  }\r\n  body {\r\n    width: 100%;\r\n    height: 100%;\r\n    color: rgba(255, 255, 255, 1);\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: medium;\r\n    overflow: hidden;\r\n  }\r\n  a {\r\n    text-decoration: none;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n  }\r\n  #BG6p6R6pCMzH6rLXugbI3, #app {\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow: hidden;\r\n  }\r\n  .hidden {\r\n    display: none;\r\n  }\r\n  .hide {\r\n    opacity : 0;\r\n    transition: opacity 1.3s;\r\n  }\r\n  input {\r\n    -moz-user-select: all;\r\n    -ms-user-select: all;\r\n    -webkit-user-select: all;\r\n    user-select: all;\r\n  }\r\n  .leaflet-control,\r\n  .leaflet-top, .leaflet-bottom {\r\n    z-index: 0 !important;\r\n  }\r\n  /* Let's get this party started */\r\n  ::-webkit-scrollbar {\r\n    width: 4px;\r\n  }\r\n\r\n  /* Track */\r\n  ::-webkit-scrollbar-track {\r\n\r\n  }\r\n\r\n  /* Handle */\r\n  ::-webkit-scrollbar-thumb {\r\n    background: rgba(187,168,164,0.3);\r\n  }\r\n  ::-webkit-scrollbar-thumb:window-inactive {\r\n    background: rgba(187,168,164,0.1);\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
 		"app": "BG6p6R6pCMzH6rLXugbI3"
 	};
+
+/***/ },
+/* 459 */
+/*!*****************************!*\
+  !*** ./src/utils/upload.js ***!
+  \*****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var $ = __webpack_require__(/*! jquery */ 258);
+	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
+	function uploadImage(file, prefix, _success, _error) {
+	    // Create a formdata object and add the files
+	    var data = new FormData();
+	    data.append("filename", file);
+	    $.ajax({
+	        url: Settings.uBaseName + Settings.uServer + "imageupload.php" + "?prefix=" + prefix + "&files",
+	        type: "POST",
+	        data: data,
+	        cache: false,
+	        dataType: "json",
+	        processData: false,
+	        contentType: false,
+	        success: function success(response, textStatus, jqXHR) {
+	            if (typeof response.error === "undefined") {
+	                if (_success) {
+	                    _success(response.files[0].replace(Settings.uRelativeImageUpload, ""));
+	                }
+	            } else {
+	                if (_error) {
+	                    _error(response);
+	                }
+	            }
+	        },
+	        error: function error(jqXHR, textStatus, errorThrown) {
+	            if (_error) {
+	                _error(jqXHR);
+	            }
+	        }
+	    });
+	}
+	exports.uploadImage = uploadImage;
+	//# sourceMappingURL=upload.js.map
 
 /***/ }
 /******/ ]);
