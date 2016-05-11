@@ -53,7 +53,7 @@
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	var routes_1 = __webpack_require__(/*! ./routes */ 218);
-	__webpack_require__(/*! ./client.css */ 457);
+	__webpack_require__(/*! ./client.css */ 461);
 	ReactDOM.render(React.createElement(react_router_1.Router, { history: react_router_1.browserHistory }, routes_1.default), document.getElementById('app'));
 	//# sourceMappingURL=client.js.map
 
@@ -26328,6 +26328,7 @@
 		"uBaseName": "/FoodParent2.0",
 		"uBaseNameForWebPack": "/FoodParent2.0/",
 		"uStaticImage": "/static/images/",
+		"uContentImage": "/content/images/",
 		"uRelativeImageUpload": "./../content/images/",
 		"uServer": "/server/",
 		"vPosition": {
@@ -39105,7 +39106,7 @@
 	var food_store_1 = __webpack_require__(/*! ./../stores/food.store */ 408);
 	var map_component_1 = __webpack_require__(/*! ./map.component */ 411);
 	var trees_panel_component_1 = __webpack_require__(/*! ./trees-panel.component */ 417);
-	var trees_message_component_1 = __webpack_require__(/*! ./trees-message.component */ 454);
+	var trees_message_component_1 = __webpack_require__(/*! ./trees-message.component */ 458);
 	var map_component_2 = __webpack_require__(/*! ./map.component */ 411);
 	(function (TreesMode) {
 	    TreesMode[TreesMode["NONE"] = 0] = "NONE";
@@ -49622,7 +49623,6 @@
 	                trees = trees.splice(i, 1);
 	            }
 	            trees.push(tree);
-	            console.log(trees.length);
 	        }
 	    }]);
 	
@@ -70019,10 +70019,12 @@
 	
 	var React = __webpack_require__(/*! react */ 1);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
+	var moment = __webpack_require__(/*! moment */ 301);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
 	var styles = __webpack_require__(/*! ./note-add.component.css */ 452);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 286);
-	var upload_1 = __webpack_require__(/*! ./../../utils/upload */ 459);
+	var upload_1 = __webpack_require__(/*! ./../../utils/upload */ 454);
+	var note_store_1 = __webpack_require__(/*! ./../../stores/note.store */ 455);
 	
 	var NoteAddComponent = function (_React$Component) {
 	    _inherits(NoteAddComponent, _React$Component);
@@ -70034,10 +70036,33 @@
 	
 	        _this.updateProps = function (props) {
 	            var self = _this;
+	            if (props.treeId && props.trees != null) {
+	                if (self.state.note == null) {
+	                    var note = new note_store_1.NoteModel({
+	                        id: "0",
+	                        type: note_store_1.NoteType.POST.toString(),
+	                        tree: props.treeId.toString(),
+	                        person: props.userId.toString(),
+	                        comment: "",
+	                        picture: "",
+	                        rate: "0",
+	                        amount: "0",
+	                        proper: note_store_1.PickupTime.PROPER.toString(),
+	                        date: moment(new Date()).format(Settings.sServerDateFormat)
+	                    });
+	                    self.setState({ note: note });
+	                }
+	            }
+	        };
+	        _this.onImageClick = function (image) {
+	            var self = _this;
+	            self.state.note.setCoverImage(image);
+	            self.forceUpdate();
 	        };
 	        var self = _this;
 	        _this.state = {
-	            editable: false
+	            editable: false,
+	            note: null
 	        };
 	        return _this;
 	    }
@@ -70063,14 +70088,27 @@
 	        key: 'render',
 	        value: function render() {
 	            var self = this;
-	            if (self.props.treeId) {
+	            if (self.props.treeId && self.state.note != null) {
 	                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
-	                return React.createElement("div", { className: styles.wrapper }, React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
+	                var images = this.state.note.getImages().map(function (image, i) {
+	                    if (i == 0) {
+	                        return React.createElement("div", { className: styles.image + " " + styles.selected, key: "noteimage" + i }, React.createElement("div", { className: styles.cover }, "cover"), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image, onClick: function onClick() {
+	                                self.onImageClick(image);
+	                            } }));
+	                    } else {
+	                        return React.createElement("div", { className: styles.image, key: "noteimage" + i }, React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image, onClick: function onClick() {
+	                                self.onImageClick(image);
+	                            } }));
+	                    }
+	                });
+	                return React.createElement("div", { className: styles.wrapper }, images, React.createElement("div", { className: styles.image }, React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
 	                        console.log('Selected file:', event.target.files[0]);
 	                        upload_1.uploadImage(event.target.files[0], tree.getId().toString(), function (filename) {
-	                            console.log(filename);
+	                            self.state.note.addImage(filename);
+	                            self.forceUpdate();
+	                            console.log(self.state.note.getImages());
 	                        }, function () {});
-	                    } }), React.createElement("div", { className: styles.inner }));
+	                    } })), React.createElement("div", { className: styles.inner }), React.createElement("div", { className: styles.button }, "POST NEW NOTE"));
 	            } else {
 	                return React.createElement("div", { className: styles.wrapper });
 	            }
@@ -70130,17 +70168,558 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._3mylhS5f_8MkZ5YM-qJZfc {\r\n    width: 100%;\r\n    padding: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .FrnCTO3bPgNobD9nrsEPC {\r\n    border-radius: 2px;\r\n    padding: 4px 12px 12px 12px;\r\n  }\r\n\r\n  ._3kY6oVVc6eS6fW6KZV-knN {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 32px;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN::before {\r\n    width: 100%;\r\n    text-align: center;\r\n    content: 'Take Photo';\r\n    display: inline-block;\r\n    border-radius: 2px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    padding: 8px 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN:hover::before {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._3mylhS5f_8MkZ5YM-qJZfc {\r\n    width: 100%;\r\n    padding: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .FrnCTO3bPgNobD9nrsEPC {\r\n    border-radius: 2px;\r\n    padding: 4px 12px 4px 12px;\r\n  }\r\n\r\n  ._3kY6oVVc6eS6fW6KZV-knN {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100px;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'ADD PHOTO';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    font-weight: 700;\r\n    color: rgba(107, 170, 119, 1);\r\n    padding: 40px 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN:hover::before {\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n  }\n  .W_0S_A6oJIJWc7ODuPSRv {\n    width: 100%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    padding: 6px 0;\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: medium;\n  }\r\n  .W_0S_A6oJIJWc7ODuPSRv:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .PqCmYENWWc_1QnJxc0oUj {\n    display: inline-block;\n    vertical-align: middle;\r\n    width: 50%;\n    border: 4px solid rgba(107, 170, 119, 0);\r\n    border-radius: 2px;\r\n    position: relative;\r\n  }\n  ._3_yJEUo2Tc7Km37cc8xCNx {\r\n    border: 4px solid rgba(107, 170, 119, 1);\r\n    border-radius: 2px;\r\n  }\n  ._1FULkMZo7NS6wC7z4_HdkK {\n    width: 100%;\n    height: 20px;\n    position: absolute;\n    top: 0;\n    left: 0;\n    background-color: rgba(107, 170, 119, 0.5);\n    color: rgba(255, 255, 255,1);\n    padding: 0 4px;\n    font-size: small;\n    font-weight: 700;\n  }\n  .PqCmYENWWc_1QnJxc0oUj img {\n    width: 100%;\n    cursor: pointer;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
 		"wrapper": "_3mylhS5f_8MkZ5YM-qJZfc",
 		"inner": "FrnCTO3bPgNobD9nrsEPC",
-		"upload": "_3kY6oVVc6eS6fW6KZV-knN"
+		"upload": "_3kY6oVVc6eS6fW6KZV-knN",
+		"button": "W_0S_A6oJIJWc7ODuPSRv",
+		"image": "PqCmYENWWc_1QnJxc0oUj",
+		"selected": "_3_yJEUo2Tc7Km37cc8xCNx",
+		"cover": "_1FULkMZo7NS6wC7z4_HdkK"
 	};
 
 /***/ },
 /* 454 */
+/*!*****************************!*\
+  !*** ./src/utils/upload.js ***!
+  \*****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var $ = __webpack_require__(/*! jquery */ 258);
+	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
+	function uploadImage(file, prefix, _success, _error) {
+	    // Create a formdata object and add the files
+	    var data = new FormData();
+	    data.append("filename", file);
+	    $.ajax({
+	        url: Settings.uBaseName + Settings.uServer + "imageupload.php" + "?prefix=" + prefix + "&files",
+	        type: "POST",
+	        data: data,
+	        cache: false,
+	        dataType: "json",
+	        processData: false,
+	        contentType: false,
+	        success: function success(response, textStatus, jqXHR) {
+	            if (typeof response.error === "undefined") {
+	                if (_success) {
+	                    _success(response.files[0].replace(Settings.uRelativeImageUpload, ""));
+	                }
+	            } else {
+	                if (_error) {
+	                    _error(response);
+	                }
+	            }
+	        },
+	        error: function error(jqXHR, textStatus, errorThrown) {
+	            if (_error) {
+	                _error(jqXHR);
+	            }
+	        }
+	    });
+	}
+	exports.uploadImage = uploadImage;
+	//# sourceMappingURL=upload.js.map
+
+/***/ },
+/* 455 */
+/*!**********************************!*\
+  !*** ./src/stores/note.store.js ***!
+  \**********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var alt_1 = __webpack_require__(/*! ./../alt */ 287);
+	var moment = __webpack_require__(/*! moment */ 301);
+	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
+	var note_actions_1 = __webpack_require__(/*! ./../actions/note.actions */ 456);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 406);
+	var note_source_1 = __webpack_require__(/*! ./../sources/note.source */ 457);
+	(function (PickupTime) {
+	    PickupTime[PickupTime["NONE"] = 0] = "NONE";
+	    PickupTime[PickupTime["EARLY"] = 1] = "EARLY";
+	    PickupTime[PickupTime["PROPER"] = 2] = "PROPER";
+	    PickupTime[PickupTime["LATE"] = 3] = "LATE";
+	})(exports.PickupTime || (exports.PickupTime = {}));
+	var PickupTime = exports.PickupTime;
+	(function (NoteType) {
+	    NoteType[NoteType["NONE"] = 0] = "NONE";
+	    NoteType[NoteType["CHANGE"] = 1] = "CHANGE";
+	    NoteType[NoteType["POST"] = 2] = "POST";
+	    NoteType[NoteType["PICKUP"] = 3] = "PICKUP";
+	})(exports.NoteType || (exports.NoteType = {}));
+	var NoteType = exports.NoteType;
+	
+	var NoteModel = function () {
+	    function NoteModel(props) {
+	        _classCallCheck(this, NoteModel);
+	
+	        var self = this;
+	        self.update(props);
+	    }
+	
+	    _createClass(NoteModel, [{
+	        key: 'update',
+	        value: function update(props) {
+	            var self = this;
+	            self.id = parseInt(props.id);
+	            self.type = parseInt(props.type);
+	            self.tree = parseInt(props.tree);
+	            self.person = parseInt(props.person);
+	            self.comment = props.comment;
+	            self.rate = parseInt(props.rate);
+	            self.amount = parseFloat(props.amount);
+	            self.proper = parseInt(props.proper);
+	            self.date = moment(props.date);
+	            if (props.picture && props.picture != "") {
+	                self.images = props.picture.split(',').map(function (image) {
+	                    return image;
+	                });
+	            } else {
+	                self.images = new Array();
+	            }
+	        }
+	    }, {
+	        key: 'toJSON',
+	        value: function toJSON() {
+	            var self = this;
+	            return {
+	                id: self.id,
+	                type: self.type,
+	                tree: self.tree,
+	                person: self.person,
+	                comment: self.comment,
+	                picture: self.images.toString(),
+	                rate: self.rate,
+	                amount: self.amount,
+	                proper: self.proper,
+	                date: self.date.format(Settings.sServerDateFormat)
+	            };
+	        }
+	    }, {
+	        key: 'getId',
+	        value: function getId() {
+	            return this.id;
+	        }
+	    }, {
+	        key: 'getNoteType',
+	        value: function getNoteType() {
+	            return this.type;
+	        }
+	    }, {
+	        key: 'setNoteType',
+	        value: function setNoteType(type) {
+	            this.type = type;
+	        }
+	    }, {
+	        key: 'getComment',
+	        value: function getComment() {
+	            return this.comment;
+	        }
+	    }, {
+	        key: 'setComment',
+	        value: function setComment(comment) {
+	            this.comment = comment;
+	        }
+	    }, {
+	        key: 'getImages',
+	        value: function getImages() {
+	            return this.images;
+	        }
+	    }, {
+	        key: 'setImages',
+	        value: function setImages(images) {
+	            this.images = images;
+	        }
+	    }, {
+	        key: 'getImage',
+	        value: function getImage(index) {
+	            return this.images[index];
+	        }
+	    }, {
+	        key: 'addImage',
+	        value: function addImage(filename) {
+	            this.images.push(filename);
+	        }
+	    }, {
+	        key: 'getRate',
+	        value: function getRate() {
+	            return this.rate;
+	        }
+	    }, {
+	        key: 'setRate',
+	        value: function setRate(rate) {
+	            this.rate = rate;
+	        }
+	    }, {
+	        key: 'getAmount',
+	        value: function getAmount() {
+	            return this.amount;
+	        }
+	    }, {
+	        key: 'setAmount',
+	        value: function setAmount(amount) {
+	            this.amount = amount;
+	        }
+	    }, {
+	        key: 'getPicupTime',
+	        value: function getPicupTime() {
+	            return this.proper;
+	        }
+	    }, {
+	        key: 'setPicupTime',
+	        value: function setPicupTime(proper) {
+	            this.proper = proper;
+	        }
+	    }, {
+	        key: 'getDate',
+	        value: function getDate() {
+	            return this.date;
+	        }
+	    }, {
+	        key: 'setDate',
+	        value: function setDate(date) {
+	            this.date = date;
+	        }
+	    }, {
+	        key: 'setCoverImage',
+	        value: function setCoverImage(filename) {
+	            var i = this.images.indexOf(filename);
+	            if (i > -1) {
+	                this.images.splice(i, 1);
+	            }
+	            this.images.unshift(filename);
+	        }
+	    }]);
+	
+	    return NoteModel;
+	}();
+	
+	exports.NoteModel = NoteModel;
+	
+	var NoteStore = function (_abstract_store_1$Abs) {
+	    _inherits(NoteStore, _abstract_store_1$Abs);
+	
+	    function NoteStore() {
+	        _classCallCheck(this, NoteStore);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(NoteStore).call(this));
+	
+	        var self = _this;
+	        if (!self.notes) {
+	            self.notes = new Array();
+	        }
+	        self.errorMessage = null;
+	        //TODO: pass state generics to make sure methods/actions expect the same type
+	        self.bindListeners({
+	            handleFetchNotes: note_actions_1.noteActions.fetchNotes,
+	            handleUpdateNote: note_actions_1.noteActions.updateNote,
+	            handleCreateNote: note_actions_1.noteActions.createNote,
+	            handleFailed: note_actions_1.noteActions.failed
+	        });
+	        self.exportPublicMethods({
+	            getNote: self.getNote,
+	            addNote: self.addNote
+	        });
+	        self.exportAsync(note_source_1.noteSource);
+	        return _this;
+	    }
+	
+	    _createClass(NoteStore, [{
+	        key: 'handleFetchNotes',
+	        value: function handleFetchNotes(notesProps) {
+	            var self = this;
+	            console.warn("Handle Fetch Notes");
+	            if (!self.notes) {
+	                self.notes = new Array();
+	            }
+	            notesProps.forEach(function (props) {
+	                self.notes.push(new NoteModel(props));
+	            });
+	            self.errorMessage = null;
+	        }
+	    }, {
+	        key: 'handleUpdateNote',
+	        value: function handleUpdateNote(noteProps) {
+	            var self = this;
+	            console.warn("Handle Update Note");
+	            var notes = self.notes.filter(function (note) {
+	                return note.getId() == parseInt(noteProps.id);
+	            });
+	            if (notes.length == 1) {
+	                notes[0].update(noteProps);
+	            }
+	        }
+	    }, {
+	        key: 'handleCreateNote',
+	        value: function handleCreateNote(noteProps) {
+	            var self = this;
+	            console.warn("Handle Create Note");
+	            console.log(noteProps);
+	            self.notes.push(new NoteModel(noteProps));
+	        }
+	    }, {
+	        key: 'handleFailed',
+	        value: function handleFailed(errorMessage) {
+	            console.warn("Handle Note Failed");
+	            this.errorMessage = errorMessage;
+	        }
+	    }, {
+	        key: 'getNote',
+	        value: function getNote(id) {
+	            var self = this;
+	            var notes = self.getState().notes.filter(function (note) {
+	                return note.getId() == id;
+	            });
+	            if (notes.length == 1) {
+	                return notes[0];
+	            }
+	            return null;
+	        }
+	    }, {
+	        key: 'addNote',
+	        value: function addNote(note) {
+	            var self = this;
+	            var notes = self.getState().notes;
+	            var i = -1;
+	            for (var j = 0; j < notes.length; j++) {
+	                if (notes[j].getId() === note.getId()) {
+	                    i = j;
+	                }
+	            }
+	            if (i > -1) {
+	                notes = notes.splice(i, 1);
+	            }
+	            notes.push(note);
+	            console.log(notes.length);
+	        }
+	    }]);
+	
+	    return NoteStore;
+	}(abstract_store_1.AbstractStore);
+	
+	exports.noteStore = alt_1.alt.createStore(NoteStore);
+	//# sourceMappingURL=note.store.js.map
+
+/***/ },
+/* 456 */
+/*!*************************************!*\
+  !*** ./src/actions/note.actions.js ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var alt_1 = __webpack_require__(/*! ./../alt */ 287);
+	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 405);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 265);
+	
+	var NoteActions = function (_abstract_actions_1$A) {
+	    _inherits(NoteActions, _abstract_actions_1$A);
+	
+	    function NoteActions() {
+	        _classCallCheck(this, NoteActions);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(NoteActions).apply(this, arguments));
+	    }
+	
+	    _createClass(NoteActions, [{
+	        key: "fetchNotes",
+	        value: function fetchNotes(notes) {
+	            var self = this;
+	            console.warn("Fetch Notes");
+	            loadingtracker_1.removeLoading();
+	            return notes;
+	        }
+	    }, {
+	        key: "updateNote",
+	        value: function updateNote(note) {
+	            var self = this;
+	            console.warn("Update Note");
+	            loadingtracker_1.removeLoading();
+	            return note;
+	            //return (dispatch) => {
+	            //  // we dispatch an event here so we can have "loading" state.
+	            //  dispatch({tree: tree, updatedTree: updatedTree});
+	            //}
+	        }
+	    }, {
+	        key: "createNote",
+	        value: function createNote(note) {
+	            var self = this;
+	            console.warn("Create Note");
+	            loadingtracker_1.removeLoading();
+	            return note;
+	            //return (dispatch) => {
+	            //  // we dispatch an event here so we can have "loading" state.
+	            //  dispatch({tree: tree, updatedTree: updatedTree});
+	            //}
+	        }
+	    }, {
+	        key: "failed",
+	        value: function failed(errorMessage) {
+	            var self = this;
+	            console.warn("Note Failed");
+	            loadingtracker_1.removeLoading();
+	            return errorMessage;
+	        }
+	    }, {
+	        key: "loading",
+	        value: function loading() {
+	            var self = this;
+	            loadingtracker_1.addLoading();
+	            return function (dispatch) {
+	                // we dispatch an event here so we can have "loading" state.
+	                dispatch();
+	            };
+	        }
+	    }]);
+	
+	    return NoteActions;
+	}(abstract_actions_1.AbstractActions);
+	
+	exports.noteActions = alt_1.alt.createActions(NoteActions);
+	//# sourceMappingURL=note.actions.js.map
+
+/***/ },
+/* 457 */
+/*!************************************!*\
+  !*** ./src/sources/note.source.js ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var $ = __webpack_require__(/*! jquery */ 258);
+	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
+	var note_actions_1 = __webpack_require__(/*! ./../actions/note.actions */ 456);
+	var NoteSource = {
+	    fetchNotes: function fetchNotes() {
+	        return {
+	            remote: function remote(state) {
+	                return new Promise(function (resolve, reject) {
+	                    $.ajax({
+	                        url: Settings.uBaseName + Settings.uServer + "notes.php",
+	                        data: {},
+	                        success: function success(response) {
+	                            resolve($.parseJSON(response));
+	                        },
+	                        error: function error(response) {
+	                            console.log(response);
+	                            reject(response);
+	                        }
+	                    });
+	                });
+	            },
+	            local: function local(state) {
+	                //TODO : Figure out why local doesn't work =(
+	                return null;
+	            },
+	
+	            success: note_actions_1.noteActions.fetchNotes,
+	            error: note_actions_1.noteActions.failed,
+	            loading: note_actions_1.noteActions.loading,
+	            shouldFetch: function shouldFetch() {
+	                return true;
+	            }
+	        };
+	    },
+	    updateNote: function updateNote() {
+	        return {
+	            remote: function remote(state, update) {
+	                console.log(update);
+	                return new Promise(function (resolve, reject) {
+	                    //console.log(tree.toJSON());
+	                    $.ajax({
+	                        url: Settings.uBaseName + Settings.uServer + "note.php",
+	                        type: 'PUT',
+	                        contentType: 'application/json',
+	                        data: JSON.stringify(update.toJSON()),
+	                        dataType: "json",
+	                        success: function success(response) {
+	                            resolve(response[0]);
+	                        },
+	                        error: function error(response) {
+	                            console.log(response);
+	                            reject(response);
+	                        }
+	                    });
+	                });
+	            },
+	            local: function local(state) {
+	                //TODO : Figure out why local doesn't work =(
+	                return null;
+	            },
+	
+	            success: note_actions_1.noteActions.updateNote,
+	            error: note_actions_1.noteActions.failed,
+	            loading: note_actions_1.noteActions.loading,
+	            shouldFetch: function shouldFetch() {
+	                return true;
+	            }
+	        };
+	    },
+	    createNote: function createNote() {
+	        return {
+	            remote: function remote(state, create) {
+	                return new Promise(function (resolve, reject) {
+	                    //console.log(tree.toJSON());
+	                    $.ajax({
+	                        url: Settings.uBaseName + Settings.uServer + "note.php",
+	                        type: 'POST',
+	                        contentType: 'application/json',
+	                        data: JSON.stringify(create.toJSON()),
+	                        dataType: "json",
+	                        success: function success(response) {
+	                            resolve(response);
+	                        },
+	                        error: function error(response) {
+	                            console.log(response);
+	                            reject(response);
+	                        }
+	                    });
+	                });
+	            },
+	            local: function local(state) {
+	                //TODO : Figure out why local doesn't work =(
+	                return null;
+	            },
+	
+	            success: note_actions_1.noteActions.createNote,
+	            error: note_actions_1.noteActions.failed,
+	            loading: note_actions_1.noteActions.loading,
+	            shouldFetch: function shouldFetch() {
+	                return true;
+	            }
+	        };
+	    }
+	};
+	exports.noteSource = NoteSource;
+	//# sourceMappingURL=note.source.js.map
+
+/***/ },
+/* 458 */
 /*!***************************************************!*\
   !*** ./src/components/trees-message.component.js ***!
   \***************************************************/
@@ -70159,7 +70738,7 @@
 	var React = __webpack_require__(/*! react */ 1);
 	__webpack_require__(/*! ./../../~/font-awesome/css/font-awesome.css */ 235);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	var styles = __webpack_require__(/*! ./trees-message.component.css */ 455);
+	var styles = __webpack_require__(/*! ./trees-message.component.css */ 459);
 	var trees_component_1 = __webpack_require__(/*! ./trees.component */ 266);
 	
 	var TreesMessageComponent = function (_React$Component) {
@@ -70227,7 +70806,7 @@
 	//# sourceMappingURL=trees-message.component.js.map
 
 /***/ },
-/* 455 */
+/* 459 */
 /*!****************************************************!*\
   !*** ./src/components/trees-message.component.css ***!
   \****************************************************/
@@ -70236,7 +70815,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-message.component.css */ 456);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./trees-message.component.css */ 460);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 223)(content, {});
@@ -70256,7 +70835,7 @@
 	}
 
 /***/ },
-/* 456 */
+/* 460 */
 /*!*******************************************************************!*\
   !*** ./~/css-loader!./src/components/trees-message.component.css ***!
   \*******************************************************************/
@@ -70278,7 +70857,7 @@
 	};
 
 /***/ },
-/* 457 */
+/* 461 */
 /*!************************!*\
   !*** ./src/client.css ***!
   \************************/
@@ -70287,7 +70866,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 458);
+	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 462);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 223)(content, {});
@@ -70307,7 +70886,7 @@
 	}
 
 /***/ },
-/* 458 */
+/* 462 */
 /*!***************************************!*\
   !*** ./~/css-loader!./src/client.css ***!
   \***************************************/
@@ -70325,50 +70904,6 @@
 	exports.locals = {
 		"app": "BG6p6R6pCMzH6rLXugbI3"
 	};
-
-/***/ },
-/* 459 */
-/*!*****************************!*\
-  !*** ./src/utils/upload.js ***!
-  \*****************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var $ = __webpack_require__(/*! jquery */ 258);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 225);
-	function uploadImage(file, prefix, _success, _error) {
-	    // Create a formdata object and add the files
-	    var data = new FormData();
-	    data.append("filename", file);
-	    $.ajax({
-	        url: Settings.uBaseName + Settings.uServer + "imageupload.php" + "?prefix=" + prefix + "&files",
-	        type: "POST",
-	        data: data,
-	        cache: false,
-	        dataType: "json",
-	        processData: false,
-	        contentType: false,
-	        success: function success(response, textStatus, jqXHR) {
-	            if (typeof response.error === "undefined") {
-	                if (_success) {
-	                    _success(response.files[0].replace(Settings.uRelativeImageUpload, ""));
-	                }
-	            } else {
-	                if (_error) {
-	                    _error(response);
-	                }
-	            }
-	        },
-	        error: function error(jqXHR, textStatus, errorThrown) {
-	            if (_error) {
-	                _error(jqXHR);
-	            }
-	        }
-	    });
-	}
-	exports.uploadImage = uploadImage;
-	//# sourceMappingURL=upload.js.map
 
 /***/ }
 /******/ ]);

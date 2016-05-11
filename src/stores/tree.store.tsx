@@ -217,7 +217,6 @@ class TreeStore extends AbstractStore<TreeState> {
       trees = trees.splice(i, 1);
     }
     trees.push(tree);
-    console.log(trees.length);
   }
 }
 
