@@ -11,6 +11,7 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './user.component.css';
 import { fetchUser, processLogout } from './../../utils/authentication';
 import { LogInStatus } from './../app.component';
+import { treeStore } from './../../stores/tree.store';
 
 export interface IUserProps {
   login: LogInStatus;
@@ -79,7 +80,9 @@ export default class UserComponent extends React.Component<IUserProps, IUserStat
     let self: UserComponent = this;
     processLogout(function(response) { // Lgout success
       console.warn("logout success");
-      self.context.router.push({pathname: window.location.pathname});
+      //self.context.router.push({pathname: window.location.pathname});
+      self.context.router.replace({pathname: Settings.uBaseName + '/'});
+      treeStore.fetchTrees();
     }, function(response) { // Login fail
 
     }, function(response) { // Error

@@ -8,6 +8,7 @@ import * as AltContainer from 'alt-container';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './login-parent.component.css';
 import { checkValidEmailAddress, processLogin } from './../../utils/authentication';
+import { treeStore } from './../../stores/tree.store';
 
 export interface ILoginParentProps {
 }
@@ -46,6 +47,7 @@ export default class LoginParentComponent extends React.Component<ILoginParentPr
       processLogin(self.state.contact.trim(), self.state.contact.trim(), function(response) { // Login success
         console.warn("login success");
         self.context.router.push({pathname: window.location.pathname});
+        treeStore.fetchTrees();
       }, function(response) { // Login fail
         console.warn("login failed");
       }, function(response) { // Error

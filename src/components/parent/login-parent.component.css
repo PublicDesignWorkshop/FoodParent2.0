@@ -2,7 +2,6 @@
   :local(.wrapper) {
     font-family: 'Open Sans', sans-serif;
     font-size: small;
-    color: rgba(94, 78, 81, 1);
   }
 
   :local(.contactlabel) {
@@ -14,10 +13,11 @@
     padding: 0;
     min-height: 22px;
     letter-spacing: 1px;
+    color: rgba(94, 78, 81, 1);
   }
   :local(.contactinput) {
     width: 100%;
-    padding: 6px 3px;
+    padding: 6px;
     border-radius: 2px;
     border: 1px solid rgba(94, 78, 81, 1);
   }

@@ -170,9 +170,7 @@ class TreeStore extends AbstractStore<TreeState> {
   handleFetchTrees(treesProps: Array<ITreeProps>) {
     let self: TreeStore = this;
     console.warn("Handle Fetch Trees");
-    if (!self.trees) {
-      self.trees = new Array<TreeModel>();
-    }
+    self.trees = new Array<TreeModel>();
     treesProps.forEach((props: ITreeProps) => {
       self.trees.push(new TreeModel(props));
     });

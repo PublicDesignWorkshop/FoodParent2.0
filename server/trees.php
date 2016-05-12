@@ -21,7 +21,14 @@
   }
 
   function read() {
-    $sql = "SELECT * FROM `tree`";
+    sec_session_continue(); // Our custom secure way of starting a PHP session.
+    $check = admin_check();
+    $sql = "";
+    if ($check) {
+      $sql = "SELECT * FROM `tree`";
+    } else {
+      $sql = "SELECT * FROM `tree` WHERE (`public` = 1)";
+    }
     /*
     if (!$loggedin) {
       $public = true;

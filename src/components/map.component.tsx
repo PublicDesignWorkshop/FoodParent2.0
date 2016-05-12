@@ -168,6 +168,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
         }
       });
       if (!bFound) {
+        self.removeMarker(self.markers[i]);
         self.markers = _.without(self.markers, self.markers[i]);
         i--;
       }
