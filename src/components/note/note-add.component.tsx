@@ -14,6 +14,7 @@ import { uploadImage } from './../../utils/upload';
 import { NoteModel, noteStore, NoteType, PickupTime } from './../../stores/note.store';
 import NoteCommentComponent from './note-comment.component';
 import NoteDateComponent from './note-date.component';
+import NoteAmountComponent from './note-amount.component';
 
 export interface INoteAddProps {
   trees: Array<TreeModel>;
@@ -117,8 +118,13 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
           <div className={styles.inner}>
             <NoteCommentComponent note={self.state.note} editable={true} async={false} />
             <NoteDateComponent note={self.state.note} editable={true} async={false} />
+            <NoteAmountComponent note={self.state.note} editable={true} async={false} />
           </div>
-          <div className={styles.button}>
+          <div className={styles.button} onClick={()=> {
+            if (self.state.note.getComment().trim() != "") {
+              noteStore.createNote(self.state.note);
+            }
+          }}>
             POST NEW NOTE
           </div>
         </div>

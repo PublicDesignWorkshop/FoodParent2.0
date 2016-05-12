@@ -3,52 +3,50 @@ import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
-import TextareaAutosize from 'react-textarea-autosize';
-
 var Settings = require('./../../constraints/settings.json');
-import * as styles from './note-comment.component.css';
+import * as styles from './note-amount.component.css';
 import { NoteModel, noteStore } from './../../stores/note.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 
-export interface INoteCommentProps {
+export interface INoteAmountProps {
   note: NoteModel;
   editable: boolean;
   async: boolean;
 }
-export interface INoteCommentStatus {
-  comment?: string;
+export interface INoteAmountStatus {
+  amount?: number;
   editing?: boolean;
 }
-export default class NoteCommentComponent extends React.Component<INoteCommentProps, INoteCommentStatus> {
-  constructor(props : INoteCommentProps) {
+export default class NoteAmountComponent extends React.Component<INoteAmountProps, INoteAmountStatus> {
+  constructor(props : INoteAmountProps) {
     super(props);
-    let self: NoteCommentComponent = this;
+    let self: NoteAmountComponent = this;
     this.state = {
-      comment: "",
+      amount: 0,
       editing: false,
     };
   }
   public componentDidMount() {
-    let self: NoteCommentComponent = this;
+    let self: NoteAmountComponent = this;
     self.updateProps(self.props);
   }
   public componentWillUnmount() {
-    let self: NoteCommentComponent = this;
+    let self: NoteAmountComponent = this;
   }
-  public componentWillReceiveProps (nextProps: INoteCommentProps) {
-    let self: NoteCommentComponent = this;
+  public componentWillReceiveProps (nextProps: INoteAmountProps) {
+    let self: NoteAmountComponent = this;
     self.updateProps(nextProps);
   }
 
-  private updateProps(props: INoteCommentProps) {
-    let self: NoteCommentComponent = this;
+  private updateProps(props: INoteAmountProps) {
+    let self: NoteAmountComponent = this;
     if (props.note) {
-      self.setState({comment: props.note.getComment().trim(), editing: false});
+      self.setState({amount: props.note.getAmount(), editing: false});
     }
   }
   private updateAttribute = () => {
-    let self: NoteCommentComponent = this;
-    self.props.note.setComment(self.state.comment);
+    let self: NoteAmountComponent = this;
+    self.props.note.setAmount(self.state.amount);
     if (self.props.async) {
       noteStore.updateNote(self.props.note);
     } else {
@@ -57,7 +55,7 @@ export default class NoteCommentComponent extends React.Component<INoteCommentPr
   }
 
   render() {
-    let self: NoteCommentComponent = this;
+    let self: NoteAmountComponent = this;
     if (self.state.editing || self.props.note.getId() == 0) {
       return (
         <div className={styles.wrapper}>
@@ -66,13 +64,13 @@ export default class NoteCommentComponent extends React.Component<INoteCommentPr
             //   self.setState({editing: true});
             // }
           }}>
-            <FontAwesome className='' name='comment-o' /> Comment
+            <FontAwesome className='' name='shopping-basket' /> Amount
           </div>
           <div className={styles.edit}>
-            <TextareaAutosize type="text" className={styles.input} key={self.props.note.getId() + "comment"} placeholder="enter comment..."
-              value={self.state.comment}
+            <input type="number" className={styles.input} key={self.props.note.getId() + "amount"} placeholder="enter weight (lbs.)..."
+              value={self.state.amount}
               onChange={(event: any)=> {
-                self.setState({comment: event.target.value});
+                self.setState({amount: event.target.value});
               }}
               onKeyPress={(event)=> {
                 // if (event.key == 'Enter') {
@@ -93,23 +91,14 @@ export default class NoteCommentComponent extends React.Component<INoteCommentPr
               self.setState({editing: true});
             }
           }}>
-            <FontAwesome className='' name='comment-o' /> Comment
+            <FontAwesome className='' name='shopping-basket' /> Amount
           </div>
           <div className={styles.value} onClick={()=> {
             if (self.props.editable) {
               self.setState({editing: true});
             }
           }}>
-            {
-              self.state.comment.split("\n").map(function(line: string, index: number) {
-                return (
-                  <span key={"line" + index}>
-                    {line}
-                    <br/>
-                  </span>
-                );
-              })
-            }
+            {self.state.amount}
           </div>
         </div>
       );

@@ -366,9 +366,12 @@
 .bootstrap-datetimepicker-widget .datepicker-decades .decade {
   line-height: 1.8em !important;
 }
+.input-group {
+  display: block;
+}
 .input-group.date .input-group-addon {
+  width: 100%;
   cursor: pointer;
-
 }
 .sr-only {
   position: absolute;
@@ -401,10 +404,14 @@ button.btn.btn-primary {
   font-weight: 700;
 }
 .form-control {
-  border-radius: 2px;
-  padding: 3px 6px;
+  width: 100%;
+  border-radius: 2px !important;
+  padding: 6px;
   font-size: small;
   outline: none;
+  color: rgba(0, 0, 0, 1);
+  height: auto;
+  box-shadow: none;
 }
 .form-control:focus {
   outline: none;

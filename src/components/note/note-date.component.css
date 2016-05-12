@@ -12,7 +12,6 @@
   :local(.value) {
     display: inline-block;
     padding: 0 0 0 16px;
-    min-height: 22px;
     min-width: 80px;
   }
   :local(.label:not(:first-child)) {
@@ -21,7 +20,7 @@
   :local(.edit) {
     display: block;
     padding: 0 0 0 16px;
-    min-height: 22px;
+    min-height: 32px;
     letter-spacing: 1px;
   }
   :local(.input) {

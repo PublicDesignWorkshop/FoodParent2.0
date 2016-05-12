@@ -30,9 +30,10 @@
   :local(.edit) {
     -webkit-flex-grow: 1;           /* NEW - Chrome */
     flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
-    padding: 6px 3px;
+    padding: 6px;
     border-radius: 2px;
     border: 1px solid rgba(94, 78, 81, 1);
+    color: rgba(0, 0, 0, 1);
   }
   :local(.edit:focus) {
     outline: none;

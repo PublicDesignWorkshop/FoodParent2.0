@@ -68944,7 +68944,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  .CuHDWnA3HLTwt_YL0lVLL {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._3MxALqoTGUaPvUaJaTicTr {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  .aoOYU_HzI8jAXlSctMLuj {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  .aoOYU_HzI8jAXlSctMLuj:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._2chX_qi0zlU_-T14hiKke3 {\r\n    display: block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._2WUqNrrBhHdrfPBsNlXbuJ {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._2WUqNrrBhHdrfPBsNlXbuJ:focus {\r\n    outline: none;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  .CuHDWnA3HLTwt_YL0lVLL {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._3MxALqoTGUaPvUaJaTicTr {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  .aoOYU_HzI8jAXlSctMLuj {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  .aoOYU_HzI8jAXlSctMLuj:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._2chX_qi0zlU_-T14hiKke3 {\r\n    display: block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._2WUqNrrBhHdrfPBsNlXbuJ {\r\n    width: 100%;\r\n    padding: 6px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(0, 0, 0, 1);\r\n  }\r\n  ._2WUqNrrBhHdrfPBsNlXbuJ:focus {\r\n    outline: none;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -69145,7 +69145,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._2BTdfQ1vKLwBw_5T5F738n {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._2oxPBXpthxKwFIQhAgwKhC {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._3YFXIKvL1anyi7dP4-euJX {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._3YFXIKvL1anyi7dP4-euJX:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  .hWEc6C0VIDkXNu732qY7s {\r\n    display: block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._2Q4eH9IbsYSmFJXLO49XQ2 {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._2Q4eH9IbsYSmFJXLO49XQ2:focus {\r\n    outline: none;\r\n  }\r\n}\r\n\r\n@media only screen and (orientation: portrait) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._2BTdfQ1vKLwBw_5T5F738n {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._2oxPBXpthxKwFIQhAgwKhC {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._3YFXIKvL1anyi7dP4-euJX {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._3YFXIKvL1anyi7dP4-euJX:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  .hWEc6C0VIDkXNu732qY7s {\r\n    display: block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._2Q4eH9IbsYSmFJXLO49XQ2 {\r\n    width: 100%;\r\n    padding: 6px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(0, 0, 0, 1);\r\n  }\r\n  ._2Q4eH9IbsYSmFJXLO49XQ2:focus {\r\n    outline: none;\r\n  }\r\n}\r\n\r\n@media only screen and (orientation: portrait) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -69645,7 +69645,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1_LYULPiA2mmm5ByLEs6ZC {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._1QGrFnv1SWTWZRKYwyQ801 {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n  }\r\n  .BqD2YXHb6wnEBHA5rL55B {\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n    margin: auto 0;\r\n  }\r\n  ._1vS_1uzYznnwHezg1SPIDI {\r\n    margin: auto 0;\r\n  }\r\n  ._1a1-nl5LHD1_c9BAQkYFQn {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._1a1-nl5LHD1_c9BAQkYFQn:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._1yxnrkHIIF6FNzBLGUQsC4 {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._1yxnrkHIIF6FNzBLGUQsC4:focus {\r\n    outline: none;\r\n  }\r\n}\r\n\r\n@media only screen and (orientation: portrait) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1_LYULPiA2mmm5ByLEs6ZC {\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._1QGrFnv1SWTWZRKYwyQ801 {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n  }\r\n  .BqD2YXHb6wnEBHA5rL55B {\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n    margin: auto 0;\r\n  }\r\n  ._1vS_1uzYznnwHezg1SPIDI {\r\n    margin: auto 0;\r\n  }\r\n  ._1a1-nl5LHD1_c9BAQkYFQn {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._1a1-nl5LHD1_c9BAQkYFQn:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._1yxnrkHIIF6FNzBLGUQsC4 {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n    padding: 6px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n    color: rgba(0, 0, 0, 1);\r\n  }\r\n  ._1yxnrkHIIF6FNzBLGUQsC4:focus {\r\n    outline: none;\r\n  }\r\n}\r\n\r\n@media only screen and (orientation: portrait) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -70029,6 +70029,7 @@
 	var note_store_1 = __webpack_require__(/*! ./../../stores/note.store */ 455);
 	var note_comment_component_1 = __webpack_require__(/*! ./note-comment.component */ 458);
 	var note_date_component_1 = __webpack_require__(/*! ./note-date.component */ 463);
+	var note_amount_component_1 = __webpack_require__(/*! ./note-amount.component */ 523);
 	
 	var NoteAddComponent = function (_React$Component) {
 	    _inherits(NoteAddComponent, _React$Component);
@@ -70111,7 +70112,11 @@
 	                            self.forceUpdate();
 	                            console.log(self.state.note.getImages());
 	                        }, function () {});
-	                    } })), React.createElement("div", { className: styles.inner }, React.createElement(note_comment_component_1.default, { note: self.state.note, editable: true, async: false }), React.createElement(note_date_component_1.default, { note: self.state.note, editable: true, async: false })), React.createElement("div", { className: styles.button }, "POST NEW NOTE"));
+	                    } })), React.createElement("div", { className: styles.inner }, React.createElement(note_comment_component_1.default, { note: self.state.note, editable: true, async: false }), React.createElement(note_date_component_1.default, { note: self.state.note, editable: true, async: false }), React.createElement(note_amount_component_1.default, { note: self.state.note, editable: true, async: false })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                        if (self.state.note.getComment().trim() != "") {
+	                            note_store_1.noteStore.createNote(self.state.note);
+	                        }
+	                    } }, "POST NEW NOTE"));
 	            } else {
 	                return React.createElement("div", { className: styles.wrapper });
 	            }
@@ -70802,12 +70807,12 @@
 	        key: 'render',
 	        value: function render() {
 	            var self = this;
-	            if (self.state.editing) {
+	            if (self.state.editing || self.props.note.getId() == 0) {
 	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.label, onMouseUp: function onMouseUp() {
 	                        // if (self.props.editable) {
 	                        //   self.setState({editing: true});
 	                        // }
-	                    } }, React.createElement(FontAwesome, { className: '', name: 'comment-o' }), " Comment"), React.createElement("div", { className: styles.edit }, React.createElement(react_textarea_autosize_1.default, { autoFocus: true, type: "text", className: styles.input, key: self.props.note.getId() + "comment", placeholder: "enter comment...", value: self.state.comment, onChange: function onChange(event) {
+	                    } }, React.createElement(FontAwesome, { className: '', name: 'comment-o' }), " Comment"), React.createElement("div", { className: styles.edit }, React.createElement(react_textarea_autosize_1.default, { type: "text", className: styles.input, key: self.props.note.getId() + "comment", placeholder: "enter comment...", value: self.state.comment, onChange: function onChange(event) {
 	                        self.setState({ comment: event.target.value });
 	                    }, onKeyPress: function onKeyPress(event) {
 	                        // if (event.key == 'Enter') {
@@ -71292,7 +71297,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._3lY7YPTFHIbhRDpT4wDiw1 {\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._3st3PiTyQonj-uQ91EmjcO {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  .KeVhma89WxeRewXLROxbl {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._3st3PiTyQonj-uQ91EmjcO:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._3Vj2QvYPRHyZVpxgi5yhjo {\r\n    display: block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._1KJr8nckk8oNLO3NNCH0oU {\r\n    width: 100%;\r\n    padding: 6px 6px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._1KJr8nckk8oNLO3NNCH0oU:focus {\r\n    outline: none;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._3lY7YPTFHIbhRDpT4wDiw1 {\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._3st3PiTyQonj-uQ91EmjcO {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  .KeVhma89WxeRewXLROxbl {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._3st3PiTyQonj-uQ91EmjcO:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._3Vj2QvYPRHyZVpxgi5yhjo {\r\n    display: block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._1KJr8nckk8oNLO3NNCH0oU {\r\n    width: 100%;\r\n    padding: 6px 6px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(204, 204, 204, 1);\r\n    color: rgba(0, 0, 0, 1);\r\n  }\r\n  ._1KJr8nckk8oNLO3NNCH0oU:focus {\r\n    outline: none;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -71745,7 +71750,8 @@
 	        bottom: 0,
 	        left: 0,
 	        right: 0,
-	        zIndex: "999"
+	        zIndex: "999",
+	        backgroundColor: "rgba(244, 244, 244, 0.75)"
 	      };
 	      if (_this.state.showPicker) {
 	        return _react2["default"].createElement("div", { onClick: _this.closePicker, style: styles });
@@ -74121,7 +74127,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._2KY2gOf92VX0VHhrjy2zmP {\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._3K1fZ7MwIITo3yNr-XQ65M {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._1eiwUD7vS__dgcDoAcLKeJ {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._3K1fZ7MwIITo3yNr-XQ65M:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._2aOOgMicGQCq8hLaQFZSs8 {\r\n    display: block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._38a3A5MEUCD7AbDtsuKA1N {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._38a3A5MEUCD7AbDtsuKA1N:focus {\r\n    outline: none;\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._2KY2gOf92VX0VHhrjy2zmP {\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._3K1fZ7MwIITo3yNr-XQ65M {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._1eiwUD7vS__dgcDoAcLKeJ {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-width: 80px;\r\n  }\r\n  ._3K1fZ7MwIITo3yNr-XQ65M:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._2aOOgMicGQCq8hLaQFZSs8 {\r\n    display: block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 32px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._38a3A5MEUCD7AbDtsuKA1N {\r\n    width: 100%;\r\n    padding: 6px 3px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._38a3A5MEUCD7AbDtsuKA1N:focus {\r\n    outline: none;\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -74360,10 +74366,175 @@
 	
 	
 	// module
-	exports.push([module.id, "/*!\n * Datetimepicker for Bootstrap 3\n * version : 4.17.37\n * https://github.com/Eonasdan/bootstrap-datetimepicker/\n */\n.bootstrap-datetimepicker-widget {\n  list-style: none;\n  right: 0 !important;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu {\n  margin: 8px 0;\n  padding: 16px;\n}\n@media (min-width: 768px) {\n  .bootstrap-datetimepicker-widget.dropdown-menu.timepicker-sbs {\n    width: 38em;\n  }\n}\n@media (min-width: 992px) {\n  .bootstrap-datetimepicker-widget.dropdown-menu.timepicker-sbs {\n    width: 38em;\n  }\n}\n@media (min-width: 1200px) {\n  .bootstrap-datetimepicker-widget.dropdown-menu.timepicker-sbs {\n    width: 38em;\n  }\n}\n.bootstrap-datetimepicker-widget.dropdown-menu:before,\n.bootstrap-datetimepicker-widget.dropdown-menu:after {\n  content: '';\n  display: inline-block;\n  position: absolute;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu.bottom:before {\n  border-left: 7px solid transparent;\n  border-right: 7px solid transparent;\n  border-bottom: 7px solid #cccccc;\n  border-bottom-color: rgba(0, 0, 0, 0.2);\n  top: -7px;\n  left: 7px;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu.bottom:after {\n  border-left: 6px solid transparent;\n  border-right: 6px solid transparent;\n  border-bottom: 6px solid white;\n  top: -6px;\n  left: 8px;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu.top:before {\n  border-left: 7px solid transparent;\n  border-right: 7px solid transparent;\n  border-top: 7px solid #cccccc;\n  border-top-color: rgba(0, 0, 0, 0.2);\n  bottom: -7px;\n  left: 6px;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu.top:after {\n  border-left: 6px solid transparent;\n  border-right: 6px solid transparent;\n  border-top: 6px solid white;\n  bottom: -6px;\n  left: 7px;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu.pull-right:before {\n  display: none;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu.pull-right:after {\n  display: none;\n}\n.bootstrap-datetimepicker-widget .list-unstyled {\n  margin: 0;\n}\n.bootstrap-datetimepicker-widget a[data-action] {\n  padding: 6px 0;\n}\n.bootstrap-datetimepicker-widget a[data-action]:active {\n  box-shadow: none;\n}\n.bootstrap-datetimepicker-widget .timepicker-hour,\n.bootstrap-datetimepicker-widget .timepicker-minute,\n.bootstrap-datetimepicker-widget .timepicker-second {\n  width: 54px;\n  font-weight: bold;\n  font-size: 1.2em;\n  margin: 0;\n  color: rgba(0, 0, 0, 0.5);\n}\n.bootstrap-datetimepicker-widget button[data-action] {\n  padding: 6px;\n  background-color: rgba(0, 0, 0, 0.75);\n}\n.bootstrap-datetimepicker-widget button[data-action]:active {\n  padding: 6px;\n  background-color: rgba(0, 0, 0, 0.75);\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"incrementHours\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Increment Hours\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"incrementMinutes\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Increment Minutes\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"decrementHours\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Decrement Hours\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"decrementMinutes\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Decrement Minutes\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"showHours\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Show Hours\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"showMinutes\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Show Minutes\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"togglePeriod\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Toggle AM/PM\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"clear\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Clear the picker\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"today\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Set the date to today\";\n}\n.bootstrap-datetimepicker-widget .picker-switch {\n  text-align: center;\n}\n.bootstrap-datetimepicker-widget .picker-switch::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Toggle Date and Time Screens\";\n}\n.bootstrap-datetimepicker-widget .picker-switch td {\n  padding: 0;\n  margin: 0;\n  height: auto;\n  width: auto;\n  line-height: inherit;\n}\n.bootstrap-datetimepicker-widget .picker-switch td span {\n  line-height: 2.5;\n  height: 2.5em;\n  width: 100%;\n}\n.bootstrap-datetimepicker-widget table {\n  width: 100%;\n  margin: 0;\n}\n.bootstrap-datetimepicker-widget table td,\n.bootstrap-datetimepicker-widget table th {\n  text-align: center;\n  border-radius: 4px;\n}\n.bootstrap-datetimepicker-widget table th {\n  height: 20px;\n  line-height: 20px;\n  width: 20px;\n}\n.bootstrap-datetimepicker-widget table th.picker-switch {\n  width: 145px;\n}\n.bootstrap-datetimepicker-widget table th.disabled,\n.bootstrap-datetimepicker-widget table th.disabled:hover {\n  background: none;\n  color: #777777;\n  cursor: not-allowed;\n}\n.bootstrap-datetimepicker-widget table th.prev::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Previous Month\";\n}\n.bootstrap-datetimepicker-widget table th.next::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Next Month\";\n}\n.bootstrap-datetimepicker-widget table thead tr:first-child th {\n  cursor: pointer;\n}\n.bootstrap-datetimepicker-widget table thead tr:first-child th:hover {\n  background: #eeeeee;\n}\n.bootstrap-datetimepicker-widget table td {\n  height: 54px;\n  line-height: 54px;\n  width: 54px;\n}\n.bootstrap-datetimepicker-widget table td.cw {\n  font-size: .8em;\n  height: 20px;\n  line-height: 20px;\n  color: #777777;\n}\n.bootstrap-datetimepicker-widget table td.day {\n  height: 24px;\n  line-height: 24px;\n  width: 20px;\n  font-weight: 700;\n  color: rgba(94, 78, 81, 1);\n}\n.bootstrap-datetimepicker-widget table td.day:hover,\n.bootstrap-datetimepicker-widget table td.hour:hover,\n.bootstrap-datetimepicker-widget table td.minute:hover,\n.bootstrap-datetimepicker-widget table td.second:hover {\n  background: #eeeeee;\n  cursor: pointer;\n}\n.bootstrap-datetimepicker-widget table td.old,\n.bootstrap-datetimepicker-widget table td.new {\n  color: rgba(94, 78, 81, 1);\n  font-weight: 400;\n}\n.bootstrap-datetimepicker-widget table td.today {\n  position: relative;\n}\n.bootstrap-datetimepicker-widget table td.today:before {\n  content: '';\n  display: inline-block;\n  border: solid transparent;\n  border-width: 0 0 7px 7px;\n  border-bottom-color: rgba(0, 0, 0, 0.75);\n  border-top-color: rgba(0, 0, 0, 0.2);\n  position: absolute;\n  bottom: 4px;\n  right: 4px;\n}\n.bootstrap-datetimepicker-widget table td.active,\n.bootstrap-datetimepicker-widget table td.active:hover {\n  background-color: rgba(94, 78, 81, 1);\n  color: #ffffff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.bootstrap-datetimepicker-widget table td.active.today:before {\n  border-bottom-color: #fff;\n}\n.bootstrap-datetimepicker-widget table td.disabled,\n.bootstrap-datetimepicker-widget table td.disabled:hover {\n  background: none;\n  color: #777777;\n  cursor: not-allowed;\n}\n.bootstrap-datetimepicker-widget table td span {\n  display: inline-block;\n  width: 54px;\n  height: 54px;\n  line-height: 54px;\n  margin: 2px 1.5px;\n  cursor: pointer;\n  border-radius: 4px;\n  color: #777777;\n}\n.bootstrap-datetimepicker-widget table td span:hover {\n  background: #eeeeee;\n}\n.bootstrap-datetimepicker-widget table td span.active {\n  background-color: rgba(0, 0, 0, 0.75);\n  color: #ffffff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.bootstrap-datetimepicker-widget table td span.old {\n  color: #777777;\n}\n.bootstrap-datetimepicker-widget table td span.disabled,\n.bootstrap-datetimepicker-widget table td span.disabled:hover {\n  background: none;\n  color: #777777;\n  cursor: not-allowed;\n}\n.bootstrap-datetimepicker-widget.usetwentyfour td.hour {\n  height: 27px;\n  line-height: 27px;\n}\n.bootstrap-datetimepicker-widget.wider {\n  width: 21em;\n}\n.bootstrap-datetimepicker-widget .datepicker-decades .decade {\n  line-height: 1.8em !important;\n}\n.input-group.date .input-group-addon {\n  cursor: pointer;\n\n}\n.sr-only {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n}\n\n.bootstrap-datetimepicker-widget .dow {\n  color: rgba(107, 170, 119, 1);\n}\n.bootstrap-datetimepicker-widget .switch,\n.bootstrap-datetimepicker-widget .prev,\n.bootstrap-datetimepicker-widget .next {\n  color: rgba(94, 78, 81, 1);\n}\n\n.dropdown-menu {\n  border-radius: 2px;\n  min-width: 100%;\n}\n\nbutton.btn.btn-primary {\n  background-color: rgba(94, 78, 81, 1);\n  border-color: rgba(94, 78, 81, 1);\n  font-weight: 700;\n}\n.form-control {\n  border-radius: 2px;\n  padding: 3px 6px;\n  font-size: small;\n  outline: none;\n}\n.form-control:focus {\n  outline: none;\n  box-shadow: none;\n  border-color: rgba(94, 78, 81, 1);\n}\n.input-group-addon {\n  padding: 6px 12px;\n}\n", ""]);
+	exports.push([module.id, "/*!\n * Datetimepicker for Bootstrap 3\n * version : 4.17.37\n * https://github.com/Eonasdan/bootstrap-datetimepicker/\n */\n.bootstrap-datetimepicker-widget {\n  list-style: none;\n  right: 0 !important;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu {\n  margin: 8px 0;\n  padding: 16px;\n}\n@media (min-width: 768px) {\n  .bootstrap-datetimepicker-widget.dropdown-menu.timepicker-sbs {\n    width: 38em;\n  }\n}\n@media (min-width: 992px) {\n  .bootstrap-datetimepicker-widget.dropdown-menu.timepicker-sbs {\n    width: 38em;\n  }\n}\n@media (min-width: 1200px) {\n  .bootstrap-datetimepicker-widget.dropdown-menu.timepicker-sbs {\n    width: 38em;\n  }\n}\n.bootstrap-datetimepicker-widget.dropdown-menu:before,\n.bootstrap-datetimepicker-widget.dropdown-menu:after {\n  content: '';\n  display: inline-block;\n  position: absolute;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu.bottom:before {\n  border-left: 7px solid transparent;\n  border-right: 7px solid transparent;\n  border-bottom: 7px solid #cccccc;\n  border-bottom-color: rgba(0, 0, 0, 0.2);\n  top: -7px;\n  left: 7px;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu.bottom:after {\n  border-left: 6px solid transparent;\n  border-right: 6px solid transparent;\n  border-bottom: 6px solid white;\n  top: -6px;\n  left: 8px;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu.top:before {\n  border-left: 7px solid transparent;\n  border-right: 7px solid transparent;\n  border-top: 7px solid #cccccc;\n  border-top-color: rgba(0, 0, 0, 0.2);\n  bottom: -7px;\n  left: 6px;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu.top:after {\n  border-left: 6px solid transparent;\n  border-right: 6px solid transparent;\n  border-top: 6px solid white;\n  bottom: -6px;\n  left: 7px;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu.pull-right:before {\n  display: none;\n}\n.bootstrap-datetimepicker-widget.dropdown-menu.pull-right:after {\n  display: none;\n}\n.bootstrap-datetimepicker-widget .list-unstyled {\n  margin: 0;\n}\n.bootstrap-datetimepicker-widget a[data-action] {\n  padding: 6px 0;\n}\n.bootstrap-datetimepicker-widget a[data-action]:active {\n  box-shadow: none;\n}\n.bootstrap-datetimepicker-widget .timepicker-hour,\n.bootstrap-datetimepicker-widget .timepicker-minute,\n.bootstrap-datetimepicker-widget .timepicker-second {\n  width: 54px;\n  font-weight: bold;\n  font-size: 1.2em;\n  margin: 0;\n  color: rgba(0, 0, 0, 0.5);\n}\n.bootstrap-datetimepicker-widget button[data-action] {\n  padding: 6px;\n  background-color: rgba(0, 0, 0, 0.75);\n}\n.bootstrap-datetimepicker-widget button[data-action]:active {\n  padding: 6px;\n  background-color: rgba(0, 0, 0, 0.75);\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"incrementHours\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Increment Hours\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"incrementMinutes\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Increment Minutes\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"decrementHours\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Decrement Hours\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"decrementMinutes\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Decrement Minutes\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"showHours\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Show Hours\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"showMinutes\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Show Minutes\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"togglePeriod\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Toggle AM/PM\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"clear\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Clear the picker\";\n}\n.bootstrap-datetimepicker-widget .btn[data-action=\"today\"]::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Set the date to today\";\n}\n.bootstrap-datetimepicker-widget .picker-switch {\n  text-align: center;\n}\n.bootstrap-datetimepicker-widget .picker-switch::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Toggle Date and Time Screens\";\n}\n.bootstrap-datetimepicker-widget .picker-switch td {\n  padding: 0;\n  margin: 0;\n  height: auto;\n  width: auto;\n  line-height: inherit;\n}\n.bootstrap-datetimepicker-widget .picker-switch td span {\n  line-height: 2.5;\n  height: 2.5em;\n  width: 100%;\n}\n.bootstrap-datetimepicker-widget table {\n  width: 100%;\n  margin: 0;\n}\n.bootstrap-datetimepicker-widget table td,\n.bootstrap-datetimepicker-widget table th {\n  text-align: center;\n  border-radius: 4px;\n}\n.bootstrap-datetimepicker-widget table th {\n  height: 20px;\n  line-height: 20px;\n  width: 20px;\n}\n.bootstrap-datetimepicker-widget table th.picker-switch {\n  width: 145px;\n}\n.bootstrap-datetimepicker-widget table th.disabled,\n.bootstrap-datetimepicker-widget table th.disabled:hover {\n  background: none;\n  color: #777777;\n  cursor: not-allowed;\n}\n.bootstrap-datetimepicker-widget table th.prev::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Previous Month\";\n}\n.bootstrap-datetimepicker-widget table th.next::after {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n  content: \"Next Month\";\n}\n.bootstrap-datetimepicker-widget table thead tr:first-child th {\n  cursor: pointer;\n}\n.bootstrap-datetimepicker-widget table thead tr:first-child th:hover {\n  background: #eeeeee;\n}\n.bootstrap-datetimepicker-widget table td {\n  height: 54px;\n  line-height: 54px;\n  width: 54px;\n}\n.bootstrap-datetimepicker-widget table td.cw {\n  font-size: .8em;\n  height: 20px;\n  line-height: 20px;\n  color: #777777;\n}\n.bootstrap-datetimepicker-widget table td.day {\n  height: 24px;\n  line-height: 24px;\n  width: 20px;\n  font-weight: 700;\n  color: rgba(94, 78, 81, 1);\n}\n.bootstrap-datetimepicker-widget table td.day:hover,\n.bootstrap-datetimepicker-widget table td.hour:hover,\n.bootstrap-datetimepicker-widget table td.minute:hover,\n.bootstrap-datetimepicker-widget table td.second:hover {\n  background: #eeeeee;\n  cursor: pointer;\n}\n.bootstrap-datetimepicker-widget table td.old,\n.bootstrap-datetimepicker-widget table td.new {\n  color: rgba(94, 78, 81, 1);\n  font-weight: 400;\n}\n.bootstrap-datetimepicker-widget table td.today {\n  position: relative;\n}\n.bootstrap-datetimepicker-widget table td.today:before {\n  content: '';\n  display: inline-block;\n  border: solid transparent;\n  border-width: 0 0 7px 7px;\n  border-bottom-color: rgba(0, 0, 0, 0.75);\n  border-top-color: rgba(0, 0, 0, 0.2);\n  position: absolute;\n  bottom: 4px;\n  right: 4px;\n}\n.bootstrap-datetimepicker-widget table td.active,\n.bootstrap-datetimepicker-widget table td.active:hover {\n  background-color: rgba(94, 78, 81, 1);\n  color: #ffffff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.bootstrap-datetimepicker-widget table td.active.today:before {\n  border-bottom-color: #fff;\n}\n.bootstrap-datetimepicker-widget table td.disabled,\n.bootstrap-datetimepicker-widget table td.disabled:hover {\n  background: none;\n  color: #777777;\n  cursor: not-allowed;\n}\n.bootstrap-datetimepicker-widget table td span {\n  display: inline-block;\n  width: 54px;\n  height: 54px;\n  line-height: 54px;\n  margin: 2px 1.5px;\n  cursor: pointer;\n  border-radius: 4px;\n  color: #777777;\n}\n.bootstrap-datetimepicker-widget table td span:hover {\n  background: #eeeeee;\n}\n.bootstrap-datetimepicker-widget table td span.active {\n  background-color: rgba(0, 0, 0, 0.75);\n  color: #ffffff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.bootstrap-datetimepicker-widget table td span.old {\n  color: #777777;\n}\n.bootstrap-datetimepicker-widget table td span.disabled,\n.bootstrap-datetimepicker-widget table td span.disabled:hover {\n  background: none;\n  color: #777777;\n  cursor: not-allowed;\n}\n.bootstrap-datetimepicker-widget.usetwentyfour td.hour {\n  height: 27px;\n  line-height: 27px;\n}\n.bootstrap-datetimepicker-widget.wider {\n  width: 21em;\n}\n.bootstrap-datetimepicker-widget .datepicker-decades .decade {\n  line-height: 1.8em !important;\n}\n.input-group {\n  display: block;\n}\n.input-group.date .input-group-addon {\n  width: 100%;\n  cursor: pointer;\n}\n.sr-only {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  margin: -1px;\n  padding: 0;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n}\n\n.bootstrap-datetimepicker-widget .dow {\n  color: rgba(107, 170, 119, 1);\n}\n.bootstrap-datetimepicker-widget .switch,\n.bootstrap-datetimepicker-widget .prev,\n.bootstrap-datetimepicker-widget .next {\n  color: rgba(94, 78, 81, 1);\n}\n\n.dropdown-menu {\n  border-radius: 2px;\n  min-width: 100%;\n}\n\nbutton.btn.btn-primary {\n  background-color: rgba(94, 78, 81, 1);\n  border-color: rgba(94, 78, 81, 1);\n  font-weight: 700;\n}\n.form-control {\n  width: 100%;\n  border-radius: 2px !important;\n  padding: 6px;\n  font-size: small;\n  outline: none;\n  color: rgba(0, 0, 0, 1);\n  height: auto;\n  box-shadow: none;\n}\n.form-control:focus {\n  outline: none;\n  box-shadow: none;\n  border-color: rgba(94, 78, 81, 1);\n}\n.input-group-addon {\n  padding: 6px 12px;\n}\n", ""]);
 	
 	// exports
 
+
+/***/ },
+/* 523 */
+/*!******************************************************!*\
+  !*** ./src/components/note/note-amount.component.js ***!
+  \******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 1);
+	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 234);
+	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 235);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 225);
+	var styles = __webpack_require__(/*! ./note-amount.component.css */ 524);
+	var note_store_1 = __webpack_require__(/*! ./../../stores/note.store */ 455);
+	
+	var NoteAmountComponent = function (_React$Component) {
+	    _inherits(NoteAmountComponent, _React$Component);
+	
+	    function NoteAmountComponent(props) {
+	        _classCallCheck(this, NoteAmountComponent);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(NoteAmountComponent).call(this, props));
+	
+	        _this.updateAttribute = function () {
+	            var self = _this;
+	            self.props.note.setAmount(self.state.amount);
+	            if (self.props.async) {
+	                note_store_1.noteStore.updateNote(self.props.note);
+	            } else {
+	                self.setState({ editing: false });
+	            }
+	        };
+	        var self = _this;
+	        _this.state = {
+	            amount: 0,
+	            editing: false
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(NoteAmountComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var self = this;
+	            self.updateProps(self.props);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var self = this;
+	            self.updateProps(nextProps);
+	        }
+	    }, {
+	        key: 'updateProps',
+	        value: function updateProps(props) {
+	            var self = this;
+	            if (props.note) {
+	                self.setState({ amount: props.note.getAmount(), editing: false });
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            if (self.state.editing || self.props.note.getId() == 0) {
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.label, onMouseUp: function onMouseUp() {
+	                        // if (self.props.editable) {
+	                        //   self.setState({editing: true});
+	                        // }
+	                    } }, React.createElement(FontAwesome, { className: '', name: 'shopping-basket' }), " Amount"), React.createElement("div", { className: styles.edit }, React.createElement("input", { type: "number", className: styles.input, key: self.props.note.getId() + "amount", placeholder: "enter weight (lbs.)...", value: self.state.amount, onChange: function onChange(event) {
+	                        self.setState({ amount: event.target.value });
+	                    }, onKeyPress: function onKeyPress(event) {
+	                        // if (event.key == 'Enter') {
+	                        //   self.updateAttribute();
+	                        // }
+	                    }, onBlur: function onBlur() {
+	                        self.updateAttribute();
+	                    } })));
+	            } else {
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.label, onClick: function onClick() {
+	                        if (self.props.editable) {
+	                            self.setState({ editing: true });
+	                        }
+	                    } }, React.createElement(FontAwesome, { className: '', name: 'shopping-basket' }), " Amount"), React.createElement("div", { className: styles.value, onClick: function onClick() {
+	                        if (self.props.editable) {
+	                            self.setState({ editing: true });
+	                        }
+	                    } }, self.state.amount));
+	            }
+	        }
+	    }]);
+	
+	    return NoteAmountComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = NoteAmountComponent;
+	//# sourceMappingURL=note-amount.component.js.map
+
+/***/ },
+/* 524 */
+/*!*******************************************************!*\
+  !*** ./src/components/note/note-amount.component.css ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./note-amount.component.css */ 525);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./note-amount.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./note-amount.component.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 525 */
+/*!**********************************************************************!*\
+  !*** ./~/css-loader!./src/components/note/note-amount.component.css ***!
+  \**********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 222)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  ._3ITo91tBpbxDJSQPLVqmqZ {\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._2BupgCTB8Ygrz7dKRHyUvb {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._3kDwZwzkylcGzsqVdVW5dR {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._2BupgCTB8Ygrz7dKRHyUvb:not(:first-child) {\r\n    padding-top: 8px;\r\n  }\r\n  ._2cXZedlR8j0cUo47Aohikx {\r\n    display: block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    letter-spacing: 1px;\r\n  }\r\n  ._3ZGgK3UohURDvV-PUpMYAQ {\r\n    width: 100%;\r\n    padding: 6px 6px;\r\n    border-radius: 2px;\r\n    border: 1px solid rgba(204, 204, 204, 1);\r\n    color: rgba(0, 0, 0, 1);\r\n  }\r\n  ._3ZGgK3UohURDvV-PUpMYAQ:focus {\r\n    outline: none;\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"wrapper": "_3ITo91tBpbxDJSQPLVqmqZ",
+		"label": "_2BupgCTB8Ygrz7dKRHyUvb",
+		"value": "_3kDwZwzkylcGzsqVdVW5dR",
+		"edit": "_2cXZedlR8j0cUo47Aohikx",
+		"input": "_3ZGgK3UohURDvV-PUpMYAQ"
+	};
 
 /***/ }
 /******/ ]);
