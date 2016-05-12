@@ -90,8 +90,7 @@ export default class TreeAddComponent extends React.Component<ITreeAddProps, ITr
               <LocationComponent tree={tree} editable={true} async={false} />
               <AddressComponent tree={tree} editable={true} async={false} />
               <DescriptionComponent tree={tree} editable={true} async={false} />
-              <FlagComponent tree={tree} flags={flagStore.getState().flags} editable={true} async={false} />
-              <OwnershipComponent tree={tree} editable={true} async={false} />
+
             </AltContainer>
           </div>
         </div>
@@ -113,6 +112,11 @@ TreeAddComponent.contextTypes = {
 
 
 /*
+
+<FlagComponent tree={tree} flags={flagStore.getState().flags} editable={true} async={false} />
+<OwnershipComponent tree={tree} editable={true} async={false} />
+
+
 <LocationComponent tree={tree} editable={self.state.editable} />
 <AddressComponent tree={tree} editable={self.state.editable} />
 <DescriptionComponent tree={tree} editable={self.state.editable} />

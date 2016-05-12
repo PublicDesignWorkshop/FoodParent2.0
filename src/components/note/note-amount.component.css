@@ -19,11 +19,20 @@
     padding-top: 8px;
   }
   :local(.edit) {
-    display: block;
+    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;           /* TWEENER - IE 10 */
+    display: -webkit-flex;          /* NEW - Chrome */
+    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
     padding: 0 0 0 16px;
     min-height: 22px;
     letter-spacing: 1px;
   }
+  :local(.type) {
+    width: 120px;
+  }
+
   :local(.input) {
     width: 100%;
     padding: 6px 6px;
@@ -34,5 +43,21 @@
   :local(.input:focus) {
     outline: none;
     border: 1px solid rgba(94, 78, 81, 1);
+  }
+
+  :local(.wrapper) .Select-control {
+    border-radius: 2px;
+    cursor: default;
+    display: table;
+    height: 36px;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+  }
+  :local(.wrapper) .is-focused:not(.is-open) > .Select-control {
+    border-color: rgba(94, 78, 81, 1);
+    box-shadow: none;
   }
 }

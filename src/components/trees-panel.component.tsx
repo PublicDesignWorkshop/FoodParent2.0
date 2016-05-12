@@ -111,6 +111,8 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
               <div className={styles.left}>
                 <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} tile={self.props.tile} onTile={self.props.onTile} />
               </div>
+              <div className={styles.right}>
+              </div>
             </div>
           );
         }
@@ -119,6 +121,8 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
           <div className={styles.wrapper}>
             <div className={styles.left}>
               <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} tile={self.props.tile} onTile={self.props.onTile} />
+            </div>
+            <div className={styles.right}>
             </div>
           </div>
         );

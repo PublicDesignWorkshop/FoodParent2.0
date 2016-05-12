@@ -1,7 +1,8 @@
 @media all {
   :local(.wrapper) {
     font-family: 'Open Sans', sans-serif;
-    font-size: medium;
+    font-size: small;
+    color: rgba(94, 78, 81, 1);
   }
 
   :local(.contactlabel) {

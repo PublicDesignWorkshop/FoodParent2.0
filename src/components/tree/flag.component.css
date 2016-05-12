@@ -35,7 +35,8 @@
     width: 100%;
     cursor: pointer;
   }
-  :local(.wrapper) .Select-placeholder, :not(.Select--multi) > .Select-control .Select-value {
+  :local(.wrapper) .Select-placeholder,
+  :local(.wrapper) :not(.Select--multi) > .Select-control .Select-value {
     bottom: 0;
     color: rgba(255, 255, 255, 1);
     left: 0;
@@ -133,7 +134,7 @@
   :local(.wrapper) .Select--multi .Select-value {
     background-color: rgba(94, 78, 81, 1);
     border-radius: 2px;
-    border: 1px solid rgba(255, 255, 255, 1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     color: rgba(255, 255, 255, 1);
     display: inline-block;
     font-size: small;
@@ -156,6 +157,10 @@
   }
   :local(.wrapper) .Select.is-disabled > .Select-control {
     background-color: rgba(94, 78, 81, 1);
+  }
+  :local(.wrapper) .is-focused:not(.is-open) > .Select-control {
+    border-color: rgba(94, 78, 81, 1);
+    box-shadow: none;
   }
 }
 

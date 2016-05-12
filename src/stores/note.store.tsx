@@ -15,6 +15,9 @@ export enum PickupTime {
 export enum NoteType {
   NONE, CHANGE, POST, PICKUP
 }
+export enum AmountType {
+  NONE, G, KG, LBS
+}
 
 export interface INoteProps {
   id: string;
@@ -27,6 +30,7 @@ export interface INoteProps {
   amount: string;
   proper: string;
   date: string;
+  atype: string;
 }
 
 export class NoteModel {
@@ -40,6 +44,7 @@ export class NoteModel {
   proper: PickupTime;
   date: moment.Moment;
   images: Array<string>;
+  atype: AmountType;
 
   constructor(props: INoteProps) {
     let self: NoteModel = this;
@@ -63,9 +68,11 @@ export class NoteModel {
     } else {
       self.images = new Array<string>();
     }
+    self.atype = parseInt(props.atype);
   }
   public toJSON(): any {
     let self: NoteModel = this;
+    // TODO:: Convert Amount Type
     return {
       id: self.id,
       type: self.type,
@@ -123,6 +130,12 @@ export class NoteModel {
   }
   public setPicupTime(proper: PickupTime): void {
     this.proper = proper;
+  }
+  public getAmountType(): number {
+    return this.atype;
+  }
+  public setAmountType(atype: AmountType): void {
+    this.atype = atype;
   }
   public getDate(): moment.Moment {
     return this.date;

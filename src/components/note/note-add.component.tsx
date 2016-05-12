@@ -11,7 +11,7 @@ import * as styles from './note-add.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { LogInStatus } from './../app.component';
 import { uploadImage } from './../../utils/upload';
-import { NoteModel, noteStore, NoteType, PickupTime } from './../../stores/note.store';
+import { NoteModel, noteStore, NoteType, PickupTime, AmountType } from './../../stores/note.store';
 import NoteCommentComponent from './note-comment.component';
 import NoteDateComponent from './note-date.component';
 import NoteAmountComponent from './note-amount.component';
@@ -63,6 +63,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
           amount: "0",
           proper: PickupTime.PROPER.toString(),
           date: moment(new Date()).format(Settings.sServerDateFormat),
+          atype: AmountType.G.toString(),
         });
         self.setState({note: note});
       }

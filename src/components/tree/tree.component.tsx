@@ -73,35 +73,65 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
     if (self.props.treeId) {
       var tree: TreeModel = treeStore.getTree(self.props.treeId);
       var food: FoodModel = foodStore.getFood(tree.getFoodId());
-      return (
-        <div className={styles.wrapper}>
-          <div className={styles.treeinfo}>
-            <FoodComponent tree={tree} foods={self.props.foods} editable={self.state.editable} async={self.state.editable} />
-            <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
-              self.context.router.push({pathname: Settings.uBaseName + '/'});
-              //self.setState({editable: self.state.editable});
-            }}/></div>
-          </div>
-          <div className={styles.basicinfo}>
-            <AltContainer stores={
-              {
-                flags: function (props) {
-                  return {
-                    store: flagStore,
-                    value: flagStore.getState().flags
-                  };
+      if (self.props.login == LogInStatus.ADMIN || self.props.login == LogInStatus.MANAGER) {
+        return (
+          <div className={styles.wrapper}>
+            <div className={styles.treeinfo}>
+              <FoodComponent tree={tree} foods={self.props.foods} editable={self.state.editable} async={self.state.editable} />
+              <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
+                self.context.router.push({pathname: Settings.uBaseName + '/'});
+                //self.setState({editable: self.state.editable});
+              }}/></div>
+            </div>
+            <div className={styles.basicinfo}>
+              <AltContainer stores={
+                {
+                  flags: function (props) {
+                    return {
+                      store: flagStore,
+                      value: flagStore.getState().flags
+                    };
+                  }
                 }
-              }
-            }>
-              <LocationComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
-              <AddressComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
-              <DescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
-              <FlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} async={self.state.editable} />
-              <OwnershipComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
-            </AltContainer>
+              }>
+                <LocationComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+                <AddressComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+                <DescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+                <FlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} async={self.state.editable} />
+                <OwnershipComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              </AltContainer>
+            </div>
           </div>
-        </div>
-      );
+        );
+      } else {
+        return (
+          <div className={styles.wrapper}>
+            <div className={styles.treeinfo}>
+              <FoodComponent tree={tree} foods={self.props.foods} editable={self.state.editable} async={self.state.editable} />
+              <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
+                self.context.router.push({pathname: Settings.uBaseName + '/'});
+                //self.setState({editable: self.state.editable});
+              }}/></div>
+            </div>
+            <div className={styles.basicinfo}>
+              <AltContainer stores={
+                {
+                  flags: function (props) {
+                    return {
+                      store: flagStore,
+                      value: flagStore.getState().flags
+                    };
+                  }
+                }
+              }>
+                <LocationComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+                <AddressComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+                <DescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              </AltContainer>
+            </div>
+          </div>
+        );
+      }
     } else {
       return (
         <div className={styles.wrapper}>

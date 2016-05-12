@@ -22,6 +22,13 @@
 
   function read() {
     $sql = "SELECT * FROM `tree`";
+    /*
+    if (!$loggedin) {
+      $public = true;
+      $flags = 0;
+    }
+    $sql = "SELECT * FROM `tree` where flags=$flags and public=$public and type in $type";
+    */
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);
