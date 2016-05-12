@@ -6,6 +6,4 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 
-
-//declare var moment: moment.MomentStatic;
 declare var moment: any;

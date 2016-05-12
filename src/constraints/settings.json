@@ -16,6 +16,7 @@
   "iMinZoom": 5,
   "iFocusZoom": 18,
   "sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
+  "sUIDateFormat": "MM/DD/YY h:mm A",
   "uReverseGeoCoding": "//nominatim.openstreetmap.org/reverse?format=json&zoom=18&addressdetails=1",
   "iMarkerPrecision": 5,
   "uTemporaryMarkerIcon": "unknown.svg"

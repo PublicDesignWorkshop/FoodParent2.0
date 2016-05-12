@@ -27,7 +27,7 @@ export interface ITreesStatus {
   trees?: Array<TreeModel>;
   treeId?: number;
   zoom?: number;
-  position?: null;
+  position?: L.LatLng;
   mode?: TreesMode;
   tile?: TileMode;
 }

@@ -12,6 +12,8 @@ import { TreeModel, treeStore } from './../../stores/tree.store';
 import { LogInStatus } from './../app.component';
 import { uploadImage } from './../../utils/upload';
 import { NoteModel, noteStore, NoteType, PickupTime } from './../../stores/note.store';
+import NoteCommentComponent from './note-comment.component';
+import NoteDateComponent from './note-date.component';
 
 export interface INoteAddProps {
   trees: Array<TreeModel>;
@@ -103,7 +105,6 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
           {images}
           <div className={styles.image}>
             <input className={styles.upload} type="file" accept="image/*" capture="camera" onChange={(event: any)=> {
-              console.log('Selected file:', event.target.files[0]);
               uploadImage(event.target.files[0], tree.getId().toString(), function(filename: string) {  // success
                 self.state.note.addImage(filename);
                 self.forceUpdate();
@@ -114,7 +115,8 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
             }} />
           </div>
           <div className={styles.inner}>
-
+            <NoteCommentComponent note={self.state.note} editable={true} async={false} />
+            <NoteDateComponent note={self.state.note} editable={true} async={false} />
           </div>
           <div className={styles.button}>
             POST NEW NOTE
