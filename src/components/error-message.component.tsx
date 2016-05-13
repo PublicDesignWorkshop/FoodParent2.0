@@ -43,7 +43,6 @@ export default class ErrorMessageComponent extends React.Component<IErrorMessage
 
   private updateProps(props: IErrorMessageProps) {
     let self: ErrorMessageComponent = this;
-    console.log(props);
     let type: ErrorType = ErrorType.NONE;
     if (props.error.indexOf("e300") > -1 && props.match.indexOf("e300") > -1) {
       type = ErrorType.WAITING;

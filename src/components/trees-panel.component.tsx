@@ -74,7 +74,6 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
       amount: "0",
       proper: PickupTime.PROPER.toString(),
       date: moment(new Date()).format(Settings.sServerDateFormat),
-      atype: AmountType.G.toString(),
     });
     noteStore.addNote(note);
   }

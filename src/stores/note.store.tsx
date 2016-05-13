@@ -30,7 +30,6 @@ export interface INoteProps {
   amount: string;
   proper: string;
   date: string;
-  atype: string;
 }
 
 export class NoteModel {
@@ -49,6 +48,7 @@ export class NoteModel {
   constructor(props: INoteProps) {
     let self: NoteModel = this;
     self.update(props);
+    self.atype = AmountType.G;
   }
   public update(props: INoteProps) {
     let self: NoteModel = this;
@@ -68,7 +68,6 @@ export class NoteModel {
     } else {
       self.images = new Array<string>();
     }
-    self.atype = parseInt(props.atype);
   }
   public toJSON(): any {
     let self: NoteModel = this;
@@ -83,7 +82,7 @@ export class NoteModel {
       rate: self.rate,
       amount: self.amount,
       proper: self.proper,
-      date: self.date.format(Settings.sServerDateFormat)
+      date: self.date.format(Settings.sServerDateFormat),
     }
   }
   public getId(): number {
@@ -230,6 +229,33 @@ class NoteStore extends AbstractStore<NoteState> {
     setTimeout(function() {
       self.errorMessage = null;
     }, Settings.iErrorMessageDuration);
+
+    // Reset a new note
+    let note: NoteModel = new NoteModel({
+      id: "0",
+      type: NoteType.POST.toString(),
+      tree: "0",
+      person: "0",
+      comment: "",
+      picture: "",
+      rate: "0",
+      amount: "0",
+      proper: PickupTime.PROPER.toString(),
+      date: moment(new Date()).format(Settings.sServerDateFormat),
+    });
+    let i = -1;
+    for(let j = 0; j < self.notes.length; j++) {
+      if(self.notes[j].getId() === note.getId()) {
+        i = j;
+      }
+    }
+    console.log(i);
+    if (i > -1) {
+      self.notes = self.notes.splice(i, 1);
+    }
+    console.log(note);
+    self.notes.push(note);
+    console.log(self.notes);
   }
   handleLoading(errorMessage: string) {
     let self: NoteStore = this;
@@ -261,7 +287,6 @@ class NoteStore extends AbstractStore<NoteState> {
       notes = notes.splice(i, 1);
     }
     notes.push(note);
-    console.log(notes.length);
   }
 }
 
