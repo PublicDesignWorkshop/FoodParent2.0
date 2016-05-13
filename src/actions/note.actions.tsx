@@ -48,10 +48,11 @@ class NoteActions extends AbstractActions implements INoteActions {
   loading() {
     let self: NoteActions = this;
     addLoading();
-    return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
-      dispatch();
-    }
+    return "e300";
+    // return (dispatch) => {
+    //   // we dispatch an event here so we can have "loading" state.
+    //   dispatch();
+    // }
   }
 }
 

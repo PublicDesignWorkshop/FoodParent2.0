@@ -4,6 +4,7 @@ import { Router, Link } from 'react-router';
 import * as FontAwesome from 'react-fontawesome';
 import './../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
+import * as moment from 'moment';
 
 var Settings = require('./../constraints/settings.json');
 import * as styles from './trees-panel.component.css';
@@ -14,6 +15,7 @@ import TreesControlsComponent from './trees-controls.component';
 import NoteAddComponent from './note/note-add.component';
 import { TreeModel, treeStore } from './../stores/tree.store';
 import { FoodModel, foodStore } from './../stores/food.store';
+import { NoteModel, noteStore, NoteType, PickupTime, AmountType } from './../stores/note.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 import { LogInStatus } from './app.component';
@@ -49,6 +51,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
   public componentDidMount() {
     let self: TreesPanelComponent = this;
     self.updateProps(self.props);
+    self.createNewNote();
   }
   public componentWillUnmount() {
     let self: TreesPanelComponent = this;
@@ -56,6 +59,24 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
   public componentWillReceiveProps (nextProps: ITreesPanelProps) {
     let self: TreesPanelComponent = this;
     self.updateProps(nextProps);
+  }
+
+  private createNewNote = () => {
+    let self: TreesPanelComponent = this;
+    let note: NoteModel = new NoteModel({
+      id: "0",
+      type: NoteType.POST.toString(),
+      tree: "0",
+      person: "0",
+      comment: "",
+      picture: "",
+      rate: "0",
+      amount: "0",
+      proper: PickupTime.PROPER.toString(),
+      date: moment(new Date()).format(Settings.sServerDateFormat),
+      atype: AmountType.G.toString(),
+    });
+    noteStore.addNote(note);
   }
 
   private updateProps = (props: ITreesPanelProps) => {
@@ -101,7 +122,24 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
               </div>
               <div className={styles.right}>
                 <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} />
-                <NoteAddComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} trees={self.props.trees} />
+                <AltContainer stores={
+                  {
+                    note: function (props) {
+                      return {
+                        store: noteStore,
+                        value: noteStore.getNote(0),
+                      };
+                    },
+                    error: function (props) {
+                      return {
+                        store: noteStore,
+                        value: new Array<string>(noteStore.getState().errorMessage),
+                      };
+                    }
+                  }
+                }>
+                  <NoteAddComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} trees={self.props.trees} note={noteStore.getNote(0)} error={new Array<string>(noteStore.getState().errorMessage)} />
+                </AltContainer>
               </div>
             </div>
           );

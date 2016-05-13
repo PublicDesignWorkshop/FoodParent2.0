@@ -10,6 +10,7 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './note-amount.component.css';
 import { NoteModel, noteStore, AmountType, PickupTime } from './../../stores/note.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
+import ErrorMessage from './../error-message.component';
 
 export interface IPickupTimeOption {
   value: number;
@@ -129,10 +130,6 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
 
   render() {
     let self: NoteAmountComponent = this;
-    let error: JSX.Element = null;
-    if (self.props.error.indexOf("e602") > -1) {
-      error = <div className={styles.error}>{Settings.e602}</div>;
-    }
     if (self.state.editing || self.props.note.getId() == 0) {
       return (
         <div className={styles.wrapper}>
@@ -161,7 +158,7 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
             <Select className={styles.proper} name="pickuptime-select" multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={self.state.options2} value={self.state.selected2} onChange={self.updatePickupTime} />
           </div>
           <div className={styles.message}>
-            {error}
+            <ErrorMessage error={self.props.error} match={new Array<string>("e602")}/>
           </div>
         </div>
       );

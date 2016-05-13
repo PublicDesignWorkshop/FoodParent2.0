@@ -9,6 +9,7 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './note-comment.component.css';
 import { NoteModel, noteStore } from './../../stores/note.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
+import ErrorMessage from './../error-message.component';
 
 export interface INoteCommentProps {
   note: NoteModel;
@@ -59,10 +60,6 @@ export default class NoteCommentComponent extends React.Component<INoteCommentPr
 
   render() {
     let self: NoteCommentComponent = this;
-    let error: JSX.Element = null;
-    if (self.props.error.indexOf("e601") > -1) {
-      error = <div className={styles.error}>{Settings.e602}</div>;
-    }
     if (self.state.editing || self.props.note.getId() == 0) {
       return (
         <div className={styles.wrapper}>
@@ -87,7 +84,7 @@ export default class NoteCommentComponent extends React.Component<INoteCommentPr
               onBlur={()=> {
                 self.updateAttribute();
               }} />
-            {error}
+            <ErrorMessage error={self.props.error} match={new Array<string>("e601")}/>
           </div>
         </div>
       );

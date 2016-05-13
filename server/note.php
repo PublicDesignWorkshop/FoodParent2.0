@@ -97,15 +97,22 @@
     }
 
     $data = json_decode(file_get_contents('php://input'));
+    $type = $data->{'type'};  // 1: CHANGE, 2: POST, 3: PICKUP
+    $proper = $data->{'proper'};  // 1: EARLY, 2: PROPER, 3: LATE
+    if (floatval($data->{'amount'}) > 0) {
+      $type = 3;
+    } else {
+      $proper = 0;
+    }
     $params = array(
-      "type" => $data->{'type'},
+      "type" => $type,
       "tree" => $data->{'tree'},
       "person" => $owner,
       "comment" => $data->{'comment'},
       "picture" => $data->{'picture'},
       "rate" => $data->{'rate'},
       "amount" => $data->{'amount'},
-      "proper" => $data->{'proper'},
+      "proper" => $proper,
       "date" => $data->{'date'},
       );
     $sql = "INSERT INTO `note` VALUES ( NULL, :type, :tree, :person, :comment, :picture, :rate, :amount, :proper, :date )";

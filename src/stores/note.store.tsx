@@ -89,6 +89,18 @@ export class NoteModel {
   public getId(): number {
     return this.id
   }
+  public getTreeId(): number {
+    return this.tree;
+  }
+  public setTreeId(tree: number): void {
+    this.tree = tree;
+  }
+  public getPersonId(): number {
+    return this.person;
+  }
+  public setPersonId(person: number): void {
+    this.person = person;
+  }
   public getNoteType(): NoteType {
     return this.type;
   }
@@ -181,6 +193,7 @@ class NoteStore extends AbstractStore<NoteState> {
       handleFetchNotes: noteActions.fetchNotes,
       handleUpdateNote: noteActions.updateNote,
       handleCreateNote: noteActions.createNote,
+      handleLoading: noteActions.loading,
       handleFailed: noteActions.failed,
     });
     self.exportPublicMethods({
@@ -213,10 +226,19 @@ class NoteStore extends AbstractStore<NoteState> {
     console.warn("Handle Create Note");
     console.log(noteProps);
     self.notes.push(new NoteModel(noteProps));
+    self.errorMessage = "e600";
+    setTimeout(function() {
+      self.errorMessage = null;
+    }, Settings.iErrorMessageDuration);
+  }
+  handleLoading(errorMessage: string) {
+    let self: NoteStore = this;
+    self.errorMessage = errorMessage;
   }
   handleFailed(errorMessage: string) {
+    let self: NoteStore = this;
     console.warn("Handle Note Failed");
-    this.errorMessage = errorMessage;
+    self.errorMessage = errorMessage;
   }
   getNote(id: number): NoteModel {
     let self: NoteStore = this;

@@ -21,14 +21,17 @@
   "iMarkerPrecision": 5,
   "uTemporaryMarkerIcon": "unknown.svg",
 
-  "iErrorMessageDuration": 2500,
+  "iErrorMessageDuration": 5000,
 
 
 
   "e300": "Processing...",
 
-  
-  "e600": "The note is added successfully.",
+
+  "e600": "A new note is added successfully.",
   "e601": "Please fill out comment.",
-  "e602": "Please use postivie number."
+  "e602": "Please use postivie number.",
+  "e603": "Failed to add a new note.",
+  "e603": "The new note is modified successfully.",
+  "e603": "The new note is deleted successfully."
 }
