@@ -97,7 +97,9 @@
     min-height: 22px;
     min-width: 80px;
   }
-
+  :local(.success) {
+    color: rgba(35, 79, 30, 1);
+  }
 }
 
 

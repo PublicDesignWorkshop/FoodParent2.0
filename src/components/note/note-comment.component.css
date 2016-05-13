@@ -35,4 +35,7 @@
     outline: none;
     border: 1px solid rgba(94, 78, 81, 1);
   }
+  :local(.error) {
+    color: rgba(145, 13, 9, 1);
+  }
 }

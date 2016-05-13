@@ -8,12 +8,12 @@ import { noteStore, NoteModel, NoteState } from './../stores/note.store';
 let NoteSource: AltJS.Source = {
   fetchNotes(): AltJS.SourceModel<Array<NoteModel>> {
     return {
-      remote(state: NoteState) {
+      remote(state: NoteState, treeId: number) {
         return new Promise<Array<NoteModel>>((resolve, reject) => {
           $.ajax({
             url: Settings.uBaseName + Settings.uServer + "notes.php",
             data: {
-
+              treeId: treeId,
             },
             success: function(response) {
               resolve($.parseJSON(response));

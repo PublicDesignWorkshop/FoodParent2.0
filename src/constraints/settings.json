@@ -19,5 +19,16 @@
   "sUIDateFormat": "MM/DD/YY h:mm A",
   "uReverseGeoCoding": "//nominatim.openstreetmap.org/reverse?format=json&zoom=18&addressdetails=1",
   "iMarkerPrecision": 5,
-  "uTemporaryMarkerIcon": "unknown.svg"
+  "uTemporaryMarkerIcon": "unknown.svg",
+
+  "iErrorMessageDuration": 2500,
+
+
+
+  "e300": "Processing...",
+
+  
+  "e600": "The note is added successfully.",
+  "e601": "Please fill out comment.",
+  "e602": "Please use postivie number."
 }

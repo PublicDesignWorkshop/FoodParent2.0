@@ -32,6 +32,9 @@
   :local(.type) {
     width: 120px;
   }
+  :local(.proper) {
+    width: 160px;
+  }
 
   :local(.input) {
     width: 100%;
@@ -59,5 +62,12 @@
   :local(.wrapper) .is-focused:not(.is-open) > .Select-control {
     border-color: rgba(94, 78, 81, 1);
     box-shadow: none;
+  }
+  :local(.message) {
+    padding: 0 0 0 16px;
+    letter-spacing: 1px;
+  }
+  :local(.error) {
+    color: rgba(145, 13, 9, 1);
   }
 }

@@ -25,15 +25,18 @@ export interface INoteAddProps {
 export interface INoteAddStatus {
   editable?: boolean;
   note?: NoteModel;
+  error?: Array<string>;
 }
 export default class NoteAddComponent extends React.Component<INoteAddProps, INoteAddStatus> {
   static contextTypes: any;
+  private errorTimer: any;
   constructor(props : INoteAddProps) {
     super(props);
     let self: NoteAddComponent = this;
     this.state = {
       editable: false,
       note: null,
+      error: new Array<string>(),
     };
   }
   public componentDidMount() {
@@ -78,6 +81,12 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
 
   render() {
     let self: NoteAddComponent = this;
+    let error: JSX.Element = null;
+    if (self.state.error.indexOf("e300") > -1) {
+      error = <div className={styles.success}>{Settings.e300}</div>;
+    } else if (self.state.error.indexOf("e600") > -1) {
+      error = <div className={styles.success}>{Settings.e600}</div>;
+    }
     if (self.props.treeId && self.state.note != null) {
       var tree: TreeModel = treeStore.getTree(self.props.treeId);
       let images: Array<JSX.Element> = this.state.note.getImages().map(function(image: string, i: number) {
@@ -117,17 +126,38 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
             }} />
           </div>
           <div className={styles.inner}>
-            <NoteCommentComponent note={self.state.note} editable={true} async={false} />
+            <NoteCommentComponent note={self.state.note} editable={true} async={false} error={self.state.error} />
             <NoteDateComponent note={self.state.note} editable={true} async={false} />
-            <NoteAmountComponent note={self.state.note} editable={true} async={false} />
+            <NoteAmountComponent note={self.state.note} editable={true} async={false} error={self.state.error} />
           </div>
           <div className={styles.button} onClick={()=> {
-            if (self.state.note.getComment().trim() != "") {
+            let error: Array<string> = new Array<string>();
+            let bError: boolean = false;
+            if (self.state.note.getComment().trim() == "") {
+              error.push("e601");
+              bError = true;
+            }
+            if (self.state.note.getAmount() < 0) {
+              error.push("e602");
+              bError = true;
+            }
+            if (!bError) {
+              error.push("e300");
               noteStore.createNote(self.state.note);
+            }
+            self.setState({error: error});
+            if (bError) {
+              if (self.errorTimer) {
+                clearInterval(self.errorTimer);
+              }
+              self.errorTimer = setTimeout(function() {
+                self.setState({error: new Array<string>()});
+              }, Settings.iErrorMessageDuration);
             }
           }}>
             POST NEW NOTE
           </div>
+          {error}
         </div>
       );
     } else {

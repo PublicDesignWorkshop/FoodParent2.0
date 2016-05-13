@@ -14,6 +14,7 @@ export interface INoteCommentProps {
   note: NoteModel;
   editable: boolean;
   async: boolean;
+  error: Array<string>;
 }
 export interface INoteCommentStatus {
   comment?: string;
@@ -58,6 +59,10 @@ export default class NoteCommentComponent extends React.Component<INoteCommentPr
 
   render() {
     let self: NoteCommentComponent = this;
+    let error: JSX.Element = null;
+    if (self.props.error.indexOf("e601") > -1) {
+      error = <div className={styles.error}>{Settings.e602}</div>;
+    }
     if (self.state.editing || self.props.note.getId() == 0) {
       return (
         <div className={styles.wrapper}>
@@ -82,6 +87,7 @@ export default class NoteCommentComponent extends React.Component<INoteCommentPr
               onBlur={()=> {
                 self.updateAttribute();
               }} />
+            {error}
           </div>
         </div>
       );
