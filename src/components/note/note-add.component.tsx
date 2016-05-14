@@ -15,6 +15,7 @@ import { NoteModel, noteStore, NoteType, PickupTime, AmountType } from './../../
 import NoteCommentComponent from './note-comment.component';
 import NoteDateComponent from './note-date.component';
 import NoteAmountComponent from './note-amount.component';
+import NoteRateComponent from './note-rate.component';
 import ErrorMessage from './../error-message.component';
 
 export interface INoteAddProps {
@@ -53,7 +54,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
 
   private updateProps = (props: INoteAddProps) => {
     let self: NoteAddComponent = this;
-    if (props.treeId && props.userId) {
+    if (props.note != null && props.userId != null) {
       props.note.setTreeId(props.treeId);
       props.note.setPersonId(props.userId);
       self.setState({error: props.error});
@@ -106,6 +107,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
             }} />
           </div>
           <div className={styles.inner}>
+            <NoteRateComponent note={self.props.note} editable={true} async={false} error={self.state.error} />
             <NoteCommentComponent note={self.props.note} editable={true} async={false} error={self.state.error} />
             <NoteDateComponent note={self.props.note} editable={true} async={false} />
             <NoteAmountComponent note={self.props.note} editable={true} async={false} error={self.state.error} />

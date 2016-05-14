@@ -1,0 +1,32 @@
+@media all {
+  :local(.wrapper) {
+    font-family: 'Open Sans', sans-serif;
+    font-size: small;
+  }
+  :local(.label) {
+    font-weight: 700;
+    padding-top: 8px;
+    padding-bottom: 4px;
+  }
+  :local(.label:not(:first-child)) {
+    padding-top: 8px;
+  }
+  :local(.value) {
+    padding: 0 0 0 16px;
+  }
+  :local(.star) {
+    font-weight: 700;
+    font-size: x-small;
+  }
+  :local(.comment) {
+
+  }
+  :local(.date) {
+    font-size: x-small;
+    font-style: italic;
+  }
+}
+
+@media only screen and (orientation: portrait) {
+
+}

@@ -17,7 +17,7 @@ export interface INoteDateProps {
   async: boolean;
 }
 export interface INoteDateStatus {
-  date?: moment.Moment;
+
 }
 export default class NoteDateComponent extends React.Component<INoteDateProps, INoteDateStatus> {
   constructor(props : INoteDateProps) {
@@ -41,13 +41,11 @@ export default class NoteDateComponent extends React.Component<INoteDateProps, I
 
   private updateProps(props: INoteDateProps) {
     let self: NoteDateComponent = this;
-    if (props.note) {
-      self.setState({date: props.note.getDate()});
-    }
   }
-  private updateAttribute = () => {
+  private updateAttribute = (date: moment.Moment) => {
     let self: NoteDateComponent = this;
-    self.props.note.setDate(self.state.date);
+    self.props.note.setDate(date);
+    console.log(self.props.note.getFormattedDate());
     if (self.props.async) {
       noteStore.updateNote(self.props.note);
     }
@@ -65,9 +63,8 @@ export default class NoteDateComponent extends React.Component<INoteDateProps, I
           <FontAwesome className='' name='calendar-o' /> Date
         </div>
         <div className={styles.edit}>
-          <DateTimeField dateTime={self.state.date.format(Settings.sUIDateFormat)} format={Settings.sUIDateFormat} onChange={(event: any)=> {
-            self.setState({date: moment(event, Settings.sUIDateFormat)});
-            self.updateAttribute();
+          <DateTimeField mode="date" dateTime={self.props.note.getDate().format(Settings.sUIDateFormat)} format={Settings.sUIDateFormat} onChange={(event: any)=> {
+            self.updateAttribute(moment(event, Settings.sUIDateFormat));
           }}/>
         </div>
       </div>

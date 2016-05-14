@@ -8,6 +8,7 @@ import { noteActions } from './../actions/note.actions';
 import { AbstractStore } from './../stores/abstract.store';
 import { noteSource } from './../sources/note.source';
 import { foodStore } from './food.store';
+import { sortNoteByDateDESC } from './../utils/sort';
 
 export enum PickupTime {
   NONE, EARLY, PROPER, LATE
@@ -154,6 +155,9 @@ export class NoteModel {
   public setDate(date: moment.Moment): void {
     this.date = date;
   }
+  public getFormattedDate(): string {
+    return this.date.format(Settings.sUIDateFormat);
+  }
   public setCoverImage(filename: string): void {
     let i = this.images.indexOf(filename);
     if (i > -1) {
@@ -170,8 +174,9 @@ export interface NoteState {
 
 interface NoteExtendedStore extends AltJS.AltStore<NoteState> {
   getNote(id: number): NoteModel;
+  getNotesFromTreeId(treeId: number): Array<NoteModel>;
   addNote(note: NoteModel): void;
-  fetchNotes(): void;
+  fetchNotesFromTreeIds(treeIds: Array<number>): void;
   updateNote(update: NoteModel): void;
   createNote(create: NoteModel): void;
   isLoading(): boolean;
@@ -189,7 +194,7 @@ class NoteStore extends AbstractStore<NoteState> {
     self.errorMessage = null;
     //TODO: pass state generics to make sure methods/actions expect the same type
     self.bindListeners({
-      handleFetchNotes: noteActions.fetchNotes,
+      handleFetchNotesFromTreeIds: noteActions.fetchNotesFromTreeIds,
       handleUpdateNote: noteActions.updateNote,
       handleCreateNote: noteActions.createNote,
       handleLoading: noteActions.loading,
@@ -198,14 +203,23 @@ class NoteStore extends AbstractStore<NoteState> {
     self.exportPublicMethods({
       getNote: self.getNote,
       addNote: self.addNote,
+      getNotesFromTreeId: self.getNotesFromTreeId,
     });
     self.exportAsync(noteSource);
   }
-  handleFetchNotes(notesProps: Array<INoteProps>) {
+  handleFetchNotesFromTreeIds(notesProps: Array<INoteProps>) {
     let self: NoteStore = this;
     console.warn("Handle Fetch Notes");
-    if (!self.notes) {
-      self.notes = new Array<NoteModel>();
+    let note: NoteModel;
+    if (self.notes) {
+      let notes = self.notes.filter(note => note.getId() == 0);
+      if (notes.length > 0) {
+        note = notes[0];
+      }
+    }
+    self.notes = new Array<NoteModel>();
+    if (note) {
+      self.notes.push(note);
     }
     notesProps.forEach((props: INoteProps) => {
       self.notes.push(new NoteModel(props));
@@ -249,13 +263,12 @@ class NoteStore extends AbstractStore<NoteState> {
         i = j;
       }
     }
-    console.log(i);
     if (i > -1) {
-      self.notes = self.notes.splice(i, 1);
+      self.notes.splice(i, 1);
     }
-    console.log(note);
     self.notes.push(note);
-    console.log(self.notes);
+    console.log(self.notes.sort(sortNoteByDateDESC));
+    self.notes = self.notes.sort(sortNoteByDateDESC);
   }
   handleLoading(errorMessage: string) {
     let self: NoteStore = this;
@@ -275,6 +288,7 @@ class NoteStore extends AbstractStore<NoteState> {
     return null;
   }
   addNote(note: NoteModel): void {
+    console.log("addnote");
     let self: NoteStore = this;
     let notes = self.getState().notes;
     let i = -1;
@@ -287,6 +301,11 @@ class NoteStore extends AbstractStore<NoteState> {
       notes = notes.splice(i, 1);
     }
     notes.push(note);
+  }
+  getNotesFromTreeId(treeId: number): Array<NoteModel> {
+    let self: NoteStore = this;
+    let notes = self.getState().notes.filter(note => note.getTreeId() == treeId);
+    return notes;
   }
 }
 

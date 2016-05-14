@@ -5,7 +5,7 @@ import { NoteModel } from './../stores/note.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 
 interface INoteActions {
-  fetchNotes(notes: Array<NoteModel>);
+  fetchNotesFromTreeIds(notes: Array<NoteModel>);
   updateNote(note: NoteModel): void;
   createNote(note: NoteModel): void;
   failed(errorMessage: any);
@@ -13,7 +13,7 @@ interface INoteActions {
 }
 
 class NoteActions extends AbstractActions implements INoteActions {
-  fetchNotes(notes: Array<NoteModel>) {
+  fetchNotesFromTreeIds(notes: Array<NoteModel>) {
     let self: NoteActions = this;
     console.warn("Fetch Notes");
     removeLoading();

@@ -25,14 +25,14 @@
     $params = null;
     if ($data != null) {
       $params = array(
-        "treeId" => $data->{'treeId'},
+        "treeIds" => $data->{'treeIds'},
       );
     } else {
       $params = array(
-        "treeId" => $_GET['treeId'],
+        "treeIds" => $_GET['treeIds'],
       );
     }
-    $sql = "SELECT * FROM `note` WHERE (`tree` = :treeId)";
+    $sql = "SELECT * FROM `note` WHERE (`tree` IN (".$params["treeIds"].")) ORDER BY `date` DESC";
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);

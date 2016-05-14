@@ -10,6 +10,7 @@ import * as styles from './tree.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { FlagModel, flagStore } from './../../stores/flag.store';
+import { NoteModel, noteStore } from './../../stores/note.store';
 import FoodComponent from './food.component';
 import AddressComponent from './address.component';
 import DescriptionComponent from './description.component';
@@ -17,6 +18,7 @@ import FlagComponent from './flag.component';
 import OwnershipComponent from './ownership.component';
 import LocationComponent from './location.component';
 import { LogInStatus } from './../app.component';
+import NoteListComponent from './../note/note-list.component';
 
 export interface ITreeProps {
   foods: Array<FoodModel>;
@@ -24,6 +26,7 @@ export interface ITreeProps {
   treeId: number;
   login: LogInStatus;
   userId: number;
+  notes: Array<NoteModel>;
 }
 export interface ITreeStatus {
   editable: boolean;
@@ -59,7 +62,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
         if (props.login == LogInStatus.MANAGER || props.login == LogInStatus.ADMIN) {
           editable = true;
         } else {
-          if (tree.getOwner() == props.userId) {
+          if (tree.getOwner() == props.userId && props.userId != 0) {
             editable = true;
           }
         }
@@ -99,6 +102,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
                 <DescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
                 <FlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} async={self.state.editable} />
                 <OwnershipComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+                <NoteListComponent notes={self.props.notes} />
               </AltContainer>
             </div>
           </div>
@@ -113,7 +117,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
                 //self.setState({editable: self.state.editable});
               }}/></div>
             </div>
-            <div className={styles.basicinfo}>
+            <div className={styles.basicinfo2}>
               <AltContainer stores={
                 {
                   flags: function (props) {
@@ -127,6 +131,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
                 <LocationComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
                 <AddressComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
                 <DescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+                <NoteListComponent notes={self.props.notes} />
               </AltContainer>
             </div>
           </div>

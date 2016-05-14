@@ -85,6 +85,11 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
       let open: boolean = false;
       if (tree) {
         open = true;
+        setTimeout(function () {
+          let treeIds: Array<number> = new Array<number>();
+          treeIds.push(tree.getId());
+          noteStore.fetchNotesFromTreeIds(treeIds);
+        }, 1);
       }
       addLoading();
       checkLogin(function(response1) { // login
@@ -102,7 +107,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
       }, function(response) { // Not logged in
         removeLoading();
         console.log("guest");
-        self.setState({login: LogInStatus.GUEST, userId: parseInt(response.id), open: open});
+        self.setState({login: LogInStatus.GUEST, userId: 0, open: open});
       }, function(response) { // Error
         removeLoading();
       });
@@ -120,7 +125,24 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                 <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} tile={self.props.tile} onTile={self.props.onTile} />
               </div>
               <div className={styles.right}>
-                <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} />
+                <AltContainer stores={
+                  {
+                    notes: function (props) {
+                      return {
+                        store: noteStore,
+                        value: noteStore.getState().notes,
+                      };
+                    },
+                    error: function (props) {
+                      return {
+                        store: noteStore,
+                        value: new Array<string>(noteStore.getState().errorMessage),
+                      };
+                    }
+                  }
+                }>
+                  <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} notes={noteStore.getState().notes}/>
+                </AltContainer>
                 <AltContainer stores={
                   {
                     note: function (props) {

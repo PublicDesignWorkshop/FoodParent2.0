@@ -34,7 +34,6 @@
     margin-right: 8px;
   }
   :local(.treeinfo .close) {
-
     font-size: xx-large;
     font-weight: 700;
     color: rgba(94, 78, 81, 1);
@@ -46,6 +45,15 @@
     border-radius: 2px;
     background-color: rgba(94, 78, 81, 1);
     padding: 4px 12px 12px 12px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  :local(.basicinfo2) {
+    border-radius: 2px;
+    background-color: rgba(94, 78, 81, 1);
+    padding: 4px 12px 12px 12px;
+    max-height: 180px;
+    overflow-y: auto;
   }
   .span[name="close"] {
   }

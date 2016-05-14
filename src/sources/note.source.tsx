@@ -6,14 +6,15 @@ import { noteStore, NoteModel, NoteState } from './../stores/note.store';
 
 
 let NoteSource: AltJS.Source = {
-  fetchNotes(): AltJS.SourceModel<Array<NoteModel>> {
+  fetchNotesFromTreeIds(): AltJS.SourceModel<Array<NoteModel>> {
     return {
-      remote(state: NoteState, treeId: number) {
+      remote(state: NoteState, treeIds?: Array<number>) {
         return new Promise<Array<NoteModel>>((resolve, reject) => {
           $.ajax({
             url: Settings.uBaseName + Settings.uServer + "notes.php",
+            type: 'GET',
             data: {
-              treeId: treeId,
+              treeIds: treeIds.toString(),
             },
             success: function(response) {
               resolve($.parseJSON(response));
@@ -29,7 +30,7 @@ let NoteSource: AltJS.Source = {
         //TODO : Figure out why local doesn't work =(
         return null;
       },
-      success: noteActions.fetchNotes,
+      success: noteActions.fetchNotesFromTreeIds,
       error: noteActions.failed,
       loading: noteActions.loading,
       shouldFetch:() => true
