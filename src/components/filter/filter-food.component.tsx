@@ -68,8 +68,18 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
     let self: FilterFoodComponent = this;
     return (
       <div className={styles.wrapper}>
+        <div className={styles.title}>
+          FOOD TYPE FILTER
+        </div>
+        <div className={styles.label} onMouseUp={()=> {
+          // if (self.props.editable) {
+          //   self.setState({editing: true});
+          // }
+        }}>
+          <FontAwesome className='' name='apple ' /> Food Types
+        </div>
         <div className={styles.value}>
-          <Select name="food-select" multi={true} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
+          <Select name="food-select" multi={true} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select food types..." />
         </div>
       </div>
     );
