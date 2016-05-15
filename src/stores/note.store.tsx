@@ -237,7 +237,6 @@ class NoteStore extends AbstractStore<NoteState> {
   handleCreateNote(noteProps: INoteProps) {
     let self: NoteStore = this;
     console.warn("Handle Create Note");
-    console.log(noteProps);
     self.notes.push(new NoteModel(noteProps));
     self.errorMessage = "e600";
     setTimeout(function() {
@@ -267,7 +266,6 @@ class NoteStore extends AbstractStore<NoteState> {
       self.notes.splice(i, 1);
     }
     self.notes.push(note);
-    console.log(self.notes.sort(sortNoteByDateDESC));
     self.notes = self.notes.sort(sortNoteByDateDESC);
   }
   handleLoading(errorMessage: string) {
@@ -288,7 +286,6 @@ class NoteStore extends AbstractStore<NoteState> {
     return null;
   }
   addNote(note: NoteModel): void {
-    console.log("addnote");
     let self: NoteStore = this;
     let notes = self.getState().notes;
     let i = -1;

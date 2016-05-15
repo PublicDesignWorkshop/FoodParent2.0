@@ -38,4 +38,8 @@
   :local(.error) {
     color: rgba(145, 13, 9, 1);
   }
+  :local(.wrapper) .is-focused:not(.is-open) > .Select-control {
+    border-color: rgba(94, 78, 81, 1);
+    box-shadow: none;
+  }
 }

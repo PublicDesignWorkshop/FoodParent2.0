@@ -39,10 +39,12 @@ export interface ITreesPanelStatus {
 }
 export default class TreesPanelComponent extends React.Component<ITreesPanelProps, ITreesPanelStatus> {
   static contextTypes: any;
+  private bFirstLoad: boolean;
   constructor(props : ITreesPanelProps) {
     super(props);
     let self: TreesPanelComponent = this;
-    this.state = {
+    self.bFirstLoad = true;
+    self.state = {
       login: LogInStatus.GUEST,
       userId: null,
       open: false,
@@ -58,7 +60,9 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
   }
   public componentWillReceiveProps (nextProps: ITreesPanelProps) {
     let self: TreesPanelComponent = this;
-    self.updateProps(nextProps);
+    if (self.bFirstLoad || self.props.treeId != nextProps.treeId) {
+      self.updateProps(nextProps);
+    }
   }
 
   private createNewNote = () => {
@@ -84,6 +88,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
       var tree: TreeModel = treeStore.getTree(props.treeId);
       let open: boolean = false;
       if (tree) {
+        self.bFirstLoad = false;
         open = true;
         setTimeout(function () {
           let treeIds: Array<number> = new Array<number>();
