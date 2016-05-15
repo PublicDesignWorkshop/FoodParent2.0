@@ -60,87 +60,48 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
       tileIcon = 'map';
     }
 
-    if (self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.ADMIN) {
-      return (
-        <div className={styles.wrapper}>
-          <div className={styles.button + " " + styles.buttontop} onClick={()=> {
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
-            }
-          }}>
-            <FontAwesome className='' name='location-arrow' />
-          </div>
-          <div className={styles.button} onClick={()=> {
-            if (self.props.tile == TileMode.GRAY) {
-              self.props.onTile(TileMode.SATELLITE);
-            } else {
-              self.props.onTile(TileMode.GRAY);
-            }
-          }}>
-            <FontAwesome className='' name={tileIcon} />
-          </div>
-          <div className={styles.button} onClick={()=> {
-            let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-            self.props.onZoom(zoom);
-          }}>
-            <FontAwesome className='' name='search-plus' />
-          </div>
-          <div className={styles.button} onClick={()=> {
-            let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-            self.props.onZoom(zoom);
-          }}>
-            <FontAwesome className='' name='search-minus' />
-          </div>
-          <div className={styles.button}>
-            <FontAwesome className='' name='filter' />
-          </div>
-          <div className={styles.button + " " + styles.buttonbottom}>
-            <FontAwesome className='' name='plus' onClick={()=> {
-              self.context.router.push({pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" }});
-            }}/>
-          </div>
+    return (
+      <div className={styles.wrapper}>
+        <div className={styles.button + " " + styles.buttontop} onClick={()=> {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
+          }
+        }}>
+          <FontAwesome className='' name='location-arrow' />
         </div>
-      );
-    } else {
-      return (
-        <div className={styles.wrapper}>
-          <div className={styles.button + " " + styles.buttontop} onClick={()=> {
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
-            }
-          }}>
-            <FontAwesome className='' name='location-arrow' />
-          </div>
-          <div className={styles.button} onClick={()=> {
-            if (self.props.tile == TileMode.GRAY) {
-              self.props.onTile(TileMode.SATELLITE);
-            } else {
-              self.props.onTile(TileMode.GRAY);
-            }
-          }}>
-            <FontAwesome className='' name={tileIcon} />
-          </div>
-          <div className={styles.button} onClick={()=> {
-            let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-            self.props.onZoom(zoom);
-          }}>
-            <FontAwesome className='' name='search-plus' />
-          </div>
-          <div className={styles.button} onClick={()=> {
-            let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-            self.props.onZoom(zoom);
-          }}>
-            <FontAwesome className='' name='search-minus' />
-          </div>
-          <div className={styles.button + " " + styles.buttonbottom}>
-            <FontAwesome className='' name='plus' onClick={()=> {
-              self.context.router.push({pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" }});
-            }} />
-          </div>
+        <div className={styles.button} onClick={()=> {
+          if (self.props.tile == TileMode.GRAY) {
+            self.props.onTile(TileMode.SATELLITE);
+          } else {
+            self.props.onTile(TileMode.GRAY);
+          }
+        }}>
+          <FontAwesome className='' name={tileIcon} />
         </div>
-      );
-    }
-
+        <div className={styles.button} onClick={()=> {
+          let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
+          self.props.onZoom(zoom);
+        }}>
+          <FontAwesome className='' name='search-plus' />
+        </div>
+        <div className={styles.button} onClick={()=> {
+          let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
+          self.props.onZoom(zoom);
+        }}>
+          <FontAwesome className='' name='search-minus' />
+        </div>
+        <div className={styles.button}>
+          <FontAwesome className='' name='filter' onClick={()=> {
+            self.context.router.push({pathname: Settings.uBaseName + '/trees/filter'});
+          }} />
+        </div>
+        <div className={styles.button + " " + styles.buttonbottom}>
+          <FontAwesome className='' name='plus' onClick={()=> {
+            self.context.router.push({pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" }});
+          }} />
+        </div>
+      </div>
+    );
   }
 }
 

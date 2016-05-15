@@ -1,0 +1,23 @@
+@media all {
+  :local(.wrapper) {
+    color: rgba(94, 78, 81, 1);
+    font-family: 'Open Sans', sans-serif;
+    font-size: small;
+  }
+  :local(.label) {
+    font-weight: 700;
+    padding-top: 8px;
+    padding-bottom: 4px;
+  }
+  :local(.label:not(:first-child)) {
+    padding-top: 8px;
+  }
+  :local(.value) {
+    width: 100%;
+    padding: 0 0 0 16px;
+  }
+  :local(.wrapper) .is-focused:not(.is-open) > .Select-control {
+    border-color: rgba(94, 78, 81, 1);
+    box-shadow: none;
+  }
+}

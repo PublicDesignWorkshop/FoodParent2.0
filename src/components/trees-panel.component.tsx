@@ -13,8 +13,10 @@ import TreeAddComponent from './tree/tree-add.component';
 import { TreesMode } from './trees.component';
 import TreesControlsComponent from './trees-controls.component';
 import NoteAddComponent from './note/note-add.component';
+import TrresFilterComponent from './filter/trees-filter.component';
 import { TreeModel, treeStore } from './../stores/tree.store';
 import { FoodModel, foodStore } from './../stores/food.store';
+import { FlagModel, flagStore } from './../stores/flag.store';
 import { NoteModel, noteStore, NoteType, PickupTime, AmountType } from './../stores/note.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
@@ -198,6 +200,28 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
             </div>
             <div className={styles.right}>
               <TreeAddComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} />
+            </div>
+          </div>
+        );
+      case TreesMode.TREESFILTER:
+        return (
+          <div className={styles.wrapper + " " + styles.slidein}>
+            <div className={styles.left}>
+              <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} tile={self.props.tile} onTile={self.props.onTile} />
+            </div>
+            <div className={styles.right}>
+              <AltContainer stores={
+                {
+                  flags: function (props) {
+                    return {
+                      store: flagStore,
+                      value: flagStore.getState().flags
+                    };
+                  }
+                }
+              }>
+                <TrresFilterComponent foods={self.props.foods} trees={self.props.trees} flags={flagStore.getState().flags} />
+              </AltContainer>
             </div>
           </div>
         );

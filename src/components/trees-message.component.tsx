@@ -52,6 +52,7 @@ export default class TreesMessageComponent extends React.Component<ITreesMessage
     let self: TreesMessageComponent = this;
     switch (self.props.mode) {
       case TreesMode.TREEDETAIL:
+      case TreesMode.TREESFILTER:
         return (
           <div className={styles.wrapper}>
           </div>

@@ -17,7 +17,7 @@ import TreesMessageComponent from './trees-message.component';
 import { TileMode } from './map.component';
 
 export enum TreesMode {
-  NONE, TREEDETAIL, TREEADDMARKER, TREEADDINFO, TREEADDSAVE
+  NONE, TREEDETAIL, TREEADDMARKER, TREEADDINFO, TREEADDSAVE, TREESFILTER
 }
 export interface ITreesProps {
   params: any;
@@ -82,6 +82,8 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
           self.context.router.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" }});
         }
       }
+    } else if (props.params.treeId == "filter") {
+      mode = TreesMode.TREESFILTER;
     } else if (props.params.treeId) {
       treeId = parseInt(props.params.treeId);
     }
