@@ -30,9 +30,10 @@
       $public = "0,1";
     }
     $sql .= "`public` IN (".$public.") ";
-    if ($_SESSION && $_SESSION['food_ids'] != "") {
+    if (isset($_SESSION['food_ids']) && $_SESSION['food_ids'] && $_SESSION['food_ids'] != "") {
       $sql .= "AND `food` IN (".$_SESSION['food_ids'].") ";
     } else {
+      //$sql .= "AND `food` IN (0) ";
       $foods = calcSeasonFoods();
       $sql .= "AND `food` IN (".$foods.") ";
     }

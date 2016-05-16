@@ -42,13 +42,14 @@
     $check = admin_check();
     $public = null;
     $foods = null;
-    if ($_SESSION && $_SESSION['public']) {
+    if (isset($_SESSION['public'])) {
       $public = $_SESSION['public'];
     }
-    if ($_SESSION && $_SESSION['food_ids']) {
+    if (isset($_SESSION['food_ids'])) {
       $foods = $_SESSION['food_ids'];
     } else {
       $foods = calcSeasonFoods();
+      $_SESSION['food_ids'] = $foods;
     }
     $params = array(
       "code" => 400,
@@ -63,13 +64,11 @@
     $check = admin_check();
     $public = null;
     $foods = null;
-    if ($_SESSION && $_SESSION['public']) {
+    if (isset($_SESSION['public'])) {
       $public = $_SESSION['public'];
     }
-    if ($_SESSION && $_SESSION['food_ids']) {
-      $_SESSION['food_ids'] = null;
-    }
     $foods = calcSeasonFoods();
+    $_SESSION['food_ids'] = $foods;
     $params = array(
       "code" => 400,
       "public" => $public,
@@ -78,6 +77,6 @@
     echo json_encode($params);
   }
 
-  
+
 
 ?>

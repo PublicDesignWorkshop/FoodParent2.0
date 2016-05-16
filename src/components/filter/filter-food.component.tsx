@@ -65,6 +65,7 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
             selected.push({value: food, label: label});
           });
           self.setState({selected: selected});
+          treeStore.fetchTrees();
         }, function(response) {
 
         }, function(response) {
