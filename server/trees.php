@@ -23,12 +23,21 @@
   function read() {
     sec_session_continue(); // Our custom secure way of starting a PHP session.
     $check = admin_check();
-    $sql = "";
-    if ($check) {
-      $sql = "SELECT * FROM `tree`";
+    $sql = "SELECT * FROM `tree` WHERE ";
+    if (!$check) {
+      $public = "1";
     } else {
-      $sql = "SELECT * FROM `tree` WHERE (`public` = 1)";
+      $public = "0,1";
     }
+    $sql .= "`public` IN (".$public.") ";
+    if ($_SESSION && $_SESSION['food_ids'] != "") {
+      $sql .= "AND `food` IN (".$_SESSION['food_ids'].") ";
+    } else {
+      $foods = calcSeasonFoods();
+      $sql .= "AND `food` IN (".$foods.") ";
+    }
+
+
     /*
     if (!$loggedin) {
       $public = true;

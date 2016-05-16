@@ -222,6 +222,24 @@
     }
   }
 
+  function calcSeasonFoods() {
+    $sql = "SELECT id FROM `food` WHERE `season` = 1";
+    try {
+      $pdo = getConnection();
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute();
+      $result = $stmt->fetchAll();
+      $pdo = null;
+      $foods = [];
+      foreach ($result as $food) {
+        array_push($foods, $food["id"]);
+      }
+      return implode(',', $foods);
+    } catch(PDOException $e) {
+      return '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+  }
+
   //sec_session_start(); // Our custom secure way of starting a PHP session.
   //login('jkim848@gatech.edu', 'foodparent');
   //login_check();

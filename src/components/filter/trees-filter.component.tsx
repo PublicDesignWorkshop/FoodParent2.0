@@ -57,6 +57,15 @@ export default class TreesFilterComponent extends React.Component<ITreesFilterPr
     let self: TreesFilterComponent = this;
     return(
       <div className={styles.wrapper}>
+        <div className={styles.inner}>
+          <div className={styles.title}>
+            FOOD FILTERS
+          </div>
+          <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
+            self.context.router.push({pathname: Settings.uBaseName + '/'});
+            //self.setState({editable: self.state.editable});
+          }}/></div>
+        </div>
         <FilterFoodComponent foods={self.props.foods} />
       </div>
     );

@@ -46,6 +46,7 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
       if (note.getId()) {
         return (
           <div className={styles.value} key={"note" + i}>
+            • 
             <span className={styles.comment}>
               {" \"" + note.getComment() + "\" "}
             </span>
