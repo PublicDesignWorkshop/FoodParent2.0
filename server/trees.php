@@ -30,7 +30,7 @@
       $public = "0,1";
     }
     $sql .= "`public` IN (".$public.") ";
-    if (isset($_SESSION['food_ids']) && $_SESSION['food_ids'] && $_SESSION['food_ids'] != "") {
+    if (isset($_SESSION['food_ids'])) {
       $sql .= "AND `food` IN (".$_SESSION['food_ids'].") ";
     } else {
       //$sql .= "AND `food` IN (0) ";

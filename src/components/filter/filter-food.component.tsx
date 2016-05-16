@@ -61,8 +61,10 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
           });
           var selected = new Array<IFilterFoodOption>();
           foods.forEach(food => {
-            let label: string = foodStore.getFood(food).getName();
-            selected.push({value: food, label: label});
+            if (food != 0) {
+              let label: string = foodStore.getFood(food).getName();
+              selected.push({value: food, label: label});
+            }
           });
           self.setState({selected: selected});
           treeStore.fetchTrees();
@@ -116,8 +118,10 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
       });
       var selected = new Array<IFilterFoodOption>();
       foods.forEach(food => {
-        let label: string = foodStore.getFood(food).getName();
-        selected.push({value: food, label: label});
+        if (food != 0) {
+          let label: string = foodStore.getFood(food).getName();
+          selected.push({value: food, label: label});
+        }
       });
       self.setState({selected: selected});
       treeStore.fetchTrees();

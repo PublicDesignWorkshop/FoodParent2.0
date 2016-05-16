@@ -49,7 +49,8 @@ export default class LoginManagerComponent extends React.Component<ILoginManager
       processLogin(self.state.contact.trim(), self.state.password.trim(), function(response) { // Login success
         console.warn("login success");
         self.context.router.push({pathname: window.location.pathname});
-        treeStore.fetchTrees();
+        location.reload();
+        // treeStore.fetchTrees();
       }, function(response) { // Login fail
         console.warn("login failed");
       }, function(response) { // Error

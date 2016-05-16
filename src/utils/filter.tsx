@@ -7,12 +7,14 @@ export enum FilterMode {
 }
 
 export function applyFilter(mode: FilterMode, foodIds: Array<number>, success?: any, fail?: any, error?: any) {
+  let foods: Array<number> = foodIds;
+  foods.unshift(0);
   $.ajax({
     url: Settings.uBaseName + Settings.uServer + "filter.php",
     type: "POST",
     data: {
       'mode': mode,
-      'foodIds': foodIds.toString(),
+      'foodIds': foods.toString(),
     },
     cache: false,
     dataType: "json",
@@ -68,7 +70,7 @@ export function resetFilter(success?: any, fail?: any, error?: any) {
     url: Settings.uBaseName + Settings.uServer + "filter.php",
     type: "PUT",
     data: {
-
+      
     },
     cache: false,
     dataType: "json",

@@ -20,7 +20,7 @@
     // mode: 1 - FOOD
     sec_session_continue(); // Our custom secure way of starting a PHP session.
     $check = admin_check();
-
+    $public = null;
     if ($_POST['mode'] == 1) {
       if ($_POST['foodIds'] != "") {
         $_SESSION['food_ids'] = $_POST['foodIds'];
@@ -28,10 +28,13 @@
         $_SESSION['food_ids'] = null;
       }
     }
+    if (isset($_SESSION['public'])) {
+      $public = $_SESSION['public'];
+    }
 
     $params = array(
       "code" => 400,
-      "public" => $_SESSION['public'],
+      "public" => $public,
       "foods" => $_SESSION['food_ids'],
     );
     echo json_encode($params);
