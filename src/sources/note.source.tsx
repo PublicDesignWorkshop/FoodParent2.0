@@ -2,7 +2,7 @@ import * as $ from 'jquery';
 
 var Settings = require('./../constraints/settings.json');
 import { noteActions } from './../actions/note.actions';
-import { noteStore, NoteModel, NoteState } from './../stores/note.store';
+import { noteStore, NoteModel, NoteState, NoteType, AmountType } from './../stores/note.store';
 
 
 let NoteSource: AltJS.Source = {
@@ -71,6 +71,11 @@ let NoteSource: AltJS.Source = {
   createNote(): AltJS.SourceModel<NoteModel> {
     return {
       remote(state: NoteState, create?: NoteModel) {
+        if (create.getAmountType() == AmountType.KG) {
+          create.setAmount(create.getAmount() * Settings.fKGToG);
+        } else if (create.getAmountType() == AmountType.LBS) {
+          create.setAmount(create.getAmount() * Settings.fLBSTOG);
+        }
         return new Promise<NoteModel>((resolve, reject) => {
           //console.log(tree.toJSON());
           $.ajax({

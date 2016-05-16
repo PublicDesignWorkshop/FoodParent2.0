@@ -86,7 +86,7 @@ export default class NoteRateComponent extends React.Component<INoteRateProps, I
             //   self.setState({editing: true});
             // }
           }}>
-            <FontAwesome className='' name='shopping-basket' /> Pickup
+            <FontAwesome className='' name='star' /> Rate
           </div>
           <div className={styles.edit}>
             <Select name="amount-select" multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} />
@@ -102,7 +102,7 @@ export default class NoteRateComponent extends React.Component<INoteRateProps, I
               self.setState({editing: true});
             }
           }}>
-            <FontAwesome className='' name='shopping-basket' /> Pickup
+            <FontAwesome className='' name='star' /> Rate
           </div>
           <div className={styles.value} onClick={()=> {
             if (self.props.editable) {

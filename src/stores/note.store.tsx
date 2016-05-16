@@ -192,7 +192,7 @@ class NoteStore extends AbstractStore<NoteState> {
       self.notes = new Array<NoteModel>();
     }
     self.errorMessage = null;
-    //TODO: pass state generics to make sure methods/actions expect the same type
+    // TODO: pass state generics to make sure methods/actions expect the same type
     self.bindListeners({
       handleFetchNotesFromTreeIds: noteActions.fetchNotesFromTreeIds,
       handleUpdateNote: noteActions.updateNote,
