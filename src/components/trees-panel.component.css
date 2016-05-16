@@ -7,6 +7,7 @@
     height: 100%;
     transition: 0.25s;
     padding: 48px 0 0 0;
+    overflow-y: auto;
   }
   :local(.slidein) {
     right: 0;
@@ -27,7 +28,7 @@
     -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
     -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
     box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
-    overflow-y: auto;
+    overflow-y: scroll;
   }
 }
 
