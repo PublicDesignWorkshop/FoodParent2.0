@@ -14,7 +14,7 @@
       //read();
       break;
     case 'PUT':
-      //update();
+      update();
       break;
     case 'DELETE':
       //delete();
@@ -52,25 +52,25 @@
     if ($data != null) {
       $params = array(
         "id" => $data->{'id'},
-        "lat" => $data->{'lat'},
-        "lng" => $data->{'lng'},
-        "food" => $data->{'food'},
-        "flag" => $data->{'flag'},
-        "description" => $data->{'description'},
-        "address" => $data->{'address'},
-        "public" => $data->{'public'},
-        "owner" => $data->{'owner'},
-        "updated" => date("Y-m-d H:i:s"),
+        "type" => $data->{'type'},
+        "tree" => $data->{'tree'},
+        "person" => $data->{'person'},
+        "comment" => $data->{'comment'},
+        "picture" => $data->{'picture'},
+        "rate" => $data->{'rate'},
+        "amount" => $data->{'amount'},
+        "proper" => $data->{'proper'},
+        "date" => $data->{'date'},
       );
     }
-    $sql = "UPDATE `tree` SET `lat` = :lat, `lng` = :lng, `food` = :food, `flag` = :flag, `public` = :public, `owner` = :owner, `description` = :description, `address` = :address, `updated` = :updated WHERE (`id` = :id)";
+    $sql = "UPDATE `note` SET `type` = :type, `tree` = :tree, `person` = :person, `comment` = :comment, `picture` = :picture, `rate` = :rate, `amount` = :amount, `proper` = :proper, `date` = :date WHERE (`id` = :id)";
 
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);
       $stmt->execute($params);
 
-      $sql = "SELECT * FROM `tree` WHERE (`id` = :id)";
+      $sql = "SELECT * FROM `note` WHERE (`id` = :id)";
       $params = array(
         "id" => $data->{'id'},
       );

@@ -56,6 +56,9 @@ export default class ErrorMessageComponent extends React.Component<IErrorMessage
     } else if (props.error.indexOf("e602") > -1 && props.match.indexOf("e602") > -1) {
       type = ErrorType.ERROR;
       self.setState({type: ErrorType.ERROR, comment: Settings.e602});
+    } else if (props.error.indexOf("e603") > -1 && props.match.indexOf("e603") > -1) {
+      type = ErrorType.SUCCESS;
+      self.setState({type: ErrorType.SUCCESS, comment: Settings.e603});
     } else {
       type = ErrorType.NONE;
       self.setState({type: ErrorType.NONE, comment: ""});

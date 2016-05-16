@@ -13,6 +13,14 @@
   }
   :local(.value) {
     padding: 0 0 0 16px;
+    cursor: pointer;
+  }
+  :local(.value:hover),
+  :local(.value:hover .star),
+  :local(.value:hover .date) {
+    color: rgba(107, 170, 119, 1);
+    font-size: small;
+    font-weight: 700;
   }
   :local(.star) {
     font-weight: 700;

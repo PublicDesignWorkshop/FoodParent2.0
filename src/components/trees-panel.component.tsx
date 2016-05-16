@@ -13,6 +13,7 @@ import TreeAddComponent from './tree/tree-add.component';
 import { TreesMode } from './trees.component';
 import TreesControlsComponent from './trees-controls.component';
 import NoteAddComponent from './note/note-add.component';
+import NoteEditComponent from './note/note-edit.component';
 import TrresFilterComponent from './filter/trees-filter.component';
 import { TreeModel, treeStore } from './../stores/tree.store';
 import { FoodModel, foodStore } from './../stores/food.store';
@@ -25,6 +26,7 @@ import { TileMode } from './map.component';
 
 export interface ITreesPanelProps {
   treeId: number;
+  noteId: number;
   foods: Array<FoodModel>;
   trees: Array<TreeModel>;
   zoom: number;
@@ -225,8 +227,65 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
             </div>
           </div>
         );
+      case TreesMode.TREENOTEEDIT:
+        if (self.state.open) {
+          return (
+            <div className={styles.wrapper + " " + styles.slidein}>
+              <div className={styles.left}>
+                <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} tile={self.props.tile} onTile={self.props.onTile} />
+              </div>
+              <div className={styles.right}>
+                <AltContainer stores={
+                  {
+                    notes: function (props) {
+                      return {
+                        store: noteStore,
+                        value: noteStore.getState().notes,
+                      };
+                    },
+                    error: function (props) {
+                      return {
+                        store: noteStore,
+                        value: new Array<string>(noteStore.getState().errorMessage),
+                      };
+                    }
+                  }
+                }>
+                  <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} notes={noteStore.getState().notes}/>
+                </AltContainer>
+                <AltContainer stores={
+                  {
+                    note: function (props) {
+                      return {
+                        store: noteStore,
+                        value: noteStore.getNote(self.props.noteId),
+                      };
+                    },
+                    error: function (props) {
+                      return {
+                        store: noteStore,
+                        value: new Array<string>(noteStore.getState().errorMessage),
+                      };
+                    }
+                  }
+                }>
+                  <NoteEditComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} trees={self.props.trees} note={noteStore.getNote(self.props.noteId)} error={new Array<string>(noteStore.getState().errorMessage)} />
+                </AltContainer>
+              </div>
+            </div>
+          );
+        } else {
+          return (
+            <div className={styles.wrapper}>
+              <div className={styles.left}>
+                <TreesControlsComponent login={self.state.login} zoom={self.props.zoom} onZoom={self.props.onZoom} onGeo={self.props.onGeo} tile={self.props.tile} onTile={self.props.onTile} />
+              </div>
+              <div className={styles.right}>
+              </div>
+            </div>
+          );
+        }
     }
-
   }
 }
 

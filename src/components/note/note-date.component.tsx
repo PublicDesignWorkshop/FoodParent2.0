@@ -53,21 +53,39 @@ export default class NoteDateComponent extends React.Component<INoteDateProps, I
 
   render() {
     let self: NoteDateComponent = this;
-    return (
-      <div className={styles.wrapper}>
-        <div className={styles.label} onMouseUp={()=> {
-          // if (self.props.editable) {
-          //   self.setState({editing: true});
-          // }
-        }}>
-          <FontAwesome className='' name='calendar-o' /> Date
+    if (self.props.editable || self.props.note.getId() == 0) {
+      return (
+        <div className={styles.wrapper}>
+          <div className={styles.label} onMouseUp={()=> {
+            // if (self.props.editable) {
+            //   self.setState({editing: true});
+            // }
+          }}>
+            <FontAwesome className='' name='calendar-o' /> Date
+          </div>
+          <div className={styles.edit}>
+            <DateTimeField mode="date" dateTime={self.props.note.getDate().format(Settings.sUIDateFormat)} format={Settings.sUIDateFormat} onChange={(event: any)=> {
+              self.updateAttribute(moment(event, Settings.sUIDateFormat));
+            }}/>
+          </div>
         </div>
-        <div className={styles.edit}>
-          <DateTimeField mode="date" dateTime={self.props.note.getDate().format(Settings.sUIDateFormat)} format={Settings.sUIDateFormat} onChange={(event: any)=> {
-            self.updateAttribute(moment(event, Settings.sUIDateFormat));
-          }}/>
+      );
+    } else {
+      return (
+        <div className={styles.wrapper}>
+          <div className={styles.label} onMouseUp={()=> {
+            // if (self.props.editable) {
+            //   self.setState({editing: true});
+            // }
+          }}>
+            <FontAwesome className='' name='calendar-o' /> Date
+          </div>
+          <div className={styles.edit2}>
+            {self.props.note.getDate().format(Settings.sUIDateFormat)}
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
+
   }
 }

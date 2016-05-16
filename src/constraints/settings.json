@@ -34,6 +34,6 @@
   "e601": "Please fill out comment.",
   "e602": "Please use postivie number.",
   "e603": "Failed to add a new note.",
-  "e603": "The new note is modified successfully.",
-  "e603": "The new note is deleted successfully."
+  "e604": "The new note is modified successfully.",
+  "e605": "The new note is deleted successfully."
 }

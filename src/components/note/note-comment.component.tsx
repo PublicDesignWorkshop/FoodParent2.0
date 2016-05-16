@@ -19,7 +19,6 @@ export interface INoteCommentProps {
 }
 export interface INoteCommentStatus {
   comment?: string;
-  editing?: boolean;
 }
 export default class NoteCommentComponent extends React.Component<INoteCommentProps, INoteCommentStatus> {
   constructor(props : INoteCommentProps) {
@@ -27,7 +26,6 @@ export default class NoteCommentComponent extends React.Component<INoteCommentPr
     let self: NoteCommentComponent = this;
     this.state = {
       comment: "",
-      editing: false,
     };
   }
   public componentDidMount() {
@@ -45,7 +43,7 @@ export default class NoteCommentComponent extends React.Component<INoteCommentPr
   private updateProps(props: INoteCommentProps) {
     let self: NoteCommentComponent = this;
     if (props.note) {
-      self.setState({comment: props.note.getComment().trim(), editing: false});
+      self.setState({comment: props.note.getComment().trim()});
     }
   }
   private updateAttribute = () => {
@@ -54,13 +52,13 @@ export default class NoteCommentComponent extends React.Component<INoteCommentPr
     if (self.props.async) {
       noteStore.updateNote(self.props.note);
     } else {
-      self.setState({editing: false});
+
     }
   }
 
   render() {
     let self: NoteCommentComponent = this;
-    if (self.state.editing || self.props.note.getId() == 0) {
+    if (self.props.editable || self.props.note.getId() == 0) {
       return (
         <div className={styles.wrapper}>
           <div className={styles.label} onMouseUp={()=> {
@@ -91,18 +89,10 @@ export default class NoteCommentComponent extends React.Component<INoteCommentPr
     } else {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onClick={()=> {
-            if (self.props.editable) {
-              self.setState({editing: true});
-            }
-          }}>
+          <div className={styles.label}>
             <FontAwesome className='' name='comment-o' /> Comment
           </div>
-          <div className={styles.value} onClick={()=> {
-            if (self.props.editable) {
-              self.setState({editing: true});
-            }
-          }}>
+          <div className={styles.value}>
             {
               self.state.comment.split("\n").map(function(line: string, index: number) {
                 return (

@@ -1,0 +1,144 @@
+@media all {
+  :local(.wrapper) {
+    width: 100%;
+    padding: 8px;
+    color: rgba(94, 78, 81, 1);
+    font-family: 'Open Sans', sans-serif;
+    font-size: small;
+  }
+  :local(.inner) {
+    border-radius: 2px;
+    padding: 4px 8px;
+  }
+
+  :local(.upload) {
+    width: 100%;
+    outline: none;
+    height: 100px;
+    border: 1px dashed rgba(107, 170, 119, 1);
+    overflow: hidden;
+    border-radius: 2px;
+  }
+  :local(.upload::-webkit-file-upload-button) {
+    visibility: hidden;
+    outline: none;
+  }
+  :local(.upload::before) {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    content: 'ADD PHOTO';
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 2px;
+    background-color: rgba(244, 244, 244, 1);
+    font-weight: 700;
+    color: rgba(107, 170, 119, 1);
+    padding: 40px 0;
+    cursor: pointer;
+    font-size: medium;
+  }
+  :local(.upload:hover::before) {
+    color: rgba(244, 244, 244, 1);
+    background-color: rgba(107, 170, 119, 1);
+  }
+  :local(.button) {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    background-color: rgba(107, 170, 119, 1);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 1);
+    padding: 6px 0;
+    margin: 4px 0;
+    cursor: pointer;
+    font-size: medium;
+  }
+  :local(.button:hover) {
+    color: rgba(94, 78, 81, 1);
+  }
+  :local(.button2) {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    background-color: rgba(244, 244, 244, 1);
+    font-weight: 700;
+    color: rgba(107, 170, 119, 1);
+    padding: 6px 0;
+    margin: 4px 0;
+    cursor: pointer;
+    font-size: medium;
+    border: 1px solid rgba(107, 170, 119, 1);
+  }
+  :local(.button2:hover) {
+    color: rgba(94, 78, 81, 1);
+    border: 1px solid rgba(94, 78, 81, 1);
+  }
+  :local(.button3) {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    background-color: rgba(94, 78, 81, 1);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 1);
+    padding: 6px 0;
+    margin: 24px 0 4px 0;
+    cursor: pointer;
+    font-size: medium;
+  }
+  :local(.button3:hover) {
+    color: rgba(107, 170, 119, 1);
+  }
+  :local(.image) {
+    display: inline-block;
+    vertical-align: middle;
+    width: 50%;
+    border: 4px solid rgba(107, 170, 119, 0);
+    border-radius: 2px;
+    position: relative;
+  }
+  :local(.selected) {
+    border: 4px solid rgba(107, 170, 119, 1);
+    border-radius: 2px;
+  }
+  :local(.cover) {
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(107, 170, 119, 0.5);
+    color: rgba(255, 255, 255,1);
+    padding: 0 4px;
+    font-size: small;
+    font-weight: 700;
+  }
+  :local(.image img) {
+    width: 100%;
+    cursor: pointer;
+  }
+
+  :local(.label) {
+    font-weight: 700;
+    padding-top: 8px;
+    padding-bottom: 4px;
+  }
+  :local(.value) {
+    display: inline-block;
+    padding: 0 0 0 16px;
+    min-height: 22px;
+    min-width: 80px;
+  }
+  :local(.success) {
+    color: rgba(35, 79, 30, 1);
+  }
+}
+
+
+@media screen and (max-device-width: 736px) {
+
+}
+
+@media screen and (max-device-aspect-ratio: 1/1) {
+
+}

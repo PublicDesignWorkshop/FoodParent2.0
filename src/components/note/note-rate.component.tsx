@@ -23,7 +23,6 @@ export interface INoteRateProps {
   error: Array<string>;
 }
 export interface INoteRateStatus {
-  editing?: boolean;
   options?: Array<INoteRateOption>;
   selected?: INoteRateOption;
 }
@@ -31,8 +30,8 @@ export default class NoteRateComponent extends React.Component<INoteRateProps, I
   constructor(props : INoteRateProps) {
     super(props);
     let self: NoteRateComponent = this;
-    this.state = {
-      editing: false,
+    self.state = {
+
     };
   }
   public componentDidMount() {
@@ -59,9 +58,9 @@ export default class NoteRateComponent extends React.Component<INoteRateProps, I
       options.push({value: 5, label: "★★★★★ (Fully Grown)"});
       let selected: INoteRateOption = options[props.note.getRate()];
       if (props.note.getAmount() != 0) {
-        self.setState({editing: false, options: options, selected: selected});
+        self.setState({options: options, selected: selected});
       } else {
-        self.setState({editing: false, options: options, selected: selected});
+        self.setState({options: options, selected: selected});
       }
     }
   }
@@ -72,13 +71,13 @@ export default class NoteRateComponent extends React.Component<INoteRateProps, I
     if (self.props.async) {
       noteStore.updateNote(self.props.note);
     } else {
-      self.setState({editing: false});
+
     }
   }
 
   render() {
     let self: NoteRateComponent = this;
-    if (self.state.editing || self.props.note.getId() == 0) {
+    if (self.props.editable || self.props.note.getId() == 0) {
       return (
         <div className={styles.wrapper}>
           <div className={styles.label} onMouseUp={()=> {
@@ -95,25 +94,37 @@ export default class NoteRateComponent extends React.Component<INoteRateProps, I
         </div>
       );
     } else {
-      return (
-        <div className={styles.wrapper}>
-          <div className={styles.label} onClick={()=> {
-            if (self.props.editable) {
-              self.setState({editing: true});
-            }
-          }}>
-            <FontAwesome className='' name='star' /> Rate
+      if (self.state.options) {
+        return (
+          <div className={styles.wrapper}>
+            <div className={styles.label} onMouseUp={()=> {
+              // if (self.props.editable) {
+              //   self.setState({editing: true});
+              // }
+            }}>
+              <FontAwesome className='' name='star' /> Rate
+            </div>
+            <div className={styles.edit}>
+              {self.state.options[self.props.note.getRate()].label}
+            </div>
           </div>
-          <div className={styles.value} onClick={()=> {
-            if (self.props.editable) {
-              self.setState({editing: true});
-            }
-          }}>
-            {self.props.note.getRate()}
-          </div>
-        </div>
-      );
-    }
+        );
+      } else {
+        return (
+          <div className={styles.wrapper}>
+            <div className={styles.label} onMouseUp={()=> {
+              // if (self.props.editable) {
+              //   self.setState({editing: true});
+              // }
+            }}>
+              <FontAwesome className='' name='star' /> Rate
+            </div>
+            <div className={styles.edit}>
 
+            </div>
+          </div>
+        );
+      }
+    }
   }
 }

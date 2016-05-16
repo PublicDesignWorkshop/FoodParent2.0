@@ -39,7 +39,12 @@ let NoteSource: AltJS.Source = {
   updateNote(): AltJS.SourceModel<NoteModel> {
     return {
       remote(state: NoteState, update?: NoteModel) {
-        console.log(update);
+        if (update.getAmountType() == AmountType.KG) {
+          update.setAmount(update.getAmount() * Settings.fKGToG);
+        } else if (update.getAmountType() == AmountType.LBS) {
+          update.setAmount(update.getAmount() * Settings.fLBSTOG);
+        }
+        update.setAmountType(AmountType.G);
         return new Promise<NoteModel>((resolve, reject) => {
           //console.log(tree.toJSON());
           $.ajax({

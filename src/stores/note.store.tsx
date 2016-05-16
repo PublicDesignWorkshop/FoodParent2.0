@@ -233,6 +233,10 @@ class NoteStore extends AbstractStore<NoteState> {
     if (notes.length == 1) {
       notes[0].update(noteProps);
     }
+    self.errorMessage = "e604";
+    setTimeout(function() {
+      self.errorMessage = null;
+    }, Settings.iErrorMessageDuration);
   }
   handleCreateNote(noteProps: INoteProps) {
     let self: NoteStore = this;

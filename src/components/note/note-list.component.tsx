@@ -18,6 +18,7 @@ export interface INoteListStatus {
 
 }
 export default class NoteListComponent extends React.Component<INoteListProps, INoteListStatus> {
+  static contextTypes: any;
   constructor(props : INoteListProps) {
     super(props);
     let self: NoteListComponent = this;
@@ -45,8 +46,11 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
     let notes: Array<JSX.Element> = self.props.notes.map(function(note: NoteModel, i: number) {
       if (note.getId()) {
         return (
-          <div className={styles.value} key={"note" + i}>
-            • 
+          <div className={styles.value} key={"note" + i}  onClick={()=> {
+            console.log(note.getId());
+            self.context.router.push({pathname: window.location.pathname, query: { note: note.getId() }});
+          }}>
+            •
             <span className={styles.comment}>
               {" \"" + note.getComment() + "\" "}
             </span>
@@ -72,3 +76,10 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
     );
   }
 }
+
+
+NoteListComponent.contextTypes = {
+  router: function () {
+    return React.PropTypes.func.isRequired;
+  }
+};

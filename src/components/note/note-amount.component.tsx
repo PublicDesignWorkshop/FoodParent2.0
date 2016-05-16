@@ -29,7 +29,6 @@ export interface INoteAmountProps {
 }
 export interface INoteAmountStatus {
   amount?: any;
-  editing?: boolean;
   options?: Array<IAmountTypeOption>;
   selected?: IAmountTypeOption;
   options2?: Array<IPickupTimeOption>;
@@ -41,7 +40,6 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
     let self: NoteAmountComponent = this;
     this.state = {
       amount: "",
-      editing: false,
     };
   }
   public componentDidMount() {
@@ -84,9 +82,9 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
         selected2 = options2[2];
       }
       if (props.note.getAmount() != 0) {
-        self.setState({amount: props.note.getAmount(), editing: false, options: options, selected: selected, options2: options2, selected2: selected2});
+        self.setState({amount: props.note.getAmount(), options: options, selected: selected, options2: options2, selected2: selected2});
       } else {
-        self.setState({amount: "", editing: false, options: options, selected: selected, options2: options2, selected2: selected2});
+        self.setState({amount: "", options: options, selected: selected, options2: options2, selected2: selected2});
       }
 
     }
@@ -109,7 +107,7 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
     if (self.props.async) {
       noteStore.updateNote(self.props.note);
     } else {
-      self.setState({editing: false});
+
     }
   }
   private updatePickupTime = (selected2: any) => {
@@ -130,7 +128,7 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
 
   render() {
     let self: NoteAmountComponent = this;
-    if (self.state.editing || self.props.note.getId() == 0) {
+    if (self.props.editable || self.props.note.getId() == 0) {
       return (
         <div className={styles.wrapper}>
           <div className={styles.label} onMouseUp={()=> {
@@ -165,19 +163,11 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
     } else {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onClick={()=> {
-            if (self.props.editable) {
-              self.setState({editing: true});
-            }
-          }}>
+          <div className={styles.label}>
             <FontAwesome className='' name='shopping-basket' /> Pickup
           </div>
-          <div className={styles.value} onClick={()=> {
-            if (self.props.editable) {
-              self.setState({editing: true});
-            }
-          }}>
-            {self.state.amount}
+          <div className={styles.value}>
+            {self.state.amount.toLocaleString() + "g"}
           </div>
         </div>
       );
