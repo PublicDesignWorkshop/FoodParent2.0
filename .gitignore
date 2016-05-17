@@ -1,5 +1,6 @@
 node_modules/*
 !node_modules/react-bootstrap-datetimepicker
+!node_modules/react-pinch-zoom-pan
 dist/FoodParent2.0/*
 dist/dist/*
 dist/foodparent.js

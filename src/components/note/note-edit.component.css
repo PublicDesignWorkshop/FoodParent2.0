@@ -96,6 +96,7 @@
     border: 4px solid rgba(107, 170, 119, 0);
     border-radius: 2px;
     position: relative;
+    overflow: hidden;
   }
   :local(.selected) {
     border: 4px solid rgba(107, 170, 119, 1);
@@ -112,6 +113,32 @@
     padding: 0 4px;
     font-size: small;
     font-weight: 700;
+  }
+  :local(.zoom) {
+    display: none;
+  }
+  :local(.image:hover .zoom) {
+    display: block;
+    width: 72px;
+    height: 72px;
+    position: absolute;
+    bottom: -36px;
+    right: -36px;
+    background-color: rgba(107, 170, 119, 1);
+    color: rgba(255, 255, 255,1);
+    padding: 26px 8px;
+    font-size: small;
+    font-weight: 700;
+    -ms-transform: rotate(45deg); /* IE 9 */
+    -webkit-transform: rotate(45deg); /* Safari */
+    transform: rotate(45deg);
+    cursor: pointer;
+    font-size: large;
+  }
+  :local(.zoom) .fa {
+    -ms-transform: rotate(-45deg); /* IE 9 */
+    -webkit-transform: rotate(-45deg); /* Safari */
+    transform: rotate(-45deg);
   }
   :local(.image img) {
     width: 100%;

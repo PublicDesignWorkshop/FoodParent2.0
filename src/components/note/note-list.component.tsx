@@ -105,7 +105,6 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
           if (note.getNoteType() == NoteType.POST) {
             return (
               <div className={styles.value} key={"note" + i}  onClick={()=> {
-                console.log(note.getId());
                 self.context.router.push({pathname: window.location.pathname, query: { note: note.getId() }});
               }}>
                 •

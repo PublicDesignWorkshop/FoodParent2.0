@@ -17,6 +17,7 @@ import NoteDateComponent from './note-date.component';
 import NoteAmountComponent from './note-amount.component';
 import NoteRateComponent from './note-rate.component';
 import ErrorMessage from './../error-message.component';
+import ImageZoomComponent from './../image/image-zoom.component';
 
 export interface INoteEditProps {
   trees: Array<TreeModel>;
@@ -28,6 +29,7 @@ export interface INoteEditProps {
 }
 export interface INoteEditStatus {
   editable?: boolean;
+  image?: string;
   error?: Array<string>;
 }
 export default class NoteEditComponent extends React.Component<INoteEditProps, INoteEditStatus> {
@@ -36,6 +38,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
     super(props);
     let self: NoteEditComponent = this;
     this.state = {
+      image: null,
       editable: false,
       error: new Array<string>(),
     };
@@ -77,16 +80,36 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
     }
   }
 
+  private onImageZoom = (image: string) => {
+    let self: NoteEditComponent = this;
+    image = image.replace("_thumb", "_dest");
+    self.setState({image: image});
+  }
+
+  private onImageClose = () => {
+    let self: NoteEditComponent = this;
+    self.setState({image: null});
+  }
+
   render() {
     let self: NoteEditComponent = this;
     if (self.props.treeId && self.props.note != null) {
       var tree: TreeModel = treeStore.getTree(self.props.treeId);
+      let image: JSX.Element;
+      if (self.state.image) {
+        image = <ImageZoomComponent image={self.state.image} onClose={self.onImageClose}/>;
+      }
       let images: Array<JSX.Element> = self.props.note.getImages().map(function(image: string, i: number) {
         if (i == 0) {
           return (
             <div className={styles.image + " " + styles.selected} key={"noteimage" + i}>
               <div className={styles.cover}>
                 cover
+              </div>
+              <div className={styles.zoom} onClick={()=> {
+                self.onImageZoom(image);
+              }}>
+                <FontAwesome className='' name='search-plus' />
               </div>
               <img src={Settings.uBaseName + Settings.uContentImage + image} onClick={()=> {
                 self.onImageClick(image);
@@ -96,6 +119,11 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
         } else {
           return (
             <div className={styles.image} key={"noteimage" + i}>
+              <div className={styles.zoom} onClick={()=> {
+                self.onImageZoom(image);
+              }}>
+                <FontAwesome className='' name='search-plus' />
+              </div>
               <img src={Settings.uBaseName + Settings.uContentImage + image} onClick={()=> {
                 self.onImageClick(image);
               }}/>
@@ -160,6 +188,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
             }}>
               DELETE
             </div>
+            {image}
           </div>
         );
       } else {
@@ -177,6 +206,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
             }}>
               CLOSE
             </div>
+            {image}
           </div>
         );
       }
