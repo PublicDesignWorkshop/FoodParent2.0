@@ -179,6 +179,7 @@ interface NoteExtendedStore extends AltJS.AltStore<NoteState> {
   fetchNotesFromTreeIds(treeIds: Array<number>): void;
   updateNote(update: NoteModel): void;
   createNote(create: NoteModel): void;
+  deleteNote(create: NoteModel): void;
   isLoading(): boolean;
 }
 
@@ -197,6 +198,7 @@ class NoteStore extends AbstractStore<NoteState> {
       handleFetchNotesFromTreeIds: noteActions.fetchNotesFromTreeIds,
       handleUpdateNote: noteActions.updateNote,
       handleCreateNote: noteActions.createNote,
+      handleDeleteNote: noteActions.deleteNote,
       handleLoading: noteActions.loading,
       handleFailed: noteActions.failed,
     });
@@ -271,6 +273,18 @@ class NoteStore extends AbstractStore<NoteState> {
     }
     self.notes.push(note);
     self.notes = self.notes.sort(sortNoteByDateDESC);
+  }
+  handleDeleteNote(noteProps: INoteProps) {
+    let self: NoteStore = this;
+    let i = -1;
+    for(let j = 0; j < self.notes.length; j++) {
+      if(self.notes[j].getId() === parseInt(noteProps.id)) {
+        i = j;
+      }
+    }
+    if (i > -1) {
+      self.notes.splice(i, 1);
+    }
   }
   handleLoading(errorMessage: string) {
     let self: NoteStore = this;

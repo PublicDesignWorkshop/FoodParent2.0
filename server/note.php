@@ -17,7 +17,7 @@
       update();
       break;
     case 'DELETE':
-      //delete();
+      delete();
       break;
   }
 
@@ -140,20 +140,20 @@
     }
   }
 
-    function delete() {
-        $data = json_decode(file_get_contents('php://input'));
-        $params = array(
-            "id" => $data->{'id'},
-        );
-        $sql = "DELETE FROM `tree` WHERE (`id` = :id)";
-        try {
-            $pdo = getConnection();
-            $stmt = $pdo->prepare($sql);
-            $result = $stmt->execute($params);
-            $pdo = null;
-            echo json_encode($result);
-        } catch(PDOException $e) {
-            echo '{"error":{"text":'. $e->getMessage() .'}}';
-        }
+  function delete() {
+    $data = json_decode(file_get_contents('php://input'));
+    $params = array(
+      "id" => $data->{'id'},
+    );
+    $sql = "DELETE FROM `note` WHERE (`id` = :id)";
+    try {
+      $pdo = getConnection();
+      $stmt = $pdo->prepare($sql);
+      $result = $stmt->execute($params);
+      $pdo = null;
+      echo json_encode($result);
+    } catch(PDOException $e) {
+      echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
+  }
 ?>

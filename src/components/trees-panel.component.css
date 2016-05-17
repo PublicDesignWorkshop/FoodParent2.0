@@ -7,7 +7,7 @@
     height: 100%;
     transition: 0.25s;
     padding: 48px 0 0 0;
-    overflow-y: auto;
+
   }
   :local(.slidein) {
     right: 0;
@@ -32,14 +32,15 @@
   }
 }
 
-@media screen and (max-device-width: 736px) {
+@media screen and (max-device-width: 1280px) {
   :local(.wrapper) {
-    right: -50%;
-    width: 50%;
+    right: -100%;
+    width: 100%;
   }
   :local(.slidein) {
     right: 0;
     transition: 0.25s;
+    overflow-y: auto;
   }
 }
 
@@ -53,5 +54,6 @@
   :local(.slidein) {
     right: 0;
     transition: 0.25s;
+    overflow-y: auto;
   }
 }

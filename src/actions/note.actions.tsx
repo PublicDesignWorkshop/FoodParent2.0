@@ -8,6 +8,7 @@ interface INoteActions {
   fetchNotesFromTreeIds(notes: Array<NoteModel>);
   updateNote(note: NoteModel): void;
   createNote(note: NoteModel): void;
+  deleteNote(note: NoteModel): void;
   failed(errorMessage: any);
   loading(): void;
 }
@@ -32,6 +33,16 @@ class NoteActions extends AbstractActions implements INoteActions {
   createNote(note: NoteModel) {
     let self: NoteActions = this;
     console.warn("Create Note");
+    removeLoading();
+    return note;
+    //return (dispatch) => {
+    //  // we dispatch an event here so we can have "loading" state.
+    //  dispatch({tree: tree, updatedTree: updatedTree});
+    //}
+  }
+  deleteNote(note: NoteModel) {
+    let self: NoteActions = this;
+    console.warn("Delete Note");
     removeLoading();
     return note;
     //return (dispatch) => {

@@ -155,7 +155,8 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
             </div>
             <ErrorMessage error={self.props.error} match={new Array<string>("e300", "e604")}/>
             <div className={styles.button3} onClick={()=> {
-
+              // noteStore.deleteNote(self.props.note);
+              self.context.router.push({pathname: window.location.pathname, query: { note: self.props.note.getId(), mode: "delete" }});
             }}>
               DELETE
             </div>

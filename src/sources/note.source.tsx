@@ -108,6 +108,37 @@ let NoteSource: AltJS.Source = {
       loading: noteActions.loading,
       shouldFetch:() => true
     };
+  },
+  deleteNote(): AltJS.SourceModel<NoteModel> {
+    return {
+      remote(state: NoteState, remove?: NoteModel) {
+        return new Promise<NoteModel>((resolve, reject) => {
+          //console.log(tree.toJSON());
+          $.ajax({
+            url: Settings.uBaseName + Settings.uServer + "note.php",
+            type: 'DELETE',
+            contentType: 'application/json',
+            data: JSON.stringify(remove.toJSON()),
+            dataType: "json",
+            success: function(response) {
+              resolve(remove.toJSON());
+            },
+            error: function(response) {
+              console.log(response);
+              reject(response);
+            }
+          });
+        })
+      },
+      local(state: NoteState): NoteModel {
+        //TODO : Figure out why local doesn't work =(
+        return null;
+      },
+      success: noteActions.deleteNote,
+      error: noteActions.failed,
+      loading: noteActions.loading,
+      shouldFetch:() => true
+    };
   }
 };
 

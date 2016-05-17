@@ -150,7 +150,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                     }
                   }
                 }>
-                  <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} notes={noteStore.getState().notes}/>
+                  <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} noteId={self.props.noteId} foods={self.props.foods} trees={self.props.trees} notes={noteStore.getState().notes}/>
                 </AltContainer>
                 <AltContainer stores={
                   {
@@ -228,6 +228,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
           </div>
         );
       case TreesMode.TREENOTEEDIT:
+      case TreesMode.TREENOTEDELETE:
         if (self.state.open) {
           return (
             <div className={styles.wrapper + " " + styles.slidein}>
@@ -251,7 +252,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                     }
                   }
                 }>
-                  <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} foods={self.props.foods} trees={self.props.trees} notes={noteStore.getState().notes}/>
+                  <TreeComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} noteId={self.props.noteId} foods={self.props.foods} trees={self.props.trees} notes={noteStore.getState().notes}/>
                 </AltContainer>
                 <AltContainer stores={
                   {

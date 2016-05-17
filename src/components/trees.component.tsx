@@ -17,7 +17,7 @@ import TreesMessageComponent from './trees-message.component';
 import { TileMode } from './map.component';
 
 export enum TreesMode {
-  NONE, TREEDETAIL, TREEADDMARKER, TREEADDINFO, TREEADDSAVE, TREESFILTER, TREENOTEEDIT
+  NONE, TREEDETAIL, TREEADDMARKER, TREEADDINFO, TREEADDSAVE, TREESFILTER, TREENOTEEDIT, TREENOTEDELETE
 }
 export interface ITreesProps {
   params: any;
@@ -91,6 +91,9 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
       if (props.location.query.note) {
         mode = TreesMode.TREENOTEEDIT;
         noteId = parseInt(props.location.query.note);
+        if (props.location.query.mode == "delete") {
+          mode = TreesMode.TREENOTEDELETE;
+        }
       }
       treeId = parseInt(props.params.treeId);
     }
@@ -154,7 +157,7 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
         }>
           <MapComponent tile={self.state.tile} mode={self.state.mode} treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} onRender={self.onMapRender} zoom={self.state.zoom} onZoom={self.onZoom} position={self.state.position} offGeo={self.offGeo} />
           <TreesPanelComponent tile={self.state.tile} onTile={self.onTile} mode={self.state.mode} treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} zoom={self.state.zoom} onZoom={self.onZoom} onGeo={self.onGeo} noteId={self.state.noteId} />
-          <TreesMessageComponent mode={self.state.mode} />
+          <TreesMessageComponent mode={self.state.mode} treeId={self.state.treeId} noteId={self.state.noteId} />
         </AltContainer>
       </div>
     );

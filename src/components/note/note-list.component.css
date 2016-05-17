@@ -15,10 +15,14 @@
     padding: 0 0 0 16px;
     cursor: pointer;
   }
+
+  :local(.selected),
+  :local(.selected .star),
+  :local(.selected .date),
   :local(.value:hover),
   :local(.value:hover .star),
   :local(.value:hover .date) {
-    color: rgba(107, 170, 119, 1);
+    color: rgba(255, 255, 255, 1);
     font-size: small;
     font-weight: 700;
   }
@@ -32,6 +36,9 @@
   :local(.date) {
     font-size: x-small;
     font-style: italic;
+  }
+  :local(.blankstar) {
+    color: rgba(255, 255, 255, 0.25) !important;
   }
 }
 

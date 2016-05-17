@@ -12,6 +12,7 @@ import { TreesMode } from './trees.component';
 import TreesControlsComponent from './trees-controls.component';
 import { TreeModel, treeStore } from './../stores/tree.store';
 import { FoodModel, foodStore } from './../stores/food.store';
+import { NoteModel, noteStore } from './../stores/note.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 import { LogInStatus } from './app.component';
@@ -19,6 +20,8 @@ import { LogInStatus } from './app.component';
 
 export interface ITreesMessageProps {
   mode: TreesMode;
+  treeId: number;
+  noteId: number;
 }
 export interface ITreesMessageStatus {
 
@@ -73,6 +76,21 @@ export default class TreesMessageComponent extends React.Component<ITreesMessage
                 self.context.router.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "save" }});
               }} >
                 SAVE
+              </span>
+            </div>
+          </div>
+        );
+      case TreesMode.TREENOTEDELETE:
+        let note: NoteModel = noteStore.getNote(self.props.noteId);
+        return (
+          <div className={styles.wrapper + " " + styles.slidein}>
+            <div className={styles.message}>
+              Press the button to <strong>delete</strong> this post.
+              <span className={styles.button} onClick={()=> {
+                noteStore.deleteNote(note);
+                self.context.router.replace({pathname: window.location.pathname});
+              }} >
+                DELETE
               </span>
             </div>
           </div>

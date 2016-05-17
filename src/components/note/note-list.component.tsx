@@ -7,12 +7,13 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './note-list.component.css';
-import { NoteModel, noteStore } from './../../stores/note.store';
+import { NoteModel, noteStore, NoteType, PickupTime } from './../../stores/note.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import ErrorMessage from './../error-message.component';
 
 export interface INoteListProps {
   notes: Array<NoteModel>;
+  noteId: number;
 }
 export interface INoteListStatus {
 
@@ -45,23 +46,99 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
     let self: NoteListComponent = this;
     let notes: Array<JSX.Element> = self.props.notes.map(function(note: NoteModel, i: number) {
       if (note.getId()) {
-        return (
-          <div className={styles.value} key={"note" + i}  onClick={()=> {
-            console.log(note.getId());
-            self.context.router.push({pathname: window.location.pathname, query: { note: note.getId() }});
-          }}>
-            •
-            <span className={styles.comment}>
-              {" \"" + note.getComment() + "\" "}
-            </span>
-            <span className={styles.star}>
-              {"★x" + note.getRate()}
-            </span>
-            <span className={styles.date}>
-              {" (" + note.getFormattedDate() + ")"}
-            </span>
-          </div>
-        );
+        let pickuptime: string = "Early";
+        if (note.getPicupTime() == PickupTime.PROPER) {
+          pickuptime = "Proper";
+        } else if (note.getPicupTime() == PickupTime.PROPER) {
+          pickuptime = "Late"
+        }
+        let rate: JSX.Element = <span><span className={styles.blankstar}>☆☆☆☆☆</span></span>;
+        if (note.getRate() == 1) {
+          rate = <span><span>★</span><span className={styles.blankstar}>☆☆☆☆</span></span>;
+        } else if (note.getRate() == 2) {
+          rate = <span><span>★★</span><span className={styles.blankstar}>☆☆☆</span></span>;
+        } else if (note.getRate() == 3) {
+          rate = <span><span>★★★</span><span className={styles.blankstar}>☆☆</span></span>;
+        } else if (note.getRate() == 4) {
+          rate = <span><span>★★★★</span><span className={styles.blankstar}>☆</span></span>;
+        } else if (note.getRate() == 5) {
+          rate = <span><span>★★★★★</span></span>;
+        }
+        if (note.getId() == self.props.noteId) {
+          if (note.getNoteType() == NoteType.POST) {
+            return (
+              <div className={styles.value + " " + styles.selected} key={"note" + i}  onClick={()=> {
+                self.context.router.push({pathname: window.location.pathname, query: { note: note.getId() }});
+              }}>
+                •
+                <span className={styles.comment}>
+                  {" \"" + note.getComment() + "\" "}
+                </span>
+                <span className={styles.star}>
+                  {rate}
+                </span>
+                <span className={styles.date}>
+                  {" (" + note.getFormattedDate() + ")"}
+                </span>
+              </div>
+            );
+          } else if (note.getNoteType() == NoteType.PICKUP) {
+            return (
+              <div className={styles.value + " " + styles.selected} key={"note" + i}  onClick={()=> {
+                self.context.router.push({pathname: window.location.pathname, query: { note: note.getId() }});
+              }}>
+                ▶
+                <span className={styles.comment}>
+                  {" " + note.getAmount().toLocaleString() + "g has been picked up. "}
+                </span>
+                <span className={styles.star}>
+                  {"\"" + pickuptime + "\""}
+                </span>
+                <span className={styles.date}>
+                  {" (" + note.getFormattedDate() + ")"}
+                </span>
+              </div>
+            );
+          }
+
+        } else {
+          if (note.getNoteType() == NoteType.POST) {
+            return (
+              <div className={styles.value} key={"note" + i}  onClick={()=> {
+                console.log(note.getId());
+                self.context.router.push({pathname: window.location.pathname, query: { note: note.getId() }});
+              }}>
+                •
+                <span className={styles.comment}>
+                  {" \"" + note.getComment() + "\" "}
+                </span>
+                <span className={styles.star}>
+                  {rate}
+                </span>
+                <span className={styles.date}>
+                  {" (" + note.getFormattedDate() + ")"}
+                </span>
+              </div>
+            );
+          } else if (note.getNoteType() == NoteType.PICKUP) {
+            return (
+              <div className={styles.value} key={"note" + i}  onClick={()=> {
+                self.context.router.push({pathname: window.location.pathname, query: { note: note.getId() }});
+              }}>
+                ▶
+                <span className={styles.comment}>
+                  {" " + note.getAmount().toLocaleString() + "g has been picked up. "}
+                </span>
+                <span className={styles.star}>
+                  {"\"" + pickuptime + "\""}
+                </span>
+                <span className={styles.date}>
+                  {" (" + note.getFormattedDate() + ")"}
+                </span>
+              </div>
+            );
+          }
+        }
       } else {
         return null;
       }
