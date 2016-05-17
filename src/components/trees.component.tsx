@@ -80,7 +80,7 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
         var tree: TreeModel = treeStore.getTree(0);
         if (tree) {
           treeStore.createTree(tree);
-          self.context.router.replace({pathname: Settings.uBaseName + '/'});
+          // self.context.router.replace({pathname: Settings.uBaseName + '/'});
         } else {
           self.context.router.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" }});
         }

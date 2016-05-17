@@ -12,6 +12,8 @@ import * as styles from './food.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
+import { applyFilter, FilterMode } from './../../utils/filter';
+
 
 export interface IFoodOption {
   value: number;
@@ -76,6 +78,18 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
       treeStore.updateTree(self.props.tree);
     } else {
       self.setState({selected: selected});
+    }
+    // Apply filter for a new tree food type to help users to figure out the location
+    if (self.props.tree.getId() == 0) {
+      var foods = new Array<number>();
+      foods.push(foodId);
+      applyFilter(FilterMode.FOOD, foods, function(response) {
+        treeStore.fetchTrees();
+      }, function(response) {
+
+      }, function(response) {
+
+      });
     }
   }
 

@@ -2,6 +2,7 @@ import { alt } from './../alt';
 import * as Alt from 'alt';
 import * as moment from 'moment';
 import * as L from 'leaflet';
+import { browserHistory } from 'react-router';
 
 var Settings = require('./../constraints/settings.json');
 import { noteActions } from './../actions/note.actions';

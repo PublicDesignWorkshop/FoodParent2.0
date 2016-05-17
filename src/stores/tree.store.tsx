@@ -2,6 +2,7 @@ import { alt } from './../alt';
 import * as Alt from 'alt';
 import * as moment from 'moment';
 import * as L from 'leaflet';
+import { browserHistory } from 'react-router';
 
 var Settings = require('./../constraints/settings.json');
 import { treeActions } from './../actions/tree.actions';
@@ -199,6 +200,7 @@ class TreeStore extends AbstractStore<TreeState> {
     console.warn("Handle Create Tree");
     console.log(treeProps);
     self.trees.push(new TreeModel(treeProps));
+    browserHistory.replace({pathname: Settings.uBaseName + '/trees/' + treeProps.id});
   }
   handleFailed(errorMessage: string) {
     console.warn("Handle Tree Failed");

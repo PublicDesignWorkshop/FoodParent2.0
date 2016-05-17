@@ -92,7 +92,7 @@
 
   function create() {
     $owner = 0;
-    if ($_SESSION && $_SESSION['user_id']) {
+    if (isset($_SESSION['user_id'])) {
       $owner = intval($_SESSION['user_id']);;
     }
 

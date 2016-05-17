@@ -87,7 +87,6 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
     let self: FilterFoodComponent = this;
     self.setState({selected: selected});
     var foods = new Array<number>();
-    console.log(selected);
     if (selected) {
       selected.forEach(option => {
         foods.push(parseInt(option.value));
