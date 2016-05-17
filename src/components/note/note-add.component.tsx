@@ -100,6 +100,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
             <input className={styles.upload} type="file" accept="image/*" capture="camera" onChange={(event: any)=> {
               if (event.target.files[0] != null) {
                 uploadImage(event.target.files[0], tree.getId().toString(), function(filename: string) {  // success
+                  console.log(filename);
                   self.props.note.addImage(filename);
                   self.forceUpdate();
                 }, function() { // fail

@@ -57,7 +57,6 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
   public componentDidMount() {
     let self: TreesPanelComponent = this;
     self.updateProps(self.props);
-    self.createNewNote();
   }
   public componentWillUnmount() {
     let self: TreesPanelComponent = this;
@@ -71,6 +70,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
 
   private createNewNote = () => {
     let self: TreesPanelComponent = this;
+    console.log("createNewNote");
     let note: NoteModel = new NoteModel({
       id: "0",
       type: NoteType.POST.toString(),
@@ -92,6 +92,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
       var tree: TreeModel = treeStore.getTree(props.treeId);
       let open: boolean = false;
       if (tree) {
+        self.createNewNote();
         self.bFirstLoad = false;
         open = true;
         setTimeout(function () {

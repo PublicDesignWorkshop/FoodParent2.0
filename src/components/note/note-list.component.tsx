@@ -49,7 +49,7 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
         let pickuptime: string = "Early";
         if (note.getPicupTime() == PickupTime.PROPER) {
           pickuptime = "Proper";
-        } else if (note.getPicupTime() == PickupTime.PROPER) {
+        } else if (note.getPicupTime() == PickupTime.LATE) {
           pickuptime = "Late"
         }
         let rate: JSX.Element = <span><span className={styles.blankstar}>☆☆☆☆☆</span></span>;
@@ -89,7 +89,7 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
               }}>
                 ▶
                 <span className={styles.comment}>
-                  {" " + note.getAmount().toLocaleString() + "g has been picked up. "}
+                  {" " + Math.floor(note.getAmount()).toLocaleString() + "g has been picked up. "}
                 </span>
                 <span className={styles.star}>
                   {"\"" + pickuptime + "\""}

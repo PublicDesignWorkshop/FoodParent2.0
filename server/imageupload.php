@@ -17,7 +17,7 @@ if(isset($_GET['files'])) {
     $tempName = str_replace(".".$extension, "", $fileName);
     $tempName = preg_replace('/[^A-Za-z0-\9\-]/', '', $tempName);
     if (!file_exists($uploaddir.$fileName)) {
-      $fileName = $prefix.'_0.'.$extension;
+      $fileName = $prefix.'_0_dest.'.$extension;
     }
 		while( file_exists($uploaddir.$fileName) ) {
 			$info = pathinfo($fileName);
@@ -25,14 +25,39 @@ if(isset($_GET['files'])) {
 			$name = str_replace(".".$extension, "", $fileName);
 
 			$count++;
-			$fileName = $prefix.'_'.$count.".".$extension;
+			$fileName = $prefix.'_'.$count."_dest.".$extension;
 		}
 
-		if( move_uploaded_file($file['tmp_name'], $uploaddir.$fileName) ) {
-			$files[] = $uploaddir.$fileName;
+		$destName = $prefix.'_'.$count."_dest.".$extension;
+		$thumbName = $prefix.'_'.$count."_thumb.".$extension;
+
+		list($origWidth, $origHeight) = getimagesize($file['tmp_name']);
+		$newWidth = 1920;
+		$newHeight = intval($newWidth * $origHeight / $origWidth);
+		$thumbWidth = 320;
+		$thumbHeight = intval($thumbWidth * $origHeight / $origWidth);
+
+		// Load
+		$thumb = imagecreatetruecolor($thumbWidth, $thumbHeight);
+		$dest = imagecreatetruecolor($newWidth, $newHeight);
+		$source = imagecreatefromjpeg($file['tmp_name']);
+
+		// Resize
+		imagecopyresized($dest, $source, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
+		imagecopyresized($thumb, $source, 0, 0, 0, 0, $thumbWidth, $thumbHeight, $origWidth, $origHeight);
+
+		// Save
+		if (imagejpeg($dest, $uploaddir.$destName, 75) && imagejpeg($thumb, $uploaddir.$thumbName, 75)) {
+			$files[] = $uploaddir.$thumbName;
 		} else {
-		    $error = true;
+			$error = true;
 		}
+
+		// if( move_uploaded_file($file['tmp_name'], $uploaddir.$fileName) ) {
+		// 	$files[] = $uploaddir.$fileName;
+		// } else {
+		//     $error = true;
+		// }
 		/*
 		if(move_uploaded_file($file['tmp_name'], $uploaddir .basename($file['name']))) {
 			$files[] = $uploaddir .$file['name'];

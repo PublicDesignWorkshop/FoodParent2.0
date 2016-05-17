@@ -314,7 +314,7 @@ class NoteStore extends AbstractStore<NoteState> {
       }
     }
     if (i > -1) {
-      notes = notes.splice(i, 1);
+      notes.splice(i, 1);
     }
     notes.push(note);
   }
