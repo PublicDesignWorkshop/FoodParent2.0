@@ -101,47 +101,74 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
       }
       let images: Array<JSX.Element> = self.props.note.getImages().map(function(image: string, i: number) {
         if (i == 0) {
-          return (
-            <div className={styles.image + " " + styles.selected} key={"noteimage" + i}>
-              <div className={styles.cover}>
-                cover
-              </div>
-              <div className={styles.remove} onClick={()=> {
+          if (self.state.editable) {
+            return (
+              <div className={styles.image + " " + styles.selected} key={"noteimage" + i}>
+                <div className={styles.cover}>
+                  cover
+                </div>
+                <div className={styles.remove} onClick={()=> {
 
-              }}>
-                <FontAwesome className='' name='remove' />
+                }}>
+                  <FontAwesome className='' name='remove' />
+                </div>
+                <div className={styles.zoom} onClick={()=> {
+                  self.onImageZoom(image);
+                }}>
+                  <FontAwesome className='' name='search-plus' />
+                </div>
+                <img src={Settings.uBaseName + Settings.uContentImage + image} />
               </div>
-              <div className={styles.zoom} onClick={()=> {
-                self.onImageZoom(image);
-              }}>
-                <FontAwesome className='' name='search-plus' />
+            );
+          } else {
+            return (
+              <div className={styles.image + " " + styles.selected} key={"noteimage" + i}>
+                <div className={styles.cover}>
+                  cover
+                </div>
+                <div className={styles.zoom} onClick={()=> {
+                  self.onImageZoom(image);
+                }}>
+                  <FontAwesome className='' name='search-plus' />
+                </div>
+                <img src={Settings.uBaseName + Settings.uContentImage + image} />
               </div>
-              <img src={Settings.uBaseName + Settings.uContentImage + image} onClick={()=> {
-                self.onImageClick(image);
-              }}/>
-            </div>
-          );
+            );
+          }
         } else {
-          return (
-            <div className={styles.image} key={"noteimage" + i}>
-              <div className={styles.cover2} onClick={()=> {
-                self.onImageClick(image);
-              }}>
-                set as a cover
-              </div>
-              <div className={styles.remove} onClick={()=> {
+          if (self.state.editable) {
+            return (
+              <div className={styles.image} key={"noteimage" + i}>
+                <div className={styles.cover2} onClick={()=> {
+                  self.onImageClick(image);
+                }}>
+                  set as a cover
+                </div>
+                <div className={styles.remove} onClick={()=> {
 
-              }}>
-                <FontAwesome className='' name='remove' />
+                }}>
+                  <FontAwesome className='' name='remove' />
+                </div>
+                <div className={styles.zoom} onClick={()=> {
+                  self.onImageZoom(image);
+                }}>
+                  <FontAwesome className='' name='search-plus' />
+                </div>
+                <img src={Settings.uBaseName + Settings.uContentImage + image} />
               </div>
-              <div className={styles.zoom} onClick={()=> {
-                self.onImageZoom(image);
-              }}>
-                <FontAwesome className='' name='search-plus' />
+            );
+          } else {
+            return (
+              <div className={styles.image} key={"noteimage" + i}>
+                <div className={styles.zoom} onClick={()=> {
+                  self.onImageZoom(image);
+                }}>
+                  <FontAwesome className='' name='search-plus' />
+                </div>
+                <img src={Settings.uBaseName + Settings.uContentImage + image} />
               </div>
-              <img src={Settings.uBaseName + Settings.uContentImage + image} />
-            </div>
-          );
+            );
+          }
         }
       });
       if (self.state.editable) {

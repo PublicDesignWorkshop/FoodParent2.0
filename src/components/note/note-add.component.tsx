@@ -17,6 +17,7 @@ import NoteDateComponent from './note-date.component';
 import NoteAmountComponent from './note-amount.component';
 import NoteRateComponent from './note-rate.component';
 import ErrorMessage from './../error-message.component';
+import ImageZoomComponent from './../image/image-zoom.component';
 
 export interface INoteAddProps {
   trees: Array<TreeModel>;
@@ -28,6 +29,7 @@ export interface INoteAddProps {
 }
 export interface INoteAddStatus {
   editable?: boolean;
+  image?: string;
   error?: Array<string>;
 }
 export default class NoteAddComponent extends React.Component<INoteAddProps, INoteAddStatus> {
@@ -37,6 +39,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
     let self: NoteAddComponent = this;
     this.state = {
       editable: false,
+      image: null,
       error: new Array<string>(),
     };
   }
@@ -67,10 +70,25 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
     self.forceUpdate();
   }
 
+  private onImageZoom = (image: string) => {
+    let self: NoteAddComponent = this;
+    image = image.replace("_thumb", "_dest");
+    self.setState({image: image});
+  }
+
+  private onImageClose = () => {
+    let self: NoteAddComponent = this;
+    self.setState({image: null});
+  }
+
   render() {
     let self: NoteAddComponent = this;
     if (self.props.treeId && self.props.note != null) {
       var tree: TreeModel = treeStore.getTree(self.props.treeId);
+      let image: JSX.Element;
+      if (self.state.image) {
+        image = <ImageZoomComponent image={self.state.image} onClose={self.onImageClose}/>;
+      }
       let images: Array<JSX.Element> = self.props.note.getImages().map(function(image: string, i: number) {
         if (i == 0) {
           return (
@@ -78,17 +96,38 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
               <div className={styles.cover}>
                 cover
               </div>
-              <img src={Settings.uBaseName + Settings.uContentImage + image} onClick={()=> {
-                self.onImageClick(image);
-              }}/>
+              <div className={styles.remove} onClick={()=> {
+
+              }}>
+                <FontAwesome className='' name='remove' />
+              </div>
+              <div className={styles.zoom} onClick={()=> {
+                self.onImageZoom(image);
+              }}>
+                <FontAwesome className='' name='search-plus' />
+              </div>
+              <img src={Settings.uBaseName + Settings.uContentImage + image} />
             </div>
           );
         } else {
           return (
             <div className={styles.image} key={"noteimage" + i}>
-              <img src={Settings.uBaseName + Settings.uContentImage + image} onClick={()=> {
+              <div className={styles.cover2} onClick={()=> {
                 self.onImageClick(image);
-              }}/>
+              }}>
+                set as a cover
+              </div>
+              <div className={styles.remove} onClick={()=> {
+
+              }}>
+                <FontAwesome className='' name='remove' />
+              </div>
+              <div className={styles.zoom} onClick={()=> {
+                self.onImageZoom(image);
+              }}>
+                <FontAwesome className='' name='search-plus' />
+              </div>
+              <img src={Settings.uBaseName + Settings.uContentImage + image} />
             </div>
           );
         }
@@ -139,6 +178,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
             POST NEW NOTE
           </div>
           <ErrorMessage error={self.props.error} match={new Array<string>("e300", "e600")}/>
+          {image}
         </div>
       );
     } else {
