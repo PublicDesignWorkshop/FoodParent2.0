@@ -6,5 +6,5 @@ FoodParent is a web-based application as a part of Concrete Jungle’s FoodParen
 2. Install [node.js](https://nodejs.org/en/) to use npm command in OSX and Windows.
 3. Open terminal or command prompt and move to the app directory.
 4. Run `npm install` to install all dependency libaries.
-5. Run `npm run dev` or `npm run build` to generate compiled _foodparent.js_ and _foodparent.map.js_ file in _[APP]/dist_ directory.
-6. Copy _database.php_ and _dbpass.php_ files from _[APP]/serverconfig_ to _[APP]/server_ directory.
+5. Run `npm run dev` or `npm run build` to generate compiled `foodparent.js` and `foodparent.map.js` file in [APP-ROOT]/dist directory.
+6. Copy `database.php` and `dbpass.php` files from [APP-ROOT]/serverconfig to [APP-ROOT]/server directory.
