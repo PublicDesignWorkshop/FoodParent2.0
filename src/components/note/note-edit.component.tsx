@@ -106,6 +106,11 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
               <div className={styles.cover}>
                 cover
               </div>
+              <div className={styles.remove} onClick={()=> {
+
+              }}>
+                <FontAwesome className='' name='remove' />
+              </div>
               <div className={styles.zoom} onClick={()=> {
                 self.onImageZoom(image);
               }}>
@@ -119,14 +124,22 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
         } else {
           return (
             <div className={styles.image} key={"noteimage" + i}>
+              <div className={styles.cover2} onClick={()=> {
+                self.onImageClick(image);
+              }}>
+                set as a cover
+              </div>
+              <div className={styles.remove} onClick={()=> {
+
+              }}>
+                <FontAwesome className='' name='remove' />
+              </div>
               <div className={styles.zoom} onClick={()=> {
                 self.onImageZoom(image);
               }}>
                 <FontAwesome className='' name='search-plus' />
               </div>
-              <img src={Settings.uBaseName + Settings.uContentImage + image} onClick={()=> {
-                self.onImageClick(image);
-              }}/>
+              <img src={Settings.uBaseName + Settings.uContentImage + image} />
             </div>
           );
         }

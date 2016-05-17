@@ -9,3 +9,20 @@ import './bootstrap-datetimepicker.css';
 ReactDOM.render(<Router history={browserHistory}>{Routes}</Router>, document.getElementById('app'));
 
 resetFilter();
+
+// var elem: any = document.querySelector("#app");
+// if (elem.requestFullscreen) {
+//   alert("full screen");
+//   elem.requestFullscreen();
+// } else if (elem.msRequestFullscreen) {
+//   alert("full screen");
+//   elem.msRequestFullscreen();
+// } else if (elem.mozRequestFullScreen) {
+//   alert("full screen");
+//   elem.mozRequestFullScreen();
+// } else if (elem.webkitRequestFullscreen) {
+//   alert("full screen");
+//   elem.webkitRequestFullscreen();
+// } else {
+//   alert("non-full screen");
+// }
