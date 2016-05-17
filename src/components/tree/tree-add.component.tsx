@@ -10,7 +10,6 @@ import * as styles from './tree-add.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { FlagModel, flagStore } from './../../stores/flag.store';
-import { OwnershipModel, ownershipStore } from './../../stores/ownership.store';
 import FoodComponent from './food.component';
 import AddressComponent from './address.component';
 import DescriptionComponent from './description.component';
