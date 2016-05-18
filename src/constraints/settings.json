@@ -5,6 +5,7 @@
   "uContentImage": "/content/images/",
   "uRelativeImageUpload": "./../content/images/",
   "uServer": "/server/",
+  "sMailserversuffix": "smtp",
   "vPosition": {
     "x": 33.7704,
     "y": -84.3806
@@ -27,6 +28,9 @@
 
 
 
+
+
+
   "e300": "Processing...",
 
 
@@ -35,5 +39,8 @@
   "e602": "Please use postivie number.",
   "e603": "Failed to add a new note.",
   "e604": "The new note is modified successfully.",
-  "e605": "The new note is deleted successfully."
+  "e605": "The new note is deleted successfully.",
+
+
+  "e901": "Failed to send the message."
 }

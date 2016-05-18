@@ -3,12 +3,20 @@ import * as ReactDOM from 'react-dom';
 import { Router, browserHistory  } from 'react-router';
 import Routes from './routes';
 import { resetFilter } from './utils/filter';
+import { sendMailFromParent } from './utils/mail';
 
 import './client.css';
 import './bootstrap-datetimepicker.css';
 ReactDOM.render(<Router history={browserHistory}>{Routes}</Router>, document.getElementById('app'));
 
 resetFilter();
+// sendMailFromParent("jkim848@gatech.edu", "Mail Subject", "Mail Message", function(response) {
+//
+// }, function(response) {
+//
+// }, function(response) {
+//
+// });
 
 // var elem: any = document.querySelector("#app");
 // if (elem.requestFullscreen) {

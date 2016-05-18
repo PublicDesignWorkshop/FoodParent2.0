@@ -12,5 +12,6 @@ src/**/*.css.d.ts
 npm-debug.log.*
 server/database.php
 server/dbpass.php
+server/config.php
 content/images/*
 !content/images/blank.jpg
