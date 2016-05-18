@@ -16,10 +16,10 @@ _*{} is variable that can be different based on your environment._
 
 ```php
 class database extends dbpass {
-    public $host = "{database host address}";
-    public $username = "{database account name}";
-    public $port = 3306;    // database port number - usually 3306.
-    public $db_name = "{database name}";
+    public $host = "{database host address}";    //ex> localhost
+    public $username = "{database account name}"; //ex> root (not recommended)
+    public $port = {database port number};    //ex> 3306.
+    public $db_name = "{database name}";    // ex> foodparent
 }
 ```
 
