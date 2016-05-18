@@ -72,7 +72,6 @@ export default class FilterFlagComponent extends React.Component<IFilterFlagProp
               selected.push({value: flagId, label: label});
             }
           });
-          console.log(selected);
           self.setState({selected: selected});
           treeStore.fetchTrees();
         }, function(response) {
