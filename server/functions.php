@@ -240,6 +240,42 @@
     }
   }
 
+  function getDefaultFlags() {
+    $sql = "SELECT id FROM `flag` WHERE `filter` = 1";
+    try {
+      $pdo = getConnection();
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute();
+      $result = $stmt->fetchAll();
+      $pdo = null;
+      $flags = [];
+      foreach ($result as $flag) {
+        array_push($flags, $flag["id"]);
+      }
+      return implode(',', $flags);
+    } catch(PDOException $e) {
+      return '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+  }
+
+  function getFlagSize() {
+    $sql = "SELECT id FROM `flag`";
+    try {
+      $pdo = getConnection();
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute();
+      $result = $stmt->fetchAll();
+      $pdo = null;
+      $size = 0;
+      foreach ($result as $flag) {
+        $size++;
+      }
+      return $size;
+    } catch(PDOException $e) {
+      return '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+  }
+
   //sec_session_start(); // Our custom secure way of starting a PHP session.
   //login('jkim848@gatech.edu', 'foodparent');
   //login_check();

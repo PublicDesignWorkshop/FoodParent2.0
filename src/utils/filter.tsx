@@ -3,18 +3,17 @@ import * as $ from 'jquery';
 var Settings = require('./../constraints/settings.json');
 
 export enum FilterMode {
-  NONE, FOOD
+  NONE, FOOD, FLAG
 }
 
-export function applyFilter(mode: FilterMode, foodIds: Array<number>, success?: any, fail?: any, error?: any) {
-  let foods: Array<number> = foodIds;
-  foods.unshift(0);
+export function applyFilter(mode: FilterMode, ids: Array<number>, success?: any, fail?: any, error?: any) {
+  ids.unshift(-1);  // Fake id to handle when there is no item in ids.
   $.ajax({
     url: Settings.uBaseName + Settings.uServer + "filter.php",
     type: "POST",
     data: {
       'mode': mode,
-      'foodIds': foods.toString(),
+      'ids': ids.toString(),
     },
     cache: false,
     dataType: "json",
@@ -70,7 +69,7 @@ export function resetFilter(success?: any, fail?: any, error?: any) {
     url: Settings.uBaseName + Settings.uServer + "filter.php",
     type: "PUT",
     data: {
-      
+
     },
     cache: false,
     dataType: "json",

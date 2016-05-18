@@ -30,6 +30,7 @@
       $public = "0,1";
     }
     $sql .= "`public` IN (".$public.") ";
+    // Food basic filtering
     if (isset($_SESSION['food_ids'])) {
       $sql .= "AND `food` IN (".$_SESSION['food_ids'].") ";
     } else {
@@ -37,6 +38,18 @@
       $foods = calcSeasonFoods();
       $sql .= "AND `food` IN (".$foods.") ";
     }
+    // Flag basic filtering
+    $flagsize = getFlagSize();
+    $flags = getDefaultFlags();
+    for ($i = 1; $i <= $flagsize; $i++) {
+      if (isset($_SESSION['flag_ids'])) {
+        $sql .= "AND SUBSTRING_INDEX(`flag`, ',', " . $i . ") IN (" . $_SESSION['flag_ids'] . ") ";
+      } else {
+        $sql .= "AND SUBSTRING_INDEX(`flag`, ',', " . $i . ") IN (" . $flags . ") ";
+      }
+    }
+
+
 
 
     /*

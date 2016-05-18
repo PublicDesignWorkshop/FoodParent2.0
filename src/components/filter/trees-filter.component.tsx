@@ -15,6 +15,7 @@ import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../../utils/authentication';
 import { LogInStatus } from './../app.component';
 import FilterFoodComponent from './filter-food.component';
+import FilterFlagComponent from './filter-flag.component';
 
 export interface ITreesFilterProps {
   foods: Array<FoodModel>;
@@ -59,7 +60,7 @@ export default class TreesFilterComponent extends React.Component<ITreesFilterPr
       <div className={styles.wrapper}>
         <div className={styles.inner}>
           <div className={styles.title}>
-            FOOD FILTERS
+            TREE FILTERS
           </div>
           <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
             self.context.router.push({pathname: Settings.uBaseName + '/'});
@@ -67,6 +68,7 @@ export default class TreesFilterComponent extends React.Component<ITreesFilterPr
           }}/></div>
         </div>
         <FilterFoodComponent foods={self.props.foods} />
+        <FilterFlagComponent flags={self.props.flags} />
       </div>
     );
   }

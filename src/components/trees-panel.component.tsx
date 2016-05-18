@@ -57,6 +57,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
   public componentDidMount() {
     let self: TreesPanelComponent = this;
     self.updateProps(self.props);
+    flagStore.fetchFlags();
   }
   public componentWillUnmount() {
     let self: TreesPanelComponent = this;

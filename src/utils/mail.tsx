@@ -3,7 +3,7 @@ import * as $ from 'jquery';
 var Settings = require('./../constraints/settings.json');
 
 export function sendMailFromParent(mailfrom: string, subject: string, message: string, success?: any, fail?: any, error?: any) {
-  console.log("sendMailFromParent");
+  console.log("---------sendMailFromParent---------");
   $.ajax({
     url: Settings.uBaseName + Settings.uServer + "mailfrom_" + Settings.sMailserversuffix + ".php",
     type: "POST",
@@ -15,7 +15,6 @@ export function sendMailFromParent(mailfrom: string, subject: string, message: s
     cache: false,
     dataType: "json",
     success: function (response, textStatus, jqXHR) {
-      console.log(response);
       if (parseInt(response.code) == 400) {   // Logged in
         if (success) {
           success(response);

@@ -43,7 +43,6 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
   }
   public componentDidMount() {
     let self: TreeComponent = this;
-    flagStore.fetchFlags();
     self.updateProps(self.props);
   }
   public componentWillUnmount() {

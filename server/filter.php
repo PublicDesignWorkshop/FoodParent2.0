@@ -17,15 +17,21 @@
   }
 
   function update() {
-    // mode: 1 - FOOD
+    // mode: 1 - FOOD, 2 - FLAG
     sec_session_continue(); // Our custom secure way of starting a PHP session.
     $check = admin_check();
     $public = null;
     if ($_POST['mode'] == 1) {
-      if ($_POST['foodIds'] != "") {
-        $_SESSION['food_ids'] = $_POST['foodIds'];
+      if ($_POST['ids'] != "") {
+        $_SESSION['food_ids'] = $_POST['ids'];
       } else {
         $_SESSION['food_ids'] = null;
+      }
+    } else if ($_POST['mode'] == 2) {
+      if ($_POST['ids'] != "") {
+        $_SESSION['flag_ids'] = $_POST['ids'];
+      } else {
+        $_SESSION['flag_ids'] = null;
       }
     }
     if (isset($_SESSION['public'])) {
@@ -36,6 +42,7 @@
       "code" => 400,
       "public" => $public,
       "foods" => $_SESSION['food_ids'],
+      "flags" => $_SESSION['flag_ids'],
     );
     echo json_encode($params);
   }
@@ -45,8 +52,12 @@
     $check = admin_check();
     $public = null;
     $foods = null;
+    $flags = null;
     if (isset($_SESSION['public'])) {
       $public = $_SESSION['public'];
+    }
+    if (isset($_SESSION['flag_ids'])) {
+      $flags = $_SESSION['flag_ids'];
     }
     if (isset($_SESSION['food_ids'])) {
       $foods = $_SESSION['food_ids'];
@@ -58,6 +69,7 @@
       "code" => 400,
       "public" => $public,
       "foods" => $foods,
+      "flags" => $flags,
     );
     echo json_encode($params);
   }
@@ -67,9 +79,12 @@
     $check = admin_check();
     $public = null;
     $foods = null;
+    $flags = null;
     if (isset($_SESSION['public'])) {
       $public = $_SESSION['public'];
     }
+    $flags = getDefaultFlags();
+    $_SESSION['flag_ids'] = $flags;
     $foods = calcSeasonFoods();
     $_SESSION['food_ids'] = $foods;
     $params = array(

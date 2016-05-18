@@ -4,6 +4,7 @@
   session_unset();
   $_SESSION['public'] = null;
   $_SESSION['food_ids'] = null;
+  $_SESSION['flag_ids'] = null;
 
   $params = array(
     "code" => 400,
