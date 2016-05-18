@@ -12,11 +12,12 @@ _FoodParent_ is a web-based application as a part of Concrete Jungle’s _FoodPa
 8. Open `database.php` file and put your database information.
 
 
+```
     class database extends dbpass {
       public $host = "localhost";
       public $username = "cj";
       public $port = 3306;
       public $db_name = "tree_parent";
     }
+```
 
-9. 
