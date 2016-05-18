@@ -11,9 +11,9 @@ _FoodParent_ is a web-based application as a part of Concrete Jungle’s _FoodPa
 7. Copy `database.php` and `dbpass.php` files from [APP-ROOT]/serverconfig to [APP-ROOT]/server directory.
 8. Open `database.php` file and put your database information.
 
-      class database extends dbpass {
-        public $host = "localhost";
-        public $username = "cj";
-        public $port = 3306;
-        public $db_name = "tree_parent";
-      }
+  class database extends dbpass {
+    public $host = "localhost";
+    public $username = "cj";
+    public $port = 3306;
+    public $db_name = "tree_parent";
+  }
