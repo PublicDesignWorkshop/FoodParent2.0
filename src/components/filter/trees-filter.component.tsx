@@ -16,14 +16,15 @@ import { checkLogin, checkAdmin } from './../../utils/authentication';
 import { LogInStatus } from './../app.component';
 import FilterFoodComponent from './filter-food.component';
 import FilterFlagComponent from './filter-flag.component';
+import FilterOwnershipComponent from './filter-ownership.component';
 
 export interface ITreesFilterProps {
   foods: Array<FoodModel>;
   trees: Array<TreeModel>;
   flags: Array<FlagModel>;
+  login: LogInStatus;
 }
 export interface ITreesFilterStatus {
-  login?: LogInStatus;
   userId?: number;
   open?: boolean;
 }
@@ -33,7 +34,6 @@ export default class TreesFilterComponent extends React.Component<ITreesFilterPr
     super(props);
     let self: TreesFilterComponent = this;
     self.state = {
-      login: LogInStatus.GUEST,
       userId: null,
       open: false,
     };
@@ -56,6 +56,10 @@ export default class TreesFilterComponent extends React.Component<ITreesFilterPr
 
   render() {
     let self: TreesFilterComponent = this;
+    let filterownership: JSX.Element;
+    if (self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.ADMIN) {
+      filterownership = <FilterOwnershipComponent />;
+    }
     return(
       <div className={styles.wrapper}>
         <div className={styles.inner}>
@@ -69,6 +73,7 @@ export default class TreesFilterComponent extends React.Component<ITreesFilterPr
         </div>
         <FilterFoodComponent foods={self.props.foods} />
         <FilterFlagComponent flags={self.props.flags} />
+        {filterownership}
       </div>
     );
   }

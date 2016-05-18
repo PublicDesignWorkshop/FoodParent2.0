@@ -27,7 +27,11 @@
     if (!$check) {
       $public = "1";
     } else {
-      $public = "0,1";
+      if (isset($_SESSION['public'])) {
+        $public  = $_SESSION['public'];
+      } else {
+        $public = "0,1";
+      }
     }
     $sql .= "`public` IN (".$public.") ";
     // Food basic filtering

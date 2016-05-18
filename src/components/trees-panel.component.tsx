@@ -224,7 +224,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                   }
                 }
               }>
-                <TrresFilterComponent foods={self.props.foods} trees={self.props.trees} flags={flagStore.getState().flags} />
+                <TrresFilterComponent login={self.state.login} foods={self.props.foods} trees={self.props.trees} flags={flagStore.getState().flags} />
               </AltContainer>
             </div>
           </div>

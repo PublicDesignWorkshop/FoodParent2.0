@@ -150,7 +150,7 @@ export default class FilterFlagComponent extends React.Component<IFilterFlagProp
           <FontAwesome className='' name='apple ' /> Flag Types
         </div>
         <div className={styles.value}>
-          <Select name="flag-select" multi={true} searchable={true} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select flag types..." />
+          <Select name="flag-select" multi={true} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select flag types..." />
         </div>
       </div>
     );

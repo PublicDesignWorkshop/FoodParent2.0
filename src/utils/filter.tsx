@@ -3,7 +3,7 @@ import * as $ from 'jquery';
 var Settings = require('./../constraints/settings.json');
 
 export enum FilterMode {
-  NONE, FOOD, FLAG
+  NONE, FOOD, FLAG, OWNERSHIP
 }
 
 export function applyFilter(mode: FilterMode, ids: Array<number>, success?: any, fail?: any, error?: any) {
