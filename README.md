@@ -13,15 +13,26 @@ _*{} is variable that can be different based on your environment._
 ### Compile Configuration
 * Open `settings.json` file under {app-root-directory}/src/constraint directory.
 * Change `uBaseName` and `uBaseNameForWebPack` values based on the relative location of {app-root-directory} from {apach-htdocs} directory. If {app-root-directory} is the {apach-htdocs}, put `"uBaseName": ""` and `"uBaseNameForWebPack": "/"`. If the {app-root-directory} is located under {apach-htdocs} directory, such as {apach-htdocs}/{app-root-directory}, put `"uBaseName": "/{app-root-directory}"` and `"uBaseNameForWebPack": "/{app-root-directory}/"`.
+* Open `index.html` file under {app-root-directory}.
+* Find all `/FoodParent2.0` change into relative location of {app-root-directory}. If the {app-root-directory} is the {apach-htdocs}, remove all `/FoodParent2.0`.
 
 ### Compilation and Bundle
-
 * Open terminal or command prompt and move to the app directory.
 * Run `npm install` to install all dependency libaries.
 * Run `npm run dev` or `npm run build` to generate compiled `foodparent.js` and `foodparent.map.js` file under {app-root-directory}/dist directory.
 
+### Server Configuration
+* Open `php.ini` configuration file under {apach} directory. If you are using external hosting service, ask hosting manager.
+* Find `upload_max_filesize` and set the value higher than 6M. This value defines the maximum size of file, and some of image files generated from smart devices exceeds 4M.
+```
+; Maximum allowed size for uploaded files.
+; http://php.net/upload-max-filesize
+upload_max_filesize=6M
+```
 
+### Database Setup
 * Create a MySQL database, and admin user account and password for the database.
+* 
 * Copy `database.php` and `dbpass.php` files from {app-root-directory}/serverconfig to {app-root-directory}/server directory.
 * Open `database.php` file and put your database information.
 ```php
