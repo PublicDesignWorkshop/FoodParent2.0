@@ -21,6 +21,8 @@ _*{} is variable that can be different based on your environment._
 * Run `npm install` to install all dependency libaries.
 * Run `npm run dev` or `npm run build` to generate compiled `foodparent.js` and `foodparent.map.js` file under {app-root-directory}/dist directory.
 
+*If you change the directory, you need to cancel the build and re-run `npm run dev` or `npm run build`.
+
 ### Server Configuration
 * Open `php.ini` configuration file under {apach} directory. If you are using external hosting service, ask hosting manager.
 * Find `upload_max_filesize` and set the value higher than 6M. This value defines the maximum size of file, and some of image files generated from smart devices exceeds 4M.
@@ -32,7 +34,7 @@ upload_max_filesize=6M
 
 ### Database Setup
 * Create a MySQL database, and admin user account and password for the database.
-* Open `tree_parent.sql` under {app-root-directory}/serverconfig and copy all and paste in SQL query/queries command prompt.
+* Open `tree_parent.sql` under {app-root-directory}/serverconfig and copy all and paste in SQL query/queries command prompt to create tables automatically.
 * Copy `database.php` and `dbpass.php` files from {app-root-directory}/serverconfig to {app-root-directory}/server directory.
 * Open `database.php` file and put your database information.
 ```php
@@ -49,3 +51,13 @@ class dbpass {
     public $password = "";
 }
 ```
+### Upload files in a server
+*Don't try to upload all files in {app-root-directory}. It have a lot of dependency libraries which don't need to run the application.
+*Below are the list of directories and files require to run the applicaiton.
+* content/
+* dist/
+* favicons/
+* server/
+* static/
+* index.html
+* .htaccess
