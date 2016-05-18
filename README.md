@@ -32,7 +32,7 @@ upload_max_filesize=6M
 
 ### Database Setup
 * Create a MySQL database, and admin user account and password for the database.
-* 
+* Open `tree_parent.sql` under {app-root-directory}/serverconfig and copy all and paste in SQL query/queries command prompt.
 * Copy `database.php` and `dbpass.php` files from {app-root-directory}/serverconfig to {app-root-directory}/server directory.
 * Open `database.php` file and put your database information.
 ```php
@@ -49,14 +49,3 @@ class dbpass {
     public $password = "";
 }
 ```
-## Installation - Server
-
-<<<<<<< HEAD
-  class database extends dbpass {
-    public $host = "localhost";
-    public $username = "cj";
-    public $port = 3306;
-    public $db_name = "tree_parent";
-  }
-=======
->>>>>>> f35cf9b941a291ffec59522a063fa34878f4d18b
