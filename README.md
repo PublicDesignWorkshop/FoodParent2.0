@@ -4,15 +4,26 @@ _FoodParent_ is a web-based application as a part of Concrete Jungle’s _FoodPa
 ## Installation
 _*{} is variable that can be different based on your environment._
 
-* Download zip file or Git-clone https://github.com/PublicDesignWorkshop/FoodParent2.0.git.
-* Install [node.js](https://nodejs.org/en/) to use npm command in OSX and Windows.
+### Prerequisites
+* FoodParent package file from https://github.com/PublicDesignWorkshop/FoodParent2.0.git.
+* [node.js](https://nodejs.org/en/) to use npm command in OSX and Windows.
+* Apache server / PHP
+* MySQL ^5.0
+
+### Compile Configuration
+* Open `settings.json` file under {app-root-directory}/src/constraint directory.
+* Change `uBaseName` and `uBaseNameForWebPack` values based on the relative location of {app-root-directory} from {apach-htdocs} directory. If {app-root-directory} is the {apach-htdocs}, put `"uBaseName": ""` and `"uBaseNameForWebPack": "/"`. If the {app-root-directory} is located under {apach-htdocs} directory, such as {apach-htdocs}/{app-root-directory}, put `"uBaseName": "/{app-root-directory}"` and `"uBaseNameForWebPack": "/{app-root-directory}/"`.
+
+### Compilation and Bundle
+
 * Open terminal or command prompt and move to the app directory.
 * Run `npm install` to install all dependency libaries.
-* Run `npm run dev` or `npm run build` to generate compiled `foodparent.js` and `foodparent.map.js` file in {app-root-directory}/dist directory.
+* Run `npm run dev` or `npm run build` to generate compiled `foodparent.js` and `foodparent.map.js` file under {app-root-directory}/dist directory.
+
+
 * Create a MySQL database, and admin user account and password for the database.
 * Copy `database.php` and `dbpass.php` files from {app-root-directory}/serverconfig to {app-root-directory}/server directory.
 * Open `database.php` file and put your database information.
-
 ```php
 class database extends dbpass {
     public $host = "{database host address}";    //ex> localhost
@@ -22,9 +33,10 @@ class database extends dbpass {
 }
 ```
 * Open `dbpass.php` file and put your database account password.
-
 ```php
 class dbpass {
     public $password = "";
 }
 ```
+## Installation - Server
+
