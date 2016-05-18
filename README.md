@@ -7,4 +7,13 @@ _FoodParent_ is a web-based application as a part of Concrete Jungle’s _FoodPa
 3. Open terminal or command prompt and move to the app directory.
 4. Run `npm install` to install all dependency libaries.
 5. Run `npm run dev` or `npm run build` to generate compiled `foodparent.js` and `foodparent.map.js` file in [APP-ROOT]/dist directory.
-6. Copy `database.php` and `dbpass.php` files from [APP-ROOT]/serverconfig to [APP-ROOT]/server directory.
+6. Create a MySQL database, and admin user account and password for the database.
+7. Copy `database.php` and `dbpass.php` files from [APP-ROOT]/serverconfig to [APP-ROOT]/server directory.
+8. Open `database.php` file and put your database information.
+
+      class database extends dbpass {
+        public $host = "localhost";
+        public $username = "cj";
+        public $port = 3306;
+        public $db_name = "tree_parent";
+      }
