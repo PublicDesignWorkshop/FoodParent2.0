@@ -33,6 +33,10 @@
 
   "e300": "Processing...",
 
+  "e500": "Processing...",
+  "e501": "A new parent is registered successfully.",
+  "e502": "Please fill out e-mail address.",
+  "e503": "Please fill out correct e-mail address.",
 
   "e600": "A new note is added successfully.",
   "e601": "Please fill out comment.",

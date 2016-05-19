@@ -6,12 +6,16 @@ import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
+import * as moment from 'moment';
 
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './login.component.css';
 import { processLogin, checkLogin } from './../../utils/authentication';
 import LoginParentComponent from './login-parent.component';
 import LoginManagerComponent from './login-manager.component';
+import SignUpComponent from './signup.component';
+import { PersonModel, personStore } from './../../stores/person.store';
+import { LogInStatus } from './../app.component';
 
 export interface ILogInOption {
   value: number;
@@ -45,6 +49,7 @@ export default class LoginComponent extends React.Component<ILoginProps, ILoginS
     self.selected = self.options[0];
 
     self.updateProps(self.props);
+    self.createNewPerson();
   }
   public componentWillUnmount() {
     let self: LoginComponent = this;
@@ -52,6 +57,19 @@ export default class LoginComponent extends React.Component<ILoginProps, ILoginS
   public componentWillReceiveProps (nextProps: ILoginProps) {
     let self: LoginComponent = this;
     self.updateProps(nextProps);
+  }
+  private createNewPerson = () => {
+    let self: LoginComponent = this;
+    console.log("createNewPerson");
+    let person: PersonModel = new PersonModel({
+      id: "0",
+      auth: LogInStatus.PARENT.toString(),
+      name: "",
+      contact: "",
+      neighborhood: "",
+      updated: moment(new Date()).format(Settings.sServerDateFormat),
+    });
+    personStore.addPerson(person);
   }
   private updateProps = (props: ILoginProps) => {
     let self: LoginComponent = this;
@@ -111,6 +129,24 @@ export default class LoginComponent extends React.Component<ILoginProps, ILoginS
             <div className={styles.basicinfo}>
               <LoginParentComponent />
             </div>
+            <AltContainer stores={
+              {
+                person: function (props) {
+                  return {
+                    store: personStore,
+                    value: personStore.getPerson(0),
+                  };
+                },
+                error: function (props) {
+                  return {
+                    store: personStore,
+                    value: new Array<string>(personStore.getState().errorMessage),
+                  };
+                }
+              }
+            }>
+              <SignUpComponent person={personStore.getPerson(0)} error={new Array<string>(personStore.getState().errorMessage)} />
+            </AltContainer>
           </div>
         );
       }

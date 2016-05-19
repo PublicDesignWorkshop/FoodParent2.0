@@ -7,25 +7,25 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './signup.component.css';
-import { NoteModel, noteStore } from './../../stores/note.store';
+import { PersonModel, personStore } from './../../stores/person.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import ErrorMessage from './../error-message.component';
+import UserContact from './user-contact.component';
 
 export interface ISignUpProps {
-  note: NoteModel;
-  editable: boolean;
-  async: boolean;
+  person: PersonModel;
   error: Array<string>;
 }
 export interface ISignUpStatus {
-  comment?: string;
+  error?: Array<string>;
+  open?: boolean;
 }
 export default class SignUpComponent extends React.Component<ISignUpProps, ISignUpStatus> {
   constructor(props : ISignUpProps) {
     super(props);
     let self: SignUpComponent = this;
-    this.state = {
-      comment: "",
+    self.state = {
+      open: false,
     };
   }
   public componentDidMount() {
@@ -42,70 +42,41 @@ export default class SignUpComponent extends React.Component<ISignUpProps, ISign
 
   private updateProps(props: ISignUpProps) {
     let self: SignUpComponent = this;
-    if (props.note) {
-      self.setState({comment: props.note.getComment().trim()});
-    }
+    self.setState({error: props.error});
   }
-  private updateAttribute = () => {
-    let self: SignUpComponent = this;
-    self.props.note.setComment(self.state.comment);
-    if (self.props.async) {
-      noteStore.updateNote(self.props.note);
-    } else {
 
-    }
+  private onClick = () => {
+    let self: SignUpComponent = this;
+    self.setState({open: true});
   }
 
   render() {
     let self: SignUpComponent = this;
-    if (self.props.editable || self.props.note.getId() == 0) {
+    if (self.state.open) {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onMouseUp={()=> {
-            // if (self.props.editable) {
-            //   self.setState({editing: true});
-            // }
-          }}>
-            <FontAwesome className='' name='comment-o' /> Comment
+          <div className={styles.header}>
+            <FontAwesome className={styles.icon} name='user-plus' />
+            <div className={styles.title}>
+              REGISTER NEW PARENT
+            </div>
           </div>
-          <div className={styles.edit}>
-            <TextareaAutosize type="text" className={styles.input} key={self.props.note.getId() + "comment"} placeholder="enter comment..."
-              value={self.state.comment}
-              onChange={(event: any)=> {
-                self.setState({comment: event.target.value});
-              }}
-              onKeyPress={(event)=> {
-                // if (event.key == 'Enter') {
-                //   self.updateAttribute();
-                // }
-              }}
-              onBlur={()=> {
-                self.updateAttribute();
-              }} />
-            <ErrorMessage error={self.props.error} match={new Array<string>("e601")}/>
+          <div className={styles.inner}>
+            <UserContact person={self.props.person} editable={true} async={false} error={self.state.error} />
           </div>
         </div>
       );
     } else {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label}>
-            <FontAwesome className='' name='comment-o' /> Comment
-          </div>
-          <div className={styles.value}>
-            {
-              self.state.comment.split("\n").map(function(line: string, index: number) {
-                return (
-                  <span key={"line" + index}>
-                    {line}
-                    <br/>
-                  </span>
-                );
-              })
-            }
+          <div className={styles.button2} onClick={()=> {
+            self.onClick();
+          }}>
+            BECOME A PARENT
           </div>
         </div>
       );
     }
+
   }
 }

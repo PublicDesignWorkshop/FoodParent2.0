@@ -139,7 +139,7 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
             <FontAwesome className='' name='shopping-basket' /> Pickup
           </div>
           <div className={styles.edit}>
-            <input type="number" className={styles.input} key={self.props.note.getId() + "amount"} placeholder="enter weight (lbs.)..."
+            <input type="number" className={styles.input} key={self.props.note.getId() + "amount"} placeholder="enter weight..."
               value={self.state.amount}
               onChange={(event: any)=> {
                 self.setState({amount: event.target.value});

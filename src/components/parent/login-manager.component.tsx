@@ -66,7 +66,7 @@ export default class LoginManagerComponent extends React.Component<ILoginManager
     return (
       <div className={styles.wrapper}>
         <div className={styles.contactlabel}>
-          <FontAwesome className='' name='caret-right' /><label htmlFor={"managerin-contact"}> Manager Contact</label>
+          <FontAwesome className='' name='caret-right' /><label htmlFor={"managerin-contact"}> Manager Contact (E-mail)</label>
         </div>
         <div className={styles.contactname}>
           <input autoFocus type="email" className={styles.contactinput} id={"managerin-contact"} key={"managerin-contact"} placeholder="enter e-mail address..."

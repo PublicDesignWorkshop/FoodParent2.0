@@ -64,7 +64,7 @@ export default class LoginParentComponent extends React.Component<ILoginParentPr
     return (
       <div className={styles.wrapper}>
         <div className={styles.contactlabel}>
-          <FontAwesome className='' name='caret-right' /><label htmlFor={"parentin-contact"}> Parent Contact</label>
+          <FontAwesome className='' name='caret-right' /><label htmlFor={"parentin-contact"}> Parent Contact (E-mail)</label>
         </div>
         <div className={styles.contactname}>
           <input autoFocus type="email" className={styles.contactinput} id={"parentin-contact"} key={"parentin-contact"} placeholder="enter e-mail address..."

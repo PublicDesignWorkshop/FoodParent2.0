@@ -20,7 +20,7 @@
   }
   :local(.edit) {
     display: block;
-    padding: 0 0 0 16px;
+    padding: 0 0 0 8px;
     min-height: 22px;
     letter-spacing: 1px;
   }
