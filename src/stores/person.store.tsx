@@ -192,6 +192,9 @@ class PersonStore extends AbstractStore<PersonState> {
       self.persons.splice(i, 1);
     }
     self.persons.push(person);
+    // self.context.router.push({pathname: window.location.pathname});
+    location.reload();
+    // browserHistory.push({pathname: Settings.uBaseName + '/trees/' + tree.getId()});
   }
   handleDeletePerson(personProps: IPersonProps) {
     let self: PersonStore = this;

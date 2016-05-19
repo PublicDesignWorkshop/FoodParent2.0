@@ -86,7 +86,6 @@
         "id" => $data->{'id'},
         "auth" => $data->{'auth'},
         "name" => $data->{'name'},
-        "address" => $data->{'address'},
         "contact" => $data->{'contact'},
         "neighborhood" => $data->{'neighborhood'},
         "active" => 1,
@@ -100,13 +99,13 @@
       );
       echo json_encode($json);
     } else {
-      $sql = "UPDATE `person` SET `auth` = :auth, `name` = :name, `address` = :address, `contact` = :contact, `neighborhood` = :neighborhood, `active` = :active, `updated` = :updated WHERE (`id` = :id)";
+      $sql = "UPDATE `person` SET `auth` = :auth, `name` = :name, `contact` = :contact, `neighborhood` = :neighborhood, `active` = :active, `updated` = :updated WHERE (`id` = :id)";
       try {
         $pdo = getConnection();
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
 
-        $sql = "SELECT `id`, `auth`, `name`, `address`, `contact`, `neighborhood`, `updated` FROM `person` WHERE (`id` = :id)";
+        $sql = "SELECT `id`, `auth`, `name`, `contact`, `neighborhood`, `updated` FROM `person` WHERE (`id` = :id)";
         $params = array(
           "id" => $data->{'id'},
         );
@@ -127,39 +126,110 @@
 
   function create() {
     $data = json_decode(file_get_contents('php://input'));
+    // Check account already exists in db.
     $params = array(
-      "auth" => $data->{'auth'},
-      "name" => $data->{'name'},
-      "address" => $data->{'address'},
-      "contact" => $data->{'contact'},
-      "password" => "",
-      "salt" => "",
-      "neighborhood" => $data->{'neighborhood'},
-      "active" => 1,
-      "updated" => date("Y-m-d H:i:s"),
+      "contact" => filter_var($data->{'contact'}, FILTER_SANITIZE_STRING),
     );
-    $sql = "INSERT INTO `person` VALUES ( NULL, :auth, :name, :address, :contact, :password, :salt, :neighborhood, :active, :updated )";
-
+    $sql = "SELECT `id`, `active` FROM `person` WHERE (`contact` = :contact)";
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);
       $stmt->execute($params);
+      $result = $stmt->fetch();
+      if ($stmt->rowCount() == 1) { // user already exists.
+        $id = $result["id"];
+        $active = $result["active"]; // Check account is active or not.
+        if ($active == 1) { // Return with error code if account already exists and active.
+          $params = array(
+            "code" => 504
+          );
+          echo json_encode($params);
+        } else {  // Make active if account already exists but is inactive.
+          // generate salt.
+          $salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
+          // Create salted password.
+          $password = hash('sha512', $params["contact"] . $salt);
+          $params = array(
+            "id" => $id,
+            "auth" => 3,
+            "name" => filter_var($data->{'name'}, FILTER_SANITIZE_STRING),
+            "contact" => filter_var($data->{'contact'}, FILTER_SANITIZE_STRING),
+            "password" => $password,
+            "salt" => $salt,
+            "neighborhood" => filter_var($data->{'neighborhood'}, FILTER_SANITIZE_STRING),
+            "active" => 1,
+            "updated" => date("Y-m-d"),
+          );
 
-      $sql = "SELECT `id`, `auth`, `name`, `address`, `contact`, `neighborhood`, `updated` FROM `person` WHERE `id` = :id";
-      $params = array(
-        "id" => $pdo->lastInsertId(),
-      );
-      try {
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute($params);
-        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $pdo = null;
-        echo json_encode($result[0]);
-      } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
+          $sql = "UPDATE `person` SET `auth` = :auth, `name` = :name, `contact` = :contact, `password` = :password, `salt` = :salt, `neighborhood` = :neighborhood, `active` = :active, `updated` = :updated WHERE (`id` = :id)";
+          try {
+            $pdo = getConnection();
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+
+            $sql = "SELECT `id`, `auth`, `name`, `contact`, `neighborhood`, `updated` FROM `person` WHERE (`id` = :id)";
+            $params = array(
+              "id" => $id,
+            );
+            try {
+              $stmt = $pdo->prepare($sql);
+              $stmt->execute($params);
+              $result = $stmt->fetch();
+              $pdo = null;
+              login(filter_var($data->{'contact'}, FILTER_SANITIZE_STRING), filter_var($data->{'contact'}, FILTER_SANITIZE_STRING));  // Login automatically.
+              echo json_encode($result);
+            } catch(PDOException $e) {
+              echo '{"error":{"text":'. $e->getMessage() .'}}';
+            }
+          } catch(PDOException $e) {
+            echo '{"error":{"text":'. $e->getMessage() .'}}';
+          }
+        }
+      } else {  // Create a new user account.
+        // generate salt.
+        $salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
+        // Create salted password.
+        $password = hash('sha512', $params["contact"] . $salt);
+        $params = array(
+          "auth" => 3,
+          "name" => filter_var($data->{'name'}, FILTER_SANITIZE_STRING),
+          "contact" => filter_var($data->{'contact'}, FILTER_SANITIZE_STRING),
+          "password" => $password,
+          "salt" => $salt,
+          "neighborhood" => filter_var($data->{'neighborhood'}, FILTER_SANITIZE_STRING),
+          "active" => 1,
+          "updated" => date("Y-m-d"),
+        );
+
+        $sql = "INSERT INTO `person` VALUES ( NULL, :auth, :name, :contact, :password, :salt, :neighborhood, :active, :updated )";
+        try {
+          $stmt = $pdo->prepare($sql);
+          if ($stmt) {
+            $stmt->execute($params);
+            login($params["contact"], $params["contact"]);  // Login automatically.
+            $sql = "SELECT `id`, `auth`, `name`, `contact`, `neighborhood`, `updated` FROM `person` WHERE (`id` = :id)";
+            $params = array(
+              "id" => $pdo->lastInsertId(),
+            );
+            try {
+              $stmt = $pdo->prepare($sql);
+              $stmt->execute($params);
+              $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+              $pdo = null;
+              echo json_encode($result[0]);
+            } catch(PDOException $e) {
+              echo '{"error":{"text":'. $e->getMessage() .'}}';
+            }
+          }
+        } catch(PDOException $e) {
+          $params = array(
+            "code" => 404
+          );
+          echo json_encode($params);
+        }
       }
     } catch(PDOException $e) {
-      echo '{"error":{"text":'. $e->getMessage() .'}}';
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
   }
 

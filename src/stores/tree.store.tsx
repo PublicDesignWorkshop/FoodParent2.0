@@ -3,6 +3,7 @@ import * as Alt from 'alt';
 import * as moment from 'moment';
 import * as L from 'leaflet';
 import { browserHistory } from 'react-router';
+import * as _ from 'underscore';
 
 var Settings = require('./../constraints/settings.json');
 import { treeActions } from './../actions/tree.actions';
@@ -20,6 +21,7 @@ export interface ITreeProps {
   description: string;
   address: string;
   owner: string;
+  parent: string;
   updated: string;
 }
 
@@ -55,7 +57,9 @@ export class TreeModel {
       return parseInt(flag);
     });
     // TODO: connect with parents
-    self.parents = new Array<number>();
+    self.parents = props.parent.split(',').map((flag: string) => {
+      return parseInt(flag);
+    });
   }
   public toJSON(): any {
     let self: TreeModel = this;
@@ -68,7 +72,8 @@ export class TreeModel {
       description: self.description,
       address: self.address,
       public: self.ownership,
-      owner: self.owner
+      owner: self.owner,
+      parent: self.parents.toString(),
     }
   }
   public getId(): number {
@@ -115,6 +120,20 @@ export class TreeModel {
   }
   public setFlags(flags: Array<number>): void {
     this.flags = flags;
+  }
+  public getParents(): Array<number> {
+    return _.without(this.parents, 0);
+  }
+  public setParents(parents: Array<number>): void {
+    this.parents = parents;
+  }
+  public addParent(parentId): void {
+    if (this.parents.indexOf(parentId) == -1) {
+      this.parents.push(parentId);
+    }
+  }
+  public removeParent(parentId): void {
+    this.parents = _.without(this.parents, parentId);
   }
   public getOwner(): number {
     return this.owner;

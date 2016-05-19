@@ -11,6 +11,8 @@ import { PersonModel, personStore } from './../../stores/person.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import ErrorMessage from './../error-message.component';
 import UserContact from './user-contact.component';
+import UserName from './user-name.component';
+import UserNeighborhood from './user-neighborhood.component';
 
 export interface ISignUpProps {
   person: PersonModel;
@@ -58,11 +60,27 @@ export default class SignUpComponent extends React.Component<ISignUpProps, ISign
           <div className={styles.header}>
             <FontAwesome className={styles.icon} name='user-plus' />
             <div className={styles.title}>
-              REGISTER NEW PARENT
+              SIGN-UP AS A NEW PARENT
             </div>
           </div>
           <div className={styles.inner}>
             <UserContact person={self.props.person} editable={true} async={false} error={self.state.error} />
+            <UserName person={self.props.person} editable={true} async={false} error={self.state.error} />
+            <UserNeighborhood person={self.props.person} editable={true} async={false} error={self.state.error} />
+          </div>
+          <div className={styles.button} onClick={()=> {
+            let error: Array<string> = new Array<string>();
+            let bError: boolean = false;
+            if (self.props.person.getContact().trim() == "") {
+              error.push("e502");
+              bError = true;
+            }
+            if (!bError) {
+              personStore.createPerson(self.props.person);
+            }
+            self.setState({error: error});
+          }}>
+            SIGN UP
           </div>
         </div>
       );

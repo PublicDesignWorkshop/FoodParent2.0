@@ -12,29 +12,29 @@ import * as styles from './user.component.css';
 import { fetchUser, processLogout } from './../../utils/authentication';
 import { LogInStatus } from './../app.component';
 import { treeStore } from './../../stores/tree.store';
+import UserContact from './user-contact.component';
+import UserName from './user-name.component';
+import UserNeighborhood from './user-neighborhood.component';
+import { PersonModel, personStore } from './../../stores/person.store';
 
 export interface IUserProps {
   login: LogInStatus;
   userId: number;
-  bOpen: any;
+  open: any;
 }
 export interface IUserStatus {
-  name: string;
-  contact: string;
-  address: string;
-  bOpen: boolean;
+  role?: string;
+  error?: Array<string>;
+  editable?: boolean;
 }
 export default class UserComponent extends React.Component<IUserProps, IUserStatus> {
   static contextTypes: any;
-  private authentication: string;
   constructor(props : IUserProps) {
     super(props);
     let self: UserComponent = this;
     this.state = {
-      name: "",
-      contact: "",
-      address: "",
-      bOpen: false,
+      error: new Array<string>(),
+      editable: false,
     };
   }
   public componentDidMount() {
@@ -51,25 +51,18 @@ export default class UserComponent extends React.Component<IUserProps, IUserStat
   private updateProps = (props: IUserProps) => {
     let self: UserComponent = this;
     if (props.login == LogInStatus.GUEST) {
-      self.authentication = "Guest";
+      self.setState({role: "Guest"});
     } else if (props.login == LogInStatus.PARENT) {
-      self.authentication = "Parent";
+      self.setState({role: "Parent"});
     } else if (props.login == LogInStatus.MANAGER) {
-      self.authentication = "Manager";
+      self.setState({role: "Manager"});
     } else if (props.login == LogInStatus.ADMIN) {
-      self.authentication = "Admin";
+      self.setState({role: "Admin"});
     }
-    fetchUser(props.userId, function(response) {
-      self.setState({name: response.name, contact: response.contact, address: response.address, bOpen: self.state.bOpen});
-    }, function(response) {
-
-    }, function(response) {
-
-    });
-    if (props.bOpen == "true") {
-      self.setState({name: self.state.name, contact: self.state.contact, address: self.state.address, bOpen: true});
-    } else {
-      self.setState({name: self.state.name, contact: self.state.contact, address: self.state.address, bOpen: false});
+    if (props.userId) {
+      let ids: Array<number> = new Array<number>();
+      ids.push(props.userId);
+      personStore.fetchPersons(ids);
     }
   }
   private updateAttribute = () => {
@@ -92,43 +85,57 @@ export default class UserComponent extends React.Component<IUserProps, IUserStat
 
   render() {
     let self: UserComponent = this;
-    if (self.state.bOpen) {
+    if (self.props.open && self.props.userId) {
+      let title: string = "";
+      if (self.props.login == LogInStatus.GUEST) {
+        title = "GUEST INFO";
+      } else if (self.props.login == LogInStatus.PARENT) {
+        title = "PARENT INFO";
+      } else if (self.props.login == LogInStatus.MANAGER) {
+        title = "MANAGER INFO";
+      } else if (self.props.login == LogInStatus.ADMIN) {
+        title = "ADMIN INFO";
+      }
       return (
         <div className={styles.wrapper + " " + styles.slidein}>
           <div className={styles.userinfo}>
             <div className={styles.icon}>
               <FontAwesome className='' name='user' />
             </div>
-            <div className={styles.name}>PARENT INFO</div>
+            <div className={styles.name}>
+              {title}
+            </div>
             <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
               self.context.router.goBack();
             }}/></div>
           </div>
           <div className={styles.basicinfo}>
-            <div className={styles.contactlabel}>
-              <FontAwesome className='' name='at' /> E-mail Address
-            </div>
-            <div className={styles.contactname}>
-              {self.state.contact}
-            </div>
-            <div className={styles.contactlabel}>
-              <FontAwesome className='' name='long-arrow-right' /> Name
-            </div>
-            <div className={styles.contactname}>
-              {self.state.name}
-            </div>
-            <div className={styles.contactlabel}>
-              <FontAwesome className='' name='long-arrow-right' /> Role
-            </div>
-            <div className={styles.contactname}>
-              {self.authentication}
-            </div>
-            <div className={styles.contactlabel}>
-              <FontAwesome className='' name='long-arrow-right' /> Neighborhood
-            </div>
-            <div className={styles.contactname}>
-              {self.state.address}
-            </div>
+            <AltContainer stores={
+              {
+                person: function (props) {
+                  return {
+                    store: personStore,
+                    value: personStore.getPerson(self.props.userId),
+                  };
+                },
+                error: function (props) {
+                  return {
+                    store: personStore,
+                    value: new Array<string>(personStore.getState().errorMessage),
+                  };
+                }
+              }
+            }>
+              <UserContact person={personStore.getPerson(self.props.userId)} editable={self.state.editable} async={self.state.editable} error={self.state.error} />
+              <UserName person={personStore.getPerson(self.props.userId)} editable={self.state.editable} async={self.state.editable} error={self.state.error} />
+              <div className={styles.contactlabel}>
+                <FontAwesome className='' name='long-arrow-right' /> Role
+              </div>
+              <div className={styles.contactname}>
+                {self.state.role}
+              </div>
+              <UserNeighborhood person={personStore.getPerson(self.props.userId)} editable={self.state.editable} async={self.state.editable} error={self.state.error} />
+            </AltContainer>
           </div>
           <div className={styles.buttongroup} onClick={()=> {
             self.submitLogout();

@@ -1,0 +1,65 @@
+@media all {
+  :local(.wrapper) {
+    font-family: 'Open Sans', sans-serif;
+    font-size: small;
+  }
+  :local(.name) {
+    display: inline-block;
+    padding: 0 0 0 16px;
+    min-height: 22px;
+    min-width: 80px;
+  }
+  :local(.label) {
+    font-weight: 700;
+    padding-top: 8px;
+    padding-bottom: 4px;
+  }
+  :local(.label:not(:first-child)) {
+    padding-top: 8px;
+  }
+  :local(.editname) {
+    display: block;
+    padding: 0 0 0 16px;
+    min-height: 22px;
+    letter-spacing: 1px;
+  }
+  :local(.edit) {
+    width: 100%;
+    padding: 6px;
+    border-radius: 2px;
+    border: 1px solid rgba(94, 78, 81, 1);
+    color: rgba(0, 0, 0, 1);
+  }
+  :local(.edit:focus) {
+    outline: none;
+  }
+  :local(.adopt) {
+    border-radius: 2px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 2px 4px;
+    margin: 2px 4px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: x-small;
+    font-family: 'Open Sans Condensed', sans-serif;
+  }
+  :local(.unadopt) {
+    border-radius: 2px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 2px 4px;
+    margin: 2px 4px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: x-small;
+    font-family: 'Open Sans Condensed', sans-serif;
+  }
+  :local(.unadopt:hover),
+  :local(.adopt:hover) {
+    color: rgba(107, 170, 119, 1);
+    border: 2px solid rgba(107, 170, 119, 1);
+  }
+}
+
+@media only screen and (orientation: portrait) {
+
+}

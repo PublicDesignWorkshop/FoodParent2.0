@@ -7,49 +7,49 @@ import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
 
 var Settings = require('./../../constraints/settings.json');
-import * as styles from './user-contact.component.css';
+import * as styles from './user-name.component.css';
 import { PersonModel, personStore } from './../../stores/person.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import ErrorMessage from './../error-message.component';
 
-export interface IUserContactProps {
+export interface IUserNameProps {
   person: PersonModel;
   editable: boolean;
   async: boolean;
   error: Array<string>;
 }
-export interface IUserContactStatus {
-  contact?: string;
+export interface IUserNameStatus {
+  name?: string;
 }
-export default class UserContactComponent extends React.Component<IUserContactProps, IUserContactStatus> {
-  constructor(props : IUserContactProps) {
+export default class UserNameComponent extends React.Component<IUserNameProps, IUserNameStatus> {
+  constructor(props : IUserNameProps) {
     super(props);
-    let self: UserContactComponent = this;
+    let self: UserNameComponent = this;
     this.state = {
-      contact: "",
+      name: "",
     };
   }
   public componentDidMount() {
-    let self: UserContactComponent = this;
+    let self: UserNameComponent = this;
     self.updateProps(self.props);
   }
   public componentWillUnmount() {
-    let self: UserContactComponent = this;
+    let self: UserNameComponent = this;
   }
-  public componentWillReceiveProps (nextProps: IUserContactProps) {
-    let self: UserContactComponent = this;
+  public componentWillReceiveProps (nextProps: IUserNameProps) {
+    let self: UserNameComponent = this;
     self.updateProps(nextProps);
   }
 
-  private updateProps(props: IUserContactProps) {
-    let self: UserContactComponent = this;
+  private updateProps(props: IUserNameProps) {
+    let self: UserNameComponent = this;
     if (props.person) {
-      self.setState({contact: props.person.getContact()});
+      self.setState({name: props.person.getName()});
     }
   }
   private updateAttribute = (selected?: any) => {
-    let self: UserContactComponent = this;
-    self.props.person.setContact(self.state.contact);
+    let self: UserNameComponent = this;
+    self.props.person.setName(self.state.name);
     if (self.props.async) {
       personStore.updatePerson(self.props.person);
     } else {
@@ -58,7 +58,7 @@ export default class UserContactComponent extends React.Component<IUserContactPr
   }
 
   render() {
-    let self: UserContactComponent = this;
+    let self: UserNameComponent = this;
     if (self.props.person && (self.props.editable || self.props.person.getId() == 0)) {
       return (
         <div className={styles.wrapper}>
@@ -67,14 +67,13 @@ export default class UserContactComponent extends React.Component<IUserContactPr
             //   self.setState({editing: true});
             // }
           }}>
-            <FontAwesome className='' name='at' /> Contact (E-mail)
+            <FontAwesome className='' name='microphone' /> Name
           </div>
           <div className={styles.edit}>
-            <input type="email" className={styles.input} key={self.props.person.getId() + "contact"} placeholder="enter e-mail address..."
-              autoComplete
-              value={self.state.contact}
+            <input type="text" className={styles.input} key={self.props.person.getId() + "name"} placeholder="optional..."
+              value={self.state.name}
               onChange={(event: any)=> {
-                self.setState({contact: event.target.value});
+                self.setState({name: event.target.value});
               }}
               onKeyPress={(event)=> {
                 // if (event.key == 'Enter') {
@@ -86,7 +85,7 @@ export default class UserContactComponent extends React.Component<IUserContactPr
               }} />
           </div>
           <div className={styles.message}>
-            <ErrorMessage error={self.props.error} match={new Array<string>("e502, e503")} />
+            <ErrorMessage error={self.props.error} match={new Array<string>()} />
           </div>
         </div>
       );
@@ -94,10 +93,10 @@ export default class UserContactComponent extends React.Component<IUserContactPr
       return (
         <div className={styles.wrapper2}>
           <div className={styles.label}>
-            <FontAwesome className='' name='at' /> Contact (E-mail)
+            <FontAwesome className='' name='microphone' /> Name
           </div>
           <div className={styles.value}>
-            {self.state.contact}
+            {self.state.name}
           </div>
         </div>
       );

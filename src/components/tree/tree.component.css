@@ -45,14 +45,14 @@
     border-radius: 2px;
     background-color: rgba(94, 78, 81, 1);
     padding: 4px 12px 12px 12px;
-    max-height: 352px;
+    max-height: 400px;
     overflow-y: auto;
   }
   :local(.basicinfo2) {
     border-radius: 2px;
     background-color: rgba(94, 78, 81, 1);
     padding: 4px 12px 12px 12px;
-    max-height: 232px;
+    max-height: 280px;
     overflow-y: auto;
   }
   .span[name="close"] {

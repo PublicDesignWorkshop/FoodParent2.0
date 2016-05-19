@@ -8,7 +8,7 @@
   }
   :local(.inner) {
     width: 100%;
-    padding: 0 8px;
+    padding: 0 8px 8px 0;
   }
   :local(.header) {
     display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
@@ -48,7 +48,6 @@
     margin: 4px 0;
     cursor: pointer;
     font-size: medium;
-    border-radius: 2px;
   }
   :local(.button:hover) {
     color: rgba(94, 78, 81, 1);

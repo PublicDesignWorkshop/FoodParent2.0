@@ -22,8 +22,6 @@
 
   function read() {
     sec_session_continue(); // Our custom secure way of starting a PHP session.
-    $check = admin_check();
-
     $data = json_decode(file_get_contents('php://input'));
     $params = null;
     if ($data != null) {
@@ -35,8 +33,20 @@
         "ids" => $_GET['ids'],
       );
     }
-
-    if ($check) {
+    $userid = null;
+    $userauth = null;
+    if (isset($_SESSION['user_id'])) {
+      $userid = intval($_SESSION['user_id']);
+    }
+    if (isset($_SESSION['user_auth'])) {
+      $userauth = intval($_SESSION['user_auth']);
+    }
+    if (($userauth != 1 && $userauth != 2) && $userid != intval($params['ids'])) {
+      $json = array(
+        "code" => 901,
+      );
+      echo json_encode($json);
+    } else {
       $sql = "SELECT `id`, `auth`, `name`, `contact`, `neighborhood`, `updated` FROM `person` WHERE (`id` IN (" . $params["ids"] . ") AND `active` = 1)";
       try {
         $pdo = getConnection();
@@ -48,11 +58,6 @@
       } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
       }
-    } else {
-      $json = array(
-        "code" => 901,
-      );
-      echo json_encode($json);
     }
   }
 ?>

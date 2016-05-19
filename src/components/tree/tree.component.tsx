@@ -17,6 +17,7 @@ import DescriptionComponent from './description.component';
 import FlagComponent from './flag.component';
 import OwnershipComponent from './ownership.component';
 import LocationComponent from './location.component';
+import TreeParentsComponent from './tree-parents.component';
 import { LogInStatus } from './../app.component';
 import NoteListComponent from './../note/note-list.component';
 
@@ -102,6 +103,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
                 <DescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
                 <FlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} async={self.state.editable} />
                 <OwnershipComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+                <TreeParentsComponent login={self.props.login} tree={tree} userId={self.props.userId} />
                 <NoteListComponent notes={self.props.notes} noteId={self.props.noteId} />
               </AltContainer>
             </div>
@@ -131,6 +133,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
                 <LocationComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
                 <AddressComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
                 <DescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+                <TreeParentsComponent login={self.props.login} tree={tree} userId={self.props.userId} />
                 <NoteListComponent notes={self.props.notes} noteId={self.props.noteId} />
               </AltContainer>
             </div>

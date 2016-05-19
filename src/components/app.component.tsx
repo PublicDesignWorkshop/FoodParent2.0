@@ -91,7 +91,7 @@ export default class AppComponent extends React.Component<IAppProps, IAppStatus>
               {this.props.children}
             </div>
             <LoaderComponent />
-            <UserComponent login={self.state.login} bOpen={self.props.location.query.login} userId={self.state.userId} />
+            <UserComponent login={self.state.login} open={self.props.location.query.login} userId={self.state.userId} />
           </div>
         );
     }
