@@ -40,7 +40,7 @@
     } else {
       //$sql .= "AND `food` IN (0) ";
       $foods = calcSeasonFoods();
-      $sql .= "AND `food` IN (".$foods.") ";
+      $sql .= "AND `food` IN (" . $foods . ") ";
     }
     // Flag basic filtering
     $flagsize = getFlagSize();
@@ -52,17 +52,28 @@
         $sql .= "AND SUBSTRING_INDEX(`flag`, ',', " . $i . ") IN (" . $flags . ") ";
       }
     }
-
-
-
-
-    /*
-    if (!$loggedin) {
-      $public = true;
-      $flags = 0;
+    if (isset($_SESSION['adopt'])) {
+      if (isset($_SESSION['user_id'])) {
+        $userId = intval($_SESSION['user_id']);
+        if (intval($_SESSION['adopt']) == 1) {
+          $sql .= "AND ( ";
+          for ($i = 1; $i <= 10; $i++) {
+            if ($i == 1) {
+              $sql .= "SUBSTRING_INDEX(`parent`, ',', " . $i . ") = " . $userId . " ";
+            } else {
+              $sql .= "OR SUBSTRING_INDEX(SUBSTRING_INDEX(`parent`, ',', " . $i . "), ',', -1) = " . $userId . " ";
+            }
+          }
+          $sql .= ") ";
+        }
+      }
+      if (intval($_SESSION['adopt']) == 2) {
+        $sql .= "AND `parent` != '' AND `parent` != '0' ";
+      } else if (intval($_SESSION['adopt']) == 3) {
+        $sql .= "AND `parent` = '' OR `parent` = '0' ";
+      }
     }
-    $sql = "SELECT * FROM `tree` where flags=$flags and public=$public and type in $type";
-    */
+
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);

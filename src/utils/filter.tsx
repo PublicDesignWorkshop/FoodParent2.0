@@ -3,11 +3,15 @@ import * as $ from 'jquery';
 var Settings = require('./../constraints/settings.json');
 
 export enum FilterMode {
-  NONE, FOOD, FLAG, OWNERSHIP
+  NONE, FOOD, FLAG, OWNERSHIP, ADOPT
 }
 
 export function applyFilter(mode: FilterMode, ids: Array<number>, success?: any, fail?: any, error?: any) {
-  ids.unshift(-1);  // Fake id to handle when there is no item in ids.
+  if (mode == FilterMode.ADOPT) {
+
+  } else {
+    ids.unshift(-1);  // Fake id to handle when there is no item in ids.
+  }
   $.ajax({
     url: Settings.uBaseName + Settings.uServer + "filter.php",
     type: "POST",
