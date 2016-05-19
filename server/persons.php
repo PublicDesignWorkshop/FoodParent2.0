@@ -37,7 +37,7 @@
     }
 
     if ($check) {
-      $sql = "SELECT `id`, `auth`, `name`, `contact`, `neighborhood`, `updated` FROM `person` WHERE (`id` IN (" . $params["ids"] . "))";
+      $sql = "SELECT `id`, `auth`, `name`, `contact`, `neighborhood`, `updated` FROM `person` WHERE (`id` IN (" . $params["ids"] . ") AND `active` = 1)";
       try {
         $pdo = getConnection();
         $stmt = $pdo->prepare($sql);
