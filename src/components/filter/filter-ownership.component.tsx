@@ -54,7 +54,6 @@ export default class FilterOwnershipComponent extends React.Component<IFilterOwn
     if (self.bFirstLoad) {
       self.bFirstLoad = false;
       readFilter(function(response) {
-        console.log(response);
         let ownerships: Array<number> = response.ownerships.split(",").map(function(item) {
           return parseInt(item);
         });
@@ -139,7 +138,7 @@ export default class FilterOwnershipComponent extends React.Component<IFilterOwn
           //   self.setState({editing: true});
           // }
         }}>
-          <FontAwesome className='' name='apple ' /> Ownership Types
+          <FontAwesome className='' name='home' /> Ownership Types
         </div>
         <div className={styles.value}>
           <Select name="ownership-select" multi={true} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownership types..." />

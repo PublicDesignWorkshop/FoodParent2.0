@@ -89,7 +89,6 @@ export default class LoginParentComponent extends React.Component<ILoginParentPr
             SIGN IN
           </div>
         </div>
-
       </div>
     );
   }

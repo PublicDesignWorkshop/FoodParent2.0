@@ -147,7 +147,7 @@ export default class FilterFlagComponent extends React.Component<IFilterFlagProp
           //   self.setState({editing: true});
           // }
         }}>
-          <FontAwesome className='' name='apple ' /> Flag Types
+          <FontAwesome className='' name='tags' /> Flag Types
         </div>
         <div className={styles.value}>
           <Select name="flag-select" multi={true} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select flag types..." />

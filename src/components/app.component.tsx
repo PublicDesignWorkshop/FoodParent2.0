@@ -10,7 +10,7 @@ import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 
 export enum LogInStatus {
-  GUEST, PARENT, MANAGER, ADMIN
+  NONE, ADMIN, MANAGER, PARENT, GUEST
 }
 
 export interface IAppProps {

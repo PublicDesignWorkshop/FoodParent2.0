@@ -41,6 +41,9 @@
   "e604": "The new note is modified successfully.",
   "e605": "The new note is deleted successfully.",
 
+  "e700": "A new account is created successfully.",
+  "e704": "The new person is modified successfully.",
+
 
   "e901": "Failed to send the message."
 }
