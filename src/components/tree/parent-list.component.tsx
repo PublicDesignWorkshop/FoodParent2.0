@@ -7,12 +7,13 @@ import './../../../node_modules/font-awesome/css/font-awesome.css';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './parent-list.component.css';
 import { PersonModel, personStore } from './../../stores/person.store';
-import { TreeModel } from './../../stores/tree.store';
+import { TreeModel, treeStore } from './../../stores/tree.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 
 export interface IParentListProps {
   tree: TreeModel;
   persons: Array<PersonModel>;
+  userId: number;
 }
 export interface IParentListStatus {
 
@@ -54,10 +55,21 @@ export default class ParentListComponent extends React.Component<IParentListProp
     if (list.length == 0) {
       list.push(<span key={"parent-no"}>No one adopts this tree.</span>);
     }
-
+    let adopt: JSX.Element;
+    adopt = <span className={styles.adopt} onClick={()=> {
+      self.props.tree.addParent(self.props.userId);
+      treeStore.updateTree(self.props.tree);
+    }}>ADOPT </span>;
+    if (parents.indexOf(self.props.userId) > -1) {
+      adopt = <span className={styles.unadopt} onClick={()=> {
+        self.props.tree.removeParent(self.props.userId);
+        treeStore.updateTree(self.props.tree);
+      }}>UN-ADOPT</span>;
+    }
     return (
       <div className={styles.wrapper}>
         {list}
+        {adopt}
       </div>
     );
   }

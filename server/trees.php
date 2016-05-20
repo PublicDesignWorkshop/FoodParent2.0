@@ -70,7 +70,7 @@
       if (intval($_SESSION['adopt']) == 2) {
         $sql .= "AND `parent` != '' AND `parent` != '0' ";
       } else if (intval($_SESSION['adopt']) == 3) {
-        $sql .= "AND `parent` = '' OR `parent` = '0' ";
+        $sql .= "AND (`parent` = '' OR `parent` = '0') ";
       }
     }
 

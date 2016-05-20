@@ -43,6 +43,31 @@
   :local(.parent:hover) {
     font-weight: 700;
   }
+  :local(.adopt) {
+    border-radius: 2px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 2px 4px;
+    margin: 2px 4px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: small;
+    font-family: 'Open Sans Condensed', sans-serif;
+  }
+  :local(.unadopt) {
+    border-radius: 2px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 2px 4px;
+    margin: 2px 4px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: small;
+    font-family: 'Open Sans Condensed', sans-serif;
+  }
+  :local(.unadopt:hover),
+  :local(.adopt:hover) {
+    color: rgba(107, 170, 119, 1);
+    border: 2px solid rgba(107, 170, 119, 1);
+  }
 }
 
 @media only screen and (orientation: portrait) {

@@ -76,7 +76,7 @@ export default class TreeParentsComponent extends React.Component<ITreeParentsPr
               }
             }
           }>
-            <ParentListComponent tree={self.props.tree} persons={personStore.getState().persons} />
+            <ParentListComponent userId={self.props.userId} tree={self.props.tree} persons={personStore.getState().persons} />
           </AltContainer>
           </div>
         </div>
