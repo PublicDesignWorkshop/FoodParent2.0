@@ -58,8 +58,6 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
   private updateProps = (props: INoteEditProps) => {
     let self: NoteEditComponent = this;
     if (props.note != null && props.userId != null) {
-      props.note.setTreeId(props.treeId);
-      props.note.setPersonId(props.userId);
       let editable: boolean = false;
       if (props.login == LogInStatus.MANAGER || props.login == LogInStatus.ADMIN) {
         editable = true;
