@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { Router, browserHistory  } from 'react-router';
 import Routes from './routes';
 import { resetFilter } from './utils/filter';
-import { sendMailFromParent } from './utils/mail';
+//import { sendMailFromParent } from './utils/mail';
 
 import './client.css';
 import './bootstrap-datetimepicker.css';
