@@ -32,7 +32,7 @@
   }
 }
 
-@media screen and (max-device-width: 1280px) {
+@media screen and (max-device-width: 1024px) {
   :local(.wrapper) {
     right: -100%;
     width: 100%;
