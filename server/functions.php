@@ -230,7 +230,7 @@
       $stmt->execute();
       $result = $stmt->fetchAll();
       $pdo = null;
-      $foods = [];
+      $foods = [-1];
       foreach ($result as $food) {
         array_push($foods, $food["id"]);
       }
