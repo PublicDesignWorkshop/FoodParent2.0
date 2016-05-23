@@ -52,17 +52,57 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
         } else if (note.getPicupTime() == PickupTime.LATE) {
           pickuptime = "Late"
         }
-        let rate: JSX.Element = <span><span className={styles.blankstar}>☆☆☆☆☆</span></span>;
+        let rate: JSX.Element = <span><span className={styles.blankstar}>
+          <FontAwesome className='' name='star-o' />
+          <FontAwesome className='' name='star-o' />
+          <FontAwesome className='' name='star-o' />
+          <FontAwesome className='' name='star-o' />
+          <FontAwesome className='' name='star-o' />
+        </span></span>;
         if (note.getRate() == 1) {
-          rate = <span><span>★</span><span className={styles.blankstar}>☆☆☆☆</span></span>;
+          rate = <span><span>
+            <FontAwesome className='' name='star' />
+          </span><span className={styles.blankstar}>
+            <FontAwesome className='' name='star-o' />
+            <FontAwesome className='' name='star-o' />
+            <FontAwesome className='' name='star-o' />
+            <FontAwesome className='' name='star-o' />
+          </span></span>;
         } else if (note.getRate() == 2) {
-          rate = <span><span>★★</span><span className={styles.blankstar}>☆☆☆</span></span>;
+          rate = <span><span>
+            <FontAwesome className='' name='star' />
+            <FontAwesome className='' name='star' />
+          </span><span className={styles.blankstar}>
+            <FontAwesome className='' name='star-o' />
+            <FontAwesome className='' name='star-o' />
+            <FontAwesome className='' name='star-o' />
+          </span></span>;
         } else if (note.getRate() == 3) {
-          rate = <span><span>★★★</span><span className={styles.blankstar}>☆☆</span></span>;
+          rate = <span><span>
+            <FontAwesome className='' name='star' />
+            <FontAwesome className='' name='star' />
+            <FontAwesome className='' name='star' />
+          </span><span className={styles.blankstar}>
+            <FontAwesome className='' name='star-o' />
+            <FontAwesome className='' name='star-o' />
+          </span></span>;
         } else if (note.getRate() == 4) {
-          rate = <span><span>★★★★</span><span className={styles.blankstar}>☆</span></span>;
+          rate = <span><span>
+            <FontAwesome className='' name='star' />
+            <FontAwesome className='' name='star' />
+            <FontAwesome className='' name='star' />
+            <FontAwesome className='' name='star' />
+          </span><span className={styles.blankstar}>
+            <FontAwesome className='' name='star-o' />
+          </span></span>;
         } else if (note.getRate() == 5) {
-          rate = <span><span>★★★★★</span></span>;
+          rate = <span><span>
+            <FontAwesome className='' name='star' />
+            <FontAwesome className='' name='star' />
+            <FontAwesome className='' name='star' />
+            <FontAwesome className='' name='star' />
+            <FontAwesome className='' name='star' />
+          </span></span>;
         }
         if (note.getId() == self.props.noteId) {
           if (note.getNoteType() == NoteType.POST) {
@@ -87,7 +127,7 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
               <div className={styles.value + " " + styles.selected} key={"note" + i}  onClick={()=> {
                 self.context.router.push({pathname: window.location.pathname, query: { note: note.getId() }});
               }}>
-                ▶
+                <FontAwesome className='' name='angle-right' />
                 <span className={styles.comment}>
                   {" " + Math.floor(note.getAmount()).toLocaleString() + "g has been picked up. "}
                 </span>
@@ -124,7 +164,7 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
               <div className={styles.value} key={"note" + i}  onClick={()=> {
                 self.context.router.push({pathname: window.location.pathname, query: { note: note.getId() }});
               }}>
-                ▶
+                <FontAwesome className='' name='angle-right' />
                 <span className={styles.comment}>
                   {" " + note.getAmount().toLocaleString() + "g has been picked up. "}
                 </span>
