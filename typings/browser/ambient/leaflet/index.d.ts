@@ -4365,7 +4365,7 @@ declare var L_DISABLE_3D: boolean;
 declare namespace L {
 
     export class Google {
-      constructor(tile?: any);
+      constructor(type?: any, options?: any);
     }
 }
 
