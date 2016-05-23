@@ -76,7 +76,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
     //     minZoom: Settings.iMinZoom,
     //     maxZoom: Settings.iMaxZoom,
     // });
-    self.satTileLayer = new L.Google('SATELLITE', {
+    self.satTileLayer = new L.Google(Settings.sGoogleMapTileType, {
       minZoom: Settings.iMinZoom,
       maxZoom: Settings.iMaxZoom,
     });
