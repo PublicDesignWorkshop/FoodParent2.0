@@ -221,26 +221,32 @@
 
 }
 
-@media screen and (max-device-width: 667px) {
+@media screen and (max-device-width: 1024px) {
   :local(.wrapper) {
-    position: absolute;
-    right: -50%;
-    width: 50%;
+    display: none;
+    right: -100%;
+    width: 100%;
   }
   :local(.slidein) {
+    display: block;
     right: 0;
+    transition: 0.25s;
+    overflow-y: auto;
   }
 }
 
 @media screen and (max-device-aspect-ratio: 1/1) {
   :local(.wrapper) {
-    position: absolute;
+    display: none;
+    position: fixed;
     right: -100%;
     width: 100%;
     opacity: 0.95;
     padding-bottom: 120px;
   }
   :local(.slidein) {
+    display: block;
     right: 0;
+    transition: 0.25s;
   }
 }
