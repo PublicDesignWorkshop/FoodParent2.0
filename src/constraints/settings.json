@@ -13,7 +13,7 @@
   "uGrayTileMap" : "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
   "uSatTileMap" : "//oatile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg",
   "iDefaultZoom": 13,
-  "iMaxZoom": 18,
+  "iMaxZoom": 20,
   "iMinZoom": 5,
   "iFocusZoom": 18,
   "sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
@@ -21,6 +21,7 @@
   "uReverseGeoCoding": "//nominatim.openstreetmap.org/reverse?format=json&zoom=18&addressdetails=1",
   "iMarkerPrecision": 5,
   "uTemporaryMarkerIcon": "unknown.svg",
+  "iMaxClusterRadius": 1,
 
   "iErrorMessageDuration": 5000,
   "fKGToG": 1000,
