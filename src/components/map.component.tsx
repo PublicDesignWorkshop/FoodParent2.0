@@ -285,6 +285,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       zoomToBoundsOnClick: true,
       removeOutsideVisibleBounds: true,
       maxClusterRadius: Settings.iMaxClusterRadius,
+      disableClusteringAtZoom: Settings.iDisableClusteringAtZoom
     });
     self.layer.addTo(self.map);
     document.querySelector('.leaflet-bottom.leaflet-left').innerHTML = '<div class="leaflet-control-attribution leaflet-control"><div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a></div></div>';

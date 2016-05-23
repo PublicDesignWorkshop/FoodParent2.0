@@ -12,6 +12,7 @@
   },
   "uGrayTileMap" : "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
   "uSatTileMap" : "//oatile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg",
+  "sGoogleMapTileType": "HYBRID",
   "iDefaultZoom": 13,
   "iMaxZoom": 20,
   "iMinZoom": 5,
@@ -21,8 +22,10 @@
   "uReverseGeoCoding": "//nominatim.openstreetmap.org/reverse?format=json&zoom=18&addressdetails=1",
   "iMarkerPrecision": 5,
   "uTemporaryMarkerIcon": "unknown.svg",
-  "iMaxClusterRadius": 1,
-  "sGoogleMapTileType": "SATELLITE",
+  "iMaxClusterRadius": 40,
+  "iDisableClusteringAtZoom": 16,
+
+
 
   "iErrorMessageDuration": 5000,
   "fKGToG": 1000,
