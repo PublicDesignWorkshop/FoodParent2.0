@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
+import 'googletile';
 import * as _ from 'underscore';
 import * as $ from 'jquery';
 import * as moment from 'moment';
@@ -39,7 +40,7 @@ export interface IMapStatus {
 export default class MapComponent extends React.Component<IMapProps, IMapStatus> {
   private map: L.Map;
   private grayTileLayer: L.TileLayer;
-  private satTileLayer: L.TileLayer;
+  private satTileLayer: any;
   private layer: L.MarkerClusterGroup;
   private markers: Array<L.Marker>;
   private userMarker: L.Circle;
@@ -71,10 +72,13 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
         minZoom: Settings.iMinZoom,
         maxZoom: Settings.iMaxZoom,
     });
-    self.satTileLayer = L.tileLayer(Settings.uSatTileMap, {
-        minZoom: Settings.iMinZoom,
-        maxZoom: Settings.iMaxZoom,
-    });
+    // self.satTileLayer = L.tileLayer(Settings.uSatTileMap, {
+    //     minZoom: Settings.iMinZoom,
+    //     maxZoom: Settings.iMaxZoom,
+    // });
+    self.satTileLayer = new L.Google();
+
+
     self.grayTileLayer.addTo(self.map);
     self.map.invalidateSize(false);
     // fetch trees after map is loaded.
@@ -101,7 +105,8 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
           break;
         case TileMode.SATELLITE:
           if (!self.map.hasLayer(self.satTileLayer)) {
-            self.satTileLayer.addTo(self.map);
+            self.map.addLayer(self.satTileLayer);
+            //self.satTileLayer.addTo(self.map);
             self.map.removeLayer(self.grayTileLayer);
           }
           break;

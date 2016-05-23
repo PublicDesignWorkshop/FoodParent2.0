@@ -8,11 +8,19 @@ module.exports = {
     filename: "foodparent.js",
     path: __dirname + "/dist",
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      'googletile': 'imports?this=>global!exports?googletile!googletile',
+    })
+  ],
   resolve: {
     // Absolute path that contains modules
     root: __dirname,
     // Directory names to be searched for modules
     modulesDirectories: ['lib', 'node_modules'],
+    alias: {
+      'googletile' : path.join(__dirname, './node_modules/leaflet-plugins/layer/tile/Google.js'),
+    }
   },
   devtool: 'eval',
   module: {
