@@ -157,10 +157,10 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
           <div className={styles.button} onClick={()=> {
             let error: Array<string> = new Array<string>();
             let bError: boolean = false;
-            if (self.props.note.getComment().trim() == "") {
-              error.push("e601");
-              bError = true;
-            }
+            // if (self.props.note.getComment().trim() == "") {
+            //   error.push("e601");
+            //   bError = true;
+            // }
             if (self.props.note.getAmount() < 0) {
               error.push("e602");
               bError = true;

@@ -194,10 +194,10 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
             <div className={styles.button} onClick={()=> {
               let error: Array<string> = new Array<string>();
               let bError: boolean = false;
-              if (self.props.note.getComment().trim() == "") {
-                error.push("e601");
-                bError = true;
-              }
+              // if (self.props.note.getComment().trim() == "") {
+              //   error.push("e601");
+              //   bError = true;
+              // }
               if (self.props.note.getAmount() < 0) {
                 error.push("e602");
                 bError = true;
