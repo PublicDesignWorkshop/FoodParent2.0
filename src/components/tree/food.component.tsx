@@ -70,19 +70,13 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
       if (selected) {
         foodId = parseInt(selected.value);
       }
-      self.props.tree.setFoodId(foodId);
-      if (self.props.async) {
-        treeStore.updateTree(self.props.tree);
-      } else {
-        self.setState({selected: selected});
-      }
       // Apply filter for a new tree food type to help users to figure out the location
       if (self.props.tree.getId() == 0) {
         var foods = new Array<number>();
         foods.push(foodId);
         applyFilter(FilterMode.FOOD, foods, function(response) {
           deleteFilter(function () {
-            treeStore.fetchTrees();
+            //treeStore.fetchTrees();
           });
         }, function(response) {
 
