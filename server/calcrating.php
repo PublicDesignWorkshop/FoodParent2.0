@@ -24,9 +24,9 @@
     $startthisyear = new DateTime('-1 MONTH', new DateTimeZone('America/Los_Angeles')); // first argument uses strtotime parsing
     $endthisyear = new DateTime('+1 MONTH', new DateTimeZone('America/Los_Angeles')); // first argument uses strtotime parsing
     $startlastyear = new DateTime('-13 MONTH', new DateTimeZone('America/Los_Angeles')); // first argument uses strtotime parsing
-    $endlastyear = new DateTime('+11 MONTH', new DateTimeZone('America/Los_Angeles')); // first argument uses strtotime parsing
-    $start2lastyear = new DateTime('-13 MONTH', new DateTimeZone('America/Los_Angeles')); // first argument uses strtotime parsing
-    $end2lastyear = new DateTime('+11 MONTH', new DateTimeZone('America/Los_Angeles')); // first argument uses strtotime parsing
+    $endlastyear = new DateTime('-11 MONTH', new DateTimeZone('America/Los_Angeles')); // first argument uses strtotime parsing
+    $start2lastyear = new DateTime('-25 MONTH', new DateTimeZone('America/Los_Angeles')); // first argument uses strtotime parsing
+    $end2lastyear = new DateTime('-23 MONTH', new DateTimeZone('America/Los_Angeles')); // first argument uses strtotime parsing
 
     // echo nl2br($startthisyear->format('Y-m-d') . "\n");
     // echo nl2br($endthisyear->format('Y-m-d') . "\n");
