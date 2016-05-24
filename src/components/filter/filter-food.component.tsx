@@ -117,7 +117,7 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
       });
       var selected = new Array<IFilterFoodOption>();
       foods.forEach(food => {
-        if (food != 0) {
+        if (food != 0 && food != -1) {
           let label: string = foodStore.getFood(food).getName();
           selected.push({value: food, label: label});
         }

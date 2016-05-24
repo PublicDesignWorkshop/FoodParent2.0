@@ -142,6 +142,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
               address: "",
               owner: "0",
               parent: "0",
+              rate: "-1",
               updated: moment(new Date()).format(Settings.sServerDateFormat),
             });
             treeStore.addTree(tree);

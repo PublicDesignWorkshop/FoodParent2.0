@@ -18,6 +18,7 @@ import FilterFoodComponent from './filter-food.component';
 import FilterFlagComponent from './filter-flag.component';
 import FilterOwnershipComponent from './filter-ownership.component';
 import FilterAdoptComponent from './filter-adopt.component';
+import FilterRateComponent from './filter-rate.component';
 
 export interface ITreesFilterProps {
   foods: Array<FoodModel>;
@@ -73,7 +74,8 @@ export default class TreesFilterComponent extends React.Component<ITreesFilterPr
           }}/></div>
         </div>
         <FilterFoodComponent foods={self.props.foods} />
-        <FilterAdoptComponent />
+        <FilterRateComponent />
+        <FilterAdoptComponent login={self.props.login}/>
         <FilterFlagComponent flags={self.props.flags} />
         {filterownership}
       </div>

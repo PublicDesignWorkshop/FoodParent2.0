@@ -73,6 +73,13 @@
         $sql .= "AND (`parent` = '' OR `parent` = '0') ";
       }
     }
+    for ($i = 1; $i <= 6; $i++) {
+      if (isset($_SESSION['rates'])) {
+        $sql .= "AND SUBSTRING_INDEX(`rate`, ',', " . $i . ") IN (" . $_SESSION['rates'] . ") ";
+      } else {
+        $sql .= "AND SUBSTRING_INDEX(`rate`, ',', " . $i . ") IN (-1,4,5) ";
+      }
+    }
 
     try {
       $pdo = getConnection();

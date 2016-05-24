@@ -61,10 +61,11 @@
         "public" => $data->{'public'},
         "owner" => $data->{'owner'},
         "parent" => $data->{'parent'},
+        "rate" => $data->{'rate'},
         "updated" => date("Y-m-d H:i:s"),
       );
     }
-    $sql = "UPDATE `tree` SET `lat` = :lat, `lng` = :lng, `food` = :food, `flag` = :flag, `public` = :public, `parent` = :parent, `owner` = :owner, `description` = :description, `address` = :address, `updated` = :updated WHERE (`id` = :id)";
+    $sql = "UPDATE `tree` SET `lat` = :lat, `lng` = :lng, `food` = :food, `flag` = :flag, `public` = :public, `parent` = :parent, `rate` = :rate, `owner` = :owner, `description` = :description, `address` = :address, `updated` = :updated WHERE (`id` = :id)";
 
     try {
       $pdo = getConnection();
@@ -108,9 +109,10 @@
       "address" => $data->{'address'},
       "public" => $data->{'public'},
       "parent" => $data->{'parent'},
+      "rate" => $data->{'rate'},
       "updated" => date("Y-m-d H:i:s"),
       );
-    $sql = "INSERT INTO `tree` VALUES ( NULL, :lat, :lng, :food, :flag, :owner, :description, :address, :public, :parent, :updated )";
+    $sql = "INSERT INTO `tree` VALUES ( NULL, :lat, :lng, :food, :flag, :owner, :description, :address, :public, :parent, :rate, :updated )";
 
     try {
       $pdo = getConnection();
