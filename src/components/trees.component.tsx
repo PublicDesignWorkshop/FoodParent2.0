@@ -15,6 +15,7 @@ import MapComponent from './map.component' ;
 import TreesPanelComponent from './trees-panel.component';
 import TreesMessageComponent from './trees-message.component';
 import { TileMode } from './map.component';
+import { calcRating } from './../utils/rating';
 
 export enum TreesMode {
   NONE, TREEDETAIL, TREEADDMARKER, TREEADDINFO, TREEADDSAVE, TREESFILTER, TREENOTEEDIT, TREENOTEDELETE
@@ -110,10 +111,10 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
 
   public onMapRender = () => {
     let self: TreesComponent = this;
-    setTimeout(function () {
+    calcRating(function () {
       foodStore.fetchFoods();
       treeStore.fetchTrees();
-    }, 1500);
+    });
   }
   public renderTree = (treeId: number) => {
     let self: TreesComponent = this;
