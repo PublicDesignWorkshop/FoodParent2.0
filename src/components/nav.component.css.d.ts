@@ -5,3 +5,5 @@ export const logo: string;
 export const center: string;
 export const right: string;
 export const login: string;
+export const location: string;
+export const edit: string;

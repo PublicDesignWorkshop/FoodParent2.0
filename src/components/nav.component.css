@@ -55,6 +55,7 @@
     text-align: center;
     margin: auto;
     cursor: pointer;
+    padding: 0 6px;
   }
 
   :local(.wrapper .center:hover) {
@@ -84,6 +85,28 @@
   }
   :local(.wrapper .right .login:hover) {
     color: rgba(94, 78, 81, 1);
+  }
+
+  :local(.location) {
+    width: 100%;
+    padding: 6px;
+    border-radius: 2px;
+    color: rgba(255, 255, 255, 1);
+    cursor: text;
+  }
+  :local(.location:hover) {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  :local(.edit) {
+    width: 100%;
+    padding: 6px;
+    border-radius: 2px;
+    border: 1px solid rgba(94, 78, 81, 1);
+    color: rgba(0, 0, 0, 1);
+  }
+  :local(.edit:focus) {
+    outline: none;
   }
 }
 
