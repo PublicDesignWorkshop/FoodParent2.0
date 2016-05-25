@@ -82,7 +82,7 @@ export default class FilterAdoptComponent extends React.Component<IFilterAdoptPr
     }
 
     var options = new Array<IFilterAdoptOption>();
-    if (self.props.login == LogInStatus.ADMIN || self.props.login == LogInStatus.MANAGER) {
+    if (self.props.login == LogInStatus.ADMIN || self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.PARENT) {
       options.push({value: 0, label: "All"});
       options.push({value: 1, label: "My Trees"});
       options.push({value: 2, label: "Adopted"});

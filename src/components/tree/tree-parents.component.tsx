@@ -23,6 +23,7 @@ export interface ITreeParentsStatus {
 }
 export default class TreeParentsComponent extends React.Component<ITreeParentsProps, ITreeParentsStatus> {
   static contextTypes: any;
+  private tree: number;
   constructor(props : ITreeParentsProps) {
     super(props);
     let self: TreeParentsComponent = this;
@@ -44,7 +45,8 @@ export default class TreeParentsComponent extends React.Component<ITreeParentsPr
 
   private updateProps(props: ITreeParentsProps) {
     let self: TreeParentsComponent = this;
-    if (props.tree) {
+    if (props.tree && props.tree.getId() != self.tree) {
+      console.log("-------------");
       if (self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.ADMIN) {
         if (props.tree.getParents().length > 0) {
           setTimeout(function() {
@@ -52,6 +54,7 @@ export default class TreeParentsComponent extends React.Component<ITreeParentsPr
           }, 1);
         }
       }
+      self.tree = props.tree.getId();
     }
   }
 

@@ -1,6 +1,6 @@
 {
-  "uBaseName": "/FoodParent2.0",
-  "uBaseNameForWebPack": "/FoodParent2.0/",
+  "uBaseName": "",
+  "uBaseNameForWebPack": "/",
   "uStaticImage": "/static/images/",
   "uContentImage": "/content/images/",
   "uRelativeImageUpload": "./../content/images/",
@@ -16,7 +16,7 @@
   "iDefaultZoom": 13,
   "iMaxZoom": 20,
   "iMinZoom": 5,
-  "iFocusZoom": 18,
+  "iFocusZoom": 17,
   "sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
   "sUIDateFormat": "MM/DD/YY",
   "uReverseGeoCoding": "//nominatim.openstreetmap.org/reverse?format=json&zoom=18&addressdetails=1",

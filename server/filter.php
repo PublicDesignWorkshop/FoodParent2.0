@@ -117,7 +117,7 @@
     $_SESSION['food_ids'] = $foods;
     $adopt = "0";
     $_SESSION['adopt'] = $adopt;
-    $rates = "-1,4,5";
+    $rates = "-1,0,1,2,3,4,5";
     $_SESSION['rates'] = $rates;
     $params = array(
       "code" => 400,

@@ -62,6 +62,10 @@ export default class TreesFilterComponent extends React.Component<ITreesFilterPr
     if (self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.ADMIN) {
       filterownership = <FilterOwnershipComponent />;
     }
+    let filterflag: JSX.Element;
+    if (self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.ADMIN) {
+      filterflag = <FilterFlagComponent flags={self.props.flags} />;
+    }
     return(
       <div className={styles.wrapper}>
         <div className={styles.inner}>
@@ -76,7 +80,7 @@ export default class TreesFilterComponent extends React.Component<ITreesFilterPr
         <FilterFoodComponent foods={self.props.foods} />
         <FilterRateComponent />
         <FilterAdoptComponent login={self.props.login}/>
-        <FilterFlagComponent flags={self.props.flags} />
+        {filterflag}
         {filterownership}
       </div>
     );
