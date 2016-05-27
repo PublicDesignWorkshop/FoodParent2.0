@@ -11,10 +11,10 @@
     display: -webkit-flex;          /* NEW - Chrome */
     display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
 
-    -moz-user-select: all;
+    /*-moz-user-select: all;
     -ms-user-select: all;
     -webkit-user-select: all;
-    user-select: all;
+    user-select: all;*/
 
     width: 48px;
     height: 48px;

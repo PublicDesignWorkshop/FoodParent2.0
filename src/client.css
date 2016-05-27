@@ -9,10 +9,10 @@
     box-sizing: border-box;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 
-    -moz-user-select: none;
+    /*-moz-user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
-    user-select: none;
+    user-select: none;*/
   }
   html {
     width: 100%;
@@ -44,10 +44,10 @@
     transition: opacity 1.3s;
   }
   input {
-    -moz-user-select: all;
+    /*-moz-user-select: all;
     -ms-user-select: all;
     -webkit-user-select: all;
-    user-select: all;
+    user-select: all;*/
   }
   .leaflet-control,
   .leaflet-top, .leaflet-bottom {
