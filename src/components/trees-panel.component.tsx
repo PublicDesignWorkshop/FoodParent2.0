@@ -58,6 +58,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
     let self: TreesPanelComponent = this;
     self.updateProps(self.props);
     flagStore.fetchFlags();
+    foodStore.fetchFoods();
   }
   public componentWillUnmount() {
     let self: TreesPanelComponent = this;
@@ -258,6 +259,12 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                 </AltContainer>
                 <AltContainer stores={
                   {
+                    foods: function (props) {
+                      return {
+                        store: foodStore,
+                        value: foodStore.getState().foods
+                      };
+                    },
                     note: function (props) {
                       return {
                         store: noteStore,
@@ -272,7 +279,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                     }
                   }
                 }>
-                  <NoteEditComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} trees={self.props.trees} note={noteStore.getNote(self.props.noteId)} error={new Array<string>(noteStore.getState().errorMessage)} />
+                  <NoteEditComponent login={self.state.login} userId={self.state.userId} treeId={self.props.treeId} trees={self.props.trees} note={noteStore.getNote(self.props.noteId)} error={new Array<string>(noteStore.getState().errorMessage)} foods={foodStore.getState().foods} />
                 </AltContainer>
               </div>
             </div>

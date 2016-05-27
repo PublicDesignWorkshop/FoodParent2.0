@@ -12,6 +12,7 @@ import * as styles from './image-zoom.component.css';
 import { NoteModel, noteStore } from './../../stores/note.store';
 
 export interface IImageZoomProps {
+  title: string;
   image: string;
   onClose: Function;
 }
@@ -56,7 +57,7 @@ export default class ImageZoomComponent extends React.Component<IImageZoomProps,
           <div className={styles.inner} ref="container">
             <div className={styles.header}>
               <div className={styles.title}>
-                TITLE
+                {self.props.title}
               </div>
               <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
                 self.props.onClose();

@@ -11,6 +11,7 @@ import * as styles from './note-edit.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { LogInStatus } from './../app.component';
 import { uploadImage } from './../../utils/upload';
+import { FoodModel, foodStore } from './../../stores/food.store';
 import { NoteModel, noteStore, NoteType, PickupTime, AmountType } from './../../stores/note.store';
 import NoteCommentComponent from './note-comment.component';
 import NoteDateComponent from './note-date.component';
@@ -26,6 +27,7 @@ export interface INoteEditProps {
   userId: number;
   note: NoteModel;
   error: Array<string>;
+  foods: Array<FoodModel>;
 }
 export interface INoteEditStatus {
   editable?: boolean;
@@ -93,9 +95,10 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
     let self: NoteEditComponent = this;
     if (self.props.treeId && self.props.note != null) {
       var tree: TreeModel = treeStore.getTree(self.props.treeId);
+      let food: FoodModel = foodStore.getFood(tree.getFoodId());
       let image: JSX.Element;
       if (self.state.image) {
-        image = <ImageZoomComponent image={self.state.image} onClose={self.onImageClose}/>;
+        image = <ImageZoomComponent image={self.state.image} onClose={self.onImageClose}  title={food.getName() + tree.getName() + " - " + self.props.note.getFormattedDate()} />;
       }
       let images: Array<JSX.Element> = self.props.note.getImages().map(function(image: string, i: number) {
         if (i == 0) {
