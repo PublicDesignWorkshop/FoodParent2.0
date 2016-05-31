@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { Router, Link } from 'react-router';
+import * as AltContainer from 'alt-container';
 
 var Settings = require('./../constraints/settings.json');
 import * as styles from './nav.component.css';
 import { LogInStatus } from './app.component';
 import { geocoding, reverseGeocoding, IReverseGeoLocation } from './../utils/geolocation';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
+import NavAddressComponent from './nav-address.component';
+import { MapModel, mapStore } from './../stores/map.store';
 
 export interface INavProps {
   login: LogInStatus;
@@ -15,8 +18,7 @@ export interface INavProps {
   location: any;
 }
 export interface INavStatus {
-  address?: string;
-  editing?: boolean;
+
 }
 export default class NavComponent extends React.Component<INavProps, INavStatus> {
   private map: any;
@@ -52,71 +54,10 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
     }
   }
 
-  private searchAddress = () => {
-    let self: NavComponent = this;
-    self.setState({editing: false});
-    if (self.state.address.trim() != "") {
-      self.props.onChange(self.state.address);
-      geocoding(self.state.address, new L.LatLng(self.props.location.query.lat, self.props.location.query.lng), function(response) {
-        // self.context.router.replace({pathname: window.location.pathname, query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
-        self.context.router.replace({pathname: Settings.uBaseName + '/', query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
-      }, function() {
-
-      });
-    } else {
-      if (self.props.location.query.lat && self.props.location.query.lng) {
-        addLoading();
-        reverseGeocoding(new L.LatLng(self.props.location.query.lat, self.props.location.query.lng), function(response: IReverseGeoLocation) {
-          self.setState({address: response.road + ", " + response.county + ", " + response.state + ", " + response.postcode, editing: false});
-          removeLoading();
-        }, function() {
-          removeLoading();
-        });
-      }
-    }
-  }
-
   render() {
     let self: NavComponent = this;
-    if (self.state.editing) {
-      switch(self.props.login) {
-        case LogInStatus.GUEST:
-          return (
-            <div className={styles.wrapper}>
-              <div className={styles.left}>
-                <div className={styles.title} onClick={()=> {
-                  self.context.router.push({pathname: Settings.uBaseName + '/'});
-                }}>
-                  FoodParent
-                </div>
-                <div className={styles.logo}></div>
-              </div>
-              <div className={styles.center}>
-                <input autoFocus type="text" className={styles.edit} placeholder="enter a search location address..."
-                  value={self.state.address}
-                  onChange={(event: any)=> {
-                    self.setState({address: event.target.value});
-                  }}
-                  onKeyPress={(event)=> {
-                    if (event.key == 'Enter') {
-                      self.searchAddress();
-                    }
-                  }}
-                  onBlur={()=> {
-                    self.searchAddress();
-                  }} />
-              </div>
-              <div className={styles.right}>
-                <div className={styles.login} onClick={()=> {
-                  self.context.router.push({pathname: window.location.pathname, query: { login: true }});
-                }}>
-                  PARENT IN
-                </div>
-              </div>
-            </div>
-          );
-        case LogInStatus.PARENT:
-        case LogInStatus.MANAGER:
+    switch(self.props.login) {
+      case LogInStatus.GUEST:
         return (
           <div className={styles.wrapper}>
             <div className={styles.left}>
@@ -128,19 +69,43 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
               <div className={styles.logo}></div>
             </div>
             <div className={styles.center}>
-              <input autoFocus type="text" className={styles.edit} placeholder="enter a search location address..."
-                value={self.state.address}
-                onChange={(event: any)=> {
-                  self.setState({address: event.target.value});
-                }}
-                onKeyPress={(event)=> {
-                  if (event.key == 'Enter') {
-                    self.searchAddress();
-                  }
-                }}
-                onBlur={()=> {
-                  self.searchAddress();
-                }} />
+              <AltContainer stores={
+                {
+                  maps: mapStore
+                }
+              }>
+                <NavAddressComponent mapId="map" />
+              </AltContainer>
+            </div>
+            <div className={styles.right}>
+              <div className={styles.login} onClick={()=> {
+                self.context.router.push({pathname: window.location.pathname, query: { login: true }});
+              }}>
+                PARENT IN
+              </div>
+            </div>
+          </div>
+        );
+      case LogInStatus.PARENT:
+      case LogInStatus.MANAGER:
+        return (
+          <div className={styles.wrapper}>
+            <div className={styles.left}>
+              <div className={styles.title} onClick={()=> {
+                self.context.router.push({pathname: Settings.uBaseName + '/'});
+              }}>
+                FoodParent
+              </div>
+              <div className={styles.logo}></div>
+            </div>
+            <div className={styles.center}>
+              <AltContainer stores={
+                {
+                  maps: mapStore
+                }
+              }>
+                <NavAddressComponent mapId="map" />
+              </AltContainer>
             </div>
             <div className={styles.right}>
               <div className={styles.login} onClick={()=> {
@@ -151,65 +116,6 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
             </div>
           </div>
         );
-      }
-    } else {
-      switch(self.props.login) {
-        case LogInStatus.GUEST:
-          return (
-            <div className={styles.wrapper}>
-              <div className={styles.left}>
-                <div className={styles.title} onClick={()=> {
-                  self.context.router.push({pathname: Settings.uBaseName + '/'});
-                }}>
-                  FoodParent
-                </div>
-                <div className={styles.logo}></div>
-              </div>
-              <div className={styles.center}>
-                <div className={styles.location} onClick={()=> {
-                  self.setState({address: "", editing: true});
-                }}>
-                  {self.state.address}
-                </div>
-              </div>
-              <div className={styles.right}>
-                <div className={styles.login} onClick={()=> {
-                  self.context.router.push({pathname: window.location.pathname, query: { login: true }});
-                }}>
-                  PARENT IN
-                </div>
-              </div>
-            </div>
-          );
-        case LogInStatus.PARENT:
-        case LogInStatus.MANAGER:
-          return (
-            <div className={styles.wrapper}>
-              <div className={styles.left}>
-                <div className={styles.title} onClick={()=> {
-                  self.context.router.push({pathname: Settings.uBaseName + '/'});
-                }}>
-                  FoodParent
-                </div>
-                <div className={styles.logo}></div>
-              </div>
-              <div className={styles.center}>
-                <div className={styles.location} onClick={()=> {
-                  self.setState({address: "", editing: true});
-                }}>
-                  {self.state.address}
-                </div>
-              </div>
-              <div className={styles.right}>
-                <div className={styles.login} onClick={()=> {
-                  self.context.router.push({pathname: window.location.pathname, query: { login: true }});
-                }}>
-                  {self.props.contact}
-                </div>
-              </div>
-            </div>
-          );
-      }
     }
   }
 }

@@ -18,6 +18,8 @@ import { treeActions } from './../actions/tree.actions';
 import MarkerComponent from './marker.component';
 import { TreesMode } from './trees.component';
 
+import { mapActions } from './../actions/map.actions';
+
 export enum TileMode {
   GRAY, SATELLITE
 }
@@ -95,20 +97,22 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   public componentWillReceiveProps (nextProps: IMapProps) {
     //this.setState({cid: nextProps.cid});
     let self: MapComponent = this;
-    if (nextProps.location.query.lat && nextProps.location.query.lng && nextProps.location.query.move == "true") {
-      // self.context.router.replace({pathname: window.location.pathname, query: { lat: nextProps.location.query.lat, lng: nextProps.location.query.lng }});
+    // if (nextProps.location.query.lat && nextProps.location.query.lng && nextProps.location.query.move == "true") {
+    //   // self.context.router.replace({pathname: window.location.pathname, query: { lat: nextProps.location.query.lat, lng: nextProps.location.query.lng }});
+    //
+    //   let location: L.LatLng = new L.LatLng(nextProps.location.query.lat, nextProps.location.query.lng);
+    //   var point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, self.props.zoom);
+    //   var rMap = ReactDOM.findDOMNode(self.refs['map']);
+    //   if (rMap.clientWidth > rMap.clientHeight) {
+    //     point.x += self.map.getSize().x * 0.15;
+    //   } else {
+    //     //point.y += self.map.getSize().y * 0.15;
+    //   }
+    //   location = L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom);
+    //   self.map.setView(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
+    // } else
 
-      let location: L.LatLng = new L.LatLng(nextProps.location.query.lat, nextProps.location.query.lng);
-      var point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, self.props.zoom);
-      var rMap = ReactDOM.findDOMNode(self.refs['map']);
-      if (rMap.clientWidth > rMap.clientHeight) {
-        point.x += self.map.getSize().x * 0.15;
-      } else {
-        //point.y += self.map.getSize().y * 0.15;
-      }
-      location = L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom);
-      self.map.setView(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
-    } else if (nextProps.trees && nextProps.foods.length) {
+    if (nextProps.trees && nextProps.foods.length) {
       self.renderMarkers(nextProps.trees, nextProps);
       self.map.setZoom(nextProps.zoom);
       self.renderUserLocation(nextProps.position);
@@ -331,31 +335,13 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       self.props.onZoom(event.target._zoom);
     });
     self.props.onRender();
-
-
-    var point: L.Point = L.CRS.EPSG3857.latLngToPoint(self.map.getCenter(), self.props.zoom);
-    var rMap = ReactDOM.findDOMNode(self.refs['map']);
-    if (rMap.clientWidth > rMap.clientHeight) {
-      point.x -= self.map.getSize().x * 0.15;
-    } else {
-      //point.y += self.map.getSize().y * 0.15;
-    }
-    let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom);
-    self.context.router.replace({pathname: window.location.pathname, query: { lat: location.lat.toFixed(Settings.iMarkerPrecision), lng: location.lng.toFixed(Settings.iMarkerPrecision) }});
-    
+    mapActions.addMap('map', self.map);
   }
 
   private afterMoveMap = () => {
     var self: MapComponent = this;
-    var point: L.Point = L.CRS.EPSG3857.latLngToPoint(self.map.getCenter(), self.props.zoom);
-    var rMap = ReactDOM.findDOMNode(self.refs['map']);
-    if (rMap.clientWidth > rMap.clientHeight) {
-      point.x -= self.map.getSize().x * 0.15;
-    } else {
-      //point.y += self.map.getSize().y * 0.15;
-    }
-    let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom);
-    self.context.router.replace({pathname: window.location.pathname, query: { lat: location.lat.toFixed(Settings.iMarkerPrecision), lng: location.lng.toFixed(Settings.iMarkerPrecision) }});
+    // update mapStore to update address of the map when the map is dragged.
+    mapActions.update('map');
   }
   render() {
     let self: MapComponent = this;

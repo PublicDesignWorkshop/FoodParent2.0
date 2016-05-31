@@ -1,0 +1,38 @@
+@media all {
+  :local(.location) {
+    width: 100%;
+    padding: 1px 6px;
+    border-radius: 2px;
+    color: rgba(255, 255, 255, 1);
+    cursor: text;
+    overflow: hidden;
+    min-height: 24px;
+  }
+  :local(.location:hover) {
+    color: rgba(107, 170, 119, 1);
+  }
+
+  :local(.edit) {
+    width: 100%;
+    padding: 6px;
+    border-radius: 2px;
+    border: 1px solid rgba(94, 78, 81, 1);
+    color: rgba(0, 0, 0, 1);
+  }
+  :local(.edit:focus) {
+    outline: none;
+  }
+}
+
+
+@media screen and (max-device-width: 1024px) {
+  :local(.location) {
+    line-height: 105%;
+  }
+}
+
+@media screen and (max-device-aspect-ratio: 1/1) {
+  :local(.location) {
+    line-height: 105%;
+  }
+}
