@@ -57,7 +57,7 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
     self.setState({editing: false});
     if (self.state.address.trim() != "") {
       self.props.onChange(self.state.address);
-      geocoding(self.state.address, function(response) {
+      geocoding(self.state.address, new L.LatLng(self.props.location.query.lat, self.props.location.query.lng), function(response) {
         // self.context.router.replace({pathname: window.location.pathname, query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
         self.context.router.replace({pathname: Settings.uBaseName + '/', query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
       }, function() {
