@@ -40,6 +40,13 @@ export default class UserComponent extends React.Component<IUserProps, IUserStat
   public componentDidMount() {
     let self: UserComponent = this;
     self.updateProps(self.props);
+    if (self.props.userId) {
+      let ids: Array<number> = new Array<number>();
+      ids.push(self.props.userId);
+      setTimeout(function () {
+        personStore.fetchPersons(ids);
+      }, 1);
+    }
   }
   public componentWillUnmount() {
     let self: UserComponent = this;
@@ -59,11 +66,7 @@ export default class UserComponent extends React.Component<IUserProps, IUserStat
     } else if (props.login == LogInStatus.ADMIN) {
       self.setState({role: "Admin"});
     }
-    if (props.userId) {
-      let ids: Array<number> = new Array<number>();
-      ids.push(props.userId);
-      personStore.fetchPersons(ids);
-    }
+
   }
   private updateAttribute = () => {
     let self: UserComponent = this;

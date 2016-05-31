@@ -22,6 +22,7 @@ export interface ITreeProps {
   address: string;
   owner: string;
   parent: string;
+  rate: string;
   updated: string;
 }
 
@@ -34,6 +35,7 @@ export class TreeModel {
   ownership: number;
   address: string;
   owner: number;
+  rate: number;
   updated: moment.Moment;
   flags: Array<number>;
   parents: Array<number>;
@@ -60,6 +62,7 @@ export class TreeModel {
     self.parents = props.parent.split(',').map((flag: string) => {
       return parseInt(flag);
     });
+    self.rate = parseInt(props.rate);
   }
   public toJSON(): any {
     let self: TreeModel = this;
@@ -74,6 +77,7 @@ export class TreeModel {
       public: self.ownership,
       owner: self.owner,
       parent: self.parents.toString(),
+      rate: self.rate,
     }
   }
   public getId(): number {
@@ -146,6 +150,9 @@ export class TreeModel {
   }
   public setOwnership(ownership: number): void {
     this.ownership = ownership;
+  }
+  public getRate(): number {
+    return this.rate;
   }
 }
 

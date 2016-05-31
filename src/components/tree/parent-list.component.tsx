@@ -46,6 +46,8 @@ export default class ParentListComponent extends React.Component<IParentListProp
     let self: ParentListComponent = this;
     let list: Array<JSX.Element> = new Array<JSX.Element>();
     let parents: Array<number> = self.props.tree.getParents();
+    console.log(personStore.getState().persons);
+    console.log(parents);
     parents.forEach((parentId: number) => {
       let person: PersonModel = personStore.getPerson(parentId);
       if (person) {

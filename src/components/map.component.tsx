@@ -33,6 +33,7 @@ export interface IMapProps {
   offGeo: Function;
   mode: TreesMode;
   tile: TileMode;
+  location: any;
 }
 export interface IMapStatus {
 
@@ -94,7 +95,20 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   public componentWillReceiveProps (nextProps: IMapProps) {
     //this.setState({cid: nextProps.cid});
     let self: MapComponent = this;
-    if (nextProps.trees && nextProps.foods.length) {
+    if (nextProps.location.query.lat && nextProps.location.query.lng && nextProps.location.query.move == "true") {
+      // self.context.router.replace({pathname: window.location.pathname, query: { lat: nextProps.location.query.lat, lng: nextProps.location.query.lng }});
+
+      let location: L.LatLng = new L.LatLng(nextProps.location.query.lat, nextProps.location.query.lng);
+      var point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, self.props.zoom);
+      var rMap = ReactDOM.findDOMNode(self.refs['map']);
+      if (rMap.clientWidth > rMap.clientHeight) {
+        point.x += self.map.getSize().x * 0.15;
+      } else {
+        //point.y += self.map.getSize().y * 0.15;
+      }
+      location = L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom);
+      self.map.setView(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
+    } else if (nextProps.trees && nextProps.foods.length) {
       self.renderMarkers(nextProps.trees, nextProps);
       self.map.setZoom(nextProps.zoom);
       self.renderUserLocation(nextProps.position);
@@ -142,6 +156,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
               address: "",
               owner: "0",
               parent: "0",
+              rate: "-1",
               updated: moment(new Date()).format(Settings.sServerDateFormat),
             });
             treeStore.addTree(tree);
@@ -304,7 +319,8 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
         } else {
           //point.y += self.map.getSize().y * 0.15;
         }
-        self.map.panTo(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
+        let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom);
+        self.map.panTo(location);
         //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
       }, 250);
     });
@@ -315,10 +331,31 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       self.props.onZoom(event.target._zoom);
     });
     self.props.onRender();
+
+
+    var point: L.Point = L.CRS.EPSG3857.latLngToPoint(self.map.getCenter(), self.props.zoom);
+    var rMap = ReactDOM.findDOMNode(self.refs['map']);
+    if (rMap.clientWidth > rMap.clientHeight) {
+      point.x -= self.map.getSize().x * 0.15;
+    } else {
+      //point.y += self.map.getSize().y * 0.15;
+    }
+    let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom);
+    self.context.router.replace({pathname: window.location.pathname, query: { lat: location.lat.toFixed(Settings.iMarkerPrecision), lng: location.lng.toFixed(Settings.iMarkerPrecision) }});
+    
   }
 
   private afterMoveMap = () => {
     var self: MapComponent = this;
+    var point: L.Point = L.CRS.EPSG3857.latLngToPoint(self.map.getCenter(), self.props.zoom);
+    var rMap = ReactDOM.findDOMNode(self.refs['map']);
+    if (rMap.clientWidth > rMap.clientHeight) {
+      point.x -= self.map.getSize().x * 0.15;
+    } else {
+      //point.y += self.map.getSize().y * 0.15;
+    }
+    let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom);
+    self.context.router.replace({pathname: window.location.pathname, query: { lat: location.lat.toFixed(Settings.iMarkerPrecision), lng: location.lng.toFixed(Settings.iMarkerPrecision) }});
   }
   render() {
     let self: MapComponent = this;
@@ -332,4 +369,6 @@ MapComponent.contextTypes = {
   router: function () {
     return React.PropTypes.func.isRequired;
   }
+  // ,
+  // address: React.PropTypes.string,
 };

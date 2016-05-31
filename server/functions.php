@@ -258,6 +258,24 @@
     }
   }
 
+  function getAllFlags() {
+    $sql = "SELECT id FROM `flag`";
+    try {
+      $pdo = getConnection();
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute();
+      $result = $stmt->fetchAll();
+      $pdo = null;
+      $flags = [];
+      foreach ($result as $flag) {
+        array_push($flags, $flag["id"]);
+      }
+      return implode(',', $flags);
+    } catch(PDOException $e) {
+      return '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+  }
+
   function getFlagSize() {
     $sql = "SELECT id FROM `flag`";
     try {

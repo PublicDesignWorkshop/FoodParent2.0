@@ -16,7 +16,7 @@
   "iDefaultZoom": 13,
   "iMaxZoom": 20,
   "iMinZoom": 5,
-  "iFocusZoom": 18,
+  "iFocusZoom": 17,
   "sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
   "sUIDateFormat": "MM/DD/YY",
   "uReverseGeoCoding": "//nominatim.openstreetmap.org/reverse?format=json&zoom=18&addressdetails=1",
@@ -30,6 +30,8 @@
   "iErrorMessageDuration": 5000,
   "fKGToG": 1000,
   "fLBSTOG": 453.592,
+
+  "uGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCVpuJwOhwgzCmv78WRCybpJ6azSd6lMis",
 
 
 

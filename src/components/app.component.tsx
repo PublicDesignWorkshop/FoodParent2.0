@@ -18,16 +18,24 @@ export interface IAppProps {
 }
 
 export interface IAppStatus {
-  login: LogInStatus;
-  userId: number;
-  contact: string;
+  login?: LogInStatus;
+  userId?: number;
+  contact?: string;
+  address?: string;
 }
 
 export default class AppComponent extends React.Component<IAppProps, IAppStatus> {
+  // static childContextTypes = {
+  //   address: React.PropTypes.string
+  // }
+  // getChildContext() {
+  //   return {address: this.state.address};
+  // }
   constructor(props : IAppProps) {
     super(props);
     let self: AppComponent = this;
     this.state = {
+      address: "",
       login : LogInStatus.GUEST,
       contact: "",
       userId: null,
@@ -46,6 +54,7 @@ export default class AppComponent extends React.Component<IAppProps, IAppStatus>
   }
   private updateProps = (props: IAppProps) => {
     let self: AppComponent = this;
+
     addLoading();
     checkLogin(function(response1) { // login
       checkAdmin(function(response2) { // Manager
@@ -64,6 +73,10 @@ export default class AppComponent extends React.Component<IAppProps, IAppStatus>
       removeLoading();
     });
   }
+  onAddressChange = (address: string) => {
+    let self: AppComponent = this;
+    self.setState({address: address});
+  }
   render() {
     let self: AppComponent = this;
     switch(self.state.login) {
@@ -71,7 +84,7 @@ export default class AppComponent extends React.Component<IAppProps, IAppStatus>
         return (
           <div className={styles.wrapper}>
             <div className={styles.header}>
-              <NavComponent login={self.state.login} contact={self.state.contact} />
+              <NavComponent login={self.state.login} contact={self.state.contact} onChange={self.onAddressChange} location={self.props.location} />
             </div>
             <div className={styles.body}>
               {this.props.children}
@@ -85,7 +98,7 @@ export default class AppComponent extends React.Component<IAppProps, IAppStatus>
         return (
           <div className={styles.wrapper}>
             <div className={styles.header}>
-              <NavComponent login={self.state.login} contact={self.state.contact} />
+              <NavComponent login={self.state.login} contact={self.state.contact} onChange={self.onAddressChange} location={self.props.location} />
             </div>
             <div className={styles.body}>
               {this.props.children}

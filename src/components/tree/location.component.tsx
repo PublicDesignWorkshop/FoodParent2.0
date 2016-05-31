@@ -7,7 +7,7 @@ import './../../../node_modules/font-awesome/css/font-awesome.css';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './location.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
-import { reverseGeocoding, IReverseGeoLocation } from './../../utils/reversegeolocation';
+import { reverseGeocoding, IReverseGeoLocation } from './../../utils/geolocation';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 
 export interface ILocationProps {

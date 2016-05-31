@@ -12,6 +12,7 @@ import * as styles from './filter-adopt.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
+import { LogInStatus } from './../app.component';
 
 export interface IFilterAdoptOption {
   value: number;
@@ -19,7 +20,7 @@ export interface IFilterAdoptOption {
 }
 
 export interface IFilterAdoptProps {
-
+  login: LogInStatus;
 }
 export interface IFilterAdoptStatus {
   options?: Array<IFilterAdoptOption>;
@@ -81,10 +82,16 @@ export default class FilterAdoptComponent extends React.Component<IFilterAdoptPr
     }
 
     var options = new Array<IFilterAdoptOption>();
-    options.push({value: 0, label: "All"});
-    options.push({value: 1, label: "My Trees"});
-    options.push({value: 2, label: "Adopted"});
-    options.push({value: 3, label: "Unadopted"});
+    if (self.props.login == LogInStatus.ADMIN || self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.PARENT) {
+      options.push({value: 0, label: "All"});
+      options.push({value: 1, label: "My Trees"});
+      options.push({value: 2, label: "Adopted"});
+      options.push({value: 3, label: "Unadopted"});
+    } else {
+      options.push({value: 0, label: "All"});
+      options.push({value: 2, label: "Adopted"});
+      options.push({value: 3, label: "Unadopted"});
+    }
     self.setState({options: options});
   }
 
