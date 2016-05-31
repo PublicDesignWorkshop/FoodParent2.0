@@ -5,8 +5,7 @@ import { Router, Link } from 'react-router';
 var Settings = require('./../constraints/settings.json');
 import * as styles from './nav.component.css';
 import { LogInStatus } from './app.component';
-import { geocoding } from './../utils/reversegeolocation';
-import { reverseGeocoding, IReverseGeoLocation } from './../utils/reversegeolocation';
+import { geocoding, reverseGeocoding, IReverseGeoLocation } from './../utils/geolocation';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 
 export interface INavProps {
@@ -41,7 +40,6 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
     self.updateProps(nextProps);
   }
   private updateProps = (props: INavProps) => {
-    console.log("--updateProps");
     let self: NavComponent = this;
     if (props.location.query.lat && props.location.query.lng) {
       addLoading();

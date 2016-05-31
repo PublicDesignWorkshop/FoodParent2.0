@@ -94,7 +94,6 @@
     color: rgba(255, 255, 255, 1);
     cursor: text;
     overflow: hidden;
-    line-height: 105%;
     min-height: 24px;
   }
   :local(.location:hover) {
@@ -134,6 +133,10 @@
   :local(.wrapper .right .login) {
     font-size: small;
   }
+
+  :local(.location) {
+    line-height: 105%;
+  }
 }
 
 @media screen and (max-device-aspect-ratio: 1/1) {
@@ -155,5 +158,8 @@
   }
   :local(.wrapper .right .login) {
     font-size: small;
+  }
+  :local(.location) {
+    line-height: 105%;
   }
 }
