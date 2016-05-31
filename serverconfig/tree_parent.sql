@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2016 at 03:09 AM
+-- Generation Time: May 31, 2016 at 11:03 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.5.35
 
@@ -23,72 +23,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `adopt`
---
-
-CREATE TABLE `adopt` (
-  `id` int(11) NOT NULL,
-  `tree` int(11) NOT NULL,
-  `parent` int(11) NOT NULL,
-  `updated` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `auth`
---
-
-CREATE TABLE `auth` (
-  `id` int(11) NOT NULL,
-  `name` varchar(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `auth`
---
-
-INSERT INTO `auth` (`id`, `name`) VALUES
-(1, 'ConcreteJungle'),
-(2, 'Manager'),
-(3, 'Participant'),
-(4, 'Guest');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `donation`
---
-
-CREATE TABLE `donation` (
-  `id` int(11) NOT NULL,
-  `type` int(11) NOT NULL,
-  `place` int(11) NOT NULL,
-  `tree` varchar(128) NOT NULL,
-  `quantity` float NOT NULL,
-  `picture` varchar(512) NOT NULL,
-  `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `flag`
 --
 
 CREATE TABLE `flag` (
   `id` int(11) NOT NULL,
-  `name` varchar(16) NOT NULL
+  `name` varchar(16) NOT NULL,
+  `filter` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `flag`
 --
 
-INSERT INTO `flag` (`id`, `name`) VALUES
-(1, 'dead'),
-(2, 'verified'),
-(3, 'hidden');
+INSERT INTO `flag` (`id`, `name`, `filter`) VALUES
+(1, 'dead', 0),
+(2, 'verified', 1),
+(3, 'hidden', 0);
 
 -- --------------------------------------------------------
 
@@ -112,8 +63,8 @@ CREATE TABLE `food` (
 INSERT INTO `food` (`id`, `name`, `icon`, `description`, `season`, `updated`) VALUES
 (1, '*Other', 'unknown.svg', '', 0, '2016-01-30 00:00:00'),
 (2, 'Blackberries', 'blackberries.svg', '', 1, '2016-01-30 00:00:00'),
-(3, 'Pears', 'pears.svg', '', 1, '2016-01-30 00:00:00'),
-(4, 'Mulberries', 'mulberries.svg', '', 1, '2016-01-30 00:00:00'),
+(3, 'Pears', 'pears.svg', '', 0, '2016-01-30 00:00:00'),
+(4, 'Mulberries', 'mulberries.svg', '', 0, '2016-01-30 00:00:00'),
 (5, 'Crabapples', 'crabapples.svg', '', 0, '2016-01-30 00:00:00'),
 (6, 'Apples', 'apples.svg', '', 1, '0000-00-00 00:00:00'),
 (7, 'Blueberries', 'blueberries.svg', '', 0, '0000-00-00 00:00:00'),
@@ -136,26 +87,7 @@ INSERT INTO `food` (`id`, `name`, `icon`, `description`, `season`, `updated`) VA
 (24, 'Quinces', 'quinces.svg', '', 0, '0000-00-00 00:00:00'),
 (25, 'Black Walnuts', 'blackwalnuts.svg', '', 0, '0000-00-00 00:00:00'),
 (26, 'Kiwis', 'kiwis.svg', '', 0, '0000-00-00 00:00:00'),
-(30, 'Loquat', 'loquat.svg', '', 0, '0000-00-00 00:00:00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `note`
---
-
-CREATE TABLE `note` (
-  `id` int(11) NOT NULL,
-  `type` int(11) NOT NULL,
-  `tree` int(11) NOT NULL,
-  `person` int(11) NOT NULL,
-  `comment` text NOT NULL,
-  `picture` varchar(128) NOT NULL,
-  `rate` tinyint(1) NOT NULL DEFAULT '0',
-  `amount` float NOT NULL DEFAULT '0',
-  `proper` tinyint(1) NOT NULL DEFAULT '0',
-  `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+(27, 'Loquat', 'loquat.svg', '', 0, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -167,37 +99,20 @@ CREATE TABLE `person` (
   `id` int(11) NOT NULL,
   `auth` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
-  `address` varchar(128) NOT NULL,
   `contact` varchar(128) NOT NULL,
   `password` char(128) NOT NULL,
   `salt` char(128) NOT NULL,
   `neighborhood` varchar(128) NOT NULL,
-  `updated` datetime NOT NULL
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `updated` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `person`
 --
 
-INSERT INTO `person` (`id`, `auth`, `name`, `address`, `contact`, `password`, `salt`, `neighborhood`, `updated`) VALUES
-(1, 1, 'Craig Durkin', '', 'craig@concrete-jungle.org', 'f0172539810bf52afc511e783f55540d7fde67e1bd9e08cc28c12e376c93293fd06d773ecb19e67a2edb78b966bd1f5d5b6135a01b9499c6b9390efc2c444091', '7b14ee507ab0ac2bf9b03d32996e203ab11675ead01c71d7298acf7363af3875ef6eff06dfadd7edf37dbd76d1b64bc51e5b6d9322eac9f91f31fe6fcc922761', '', '2016-01-30 16:33:11'),
-(3, 2, 'Karl Kim', '', 'jkim848@gatech.edu', '4d3de6a750589c8d8dab4590857ae284de3a6f0455debd8d39474d606692d5e72272df989ec0c4dee5fbe2da180a5449aa00101f8aeb27ea46c8703c4222cbdd', '6a660b55f4d1e11fbbf6818f205fe4208aac62e69ebf53a9af0dcf195921a34c3f43415c18000f4d26d837e651bbe873d9a3414a501057d6dcf36c49d7976513', '', '2016-01-30 20:12:01');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `place`
---
-
-CREATE TABLE `place` (
-  `id` int(11) NOT NULL,
-  `name` varchar(128) NOT NULL,
-  `description` varchar(128) NOT NULL,
-  `address` varchar(128) NOT NULL,
-  `lat` float NOT NULL,
-  `lng` float NOT NULL,
-  `updated` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `person` (`id`, `auth`, `name`, `contact`, `password`, `salt`, `neighborhood`, `active`, `updated`) VALUES
+(1, 1, 'FoodParent Admin', 'admin@foodparent.org', '37b7f23f9775b0518109ce53c02b35d817d6192d564b7a4d68c1c48210fdb74e80609e559cafe2df7e8437c8ed2761c648a611826be57f7ac084afaaa5806036', '6a267d66025b3230124cc42b35048eb9aeeac570e9bc36edbd968032d6aa4ef33622584a846bfe82a2e7f0ab2bda70ba00757f5424fe281bf134b867a9e67db3', '', 1, '2016-01-30');
 
 -- --------------------------------------------------------
 
@@ -215,30 +130,14 @@ CREATE TABLE `tree` (
   `description` varchar(128) NOT NULL,
   `address` varchar(128) NOT NULL,
   `public` tinyint(1) NOT NULL DEFAULT '0',
+  `parent` varchar(128) NOT NULL DEFAULT '0',
+  `rate` tinyint(1) NOT NULL DEFAULT '0',
   `updated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `adopt`
---
-ALTER TABLE `adopt`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `auth`
---
-ALTER TABLE `auth`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `donation`
---
-ALTER TABLE `donation`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `flag`
@@ -253,23 +152,11 @@ ALTER TABLE `food`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `note`
---
-ALTER TABLE `note`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `person`
 --
 ALTER TABLE `person`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `contact` (`contact`);
-
---
--- Indexes for table `place`
---
-ALTER TABLE `place`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tree`
@@ -282,21 +169,6 @@ ALTER TABLE `tree`
 --
 
 --
--- AUTO_INCREMENT for table `adopt`
---
-ALTER TABLE `adopt`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `auth`
---
-ALTER TABLE `auth`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `donation`
---
-ALTER TABLE `donation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `flag`
 --
 ALTER TABLE `flag`
@@ -305,27 +177,17 @@ ALTER TABLE `flag`
 -- AUTO_INCREMENT for table `food`
 --
 ALTER TABLE `food`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
---
--- AUTO_INCREMENT for table `note`
---
-ALTER TABLE `note`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `place`
---
-ALTER TABLE `place`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tree`
 --
 ALTER TABLE `tree`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
