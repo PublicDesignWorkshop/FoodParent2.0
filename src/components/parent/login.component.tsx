@@ -15,6 +15,7 @@ import LoginParentComponent from './login-parent.component';
 import LoginManagerComponent from './login-manager.component';
 import SignUpComponent from './signup.component';
 import { PersonModel, personStore } from './../../stores/person.store';
+import { AuthModel, authStore } from './../../stores/auth.store';
 import { LogInStatus } from './../app.component';
 
 export interface ILogInOption {
@@ -23,33 +24,28 @@ export interface ILogInOption {
 }
 
 export interface ILoginProps {
-  bOpen: any;
+  open: boolean;
 }
 export interface ILoginStatus {
-  bOpen: boolean;
-  bManagerMode: boolean;
+  options?: Array<ILogInOption>;
+  selected?: ILogInOption;
 }
 export default class LoginComponent extends React.Component<ILoginProps, ILoginStatus> {
-  private options: Array<ILogInOption>;
-  private selected: ILogInOption;
   static contextTypes: any;
   constructor(props : ILoginProps) {
     super(props);
     let self: LoginComponent = this;
+    let options = new Array<ILogInOption>();
+    options.push({value: 0, label: "PARENT SIGN-IN"});
+    options.push({value: 1, label: "MANAGER SIGN-IN"});
     this.state = {
-      bOpen: false,
-      bManagerMode: false,
+      options: options,
+      selected: options[0],
     };
+
   }
   public componentDidMount() {
     let self: LoginComponent = this;
-    self.options = new Array<ILogInOption>();
-    self.options.push({value: 1, label: "PARENT SIGN-IN"});
-    self.options.push({value: 0, label: "MANAGER SIGN-IN"});
-    self.selected = self.options[0];
-
-    self.updateProps(self.props);
-    self.createNewPerson();
   }
   public componentWillUnmount() {
     let self: LoginComponent = this;
@@ -58,104 +54,82 @@ export default class LoginComponent extends React.Component<ILoginProps, ILoginS
     let self: LoginComponent = this;
     self.updateProps(nextProps);
   }
-  private createNewPerson = () => {
-    let self: LoginComponent = this;
-    console.log("createNewPerson");
-    let person: PersonModel = new PersonModel({
-      id: "0",
-      auth: LogInStatus.PARENT.toString(),
-      name: "",
-      contact: "",
-      neighborhood: "",
-      updated: moment(new Date()).format(Settings.sServerDateFormat),
-    });
-    personStore.addPerson(person);
-  }
   private updateProps = (props: ILoginProps) => {
     let self: LoginComponent = this;
-    if (props.bOpen == "true") {
-      self.setState({bOpen: true, bManagerMode: self.state.bManagerMode});
-    } else {
-      self.setState({bOpen: false, bManagerMode: self.state.bManagerMode});
-    }
   }
   private updateAttribute = () => {
     let self: LoginComponent = this;
   }
-  private updateLoginMode = (selected) => {
+  private updateChange = (selected) => {
     let self: LoginComponent = this;
-    if (selected) {
-      self.selected = selected;
-      if (parseInt(selected.value) == 0) {
-        self.setState({bOpen: self.state.bOpen, bManagerMode: true});
-      } else {
-        self.setState({bOpen: self.state.bOpen, bManagerMode: false});
-      }
-    }
+    self.setState({selected: selected});
   }
 
   render() {
     let self: LoginComponent = this;
-    if (self.state.bOpen) {
-      if (self.state.bManagerMode) {
+    if (self.props.open) {
+      if (self.state.selected.value == 0) {
         return (
-          <div className={styles.wrapper + " " + styles.slidein}>
-            <div className={styles.siginininfo}>
-              <div className={styles.icon}>
-                <FontAwesome className='' name='user' />
+          <div className={styles.full}>
+            <div className={styles.wrapper + " " + styles.slidein}>
+              <div className={styles.siginininfo}>
+                <div className={styles.icon}>
+                  <FontAwesome className='' name='user' />
+                </div>
+                <Select className={styles.name} name="loginmode-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateChange} placeholder="select login mode..." />
+                <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
+                  self.context.router.goBack();
+                }}/></div>
               </div>
-              <Select className={styles.name} name="loginmode-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.options} value={self.selected} onChange={self.updateLoginMode} placeholder="select login mode..." />
-              <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
-                self.context.router.goBack();
-              }}/></div>
-            </div>
-            <div className={styles.basicinfo}>
-              <LoginManagerComponent />
+              <div className={styles.basicinfo}>
+                <LoginParentComponent />
+              </div>
+              <div className={styles.buttongroup} onClick={()=> {
+                self.context.router.push({pathname: window.location.pathname, query: { user: 'signup' }});
+              }}>
+                <div className={styles.button}>
+                  BECOME A PARENT
+                </div>
+              </div>
             </div>
           </div>
         );
-      } else {
+      } else if (self.state.selected.value == 1) {
         return (
-          <div className={styles.wrapper + " " + styles.slidein}>
-            <div className={styles.siginininfo}>
-              <div className={styles.icon}>
-                <FontAwesome className='' name='user' />
+          <div className={styles.full}>
+            <div className={styles.wrapper + " " + styles.slidein}>
+              <div className={styles.siginininfo}>
+                <div className={styles.icon}>
+                  <FontAwesome className='' name='user' />
+                </div>
+                <Select className={styles.name} name="loginmode-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateChange} placeholder="select login mode..." />
+                <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
+                  self.context.router.goBack();
+                }}/></div>
               </div>
-              <Select className={styles.name} name="loginmode-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.options} value={self.selected} onChange={self.updateLoginMode} placeholder="select login mode..." />
-              <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
-                self.context.router.goBack();
-              }}/></div>
+              <div className={styles.basicinfo}>
+                <LoginManagerComponent />
+              </div>
+              <div className={styles.buttongroup} onClick={()=> {
+                self.context.router.push({pathname: window.location.pathname, query: { user: 'signup' }});
+              }}>
+                <div className={styles.button}>
+                  BECOME A PARENT
+                </div>
+              </div>
             </div>
-            <div className={styles.basicinfo}>
-              <LoginParentComponent />
-            </div>
-            <AltContainer stores={
-              {
-                person: function (props) {
-                  return {
-                    store: personStore,
-                    value: personStore.getPerson(0),
-                  };
-                },
-                error: function (props) {
-                  return {
-                    store: personStore,
-                    value: new Array<string>(personStore.getState().errorMessage),
-                  };
-                }
-              }
-            }>
-              <SignUpComponent person={personStore.getPerson(0)} error={new Array<string>(personStore.getState().errorMessage)} />
-            </AltContainer>
           </div>
         );
       }
     } else {
       return (
-        <div className={styles.wrapper}>
+        <div className={styles.full}>
+          <div className={styles.wrapper}>
+          </div>
         </div>
       );
     }
+
   }
 }
 
@@ -164,3 +138,22 @@ LoginComponent.contextTypes = {
     return React.PropTypes.func.isRequired;
   }
 };
+
+// <AltContainer stores={
+//   {
+//     person: function (props) {
+//       return {
+//         store: personStore,
+//         value: personStore.getPerson(0),
+//       };
+//     },
+//     error: function (props) {
+//       return {
+//         store: personStore,
+//         value: new Array<string>(personStore.getState().errorMessage),
+//       };
+//     }
+//   }
+// }>
+//   <SignUpComponent person={personStore.getPerson(0)} error={new Array<string>(personStore.getState().errorMessage)} />
+// </AltContainer>

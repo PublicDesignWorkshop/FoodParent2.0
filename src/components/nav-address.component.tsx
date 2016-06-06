@@ -18,6 +18,7 @@ export interface INavAddressStatus {
   editing?: boolean;
 }
 export default class NavAddressComponent extends React.Component<INavAddressProps, INavAddressStatus> {
+  static contextTypes: any;
   constructor(props : INavAddressProps) {
     super(props);
     let self: NavAddressComponent = this;
@@ -56,13 +57,32 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
     let location: L.LatLng = mapStore.getCenter(self.props.mapId);
     self.setState({editing: false});
     if (self.state.address.trim() != "") {
-      geocoding(self.state.address, new L.LatLng(location.lat, location.lng), function(response) {
-        mapActions.panTo(self.props.mapId, new L.LatLng(response.lat.toFixed(Settings.iMarkerPrecision), response.lng.toFixed(Settings.iMarkerPrecision)));
-        // self.context.router.replace({pathname: window.location.pathname, query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
-        // self.context.router.replace({pathname: Settings.uBaseName + '/', query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
-      }, function() {
+      let value: any = self.state.address.trim();
+      if (!isNaN(value)) {
+        setTimeout(function() {
+          mapActions.setFirst('map', true);
+        }, 0);
+        self.context.router.push({pathname: Settings.uBaseName + '/tree/' + parseInt(value)});
+      } else {
+        geocoding(self.state.address, new L.LatLng(location.lat, location.lng), function(response) {
+          mapActions.moveTo(self.props.mapId, new L.LatLng(response.lat.toFixed(Settings.iMarkerPrecision), response.lng.toFixed(Settings.iMarkerPrecision)), Settings.iFocusZoom);
+          // self.context.router.replace({pathname: window.location.pathname, query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
+          // self.context.router.replace({pathname: Settings.uBaseName + '/', query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
+        }, function() {
 
-      });
+        });
+      }
+    } else {
+      let location: L.LatLng = mapStore.getCenter(self.props.mapId);
+      if (location && location.lat && location.lng) {
+        addLoading();
+        reverseGeocoding(new L.LatLng(location.lat, location.lng), function(response: IReverseGeoLocation) {
+          self.setState({address: response.road + ", " + response.county + ", " + response.state + ", " + response.postcode, editing: false});
+          removeLoading();
+        }, function() {
+          removeLoading();
+        });
+      }
     }
     //  else {
     //   if (self.props.location.query.lat && self.props.location.query.lng) {
@@ -106,3 +126,9 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
     }
   }
 }
+
+NavAddressComponent.contextTypes = {
+  router: function () {
+    return React.PropTypes.func.isRequired;
+  }
+};

@@ -248,7 +248,7 @@
       $stmt->execute();
       $result = $stmt->fetchAll();
       $pdo = null;
-      $flags = [];
+      $flags = [0];
       foreach ($result as $flag) {
         array_push($flags, $flag["id"]);
       }

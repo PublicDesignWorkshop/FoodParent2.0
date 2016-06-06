@@ -9,6 +9,7 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './login-parent.component.css';
 import { checkValidEmailAddress, processLogin } from './../../utils/authentication';
 import { treeStore } from './../../stores/tree.store';
+import { authActions } from './../../actions/auth.actions';
 
 export interface ILoginParentProps {
 }
@@ -44,16 +45,17 @@ export default class LoginParentComponent extends React.Component<ILoginParentPr
   private submitLogin = () => {
     let self: LoginParentComponent = this;
     if (checkValidEmailAddress(self.state.contact.trim())) {
-      processLogin(self.state.contact.trim(), self.state.contact.trim(), function(response) { // Login success
-        console.warn("login success");
-        self.context.router.push({pathname: window.location.pathname});
-        location.reload();
-        // treeStore.fetchTrees();
-      }, function(response) { // Login fail
-        console.warn("login failed");
-      }, function(response) { // Error
-
-      });
+      authActions.processLogin(self.state.contact.trim(), self.state.contact.trim());
+      // processLogin(self.state.contact.trim(), self.state.contact.trim(), function(response) { // Login success
+      //   console.warn("login success");
+      //   self.context.router.push({pathname: window.location.pathname});
+      //   location.reload();
+      //   // treeStore.fetchTrees();
+      // }, function(response) { // Login fail
+      //   console.warn("login failed");
+      // }, function(response) { // Error
+      //
+      // });
     } else {
 
     }

@@ -16,6 +16,8 @@ import { NoteModel, noteStore } from './../stores/note.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 import { LogInStatus } from './app.component';
+import { noteActions } from './../actions/note.actions';
+import { displaySuccessMessage, displayErrorMessage } from './../utils/message';
 
 
 export interface ITreesMessageProps {
@@ -60,7 +62,7 @@ export default class TreesMessageComponent extends React.Component<ITreesMessage
             <div className={styles.message}>
               <strong>Move</strong> the <strong>New Tree</strong> to a designated location.
               <span className={styles.button} onClick={()=> {
-                self.context.router.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "info" }});
+                self.context.router.replace({pathname: Settings.uBaseName + '/tree/add', query: { mode: "info" }});
               }} >
                 NEXT
               </span>
@@ -73,7 +75,7 @@ export default class TreesMessageComponent extends React.Component<ITreesMessage
             <div className={styles.message}>
               <strong>Fill out</strong> information for the <strong>New Tree</strong>.
               <span className={styles.button} onClick={()=> {
-                self.context.router.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "save" }});
+                self.context.router.replace({pathname: Settings.uBaseName + '/tree/add', query: { mode: "save" }});
               }} >
                 SAVE
               </span>
@@ -87,7 +89,7 @@ export default class TreesMessageComponent extends React.Component<ITreesMessage
             <div className={styles.message}>
               Press the button to <strong>delete</strong> this post.
               <span className={styles.button} onClick={()=> {
-                noteStore.deleteNote(note);
+                noteActions.deleteNote(note, "Successfully deleted the note.", "Failed to delete the note.");
                 self.context.router.replace({pathname: window.location.pathname});
               }} >
                 DELETE

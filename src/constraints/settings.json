@@ -13,6 +13,7 @@
   "uGrayTileMap" : "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
   "uSatTileMap" : "//oatile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg",
   "sGoogleMapTileType": "HYBRID",
+  "iPopupDelay": 150,
   "iDefaultZoom": 13,
   "iMaxZoom": 20,
   "iMinZoom": 5,
@@ -24,6 +25,7 @@
   "uTemporaryMarkerIcon": "unknown.svg",
   "iMaxClusterRadius": 40,
   "iDisableClusteringAtZoom": 16,
+  "iMessageDuration": 1500,
 
 
 
@@ -48,7 +50,7 @@
 
   "e600": "A new note is added successfully.",
   "e601": "Please fill out comment.",
-  "e602": "Please use postivie number.",
+  "e602": "Please use a postivie number.",
   "e603": "Failed to add a new note.",
   "e604": "The new note is modified successfully.",
   "e605": "The new note is deleted successfully.",

@@ -2,9 +2,9 @@ import { alt } from './../alt';
 import * as Alt from 'alt';
 import * as moment from 'moment';
 
+var Settings = require('./../constraints/settings.json');
 import { flagActions } from './../actions/flag.actions';
 import { AbstractStore } from './../stores/abstract.store';
-import { flagSource } from './../sources/flag.source';
 import { treeStore } from './../stores/tree.store';
 
 export interface IFlagProps {
@@ -43,8 +43,6 @@ export interface FlagState {
 
 interface FlagExtendedStore extends AltJS.AltStore<FlagState> {
   getFlag(id: number): FlagModel;
-  fetchFlags(): void;
-  isLoading(): boolean;
 }
 
 class FlagStore extends AbstractStore<FlagState> {
@@ -57,26 +55,23 @@ class FlagStore extends AbstractStore<FlagState> {
     self.errorMessage = null;
     //TODO: pass state generics to make sure methods/actions expect the same type
     self.bindListeners({
-      handleFetchFlags: flagActions.fetchFlags,
-      handleFailed: flagActions.failed
+      handleUpdateFlags: flagActions.updateFlags,
     });
     self.exportPublicMethods({
       getFlag: self.getFlag
     });
-    self.exportAsync(flagSource);
   }
-  handleFetchFlags(flagsProps: Array<IFlagProps>) {
+  handleUpdateFlags(flagsProps: Array<IFlagProps>) {
     let self: FlagStore = this;
-    console.warn("Handle Fetch Flags");
     self.flags = new Array<FlagModel>();
     flagsProps.forEach((props: IFlagProps) => {
       self.flags.push(new FlagModel(props));
     });
     self.errorMessage = null;
   }
-  handleFailed(errorMessage: string) {
-    console.warn("Handle Flag Failed");
-    this.errorMessage = errorMessage;
+  handleFailed(code: number) {
+    let self: FlagStore = this;
+    // this.errorMessage = errorMessage;
   }
   getFlag(id: number): FlagModel {
     let self: FlagStore = this;

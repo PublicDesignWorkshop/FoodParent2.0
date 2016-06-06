@@ -141,7 +141,7 @@
         $active = $result["active"]; // Check account is active or not.
         if ($active == 1) { // Return with error code if account already exists and active.
           $params = array(
-            "code" => 504
+            "code" => 903
           );
           echo json_encode($params);
         } else {  // Make active if account already exists but is inactive.
@@ -177,12 +177,22 @@
               $result = $stmt->fetch();
               $pdo = null;
               login(filter_var($data->{'contact'}, FILTER_SANITIZE_STRING), filter_var($data->{'contact'}, FILTER_SANITIZE_STRING));  // Login automatically.
-              echo json_encode($result);
+              $params = array(
+                "code" => 200,
+                "person" => $result,
+              );
+              echo json_encode($params);
             } catch(PDOException $e) {
-              echo '{"error":{"text":'. $e->getMessage() .'}}';
+              $params = array(
+                "code" => 400,
+              );
+              echo json_encode($params);
             }
           } catch(PDOException $e) {
-            echo '{"error":{"text":'. $e->getMessage() .'}}';
+            $params = array(
+              "code" => 400,
+            );
+            echo json_encode($params);
           }
         }
       } else {  // Create a new user account.
@@ -216,20 +226,30 @@
               $stmt->execute($params);
               $result = $stmt->fetchAll(PDO::FETCH_OBJ);
               $pdo = null;
-              echo json_encode($result[0]);
+              $params = array(
+                "code" => 200,
+                "person" => $result[0],
+              );
+              echo json_encode($params);
             } catch(PDOException $e) {
-              echo '{"error":{"text":'. $e->getMessage() .'}}';
+              $params = array(
+                "code" => 400,
+              );
+              echo json_encode($params);
             }
           }
         } catch(PDOException $e) {
           $params = array(
-            "code" => 404
+            "code" => 400,
           );
           echo json_encode($params);
         }
       }
     } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
+      $params = array(
+        "code" => 400,
+      );
+      echo json_encode($params);
     }
   }
 

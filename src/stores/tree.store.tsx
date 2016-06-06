@@ -8,7 +8,6 @@ import * as _ from 'underscore';
 var Settings = require('./../constraints/settings.json');
 import { treeActions } from './../actions/tree.actions';
 import { AbstractStore } from './../stores/abstract.store';
-import { treeSource } from './../sources/tree.source';
 import { foodStore } from './food.store';
 
 export interface ITreeProps {
@@ -58,7 +57,6 @@ export class TreeModel {
     self.flags = props.flag.split(',').map((flag: string) => {
       return parseInt(flag);
     });
-    // TODO: connect with parents
     self.parents = props.parent.split(',').map((flag: string) => {
       return parseInt(flag);
     });
@@ -161,14 +159,11 @@ export interface TreeState {
   errorMessage: string;
 }
 
-
 interface TreeExtendedStore extends AltJS.AltStore<TreeState> {
   getTree(id: number): TreeModel;
-  addTree(tree: TreeModel): void;
-  fetchTrees(): void;
-  updateTree(update: TreeModel): void;
-  createTree(create: TreeModel): void;
-  isLoading(): boolean;
+  // addTree(tree: TreeModel): void;
+  // updateTree(update: TreeModel): void;
+  // createTree(create: TreeModel): void;
 }
 
 class TreeStore extends AbstractStore<TreeState> {
@@ -177,60 +172,33 @@ class TreeStore extends AbstractStore<TreeState> {
   constructor() {
     super();
     let self: TreeStore = this;
-    if (!self.trees) {
-      self.trees = new Array<TreeModel>();
-    }
+    self.trees = new Array<TreeModel>();
     self.errorMessage = null;
     //TODO: pass state generics to make sure methods/actions expect the same type
     self.bindListeners({
-      handleFetchTrees: treeActions.fetchTrees,
-      handleUpdateTree: treeActions.updateTree,
-      handleCreateTree: treeActions.createTree,
+      handleFetchedTrees: treeActions.fetchedTrees,
+      handleUpdatedTree: treeActions.updatedTree,
+      // handleUpdateTree: treeActions.updateTree,
+      // handleCreateTree: treeActions.createTree,
       handleFailed: treeActions.failed,
     });
     self.exportPublicMethods({
       getTree: self.getTree,
-      addTree: self.addTree,
+      // addTree: self.addTree,
     });
-    self.exportAsync(treeSource);
   }
-  handleFetchTrees(treesProps: Array<ITreeProps>) {
+  handleFetchedTrees(treesProps: Array<ITreeProps>) {
     let self: TreeStore = this;
-    console.warn("Handle Fetch Trees");
-    let tree: TreeModel;
-    if (self.trees) {
-      let trees = self.trees.filter(tree => tree.getId() == 0);
-      if (trees.length > 0) {
-        tree = trees[0];
-      }
-    }
+    console.warn("- Handle fetched trees -");
     self.trees = new Array<TreeModel>();
-    if (tree) {
-      self.trees.push(tree);
-    }
     treesProps.forEach((props: ITreeProps) => {
       self.trees.push(new TreeModel(props));
     });
     self.errorMessage = null;
   }
-  handleUpdateTree(treeProps: ITreeProps) {
+  handleFailed(code: number) {
     let self: TreeStore = this;
-    console.warn("Handle Update Tree");
-    let trees = self.trees.filter(tree => tree.getId() == parseInt(treeProps.id));
-    if (trees.length == 1) {
-      trees[0].update(treeProps);
-    }
-  }
-  handleCreateTree(treeProps: ITreeProps) {
-    let self: TreeStore = this;
-    console.warn("Handle Create Tree");
-    console.log(treeProps);
-    self.trees.push(new TreeModel(treeProps));
-    browserHistory.replace({pathname: Settings.uBaseName + '/trees/' + treeProps.id});
-  }
-  handleFailed(errorMessage: string) {
-    console.warn("Handle Tree Failed");
-    this.errorMessage = errorMessage;
+    // this.errorMessage = errorMessage;
   }
   getTree(id: number): TreeModel {
     let self: TreeStore = this;
@@ -240,20 +208,77 @@ class TreeStore extends AbstractStore<TreeState> {
     }
     return null;
   }
-  addTree(tree: TreeModel): void {
+  handleUpdatedTree(treeProps: ITreeProps) {
     let self: TreeStore = this;
-    let trees = self.getState().trees;
-    let i = -1;
-    for(let j = 0; j < trees.length; j++) {
-      if(trees[j].getId() === tree.getId()) {
-        i = j;
-      }
+    let trees = self.trees.filter(tree => tree.getId() == parseInt(treeProps.id));
+    if (trees.length == 1) {
+      trees[0].update(treeProps);
     }
-    if (i > -1) {
-      trees = trees.splice(i, 1);
-    }
-    trees.push(tree);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // handleFetchTrees(treesProps: Array<ITreeProps>) {
+  //   let self: TreeStore = this;
+  //   console.warn("Handle Fetch Trees");
+  //   let tree: TreeModel;
+  //   if (self.trees) {
+  //     let trees = self.trees.filter(tree => tree.getId() == 0);
+  //     if (trees.length > 0) {
+  //       tree = trees[0];
+  //     }
+  //   }
+  //   self.trees = new Array<TreeModel>();
+  //   if (tree) {
+  //     self.trees.push(tree);
+  //   }
+  //   treesProps.forEach((props: ITreeProps) => {
+  //     self.trees.push(new TreeModel(props));
+  //   });
+  //   self.errorMessage = null;
+  // }
+
+  // handleCreateTree(treeProps: ITreeProps) {
+  //   let self: TreeStore = this;
+  //   console.warn("Handle Create Tree");
+  //   console.log(treeProps);
+  //   self.trees.push(new TreeModel(treeProps));
+  //   browserHistory.replace({pathname: Settings.uBaseName + '/trees/' + treeProps.id});
+  // }
+  //
+  // getTree(id: number): TreeModel {
+  //   let self: TreeStore = this;
+  //   let trees = self.getState().trees.filter(tree => tree.getId() == id);
+  //   if (trees.length == 1) {
+  //     return trees[0];
+  //   }
+  //   return null;
+  // }
+  // addTree(tree: TreeModel): void {
+  //   let self: TreeStore = this;
+  //   let trees = self.getState().trees;
+  //   let i = -1;
+  //   for(let j = 0; j < trees.length; j++) {
+  //     if(trees[j].getId() === tree.getId()) {
+  //       i = j;
+  //     }
+  //   }
+  //   if (i > -1) {
+  //     trees = trees.splice(i, 1);
+  //   }
+  //   trees.push(tree);
+  // }
 }
 
 export const treeStore: TreeExtendedStore = alt.createStore<TreeState>(TreeStore) as TreeExtendedStore;

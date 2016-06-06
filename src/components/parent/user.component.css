@@ -1,17 +1,25 @@
 @media all {
-  :local(.wrapper) {
+  :local(.full) {
     position: fixed;
+    top: 48;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+  }
+  :local(.wrapper) {
+    position: absolute;
     top: 0;
     right: -30%;
     width: 30%;
     height: 100%;
-    transition: 0.75s;
-    padding: 56px 8px 8px 8px;
+    padding: 8px;
     background-color: rgba(244, 244, 244, 1);
     -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
     -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
     box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
     overflow-y: auto;
+    pointer-events: visible;
   }
   :local(.slidein) {
     right: 0;
@@ -131,7 +139,7 @@
 @media screen and (max-device-aspect-ratio: 1/1) {
   :local(.wrapper) {
     display: none;
-    position: fixed;
+    position: absolute;
     right: -100%;
     width: 100%;
     opacity: 0.95;

@@ -19,15 +19,15 @@ import NoteAmountComponent from './note-amount.component';
 import NoteRateComponent from './note-rate.component';
 import ErrorMessage from './../error-message.component';
 import ImageZoomComponent from './../image/image-zoom.component';
+import { noteActions } from './../../actions/note.actions';
+import { authStore } from './../../stores/auth.store';
+import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
 
 export interface INoteEditProps {
   trees: Array<TreeModel>;
-  treeId: number;
-  login: LogInStatus;
-  userId: number;
-  note: NoteModel;
-  error: Array<string>;
   foods: Array<FoodModel>;
+  treeId: number;
+  note: NoteModel;
 }
 export interface INoteEditStatus {
   editable?: boolean;
@@ -59,16 +59,16 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
 
   private updateProps = (props: INoteEditProps) => {
     let self: NoteEditComponent = this;
-    if (props.note != null && props.userId != null) {
+    if (props.note != null) {
       let editable: boolean = false;
-      if (props.login == LogInStatus.MANAGER || props.login == LogInStatus.ADMIN) {
+      if (authStore.getAuth().getIsManager()) {
         editable = true;
       } else {
-        if (props.note.getPersonId() == props.userId && props.userId != 0) {
+        if (props.note.getPersonId() == authStore.getAuth().getId() && authStore.getAuth().getId() != 0) {
           editable = true;
         }
       }
-      self.setState({editable: editable, error: props.error});
+      self.setState({editable: editable});
     }
   }
 
@@ -189,40 +189,40 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
               }} />
             </div>
             <div className={styles.inner}>
-              <NoteRateComponent note={self.props.note} editable={self.state.editable} async={false} error={self.state.error} />
+              <NoteRateComponent note={self.props.note} editable={self.state.editable} async={false} />
               <NoteCommentComponent note={self.props.note} editable={self.state.editable} async={false} error={self.state.error} />
               <NoteDateComponent note={self.props.note} editable={self.state.editable} async={false} />
               <NoteAmountComponent note={self.props.note} editable={self.state.editable} async={false} error={self.state.error} />
             </div>
             <div className={styles.button} onClick={()=> {
               let error: Array<string> = new Array<string>();
-              let bError: boolean = false;
+              let valid: boolean = true;
               // if (self.props.note.getComment().trim() == "") {
-              //   error.push("e601");
-              //   bError = true;
+              //   error.push("601");
+              //   valid = false;
               // }
               if (self.props.note.getAmount() < 0) {
                 error.push("e602");
-                bError = true;
+                valid = false;
+                displayErrorMessage(Settings.e602);
               }
-              if (!bError) {
+              if (valid) {
                 if (self.props.note.getAmount() > 0) {
                   self.props.note.setNoteType(NoteType.PICKUP);
                 } else {
                   self.props.note.setNoteType(NoteType.POST);
                 }
-                noteStore.updateNote(self.props.note);
+                noteActions.updateNote(self.props.note, "Successfully updated the note.", "Failed to update the note.");
               }
               self.setState({error: error});
             }}>
               SAVE
             </div>
             <div className={styles.button2} onClick={()=> {
-              self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.props.treeId});
+              self.context.router.push({pathname: Settings.uBaseName + '/tree/' + self.props.treeId});
             }}>
               CANCEL
             </div>
-            <ErrorMessage error={self.props.error} match={new Array<string>("e300", "e604")}/>
             <div className={styles.button3} onClick={()=> {
               // noteStore.deleteNote(self.props.note);
               self.context.router.push({pathname: window.location.pathname, query: { note: self.props.note.getId(), mode: "delete" }});
@@ -237,13 +237,13 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
           <div className={styles.wrapper}>
             {images}
             <div className={styles.inner}>
-              <NoteRateComponent note={self.props.note} editable={self.state.editable} async={false} error={self.state.error} />
+              <NoteRateComponent note={self.props.note} editable={self.state.editable} async={false} />
               <NoteCommentComponent note={self.props.note} editable={self.state.editable} async={false} error={self.state.error} />
               <NoteDateComponent note={self.props.note} editable={self.state.editable} async={false} />
               <NoteAmountComponent note={self.props.note} editable={self.state.editable} async={false} error={self.state.error} />
             </div>
             <div className={styles.button2} onClick={()=> {
-              self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.props.treeId});
+              self.context.router.push({pathname: Settings.uBaseName + '/tree/' + self.props.treeId});
             }}>
               CLOSE
             </div>

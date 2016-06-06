@@ -7,12 +7,7 @@ import { browserHistory } from 'react-router';
 var Settings = require('./../constraints/settings.json');
 import { personActions } from './../actions/person.actions';
 import { AbstractStore } from './../stores/abstract.store';
-import { personSource } from './../sources/person.source';
-import { LogInStatus } from './../components/app.component';
-
-export enum PersonType {
-  NONE, CHANGE, POST, PICKUP
-}
+import { AuthStatus } from './../stores/auth.store';
 
 export interface IPersonProps {
   id: string;
@@ -25,7 +20,7 @@ export interface IPersonProps {
 
 export class PersonModel {
   id: number;
-  auth: LogInStatus;
+  auth: AuthStatus;
   name: string;
   contact: string;
   neighborhood: string;
@@ -58,11 +53,22 @@ export class PersonModel {
   public getId(): number {
     return this.id
   }
-  public getLogInStatus(): LogInStatus {
+  public getAuth(): AuthStatus {
     return this.auth;
   }
-  public setLogInStatus(login: LogInStatus): void {
-    this.auth = login;
+  public setAuth(auth: AuthStatus): void {
+    this.auth = auth;
+  }
+  public getFormattedAuth(): string {
+    if (this.auth == AuthStatus.GUEST) {
+      return "Guest";
+    } else if (this.auth == AuthStatus.PARENT) {
+      return "Parent";
+    } else if (this.auth == AuthStatus.MANAGER) {
+      return "Manager";
+    } else if (this.auth == AuthStatus.ADMIN) {
+      return "Admin";
+    }
   }
   public getName(): string {
     return this.name;
@@ -94,64 +100,106 @@ export class PersonModel {
 }
 
 export interface PersonState {
+  temp: PersonModel;
   persons: Array<PersonModel>;
   errorMessage: string;
 }
 
 interface PersonExtendedStore extends AltJS.AltStore<PersonState> {
-  getPerson(id: number): PersonModel;
-  addPerson(person: PersonModel): void;
-  fetchPersons(ids: Array<number>): void;
-  updatePerson(person: PersonModel): void;
-  createPerson(person: PersonModel): void;
-  deletePerson(person: PersonModel): void;
-  isLoading(): boolean;
+  getTempPerson(): PersonModel;
 }
 
 class PersonStore extends AbstractStore<PersonState> {
+  private temp: PersonModel;
   private persons: Array<PersonModel>;
   private errorMessage: string;
   constructor() {
     super();
     let self: PersonStore = this;
-    if (!self.persons) {
-      self.persons = new Array<PersonModel>();
-    }
+    self.persons = new Array<PersonModel>();
+    self.temp = new PersonModel({
+      id: "0",
+      // Some reason, which I don't know, it cannot read the value in a constructor.
+      // auth: AuthStatus.GUEST.toString(),
+      auth: "4",
+      name: "",
+      contact: "",
+      neighborhood: "",
+      updated: moment(new Date()).format(Settings.sServerDateFormat),
+    });
     self.errorMessage = null;
     // TODO: pass state generics to make sure methods/actions expect the same type
     self.bindListeners({
-      handleFetchPersons: personActions.fetchPersons,
-      handleUpdatePerson: personActions.updatePerson,
-      handleCreatePerson: personActions.createPerson,
-      handleDeletePerson: personActions.deletePerson,
-      handleLoading: personActions.loading,
+      handleCreatedPerson: personActions.createdPerson,
+      handleFetchedPersons: personActions.fetchedPersons,
+
+      
+      // handleCreatePerson: personActions.createPerson,
+      // handleDeletePerson: personActions.deletePerson,
+      // handleLoading: personActions.loading,
       handleFailed: personActions.failed,
     });
     self.exportPublicMethods({
+      getTempPerson: self.getTempPerson,
       getPerson: self.getPerson,
-      addPerson: self.addPerson,
+      // addPerson: self.addPerson,
     });
-    self.exportAsync(personSource);
+    // self.exportAsync(personSource);
   }
-  handleFetchPersons(personsProps: Array<IPersonProps>) {
+  getTempPerson(): PersonModel {
     let self: PersonStore = this;
-    console.warn("Handle Fetch Personss");
-    let person: PersonModel;
-    if (self.persons) {
-      let persons = self.persons.filter(person => person.getId() == 0);
-      if (persons.length > 0) {
-        person = persons[0];
-      }
-    }
+    return self.getState().temp;
+  }
+  handleCreatedPerson(personProps: IPersonProps) {
+    let self: PersonStore = this;
+    self.persons.push(new PersonModel(personProps));
+    self.temp = new PersonModel({
+      id: "0",
+      auth: AuthStatus.PARENT.toString(),
+      name: "",
+      contact: "",
+      neighborhood: "",
+      updated: moment(new Date()).format(Settings.sServerDateFormat),
+    });
+    self.errorMessage = null;
+  }
+
+
+
+
+  handleFetchedPersons(personProps: Array<IPersonProps>) {
+    let self: PersonStore = this;
     self.persons = new Array<PersonModel>();
-    if (person) {
-      self.persons.push(person);
-    }
-    personsProps.forEach((props: IPersonProps) => {
+    personProps.forEach((props: IPersonProps) => {
       self.persons.push(new PersonModel(props));
     });
     self.errorMessage = null;
   }
+  handleFailed(code: number) {
+    let self: PersonStore = this;
+  }
+
+
+
+  // handleFetchPersons(personsProps: Array<IPersonProps>) {
+  //   let self: PersonStore = this;
+  //   console.warn("Handle Fetch Personss");
+  //   let person: PersonModel;
+  //   if (self.persons) {
+  //     let persons = self.persons.filter(person => person.getId() == 0);
+  //     if (persons.length > 0) {
+  //       person = persons[0];
+  //     }
+  //   }
+  //   self.persons = new Array<PersonModel>();
+  //   if (person) {
+  //     self.persons.push(person);
+  //   }
+  //   personsProps.forEach((props: IPersonProps) => {
+  //     self.persons.push(new PersonModel(props));
+  //   });
+  //   self.errorMessage = null;
+  // }
   handleUpdatePerson(personProps: IPersonProps) {
     let self: PersonStore = this;
     console.warn("Handle Update Person");
@@ -164,38 +212,7 @@ class PersonStore extends AbstractStore<PersonState> {
       self.errorMessage = null;
     }, Settings.iErrorMessageDuration);
   }
-  handleCreatePerson(personProps: IPersonProps) {
-    let self: PersonStore = this;
-    console.warn("Handle Create Person");
-    self.persons.push(new PersonModel(personProps));
-    self.errorMessage = "e700";
-    setTimeout(function() {
-      self.errorMessage = null;
-    }, Settings.iErrorMessageDuration);
 
-    // Reset a new person
-    let person: PersonModel = new PersonModel({
-      id: "0",
-      auth: LogInStatus.PARENT.toString(),
-      name: "",
-      contact: "",
-      neighborhood: "",
-      updated: moment(new Date()).format(Settings.sServerDateFormat),
-    });
-    let i = -1;
-    for(let j = 0; j < self.persons.length; j++) {
-      if(self.persons[j].getId() === person.getId()) {
-        i = j;
-      }
-    }
-    if (i > -1) {
-      self.persons.splice(i, 1);
-    }
-    self.persons.push(person);
-    // self.context.router.push({pathname: window.location.pathname});
-    location.reload();
-    // browserHistory.push({pathname: Settings.uBaseName + '/trees/' + tree.getId()});
-  }
   handleDeletePerson(personProps: IPersonProps) {
     let self: PersonStore = this;
     let i = -1;
@@ -212,11 +229,7 @@ class PersonStore extends AbstractStore<PersonState> {
     let self: PersonStore = this;
     self.errorMessage = errorMessage;
   }
-  handleFailed(errorMessage: string) {
-    let self: PersonStore = this;
-    console.warn("Handle Person Failed");
-    self.errorMessage = errorMessage;
-  }
+
   getPerson(id: number): PersonModel {
     let self: PersonStore = this;
     let persons = self.getState().persons.filter(person => person.getId() == id);

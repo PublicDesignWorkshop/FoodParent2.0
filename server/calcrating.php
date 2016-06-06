@@ -64,7 +64,7 @@
           }
         }
         $params = array(
-          "code" => 400,
+          "code" => 200,
         );
         echo json_encode($params);
       } catch(PDOException $e) {

@@ -23,7 +23,7 @@ module MarkerComponent {
       riseOnHover: true,
     });
     marker.on('click', function() {
-      browserHistory.push({pathname: Settings.uBaseName + '/trees/' + tree.getId()});
+      browserHistory.push({pathname: Settings.uBaseName + '/tree/' + tree.getId()});
       //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
     });
     return marker;
@@ -50,7 +50,7 @@ module MarkerComponent {
       closeOnClick: false,
     });
     marker.on('click', function() {
-      browserHistory.push({pathname: Settings.uBaseName + '/trees/' + tree.getId()});
+      browserHistory.push({pathname: Settings.uBaseName + '/tree/' + tree.getId()});
     });
     return marker;
   }
@@ -85,7 +85,7 @@ module MarkerComponent {
       if (tree) {
         tree.setLat(marker.getLatLng().lat);
         tree.setLng(marker.getLatLng().lng);
-        browserHistory.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" }});
+        browserHistory.replace({pathname: Settings.uBaseName + '/tree/add', query: { mode: "marker" }});
       }
     });
     return marker;

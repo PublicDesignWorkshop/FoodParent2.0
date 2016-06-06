@@ -7,7 +7,7 @@ export interface ILoaderProps {
 }
 
 export interface ILoaderStatus {
-  active: boolean;
+
 }
 
 export default class LoaderComponent extends React.Component<ILoaderProps, ILoaderStatus> {
@@ -15,7 +15,7 @@ export default class LoaderComponent extends React.Component<ILoaderProps, ILoad
     super(props);
     let self: LoaderComponent = this;
     this.state = {
-      active: false,
+
     };
   }
   public componentDidMount() {
@@ -30,16 +30,11 @@ export default class LoaderComponent extends React.Component<ILoaderProps, ILoad
 
   render() {
     let self: LoaderComponent = this;
-    if (self.state.active) {
-      return <div className={styles.wrapper}>
-        <div className={styles.loader}>
-        </div>
-      </div>;
-    } else {
-      return <div className={styles.wrapper}>
+    return (
+      <div className={styles.wrapper}>
         <div id="loader" className={styles.loader + " hide"}>
         </div>
-      </div>;
-    }
+      </div>
+    );
   }
 }

@@ -1,13 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import * as AltContainer from 'alt-container';
 
 import * as styles from './app.component.css';
 import NavComponent from './nav.component';
 import LoaderComponent from './loader.component';
-import LoginComponent from './parent/login.component';
-import UserComponent from './parent/user.component';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
+import { authActions } from './../actions/auth.actions';
+import { authStore, AuthStatus, AuthModel } from './../stores/auth.store';
+import IMessageProps from './message.component';
 
 export enum LogInStatus {
   NONE, ADMIN, MANAGER, PARENT, GUEST
@@ -18,6 +20,9 @@ export interface IAppProps {
 }
 
 export interface IAppStatus {
+  auth?: AuthModel;
+  query?: any;
+
   login?: LogInStatus;
   userId?: number;
   contact?: string;
@@ -25,17 +30,16 @@ export interface IAppStatus {
 }
 
 export default class AppComponent extends React.Component<IAppProps, IAppStatus> {
-  // static childContextTypes = {
-  //   address: React.PropTypes.string
-  // }
+  // static childContextTypes;
   // getChildContext() {
-  //   return {address: this.state.address};
+  //   return {query: this.props.location.query};
   // }
   constructor(props : IAppProps) {
     super(props);
     let self: AppComponent = this;
     this.state = {
       address: "",
+      auth: authStore.getAuth(),
       login : LogInStatus.GUEST,
       contact: "",
       userId: null,
@@ -43,6 +47,7 @@ export default class AppComponent extends React.Component<IAppProps, IAppStatus>
   }
   public componentDidMount() {
     let self: AppComponent = this;
+    authActions.fetchAuth();
     self.updateProps(self.props);
   }
   public componentWillUnmount() {
@@ -54,59 +59,75 @@ export default class AppComponent extends React.Component<IAppProps, IAppStatus>
   }
   private updateProps = (props: IAppProps) => {
     let self: AppComponent = this;
-
-    addLoading();
-    checkLogin(function(response1) { // login
-      checkAdmin(function(response2) { // Manager
-        removeLoading();
-        self.setState({login: LogInStatus.MANAGER, userId: parseInt(response1.id), contact: response1.contact});
-      }, function(response) { // Parent
-        removeLoading();
-        self.setState({login: LogInStatus.PARENT, userId: parseInt(response1.id), contact: response1.contact});
-      }, function(response) { // Error
-        removeLoading();
-      });
-    }, function(response) { // Not logged in
-      removeLoading();
-      self.setState({login: LogInStatus.GUEST, userId: parseInt(response.id), contact: response.contact});
-    }, function(response) { // Error
-      removeLoading();
-    });
-  }
-  onAddressChange = (address: string) => {
-    let self: AppComponent = this;
-    self.setState({address: address});
+    self.setState({query: props.location.query});
   }
   render() {
     let self: AppComponent = this;
-    switch(self.state.login) {
-      case LogInStatus.GUEST:
-        return (
-          <div className={styles.wrapper}>
-            <div className={styles.header}>
-              <NavComponent login={self.state.login} contact={self.state.contact} onChange={self.onAddressChange} location={self.props.location} />
-            </div>
-            <div className={styles.body}>
-              {this.props.children}
-            </div>
-            <LoaderComponent />
-            <LoginComponent bOpen={self.props.location.query.login} />
-          </div>
-        );
-      case LogInStatus.PARENT:
-      case LogInStatus.MANAGER:
-        return (
-          <div className={styles.wrapper}>
-            <div className={styles.header}>
-              <NavComponent login={self.state.login} contact={self.state.contact} onChange={self.onAddressChange} location={self.props.location} />
-            </div>
-            <div className={styles.body}>
-              {this.props.children}
-            </div>
-            <LoaderComponent />
-            <UserComponent login={self.state.login} open={self.props.location.query.login} userId={self.state.userId} />
-          </div>
-        );
-    }
+    return (
+      <div className={styles.wrapper}>
+        <div className={styles.header}>
+          <AltContainer stores={
+            {
+              auth: function (props) {
+                return {
+                  store: authStore,
+                  value: authStore.getState().auth,
+                };
+              }
+            }
+          }>
+            <NavComponent query={self.state.query} />
+          </AltContainer>
+        </div>
+        <div className={styles.body}>
+          {this.props.children}
+        </div>
+        <LoaderComponent />
+        <IMessageProps />
+      </div>
+    );
   }
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //   switch(self.state.login) {
+  //     case LogInStatus.GUEST:
+  //       return (
+  //         <div className={styles.wrapper}>
+  //           <div className={styles.header}>
+  //             <NavComponent login={self.state.login} contact={self.state.contact} location={self.props.location} />
+  //           </div>
+  //           <div className={styles.body}>
+  //             {this.props.children}
+  //           </div>
+  //           <LoaderComponent />
+  //           <LoginComponent bOpen={self.props.location.query.login} />
+  //         </div>
+  //       );
+  //     case LogInStatus.PARENT:
+  //     case LogInStatus.MANAGER:
+  //       return (
+  //         <div className={styles.wrapper}>
+  //           <div className={styles.header}>
+  //             <NavComponent login={self.state.login} contact={self.state.contact} location={self.props.location} />
+  //           </div>
+  //           <div className={styles.body}>
+  //             {this.props.children}
+  //           </div>
+  //           <LoaderComponent />
+  //           <UserComponent login={self.state.login} open={self.props.location.query.login} userId={self.state.userId} />
+  //         </div>
+  //       );
+  //   }
+  // }
 }
+
+// AppComponent.childContextTypes = {
+//   query: React.PropTypes.object
+// }

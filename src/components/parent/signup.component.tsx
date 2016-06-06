@@ -13,21 +13,23 @@ import ErrorMessage from './../error-message.component';
 import UserContact from './user-contact.component';
 import UserName from './user-name.component';
 import UserNeighborhood from './user-neighborhood.component';
+import { personActions } from './../../actions/person.actions';
 
 export interface ISignUpProps {
-  person: PersonModel;
-  error: Array<string>;
+  open: boolean;
+  person?: PersonModel;
+  // error: Array<string>;
 }
 export interface ISignUpStatus {
   error?: Array<string>;
-  open?: boolean;
 }
 export default class SignUpComponent extends React.Component<ISignUpProps, ISignUpStatus> {
+  static contextTypes: any;
   constructor(props : ISignUpProps) {
     super(props);
     let self: SignUpComponent = this;
     self.state = {
-      open: false,
+      error: new Array<string>(),
     };
   }
   public componentDidMount() {
@@ -44,57 +46,83 @@ export default class SignUpComponent extends React.Component<ISignUpProps, ISign
 
   private updateProps(props: ISignUpProps) {
     let self: SignUpComponent = this;
-    self.setState({error: props.error});
+    // self.setState({error: props.error});
   }
 
   private onClick = () => {
     let self: SignUpComponent = this;
-    self.setState({open: true});
   }
 
   render() {
     let self: SignUpComponent = this;
-    if (self.state.open) {
+    if (self.props.open) {
+      let person: PersonModel = personStore.getTempPerson();
       return (
-        <div className={styles.wrapper}>
-          <div className={styles.header}>
-            <FontAwesome className={styles.icon} name='user-plus' />
-            <div className={styles.title}>
-              SIGN-UP AS A NEW PARENT
+        <div className={styles.full}>
+          <div className={styles.wrapper + " " + styles.slidein}>
+            <div className={styles.siginininfo}>
+            <div className={styles.icon}>
+              <FontAwesome className='' name='user-plus' />
+              </div>
+              <div className={styles.name}>
+                BECOME A PARENT
+              </div>
+              <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
+                self.context.router.goBack();
+              }}/></div>
             </div>
-          </div>
-          <div className={styles.inner}>
-            <UserContact person={self.props.person} editable={true} async={false} error={self.state.error} />
-            <UserName person={self.props.person} editable={true} async={false} error={self.state.error} />
-            <UserNeighborhood person={self.props.person} editable={true} async={false} error={self.state.error} />
-          </div>
-          <div className={styles.button} onClick={()=> {
-            let error: Array<string> = new Array<string>();
-            let bError: boolean = false;
-            if (self.props.person.getContact().trim() == "") {
-              error.push("e502");
-              bError = true;
-            }
-            if (!bError) {
-              personStore.createPerson(self.props.person);
-            }
-            self.setState({error: error});
-          }}>
-            SIGN UP
+            <div className={styles.basicinfo}>
+              <UserContact person={person} editable={true} async={false} error={self.state.error} />
+              <UserName person={person} editable={true} async={false} error={self.state.error} />
+              <UserNeighborhood person={person} editable={true} async={false} error={self.state.error} />
+              <div className={styles.buttongroup} onClick={()=> {
+                personActions.createPerson(personStore.getTempPerson(), "<strong>" + personStore.getTempPerson().getContact() + "</strong> successfully become a parent.", "<strong>" + personStore.getTempPerson().getContact() + "</strong> failed to become a parent.");
+              }}>
+                <div className={styles.button}>
+                  SIGN UP
+                </div>
+              </div>
+
+            </div>
+            <div className={styles.buttongroup} onClick={()=> {
+              self.context.router.push({pathname: window.location.pathname, query: { user: 'login' }});
+            }}>
+              <div className={styles.button2}>
+                PARENT IN
+              </div>
+            </div>
           </div>
         </div>
       );
     } else {
       return (
-        <div className={styles.wrapper}>
-          <div className={styles.button2} onClick={()=> {
-            self.onClick();
-          }}>
-            BECOME A PARENT
+        <div className={styles.full}>
+          <div className={styles.wrapper}>
           </div>
         </div>
       );
     }
-
   }
 }
+
+SignUpComponent.contextTypes = {
+  router: function () {
+    return React.PropTypes.func.isRequired;
+  }
+};
+
+
+// <div className={styles.button} onClick={()=> {
+//   let error: Array<string> = new Array<string>();
+//   let bError: boolean = false;
+//   if (self.props.person.getContact().trim() == "") {
+//     error.push("e502");
+//     bError = true;
+//   }
+//   if (!bError) {
+//     personStore.createPerson(self.props.person);
+//   }
+//   self.setState({error: error});
+// }}>
+//   SIGN UP
+// </div>

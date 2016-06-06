@@ -10,18 +10,22 @@ import { geocoding, reverseGeocoding, IReverseGeoLocation } from './../utils/geo
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import NavAddressComponent from './nav-address.component';
 import { MapModel, mapStore } from './../stores/map.store';
+import { PersonModel, personStore } from './../stores/person.store';
+import { AuthModel, AuthStatus } from './../stores/auth.store';
+import LoginComponent from './parent/login.component';
+import UserComponent from './parent/user.component';
+import SignUpComponent from './parent/signup.component';
+import { authActions } from './../actions/auth.actions';
+import { personActions } from './../actions/person.actions';
 
 export interface INavProps {
-  login: LogInStatus;
-  contact: string;
-  onChange: Function;
-  location: any;
+  auth?: AuthModel;
+  query: any;
 }
 export interface INavStatus {
 
 }
 export default class NavComponent extends React.Component<INavProps, INavStatus> {
-  private map: any;
   static contextTypes: any;
   constructor(props : INavProps) {
     super(props);
@@ -33,6 +37,7 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
   }
   public componentDidMount() {
     let self: NavComponent = this;
+    self.updateProps(self.props);
   }
   public componentWillUnmount() {
     let self: NavComponent = this;
@@ -43,21 +48,20 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
   }
   private updateProps = (props: INavProps) => {
     let self: NavComponent = this;
-    if (props.location.query.lat && props.location.query.lng) {
-      addLoading();
-      reverseGeocoding(new L.LatLng(props.location.query.lat, props.location.query.lng), function(response: IReverseGeoLocation) {
-        self.setState({address: response.road + ", " + response.county + ", " + response.state + ", " + response.postcode, editing: false});
-        removeLoading();
-      }, function() {
-        removeLoading();
-      });
-    }
+    console.log(props.query);
   }
 
   render() {
     let self: NavComponent = this;
-    switch(self.props.login) {
-      case LogInStatus.GUEST:
+    switch(self.props.auth.getAuth()) {
+      case AuthStatus.NONE:
+      case AuthStatus.GUEST:
+        let login: JSX.Element;
+        if (self.props.query && self.props.query.user == "login") {
+          login = <LoginComponent open={true} />;
+        } else if (self.props.query && self.props.query.user == "signup") {
+          login = <SignUpComponent open={true} />;
+        }
         return (
           <div className={styles.wrapper}>
             <div className={styles.left}>
@@ -79,15 +83,25 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
             </div>
             <div className={styles.right}>
               <div className={styles.login} onClick={()=> {
-                self.context.router.push({pathname: window.location.pathname, query: { login: true }});
+                if (self.props.query && self.props.query.user == "login") {
+                  self.context.router.push({pathname: window.location.pathname});
+                } else {
+                  self.context.router.push({pathname: window.location.pathname, query: { user: "login" }});
+                }
               }}>
                 PARENT IN
               </div>
             </div>
+            {login}
           </div>
         );
-      case LogInStatus.PARENT:
-      case LogInStatus.MANAGER:
+      case AuthStatus.PARENT:
+      case AuthStatus.MANAGER:
+      case AuthStatus.ADMIN:
+        let user: JSX.Element;
+        if (self.props.query && self.props.query.user && parseInt(self.props.query.user) == self.props.auth.getId()) {
+          user = <UserComponent open={true} userId={self.props.auth.getId()} />;
+        }
         return (
           <div className={styles.wrapper}>
             <div className={styles.left}>
@@ -109,15 +123,90 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
             </div>
             <div className={styles.right}>
               <div className={styles.login} onClick={()=> {
-                self.context.router.push({pathname: window.location.pathname, query: { login: true }});
+                if (self.props.query && self.props.query.user && parseInt(self.props.query.user) == self.props.auth.getId()) {
+                  self.context.router.push({pathname: window.location.pathname});
+                } else {
+                  authActions.fetchPerson(self.props.auth.getId());
+                  self.context.router.push({pathname: window.location.pathname, query: { user: self.props.auth.getId() }});
+                }
               }}>
-                {self.props.contact}
+                {self.props.auth.getContact()}
               </div>
             </div>
+            {user}
           </div>
         );
     }
   }
+
+
+
+    //
+    //
+    //
+    //
+    // switch(self.props.login) {
+    //   case LogInStatus.GUEST:
+    //     return (
+    //       <div className={styles.wrapper}>
+    //         <div className={styles.left}>
+    //           <div className={styles.title} onClick={()=> {
+    //             self.context.router.push({pathname: Settings.uBaseName + '/'});
+    //           }}>
+    //             FoodParent
+    //           </div>
+    //           <div className={styles.logo}></div>
+    //         </div>
+    //         <div className={styles.center}>
+    //           <AltContainer stores={
+    //             {
+    //               maps: mapStore
+    //             }
+    //           }>
+    //             <NavAddressComponent mapId="map" />
+    //           </AltContainer>
+    //         </div>
+    //         <div className={styles.right}>
+    //           <div className={styles.login} onClick={()=> {
+    //             self.context.router.push({pathname: window.location.pathname, query: { login: true }});
+    //           }}>
+    //             PARENT IN
+    //           </div>
+    //         </div>
+    //       </div>
+    //     );
+    //   case LogInStatus.PARENT:
+    //   case LogInStatus.MANAGER:
+    //     return (
+    //       <div className={styles.wrapper}>
+    //         <div className={styles.left}>
+    //           <div className={styles.title} onClick={()=> {
+    //             self.context.router.push({pathname: Settings.uBaseName + '/'});
+    //           }}>
+    //             FoodParent
+    //           </div>
+    //           <div className={styles.logo}></div>
+    //         </div>
+    //         <div className={styles.center}>
+    //           <AltContainer stores={
+    //             {
+    //               maps: mapStore
+    //             }
+    //           }>
+    //             <NavAddressComponent mapId="map" />
+    //           </AltContainer>
+    //         </div>
+    //         <div className={styles.right}>
+    //           <div className={styles.login} onClick={()=> {
+    //             self.context.router.push({pathname: window.location.pathname, query: { login: true }});
+    //           }}>
+    //             {self.props.contact}
+    //           </div>
+    //         </div>
+    //       </div>
+    //     );
+    // }
+  // }
 }
 
 NavComponent.contextTypes = {

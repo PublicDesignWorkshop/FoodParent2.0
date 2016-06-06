@@ -4,15 +4,18 @@
   $check = login_check();
   if ($check) {
     $params = array(
-      "code" => 400,
+      "code" => 200,
       "id" => $_SESSION['user_id'],
       "contact" => $_SESSION['contact'],
-      "auth" => $_SESSION['user_auth'],
+      "auth" => $_SESSION['user_auth'], // Auth List - 1: Concrete Jungle, 2: Manager, 3: Participant, 4: Guest.
     );
     echo json_encode($params);
   } else {
     $params = array(
       "code" => 901,
+      "id" => 0,
+      "contact" => "",
+      "auth" => 4,  // Return guest auth when an user has not logged in.
     );
     echo json_encode($params);
   }

@@ -73,11 +73,9 @@
         $sql .= "AND (`parent` = '' OR `parent` = '0') ";
       }
     }
-    for ($i = 1; $i <= 6; $i++) {
-      if (isset($_SESSION['rates'])) {
+    if (isset($_SESSION['rates'])) {
+      for ($i = 1; $i <= 6; $i++) {
         $sql .= "AND SUBSTRING_INDEX(`rate`, ',', " . $i . ") IN (" . $_SESSION['rates'] . ") ";
-      } else {
-        $sql .= "AND SUBSTRING_INDEX(`rate`, ',', " . $i . ") IN (-1,4,5) ";
       }
     }
 
@@ -87,9 +85,16 @@
       $stmt->execute();
       $result = $stmt->fetchAll(PDO::FETCH_OBJ);
       $pdo = null;
-      echo json_encode($result);
+      $params = array(
+        "code" => 200,
+        "trees" => $result,
+      );
+      echo json_encode($params);
     } catch(PDOException $e) {
-      echo '{"error":{"text":'. $e->getMessage() .'}}';
+      $params = array(
+        "code" => 400,
+      );
+      echo json_encode($params);
     }
   }
 ?>

@@ -11,24 +11,25 @@ import { TreeModel, treeStore } from './../../stores/tree.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { LogInStatus } from './../app.component';
 import { PersonModel, personStore } from './../../stores/person.store';
+import { authStore } from './../../stores/auth.store';
 import ParentListComponent from './parent-list.component';
+import { treeActions } from './../../actions/tree.actions';
+import { FoodModel, foodStore } from './../../stores/food.store';
 
 export interface ITreeParentsProps {
-  userId: number;
   tree: TreeModel;
-  login: LogInStatus;
+  persons?: Array<PersonModel>;
 }
 export interface ITreeParentsStatus {
-  editing?: boolean;
+
 }
 export default class TreeParentsComponent extends React.Component<ITreeParentsProps, ITreeParentsStatus> {
   static contextTypes: any;
-  private tree: number;
   constructor(props : ITreeParentsProps) {
     super(props);
     let self: TreeParentsComponent = this;
     self.state = {
-      editing: false,
+
     };
   }
   public componentDidMount() {
@@ -45,42 +46,32 @@ export default class TreeParentsComponent extends React.Component<ITreeParentsPr
 
   private updateProps(props: ITreeParentsProps) {
     let self: TreeParentsComponent = this;
-    if (props.tree && props.tree.getId() != self.tree) {
-      console.log("-------------");
-      if (self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.ADMIN) {
-        if (props.tree.getParents().length > 0) {
-          setTimeout(function() {
-            personStore.fetchPersons(props.tree.getParents());
-          }, 1);
-        }
-      }
-      self.tree = props.tree.getId();
-    }
+    //
+    //
+    // if (props.tree && props.tree.getId() != self.tree) {
+    //   console.log("-------------");
+    //   if (self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.ADMIN) {
+    //     if (props.tree.getParents().length > 0) {
+    //       setTimeout(function() {
+    //         personStore.fetchPersons(props.tree.getParents());
+    //       }, 1);
+    //     }
+    //   }
+    //   self.tree = props.tree.getId();
+    // }
   }
 
   render() {
     let self: TreeParentsComponent = this;
-    if (self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.ADMIN) {
+    let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
+    if (authStore.getAuth().getIsManager()) {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onClick={()=> {
-
-          }}>
+          <div className={styles.label}>
             <FontAwesome className='' name='chain' /> Parents
           </div>
           <div className={styles.editname}>
-          <AltContainer stores={
-            {
-              persons: function (props) {
-                return {
-                  store: personStore,
-                  value: personStore.getState().persons,
-                };
-              }
-            }
-          }>
-            <ParentListComponent userId={self.props.userId} tree={self.props.tree} persons={personStore.getState().persons} />
-          </AltContainer>
+            <ParentListComponent tree={self.props.tree} persons={self.props.persons} />
           </div>
         </div>
       );
@@ -95,27 +86,25 @@ export default class TreeParentsComponent extends React.Component<ITreeParentsPr
         status = parents.length + " people adopt this tree.";
       }
       let adopt: JSX.Element;
-      if (self.props.login == LogInStatus.ADMIN || self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.PARENT) {
+      if (!authStore.getAuth().getIsGuest()) {
         adopt = <span className={styles.adopt} onClick={()=> {
-          self.props.tree.addParent(self.props.userId);
-          treeStore.updateTree(self.props.tree);
+          self.props.tree.addParent(authStore.getAuth().getId());
+          treeActions.updateTree(self.props.tree, "Successfully adopted <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to adopt <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
         }}>ADOPT </span>;
-        if (parents.indexOf(self.props.userId) > -1) {
+        if (parents.indexOf(authStore.getAuth().getId()) > -1) {
           adopt = <span className={styles.unadopt} onClick={()=> {
-            self.props.tree.removeParent(self.props.userId);
-            treeStore.updateTree(self.props.tree);
+            self.props.tree.removeParent(authStore.getAuth().getId());
+            treeActions.updateTree(self.props.tree, "Successfully unadopted <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to unadopt <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
           }}>UN-ADOPT</span>;
         }
       } else {
         adopt = <span className={styles.adopt} onClick={()=> {
-          self.context.router.push({pathname: window.location.pathname, query: { login: true }});
+          self.context.router.push({pathname: window.location.pathname, query: { user: 'signup' }});
         }}>BECOME A PARENT </span>;
       }
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onClick={()=> {
-
-          }}>
+          <div className={styles.label}>
             <FontAwesome className='' name='chain' /> Parents
           </div>
           <div className={styles.editname}>

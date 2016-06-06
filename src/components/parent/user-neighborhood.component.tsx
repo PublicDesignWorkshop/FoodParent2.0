@@ -13,7 +13,7 @@ import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import ErrorMessage from './../error-message.component';
 
 export interface IUserNeighborhoodProps {
-  person: PersonModel;
+  person?: PersonModel;
   editable: boolean;
   async: boolean;
   error: Array<string>;
@@ -59,7 +59,7 @@ export default class UserNeighborhoodComponent extends React.Component<IUserNeig
 
   render() {
     let self: UserNeighborhoodComponent = this;
-    if (self.props.person && (self.props.editable || self.props.person.getId() == 0)) {
+    if (self.props.person && self.props.editable) {
       return (
         <div className={styles.wrapper}>
           <div className={styles.label} onMouseUp={()=> {

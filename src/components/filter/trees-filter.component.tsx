@@ -19,12 +19,12 @@ import FilterFlagComponent from './filter-flag.component';
 import FilterOwnershipComponent from './filter-ownership.component';
 import FilterAdoptComponent from './filter-adopt.component';
 import FilterRateComponent from './filter-rate.component';
+import { authStore } from './../../stores/auth.store';
 
 export interface ITreesFilterProps {
   foods: Array<FoodModel>;
   trees: Array<TreeModel>;
-  flags: Array<FlagModel>;
-  login: LogInStatus;
+  flags?: Array<FlagModel>;
 }
 export interface ITreesFilterStatus {
   userId?: number;
@@ -59,11 +59,9 @@ export default class TreesFilterComponent extends React.Component<ITreesFilterPr
   render() {
     let self: TreesFilterComponent = this;
     let filterownership: JSX.Element;
-    if (self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.ADMIN) {
-      filterownership = <FilterOwnershipComponent />;
-    }
     let filterflag: JSX.Element;
-    if (self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.ADMIN) {
+    if (authStore.getAuth().getIsManager()) {
+      filterownership = <FilterOwnershipComponent />;
       filterflag = <FilterFlagComponent flags={self.props.flags} />;
     }
     return(
@@ -79,7 +77,7 @@ export default class TreesFilterComponent extends React.Component<ITreesFilterPr
         </div>
         <FilterFoodComponent foods={self.props.foods} />
         <FilterRateComponent />
-        <FilterAdoptComponent login={self.props.login}/>
+        <FilterAdoptComponent />
         {filterflag}
         {filterownership}
       </div>

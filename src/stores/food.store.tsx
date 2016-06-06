@@ -4,7 +4,6 @@ import * as moment from 'moment';
 
 import { foodActions } from './../actions/food.actions';
 import { AbstractStore } from './../stores/abstract.store';
-import { foodSource } from './../sources/food.source';
 
 export interface IFoodProps {
   id: string;
@@ -59,8 +58,6 @@ export interface FoodState {
 
 interface FoodExtendedStore extends AltJS.AltStore<FoodState> {
   getFood(id: number): FoodModel;
-  fetchFoods(): void;
-  isLoading(): boolean;
 }
 
 class FoodStore extends AbstractStore<FoodState> {
@@ -73,26 +70,24 @@ class FoodStore extends AbstractStore<FoodState> {
     self.errorMessage = null;
     //TODO: pass state generics to make sure methods/actions expect the same type
     self.bindListeners({
-      handleFetchFoods: foodActions.fetchFoods,
+      handleUpdateFoods: foodActions.updateFoods,
       handleFailed: foodActions.failed
     });
     self.exportPublicMethods({
       getFood: self.getFood
     });
-    self.exportAsync(foodSource);
   }
-  handleFetchFoods(foodsProps: Array<IFoodProps>) {
+  handleUpdateFoods(foodsProps: Array<IFoodProps>) {
     let self: FoodStore = this;
-    console.warn("Handle Fetch Foods");
     self.foods = new Array<FoodModel>();
     foodsProps.forEach((props: IFoodProps) => {
       self.foods.push(new FoodModel(props));
     });
     self.errorMessage = null;
   }
-  handleFailed(errorMessage: string) {
-    console.warn("Handle Food Failed");
-    this.errorMessage = errorMessage;
+  handleFailed(code: number) {
+    let self: FoodStore = this;
+    // this.errorMessage = errorMessage;
   }
   getFood(id: number): FoodModel {
     let self: FoodStore = this;

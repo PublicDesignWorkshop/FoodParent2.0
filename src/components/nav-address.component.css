@@ -34,5 +34,6 @@
 @media screen and (max-device-aspect-ratio: 1/1) {
   :local(.location) {
     line-height: 105%;
+    font-size: small;
   }
 }

@@ -13,6 +13,7 @@ import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
+import { treeActions } from './../../actions/tree.actions';
 
 export interface IFilterFoodOption {
   value: number;
@@ -67,7 +68,7 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
             }
           });
           self.setState({selected: selected});
-          treeStore.fetchTrees();
+          treeActions.fetchTrees();
         }, function(response) {
 
         }, function(response) {
@@ -92,7 +93,7 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
         foods.push(parseInt(option.value));
       });
       applyFilter(FilterMode.FOOD, foods, function(response) {
-        treeStore.fetchTrees();
+        treeActions.fetchTrees();
       }, function(response) {
 
       }, function(response) {
@@ -100,7 +101,7 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
       });
     } else {
       applyFilter(FilterMode.FOOD, new Array<number>(), function(response) {
-        treeStore.fetchTrees();
+        treeActions.fetchTrees();
       }, function(response) {
 
       }, function(response) {

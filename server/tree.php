@@ -82,13 +82,23 @@
         $stmt->execute($params);
         $result = $stmt->fetch();
         $pdo = null;
-        echo json_encode($result);
+        $params = array(
+          "code" => 200,
+          "trees" => $result,
+        );
+        echo json_encode($params);
       } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
+        $params = array(
+          "code" => 400,
+        );
+        echo json_encode($params);
       }
 
     } catch(PDOException $e) {
-      echo '{"error":{"text":'. $e->getMessage() .'}}';
+      $params = array(
+        "code" => 400,
+      );
+      echo json_encode($params);
     }
   }
 

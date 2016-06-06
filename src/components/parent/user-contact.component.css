@@ -10,6 +10,7 @@
     font-size: small;
   }
   :local(.label) {
+    color: rgba(255, 255, 255, 1);
     font-weight: 700;
     padding-top: 8px;
     padding-bottom: 4px;

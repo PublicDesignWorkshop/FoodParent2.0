@@ -5,99 +5,142 @@ import { treeActions } from './../actions/tree.actions';
 import { treeStore, TreeModel, TreeState } from './../stores/tree.store';
 
 
-let TreeSource: AltJS.Source = {
-  fetchTrees(): AltJS.SourceModel<Array<TreeModel>> {
-    return {
-      remote(state: TreeState) {
-        return new Promise<Array<TreeModel>>((resolve, reject) => {
-          $.ajax({
-            url: Settings.uBaseName + Settings.uServer + "trees.php",
-            data: {
-
-            },
-            success: function(response) {
-              resolve($.parseJSON(response));
-            },
-            error: function(response) {
-              console.log(response);
-              reject(response);
-            }
-          });
-        })
-      },
-      local(state: TreeState): Array<TreeModel> {
-        //TODO : Figure out why local doesn't work =(
-        return null;
-      },
-      success: treeActions.fetchTrees,
-      error: treeActions.failed,
-      loading: treeActions.loading,
-      shouldFetch:() => true
-    };
+let TreeSource = {
+  fetchTrees(): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      $.ajax({
+        url: Settings.uBaseName + Settings.uServer + "trees.php",
+        data: {},
+        dataType: "json",
+        success: function(response) {
+          if (response.code == 200) {
+            resolve(response.trees);
+          } else {
+            reject(response.code);
+          }
+        },
+        error: function(response) {
+          reject(response.status);
+        }
+      });
+    })
   },
-  updateTree(): AltJS.SourceModel<TreeModel> {
-    return {
-      remote(state: TreeState, update?: TreeModel) {
-        console.log(update);
-        return new Promise<TreeModel>((resolve, reject) => {
-          //console.log(tree.toJSON());
-          $.ajax({
-            url: Settings.uBaseName + Settings.uServer + "tree.php",
-            type: 'PUT',
-            contentType: 'application/json',
-            data: JSON.stringify(update.toJSON()),
-            dataType: "json",
-            success: function(response) {
-              resolve(response[0]);
-            },
-            error: function(response) {
-              console.log(response);
-              reject(response);
-            }
-          });
-        })
-      },
-      local(state: TreeState): TreeModel {
-        //TODO : Figure out why local doesn't work =(
-        return null;
-      },
-      success: treeActions.updateTree,
-      error: treeActions.failed,
-      loading: treeActions.loading,
-      shouldFetch:() => true
-    };
+  updateTree(tree: TreeModel): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      $.ajax({
+        url: Settings.uBaseName + Settings.uServer + "tree.php",
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(tree.toJSON()),
+        dataType: "json",
+        success: function(response) {
+          if (response.code == 200) {
+            resolve(response.trees[0]);
+          } else {
+            reject(response.code);
+          }
+        },
+        error: function(response) {
+          reject(response.status);
+        }
+      });
+    })
   },
-  createTree(): AltJS.SourceModel<TreeModel> {
-    return {
-      remote(state: TreeState, create?: TreeModel) {
-        return new Promise<TreeModel>((resolve, reject) => {
-          //console.log(tree.toJSON());
-          $.ajax({
-            url: Settings.uBaseName + Settings.uServer + "tree.php",
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(create.toJSON()),
-            dataType: "json",
-            success: function(response) {
-              resolve(response);
-            },
-            error: function(response) {
-              console.log(response);
-              reject(response);
-            }
-          });
-        })
-      },
-      local(state: TreeState): TreeModel {
-        //TODO : Figure out why local doesn't work =(
-        return null;
-      },
-      success: treeActions.createTree,
-      error: treeActions.failed,
-      loading: treeActions.loading,
-      shouldFetch:() => true
-    };
-  }
+  //
+  //
+  //
+  // fetchTrees(): AltJS.SourceModel<Array<TreeModel>> {
+  //   return {
+  //     remote(state: TreeState) {
+  //       return new Promise<Array<TreeModel>>((resolve, reject) => {
+  //         $.ajax({
+  //           url: Settings.uBaseName + Settings.uServer + "trees.php",
+  //           data: {
+  //
+  //           },
+  //           success: function(response) {
+  //             resolve($.parseJSON(response));
+  //           },
+  //           error: function(response) {
+  //             console.log(response);
+  //             reject(response);
+  //           }
+  //         });
+  //       })
+  //     },
+  //     local(state: TreeState): Array<TreeModel> {
+  //       //TODO : Figure out why local doesn't work =(
+  //       return null;
+  //     },
+  //     success: treeActions.fetchTrees,
+  //     error: treeActions.failed,
+  //     loading: treeActions.loading,
+  //     shouldFetch:() => true
+  //   };
+  // },
+  // updateTree(): AltJS.SourceModel<TreeModel> {
+  //   return {
+  //     remote(state: TreeState, update?: TreeModel) {
+  //       console.log(update);
+  //       return new Promise<TreeModel>((resolve, reject) => {
+  //         //console.log(tree.toJSON());
+  //         $.ajax({
+  //           url: Settings.uBaseName + Settings.uServer + "tree.php",
+  //           type: 'PUT',
+  //           contentType: 'application/json',
+  //           data: JSON.stringify(update.toJSON()),
+  //           dataType: "json",
+  //           success: function(response) {
+  //             resolve(response[0]);
+  //           },
+  //           error: function(response) {
+  //             console.log(response);
+  //             reject(response);
+  //           }
+  //         });
+  //       })
+  //     },
+  //     local(state: TreeState): TreeModel {
+  //       //TODO : Figure out why local doesn't work =(
+  //       return null;
+  //     },
+  //     success: treeActions.updateTree,
+  //     error: treeActions.failed,
+  //     loading: treeActions.loading,
+  //     shouldFetch:() => true
+  //   };
+  // },
+  // createTree(): AltJS.SourceModel<TreeModel> {
+  //   return {
+  //     remote(state: TreeState, create?: TreeModel) {
+  //       return new Promise<TreeModel>((resolve, reject) => {
+  //         //console.log(tree.toJSON());
+  //         $.ajax({
+  //           url: Settings.uBaseName + Settings.uServer + "tree.php",
+  //           type: 'POST',
+  //           contentType: 'application/json',
+  //           data: JSON.stringify(create.toJSON()),
+  //           dataType: "json",
+  //           success: function(response) {
+  //             resolve(response);
+  //           },
+  //           error: function(response) {
+  //             console.log(response);
+  //             reject(response);
+  //           }
+  //         });
+  //       })
+  //     },
+  //     local(state: TreeState): TreeModel {
+  //       //TODO : Figure out why local doesn't work =(
+  //       return null;
+  //     },
+  //     success: treeActions.createTree,
+  //     error: treeActions.failed,
+  //     loading: treeActions.loading,
+  //     shouldFetch:() => true
+  //   };
+  // }
 };
 
 export const treeSource = TreeSource;

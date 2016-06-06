@@ -12,7 +12,7 @@ import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import ErrorMessage from './../error-message.component';
 
 export interface INoteListProps {
-  notes: Array<NoteModel>;
+  notes?: Array<NoteModel>;
   noteId: number;
 }
 export interface INoteListStatus {

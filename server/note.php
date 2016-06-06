@@ -80,13 +80,23 @@
         $stmt->execute($params);
         $result = $stmt->fetch();
         $pdo = null;
-        echo json_encode($result);
+        $params = array(
+          "code" => 200,
+          "notes" => $result,
+        );
+        echo json_encode($params);
       } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
+        $params = array(
+          "code" => 400,
+        );
+        echo json_encode($params);
       }
 
     } catch(PDOException $e) {
-      echo '{"error":{"text":'. $e->getMessage() .'}}';
+      $params = array(
+        "code" => 400,
+      );
+      echo json_encode($params);
     }
   }
 
@@ -131,12 +141,22 @@
         $stmt->execute($params);
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         $pdo = null;
-        echo json_encode($result[0]);
+        $params = array(
+          "code" => 200,
+          "note" => $result[0],
+        );
+        echo json_encode($params);
       } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
+        $params = array(
+          "code" => 400,
+        );
+        echo json_encode($params);
       }
     } catch(PDOException $e) {
-      echo '{"error":{"text":'. $e->getMessage() .'}}';
+      $params = array(
+        "code" => 400,
+      );
+      echo json_encode($params);
     }
   }
 
@@ -151,9 +171,16 @@
       $stmt = $pdo->prepare($sql);
       $result = $stmt->execute($params);
       $pdo = null;
-      echo json_encode($result);
+      $params = array(
+        "code" => 200,
+        "notes" => $result,
+      );
+      echo json_encode($params);
     } catch(PDOException $e) {
-      echo '{"error":{"text":'. $e->getMessage() .'}}';
+      $params = array(
+        "code" => 400,
+      );
+      echo json_encode($params);
     }
   }
 ?>

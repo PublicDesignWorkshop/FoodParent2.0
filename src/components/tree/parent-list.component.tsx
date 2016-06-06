@@ -1,3 +1,4 @@
+import * as $ from 'jquery';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
@@ -8,12 +9,14 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './parent-list.component.css';
 import { PersonModel, personStore } from './../../stores/person.store';
 import { TreeModel, treeStore } from './../../stores/tree.store';
+import { FoodModel, foodStore } from './../../stores/food.store';
+import { authStore } from './../../stores/auth.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
+import { treeActions } from './../../actions/tree.actions';
 
 export interface IParentListProps {
   tree: TreeModel;
-  persons: Array<PersonModel>;
-  userId: number;
+  persons?: Array<PersonModel>;
 }
 export interface IParentListStatus {
 
@@ -44,14 +47,12 @@ export default class ParentListComponent extends React.Component<IParentListProp
 
   render() {
     let self: ParentListComponent = this;
+    let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
     let list: Array<JSX.Element> = new Array<JSX.Element>();
     let parents: Array<number> = self.props.tree.getParents();
-    console.log(personStore.getState().persons);
-    console.log(parents);
-    parents.forEach((parentId: number) => {
-      let person: PersonModel = personStore.getPerson(parentId);
-      if (person) {
-        list.push(<span className={styles.parent} key={"parent" + parentId}>{person.getName()}</span>);
+    self.props.persons.forEach((person: PersonModel) => {
+      if ($.inArray(person.getId(), parents) > -1) {
+        list.push(<span className={styles.parent} key={"parent" + person.getId()}>{person.getName()}</span>);
       }
     });
     if (list.length == 0) {
@@ -59,13 +60,13 @@ export default class ParentListComponent extends React.Component<IParentListProp
     }
     let adopt: JSX.Element;
     adopt = <span className={styles.adopt} onClick={()=> {
-      self.props.tree.addParent(self.props.userId);
-      treeStore.updateTree(self.props.tree);
-    }}>ADOPT </span>;
-    if (parents.indexOf(self.props.userId) > -1) {
+      self.props.tree.addParent(authStore.getAuth().getId());
+      treeActions.updateTree(self.props.tree, "Successfully adopted <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to adopt <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
+    }}>ADOPT</span>;
+    if (parents.indexOf(authStore.getAuth().getId()) > -1) {
       adopt = <span className={styles.unadopt} onClick={()=> {
-        self.props.tree.removeParent(self.props.userId);
-        treeStore.updateTree(self.props.tree);
+        self.props.tree.removeParent(authStore.getAuth().getId());
+        treeActions.updateTree(self.props.tree, "Successfully unadopted <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to unadopt <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
       }}>UN-ADOPT</span>;
     }
     return (

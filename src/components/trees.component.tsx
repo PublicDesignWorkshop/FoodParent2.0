@@ -16,9 +16,12 @@ import TreesPanelComponent from './trees-panel.component';
 import TreesMessageComponent from './trees-message.component';
 import { TileMode } from './map.component';
 import { calcRating } from './../utils/rating';
+import { mapStore } from './../stores/map.store';
+import { flagStore } from './../stores/flag.store';
+import { flagActions } from './../actions/flag.actions';
 
 export enum TreesMode {
-  NONE, TREEDETAIL, TREEADDMARKER, TREEADDINFO, TREEADDSAVE, TREESFILTER, TREENOTEEDIT, TREENOTEDELETE
+  NONE, TREES, TREEDETAIL, TREEADDMARKER, TREEADDINFO, TREEADDSAVE, TREESFILTER, TREENOTEEDIT, TREENOTEDELETE
 }
 export interface ITreesProps {
   params: any;
@@ -45,7 +48,7 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
       noteId: null,
       zoom: Settings.iDefaultZoom,
       position: null,
-      mode: TreesMode.TREEDETAIL,
+      mode: TreesMode.TREES,
       tile: TileMode.GRAY
     };
   }
@@ -63,40 +66,14 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
     self.updateProps(nextProps);
   }
   private updateProps = (props: ITreesProps) => {
-    console.warn("--updateProps");
+    console.warn("- Update props -");
     let self: TreesComponent = this;
     let treeId = null;
     let noteId = null;
-    let mode: TreesMode = TreesMode.TREEDETAIL;
-    let location: L.LatLng;
-    let zoom: number = self.state.zoom;
-    if (props.location.query.lat && props.location.query.lng && props.location.query.move == "true") {
-      location = new L.LatLng(props.location.query.lat, props.location.query.lng);
-      zoom = Settings.iFocusZoom;
-    }
-
-    if (props.params.treeId == "add") {
-      treeId = 0;
-      if (props.location.query.mode == "marker") {
-        mode = TreesMode.TREEADDMARKER;
-      } else if (props.location.query.mode == "info") {
-        if (treeStore.getTree(0)) {
-          mode = TreesMode.TREEADDINFO;
-        } else {
-          self.context.router.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" }});
-        }
-      } else if (props.location.query.mode == "save") {
-        var tree: TreeModel = treeStore.getTree(0);
-        if (tree) {
-          treeStore.createTree(tree);
-          // self.context.router.replace({pathname: Settings.uBaseName + '/'});
-        } else {
-          self.context.router.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" }});
-        }
-      }
-    } else if (props.params.treeId == "filter") {
-      mode = TreesMode.TREESFILTER;
-    } else if (props.params.treeId) {
+    let mode: TreesMode = TreesMode.TREES;
+    if (props.params.treeId) {
+      mode = TreesMode.TREEDETAIL;
+      treeId = parseInt(props.params.treeId);
       if (props.location.query.note) {
         mode = TreesMode.TREENOTEEDIT;
         noteId = parseInt(props.location.query.note);
@@ -104,9 +81,52 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
           mode = TreesMode.TREENOTEDELETE;
         }
       }
-      treeId = parseInt(props.params.treeId);
+    }if (props.params.treeId == "filter") {
+      mode = TreesMode.TREESFILTER;
     }
-    self.setState({treeId: treeId, mode: mode, noteId: noteId, location: location, zoom: zoom});
+    self.setState({mode: mode, treeId: treeId, noteId: noteId});
+
+
+
+    // let location: L.LatLng;
+    // let zoom: number = self.state.zoom;
+    // if (props.location.query.lat && props.location.query.lng && props.location.query.move == "true") {
+    //   location = new L.LatLng(props.location.query.lat, props.location.query.lng);
+    //   zoom = Settings.iFocusZoom;
+    // }
+    //
+    // if (props.params.treeId == "add") {
+    //   treeId = 0;
+    //   if (props.location.query.mode == "marker") {
+    //     mode = TreesMode.TREEADDMARKER;
+    //   } else if (props.location.query.mode == "info") {
+    //     if (treeStore.getTree(0)) {
+    //       mode = TreesMode.TREEADDINFO;
+    //     } else {
+    //       self.context.router.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" }});
+    //     }
+    //   } else if (props.location.query.mode == "save") {
+    //     var tree: TreeModel = treeStore.getTree(0);
+    //     if (tree) {
+    //       treeStore.createTree(tree);
+    //       // self.context.router.replace({pathname: Settings.uBaseName + '/'});
+    //     } else {
+    //       self.context.router.replace({pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" }});
+    //     }
+    //   }
+    // } else if (props.params.treeId == "filter") {
+    //   mode = TreesMode.TREESFILTER;
+    // } else if (props.params.treeId) {
+    //   if (props.location.query.note) {
+    //     mode = TreesMode.TREENOTEEDIT;
+    //     noteId = parseInt(props.location.query.note);
+    //     if (props.location.query.mode == "delete") {
+    //       mode = TreesMode.TREENOTEDELETE;
+    //     }
+    //   }
+    //   treeId = parseInt(props.params.treeId);
+    // }
+    // self.setState({treeId: treeId, mode: mode, noteId: noteId, location: location, zoom: zoom});
   }
   onChange = (store: TreeState) => {
     let self: TreesComponent = this;
@@ -119,30 +139,31 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
 
   public onMapRender = () => {
     let self: TreesComponent = this;
+    flagActions.fetchFlags();
+    foodActions.fetchFoods();
     calcRating(function () {
-      foodStore.fetchFoods();
-      treeStore.fetchTrees();
+      treeActions.fetchTrees();
     });
   }
   public renderTree = (treeId: number) => {
     let self: TreesComponent = this;
     //self.setState({trees: self.state.trees, treeId: treeId, bClose: self.state.bClose});
   }
-  public changeLocation = () => {
-    let self: TreesComponent = this;
-  }
-  onZoom = (zoom: number) => {
-    let self: TreesComponent = this;
-    self.setState({zoom: zoom});
-  }
-  onGeo = (position: Position) => {
-    let self: TreesComponent = this;
-    self.setState({position: new L.LatLng(position.coords.latitude, position.coords.longitude)});
-  }
-  offGeo = () => {
-    let self: TreesComponent = this;
-    self.setState({position: null});
-  }
+  // public changeLocation = () => {
+  //   let self: TreesComponent = this;
+  // }
+  // onZoom = (zoom: number) => {
+  //   let self: TreesComponent = this;
+  //   self.setState({zoom: zoom});
+  // }
+  // onGeo = (position: Position) => {
+  //   let self: TreesComponent = this;
+  //   self.setState({position: new L.LatLng(position.coords.latitude, position.coords.longitude)});
+  // }
+  // offGeo = () => {
+  //   let self: TreesComponent = this;
+  //   self.setState({position: null});
+  // }
 
   render() {
     let self: TreesComponent = this;
@@ -161,11 +182,23 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
                 store: treeStore,
                 value: treeStore.getState().trees
               };
+            },
+            tile: function (props) {
+              return {
+                store: mapStore,
+                value: mapStore.getTile('map'),
+              };
+            },
+            flags: function (props) {
+              return {
+                store: flagStore,
+                value: flagStore.getState().flags
+              };
             }
           }
         }>
-          <MapComponent tile={self.state.tile} mode={self.state.mode} treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} onRender={self.onMapRender} zoom={self.state.zoom} onZoom={self.onZoom} position={self.state.position} offGeo={self.offGeo} location={self.props.location} />
-          <TreesPanelComponent tile={self.state.tile} onTile={self.onTile} mode={self.state.mode} treeId={self.state.treeId} foods={foodStore.getState().foods} trees={treeStore.getState().trees} zoom={self.state.zoom} onZoom={self.onZoom} onGeo={self.onGeo} noteId={self.state.noteId} />
+          <MapComponent mode={self.state.mode} treeId={self.state.treeId} onRender={self.onMapRender} />
+          <TreesPanelComponent mode={self.state.mode} treeId={self.state.treeId} noteId={self.state.noteId} />
           <TreesMessageComponent mode={self.state.mode} treeId={self.state.treeId} noteId={self.state.noteId} />
         </AltContainer>
       </div>

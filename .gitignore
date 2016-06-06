@@ -1,6 +1,7 @@
 node_modules/*
 !node_modules/react-bootstrap-datetimepicker
 !node_modules/react-pinch-zoom-pan
+!node_modules/leaflet
 dist/FoodParent2.0/*
 dist/dist/*
 dist/foodparent.js
@@ -15,3 +16,4 @@ server/dbpass.php
 server/config.php
 content/images/*
 !content/images/blank.jpg
+serverconfig/~$errorlist.xlsx

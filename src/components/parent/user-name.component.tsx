@@ -13,7 +13,7 @@ import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import ErrorMessage from './../error-message.component';
 
 export interface IUserNameProps {
-  person: PersonModel;
+  person?: PersonModel;
   editable: boolean;
   async: boolean;
   error: Array<string>;
@@ -51,7 +51,7 @@ export default class UserNameComponent extends React.Component<IUserNameProps, I
     let self: UserNameComponent = this;
     self.props.person.setName(self.state.name);
     if (self.props.async) {
-      personStore.updatePerson(self.props.person);
+      // personStore.updatePerson(self.props.person);
     } else {
 
     }
@@ -59,7 +59,7 @@ export default class UserNameComponent extends React.Component<IUserNameProps, I
 
   render() {
     let self: UserNameComponent = this;
-    if (self.props.person && (self.props.editable || self.props.person.getId() == 0)) {
+    if (self.props.person && self.props.editable) {
       return (
         <div className={styles.wrapper}>
           <div className={styles.label} onMouseUp={()=> {

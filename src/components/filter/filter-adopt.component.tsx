@@ -13,6 +13,8 @@ import { TreeModel, treeStore } from './../../stores/tree.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
 import { LogInStatus } from './../app.component';
+import { authStore } from './../../stores/auth.store';
+import { treeActions } from './../../actions/tree.actions';
 
 export interface IFilterAdoptOption {
   value: number;
@@ -20,7 +22,7 @@ export interface IFilterAdoptOption {
 }
 
 export interface IFilterAdoptProps {
-  login: LogInStatus;
+
 }
 export interface IFilterAdoptStatus {
   options?: Array<IFilterAdoptOption>;
@@ -72,7 +74,7 @@ export default class FilterAdoptComponent extends React.Component<IFilterAdoptPr
             }
           });
           self.setState({selected: selected});
-          treeStore.fetchTrees();
+          treeActions.fetchTrees();
         }, function(response) {
 
         }, function(response) {
@@ -82,7 +84,7 @@ export default class FilterAdoptComponent extends React.Component<IFilterAdoptPr
     }
 
     var options = new Array<IFilterAdoptOption>();
-    if (self.props.login == LogInStatus.ADMIN || self.props.login == LogInStatus.MANAGER || self.props.login == LogInStatus.PARENT) {
+    if (!authStore.getAuth().getIsGuest()) {
       options.push({value: 0, label: "All"});
       options.push({value: 1, label: "My Trees"});
       options.push({value: 2, label: "Adopted"});
@@ -102,7 +104,7 @@ export default class FilterAdoptComponent extends React.Component<IFilterAdoptPr
     adopts.push(selected.value);
     if (selected) {
       applyFilter(FilterMode.ADOPT, adopts, function(response) {
-        treeStore.fetchTrees();
+        treeActions.fetchTrees();
       }, function(response) {
 
       }, function(response) {
@@ -110,7 +112,7 @@ export default class FilterAdoptComponent extends React.Component<IFilterAdoptPr
       });
     } else {
       applyFilter(FilterMode.ADOPT, new Array<number>(), function(response) {
-        treeStore.fetchTrees();
+        treeActions.fetchTrees();
       }, function(response) {
 
       }, function(response) {

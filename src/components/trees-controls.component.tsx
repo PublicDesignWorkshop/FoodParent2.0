@@ -14,14 +14,12 @@ import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 import { LogInStatus } from './app.component';
 import { TileMode } from './map.component';
+import { mapActions } from './../actions/map.actions';
+import { mapStore } from './../stores/map.store';
+import { authStore } from './../stores/auth.store';
 
 export interface ITreesControlsProps {
-  login: LogInStatus;
-  zoom: number;
-  onZoom: Function;
-  onGeo: PositionCallback;
   tile: TileMode;
-  onTile: Function;
 }
 export interface ITreesControlsStatus {
 
@@ -32,9 +30,7 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
     super(props);
     let self: TreesControlsComponent = this;
     this.state = {
-      login: LogInStatus.GUEST,
-      userId: null,
-      open: false,
+
     };
   }
   public componentDidMount() {
@@ -55,51 +51,59 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
 
   render() {
     let self: TreesControlsComponent = this;
-    let tileIcon = 'map-o';
+    let tile = 'map-o';
     if (self.props.tile == TileMode.SATELLITE) {
-      tileIcon = 'map';
+      tile = 'map';
     }
+    let donation: JSX.Element;
+    if (authStore.getAuth().getIsManager()) {
+      donation = <div className={styles.button + " " + styles.buttonbottom}>
+        <FontAwesome className='' name='sitemap' onClick={()=> {
 
+        }} />
+      </div>
+    }
     return (
       <div className={styles.wrapper}>
         <div className={styles.button + " " + styles.buttontop} onClick={()=> {
           if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
+            // navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
           }
         }}>
           <FontAwesome className='' name='location-arrow' />
         </div>
         <div className={styles.button} onClick={()=> {
           if (self.props.tile == TileMode.GRAY) {
-            self.props.onTile(TileMode.SATELLITE);
+            mapActions.setTile('map', TileMode.SATELLITE);
           } else {
-            self.props.onTile(TileMode.GRAY);
+            mapActions.setTile('map', TileMode.GRAY);
           }
         }}>
-          <FontAwesome className='' name={tileIcon} />
+          <FontAwesome className='' name={tile} />
         </div>
         <div className={styles.button} onClick={()=> {
-          let zoom: number = Math.min(Settings.iMaxZoom, self.props.zoom + 1);
-          self.props.onZoom(zoom);
+          let zoom: number = Math.min(Settings.iMaxZoom, mapStore.getZoom('map') + 1);
+          mapActions.setZoom('map', zoom);
         }}>
           <FontAwesome className='' name='search-plus' />
         </div>
         <div className={styles.button} onClick={()=> {
-          let zoom: number = Math.max(Settings.iMinZoom, self.props.zoom - 1);
-          self.props.onZoom(zoom);
+          let zoom: number = Math.min(Settings.iMaxZoom, mapStore.getZoom('map') - 1);
+          mapActions.setZoom('map', zoom);
         }}>
           <FontAwesome className='' name='search-minus' />
         </div>
         <div className={styles.button}>
           <FontAwesome className='' name='filter' onClick={()=> {
-            self.context.router.push({pathname: Settings.uBaseName + '/trees/filter'});
+            self.context.router.push({pathname: Settings.uBaseName + '/tree/filter'});
           }} />
         </div>
         <div className={styles.button + " " + styles.buttonbottom}>
           <FontAwesome className='' name='plus' onClick={()=> {
-            self.context.router.push({pathname: Settings.uBaseName + '/trees/add', query: { mode: "marker" }});
+            self.context.router.push({pathname: Settings.uBaseName + '/tree/add', query: { mode: "marker" }});
           }} />
         </div>
+        {donation}
       </div>
     );
   }

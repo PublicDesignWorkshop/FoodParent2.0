@@ -1,73 +1,160 @@
 @media all {
+  :local(.full) {
+    position: fixed;
+    top: 48;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+  }
   :local(.wrapper) {
-    width: 100%;
-    padding: 16px 0 8px 0;
-    color: rgba(94, 78, 81, 1);
-    font-family: 'Open Sans', sans-serif;
-    font-size: small;
+    position: absolute;
+    top: 0;
+    right: -30%;
+    width: 30%;
+    height: 100%;
+    padding: 8px;
+    background-color: rgba(244, 244, 244, 1);
+    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
+    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.15);
+    overflow-y: auto;
+    pointer-events: visible;
   }
-  :local(.inner) {
-    width: 100%;
-    padding: 0 8px 8px 0;
+  :local(.slidein) {
+    right: 0;
   }
-  :local(.header) {
+  :local(.siginininfo) {
     display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
     display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
     display: -ms-flexbox;           /* TWEENER - IE 10 */
     display: -webkit-flex;          /* NEW - Chrome */
     display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
 
+    min-height: 60px;
     border-radius: 2px;
+    padding: 0 0 8px 0;
   }
-  :local(.icon) {
-    width: 36px;
-    height: 36px;
+  :local(.siginininfo .icon) {
+    width: 32px;
     margin: 8px;
-    font-size: 250%;
+    color: rgba(94, 78, 81, 1);
+    font-size: 235%;
   }
-  :local(.title) {
+  :local(.siginininfo .name) {
     -webkit-flex-grow: 1;           /* NEW - Chrome */
     flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
 
-    font-family: 'Open Sans Condensed', sans-serif;
     font-size: x-large;
     font-weight: 700;
     color: rgba(94, 78, 81, 1);
     margin: auto;
-    padding: 0 8px;
+    margin: 8px 16px;
+  }
+  :local(.siginininfo .close) {
+    font-size: xx-large;
+    font-weight: 700;
+    color: rgba(94, 78, 81, 1);
+  }
+  :local(.siginininfo .close span) {
+    cursor: pointer;
+  }
+  :local(.basicinfo) {
+    border-radius: 2px;
+    background-color: rgba(94, 78, 81, 1);
+    padding: 4px 12px 12px 12px;
+  }
+  .span[name="close"] {
   }
 
-  :local(.button) {
-    width: 100%;
-    text-align: center;
-    display: inline-block;
-    background-color: rgba(107, 170, 119, 1);
+  :local(.contactlabel) {
     font-weight: 700;
-    color: rgba(255, 255, 255, 1);
-    padding: 6px 0;
-    margin: 4px 0;
+    padding-top: 8px;
+    color: rgba(94, 78, 81, 1);
+  }
+  :local(.contactname) {
+    display: block;
+    padding: 0 0 0 4px;
+    min-height: 22px;
+    letter-spacing: 1px;
+  }
+  :local(.contactinput) {
+    width: 100%;
+    padding: 6px 3px;
+    border-radius: 2px;
+    margin: 2px;
+    border: 1px solid rgba(94, 78, 81, 1);
+  }
+
+  :local(.buttongroup) {
+    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;           /* TWEENER - IE 10 */
+    display: -webkit-flex;          /* NEW - Chrome */
+    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    padding: 16px 0 4px 0;
+    font-size: small;
+  }
+  :local(.button) {
+    -webkit-flex-grow: 1;           /* NEW - Chrome */
+    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    padding: 4px;
+    border-radius: 2px;
+    border: 2px solid rgba(255, 255, 255, 1);
+    text-align: center;
+    font-weight: 700;
     cursor: pointer;
-    font-size: medium;
   }
   :local(.button:hover) {
-    color: rgba(94, 78, 81, 1);
+    border: 2px solid rgba(107, 170, 119, 1);
+    color: rgba(107, 170, 119, 1);
   }
   :local(.button2) {
-    width: 100%;
-    text-align: center;
-    display: inline-block;
-    background-color: rgba(244, 244, 244, 1);
-    font-weight: 700;
-    padding: 6px 0;
-    margin: 4px 0;
-    cursor: pointer;
-    font-size: medium;
+    -webkit-flex-grow: 1;           /* NEW - Chrome */
+    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    padding: 4px;
+    border-radius: 2px;
     color: rgba(107, 170, 119, 1);
     border: 2px solid rgba(107, 170, 119, 1);
-    border-radius: 2px;
+    text-align: center;
+    font-weight: 700;
+    cursor: pointer;
   }
   :local(.button2:hover) {
-    color: rgba(94, 78, 81, 1);
     border: 2px solid rgba(94, 78, 81, 1);
+    color: rgba(94, 78, 81, 1);
+  }
+}
+
+@media screen and (max-device-width: 1024px) {
+  :local(.wrapper) {
+    display: none;
+    right: -100%;
+    width: 100%;
+  }
+  :local(.slidein) {
+    display: block;
+    right: 0;
+    transition: 0.25s;
+    overflow-y: auto;
+  }
+}
+
+@media screen and (max-device-aspect-ratio: 1/1) {
+  :local(.wrapper) {
+    display: none;
+    position: absolute;
+    right: -100%;
+    width: 100%;
+    opacity: 0.95;
+    padding-bottom: 120px;
+  }
+  :local(.slidein) {
+    display: block;
+    right: 0;
+    transition: 0.25s;
   }
 }

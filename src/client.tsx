@@ -10,6 +10,7 @@ import './bootstrap-datetimepicker.css';
 ReactDOM.render(<Router history={browserHistory}>{Routes}</Router>, document.getElementById('app'));
 
 resetFilter();
+// Code Snipet for sending an email.
 // sendMailFromParent("jkim848@gatech.edu", "Mail Subject", "Mail Message", function(response) {
 //
 // }, function(response) {
@@ -18,6 +19,7 @@ resetFilter();
 //
 // });
 
+// Code snipet for full screen mode (doesn't work).
 // var elem: any = document.querySelector("#app");
 // if (elem.requestFullscreen) {
 //   alert("full screen");

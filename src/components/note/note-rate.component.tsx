@@ -20,7 +20,6 @@ export interface INoteRateProps {
   note: NoteModel;
   editable: boolean;
   async: boolean;
-  error: Array<string>;
 }
 export interface INoteRateStatus {
   options?: Array<INoteRateOption>;
@@ -89,7 +88,6 @@ export default class NoteRateComponent extends React.Component<INoteRateProps, I
           </div>
           <div className={styles.edit}>
             <Select name="amount-select" multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} />
-            <ErrorMessage error={self.props.error} match={new Array<string>("e602")}/>
           </div>
         </div>
       );

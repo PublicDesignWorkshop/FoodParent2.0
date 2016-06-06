@@ -13,7 +13,7 @@ import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import ErrorMessage from './../error-message.component';
 
 export interface IUserContactProps {
-  person: PersonModel;
+  person?: PersonModel;
   editable: boolean;
   async: boolean;
   error: Array<string>;
@@ -51,7 +51,7 @@ export default class UserContactComponent extends React.Component<IUserContactPr
     let self: UserContactComponent = this;
     self.props.person.setContact(self.state.contact);
     if (self.props.async) {
-      personStore.updatePerson(self.props.person);
+      // personStore.updatePerson(self.props.person);
     } else {
 
     }
@@ -59,7 +59,7 @@ export default class UserContactComponent extends React.Component<IUserContactPr
 
   render() {
     let self: UserContactComponent = this;
-    if (self.props.person && (self.props.editable || self.props.person.getId() == 0)) {
+    if (self.props.person && self.props.editable) {
       return (
         <div className={styles.wrapper}>
           <div className={styles.label} onMouseUp={()=> {

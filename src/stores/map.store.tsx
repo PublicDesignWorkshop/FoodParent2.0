@@ -8,6 +8,7 @@ import { browserHistory } from 'react-router';
 var Settings = require('./../constraints/settings.json');
 import { mapActions } from './../actions/map.actions';
 import { AbstractStore } from './../stores/abstract.store';
+import { TileMode } from './../components/map.component';
 
 export interface IMapProps {
   id: string;
@@ -16,21 +17,45 @@ export interface IMapProps {
 export interface IMapLocationProps {
   id: string;
   location: L.LatLng;
+  zoom: number;
+}
+export interface IMapTileProps {
+  id: string;
+  tile: TileMode;
+}
+export interface IMapZoomProps {
+  id: string;
+  zoom: number;
+}
+
+export interface IMapFirstProps {
+  id: string;
+  first: boolean;
 }
 
 export class MapModel {
   id: string;
   map: L.Map;
+  tile: TileMode;
+  first: boolean;
   constructor(props: IMapProps) {
     let self: MapModel = this;
     self.id = props.id;
     self.map = props.map;
+    self.tile = TileMode.GRAY;
+    self.first = true;
   }
   public getId(): string {
     return this.id;
   }
   public getMap(): L.Map {
     return this.map;
+  }
+  public getTile(): TileMode {
+    return this.tile;
+  }
+  public setTile(tile: TileMode) {
+    this.tile = tile;
   }
   public getCenter(): L.LatLng {
     let self: MapModel = this;
@@ -44,8 +69,17 @@ export class MapModel {
     let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, self.map.getZoom());
     return location;
   }
+  public setZoom(zoom: number): void {
+    this.map.setZoom(zoom);
+  }
   public getZoom(): number {
     return this.map.getZoom();
+  }
+  public setFirst(first: boolean): void {
+    this.first = first;
+  }
+  public getFirst(): boolean {
+    return this.first;
   }
 }
 
@@ -59,6 +93,8 @@ interface MapExtendedStore extends AltJS.AltStore<MapState> {
   getMap(id: string): L.Map;
   getCenter(id: string): L.LatLng;
   getZoom(id: string): number;
+  getTile(id: string): TileMode;
+  getFirst(id: string): boolean;
 }
 
 class MapStore extends AbstractStore<MapState> {
@@ -77,11 +113,16 @@ class MapStore extends AbstractStore<MapState> {
       handleMoveTo: mapActions.moveTo,
       handlePanTo: mapActions.panTo,
       handleUpdate: mapActions.update,
+      handleSetTile: mapActions.setTile,
+      handleSetZoom: mapActions.setZoom,
+      handleSetFirst: mapActions.setFirst,
     });
     self.exportPublicMethods({
       getMap: self.getMap,
       getCenter: self.getCenter,
       getZoom: self.getZoom,
+      getTile: self.getTile,
+      getFirst: self.getFirst,
     });
   }
   handleAddMap(props: IMapProps) {
@@ -112,45 +153,94 @@ class MapStore extends AbstractStore<MapState> {
   }
   getZoom(id: string): number {
     let self: MapStore = this;
-    let maps = self.getState().maps.filter(map => map.getId() == id);
-    if (maps.length == 1) {
-      return maps[0].getZoom();
+    if (self.getState().maps) {
+      let maps = self.getState().maps.filter(map => map.getId() == id);
+      if (maps.length == 1) {
+        return maps[0].getZoom();
+      }
+      return Settings.iDefaultZoom;
     }
-    return null;
+    return Settings.iDefaultZoom;
   }
   handleUpdate(id: string) {
-    
+
   }
   handleMoveTo(props: IMapLocationProps) {
     let self: MapStore = this;
     let maps = self.maps.filter(map => map.getId() == props.id);
     if (maps.length == 1) {
       let location: L.LatLng = new L.LatLng(props.location.lat, props.location.lng);
-      let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, maps[0].map.getZoom());
+      let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, props.zoom);
       let rMap = document.getElementById(props.id);
       if (rMap.clientWidth > rMap.clientHeight) {
         point.x += maps[0].map.getSize().x * 0.15;
       } else {
         //point.y += self.map.getSize().y * 0.15;
       }
-      location = L.CRS.EPSG3857.pointToLatLng(point, maps[0].map.getZoom());
-      maps[0].map.setView(location);
+      location = L.CRS.EPSG3857.pointToLatLng(point, props.zoom);
+      maps[0].map.setView(location, props.zoom);
     }
   }
   handlePanTo(props: IMapLocationProps) {
     let self: MapStore = this;
     let maps = self.maps.filter(map => map.getId() == props.id);
     if (maps.length == 1) {
+      console.log(props);
       let location: L.LatLng = new L.LatLng(props.location.lat, props.location.lng);
-      let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, maps[0].map.getZoom());
+      let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, props.zoom);
       let rMap = document.getElementById(props.id);
       if (rMap.clientWidth > rMap.clientHeight) {
         point.x += maps[0].map.getSize().x * 0.15;
       } else {
         //point.y += self.map.getSize().y * 0.15;
       }
-      location = L.CRS.EPSG3857.pointToLatLng(point, maps[0].map.getZoom());
-      maps[0].map.panTo(location);
+      location = L.CRS.EPSG3857.pointToLatLng(point, props.zoom);
+      maps[0].map.panTo(location, props.zoom);
+    }
+  }
+
+
+
+
+  getTile(id: string): TileMode {
+    let self: MapStore = this;
+    if (self.getState().maps) {
+      let maps = self.getState().maps.filter(map => map.getId() == id);
+      if (maps.length == 1) {
+        return maps[0].getTile();
+      }
+      return TileMode.GRAY;
+    }
+    return TileMode.GRAY;
+  }
+  handleSetTile(props: IMapTileProps) {
+    let self: MapStore = this;
+    let maps = self.maps.filter(map => map.getId() == props.id);
+    if (maps.length == 1) {
+      return maps[0].setTile(props.tile);
+    }
+    return null;
+  }
+  handleSetZoom(props: IMapZoomProps) {
+    let self: MapStore = this;
+    let maps = self.maps.filter(map => map.getId() == props.id);
+    if (maps.length == 1) {
+      return maps[0].setZoom(props.zoom);
+    }
+    return null;
+  }
+  handleSetFirst(props: IMapFirstProps) {
+    let self: MapStore = this;
+    let maps = self.maps.filter(map => map.getId() == props.id);
+    if (maps.length == 1) {
+      maps[0].setFirst(props.first);
+    }
+  }
+  getFirst(id: string) {
+    let self: MapStore = this;
+    let maps = self.getState().maps.filter(map => map.getId() == id);
+    if (maps.length == 1) {
+      return maps[0].getFirst();
     }
   }
 }

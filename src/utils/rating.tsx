@@ -12,7 +12,7 @@ export function calcRating(success?: any, fail?: any, error?: any) {
     cache: false,
     dataType: "json",
     success: function (response, textStatus, jqXHR) {
-      if (parseInt(response.code) == 400) {   // Logged in
+      if (parseInt(response.code) == 200) {   // Logged in
         if (success) {
           success(response);
         }

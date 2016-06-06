@@ -12,6 +12,7 @@ import * as styles from './filter-rate.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
+import { treeActions } from './../../actions/tree.actions';
 
 export interface IFilterRateOption {
   value: number;
@@ -74,7 +75,7 @@ export default class FilterRateComponent extends React.Component<IFilterRateProp
           }
         });
         self.setState({selected: selected});
-        treeStore.fetchTrees();
+        treeActions.fetchTrees();
       }, function(response) {
 
       }, function(response) {
@@ -101,7 +102,7 @@ export default class FilterRateComponent extends React.Component<IFilterRateProp
         rates.push(parseInt(option.value));
       });
       applyFilter(FilterMode.RATE, rates, function(response) {
-        treeStore.fetchTrees();
+        treeActions.fetchTrees();
       }, function(response) {
 
       }, function(response) {
@@ -109,7 +110,7 @@ export default class FilterRateComponent extends React.Component<IFilterRateProp
       });
     } else {
       applyFilter(FilterMode.RATE, new Array<number>(), function(response) {
-        treeStore.fetchTrees();
+        treeActions.fetchTrees();
       }, function(response) {
 
       }, function(response) {
@@ -141,7 +142,7 @@ export default class FilterRateComponent extends React.Component<IFilterRateProp
         }
       });
       self.setState({selected: selected});
-      treeStore.fetchTrees();
+      treeActions.fetchTrees();
     }, function(response) {
 
     }, function(response) {
