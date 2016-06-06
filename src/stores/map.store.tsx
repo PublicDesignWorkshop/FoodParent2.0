@@ -27,10 +27,13 @@ export interface IMapZoomProps {
   id: string;
   zoom: number;
 }
-
 export interface IMapFirstProps {
   id: string;
   first: boolean;
+}
+export interface IMapActiveProps {
+  id: string;
+  active: boolean;
 }
 
 export class MapModel {
@@ -38,12 +41,14 @@ export class MapModel {
   map: L.Map;
   tile: TileMode;
   first: boolean;
+  active: boolean;
   constructor(props: IMapProps) {
     let self: MapModel = this;
     self.id = props.id;
     self.map = props.map;
     self.tile = TileMode.GRAY;
     self.first = true;
+    self.active = true;
   }
   public getId(): string {
     return this.id;
@@ -81,6 +86,12 @@ export class MapModel {
   public getFirst(): boolean {
     return this.first;
   }
+  public setActive(active: boolean): void {
+    this.active = active;
+  }
+  public getActive(): boolean {
+    return this.active;
+  }
 }
 
 export interface MapState {
@@ -95,6 +106,7 @@ interface MapExtendedStore extends AltJS.AltStore<MapState> {
   getZoom(id: string): number;
   getTile(id: string): TileMode;
   getFirst(id: string): boolean;
+  getActive(id: string): boolean;
 }
 
 class MapStore extends AbstractStore<MapState> {
@@ -116,6 +128,7 @@ class MapStore extends AbstractStore<MapState> {
       handleSetTile: mapActions.setTile,
       handleSetZoom: mapActions.setZoom,
       handleSetFirst: mapActions.setFirst,
+      handleSetActive: mapActions.setActive,
     });
     self.exportPublicMethods({
       getMap: self.getMap,
@@ -123,6 +136,7 @@ class MapStore extends AbstractStore<MapState> {
       getZoom: self.getZoom,
       getTile: self.getTile,
       getFirst: self.getFirst,
+      getActive: self.getActive,
     });
   }
   handleAddMap(props: IMapProps) {
@@ -241,6 +255,20 @@ class MapStore extends AbstractStore<MapState> {
     let maps = self.getState().maps.filter(map => map.getId() == id);
     if (maps.length == 1) {
       return maps[0].getFirst();
+    }
+  }
+  handleSetActive(props: IMapActiveProps) {
+    let self: MapStore = this;
+    let maps = self.maps.filter(map => map.getId() == props.id);
+    if (maps.length == 1) {
+      maps[0].setFirst(props.active);
+    }
+  }
+  getActive(id: string) {
+    let self: MapStore = this;
+    let maps = self.getState().maps.filter(map => map.getId() == id);
+    if (maps.length == 1) {
+      return maps[0].getActive();
     }
   }
 }

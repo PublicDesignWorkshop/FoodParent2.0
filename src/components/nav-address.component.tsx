@@ -41,16 +41,21 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
   }
   private updateProps = (props: INavAddressProps) => {
     let self: NavAddressComponent = this;
-    let location: L.LatLng = mapStore.getCenter(props.mapId);
-    if (location && location.lat && location.lng) {
-      addLoading();
-      reverseGeocoding(new L.LatLng(location.lat, location.lng), function(response: IReverseGeoLocation) {
-        self.setState({address: response.formatted, editing: false});
-        removeLoading();
-      }, function() {
-        removeLoading();
-      });
-    }
+    console.log(self.state.editing);
+    setTimeout(function() {
+      if (!self.state.editing) {
+        let location: L.LatLng = mapStore.getCenter(props.mapId);
+        if (location && location.lat && location.lng) {
+          addLoading();
+          reverseGeocoding(new L.LatLng(location.lat, location.lng), function(response: IReverseGeoLocation) {
+            self.setState({address: response.formatted, editing: false});
+            removeLoading();
+          }, function() {
+            removeLoading();
+          });
+        }
+      }
+    }, 250);
   }
 
   private searchAddress = () => {
@@ -110,10 +115,12 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
           }}
           onKeyPress={(event)=> {
             if (event.key == 'Enter') {
+              mapActions.setActive('map', true);
               self.searchAddress();
             }
           }}
           onBlur={()=> {
+            mapActions.setActive('map', true);
             self.searchAddress();
           }} />
       );
@@ -121,6 +128,7 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
       return (
         <div className={styles.location} onClick={()=> {
           self.setState({address: "", editing: true});
+          mapActions.setActive('map', false);
         }}>
           {self.state.address}
         </div>

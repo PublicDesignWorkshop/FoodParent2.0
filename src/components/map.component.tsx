@@ -375,9 +375,11 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   private afterMoveMap = () => {
     var self: MapComponent = this;
     // Update mapStore to update address of the map when the map is dragged.
-    setTimeout(function() {
-      mapActions.update('map');
-    }, 0);
+    if (mapStore.getActive('map')) {
+      setTimeout(function() {
+        mapActions.update('map');
+      }, 0);
+    }
   }
   render() {
     let self: MapComponent = this;

@@ -1,7 +1,7 @@
 import { alt } from './../alt';
 import * as Alt from 'alt';
 import { AbstractActions } from "./abstract.actions";
-import { MapModel, IMapProps, IMapLocationProps, IMapTileProps, IMapZoomProps, IMapFirstProps } from './../stores/map.store';
+import { MapModel, IMapProps, IMapLocationProps, IMapTileProps, IMapZoomProps, IMapFirstProps, IMapActiveProps } from './../stores/map.store';
 import { TileMode } from './../components/map.component';
 
 interface IMapActions {
@@ -12,6 +12,7 @@ interface IMapActions {
   setTile(id: string, tile: TileMode): IMapTileProps;
   setZoom(id: string, zoom: number): IMapZoomProps;
   setFirst(id: string, first: boolean): IMapFirstProps;
+  setActive(id: string, active: boolean): IMapActiveProps;
 }
 
 class MapActions extends AbstractActions implements IMapActions {
@@ -41,6 +42,9 @@ class MapActions extends AbstractActions implements IMapActions {
   }
   setFirst(id: string, first: boolean): IMapFirstProps {
     return {id, first};
+  }
+  setActive(id: string, active: boolean): IMapActiveProps {
+    return {id, active};
   }
 }
 
