@@ -4,29 +4,18 @@ var Settings = require('./../constraints/settings.json');
 import { sortGoogleLocationByDistanceASC } from './../utils/sort';
 
 export interface IReverseGeoLocation {
-  city: string;
-  country: string;
-  county: string;
-  postcode: string;
-  road: string;
-  state: string;
-  latitude: string;
-  longitude: string;
+  formatted: string;
 }
 
 export function reverseGeocoding(coordinate: L.LatLng, success?: Function, error?: Function): void {
-  var jqxhr = $.getJSON(Settings.uReverseGeoCoding + "&lat=" + coordinate.lat + "&lon=" + coordinate.lng, function (data) {
-    if (success) {
-      success({
-        city: data.address.city,
-        country: data.address.country,
-        county: data.address.county,
-        postcode: data.address.postcode,
-        road: data.address.road,
-        state: data.address.state,
-        latitude: data.lat,
-        longitude: data.lon
-      });
+  var jqxhr = $.getJSON(Settings.uReverseGeoCoding + "&latlng=" + coordinate.lat + "," + coordinate.lng, function (data) {
+    console.log(data.results[0].formatted_address);
+    if (data.status == "OK") {
+      if (success) {
+        success({
+          formatted: data.results[0].formatted_address
+        });
+      }
     }
   }).fail(function () {
     if (error) {

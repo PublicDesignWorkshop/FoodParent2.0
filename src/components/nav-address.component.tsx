@@ -44,7 +44,7 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
     if (location && location.lat && location.lng) {
       addLoading();
       reverseGeocoding(new L.LatLng(location.lat, location.lng), function(response: IReverseGeoLocation) {
-        self.setState({address: response.road + ", " + response.county + ", " + response.state + ", " + response.postcode, editing: false});
+        self.setState({address: response.formatted, editing: false});
         removeLoading();
       }, function() {
         removeLoading();

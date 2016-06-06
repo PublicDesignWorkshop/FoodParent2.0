@@ -48,7 +48,7 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
       } else {
         addLoading();
         reverseGeocoding(props.tree.getLocation(), function(response: IReverseGeoLocation) {
-          self.setState({address: response.road + ", " + response.county + ", " + response.state + ", " + response.country + ", " + response.postcode, editing: false});
+          self.setState({address: response.formatted, editing: false});
           self.props.tree.setAddress(self.state.address);
           if (self.props.async) {
             treeStore.updateTree(self.props.tree);
