@@ -25,7 +25,7 @@
   "iMarkerPrecision": 5,
   "uTemporaryMarkerIcon": "unknown.svg",
   "iMaxClusterRadius": 40,
-  "iDisableClusteringAtZoom": 16,
+  "iDisableClusteringAtZoom": 10,
   "iMessageDuration": 1500,
 
 

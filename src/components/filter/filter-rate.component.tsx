@@ -159,7 +159,7 @@ export default class FilterRateComponent extends React.Component<IFilterRateProp
           //   self.setState({editing: true});
           // }
         }}>
-          <FontAwesome className='' name='home' /> Rates
+          <FontAwesome className='' name='star' /> Rates
         </div>
         <div className={styles.value}>
           <Select name="rate-select" multi={true} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select rate types..." />

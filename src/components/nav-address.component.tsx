@@ -9,6 +9,7 @@ import { geocoding, reverseGeocoding, IReverseGeoLocation } from './../utils/geo
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { MapModel, mapStore } from './../stores/map.store';
 import { mapActions } from './../actions/map.actions';
+import { treeActions } from './../actions/tree.actions';
 
 export interface INavAddressProps {
   mapId: string;
@@ -62,6 +63,7 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
         setTimeout(function() {
           mapActions.setFirst('map', true);
         }, 0);
+        treeActions.fetchTrees(parseInt(value));
         self.context.router.push({pathname: Settings.uBaseName + '/tree/' + parseInt(value)});
       } else {
         geocoding(self.state.address, new L.LatLng(location.lat, location.lng), function(response) {
@@ -77,7 +79,7 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
       if (location && location.lat && location.lng) {
         addLoading();
         reverseGeocoding(new L.LatLng(location.lat, location.lng), function(response: IReverseGeoLocation) {
-          self.setState({address: response.road + ", " + response.county + ", " + response.state + ", " + response.postcode, editing: false});
+          self.setState({address: response.formatted, editing: false});
           removeLoading();
         }, function() {
           removeLoading();

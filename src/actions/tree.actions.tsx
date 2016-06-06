@@ -7,7 +7,7 @@ import { treeSource } from './../sources/tree.source';
 import { displaySuccessMessage, displayErrorMessage } from './../utils/message';
 
 interface ITreeActions {
-  fetchTrees();
+  fetchTrees(id?: number);
   fetchedTrees(treesProps: Array<ITreeProps>);
   updateTree(tree: TreeModel, success: string, error: string);
   updatedTree(props: ITreeProps);
@@ -17,12 +17,12 @@ interface ITreeActions {
 }
 
 class TreeActions extends AbstractActions implements ITreeActions {
-  fetchTrees() {
+  fetchTrees(id?: number) {
     let self: TreeActions = this;
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
       addLoading();
-      treeSource.fetchTrees().then((response) => {
+      treeSource.fetchTrees(id).then((response) => {
         removeLoading();
         self.fetchedTrees(response);
       }).catch((code) => {

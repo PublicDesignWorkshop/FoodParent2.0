@@ -222,7 +222,7 @@
     }
   }
 
-  function calcSeasonFoods() {
+  function calcSeasonFoods($extra) {
     $sql = "SELECT id FROM `food` WHERE `season` = 1";
     try {
       $pdo = getConnection();
@@ -233,6 +233,9 @@
       $foods = [-1];
       foreach ($result as $food) {
         array_push($foods, $food["id"]);
+      }
+      if ($extra && !in_array(strval($extra), $foods)) {
+        array_push($foods, strval($extra));
       }
       return implode(',', $foods);
     } catch(PDOException $e) {
@@ -248,7 +251,7 @@
       $stmt->execute();
       $result = $stmt->fetchAll();
       $pdo = null;
-      $flags = [0]; 
+      $flags = [0];
       foreach ($result as $flag) {
         array_push($flags, $flag["id"]);
       }

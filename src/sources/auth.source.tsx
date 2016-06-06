@@ -13,7 +13,6 @@ let AuthSource = {
         data: {},
         dataType: "json",
         success: function(response) {
-          console.log(response);
           resolve(response);
         },
         error: function(response) {

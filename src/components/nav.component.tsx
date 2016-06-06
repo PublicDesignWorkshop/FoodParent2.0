@@ -48,7 +48,6 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
   }
   private updateProps = (props: INavProps) => {
     let self: NavComponent = this;
-    console.log(props.query);
   }
 
   render() {

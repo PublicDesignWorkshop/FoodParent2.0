@@ -6,11 +6,14 @@ import { treeStore, TreeModel, TreeState } from './../stores/tree.store';
 
 
 let TreeSource = {
-  fetchTrees(): Promise<any> {
+  fetchTrees(id?: number): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       $.ajax({
         url: Settings.uBaseName + Settings.uServer + "trees.php",
-        data: {},
+        type: 'GET',
+        data: {
+          id: id,
+        },
         dataType: "json",
         success: function(response) {
           if (response.code == 200) {

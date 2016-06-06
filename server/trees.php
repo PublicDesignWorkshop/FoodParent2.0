@@ -22,8 +22,37 @@
 
   function read() {
     sec_session_continue(); // Our custom secure way of starting a PHP session.
+    $extra = 0;
+    if(isset($_GET['id'])) {
+      $public = "0,1";
+      $_SESSION['public'] = $public;
+      $flags = getDefaultFlags();
+      $_SESSION['flag_ids'] = $flags;
+      $foods = calcSeasonFoods(0);
+      $_SESSION['food_ids'] = $foods;
+      $adopt = "0";
+      $_SESSION['adopt'] = $adopt;
+      $rates = "-1,0,1,2,3,4,5";
+      $_SESSION['rates'] = $rates;
+
+      $sql = "SELECT `food` FROM `tree` WHERE `id` = ". $_GET['id'];
+      try {
+        $pdo = getConnection();
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        $pdo = null;
+        $extra = $result[0]['food'];
+      } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+      }
+    }
+
+
+
     $check = admin_check();
     $sql = "SELECT * FROM `tree` WHERE ";
+
     if (!$check) {
       $public = "1";
     } else {
@@ -36,10 +65,15 @@
     $sql .= "`public` IN (".$public.") ";
     // Food basic filtering
     if (isset($_SESSION['food_ids'])) {
+      $foodList = split(",", $_SESSION['food_ids']);
+      if (!in_array(strval($extra), $foodList)) {
+        array_push($foodList, strval($extra));
+      }
+      $_SESSION['food_ids'] = implode(",", $foodList);
       $sql .= "AND `food` IN (".$_SESSION['food_ids'].") ";
     } else {
       //$sql .= "AND `food` IN (0) ";
-      $foods = calcSeasonFoods();
+      $foods = calcSeasonFoods($extra);
       $sql .= "AND `food` IN (" . $foods . ") ";
     }
     // Flag basic filtering

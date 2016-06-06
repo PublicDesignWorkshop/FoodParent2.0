@@ -220,7 +220,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
           //   mapActions.moveTo('map', self.selected.getLatLng(), Settings.iFocusZoom);
           //   //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
           // }, Settings.iPopupDelay);
-          if(self.markers[i].getPopup()._isOpen === true && self.selected.options.id == props.treeId) {
+          if(self.markers[i].getPopup()._isOpen === true && self.selected && self.selected.options.id == props.treeId) {
             // popup is already open
           } else {
             setTimeout(function() {
@@ -340,7 +340,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       disableClusteringAtZoom: Settings.iDisableClusteringAtZoom
     });
     self.layer.addTo(self.map);
-    document.querySelector('.leaflet-bottom.leaflet-left').innerHTML = '<div class="leaflet-control-attribution leaflet-control"><div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a></div></div>';
+    // document.querySelector('.leaflet-bottom.leaflet-left').innerHTML = '<div class="leaflet-control-attribution leaflet-control"><div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a></div></div>';
     self.map.on("moveend", self.afterMoveMap);
     self.map.on('popupopen', function (event: any) {
       if (!mapStore.getFirst('map')) {

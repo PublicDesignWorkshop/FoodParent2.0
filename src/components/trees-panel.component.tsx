@@ -73,7 +73,6 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
 
   render() {
     let self: TreesPanelComponent = this;
-    console.log(self.props.mode);
     if (!self.state.open) {
       return (
         <div className={styles.wrapper}>

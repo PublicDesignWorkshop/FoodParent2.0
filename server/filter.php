@@ -86,7 +86,7 @@
     if (isset($_SESSION['food_ids'])) {
       $foods = $_SESSION['food_ids'];
     } else {
-      $foods = calcSeasonFoods();
+      $foods = calcSeasonFoods(0);
       $_SESSION['food_ids'] = $foods;
     }
     $params = array(
@@ -113,7 +113,7 @@
     $_SESSION['public'] = $public;
     $flags = getDefaultFlags();
     $_SESSION['flag_ids'] = $flags;
-    $foods = calcSeasonFoods();
+    $foods = calcSeasonFoods(0);
     $_SESSION['food_ids'] = $foods;
     $adopt = "0";
     $_SESSION['adopt'] = $adopt;

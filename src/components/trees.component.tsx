@@ -139,11 +139,18 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
 
   public onMapRender = () => {
     let self: TreesComponent = this;
-    flagActions.fetchFlags();
-    foodActions.fetchFoods();
-    calcRating(function () {
-      treeActions.fetchTrees();
-    });
+    setTimeout(function() {
+      flagActions.fetchFlags();
+      foodActions.fetchFoods();
+      calcRating(function () {
+        if (self.state.treeId) {
+          treeActions.fetchTrees(self.state.treeId);
+        } else {
+          treeActions.fetchTrees();
+        }
+      });
+    }, 500);
+
   }
   public renderTree = (treeId: number) => {
     let self: TreesComponent = this;

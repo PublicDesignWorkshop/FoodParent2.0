@@ -9,7 +9,6 @@ export interface IReverseGeoLocation {
 
 export function reverseGeocoding(coordinate: L.LatLng, success?: Function, error?: Function): void {
   var jqxhr = $.getJSON(Settings.uReverseGeoCoding + "&latlng=" + coordinate.lat + "," + coordinate.lng, function (data) {
-    console.log(data.results[0].formatted_address);
     if (data.status == "OK") {
       if (success) {
         success({
