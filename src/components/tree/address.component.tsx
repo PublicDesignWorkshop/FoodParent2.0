@@ -9,6 +9,8 @@ import * as styles from './address.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { reverseGeocoding, IReverseGeoLocation } from './../../utils/geolocation';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
+import { FoodModel, foodStore } from './../../stores/food.store';
+import { treeActions } from './../../actions/tree.actions';
 
 export interface IAddressProps {
   tree: TreeModel;
@@ -51,7 +53,8 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
           self.setState({address: response.formatted, editing: false});
           self.props.tree.setAddress(self.state.address);
           if (self.props.async) {
-            treeStore.updateTree(self.props.tree);
+            let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
+            treeActions.updateTree(self.props.tree, "Successfully updated the address of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to update the address of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
           } else {
             self.setState({editing: false});
           }
@@ -65,20 +68,21 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
 
   private updateAttribute = () => {
     let self: AddressComponent = this;
+    let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
     if (self.state.address.trim() != "") {
       self.props.tree.setAddress(self.state.address);
       if (self.props.async) {
-        treeStore.updateTree(self.props.tree);
+        treeActions.updateTree(self.props.tree, "Successfully updated the address of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to update the address of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
       } else {
         self.setState({editing: false});
       }
     } else {
       reverseGeocoding(self.props.tree.getLocation(), function(response: IReverseGeoLocation) {
-        self.setState({address: response.road + ", " + response.county + ", " + response.state + ", " + response.country + ", " + response.postcode, editing: false});
+        self.setState({address: response.formatted, editing: false});
         removeLoading();
         self.props.tree.setAddress(self.state.address);
         if (self.props.async) {
-          treeStore.updateTree(self.props.tree);
+          treeActions.updateTree(self.props.tree, "Successfully updated the address of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to update the address of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
         } else {
           self.setState({editing: false});
         }

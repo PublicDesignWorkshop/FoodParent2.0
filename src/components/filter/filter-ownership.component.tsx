@@ -12,6 +12,7 @@ import * as styles from './filter-ownership.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
+import { treeActions } from './../../actions/tree.actions';
 
 export interface IFilterOwnershipOption {
   value: number;
@@ -66,7 +67,7 @@ export default class FilterOwnershipComponent extends React.Component<IFilterOwn
           }
         });
         self.setState({selected: selected});
-        treeStore.fetchTrees();
+        treeActions.fetchTrees();
       }, function(response) {
 
       }, function(response) {
@@ -89,7 +90,7 @@ export default class FilterOwnershipComponent extends React.Component<IFilterOwn
         ownerships.push(parseInt(option.value));
       });
       applyFilter(FilterMode.OWNERSHIP, ownerships, function(response) {
-        treeStore.fetchTrees();
+        treeActions.fetchTrees();
       }, function(response) {
 
       }, function(response) {
@@ -97,7 +98,7 @@ export default class FilterOwnershipComponent extends React.Component<IFilterOwn
       });
     } else {
       applyFilter(FilterMode.OWNERSHIP, new Array<number>(), function(response) {
-        treeStore.fetchTrees();
+        treeActions.fetchTrees();
       }, function(response) {
 
       }, function(response) {
@@ -121,7 +122,7 @@ export default class FilterOwnershipComponent extends React.Component<IFilterOwn
         }
       });
       self.setState({selected: selected});
-      treeStore.fetchTrees();
+      treeActions.fetchTrees();
     }, function(response) {
 
     }, function(response) {

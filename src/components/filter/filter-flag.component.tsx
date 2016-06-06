@@ -13,6 +13,7 @@ import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FlagModel, flagStore } from './../../stores/flag.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
+import { treeActions } from './../../actions/tree.actions';
 
 export interface IFilterFlagOption {
   value: number;
@@ -73,7 +74,7 @@ export default class FilterFlagComponent extends React.Component<IFilterFlagProp
             }
           });
           self.setState({selected: selected});
-          treeStore.fetchTrees();
+          treeActions.fetchTrees();
         }, function(response) {
 
         }, function(response) {
@@ -99,7 +100,7 @@ export default class FilterFlagComponent extends React.Component<IFilterFlagProp
         flags.push(parseInt(option.value));
       });
       applyFilter(FilterMode.FLAG, flags, function(response) {
-        treeStore.fetchTrees();
+        treeActions.fetchTrees();
       }, function(response) {
 
       }, function(response) {
@@ -107,7 +108,7 @@ export default class FilterFlagComponent extends React.Component<IFilterFlagProp
       });
     } else {
       applyFilter(FilterMode.FLAG, new Array<number>(), function(response) {
-        treeStore.fetchTrees();
+        treeActions.fetchTrees();
       }, function(response) {
 
       }, function(response) {
@@ -130,7 +131,7 @@ export default class FilterFlagComponent extends React.Component<IFilterFlagProp
         }
       });
       self.setState({selected: selected});
-      treeStore.fetchTrees();
+      treeActions.fetchTrees();
     }, function(response) {
 
     }, function(response) {

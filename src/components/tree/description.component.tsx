@@ -8,6 +8,8 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './description.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
+import { FoodModel, foodStore } from './../../stores/food.store';
+import { treeActions } from './../../actions/tree.actions';
 
 export interface IDescriptionProps {
   tree: TreeModel;
@@ -53,7 +55,8 @@ export default class DescriptionComponent extends React.Component<IDescriptionPr
     let self: DescriptionComponent = this;
     self.props.tree.setDescription(self.state.description);
     if (self.props.async) {
-      treeStore.updateTree(self.props.tree);
+      let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
+      treeActions.updateTree(self.props.tree, "Successfully updated the description of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to update the description of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
     } else {
       self.setState({editing: false});
     }

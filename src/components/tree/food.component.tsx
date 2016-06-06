@@ -13,7 +13,7 @@ import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { applyFilter, FilterMode, deleteFilter } from './../../utils/filter';
-
+import { treeActions } from './../../actions/tree.actions';
 
 export interface IFoodOption {
   value: any;
@@ -95,22 +95,12 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
     }
     self.props.tree.setFoodId(foodId);
     if (self.props.async) {
-      treeStore.updateTree(self.props.tree);
+      treeActions.updateTree(self.props.tree, "Successfully updated the food type of fruit <strong>" + self.props.tree.getName() + "</strong>.", "Failed to update the food type of fruit <strong>" + self.props.tree.getName() + "</strong>.");
     } else {
       self.setState({selected: selected});
     }
     // Apply filter for a new tree food type to help users to figure out the location
-    if (self.props.tree.getId() == 0) {
-      var foods = new Array<number>();
-      foods.push(foodId);
-      applyFilter(FilterMode.FOOD, foods, function(response) {
-        treeStore.fetchTrees();
-      }, function(response) {
-
-      }, function(response) {
-
-      });
-    }
+    treeActions.fetchTrees(self.props.tree.getId());
   }
 
   render() {

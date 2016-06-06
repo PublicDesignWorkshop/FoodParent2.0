@@ -12,6 +12,8 @@ import * as styles from './flag.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FlagModel, flagStore } from './../../stores/flag.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
+import { FoodModel, foodStore } from './../../stores/food.store';
+import { treeActions } from './../../actions/tree.actions';
 
 export interface IFlagOption {
   value: number;
@@ -75,7 +77,8 @@ export default class FlagComponent extends React.Component<IFlagProps, IFlagStat
     }
     self.props.tree.setFlags(flags);
     if (self.props.async) {
-      treeStore.updateTree(self.props.tree);
+      let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
+      treeActions.updateTree(self.props.tree, "Successfully updated the flags of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to update the flags of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
     } else {
       self.setState({selected: selected});
     }
