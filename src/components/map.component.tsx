@@ -205,7 +205,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
     // Open tree info popup if the hash address has an existing tree id
     let bFound: boolean = false;
     if (props.treeId) {
-      if (self.selected && self.selected.options.id != props.treeId) {
+      if (self.selected != null && self.selected.options.id != props.treeId) {
         setTimeout(function() {
           mapActions.setFirst('map', true);
         }, 0);
@@ -251,6 +251,8 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
           break;
         }
       }
+    } else {
+      self.selected = null;
     }
     if (props.treeId != 0 && !bFound) {
       self.map.closePopup();

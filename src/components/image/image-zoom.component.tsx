@@ -45,12 +45,10 @@ export default class ImageZoomComponent extends React.Component<IImageZoomProps,
 
   private updateProps = (props: IImageZoomProps) => {
     let self: ImageZoomComponent = this;
-    console.log(props.image);
   }
 
   render() {
     let self: ImageZoomComponent = this;
-    console.log(((self.state.width / self.state.height) * 100));
     let defaultScale: number = 1;
     if (self.state.width < self.state.height) {
       defaultScale = 2;

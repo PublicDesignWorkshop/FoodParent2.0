@@ -199,7 +199,6 @@ class MapStore extends AbstractStore<MapState> {
     let self: MapStore = this;
     let maps = self.maps.filter(map => map.getId() == props.id);
     if (maps.length == 1) {
-      console.log(props);
       let location: L.LatLng = new L.LatLng(props.location.lat, props.location.lng);
       let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, props.zoom);
       let rMap = document.getElementById(props.id);
@@ -261,7 +260,7 @@ class MapStore extends AbstractStore<MapState> {
     let self: MapStore = this;
     let maps = self.maps.filter(map => map.getId() == props.id);
     if (maps.length == 1) {
-      maps[0].setFirst(props.active);
+      maps[0].setActive(props.active);
     }
   }
   getActive(id: string) {

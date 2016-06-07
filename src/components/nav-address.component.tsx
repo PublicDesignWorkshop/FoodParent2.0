@@ -63,19 +63,24 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
     self.setState({editing: false});
     if (self.state.address.trim() != "") {
       let value: any = self.state.address.trim();
+      addLoading();
       if (!isNaN(value)) {
         setTimeout(function() {
           mapActions.setFirst('map', true);
         }, 0);
         treeActions.fetchTrees(parseInt(value));
         self.context.router.push({pathname: Settings.uBaseName + '/tree/' + parseInt(value)});
+        removeLoading();
       } else {
         geocoding(self.state.address, new L.LatLng(location.lat, location.lng), function(response) {
           mapActions.moveTo(self.props.mapId, new L.LatLng(response.lat.toFixed(Settings.iMarkerPrecision), response.lng.toFixed(Settings.iMarkerPrecision)), Settings.iFocusZoom);
           // self.context.router.replace({pathname: window.location.pathname, query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
           // self.context.router.replace({pathname: Settings.uBaseName + '/', query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
+          mapActions.setActive('map', true);
+          removeLoading();
         }, function() {
-
+          mapActions.setActive('map', true);
+          removeLoading();
         });
       }
     } else {
@@ -84,8 +89,10 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
         addLoading();
         reverseGeocoding(new L.LatLng(location.lat, location.lng), function(response: IReverseGeoLocation) {
           self.setState({address: response.formatted, editing: false});
+          mapActions.setActive('map', true);
           removeLoading();
         }, function() {
+          mapActions.setActive('map', true);
           removeLoading();
         });
       }
@@ -114,12 +121,10 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
           }}
           onKeyPress={(event)=> {
             if (event.key == 'Enter') {
-              mapActions.setActive('map', true);
               self.searchAddress();
             }
           }}
           onBlur={()=> {
-            mapActions.setActive('map', true);
             self.searchAddress();
           }} />
       );
