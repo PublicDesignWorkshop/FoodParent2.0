@@ -1,76 +1,76 @@
 import { alt } from './../alt';
 import * as Alt from 'alt';
+import { browserHistory } from 'react-router';
+
+var Settings = require('./../constraints/settings.json');
 import { AbstractActions } from "./abstract.actions";
 import { NoteModel, INoteProps } from './../stores/note.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { noteSource } from './../sources/note.source';
 import { displaySuccessMessage, displayErrorMessage } from './../utils/message';
+import { localization } from './../constraints/localization';
 
 interface INoteActions {
-  createNote(person: NoteModel, success: string, error: string);
+  createNote(person: NoteModel);
   createdNote(props: INoteProps);
-  updateNote(person: NoteModel, success: string, error: string);
+  updateNote(person: NoteModel);
   updatedNote(props: INoteProps);
   resetTempNote();
   fetchNotesFromTreeIds(treeIds: Array<number>);
   fetchedNotes(notesProps: Array<INoteProps>);
-  deleteNote(note: NoteModel, success: string, error: string);
+  deleteNote(note: NoteModel);
   deletedNote(props: INoteProps);
-  failed(code: number);
+  setCode(code: number);
 }
 
 class NoteActions extends AbstractActions implements INoteActions {
-  updateNote(note: NoteModel, success: string, error: string) {
+  updateNote(note: NoteModel) {
     let self: NoteActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       addLoading();
       dispatch();
+      self.setCode(92);
       noteSource.updateNote(note).then((response) => {
         removeLoading();
-        displaySuccessMessage(success);
+        displaySuccessMessage(localization(604));
         self.updatedNote(response);
       }).catch((code) => {
         removeLoading();
-        displayErrorMessage(error);
-        self.failed(parseInt(code));
+        displayErrorMessage(localization(code));
+        self.setCode(code);
       });
     }
   }
   updatedNote(props: INoteProps) {
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       dispatch(props);
     }
   }
-  createNote(note: NoteModel, success: string, error: string) {
+  createNote(note: NoteModel) {
     let self: NoteActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       addLoading();
       dispatch();
+      self.setCode(93);
       noteSource.createNote(note).then((response) => {
         removeLoading();
-        displaySuccessMessage(success);
+        displaySuccessMessage(localization(605));
         self.createdNote(response);
       }).catch((code) => {
         removeLoading();
-        displayErrorMessage(error);
-        self.failed(parseInt(code));
+        displayErrorMessage(localization(code));
+        self.setCode(code);
       });
     }
   }
   createdNote(props: INoteProps) {
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
+      browserHistory.push({pathname: window.location.pathname, query: { note: props.id }});
       dispatch(props);
     }
   }
-
-
   resetTempNote() {
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       dispatch();
     }
   }
@@ -78,56 +78,54 @@ class NoteActions extends AbstractActions implements INoteActions {
     let self: NoteActions = this;
     if (treeIds != null && treeIds.length > 0) {
       return (dispatch) => {
-        // we dispatch an event here so we can have "loading" state.
         addLoading();
         dispatch();
+        self.setCode(90);
         noteSource.fetchNotesFromTreeIds(treeIds).then((response) => {
           removeLoading();
           self.fetchedNotes(response);
         }).catch((code) => {
           removeLoading();
-          self.failed(parseInt(code));
+          displayErrorMessage(localization(code));
+          self.setCode(code);
         });
       }
     }
     return null;
   }
-
   fetchedNotes(notesProps: Array<INoteProps>) {
     let self: NoteActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       dispatch(notesProps);
     }
   }
-  deleteNote(note: NoteModel, success: string, error: string) {
+  deleteNote(note: NoteModel) {
     let self: NoteActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       addLoading();
       dispatch();
+      self.setCode(91);
       noteSource.deleteNote(note).then((response) => {
         removeLoading();
-        displaySuccessMessage(success);
+        displaySuccessMessage(localization(607));
         self.deletedNote(note.toJSON());
       }).catch((code) => {
         removeLoading();
-        displayErrorMessage(error);
-        self.failed(parseInt(code));
+        displayErrorMessage(localization(code));
+        self.setCode(code);
       });
     }
   }
   deletedNote(props: INoteProps) {
     let self: NoteActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
+      browserHistory.replace({pathname: window.location.pathname});
       dispatch(props);
     }
   }
-  failed(code: number) {
+  setCode(code: number) {
     let self: NoteActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       dispatch(code);
     }
   }

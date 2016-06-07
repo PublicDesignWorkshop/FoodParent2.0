@@ -17,24 +17,25 @@ import NoteCommentComponent from './note-comment.component';
 import NoteDateComponent from './note-date.component';
 import NoteAmountComponent from './note-amount.component';
 import NoteRateComponent from './note-rate.component';
-import ErrorMessage from './../error-message.component';
 import ImageZoomComponent from './../image/image-zoom.component';
 import { noteActions } from './../../actions/note.actions';
 import { authStore } from './../../stores/auth.store';
 import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
 import { checkValidPickupAmountNumber } from './../../utils/errorhandler';
 import { localization } from './../../constraints/localization';
+import MessageLineComponent from './../message/message-line.component';
 
 export interface INoteEditProps {
   trees: Array<TreeModel>;
   foods: Array<FoodModel>;
   treeId: number;
   note: NoteModel;
+  code?: any;
 }
 export interface INoteEditStatus {
   editable?: boolean;
   image?: string;
-  error?: Array<string>;
+  error?: any;
 }
 export default class NoteEditComponent extends React.Component<INoteEditProps, INoteEditStatus> {
   static contextTypes: any;
@@ -44,7 +45,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
     this.state = {
       image: null,
       editable: false,
-      error: new Array<string>(),
+      error: null,
     };
   }
   public componentDidMount() {
@@ -95,7 +96,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
 
   private submitUpdate = () => {
     let self: NoteEditComponent = this;
-    let error: Array<string> = new Array<string>();
+    let error: any = null;
     try {
       checkValidPickupAmountNumber(self.props.note.getAmount());
       if (self.props.note.getAmount() > 0) {
@@ -103,10 +104,10 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
       } else {
         self.props.note.setNoteType(NoteType.POST);
       }
-      noteActions.updateNote(self.props.note, "Successfully updated the note.", "Failed to update the note.");
+      noteActions.updateNote(self.props.note);
     } catch(e) {
-      error.push(e.message);
       displayErrorMessage(localization(e.message));
+      error = e.message;
     }
     self.setState({error: error});
   }
@@ -210,19 +211,25 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
             </div>
             <div className={styles.inner}>
               <NoteRateComponent note={self.props.note} editable={self.state.editable} async={false} />
-              <NoteCommentComponent note={self.props.note} editable={self.state.editable} async={false} error={self.state.error} />
+              <NoteCommentComponent note={self.props.note} editable={self.state.editable} async={false} />
               <NoteDateComponent note={self.props.note} editable={self.state.editable} async={false} />
               <NoteAmountComponent note={self.props.note} editable={self.state.editable} async={false} error={self.state.error} />
             </div>
             <div className={styles.button} onClick={()=> {
-              self.submitUpdate();
+              if (self.props.code == 200) {
+                self.submitUpdate();
+              }
             }}>
               SAVE
             </div>
+            <MessageLineComponent code={self.props.code} match={[90, 91, 92, 93]} />
             <div className={styles.button2} onClick={()=> {
               self.context.router.push({pathname: Settings.uBaseName + '/tree/' + self.props.treeId});
             }}>
-              CANCEL
+              CLOSE
+            </div>
+            <div className={styles.or}>
+              OR
             </div>
             <div className={styles.button3} onClick={()=> {
               // noteStore.deleteNote(self.props.note);
@@ -239,7 +246,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
             {images}
             <div className={styles.inner}>
               <NoteRateComponent note={self.props.note} editable={self.state.editable} async={false} />
-              <NoteCommentComponent note={self.props.note} editable={self.state.editable} async={false} error={self.state.error} />
+              <NoteCommentComponent note={self.props.note} editable={self.state.editable} async={false} />
               <NoteDateComponent note={self.props.note} editable={self.state.editable} async={false} />
               <NoteAmountComponent note={self.props.note} editable={self.state.editable} async={false} error={self.state.error} />
             </div>

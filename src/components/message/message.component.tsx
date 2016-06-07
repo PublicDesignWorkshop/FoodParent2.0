@@ -2,10 +2,10 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
 import * as FontAwesome from 'react-fontawesome';
-import './../../node_modules/font-awesome/css/font-awesome.css';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
 
-var Settings = require('./../constraints/settings.json');
+var Settings = require('./../../constraints/settings.json');
 import * as styles from './message.component.css';
 
 export interface IMessageProps {
@@ -43,7 +43,7 @@ export default class MessageComponent extends React.Component<IMessageProps, IMe
     return (
       <div id="message" className={styles.wrapper}>
         <div className={styles.message}>
-          
+
         </div>
       </div>
     );

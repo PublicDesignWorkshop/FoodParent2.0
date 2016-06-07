@@ -18,12 +18,14 @@ import { checkLogin, checkAdmin } from './../utils/authentication';
 import { LogInStatus } from './app.component';
 import { noteActions } from './../actions/note.actions';
 import { displaySuccessMessage, displayErrorMessage } from './../utils/message';
+import { localization } from './../constraints/localization';
 
 
 export interface ITreesMessageProps {
   mode: TreesMode;
   treeId: number;
   noteId: number;
+  noteCode?: any;
 }
 export interface ITreesMessageStatus {
 
@@ -85,12 +87,13 @@ export default class TreesMessageComponent extends React.Component<ITreesMessage
       case TreesMode.TREENOTEDELETE:
         let note: NoteModel = noteStore.getNote(self.props.noteId);
         return (
-          <div className={styles.wrapper + " " + styles.slidein}>
+          <div className={styles.wrapper + " " + styles.slidein + " " + styles.error}>
             <div className={styles.message}>
-              Press the button to <strong>delete</strong> this post.
-              <span className={styles.button} onClick={()=> {
-                noteActions.deleteNote(note, "Successfully deleted the note.", "Failed to delete the note.");
-                self.context.router.replace({pathname: window.location.pathname});
+              <span dangerouslySetInnerHTML={{__html: localization(606)}} />
+              <span className={styles.button2} onClick={()=> {
+                if (self.props.noteCode == 200) {
+                  noteActions.deleteNote(note);
+                }
               }} >
                 DELETE
               </span>

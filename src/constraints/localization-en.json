@@ -1,4 +1,15 @@
 {
+  "e0": "Please check the internet connection.",
+  "e90": "Loading...",
+  "e91": "Deleting…",
+  "e92": "Updating…",
+  "e93": "Creating…",
+
   "e602": "Please use a positive number.",
-  "e603": "Please use a number value"
+  "e603": "Please use a number value.",
+  "e604": "The note has been <strong>updated</strong> successfully.",
+  "e605": "New note has been <strong>posted</strong> successfully.",
+  "e606": "Press the button to <strong>delete</strong> this note.",
+  "e607": "The note has been <strong>deleted</strong> successfully.",
+  "e42S22": "Unknown column exists in a database table."
 }

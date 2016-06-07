@@ -63,10 +63,10 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
         }
         return (
           <div className={styles.wrapper}>
-            <div className={styles.left}>
-              <div className={styles.title} onClick={()=> {
-                self.context.router.push({pathname: Settings.uBaseName + '/'});
-              }}>
+            <div className={styles.left} onClick={()=> {
+              self.context.router.push({pathname: Settings.uBaseName + '/'});
+            }}>
+              <div className={styles.title}>
                 FoodParent
               </div>
               <div className={styles.logo}></div>
@@ -103,10 +103,10 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
         }
         return (
           <div className={styles.wrapper}>
-            <div className={styles.left}>
-              <div className={styles.title} onClick={()=> {
-                self.context.router.push({pathname: Settings.uBaseName + '/'});
-              }}>
+            <div className={styles.left} onClick={()=> {
+              self.context.router.push({pathname: Settings.uBaseName + '/'});
+            }}>
+              <div className={styles.title}>
                 FoodParent
               </div>
               <div className={styles.logo}></div>

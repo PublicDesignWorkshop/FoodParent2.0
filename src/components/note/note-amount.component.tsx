@@ -10,7 +10,7 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './note-amount.component.css';
 import { NoteModel, noteStore, AmountType, PickupTime } from './../../stores/note.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
-import ErrorMessage from './../error-message.component';
+import MessageLineComponent from './../message/message-line.component';
 
 export interface IPickupTimeOption {
   value: number;
@@ -105,7 +105,7 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
     }
     self.props.note.setAmount(self.state.amount);
     if (self.props.async) {
-      noteStore.updateNote(self.props.note);
+      // noteStore.updateNote(self.props.note);
     } else {
 
     }
@@ -156,7 +156,7 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
             <Select className={styles.proper} name="pickuptime-select" multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={self.state.options2} value={self.state.selected2} onChange={self.updatePickupTime} />
           </div>
           <div className={styles.message}>
-            <ErrorMessage error={self.props.error} match={new Array<string>("e602")}/>
+            <MessageLineComponent code={self.props.error} match={[602, 603]} />
           </div>
         </div>
       );

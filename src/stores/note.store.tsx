@@ -170,29 +170,19 @@ export class NoteModel {
 export interface NoteState {
   temp: NoteModel;
   notes: Array<NoteModel>;
-  errorMessage: string;
+  code: any;
 }
 
 interface NoteExtendedStore extends AltJS.AltStore<NoteState> {
   getTempNote(): NoteModel;
   getNote(id: number): NoteModel;
-
-
-
-
   getNotesFromTreeId(treeId: number): Array<NoteModel>;
-  addNote(note: NoteModel): void;
-  fetchNotesFromTreeIds(treeIds: Array<number>): void;
-  updateNote(update: NoteModel): void;
-  createNote(create: NoteModel): void;
-  deleteNote(create: NoteModel): void;
-  isLoading(): boolean;
 }
 
 class NoteStore extends AbstractStore<NoteState> {
   private temp: NoteModel;
   private notes: Array<NoteModel>;
-  private errorMessage: string;
+  private code: any;
   constructor() {
     super();
     let self: NoteStore = this;
@@ -209,7 +199,7 @@ class NoteStore extends AbstractStore<NoteState> {
       proper: PickupTime.PROPER.toString(),
       date: moment(new Date()).format(Settings.sServerDateFormat),
     });
-    self.errorMessage = null;
+    self.code = 200;
     // TODO: pass state generics to make sure methods/actions expect the same type
     self.bindListeners({
       handleResetTempNote: noteActions.resetTempNote,
@@ -217,13 +207,11 @@ class NoteStore extends AbstractStore<NoteState> {
       handleCreatedNote: noteActions.createdNote,
       handleUpdatedNote: noteActions.updatedNote,
       handleDeletedNote: noteActions.deletedNote,
-      handleFailed: noteActions.failed,
+      handleSetCode: noteActions.setCode,
     });
     self.exportPublicMethods({
       getTempNote: self.getTempNote,
-
       getNote: self.getNote,
-      addNote: self.addNote,
       getNotesFromTreeId: self.getNotesFromTreeId,
     });
     // self.exportAsync(noteSource);
@@ -232,13 +220,26 @@ class NoteStore extends AbstractStore<NoteState> {
     let self: NoteStore = this;
     return self.getState().temp;
   }
+  getNote(id: number): NoteModel {
+    let self: NoteStore = this;
+    let notes = self.getState().notes.filter(note => note.getId() == id);
+    if (notes.length == 1) {
+      return notes[0];
+    }
+    return null;
+  }
+  getNotesFromTreeId(treeId: number): Array<NoteModel> {
+    let self: NoteStore = this;
+    let notes = self.getState().notes.filter(note => note.getTreeId() == treeId);
+    return notes;
+  }
   handleFetchedNotes(notesProps: Array<INoteProps>) {
     let self: NoteStore = this;
     self.notes = new Array<NoteModel>();
     notesProps.forEach((props: INoteProps) => {
       self.notes.push(new NoteModel(props));
     });
-    self.errorMessage = null;
+    self.code = 200;
   }
   handleCreatedNote(noteProps: INoteProps) {
     let self: NoteStore = this;
@@ -257,15 +258,7 @@ class NoteStore extends AbstractStore<NoteState> {
       date: moment(new Date()).format(Settings.sServerDateFormat),
     });
     self.notes = self.notes.sort(sortNoteByDateDESC);
-    self.errorMessage = null;
-  }
-  getNote(id: number): NoteModel {
-    let self: NoteStore = this;
-    let notes = self.getState().notes.filter(note => note.getId() == id);
-    if (notes.length == 1) {
-      return notes[0];
-    }
-    return null;
+    self.code = 200;
   }
   handleUpdatedNote(noteProps: INoteProps) {
     let self: NoteStore = this;
@@ -273,7 +266,7 @@ class NoteStore extends AbstractStore<NoteState> {
     if (notes.length == 1) {
       notes[0].update(noteProps);
     }
-    self.errorMessage = null;
+    self.code = 200;
   }
   handleDeletedNote(noteProps: INoteProps) {
     let self: NoteStore = this;
@@ -286,43 +279,7 @@ class NoteStore extends AbstractStore<NoteState> {
     if (i > -1) {
       self.notes.splice(i, 1);
     }
-  }
-
-
-
-
-
-
-
-
-  handleLoading(errorMessage: string) {
-    let self: NoteStore = this;
-    self.errorMessage = errorMessage;
-  }
-  handleFailed(errorMessage: string) {
-    let self: NoteStore = this;
-    console.warn("Handle Note Failed");
-    self.errorMessage = errorMessage;
-  }
-
-  addNote(note: NoteModel): void {
-    let self: NoteStore = this;
-    let notes = self.getState().notes;
-    let i = -1;
-    for(let j = 0; j < notes.length; j++) {
-      if(notes[j].getId() === note.getId()) {
-        i = j;
-      }
-    }
-    if (i > -1) {
-      notes.splice(i, 1);
-    }
-    notes.push(note);
-  }
-  getNotesFromTreeId(treeId: number): Array<NoteModel> {
-    let self: NoteStore = this;
-    let notes = self.getState().notes.filter(note => note.getTreeId() == treeId);
-    return notes;
+    self.code = 200;
   }
   handleResetTempNote() {
     let self: NoteStore = this;
@@ -338,8 +295,12 @@ class NoteStore extends AbstractStore<NoteState> {
       proper: PickupTime.PROPER.toString(),
       date: moment(new Date()).format(Settings.sServerDateFormat),
     });
+    self.code = 200;
   }
-
+  handleSetCode(code: any) {
+    let self: NoteStore = this;
+    self.code = code;
+  }
 }
 
 export const noteStore: NoteExtendedStore = alt.createStore<NoteState>(NoteStore) as NoteExtendedStore;

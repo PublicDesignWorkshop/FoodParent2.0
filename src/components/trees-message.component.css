@@ -21,6 +21,9 @@
     border-top: 2px solid rgba(255, 255, 255, 1);
     z-index: 5000;
   }
+  :local(.error) {
+    background-color: rgba(93, 40, 49, 1);
+  }
   :local(.slidein) {
     bottom: 0;
     transition: 0.25s;
@@ -39,6 +42,18 @@
   :local(.button:hover) {
     color: rgba(94, 78, 81, 1);
     border: 2px solid rgba(94, 78, 81, 1);
+  }
+  :local(.button2) {
+    font-weight: 700;
+    border-radius: 2px;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    padding: 2px 6px;
+    margin: 2px 2px 2px 6px;
+    cursor: pointer;
+  }
+  :local(.button2:hover) {
+    color: rgba(107, 170, 119, 1);
+    border: 2px solid rgba(107, 170, 119, 1);
   }
 }
 

@@ -10,7 +10,13 @@
     border-radius: 2px;
     padding: 4px 8px;
   }
-
+  :local(.or) {
+    font-size: small;
+    padding: 12px 0;
+    text-align: center;
+    font-weight: 700;
+    color: rgba(94, 78, 81, 1);
+  }
   :local(.upload) {
     width: 100%;
     outline: none;
@@ -82,7 +88,7 @@
     font-weight: 700;
     color: rgba(255, 255, 255, 1);
     padding: 6px 0;
-    margin: 24px 0 4px 0;
+    margin: 4px 0 4px 0;
     cursor: pointer;
     font-size: medium;
   }

@@ -100,6 +100,12 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                       store: noteStore,
                       value: noteStore.getState().temp,
                     };
+                  },
+                  code: function (props) {
+                    return {
+                      store: noteStore,
+                      value: noteStore.getState().code,
+                    };
                   }
                 }
               }>
@@ -123,6 +129,12 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                       return {
                         store: noteStore,
                         value: noteStore.getNote(self.props.noteId),
+                      };
+                    },
+                    code: function (props) {
+                      return {
+                        store: noteStore,
+                        value: noteStore.getState().code,
                       };
                     }
                   }

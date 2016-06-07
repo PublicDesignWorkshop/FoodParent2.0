@@ -11,6 +11,7 @@ let NoteSource = {
       $.ajax({
         url: Settings.uBaseName + Settings.uServer + "notes.php",
         type: 'GET',
+        contentType: 'application/json',
         data: {
           treeIds: treeIds.toString(),
         },
@@ -19,10 +20,12 @@ let NoteSource = {
           if (response.code == 200) {
             resolve(response.notes);
           } else {
+            console.log(response.message);
             reject(response.code);
           }
         },
         error: function(response) {
+          console.log(response.statusText);
           reject(response.status);
         }
       });
@@ -33,16 +36,19 @@ let NoteSource = {
       $.ajax({
         url: Settings.uBaseName + Settings.uServer + "note.php",
         type: 'POST',
+        contentType: 'application/json',
         data: JSON.stringify(note.toJSON()),
         dataType: "json",
         success: function(response) {
           if (response.code == 200) {
             resolve(response.note);
           } else {
+            console.log(response.message);
             reject(response.code);
           }
         },
         error: function(response) {
+          console.log(response.statusText);
           reject(response.status);
         }
       });
@@ -66,10 +72,12 @@ let NoteSource = {
           if (response.code == 200) {
             resolve(response.notes[0]);
           } else {
+            console.log(response.message);
             reject(response.code);
           }
         },
         error: function(response) {
+          console.log(response.statusText);
           reject(response.status);
         }
       });
@@ -87,93 +95,17 @@ let NoteSource = {
           if (response.code == 200) {
             resolve(response.notes[0]);
           } else {
+            console.log(response.message);
             reject(response.code);
           }
         },
         error: function(response) {
+          console.log(response.statusText);
           reject(response.status);
         }
       });
     })
   },
-
-  //
-  //
-  //
-  //
-  //
-  // deleteNote(): AltJS.SourceModel<NoteModel> {
-  //   return {
-  //     remote(state: NoteState, remove?: NoteModel) {
-  //       return new Promise<NoteModel>((resolve, reject) => {
-  //         //console.log(tree.toJSON());
-  //         $.ajax({
-  //           url: Settings.uBaseName + Settings.uServer + "note.php",
-  //           type: 'DELETE',
-  //           contentType: 'application/json',
-  //           data: JSON.stringify(remove.toJSON()),
-  //           dataType: "json",
-  //           success: function(response) {
-  //             resolve(remove.toJSON());
-  //           },
-  //           error: function(response) {
-  //             console.log(response);
-  //             reject(response);
-  //           }
-  //         });
-  //       })
-  //     },
-  //     local(state: NoteState): NoteModel {
-  //       //TODO : Figure out why local doesn't work =(
-  //       return null;
-  //     },
-  //     success: noteActions.deleteNote,
-  //     error: noteActions.failed,
-  //     loading: noteActions.loading,
-  //     shouldFetch:() => true
-  //   };
-  // }
-
-  //
-  // updateNote(): AltJS.SourceModel<NoteModel> {
-  //   return {
-  //     remote(state: NoteState, update?: NoteModel) {
-  //       if (update.getAmountType() == AmountType.KG) {
-  //         update.setAmount(update.getAmount() * Settings.fKGToG);
-  //       } else if (update.getAmountType() == AmountType.LBS) {
-  //         update.setAmount(update.getAmount() * Settings.fLBSTOG);
-  //       }
-  //       update.setAmountType(AmountType.G);
-  //       return new Promise<NoteModel>((resolve, reject) => {
-  //         //console.log(tree.toJSON());
-  //         $.ajax({
-  //           url: Settings.uBaseName + Settings.uServer + "note.php",
-  //           type: 'PUT',
-  //           contentType: 'application/json',
-  //           data: JSON.stringify(update.toJSON()),
-  //           dataType: "json",
-  //           success: function(response) {
-  //             resolve(response[0]);
-  //           },
-  //           error: function(response) {
-  //             console.log(response);
-  //             reject(response);
-  //           }
-  //         });
-  //       })
-  //     },
-  //     local(state: NoteState): NoteModel {
-  //       //TODO : Figure out why local doesn't work =(
-  //       return null;
-  //     },
-  //     success: noteActions.updateNote,
-  //     error: noteActions.failed,
-  //     loading: noteActions.loading,
-  //     shouldFetch:() => true
-  //   };
-  // },
-
-
 };
 
 export const noteSource = NoteSource;

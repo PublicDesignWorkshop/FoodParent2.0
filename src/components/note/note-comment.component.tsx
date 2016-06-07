@@ -9,13 +9,11 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './note-comment.component.css';
 import { NoteModel, noteStore } from './../../stores/note.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
-import ErrorMessage from './../error-message.component';
 
 export interface INoteCommentProps {
   note: NoteModel;
   editable: boolean;
   async: boolean;
-  error: Array<string>;
 }
 export interface INoteCommentStatus {
   comment?: string;
@@ -50,7 +48,7 @@ export default class NoteCommentComponent extends React.Component<INoteCommentPr
     let self: NoteCommentComponent = this;
     self.props.note.setComment(self.state.comment);
     if (self.props.async) {
-      noteStore.updateNote(self.props.note);
+      // noteStore.updateNote(self.props.note);
     } else {
 
     }
@@ -82,7 +80,6 @@ export default class NoteCommentComponent extends React.Component<INoteCommentPr
               onBlur={()=> {
                 self.updateAttribute();
               }} />
-            <ErrorMessage error={self.props.error} match={new Array<string>("e601")}/>
           </div>
         </div>
       );

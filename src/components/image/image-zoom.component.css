@@ -44,15 +44,14 @@
     display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
 
     width: 100%;
-    height: 68px;
-    padding: 8px 12px;
+    padding: 8px 12px 8px 12px;
   }
   :local(.title) {
-    font-size: x-large;
+    font-size: large;
     font-weight: 700;
     margin: auto;
     text-align: center;
-
+    padding-top: 6px;
     -webkit-flex-grow: 1;           /* NEW - Chrome */
     flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
   }

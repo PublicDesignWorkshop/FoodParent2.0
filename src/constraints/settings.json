@@ -30,7 +30,7 @@
 
 
 
-  "iErrorMessageDuration": 5000,
+  "iMessageLineDuration": 5000,
   "fKGToG": 1000,
   "fLBSTOG": 453.592,
 

@@ -17,20 +17,23 @@ import NoteCommentComponent from './note-comment.component';
 import NoteDateComponent from './note-date.component';
 import NoteAmountComponent from './note-amount.component';
 import NoteRateComponent from './note-rate.component';
-import ErrorMessage from './../error-message.component';
 import ImageZoomComponent from './../image/image-zoom.component';
 import { noteActions } from './../../actions/note.actions';
 import { authStore } from './../../stores/auth.store';
 import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
+import { checkValidPickupAmountNumber } from './../../utils/errorhandler';
+import { localization } from './../../constraints/localization';
+import MessageLineComponent from './../message/message-line.component';
 
 export interface INoteAddProps {
   treeId: number;
   note?: NoteModel;
+  code?: any;
 }
 export interface INoteAddStatus {
   editable?: boolean;
   image?: string;
-  error?: Array<string>;
+  error?: any;
 }
 export default class NoteAddComponent extends React.Component<INoteAddProps, INoteAddStatus> {
   static contextTypes: any;
@@ -40,15 +43,12 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
     this.state = {
       editable: false,
       image: null,
-      error: new Array<string>(),
+      error: null,
     };
   }
   public componentDidMount() {
     let self: NoteAddComponent = this;
     self.updateProps(self.props);
-    setTimeout(function() {
-      noteActions.resetTempNote();
-    }, 0);
   }
   public componentWillUnmount() {
     let self: NoteAddComponent = this;
@@ -84,6 +84,24 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
   private onImageClose = () => {
     let self: NoteAddComponent = this;
     self.setState({image: null});
+  }
+
+  private submitCreate = () => {
+    let self: NoteAddComponent = this;
+    let error: any = null;
+    try {
+      checkValidPickupAmountNumber(self.props.note.getAmount());
+      if (self.props.note.getAmount() > 0) {
+        self.props.note.setNoteType(NoteType.PICKUP);
+      } else {
+        self.props.note.setNoteType(NoteType.POST);
+      }
+      noteActions.createNote(noteStore.getTempNote());
+    } catch(e) {
+      displayErrorMessage(localization(e.message));
+      error = e.message;
+    }
+    self.setState({error: error});
   }
 
   render() {
@@ -145,7 +163,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
             <input className={styles.upload} type="file" accept="image/*" capture="camera" onChange={(event: any)=> {
               if (event.target.files[0] != null) {
                 uploadImage(event.target.files[0], tree.getId().toString(), function(filename: string) {  // success
-                  console.log(filename);
+                  console.log("Image file uploaded: " + filename);
                   self.props.note.addImage(filename);
                   self.forceUpdate();
                 }, function() { // fail
@@ -156,32 +174,15 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
           </div>
           <div className={styles.inner}>
             <NoteRateComponent note={self.props.note} editable={true} async={false} />
-            <NoteCommentComponent note={self.props.note} editable={true} async={false} error={self.state.error} />
+            <NoteCommentComponent note={self.props.note} editable={true} async={false} />
             <NoteDateComponent note={self.props.note} editable={true} async={false} />
             <NoteAmountComponent note={self.props.note} editable={true} async={false} error={self.state.error} />
           </div>
+          <MessageLineComponent code={self.props.code} match={[90, 91, 92, 93]} />
           <div className={styles.button} onClick={()=> {
-            let error: Array<string> = new Array<string>();
-            let valid: boolean = true;
-            // if (self.props.note.getComment().trim() == "") {
-            //   error.push("601");
-            //   valid = false;
-            // }
-            if (self.props.note.getAmount() < 0) {
-              error.push("e602");
-              valid = false;
-              displayErrorMessage(Settings.e602);
+            if (self.props.code == 200) {
+              self.submitCreate();
             }
-            if (valid) {
-              if (self.props.note.getAmount() > 0) {
-                self.props.note.setNoteType(NoteType.PICKUP);
-              } else {
-                self.props.note.setNoteType(NoteType.POST);
-              }
-              noteActions.createNote(noteStore.getTempNote(), "Successfully posted a new note.", "Failed to post a new note.");
-              // noteStore.createNote(self.props.note);
-            }
-            self.setState({error: error});
           }}>
             POST NEW NOTE
           </div>

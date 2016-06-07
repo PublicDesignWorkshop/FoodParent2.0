@@ -4,7 +4,7 @@ import * as AltContainer from 'alt-container';
 
 import * as styles from './app.component.css';
 import NavComponent from './nav.component';
-import LoaderComponent from './loader.component';
+import LoaderComponent from './message/loader.component';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 import { authActions } from './../actions/auth.actions';

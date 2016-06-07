@@ -41,7 +41,6 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
   }
   private updateProps = (props: INavAddressProps) => {
     let self: NavAddressComponent = this;
-    console.log(self.state.editing);
     setTimeout(function() {
       if (!self.state.editing) {
         let location: L.LatLng = mapStore.getCenter(props.mapId);
