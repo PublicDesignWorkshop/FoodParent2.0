@@ -22,6 +22,8 @@ import ImageZoomComponent from './../image/image-zoom.component';
 import { noteActions } from './../../actions/note.actions';
 import { authStore } from './../../stores/auth.store';
 import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
+import { checkValidPickupAmountNumber } from './../../utils/errorhandler';
+import { localization } from './../../constraints/localization';
 
 export interface INoteEditProps {
   trees: Array<TreeModel>;
@@ -89,6 +91,24 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
   private onImageClose = () => {
     let self: NoteEditComponent = this;
     self.setState({image: null});
+  }
+
+  private submitUpdate = () => {
+    let self: NoteEditComponent = this;
+    let error: Array<string> = new Array<string>();
+    try {
+      checkValidPickupAmountNumber(self.props.note.getAmount());
+      if (self.props.note.getAmount() > 0) {
+        self.props.note.setNoteType(NoteType.PICKUP);
+      } else {
+        self.props.note.setNoteType(NoteType.POST);
+      }
+      noteActions.updateNote(self.props.note, "Successfully updated the note.", "Failed to update the note.");
+    } catch(e) {
+      error.push(e.message);
+      displayErrorMessage(localization(e.message));
+    }
+    self.setState({error: error});
   }
 
   render() {
@@ -195,26 +215,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
               <NoteAmountComponent note={self.props.note} editable={self.state.editable} async={false} error={self.state.error} />
             </div>
             <div className={styles.button} onClick={()=> {
-              let error: Array<string> = new Array<string>();
-              let valid: boolean = true;
-              // if (self.props.note.getComment().trim() == "") {
-              //   error.push("601");
-              //   valid = false;
-              // }
-              if (self.props.note.getAmount() < 0) {
-                error.push("e602");
-                valid = false;
-                displayErrorMessage(Settings.e602);
-              }
-              if (valid) {
-                if (self.props.note.getAmount() > 0) {
-                  self.props.note.setNoteType(NoteType.PICKUP);
-                } else {
-                  self.props.note.setNoteType(NoteType.POST);
-                }
-                noteActions.updateNote(self.props.note, "Successfully updated the note.", "Failed to update the note.");
-              }
-              self.setState({error: error});
+              self.submitUpdate();
             }}>
               SAVE
             </div>
@@ -251,7 +252,6 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
           </div>
         );
       }
-
     } else {
       return (
         <div className={styles.wrapper}>

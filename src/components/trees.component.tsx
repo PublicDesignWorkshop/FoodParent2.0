@@ -19,6 +19,7 @@ import { calcRating } from './../utils/rating';
 import { mapStore } from './../stores/map.store';
 import { flagStore } from './../stores/flag.store';
 import { flagActions } from './../actions/flag.actions';
+import MessageComponent from './message.component';
 
 export enum TreesMode {
   NONE, TREES, TREEDETAIL, TREEADDMARKER, TREEADDINFO, TREEADDSAVE, TREESFILTER, TREENOTEEDIT, TREENOTEDELETE
@@ -207,6 +208,7 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
           <MapComponent mode={self.state.mode} treeId={self.state.treeId} onRender={self.onMapRender} />
           <TreesPanelComponent mode={self.state.mode} treeId={self.state.treeId} noteId={self.state.noteId} />
           <TreesMessageComponent mode={self.state.mode} treeId={self.state.treeId} noteId={self.state.noteId} />
+          <MessageComponent />
         </AltContainer>
       </div>
     );

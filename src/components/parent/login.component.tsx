@@ -68,59 +68,38 @@ export default class LoginComponent extends React.Component<ILoginProps, ILoginS
   render() {
     let self: LoginComponent = this;
     if (self.props.open) {
-      if (self.state.selected.value == 0) {
-        return (
-          <div className={styles.full}>
-            <div className={styles.wrapper + " " + styles.slidein}>
-              <div className={styles.siginininfo}>
-                <div className={styles.icon}>
-                  <FontAwesome className='' name='user' />
-                </div>
-                <Select className={styles.name} name="loginmode-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateChange} placeholder="select login mode..." />
-                <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
-                  self.context.router.goBack();
-                }}/></div>
-              </div>
-              <div className={styles.basicinfo}>
-                <LoginParentComponent />
-              </div>
-              <div className={styles.buttongroup} onClick={()=> {
-                self.context.router.push({pathname: window.location.pathname, query: { user: 'signup' }});
-              }}>
-                <div className={styles.button}>
-                  BECOME A PARENT
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      } else if (self.state.selected.value == 1) {
-        return (
-          <div className={styles.full}>
-            <div className={styles.wrapper + " " + styles.slidein}>
-              <div className={styles.siginininfo}>
-                <div className={styles.icon}>
-                  <FontAwesome className='' name='user' />
-                </div>
-                <Select className={styles.name} name="loginmode-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateChange} placeholder="select login mode..." />
-                <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
-                  self.context.router.goBack();
-                }}/></div>
-              </div>
-              <div className={styles.basicinfo}>
-                <LoginManagerComponent />
-              </div>
-              <div className={styles.buttongroup} onClick={()=> {
-                self.context.router.push({pathname: window.location.pathname, query: { user: 'signup' }});
-              }}>
-                <div className={styles.button}>
-                  BECOME A PARENT
-                </div>
-              </div>
-            </div>
-          </div>
-        );
+      let login: JSX.Element = <LoginParentComponent />;
+      if (self.state.selected.value == 1) {
+         login = <LoginManagerComponent />;
       }
+      return (
+        <div className={styles.full}>
+          <div className={styles.wrapper + " " + styles.slidein}>
+            <div className={styles.siginininfo}>
+              <div className={styles.icon}>
+                <FontAwesome className='' name='user' />
+              </div>
+              <Select className={styles.name} name="loginmode-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateChange} placeholder="select login mode..." />
+              <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
+                self.context.router.goBack();
+              }}/></div>
+            </div>
+            <div className={styles.basicinfo}>
+              {login}
+            </div>
+            <div className={styles.or}>
+              OR
+            </div>
+            <div className={styles.buttongroup} onClick={()=> {
+              self.context.router.push({pathname: window.location.pathname, query: { user: 'signup' }});
+            }}>
+              <div className={styles.button}>
+                BECOME A PARENT
+              </div>
+            </div>
+          </div>
+        </div>
+      );
     } else {
       return (
         <div className={styles.full}>

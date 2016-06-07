@@ -9,11 +9,13 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './signup.component.css';
 import { PersonModel, personStore } from './../../stores/person.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
+import { checkValidEmailAddress } from './../../utils/authentication';
 import ErrorMessage from './../error-message.component';
 import UserContact from './user-contact.component';
 import UserName from './user-name.component';
 import UserNeighborhood from './user-neighborhood.component';
 import { personActions } from './../../actions/person.actions';
+import { localization } from './../../constraints/localization';
 
 export interface ISignUpProps {
   open: boolean;
@@ -49,8 +51,13 @@ export default class SignUpComponent extends React.Component<ISignUpProps, ISign
     // self.setState({error: props.error});
   }
 
-  private onClick = () => {
+  private submitSignUp = () => {
     let self: SignUpComponent = this;
+    if (checkValidEmailAddress(personStore.getTempPerson().getContact().trim())) {
+      personActions.createPerson(personStore.getTempPerson(), "<strong>" + personStore.getTempPerson().getContact() + "</strong> successfully become a parent.", "<strong>" + personStore.getTempPerson().getContact() + "</strong> failed to become a parent.");
+    } else {
+
+    }
   }
 
   render() {
@@ -76,13 +83,16 @@ export default class SignUpComponent extends React.Component<ISignUpProps, ISign
               <UserName person={person} editable={true} async={false} error={self.state.error} />
               <UserNeighborhood person={person} editable={true} async={false} error={self.state.error} />
               <div className={styles.buttongroup} onClick={()=> {
-                personActions.createPerson(personStore.getTempPerson(), "<strong>" + personStore.getTempPerson().getContact() + "</strong> successfully become a parent.", "<strong>" + personStore.getTempPerson().getContact() + "</strong> failed to become a parent.");
+                self.submitSignUp();
               }}>
                 <div className={styles.button}>
                   SIGN UP
                 </div>
               </div>
 
+            </div>
+            <div className={styles.or}>
+              OR
             </div>
             <div className={styles.buttongroup} onClick={()=> {
               self.context.router.push({pathname: window.location.pathname, query: { user: 'login' }});

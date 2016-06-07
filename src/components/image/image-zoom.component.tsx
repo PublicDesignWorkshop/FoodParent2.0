@@ -51,6 +51,10 @@ export default class ImageZoomComponent extends React.Component<IImageZoomProps,
   render() {
     let self: ImageZoomComponent = this;
     console.log(((self.state.width / self.state.height) * 100));
+    let defaultScale: number = 1;
+    if (self.state.width < self.state.height) {
+      defaultScale = 2;
+    }
     if (self.state.width && self.state.height) {
       return(
         <div className={styles.wrapper}>
@@ -64,7 +68,7 @@ export default class ImageZoomComponent extends React.Component<IImageZoomProps,
               }}/></div>
             </div>
             <div className={styles.image}>
-              <PinchView debug maxScale={4} containerRatio={((self.state.height / self.state.width) * 100)}>
+              <PinchView debug defaultScale={defaultScale} maxScale={4} containerRatio={((self.state.height / self.state.width) * 100)}>
                 <img src={Settings.uBaseName + Settings.uContentImage + self.props.image} style={{
                   margin: 'auto',
                   width: '100%',

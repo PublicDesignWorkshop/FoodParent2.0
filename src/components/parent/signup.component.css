@@ -24,6 +24,12 @@
   :local(.slidein) {
     right: 0;
   }
+  :local(.or) {
+    font-size: small;
+    padding: 12px 0 4px 0;
+    text-align: center;
+    color: rgba(94, 78, 81, 1);
+  }
   :local(.siginininfo) {
     display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
     display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
@@ -93,7 +99,7 @@
     display: -webkit-flex;          /* NEW - Chrome */
     display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
 
-    padding: 16px 0 4px 0;
+    padding: 8px 0 4px 0;
     font-size: small;
   }
   :local(.button) {

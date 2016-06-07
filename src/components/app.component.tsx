@@ -9,7 +9,7 @@ import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 import { authActions } from './../actions/auth.actions';
 import { authStore, AuthStatus, AuthModel } from './../stores/auth.store';
-import IMessageProps from './message.component';
+
 
 export enum LogInStatus {
   NONE, ADMIN, MANAGER, PARENT, GUEST
@@ -83,7 +83,6 @@ export default class AppComponent extends React.Component<IAppProps, IAppStatus>
           {this.props.children}
         </div>
         <LoaderComponent />
-        <IMessageProps />
       </div>
     );
   }
