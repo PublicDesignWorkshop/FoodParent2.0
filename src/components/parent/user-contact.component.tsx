@@ -10,13 +10,13 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './user-contact.component.css';
 import { PersonModel, personStore } from './../../stores/person.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
-import ErrorMessage from './../error-message.component';
+import MessageLineComponent from './../message/message-line.component';
 
 export interface IUserContactProps {
   person?: PersonModel;
   editable: boolean;
   async: boolean;
-  error: Array<string>;
+  error: any;
 }
 export interface IUserContactStatus {
   contact?: string;
@@ -86,7 +86,7 @@ export default class UserContactComponent extends React.Component<IUserContactPr
               }} />
           </div>
           <div className={styles.message}>
-            <ErrorMessage error={self.props.error} match={new Array<string>("e502, e503")} />
+            <MessageLineComponent code={self.props.error} match={[903, 904]} />
           </div>
         </div>
       );

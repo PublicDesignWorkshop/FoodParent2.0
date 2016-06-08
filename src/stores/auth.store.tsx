@@ -68,7 +68,7 @@ export class AuthModel {
 export interface AuthState {
   auth: AuthModel;
   person: PersonModel;
-  errorMessage: string;
+  code: any;
 }
 
 interface AuthExtendedStore extends AltJS.AltStore<AuthState> {
@@ -78,47 +78,44 @@ interface AuthExtendedStore extends AltJS.AltStore<AuthState> {
 class AuthStore extends AbstractStore<AuthState> {
   private auth: AuthModel;
   private person: PersonModel;
-  private errorMessage: string;
+  code: any;
   constructor() {
     super();
     let self: AuthStore = this;
     self.auth = new AuthModel({id: "0", contact: "", auth: AuthStatus.GUEST.toString()});
-    self.person = new PersonModel({
-      id: "0",
-      auth: AuthStatus.GUEST.toString(),
-      name: "",
-      contact: "",
-      neighborhood: "",
-      updated: moment(new Date()).format(Settings.sServerDateFormat),
-    });
-    self.errorMessage = null;
+    self.code = 200;
     // TODO: pass state generics to make sure methods/actions expect the same type
     self.bindListeners({
-      handleUpdateAuth: authActions.updateAuth,
-      handleUpdatePerson: authActions.updatePerson,
-      handleUpdateLogout: authActions.updateLogout,
-      handleUpdateLogin: authActions.updateLogin,
+      handleFechedAuth: authActions.fetchedAuth,
+      handleFechedPerson: authActions.fetchedPerson,
+      handleProcessedLogout: authActions.processedLogout,
+      handleProcessedLogin: authActions.processedLogin,
+      handleSetCode: authActions.setCode,
     });
     self.exportPublicMethods({
       getAuth: self.getAuth,
       getPerson: self.getPerson,
     });
   }
-  handleUpdateAuth(props: IAuthProps) {
-    let self: AuthStore = this;
-    self.auth = new AuthModel(props);
-    self.errorMessage = null;
-  }
   getAuth() {
     let self: AuthStore = this;
     return self.getState().auth;
   }
-  handleUpdatePerson(props: IPersonProps) {
+  getPerson() {
+    let self: AuthStore = this;
+    return self.getState().person;
+  }
+  handleFechedAuth(props: IAuthProps) {
+    let self: AuthStore = this;
+    self.auth = new AuthModel(props);
+    self.code = 200;
+  }
+  handleFechedPerson(props: IPersonProps) {
     let self: AuthStore = this;
     self.person = new PersonModel(props);
-    self.errorMessage = null;
+    self.code = 200;
   }
-  handleUpdateLogout() {
+  handleProcessedLogout() {
     let self: AuthStore = this;
     self.auth = new AuthModel({id: "0", contact: "", auth: AuthStatus.GUEST.toString()});
     self.person = new PersonModel({
@@ -129,16 +126,16 @@ class AuthStore extends AbstractStore<AuthState> {
       neighborhood: "",
       updated: moment(new Date()).format(Settings.sServerDateFormat),
     });
-    self.errorMessage = null;
+    self.code = 200;
   }
-  handleUpdateLogin(props: IAuthProps) {
+  handleProcessedLogin(props: IAuthProps) {
     let self: AuthStore = this;
     self.auth = new AuthModel(props);
-    self.errorMessage = null;
+    self.code = 200;
   }
-  getPerson() {
+  handleSetCode(code: any) {
     let self: AuthStore = this;
-    return self.getState().person;
+    self.code = code;
   }
 }
 

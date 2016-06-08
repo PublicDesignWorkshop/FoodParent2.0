@@ -24,6 +24,14 @@ export function localization(value: any) {
   if (value.toString() == "606") return cl.e606;
   if (value.toString() == "607") return cl.e607;
 
+  if (value.toString() == "900") return cl.e900;
+  if (value.toString() == "901") return cl.e901;
+  if (value.toString() == "902") return cl.e902;
+  if (value.toString() == "903") return cl.e903;
+  if (value.toString() == "904") return cl.e904;
+  if (value.toString() == "905") return cl.e905;
+  if (value.toString() == "906") return cl.e906;
+
 
   if (value.toString() == "42S22") return cl.e42S22;
 

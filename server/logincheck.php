@@ -12,7 +12,8 @@
     echo json_encode($params);
   } else {
     $params = array(
-      "code" => 901,
+      "code" => 200,
+      "message" => "Not logged in.",
       "id" => 0,
       "contact" => "",
       "auth" => 4,  // Return guest auth when an user has not logged in.

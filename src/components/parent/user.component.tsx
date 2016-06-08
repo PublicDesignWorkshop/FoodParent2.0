@@ -107,12 +107,6 @@ export default class UserComponent extends React.Component<IUserProps, IUserStat
                       store: authStore,
                       value: authStore.getState().person,
                     };
-                  },
-                  error: function (props) {
-                    return {
-                      store: authStore,
-                      value: new Array<string>(authStore.getState().errorMessage),
-                    };
                   }
                 }
               }>

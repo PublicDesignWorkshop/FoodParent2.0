@@ -19,10 +19,12 @@ let PersonSource = {
           if (response.code == 200) {
             resolve(response.persons);
           } else {
+            console.log(response.message);
             reject(response.code);
           }
         },
         error: function(response) {
+          console.log(response.statusText);
           reject(response.status);
         }
       });
@@ -40,10 +42,12 @@ let PersonSource = {
           if (response.code == 200) {
             resolve(response.person);
           } else {
+            console.log(response.message);
             reject(response.code);
           }
         },
         error: function(response) {
+          console.log(response.statusText);
           reject(response.status);
         }
       });

@@ -7,37 +7,33 @@ import { personSource } from './../sources/person.source';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { displaySuccessMessage, displayErrorMessage } from './../utils/message';
 import { authActions } from './auth.actions';
+import { localization } from './../constraints/localization';
 
 var Settings = require('./../constraints/settings.json');
 
 interface IPersonActions {
-  createPerson(person: PersonModel, success: string, error: string);
+  createPerson(person: PersonModel);
   createdPerson(props: IPersonProps);
-
   fetchPersons(ids: Array<number>);
   fetchedPersons(props: Array<IPersonProps>);
-  // failed(code: number): void;
-  // createPerson(person: PersonModel): void;
-  // deletePerson(person: PersonModel): void;
-  failed(errorMessage: any);
-  // loading(): void;
+  setCode(code: number);
 }
 
 class PersonActions extends AbstractActions implements IPersonActions {
-  createPerson(person: PersonModel, success: string, error: string) {
+  createPerson(person: PersonModel) {
     let self: PersonActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       addLoading();
       dispatch();
+      self.setCode(93);
       personSource.createPerson(person).then((response) => {
-        removeLoading();
-        displaySuccessMessage(success);
+        displaySuccessMessage(localization(905));
         self.createdPerson(response);
-      }).catch((code) => {
         removeLoading();
-        displayErrorMessage(error);
-        self.failed(parseInt(code));
+      }).catch((code) => {
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
       });
     }
   }
@@ -47,24 +43,21 @@ class PersonActions extends AbstractActions implements IPersonActions {
       setTimeout(function() {
         browserHistory.goBack();
       }, 500);
-      // we dispatch an event here so we can have "loading" state.
       dispatch(props);
     }
   }
-
   fetchPersons(ids: Array<number>) {
     let self: PersonActions = this;
     if (ids != null && ids.length > 0) {
       return (dispatch) => {
-        // we dispatch an event here so we can have "loading" state.
         addLoading();
         dispatch();
         personSource.fetchPersons(ids).then((response) => {
-          removeLoading();
           self.fetchedPersons(response);
-        }).catch((code) => {
           removeLoading();
-          self.failed(parseInt(code));
+        }).catch((code) => {
+          self.setCode(code);
+          removeLoading();
         });
       }
     }
@@ -73,14 +66,12 @@ class PersonActions extends AbstractActions implements IPersonActions {
   fetchedPersons(props: Array<IPersonProps>) {
     let self: PersonActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       dispatch(props);
     }
   }
-  failed(code: number) {
+  setCode(code: number) {
     let self: PersonActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       dispatch(code);
     }
   }

@@ -10,12 +10,19 @@ let AuthSource = {
     return new Promise<any>((resolve, reject) => {
       $.ajax({
         url: Settings.uBaseName + Settings.uServer + "logincheck.php",
+        type: 'GET',
         data: {},
         dataType: "json",
         success: function(response) {
-          resolve(response);
+          if (response.code == 200) {
+            resolve(response);
+          } else {
+            console.log(response.message);
+            reject(response.code);
+          }
         },
         error: function(response) {
+          console.log(response.statusText);
           reject(response.status);
         }
       });
@@ -30,12 +37,14 @@ let AuthSource = {
         dataType: "json",
         success: function(response) {
           if (response.code == 200) {
-            resolve();
+            resolve(response);
           } else {
+            console.log(response.message);
             reject(response.code);
           }
         },
         error: function(response) {
+          console.log(response.statusText);
           reject(response.status);
         }
       });
@@ -55,10 +64,12 @@ let AuthSource = {
           if (response.code == 200) {
             resolve(response);
           } else {
+            console.log(response.message);
             reject(response.code);
           }
         },
         error: function(response) {
+          console.log(response.statusText);
           reject(response.status);
         }
       });

@@ -10,13 +10,13 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './user-name.component.css';
 import { PersonModel, personStore } from './../../stores/person.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
-import ErrorMessage from './../error-message.component';
+import MessageLineComponent from './../message/message-line.component';
 
 export interface IUserNameProps {
   person?: PersonModel;
   editable: boolean;
   async: boolean;
-  error: Array<string>;
+  error: any;
 }
 export interface IUserNameStatus {
   name?: string;
@@ -85,7 +85,7 @@ export default class UserNameComponent extends React.Component<IUserNameProps, I
               }} />
           </div>
           <div className={styles.message}>
-            <ErrorMessage error={self.props.error} match={new Array<string>()} />
+            <MessageLineComponent code={self.props.error} match={[]} />
           </div>
         </div>
       );

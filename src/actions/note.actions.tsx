@@ -1,9 +1,9 @@
 import { alt } from './../alt';
 import * as Alt from 'alt';
 import { browserHistory } from 'react-router';
+import { AbstractActions } from "./abstract.actions";
 
 var Settings = require('./../constraints/settings.json');
-import { AbstractActions } from "./abstract.actions";
 import { NoteModel, INoteProps } from './../stores/note.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { noteSource } from './../sources/note.source';
@@ -31,13 +31,13 @@ class NoteActions extends AbstractActions implements INoteActions {
       dispatch();
       self.setCode(92);
       noteSource.updateNote(note).then((response) => {
-        removeLoading();
         displaySuccessMessage(localization(604));
         self.updatedNote(response);
-      }).catch((code) => {
         removeLoading();
+      }).catch((code) => {
         displayErrorMessage(localization(code));
         self.setCode(code);
+        removeLoading();
       });
     }
   }
@@ -53,13 +53,13 @@ class NoteActions extends AbstractActions implements INoteActions {
       dispatch();
       self.setCode(93);
       noteSource.createNote(note).then((response) => {
-        removeLoading();
         displaySuccessMessage(localization(605));
         self.createdNote(response);
-      }).catch((code) => {
         removeLoading();
+      }).catch((code) => {
         displayErrorMessage(localization(code));
         self.setCode(code);
+        removeLoading();
       });
     }
   }
@@ -82,12 +82,12 @@ class NoteActions extends AbstractActions implements INoteActions {
         dispatch();
         self.setCode(90);
         noteSource.fetchNotesFromTreeIds(treeIds).then((response) => {
-          removeLoading();
           self.fetchedNotes(response);
-        }).catch((code) => {
           removeLoading();
+        }).catch((code) => {
           displayErrorMessage(localization(code));
           self.setCode(code);
+          removeLoading();
         });
       }
     }
@@ -106,13 +106,13 @@ class NoteActions extends AbstractActions implements INoteActions {
       dispatch();
       self.setCode(91);
       noteSource.deleteNote(note).then((response) => {
-        removeLoading();
         displaySuccessMessage(localization(607));
         self.deletedNote(note.toJSON());
-      }).catch((code) => {
         removeLoading();
+      }).catch((code) => {
         displayErrorMessage(localization(code));
         self.setCode(code);
+        removeLoading();
       });
     }
   }

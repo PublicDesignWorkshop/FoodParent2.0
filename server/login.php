@@ -17,6 +17,7 @@
     } else {
       $params = array(
         "code" => 902,
+        "message" => "Failed to log in.",
       );
       echo json_encode($params);
     }
@@ -24,6 +25,7 @@
     // The correct POST variables were not sent to this page.
     $params = array(
       "code" => 902,
+      "message" => "Failed to log in.",
     );
     echo json_encode($params);
   }

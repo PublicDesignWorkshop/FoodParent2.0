@@ -9,21 +9,22 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './signup.component.css';
 import { PersonModel, personStore } from './../../stores/person.store';
 import { addLoading, removeLoading } from './../../utils/loadingtracker';
-import { checkValidEmailAddress } from './../../utils/authentication';
 import ErrorMessage from './../error-message.component';
 import UserContact from './user-contact.component';
 import UserName from './user-name.component';
 import UserNeighborhood from './user-neighborhood.component';
 import { personActions } from './../../actions/person.actions';
+import { checkValidEmailAddress } from './../../utils/errorhandler';
 import { localization } from './../../constraints/localization';
+import MessageLineComponent from './../message/message-line.component';
+import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
 
 export interface ISignUpProps {
   open: boolean;
   person?: PersonModel;
-  // error: Array<string>;
 }
 export interface ISignUpStatus {
-  error?: Array<string>;
+  error?: any;
 }
 export default class SignUpComponent extends React.Component<ISignUpProps, ISignUpStatus> {
   static contextTypes: any;
@@ -31,7 +32,7 @@ export default class SignUpComponent extends React.Component<ISignUpProps, ISign
     super(props);
     let self: SignUpComponent = this;
     self.state = {
-      error: new Array<string>(),
+      error: null,
     };
   }
   public componentDidMount() {
@@ -48,16 +49,19 @@ export default class SignUpComponent extends React.Component<ISignUpProps, ISign
 
   private updateProps(props: ISignUpProps) {
     let self: SignUpComponent = this;
-    // self.setState({error: props.error});
   }
 
   private submitSignUp = () => {
     let self: SignUpComponent = this;
-    if (checkValidEmailAddress(personStore.getTempPerson().getContact().trim())) {
-      personActions.createPerson(personStore.getTempPerson(), "<strong>" + personStore.getTempPerson().getContact() + "</strong> successfully become a parent.", "<strong>" + personStore.getTempPerson().getContact() + "</strong> failed to become a parent.");
-    } else {
-
+    let error: any = null;
+    try {
+      checkValidEmailAddress(personStore.getTempPerson().getContact().trim());
+      personActions.createPerson(personStore.getTempPerson());
+    } catch(e) {
+      displayErrorMessage(localization(e.message));
+      error = e.message;
     }
+    self.setState({error: error});
   }
 
   render() {

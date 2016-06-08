@@ -25,7 +25,7 @@ export interface INoteAmountProps {
   note: NoteModel;
   editable: boolean;
   async: boolean;
-  error: Array<string>;
+  error: any;
 }
 export interface INoteAmountStatus {
   amount?: any;

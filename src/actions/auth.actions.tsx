@@ -2,45 +2,49 @@ import { browserHistory } from 'react-router';
 import { alt } from './../alt';
 import * as Alt from 'alt';
 import { AbstractActions } from "./abstract.actions";
+
+var Settings = require('./../constraints/settings.json');
 import { AuthModel, IAuthProps } from './../stores/auth.store';
 import { IPersonProps } from './../stores/person.store';
 import { authSource } from './../sources/auth.source';
 import { personSource } from './../sources/person.source';
 import { treeActions } from './tree.actions';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
-
-var Settings = require('./../constraints/settings.json');
+import { displaySuccessMessage, displayErrorMessage } from './../utils/message';
+import { localization } from './../constraints/localization';
 
 interface IAuthActions {
   fetchAuth();
-  updateAuth(props: IAuthProps);
+  fetchedAuth(props: IAuthProps);
   fetchPerson(id: number);
-  updatePerson(props: IPersonProps);
-  failed(code: number);
+  fetchedPerson(props: IPersonProps);
   processLogout();
-  updateLogout();
+  processedLogout();
   processLogin(contact: string, password: string);
-  updateLogin(props: IAuthProps);
+  processedLogin(props: IAuthProps);
+  setCode(code: number);
 }
 
 class AuthActions extends AbstractActions implements IAuthActions {
   fetchAuth() {
     let self: AuthActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       addLoading();
+      dispatch();
+      self.setCode(90);
       authSource.fetchAuth().then((response) => {
+        self.fetchedAuth({id: response.id, contact: response.contact, auth: response.auth})
         removeLoading();
-        self.updateAuth({id: response.id, contact: response.contact, auth: response.auth})
       }).catch((code) => {
-        self.failed(parseInt(code));
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
       });
     }
   }
-  updateAuth(props: IAuthProps) {
+  fetchedAuth(props: IAuthProps) {
     let self: AuthActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       dispatch(props);
     }
   }
@@ -49,21 +53,23 @@ class AuthActions extends AbstractActions implements IAuthActions {
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
       addLoading();
+      dispatch();
+      self.setCode(90);
       personSource.fetchPersons([id]).then((response) => {
-        removeLoading();
-        if (response.length == 1) {
-          self.updatePerson(response[0]);
+        if (response.length > 0) {
+          self.fetchedPerson(response[0]);
         }
-      }).catch((code) => {
         removeLoading();
-        self.failed(parseInt(code));
+      }).catch((code) => {
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
       });
     }
   }
-  updatePerson(props: IPersonProps) {
+  fetchedPerson(props: IPersonProps) {
     let self: AuthActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       dispatch(props);
     }
   }
@@ -72,18 +78,21 @@ class AuthActions extends AbstractActions implements IAuthActions {
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
       addLoading();
+      dispatch();
+      self.setCode(90);
       authSource.processLogout().then(() => {
+        self.processedLogout();
         removeLoading();
-        self.updateLogout();
       }).catch((code) => {
-        self.failed(parseInt(code));
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
       });
     }
   }
-  updateLogout() {
+  processedLogout() {
     let self: AuthActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       dispatch();
       browserHistory.push({pathname: Settings.uBaseName + '/'});
       treeActions.fetchTrees();
@@ -94,25 +103,31 @@ class AuthActions extends AbstractActions implements IAuthActions {
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
       addLoading();
+      dispatch();
+      self.setCode(90);
       authSource.processLogin(contact, password).then((response) => {
+        self.processedLogin({id: response.id, auth: response.auth, contact: response.contact});
         removeLoading();
-        self.updateLogin({id: response.id, auth: response.auth, contact: response.contact});
       }).catch((code) => {
-        self.failed(parseInt(code));
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
       });
     }
   }
-  updateLogin(props: IAuthProps) {
+  processedLogin(props: IAuthProps) {
     let self: AuthActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       dispatch(props);
       browserHistory.push({pathname: Settings.uBaseName + '/'});
       treeActions.fetchTrees();
     }
   }
-  failed(code: number) {
+  setCode(code: number) {
     let self: AuthActions = this;
+    return (dispatch) => {
+      dispatch(code);
+    }
   }
 }
 

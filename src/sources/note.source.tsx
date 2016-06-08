@@ -11,7 +11,6 @@ let NoteSource = {
       $.ajax({
         url: Settings.uBaseName + Settings.uServer + "notes.php",
         type: 'GET',
-        contentType: 'application/json',
         data: {
           treeIds: treeIds.toString(),
         },

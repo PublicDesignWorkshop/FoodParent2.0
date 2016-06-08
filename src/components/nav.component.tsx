@@ -10,7 +10,7 @@ import { geocoding, reverseGeocoding, IReverseGeoLocation } from './../utils/geo
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import NavAddressComponent from './nav-address.component';
 import { MapModel, mapStore } from './../stores/map.store';
-import { PersonModel, personStore } from './../stores/person.store';
+import { personStore } from './../stores/person.store';
 import { AuthModel, AuthStatus } from './../stores/auth.store';
 import LoginComponent from './parent/login.component';
 import UserComponent from './parent/user.component';

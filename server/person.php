@@ -45,6 +45,7 @@
     if (($userauth != 1 && $userauth != 2) && $userid != intval($params['id'])) {
       $json = array(
         "code" => 901,
+        "message" => "Access is not authorized.",
       );
       echo json_encode($json);
     } else {
@@ -56,14 +57,14 @@
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         $pdo = null;
         $json = array(
-          "code" => 400,
+          "code" => 200,
           "result" => $result,
         );
         echo json_encode($json);
       } catch(PDOException $e) {
         $json = array(
-          "code" => 404,
-          "error" => $e->getMessage(),
+          "code" => $e->getCode(),
+          "message" => $e->getMessage(),
         );
         echo json_encode($json);
       }
@@ -96,6 +97,7 @@
     if (($userauth != 1 && $userauth != 2) && $userid != intval($params['id'])) {
       $json = array(
         "code" => 901,
+        "message" => "Access is not authorized.",
       );
       echo json_encode($json);
     } else {
@@ -114,12 +116,24 @@
           $stmt->execute($params);
           $result = $stmt->fetch();
           $pdo = null;
-          echo json_encode($result);
+          $params = array(
+            "code" => 200,
+            "person" => $result,
+          );
+          echo json_encode($params);
         } catch(PDOException $e) {
-          echo '{"error":{"text":'. $e->getMessage() .'}}';
+          $json = array(
+            "code" => $e->getCode(),
+            "message" => $e->getMessage(),
+          );
+          echo json_encode($json);
         }
       } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
+        $json = array(
+          "code" => $e->getCode(),
+          "message" => $e->getMessage(),
+        );
+        echo json_encode($json);
       }
     }
   }
@@ -140,10 +154,11 @@
         $id = $result["id"];
         $active = $result["active"]; // Check account is active or not.
         if ($active == 1) { // Return with error code if account already exists and active.
-          $params = array(
-            "code" => 903
+          $json = array(
+            "code" => 903,
+            "message" => "Account is already exist.",
           );
-          echo json_encode($params);
+          echo json_encode($json);
         } else {  // Make active if account already exists but is inactive.
           // generate salt.
           $salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
@@ -183,16 +198,18 @@
               );
               echo json_encode($params);
             } catch(PDOException $e) {
-              $params = array(
-                "code" => 400,
+              $json = array(
+                "code" => $e->getCode(),
+                "message" => $e->getMessage(),
               );
-              echo json_encode($params);
+              echo json_encode($json);
             }
           } catch(PDOException $e) {
-            $params = array(
-              "code" => 400,
+            $json = array(
+              "code" => $e->getCode(),
+              "message" => $e->getMessage(),
             );
-            echo json_encode($params);
+            echo json_encode($json);
           }
         }
       } else {  // Create a new user account.
@@ -232,24 +249,27 @@
               );
               echo json_encode($params);
             } catch(PDOException $e) {
-              $params = array(
-                "code" => 400,
+              $json = array(
+                "code" => $e->getCode(),
+                "message" => $e->getMessage(),
               );
-              echo json_encode($params);
+              echo json_encode($json);
             }
           }
         } catch(PDOException $e) {
-          $params = array(
-            "code" => 400,
+          $json = array(
+            "code" => $e->getCode(),
+            "message" => $e->getMessage(),
           );
-          echo json_encode($params);
+          echo json_encode($json);
         }
       }
     } catch(PDOException $e) {
-      $params = array(
-        "code" => 400,
+      $json = array(
+        "code" => $e->getCode(),
+        "message" => $e->getMessage(),
       );
-      echo json_encode($params);
+      echo json_encode($json);
     }
   }
 
@@ -266,13 +286,22 @@
         $stmt = $pdo->prepare($sql);
         $result = $stmt->execute($params);
         $pdo = null;
-        echo json_encode($result);
+        $params = array(
+          "code" => 200,
+          "person" => $result,
+        );
+        echo json_encode($params);
       } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
+        $json = array(
+          "code" => $e->getCode(),
+          "message" => $e->getMessage(),
+        );
+        echo json_encode($json);
       }
     } else {
       $json = array(
         "code" => 901,
+        "message" => "Access is not authorized.",
       );
       echo json_encode($json);
     }

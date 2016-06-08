@@ -7,15 +7,20 @@ import * as AltContainer from 'alt-container';
 
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './login-parent.component.css';
-import { checkValidEmailAddress, processLogin } from './../../utils/authentication';
+import { processLogin } from './../../utils/authentication';
 import { treeStore } from './../../stores/tree.store';
 import { authActions } from './../../actions/auth.actions';
+import { checkValidEmailAddress } from './../../utils/errorhandler';
+import { localization } from './../../constraints/localization';
+import MessageLineComponent from './../message/message-line.component';
+import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
 
 export interface ILoginParentProps {
 }
 export interface ILoginParentStatus {
-  contact: string;
-  password: string;
+  contact?: string;
+  password?: string;
+  error?: any;
 }
 export default class LoginParentComponent extends React.Component<ILoginParentProps, ILoginParentStatus> {
   static contextTypes: any;
@@ -25,6 +30,7 @@ export default class LoginParentComponent extends React.Component<ILoginParentPr
     this.state = {
       contact: "",
       password: "",
+      error: null,
     };
   }
   public componentDidMount() {
@@ -44,21 +50,15 @@ export default class LoginParentComponent extends React.Component<ILoginParentPr
   }
   private submitLogin = () => {
     let self: LoginParentComponent = this;
-    if (checkValidEmailAddress(self.state.contact.trim())) {
+    let error: any = null;
+    try {
+      checkValidEmailAddress(self.state.contact.trim());
       authActions.processLogin(self.state.contact.trim(), self.state.contact.trim());
-      // processLogin(self.state.contact.trim(), self.state.contact.trim(), function(response) { // Login success
-      //   console.warn("login success");
-      //   self.context.router.push({pathname: window.location.pathname});
-      //   location.reload();
-      //   // treeStore.fetchTrees();
-      // }, function(response) { // Login fail
-      //   console.warn("login failed");
-      // }, function(response) { // Error
-      //
-      // });
-    } else {
-
+    } catch(e) {
+      displayErrorMessage(localization(e.message));
+      error = e.message;
     }
+    self.setState({error: error});
   }
 
   render() {
