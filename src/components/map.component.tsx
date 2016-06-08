@@ -162,7 +162,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   }
   private renderMarkers = (trees: Array<TreeModel>, props: IMapProps) => {
     let self: MapComponent = this;
-    console.warn("- Render markers -");
     // Remove unnecessary markers
     for (let i = 0; i < self.markers.length;) {
       let bFound: boolean = false;

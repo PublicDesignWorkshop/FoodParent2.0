@@ -124,7 +124,7 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
         }
       });
       self.setState({selected: selected});
-      treeStore.fetchTrees();
+      treeActions.fetchTrees();
     }, function(response) {
 
     }, function(response) {

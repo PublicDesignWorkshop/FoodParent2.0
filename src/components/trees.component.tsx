@@ -66,7 +66,6 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
     self.updateProps(nextProps);
   }
   private updateProps = (props: ITreesProps) => {
-    console.warn("- Update props -");
     let self: TreesComponent = this;
     let treeId = null;
     let noteId = null;
