@@ -17,19 +17,17 @@ import FlagComponent from './flag.component';
 import OwnershipComponent from './ownership.component';
 import LocationComponent from './location.component';
 import { LogInStatus } from './../app.component';
+import { authStore } from './../../stores/auth.store';
 
 export interface ITreeAddProps {
-  foods: Array<FoodModel>;
-  trees: Array<TreeModel>;
-  treeId: number;
-  login: LogInStatus;
-  userId: number;
+  foods?: Array<FoodModel>;
+  trees?: Array<TreeModel>;
+  tree?: TreeModel;
 }
 export interface ITreeAddStatus {
 
 }
 export default class TreeAddComponent extends React.Component<ITreeAddProps, ITreeAddStatus> {
-  private tree: TreeModel;
   static contextTypes: any;
   constructor(props : ITreeAddProps) {
     super(props);
@@ -40,7 +38,6 @@ export default class TreeAddComponent extends React.Component<ITreeAddProps, ITr
   }
   public componentDidMount() {
     let self: TreeAddComponent = this;
-    flagStore.fetchFlags();
     self.updateProps(self.props);
   }
   public componentWillUnmount() {
@@ -54,7 +51,7 @@ export default class TreeAddComponent extends React.Component<ITreeAddProps, ITr
   private updateProps = (props: ITreeAddProps) => {
     let self: TreeAddComponent = this;
     if (props.foods.length != 0) {
-      if (props.login == LogInStatus.MANAGER || props.login == LogInStatus.ADMIN) {
+      if (authStore.getAuth().getIsManager()) {
 
       } else {
 
@@ -64,13 +61,12 @@ export default class TreeAddComponent extends React.Component<ITreeAddProps, ITr
 
   render() {
     let self: TreeAddComponent = this;
-    if (self.props.treeId != null) {
-      var tree: TreeModel = treeStore.getTree(self.props.treeId);
-      var food: FoodModel = foodStore.getFood(tree.getFoodId());
+    if (self.props.tree && self.props.foods.length) {
+      var food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
       return (
         <div className={styles.wrapper}>
           <div className={styles.treeinfo}>
-            <FoodComponent tree={tree} foods={self.props.foods} editable={true} async={false} />
+            <FoodComponent tree={self.props.tree} foods={self.props.foods} editable={true} async={false} />
             <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
               self.context.router.push({pathname: Settings.uBaseName + '/'});
             }}/></div>
@@ -86,10 +82,9 @@ export default class TreeAddComponent extends React.Component<ITreeAddProps, ITr
                 }
               }
             }>
-              <LocationComponent tree={tree} editable={true} async={false} />
-              <AddressComponent tree={tree} editable={true} async={false} />
-              <DescriptionComponent tree={tree} editable={true} async={false} />
-
+              <LocationComponent tree={self.props.tree} editable={true} async={false} />
+              <AddressComponent tree={self.props.tree} editable={true} async={false} />
+              <DescriptionComponent tree={self.props.tree} editable={true} async={false} />
             </AltContainer>
           </div>
         </div>

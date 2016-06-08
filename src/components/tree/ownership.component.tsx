@@ -74,7 +74,7 @@ export default class OwnershipComponent extends React.Component<IOwnershipProps,
     }
     self.props.tree.setOwnership(ownership);
     if (self.props.async) {let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
-    treeActions.updateTree(self.props.tree, "Successfully updated the ownership of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to update the ownership of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
+    treeActions.updateTree(self.props.tree);
     } else {
       self.setState({selected: selected});
     }

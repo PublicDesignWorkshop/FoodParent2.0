@@ -12,6 +12,10 @@ interface ITreeActions {
   fetchedTrees(treesProps: Array<ITreeProps>);
   updateTree(tree: TreeModel);
   updatedTree(props: ITreeProps);
+  adoptTree(tree: TreeModel);
+  unadoptTree(tree: TreeModel);
+  resetTempTree();
+  refresh();
   setCode(code: number);
   // createTree(tree: TreeModel): void;
   // loading(): void;
@@ -64,12 +68,59 @@ class TreeActions extends AbstractActions implements ITreeActions {
       });
     }
   }
+  adoptTree(tree: TreeModel) {
+    let self: TreeActions = this;
+    return (dispatch) => {
+      // we dispatch an event here so we can have "loading" state.
+      addLoading();
+      dispatch();
+      self.setCode(92);
+      treeSource.updateTree(tree).then((response) => {
+        displaySuccessMessage(localization(638));
+        self.updatedTree(response);
+        removeLoading();
+      }).catch((code) => {
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
+      });
+    }
+  }
+  unadoptTree(tree: TreeModel) {
+    let self: TreeActions = this;
+    return (dispatch) => {
+      // we dispatch an event here so we can have "loading" state.
+      addLoading();
+      dispatch();
+      self.setCode(92);
+      treeSource.updateTree(tree).then((response) => {
+        displayErrorMessage(localization(639));
+        self.updatedTree(response);
+        removeLoading();
+      }).catch((code) => {
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
+      });
+    }
+  }
   updatedTree(props: ITreeProps) {
     let self: TreeActions = this;
     return (dispatch) => {
       dispatch(props);
     }
   }
+  resetTempTree() {
+    return (dispatch) => {
+      dispatch();
+    }
+  }
+  refresh() {
+    return (dispatch) => {
+      dispatch();
+    }
+  }
+
   // createTree(tree: TreeModel) {
   //   let self: TreeActions = this;
   //   console.warn("Create Tree");

@@ -61,6 +61,8 @@ export default class LocationComponent extends React.Component<ILocationProps, I
       let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
       treeActions.updateTree(self.props.tree, "Successfully updated the location of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to update the location of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
     } else {
+      console.log("treeActions.refresh();");
+      treeActions.refresh();
       self.setState({latitude: parseFloat(self.state.latitude).toFixed(Settings.iMarkerPrecision), longitude: parseFloat(self.state.longitude).toFixed(Settings.iMarkerPrecision), editingLatitude: false, editingLongitude: false});
     }
   }

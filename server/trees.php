@@ -42,7 +42,9 @@
         $stmt->execute();
         $result = $stmt->fetchAll();
         $pdo = null;
-        $extra = $result[0]['food'];
+        if (sizeof($result)) {
+          $extra = $result[0]['food'];
+        }
       } catch(PDOException $e) {
         $json = array(
           "code" => $e->getCode(),

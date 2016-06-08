@@ -61,12 +61,12 @@ export default class ParentListComponent extends React.Component<IParentListProp
     let adopt: JSX.Element;
     adopt = <span className={styles.adopt} onClick={()=> {
       self.props.tree.addParent(authStore.getAuth().getId());
-      treeActions.updateTree(self.props.tree, "Successfully adopted <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to adopt <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
+      treeActions.adoptTree(self.props.tree);
     }}>ADOPT</span>;
     if (parents.indexOf(authStore.getAuth().getId()) > -1) {
       adopt = <span className={styles.unadopt} onClick={()=> {
         self.props.tree.removeParent(authStore.getAuth().getId());
-        treeActions.updateTree(self.props.tree, "Successfully unadopted <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to unadopt <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
+        treeActions.unadoptTree(self.props.tree);
       }}>UN-ADOPT</span>;
     }
     return (

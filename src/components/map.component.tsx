@@ -28,6 +28,7 @@ export enum TileMode {
 export interface IMapProps {
   foods?: Array<FoodModel>;
   trees?: Array<TreeModel>;
+  tempTree?: TreeModel;
   tile?: TileMode;
   // zoom?: number;
   treeId: number;
@@ -52,17 +53,17 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   private satTileLayer: any;
   private layer: L.MarkerClusterGroup;
   private markers: Array<L.Marker>;
-
-
+  private selected: L.Marker;
+  private newMarker: L.Marker;
 
 
 
 
   private userMarker: L.Circle;
   private userCenterMarker: L.Circle;
-  private selected: L.Marker;
+
   // private position: L.LatLng;
-  private newMarker: L.Marker;
+
 
   constructor(props : IMapProps) {
     super(props);
@@ -108,7 +109,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
     let self: MapComponent = this;
   }
   public componentWillReceiveProps (nextProps: IMapProps) {
-    //this.setState({cid: nextProps.cid});
     let self: MapComponent = this;
     switch(nextProps.tile) {
       case TileMode.GRAY:
@@ -126,49 +126,38 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
     }
 
     if (nextProps.foods.length) {
-      self.renderMarkers(nextProps.trees, nextProps);
+
       // self.map.setZoom(nextProps.zoom);
       // self.renderUserLocation(nextProps.position);
-
-
-
-      // switch(nextProps.mode) {
-      //   case TreesMode.TREEDETAIL:
-      //     if (self.newMarker) {
-      //       self.map.removeLayer(self.newMarker);
-      //       self.newMarker = null;
-      //     }
-      //     break;
-      //   case TreesMode.TREEADDMARKER:
-      //     var point: L.Point = L.CRS.EPSG3857.latLngToPoint(self.map.getCenter(), self.props.zoom);
-      //     var rMap = ReactDOM.findDOMNode(self.refs['map']);
-      //     if (rMap.clientWidth > rMap.clientHeight) {
-      //       point.x -= self.map.getSize().x * 0.15;
-      //     } else {
-      //       //point.y += self.map.getSize().y * 0.15;
-      //     }
-      //     if (!self.newMarker) {
-      //       var tree: TreeModel = new TreeModel({
-      //         id: "0",
-      //         lat: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom).lat + "",
-      //         lng: L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom).lng + "",
-      //         food: "1",
-      //         flag: "0",
-      //         public: "1",
-      //         description: "",
-      //         address: "",
-      //         owner: "0",
-      //         parent: "0",
-      //         rate: "-1",
-      //         updated: moment(new Date()).format(Settings.sServerDateFormat),
-      //       });
-      //       treeStore.addTree(tree);
-      //       self.newMarker = MarkerComponent.createTemporaryMarker(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
-      //       self.map.addLayer(self.newMarker);
-      //       self.newMarker.openPopup();
-      //     }
-      //     break;
-      // }
+      switch(nextProps.mode) {
+        case TreesMode.TREEADDMARKER:
+        case TreesMode.TREEADDINFO:
+          if (nextProps.tempTree) {
+            var point: L.Point = L.CRS.EPSG3857.latLngToPoint(self.map.getCenter(), self.map.getZoom());
+            var rMap = ReactDOM.findDOMNode(self.refs['map']);
+            if (rMap.clientWidth > rMap.clientHeight) {
+              point.x -= self.map.getSize().x * 0.15;
+            } else {
+              //point.y += self.map.getSize().y * 0.15;
+            }
+            if (!self.newMarker) {
+              let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, self.map.getZoom());
+              nextProps.tempTree.setLat(location.lat);
+              nextProps.tempTree.setLng(location.lng);
+              self.newMarker = MarkerComponent.createTemporaryMarker(nextProps.tempTree);
+              self.map.addLayer(self.newMarker);
+              self.newMarker.openPopup();
+            }
+          }
+          break;
+        default:
+          if (self.newMarker) {
+            self.map.removeLayer(self.newMarker);
+            self.newMarker = null;
+          }
+        break;
+      }
+      self.renderMarkers(nextProps.trees, nextProps);
     }
   }
   private renderMarkers = (trees: Array<TreeModel>, props: IMapProps) => {
@@ -202,7 +191,9 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       }
     });
 
-
+    if (self.newMarker) {
+      self.newMarker.setLatLng(props.tempTree.getLocation());
+    }
 
     // Open tree info popup if the hash address has an existing tree id
     let bFound: boolean = false;
@@ -256,7 +247,8 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
     } else {
       self.selected = null;
     }
-    if (props.treeId != 0 && !bFound) {
+    if (props.mode != TreesMode.TREEADDMARKER && props.mode != TreesMode.TREEADDINFO && !bFound) {
+      console.log("----------------------");
       self.map.closePopup();
     }
   }

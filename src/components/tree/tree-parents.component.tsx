@@ -89,12 +89,12 @@ export default class TreeParentsComponent extends React.Component<ITreeParentsPr
       if (!authStore.getAuth().getIsGuest()) {
         adopt = <span className={styles.adopt} onClick={()=> {
           self.props.tree.addParent(authStore.getAuth().getId());
-          treeActions.updateTree(self.props.tree, "Successfully adopted <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to adopt <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
+          treeActions.adoptTree(self.props.tree);
         }}>ADOPT </span>;
         if (parents.indexOf(authStore.getAuth().getId()) > -1) {
           adopt = <span className={styles.unadopt} onClick={()=> {
             self.props.tree.removeParent(authStore.getAuth().getId());
-            treeActions.updateTree(self.props.tree, "Successfully unadopted <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to unadopt <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
+            treeActions.unadoptTree(self.props.tree);
           }}>UN-ADOPT</span>;
         }
       } else {

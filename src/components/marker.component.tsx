@@ -5,6 +5,7 @@ import './marker.component.css';
 var Settings = require('./../constraints/settings.json');
 import { FoodModel } from './../stores/food.store';
 import { treeStore, TreeModel } from './../stores/tree.store';
+import { treeActions } from './../actions/tree.actions';
 
 module MarkerComponent {
   export function createEditableMarker(food: FoodModel, tree: TreeModel): L.Marker {
@@ -17,6 +18,7 @@ module MarkerComponent {
 
     let marker: L.Marker = new L.Marker(new L.LatLng(tree.getLat(), tree.getLng()), {
       id: tree.getId(),
+      food: tree.getFoodId(),
       selected: false,
       icon: icon,
       draggable: true,
@@ -56,7 +58,7 @@ module MarkerComponent {
     return marker;
   }
 
-  export function createTemporaryMarker(position: L.LatLng): L.Marker {
+  export function createTemporaryMarker(tree: TreeModel): L.Marker {
     let icon: L.Icon = new L.Icon({
       iconUrl: Settings.uBaseName + Settings.uStaticImage + Settings.uTemporaryMarkerIcon,
       iconSize: new L.Point(40, 40),
@@ -66,8 +68,9 @@ module MarkerComponent {
 
     let template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">New&nbsp;Tree</span></div><div class="marker-right"></div>';
 
-    let marker: L.Marker = new L.Marker(position, {
-      id: 0,
+    let marker: L.Marker = new L.Marker(new L.LatLng(tree.getLat(), tree.getLng()), {
+      id: tree.getId(),
+      food: tree.getFoodId(),
       selected: false,
       icon: icon,
       draggable: true,
@@ -77,17 +80,22 @@ module MarkerComponent {
       closeOnClick: false,
     });
     marker.on('click', function() {
-      marker.openPopup();
+      // marker.openPopup();
       //browserHistory.push({pathname: Settings.uBaseName + '/trees/' + tree.getId()});
     });
     marker.on('dragend', function() {
+      tree.setLat(marker.getLatLng().lat);
+      tree.setLng(marker.getLatLng().lng);
+      setTimeout(function() {
+        treeActions.refresh();
+      }, 0);
       marker.openPopup();
-      let tree: TreeModel = treeStore.getTree(marker.options.id);
-      if (tree) {
-        tree.setLat(marker.getLatLng().lat);
-        tree.setLng(marker.getLatLng().lng);
-        browserHistory.replace({pathname: Settings.uBaseName + '/tree/add', query: { mode: "marker" }});
-      }
+      // let tree: TreeModel = treeStore.getTree(marker.options.id);
+      // if (tree) {
+      //   tree.setLat(marker.getLatLng().lat);
+      //   tree.setLng(marker.getLatLng().lng);
+      //   browserHistory.replace({pathname: Settings.uBaseName + '/tree/add', query: { mode: "marker" }});
+      // }
     });
     return marker;
   }

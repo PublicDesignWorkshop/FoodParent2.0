@@ -18,6 +18,8 @@ export interface IAddressProps {
   async: boolean;
 }
 export interface IAddressStatus {
+  prevLat?: number;
+  prevLng?: number;
   address?: string;
   editing?: boolean;
 }
@@ -26,6 +28,8 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
     super(props);
     let self: AddressComponent = this;
     this.state = {
+      prevLat: 0,
+      prevLng: 0,
       address: "",
       editing: false,
     };
@@ -33,6 +37,9 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
   public componentDidMount() {
     let self: AddressComponent = this;
     self.updateProps(self.props);
+    if (self.props.tree) {
+      self.setState({prevLat: parseFloat(self.props.tree.getLat().toFixed(Settings.iMarkerPrecision)), prevLng: parseFloat(self.props.tree.getLng().toFixed(Settings.iMarkerPrecision))});
+    }
   }
   public componentWillUnmount() {
     let self: AddressComponent = this;
@@ -45,18 +52,18 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
   private updateProps = (props: IAddressProps) => {
     let self: AddressComponent = this;
     if (props.tree) {
-      if (props.tree.getAddress() && props.tree.getAddress().trim() != "") {
-        self.setState({address: props.tree.getAddress().trim(), editing: false});
+      if (props.tree.getAddress() && props.tree.getAddress().trim() != "" && props.tree.getLat().toFixed(Settings.iMarkerPrecision) == self.state.prevLat.toFixed(Settings.iMarkerPrecision) && props.tree.getLng().toFixed(Settings.iMarkerPrecision) == self.state.prevLng.toFixed(Settings.iMarkerPrecision)) {
+        self.setState({address: props.tree.getAddress().trim(), editing: false, prevLat: props.tree.getLat(), prevLng: props.tree.getLng()});
       } else {
         addLoading();
         reverseGeocoding(props.tree.getLocation(), function(response: IReverseGeoLocation) {
           self.setState({address: response.formatted, editing: false});
-          self.props.tree.setAddress(self.state.address);
-          if (self.props.async) {
-            let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
-            treeActions.updateTree(self.props.tree, "Successfully updated the address of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to update the address of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
+          props.tree.setAddress(self.state.address);
+          if (props.async) {
+            let food: FoodModel = foodStore.getFood(props.tree.getFoodId());
+            treeActions.updateTree(props.tree);
           } else {
-            self.setState({editing: false});
+            self.setState({editing: false, prevLat: props.tree.getLat(), prevLng: props.tree.getLng()});
           }
           removeLoading();
         }, function() {
@@ -72,7 +79,7 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
     if (self.state.address.trim() != "") {
       self.props.tree.setAddress(self.state.address);
       if (self.props.async) {
-        treeActions.updateTree(self.props.tree, "Successfully updated the address of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to update the address of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
+        treeActions.updateTree(self.props.tree);
       } else {
         self.setState({editing: false});
       }
@@ -82,7 +89,7 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
         removeLoading();
         self.props.tree.setAddress(self.state.address);
         if (self.props.async) {
-          treeActions.updateTree(self.props.tree, "Successfully updated the address of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to update the address of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
+          treeActions.updateTree(self.props.tree);
         } else {
           self.setState({editing: false});
         }

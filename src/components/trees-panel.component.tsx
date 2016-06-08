@@ -60,7 +60,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
     let self: TreesPanelComponent = this;
     let tree: TreeModel = treeStore.getTree(props.treeId);
     let open: boolean = false;
-    if (tree || props.mode == TreesMode.TREESFILTER) {
+    if (tree || props.mode == TreesMode.TREESFILTER ||  props.mode == TreesMode.TREEADDINFO) {
       open = true;
       setTimeout(function () {
         // let treeIds: Array<number> = new Array<number>();
@@ -163,6 +163,35 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                 }>
                   <TrresFilterComponent foods={self.props.foods} trees={self.props.trees} />
                 </AltContainer>
+              </div>
+            </div>
+          );
+        case TreesMode.TREEADDINFO:
+          return (
+            <div className={styles.wrapper + " " + styles.slidein}>
+              <div className={styles.left}>
+                <TreesControlsComponent tile={self.props.tile} />
+              </div>
+              <div className={styles.right}>
+                <AltContainer stores={
+                  {
+                    tree: function (props) {
+                      return {
+                        store: treeStore,
+                        value: treeStore.getState().temp,
+                      };
+                    },
+                    code: function (props) {
+                      return {
+                        store: treeStore,
+                        value: treeStore.getState().code,
+                      };
+                    }
+                  }
+                }>
+                  <TreeAddComponent trees={self.props.trees} foods={self.props.foods} />
+                </AltContainer>
+
               </div>
             </div>
           );

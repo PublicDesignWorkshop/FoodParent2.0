@@ -56,12 +56,10 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
   }
   public componentDidMount() {
     let self: TreesComponent = this;
-    treeStore.listen(self.onChange);
     self.updateProps(self.props);
   }
   public componentWillUnmount() {
     let self: TreesComponent = this;
-    treeStore.unlisten(self.onChange);
   }
   public componentWillReceiveProps (nextProps: ITreesProps) {
     let self: TreesComponent = this;
@@ -73,7 +71,25 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
     let treeId = null;
     let noteId = null;
     let mode: TreesMode = TreesMode.TREES;
-    if (props.params.treeId) {
+    if (props.params.treeId == "filter") {
+      mode = TreesMode.TREESFILTER;
+    } else if (props.params.treeId == "add") {
+      if (props.location.query.mode == "marker") {
+        mode = TreesMode.TREEADDMARKER;
+        if (!treeStore.getState().temp) {
+          setTimeout(function () {
+            treeActions.resetTempTree();
+          }, 0)
+        }
+      } else if (props.location.query.mode == "info") {
+        if (treeStore.getState().temp) {
+          mode = TreesMode.TREEADDINFO;
+        } else {
+          self.context.router.replace({pathname: Settings.uBaseName + '/tree/add', query: { mode: "marker" }});
+        }
+      }
+
+    } else if (props.params.treeId) {
       mode = TreesMode.TREEDETAIL;
       treeId = parseInt(props.params.treeId);
       if (props.location.query.note) {
@@ -83,9 +99,8 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
           mode = TreesMode.TREENOTEDELETE;
         }
       }
-    }if (props.params.treeId == "filter") {
-      mode = TreesMode.TREESFILTER;
     }
+
     self.setState({mode: mode, treeId: treeId, noteId: noteId});
 
 
@@ -203,7 +218,13 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
                 store: flagStore,
                 value: flagStore.getState().flags
               };
-            }
+            },
+            tempTree: function (props) {
+              return {
+                store: treeStore,
+                value: treeStore.getState().temp
+              };
+            },
           }
         }>
           <MapComponent mode={self.state.mode} treeId={self.state.treeId} onRender={self.onMapRender} />

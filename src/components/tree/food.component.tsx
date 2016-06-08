@@ -42,7 +42,37 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
   }
   public componentDidMount() {
     let self: FoodComponent = this;
-    self.updateProps(self.props);
+    if (self.props.tree && self.props.foods) {
+      var options = new Array<IFoodOption>();
+      var selected: IFoodOption;
+      let treeName: string = "";
+      if (self.props.tree.getId()) {
+        treeName = self.props.tree.getName();
+      }
+      self.props.foods.forEach(food => {
+        options.push({value: food.getId(), label: food.getName() + treeName });
+        if (self.props.tree.getFoodId() == food.getId()) {
+          selected = {value: food.getId(), label: food.getName() + treeName};
+        }
+      });
+      self.setState({options: options, selected: selected});
+      var foodId = 0;
+      if (selected) {
+        foodId = parseInt(selected.value);
+      }
+      // Apply filter for a new tree food type to help users to figure out the location
+      if (self.props.tree.getId() == 0) {
+        applyFilter(FilterMode.FOOD, [foodId], function(response) {
+          deleteFilter(function () {
+            treeActions.fetchTrees();
+          });
+        }, function(response) {
+
+        }, function(response) {
+
+        });
+      }
+    }
   }
   public componentWillUnmount() {
     let self: FoodComponent = this;
@@ -54,41 +84,6 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
 
   private updateProps(props: IFoodProps) {
     let self: FoodComponent = this;
-    if (props.tree && props.foods) {
-      var options = new Array<IFoodOption>();
-      var selected: IFoodOption;
-      let treeName: string = "";
-      if (self.props.tree.getId()) {
-        treeName = self.props.tree.getName();
-      }
-      props.foods.forEach(food => {
-        options.push({value: food.getId(), label: food.getName() + treeName });
-        if (props.tree.getFoodId() == food.getId()) {
-          selected = {value: food.getId(), label: food.getName() + treeName};
-        }
-      });
-      self.setState({options: options, selected: selected});
-
-
-      var foodId = 0;
-      if (selected) {
-        foodId = parseInt(selected.value);
-      }
-      // Apply filter for a new tree food type to help users to figure out the location
-      if (self.props.tree.getId() == 0) {
-        var foods = new Array<number>();
-        foods.push(foodId);
-        applyFilter(FilterMode.FOOD, foods, function(response) {
-          deleteFilter(function () {
-            //treeStore.fetchTrees();
-          });
-        }, function(response) {
-
-        }, function(response) {
-
-        });
-      }
-    }
   }
 
   private updateAttribute = (selected) => {
@@ -99,13 +94,24 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
     }
     self.props.tree.setFoodId(foodId);
     if (self.props.async) {
-
       treeActions.updateTree(self.props.tree);
     } else {
       self.setState({selected: selected});
     }
-    // Apply filter for a new tree food type to help users to figure out the location
-    treeActions.fetchTrees(self.props.tree.getId());
+    if (self.props.tree.getId() == 0) {
+      applyFilter(FilterMode.FOOD, [foodId], function(response) {
+        deleteFilter(function () {
+          treeActions.fetchTrees();
+        });
+      }, function(response) {
+
+      }, function(response) {
+
+      });
+    } else {
+      // Apply filter for a new tree food type to help users to figure out the location
+      treeActions.fetchTrees(self.props.tree.getId());
+    }
   }
 
   render() {

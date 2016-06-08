@@ -78,7 +78,7 @@ export default class FlagComponent extends React.Component<IFlagProps, IFlagStat
     self.props.tree.setFlags(flags);
     if (self.props.async) {
       let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
-      treeActions.updateTree(self.props.tree, "Successfully updated the flags of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to update the flags of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
+      treeActions.updateTree(self.props.tree);
     } else {
       self.setState({selected: selected});
     }

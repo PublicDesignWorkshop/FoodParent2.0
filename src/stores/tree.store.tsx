@@ -155,6 +155,7 @@ export class TreeModel {
 }
 
 export interface TreeState {
+  temp: TreeModel;
   trees: Array<TreeModel>;
   code: any;
 }
@@ -167,16 +168,19 @@ interface TreeExtendedStore extends AltJS.AltStore<TreeState> {
 }
 
 class TreeStore extends AbstractStore<TreeState> {
+  private temp: TreeModel;
   private trees: Array<TreeModel>;
-  code: any;
+  private code: any;
   constructor() {
     super();
     let self: TreeStore = this;
     self.trees = new Array<TreeModel>();
     self.code = 200;
     self.bindListeners({
+      handleResetTempTree: treeActions.resetTempTree,
       handleFetchedTrees: treeActions.fetchedTrees,
       handleUpdatedTree: treeActions.updatedTree,
+      handleRefresh: treeActions.refresh,
       // handleUpdateTree: treeActions.updateTree,
       // handleCreateTree: treeActions.createTree,
       handleSetCode: treeActions.setCode,
@@ -209,9 +213,30 @@ class TreeStore extends AbstractStore<TreeState> {
       trees[0].update(treeProps);
     }
   }
+  handleResetTempTree() {
+    let self: TreeStore = this;
+    self.temp = new TreeModel({
+      id: "0",
+      lat: Settings.vPosition.x,
+      lng: Settings.vPosition.y,
+      food: "1",
+      flag: "0",
+      public: "1",
+      description: "",
+      address: "",
+      owner: "0",
+      parent: "0",
+      rate: "-1",
+      updated: moment(new Date()).format(Settings.sServerDateFormat),
+    });
+    self.code = 200;
+  }
   handleSetCode(code: number) {
     let self: TreeStore = this;
     self.code = code;
+  }
+  handleRefresh() {
+    let self: TreeStore = this;
   }
 
 

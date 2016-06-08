@@ -56,7 +56,7 @@ export default class DescriptionComponent extends React.Component<IDescriptionPr
     self.props.tree.setDescription(self.state.description);
     if (self.props.async) {
       let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
-      treeActions.updateTree(self.props.tree, "Successfully updated the description of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to update the description of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
+      treeActions.updateTree(self.props.tree);
     } else {
       self.setState({editing: false});
     }
