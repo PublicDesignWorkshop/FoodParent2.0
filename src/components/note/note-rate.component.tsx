@@ -9,7 +9,6 @@ import './../../../node_modules/react-select/dist/react-select.css';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './note-rate.component.css';
 import { NoteModel, noteStore, AmountType, PickupTime } from './../../stores/note.store';
-import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import ErrorMessage from './../error-message.component';
 
 export interface INoteRateOption {
@@ -68,7 +67,7 @@ export default class NoteRateComponent extends React.Component<INoteRateProps, I
     self.props.note.setRate(selected.value);
     self.setState({selected: selected});
     if (self.props.async) {
-      noteStore.updateNote(self.props.note);
+      // noteStore.updateNote(self.props.note);
     } else {
 
     }

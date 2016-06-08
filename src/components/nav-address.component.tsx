@@ -6,7 +6,6 @@ var Settings = require('./../constraints/settings.json');
 import * as styles from './nav-address.component.css';
 import { LogInStatus } from './app.component';
 import { geocoding, reverseGeocoding, IReverseGeoLocation } from './../utils/geolocation';
-import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { MapModel, mapStore } from './../stores/map.store';
 import { mapActions } from './../actions/map.actions';
 import { treeActions } from './../actions/tree.actions';
@@ -45,12 +44,10 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
       if (!self.state.editing) {
         let location: L.LatLng = mapStore.getCenter(props.mapId);
         if (location && location.lat && location.lng) {
-          addLoading();
           reverseGeocoding(new L.LatLng(location.lat, location.lng), function(response: IReverseGeoLocation) {
             self.setState({address: response.formatted, editing: false});
-            removeLoading();
           }, function() {
-            removeLoading();
+
           });
         }
       }
@@ -63,37 +60,30 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
     self.setState({editing: false});
     if (self.state.address.trim() != "") {
       let value: any = self.state.address.trim();
-      addLoading();
       if (!isNaN(value)) {
         setTimeout(function() {
           mapActions.setFirst('map', true);
         }, 0);
         treeActions.fetchTrees(parseInt(value));
         self.context.router.push({pathname: Settings.uBaseName + '/tree/' + parseInt(value)});
-        removeLoading();
       } else {
         geocoding(self.state.address, new L.LatLng(location.lat, location.lng), function(response) {
           mapActions.moveTo(self.props.mapId, new L.LatLng(response.lat.toFixed(Settings.iMarkerPrecision), response.lng.toFixed(Settings.iMarkerPrecision)), Settings.iFocusZoom);
           // self.context.router.replace({pathname: window.location.pathname, query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
           // self.context.router.replace({pathname: Settings.uBaseName + '/', query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
           mapActions.setActive('map', true);
-          removeLoading();
         }, function() {
           mapActions.setActive('map', true);
-          removeLoading();
         });
       }
     } else {
       let location: L.LatLng = mapStore.getCenter(self.props.mapId);
       if (location && location.lat && location.lng) {
-        addLoading();
         reverseGeocoding(new L.LatLng(location.lat, location.lng), function(response: IReverseGeoLocation) {
           self.setState({address: response.formatted, editing: false});
           mapActions.setActive('map', true);
-          removeLoading();
         }, function() {
           mapActions.setActive('map', true);
-          removeLoading();
         });
       }
     }

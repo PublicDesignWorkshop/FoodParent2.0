@@ -11,7 +11,6 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './food.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
-import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { applyFilter, FilterMode, deleteFilter } from './../../utils/filter';
 import { treeActions } from './../../actions/tree.actions';
 

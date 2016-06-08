@@ -11,7 +11,6 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './flag.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FlagModel, flagStore } from './../../stores/flag.store';
-import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { treeActions } from './../../actions/tree.actions';
 

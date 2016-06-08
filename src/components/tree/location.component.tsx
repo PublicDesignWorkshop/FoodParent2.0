@@ -8,7 +8,6 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './location.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { reverseGeocoding, IReverseGeoLocation } from './../../utils/geolocation';
-import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { treeActions } from './../../actions/tree.actions';
 
@@ -59,9 +58,8 @@ export default class LocationComponent extends React.Component<ILocationProps, I
     self.props.tree.setLng(parseFloat(self.state.longitude));
     if (self.props.async) {
       let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
-      treeActions.updateTree(self.props.tree, "Successfully updated the location of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.", "Failed to update the location of <strong>" + food.getName() + self.props.tree.getName() + "</strong>.");
+      treeActions.updateTree(self.props.tree);
     } else {
-      console.log("treeActions.refresh();");
       treeActions.refresh();
       self.setState({latitude: parseFloat(self.state.latitude).toFixed(Settings.iMarkerPrecision), longitude: parseFloat(self.state.longitude).toFixed(Settings.iMarkerPrecision), editingLatitude: false, editingLongitude: false});
     }

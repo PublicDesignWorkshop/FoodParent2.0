@@ -19,9 +19,7 @@ class FoodActions extends AbstractActions implements IFoodActions {
     let self: FoodActions = this;
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
-      addLoading();
       foodSource.fetchFoods().then((foodsProps) => {
-        removeLoading();
         self.updateFoods(foodsProps);
       }).catch((code) => {
         self.failed(parseInt(code));

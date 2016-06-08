@@ -8,7 +8,6 @@ import TextareaAutosize from 'react-textarea-autosize';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './note-comment.component.css';
 import { NoteModel, noteStore } from './../../stores/note.store';
-import { addLoading, removeLoading } from './../../utils/loadingtracker';
 
 export interface INoteCommentProps {
   note: NoteModel;

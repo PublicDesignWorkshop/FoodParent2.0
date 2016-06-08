@@ -7,7 +7,6 @@ var Settings = require('./../constraints/settings.json');
 import * as styles from './nav.component.css';
 import { LogInStatus } from './app.component';
 import { geocoding, reverseGeocoding, IReverseGeoLocation } from './../utils/geolocation';
-import { addLoading, removeLoading } from './../utils/loadingtracker';
 import NavAddressComponent from './nav-address.component';
 import { MapModel, mapStore } from './../stores/map.store';
 import { personStore } from './../stores/person.store';

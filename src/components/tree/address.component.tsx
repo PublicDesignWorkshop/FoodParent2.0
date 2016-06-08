@@ -8,7 +8,6 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './address.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { reverseGeocoding, IReverseGeoLocation } from './../../utils/geolocation';
-import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { treeActions } from './../../actions/tree.actions';
 
@@ -55,7 +54,6 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
       if (props.tree.getAddress() && props.tree.getAddress().trim() != "" && props.tree.getLat().toFixed(Settings.iMarkerPrecision) == self.state.prevLat.toFixed(Settings.iMarkerPrecision) && props.tree.getLng().toFixed(Settings.iMarkerPrecision) == self.state.prevLng.toFixed(Settings.iMarkerPrecision)) {
         self.setState({address: props.tree.getAddress().trim(), editing: false, prevLat: props.tree.getLat(), prevLng: props.tree.getLng()});
       } else {
-        addLoading();
         reverseGeocoding(props.tree.getLocation(), function(response: IReverseGeoLocation) {
           self.setState({address: response.formatted, editing: false});
           props.tree.setAddress(self.state.address);
@@ -66,9 +64,7 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
           } else {
             self.setState({editing: false, prevLat: parseFloat(self.props.tree.getLat().toFixed(Settings.iMarkerPrecision)), prevLng: parseFloat(self.props.tree.getLng().toFixed(Settings.iMarkerPrecision))});
           }
-          removeLoading();
         }, function() {
-          removeLoading();
         });
       }
     }
@@ -87,7 +83,6 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
     } else {
       reverseGeocoding(self.props.tree.getLocation(), function(response: IReverseGeoLocation) {
         self.setState({address: response.formatted, editing: false});
-        removeLoading();
         self.props.tree.setAddress(self.state.address);
         if (self.props.async) {
           treeActions.updateTree(self.props.tree);
@@ -95,7 +90,6 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
           self.setState({editing: false});
         }
       }, function() {
-        removeLoading();
       });
     }
   }

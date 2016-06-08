@@ -10,7 +10,6 @@ import * as styles from './trees-controls.component.css';
 import TreeComponent from './tree/tree.component';
 import { TreeModel, treeStore } from './../stores/tree.store';
 import { FoodModel, foodStore } from './../stores/food.store';
-import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 import { LogInStatus } from './app.component';
 import { TileMode } from './map.component';

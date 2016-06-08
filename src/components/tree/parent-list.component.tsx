@@ -11,7 +11,6 @@ import { PersonModel, personStore } from './../../stores/person.store';
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { authStore } from './../../stores/auth.store';
-import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { treeActions } from './../../actions/tree.actions';
 
 export interface IParentListProps {

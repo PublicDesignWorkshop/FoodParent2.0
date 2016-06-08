@@ -9,7 +9,6 @@ import './../../../node_modules/react-select/dist/react-select.css';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './note-amount.component.css';
 import { NoteModel, noteStore, AmountType, PickupTime } from './../../stores/note.store';
-import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import MessageLineComponent from './../message/message-line.component';
 
 export interface IPickupTimeOption {

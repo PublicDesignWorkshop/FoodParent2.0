@@ -12,10 +12,12 @@ export function addLoading() {
   }
 }
 export function removeLoading() {
-  loadings.pop();
-  if (!loadings.length) {
-    if (!$('#loader').hasClass('hide')) {
-      $('#loader').addClass('hide');
+  setTimeout(function() {
+    loadings.pop();
+    if (!loadings.length) {
+      if (!$('#loader').hasClass('hide')) {
+        $('#loader').addClass('hide');
+      }
     }
-  }
+  }, 500);
 }

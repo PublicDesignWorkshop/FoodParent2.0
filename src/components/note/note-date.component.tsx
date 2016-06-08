@@ -9,7 +9,6 @@ import * as moment from 'moment';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './note-date.component.css';
 import { NoteModel, noteStore } from './../../stores/note.store';
-import { addLoading, removeLoading } from './../../utils/loadingtracker';
 
 export interface INoteDateProps {
   note: NoteModel;
@@ -47,7 +46,7 @@ export default class NoteDateComponent extends React.Component<INoteDateProps, I
     self.props.note.setDate(date);
     console.log(self.props.note.getFormattedDate());
     if (self.props.async) {
-      noteStore.updateNote(self.props.note);
+      // noteStore.updateNote(self.props.note);
     }
   }
 

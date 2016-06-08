@@ -1,4 +1,5 @@
 import * as $ from 'jquery';
+import 'es6-promise';
 
 var Settings = require('./../constraints/settings.json');
 import { authActions } from './../actions/auth.actions';

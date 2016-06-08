@@ -8,7 +8,6 @@ import TextareaAutosize from 'react-textarea-autosize';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './note-list.component.css';
 import { NoteModel, noteStore, NoteType, PickupTime } from './../../stores/note.store';
-import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import ErrorMessage from './../error-message.component';
 
 export interface INoteListProps {

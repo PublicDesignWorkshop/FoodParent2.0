@@ -20,7 +20,6 @@ import { FoodModel, foodStore } from './../stores/food.store';
 import { FlagModel, flagStore } from './../stores/flag.store';
 import { authStore } from './../stores/auth.store';
 import { NoteModel, noteStore, NoteType, PickupTime, AmountType } from './../stores/note.store';
-import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { TileMode } from './map.component';
 import { noteActions } from './../actions/note.actions';
 

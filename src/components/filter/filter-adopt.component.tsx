@@ -10,7 +10,6 @@ import * as $ from 'jquery';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './filter-adopt.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
-import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
 import { LogInStatus } from './../app.component';
 import { authStore } from './../../stores/auth.store';

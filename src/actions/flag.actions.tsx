@@ -20,9 +20,7 @@ class FlagActions extends AbstractActions implements IFlagActions {
     let self: FlagActions = this;
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
-      addLoading();
       flagSource.fetchFlags().then((flagsProps) => {
-        removeLoading();
         self.updateFlags(flagsProps);
       }).catch((code) => {
         self.failed(parseInt(code));

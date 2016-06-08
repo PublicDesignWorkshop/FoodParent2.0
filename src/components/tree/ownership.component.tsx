@@ -10,7 +10,6 @@ import * as $ from 'jquery';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './ownership.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
-import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { treeActions } from './../../actions/tree.actions';
 

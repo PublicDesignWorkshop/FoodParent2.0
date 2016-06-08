@@ -8,7 +8,6 @@ import * as AltContainer from 'alt-container';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './tree-parents.component.css';
 import { TreeModel, treeStore } from './../../stores/tree.store';
-import { addLoading, removeLoading } from './../../utils/loadingtracker';
 import { LogInStatus } from './../app.component';
 import { PersonModel, personStore } from './../../stores/person.store';
 import { authStore } from './../../stores/auth.store';

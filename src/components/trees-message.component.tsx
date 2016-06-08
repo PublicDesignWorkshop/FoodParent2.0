@@ -13,7 +13,6 @@ import TreesControlsComponent from './trees-controls.component';
 import { TreeModel, treeStore } from './../stores/tree.store';
 import { FoodModel, foodStore } from './../stores/food.store';
 import { NoteModel, noteStore } from './../stores/note.store';
-import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 import { LogInStatus } from './app.component';
 import { noteActions } from './../actions/note.actions';

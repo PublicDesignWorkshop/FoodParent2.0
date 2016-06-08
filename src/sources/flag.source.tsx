@@ -1,4 +1,5 @@
 import * as $ from 'jquery';
+import 'es6-promise';
 
 var Settings = require('./../constraints/settings.json');
 import { flagActions } from './../actions/flag.actions';
