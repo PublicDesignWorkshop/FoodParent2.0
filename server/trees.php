@@ -44,7 +44,11 @@
         $pdo = null;
         $extra = $result[0]['food'];
       } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
+        $json = array(
+          "code" => $e->getCode(),
+          "message" => $e->getMessage(),
+        );
+        echo json_encode($json);
       }
     }
 
@@ -125,10 +129,11 @@
       );
       echo json_encode($params);
     } catch(PDOException $e) {
-      $params = array(
-        "code" => 400,
+      $json = array(
+        "code" => $e->getCode(),
+        "message" => $e->getMessage(),
       );
-      echo json_encode($params);
+      echo json_encode($json);
     }
   }
 ?>

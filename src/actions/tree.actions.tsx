@@ -5,60 +5,68 @@ import { TreeModel, ITreeProps } from './../stores/tree.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { treeSource } from './../sources/tree.source';
 import { displaySuccessMessage, displayErrorMessage } from './../utils/message';
+import { localization } from './../constraints/localization';
 
 interface ITreeActions {
   fetchTrees(id?: number);
   fetchedTrees(treesProps: Array<ITreeProps>);
-  updateTree(tree: TreeModel, success: string, error: string);
+  updateTree(tree: TreeModel);
   updatedTree(props: ITreeProps);
-  failed(code: number);
+  setCode(code: number);
   // createTree(tree: TreeModel): void;
   // loading(): void;
 }
 
 class TreeActions extends AbstractActions implements ITreeActions {
+  setCode(code: number) {
+    let self: TreeActions = this;
+    return (dispatch) => {
+      dispatch(code);
+    }
+  }
   fetchTrees(id?: number) {
     let self: TreeActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       addLoading();
+      dispatch();
+      self.setCode(90);
       treeSource.fetchTrees(id).then((response) => {
-        removeLoading();
         self.fetchedTrees(response);
+        removeLoading();
       }).catch((code) => {
-        self.failed(parseInt(code));
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
       });
     }
   }
   fetchedTrees(treesProps: Array<ITreeProps>) {
     let self: TreeActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       dispatch(treesProps);
     }
   }
-  failed(code: number) {
-    let self: TreeActions = this;
-  }
-  updateTree(tree: TreeModel, success: string, error: string) {
+  updateTree(tree: TreeModel) {
     let self: TreeActions = this;
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
       addLoading();
+      dispatch();
+      self.setCode(92);
       treeSource.updateTree(tree).then((response) => {
-        removeLoading();
-        displaySuccessMessage(success);
+        displaySuccessMessage(localization(634));
         self.updatedTree(response);
+        removeLoading();
       }).catch((code) => {
-        displayErrorMessage(error);
-        self.failed(parseInt(code));
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
       });
     }
   }
   updatedTree(props: ITreeProps) {
     let self: TreeActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
       dispatch(props);
     }
   }

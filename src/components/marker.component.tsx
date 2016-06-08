@@ -41,6 +41,7 @@ module MarkerComponent {
 
     let marker: L.Marker = new L.Marker(new L.LatLng(tree.getLat(), tree.getLng()), {
       id: tree.getId(),
+      food: tree.getFoodId(),
       selected: false,
       icon: icon,
       draggable: false,

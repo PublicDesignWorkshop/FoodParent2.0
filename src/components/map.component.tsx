@@ -174,6 +174,22 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   private renderMarkers = (trees: Array<TreeModel>, props: IMapProps) => {
     let self: MapComponent = this;
     console.warn("- Render markers -");
+    // Remove unnecessary markers
+    for (let i = 0; i < self.markers.length;) {
+      let bFound: boolean = false;
+      trees.forEach((tree: TreeModel) => {
+        if (tree.getId() == self.markers[i].options.id && tree.getFoodId() == self.markers[i].options.food && self.markers[i].getLatLng().lat == tree.getLat() && self.markers[i].getLatLng().lng == tree.getLng()) {
+          bFound = true;
+        }
+      });
+      if (!bFound) {
+        self.removeMarker(self.markers[i]);
+        self.markers = _.without(self.markers, self.markers[i]);
+        i--;
+      }
+      i++;
+    }
+
     trees.forEach((tree: TreeModel) => {
       let bFound: boolean = false;
       for (let i = 0; i < self.markers.length && !bFound; i++) {
@@ -186,21 +202,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       }
     });
 
-    // Remove unnecessary markers
-    for (let i = 0; i < self.markers.length;) {
-      let bFound: boolean = false;
-      trees.forEach((tree: TreeModel) => {
-        if (tree.getId() == self.markers[i].options.id) {
-          bFound = true;
-        }
-      });
-      if (!bFound) {
-        self.removeMarker(self.markers[i]);
-        self.markers = _.without(self.markers, self.markers[i]);
-        i--;
-      }
-      i++;
-    }
+
 
     // Open tree info popup if the hash address has an existing tree id
     let bFound: boolean = false;

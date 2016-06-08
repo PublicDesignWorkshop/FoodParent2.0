@@ -11,7 +11,7 @@
       create();
       break;
     case 'GET':
-      read();
+      // read();
       break;
     case 'PUT':
       update();
@@ -21,30 +21,34 @@
       break;
   }
 
-  function read() {
-    $data = json_decode(file_get_contents('php://input'));
-    $params = null;
-    if ($data != null) {
-      $params = array(
-      "id" => $data->{'id'},
-      );
-    } else {
-      $params = array(
-        "id" => $_GET['id'],
-      );
-    }
-    $sql = "SELECT * FROM `tree` WHERE (`id` = :id)";
-    try {
-      $pdo = getConnection();
-      $stmt = $pdo->prepare($sql);
-      $stmt->execute($params);
-      $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-      $pdo = null;
-      echo json_encode($result);
-    } catch(PDOException $e) {
-      echo '{"error":{"text":'. $e->getMessage() .'}}';
-    }
-  }
+  // function read() {
+  //   $data = json_decode(file_get_contents('php://input'));
+  //   $params = null;
+  //   if ($data != null) {
+  //     $params = array(
+  //     "id" => $data->{'id'},
+  //     );
+  //   } else {
+  //     $params = array(
+  //       "id" => $_GET['id'],
+  //     );
+  //   }
+  //   $sql = "SELECT * FROM `tree` WHERE (`id` = :id)";
+  //   try {
+  //     $pdo = getConnection();
+  //     $stmt = $pdo->prepare($sql);
+  //     $stmt->execute($params);
+  //     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+  //     $pdo = null;
+  //     echo json_encode($result);
+  //   } catch(PDOException $e) {
+  //     $json = array(
+  //       "code" => $e->getCode(),
+  //       "message" => $e->getMessage(),
+  //     );
+  //     echo json_encode($json);
+  //   }
+  // }
 
   function update() {
     $data = json_decode(file_get_contents('php://input'));
@@ -88,17 +92,19 @@
         );
         echo json_encode($params);
       } catch(PDOException $e) {
-        $params = array(
-          "code" => 400,
+        $json = array(
+          "code" => $e->getCode(),
+          "message" => $e->getMessage(),
         );
-        echo json_encode($params);
+        echo json_encode($json);
       }
 
     } catch(PDOException $e) {
-      $params = array(
-        "code" => 400,
+      $json = array(
+        "code" => $e->getCode(),
+        "message" => $e->getMessage(),
       );
-      echo json_encode($params);
+      echo json_encode($json);
     }
   }
 
@@ -138,12 +144,24 @@
         $stmt->execute($params);
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         $pdo = null;
-        echo json_encode($result[0]);
+        $params = array(
+          "code" => 200,
+          "tree" => $result[0],
+        );
+        echo json_encode($params);
       } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
+        $json = array(
+          "code" => $e->getCode(),
+          "message" => $e->getMessage(),
+        );
+        echo json_encode($json);
       }
     } catch(PDOException $e) {
-      echo '{"error":{"text":'. $e->getMessage() .'}}';
+      $json = array(
+        "code" => $e->getCode(),
+        "message" => $e->getMessage(),
+      );
+      echo json_encode($json);
     }
   }
 
@@ -158,9 +176,17 @@
             $stmt = $pdo->prepare($sql);
             $result = $stmt->execute($params);
             $pdo = null;
-            echo json_encode($result);
+            $params = array(
+              "code" => 200,
+              "tree" => $result,
+            );
+            echo json_encode($params);
         } catch(PDOException $e) {
-            echo '{"error":{"text":'. $e->getMessage() .'}}';
+          $json = array(
+            "code" => $e->getCode(),
+            "message" => $e->getMessage(),
+          );
+          echo json_encode($json);
         }
     }
 ?>

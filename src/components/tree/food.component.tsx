@@ -99,7 +99,8 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
     }
     self.props.tree.setFoodId(foodId);
     if (self.props.async) {
-      treeActions.updateTree(self.props.tree, "Successfully updated the food type of fruit <strong>" + self.props.tree.getName() + "</strong>.", "Failed to update the food type of fruit <strong>" + self.props.tree.getName() + "</strong>.");
+
+      treeActions.updateTree(self.props.tree);
     } else {
       self.setState({selected: selected});
     }

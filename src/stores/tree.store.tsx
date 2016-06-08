@@ -156,7 +156,7 @@ export class TreeModel {
 
 export interface TreeState {
   trees: Array<TreeModel>;
-  errorMessage: string;
+  code: any;
 }
 
 interface TreeExtendedStore extends AltJS.AltStore<TreeState> {
@@ -168,37 +168,22 @@ interface TreeExtendedStore extends AltJS.AltStore<TreeState> {
 
 class TreeStore extends AbstractStore<TreeState> {
   private trees: Array<TreeModel>;
-  private errorMessage: string;
+  code: any;
   constructor() {
     super();
     let self: TreeStore = this;
     self.trees = new Array<TreeModel>();
-    self.errorMessage = null;
-    //TODO: pass state generics to make sure methods/actions expect the same type
+    self.code = 200;
     self.bindListeners({
       handleFetchedTrees: treeActions.fetchedTrees,
       handleUpdatedTree: treeActions.updatedTree,
       // handleUpdateTree: treeActions.updateTree,
       // handleCreateTree: treeActions.createTree,
-      handleFailed: treeActions.failed,
+      handleSetCode: treeActions.setCode,
     });
     self.exportPublicMethods({
       getTree: self.getTree,
-      // addTree: self.addTree,
     });
-  }
-  handleFetchedTrees(treesProps: Array<ITreeProps>) {
-    let self: TreeStore = this;
-    console.warn("- Handle fetched trees -");
-    self.trees = new Array<TreeModel>();
-    treesProps.forEach((props: ITreeProps) => {
-      self.trees.push(new TreeModel(props));
-    });
-    self.errorMessage = null;
-  }
-  handleFailed(code: number) {
-    let self: TreeStore = this;
-    // this.errorMessage = errorMessage;
   }
   getTree(id: number): TreeModel {
     let self: TreeStore = this;
@@ -208,6 +193,15 @@ class TreeStore extends AbstractStore<TreeState> {
     }
     return null;
   }
+  handleFetchedTrees(treesProps: Array<ITreeProps>) {
+    let self: TreeStore = this;
+    console.warn("- Handle fetched trees -");
+    self.trees = new Array<TreeModel>();
+    treesProps.forEach((props: ITreeProps) => {
+      self.trees.push(new TreeModel(props));
+    });
+    self.code = 200;
+  }
   handleUpdatedTree(treeProps: ITreeProps) {
     let self: TreeStore = this;
     let trees = self.trees.filter(tree => tree.getId() == parseInt(treeProps.id));
@@ -215,6 +209,12 @@ class TreeStore extends AbstractStore<TreeState> {
       trees[0].update(treeProps);
     }
   }
+  handleSetCode(code: number) {
+    let self: TreeStore = this;
+    self.code = code;
+  }
+
+
 
 
 
