@@ -6,7 +6,6 @@ import * as AltContainer from 'alt-container';
 var Settings = require('./../constraints/settings.json');
 import * as styles from './nav.component.css';
 import { LogInStatus } from './app.component';
-import { geocoding, reverseGeocoding, IReverseGeoLocation } from './../utils/geolocation';
 import NavAddressComponent from './nav-address.component';
 import { MapModel, mapStore } from './../stores/map.store';
 import { personStore } from './../stores/person.store';

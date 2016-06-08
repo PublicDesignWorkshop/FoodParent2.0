@@ -23,7 +23,7 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
     super(props);
     let self: NavAddressComponent = this;
     this.state = {
-      address: "",
+      address: "search tree id or street address...",
       editing: false,
     };
   }
@@ -40,18 +40,18 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
   }
   private updateProps = (props: INavAddressProps) => {
     let self: NavAddressComponent = this;
-    setTimeout(function() {
-      if (!self.state.editing) {
-        let location: L.LatLng = mapStore.getCenter(props.mapId);
-        if (location && location.lat && location.lng) {
-          reverseGeocoding(new L.LatLng(location.lat, location.lng), function(response: IReverseGeoLocation) {
-            self.setState({address: response.formatted, editing: false});
-          }, function() {
-
-          });
-        }
-      }
-    }, 250);
+    // setTimeout(function() {
+    //   if (!self.state.editing) {
+    //     let location: L.LatLng = mapStore.getCenter(props.mapId);
+    //     if (location && location.lat && location.lng) {
+    //       reverseGeocoding(new L.LatLng(location.lat, location.lng), function(response: IReverseGeoLocation) {
+    //         self.setState({address: response.formatted, editing: false});
+    //       }, function() {
+    //
+    //       });
+    //     }
+    //   }
+    // }, 250);
   }
 
   private searchAddress = () => {
