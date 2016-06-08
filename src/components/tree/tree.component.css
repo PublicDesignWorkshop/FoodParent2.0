@@ -57,6 +57,24 @@
   }
   .span[name="close"] {
   }
+
+  :local(.button) {
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    display: inline-block;
+    font-weight: 700;
+    border: 1px solid rgba(93, 40, 49, 1);
+    color: rgba(93, 40, 49, 1);
+    padding: 6px 0;
+    margin: 4px 0;
+    cursor: pointer;
+    font-size: small;
+  }
+  :local(.button:hover) {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(93, 40, 49, 1);
+  }
 }
 
 

@@ -58,7 +58,7 @@
     padding: 6px 0;
     margin: 4px 0;
     cursor: pointer;
-    font-size: medium;
+    font-size: small;
   }
   :local(.button:hover) {
     color: rgba(94, 78, 81, 1);
@@ -73,7 +73,7 @@
     padding: 6px 0;
     margin: 4px 0;
     cursor: pointer;
-    font-size: medium;
+    font-size: small;
     border: 1px solid rgba(107, 170, 119, 1);
   }
   :local(.button2:hover) {
@@ -82,15 +82,16 @@
   }
   :local(.button3) {
     width: 100%;
+    font-family: 'Open Sans', sans-serif;
     text-align: center;
     display: inline-block;
-    background-color: rgba(94, 78, 81, 1);
     font-weight: 700;
     color: rgba(255, 255, 255, 1);
+    background-color: rgba(93, 40, 49, 1);
     padding: 6px 0;
-    margin: 4px 0 4px 0;
+    margin: 4px 0;
     cursor: pointer;
-    font-size: medium;
+    font-size: small;
   }
   :local(.button3:hover) {
     color: rgba(107, 170, 119, 1);

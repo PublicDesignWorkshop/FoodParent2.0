@@ -1,6 +1,9 @@
 import { alt } from './../alt';
 import * as Alt from 'alt';
+import { browserHistory } from 'react-router';
 import { AbstractActions } from "./abstract.actions";
+
+var Settings = require('./../constraints/settings.json');
 import { TreeModel, ITreeProps } from './../stores/tree.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { treeSource } from './../sources/tree.source';
@@ -14,6 +17,10 @@ interface ITreeActions {
   updatedTree(props: ITreeProps);
   adoptTree(tree: TreeModel);
   unadoptTree(tree: TreeModel);
+  createTree(tree: TreeModel);
+  createdTree(props: ITreeProps);
+  deleteTree(tree: TreeModel);
+  deletedTree(props: ITreeProps);
   resetTempTree();
   refresh();
   setCode(code: number);
@@ -110,6 +117,30 @@ class TreeActions extends AbstractActions implements ITreeActions {
       dispatch(props);
     }
   }
+  createTree(tree: TreeModel) {
+    let self: TreeActions = this;
+    return (dispatch) => {
+      // we dispatch an event here so we can have "loading" state.
+      addLoading();
+      dispatch();
+      self.setCode(92);
+      treeSource.createTree(tree).then((response) => {
+        displaySuccessMessage(localization(635));
+        self.createdTree(response);
+        removeLoading();
+      }).catch((code) => {
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
+      });
+    }
+  }
+  createdTree(props: ITreeProps) {
+    return (dispatch) => {
+      browserHistory.push({pathname: Settings.uBaseName + '/tree/' + props.id});
+      dispatch(props);
+    }
+  }
   resetTempTree() {
     return (dispatch) => {
       dispatch();
@@ -118,6 +149,30 @@ class TreeActions extends AbstractActions implements ITreeActions {
   refresh() {
     return (dispatch) => {
       dispatch();
+    }
+  }
+  deleteTree(tree: TreeModel) {
+    let self: TreeActions = this;
+    return (dispatch) => {
+      addLoading();
+      dispatch();
+      self.setCode(91);
+      treeSource.deleteTree(tree).then((response) => {
+        displayErrorMessage(localization(637));
+        self.deletedTree(tree.toJSON());
+        removeLoading();
+      }).catch((code) => {
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
+      });
+    }
+  }
+  deletedTree(props: ITreeProps) {
+    let self: TreeActions = this;
+    return (dispatch) => {
+      browserHistory.replace({pathname: Settings.uBaseName + '/'});
+      dispatch(props);
     }
   }
 

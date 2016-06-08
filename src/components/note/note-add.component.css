@@ -52,7 +52,7 @@
     padding: 6px 0;
     margin: 4px 0;
     cursor: pointer;
-    font-size: medium;
+    font-size: small;
   }
   :local(.button:hover) {
     color: rgba(94, 78, 81, 1);

@@ -106,7 +106,7 @@ class NoteActions extends AbstractActions implements INoteActions {
       dispatch();
       self.setCode(91);
       noteSource.deleteNote(note).then((response) => {
-        displaySuccessMessage(localization(607));
+        displayErrorMessage(localization(607));
         self.deletedNote(note.toJSON());
         removeLoading();
       }).catch((code) => {

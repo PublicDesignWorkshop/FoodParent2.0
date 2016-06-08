@@ -248,7 +248,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       self.selected = null;
     }
     if (props.mode != TreesMode.TREEADDMARKER && props.mode != TreesMode.TREEADDINFO && !bFound) {
-      console.log("----------------------");
       self.map.closePopup();
     }
   }

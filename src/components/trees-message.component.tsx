@@ -17,6 +17,7 @@ import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 import { LogInStatus } from './app.component';
 import { noteActions } from './../actions/note.actions';
+import { treeActions } from './../actions/tree.actions';
 import { displaySuccessMessage, displayErrorMessage } from './../utils/message';
 import { localization } from './../constraints/localization';
 
@@ -77,7 +78,7 @@ export default class TreesMessageComponent extends React.Component<ITreesMessage
             <div className={styles.message}>
               <strong>Fill out</strong> information for the <strong>New Tree</strong>.
               <span className={styles.button} onClick={()=> {
-                self.context.router.replace({pathname: Settings.uBaseName + '/tree/add', query: { mode: "save" }});
+                treeActions.createTree(treeStore.getState().temp);
               }} >
                 SAVE
               </span>
@@ -93,6 +94,22 @@ export default class TreesMessageComponent extends React.Component<ITreesMessage
               <span className={styles.button2} onClick={()=> {
                 if (self.props.noteCode == 200) {
                   noteActions.deleteNote(note);
+                }
+              }} >
+                DELETE
+              </span>
+            </div>
+          </div>
+        );
+      case TreesMode.TREEDELETE:
+        let tree: TreeModel = treeStore.getTree(self.props.treeId);
+        return (
+          <div className={styles.wrapper + " " + styles.slidein + " " + styles.error}>
+            <div className={styles.message}>
+              <span dangerouslySetInnerHTML={{__html: localization(636)}} />
+              <span className={styles.button2} onClick={()=> {
+                if (tree && self.props.noteCode == 200) {
+                  treeActions.deleteTree(tree);
                 }
               }} >
                 DELETE

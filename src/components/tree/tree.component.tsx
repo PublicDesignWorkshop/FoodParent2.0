@@ -92,7 +92,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
               <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
                 self.context.router.push({pathname: Settings.uBaseName + '/'});
                 //self.setState({editable: self.state.editable});
-              }}/></div>
+              }} /></div>
             </div>
             <div className={styles.basicinfo}>
               <LocationComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
@@ -135,6 +135,11 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
               }>
                 <NoteListComponent noteId={self.props.noteId} />
               </AltContainer>
+            </div>
+            <div className={styles.button} onClick={()=> {
+              self.context.router.push({pathname: window.location.pathname, query: { mode: "delete" }});
+            }}>
+              DELETE TREE
             </div>
           </div>
         );

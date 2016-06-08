@@ -18,6 +18,7 @@ import TrresFilterComponent from './filter/trees-filter.component';
 import { TreeModel, treeStore } from './../stores/tree.store';
 import { FoodModel, foodStore } from './../stores/food.store';
 import { FlagModel, flagStore } from './../stores/flag.store';
+import { authStore } from './../stores/auth.store';
 import { NoteModel, noteStore, NoteType, PickupTime, AmountType } from './../stores/note.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { TileMode } from './map.component';
@@ -86,6 +87,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
     } else {
       switch(self.props.mode) {
         case TreesMode.TREEDETAIL:
+        case TreesMode.TREEDELETE:
         return (
           <div className={styles.wrapper + " " + styles.slidein}>
             <div className={styles.left}>

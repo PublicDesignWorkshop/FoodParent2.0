@@ -220,7 +220,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
                 self.submitUpdate();
               }
             }}>
-              SAVE
+              UPDATE
             </div>
             <MessageLineComponent code={self.props.code} match={[90, 91, 92, 93]} />
             <div className={styles.button2} onClick={()=> {
@@ -232,7 +232,6 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
               OR
             </div>
             <div className={styles.button3} onClick={()=> {
-              // noteStore.deleteNote(self.props.note);
               self.context.router.push({pathname: window.location.pathname, query: { note: self.props.note.getId(), mode: "delete" }});
             }}>
               DELETE

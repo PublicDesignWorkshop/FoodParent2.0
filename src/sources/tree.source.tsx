@@ -53,6 +53,52 @@ let TreeSource = {
       });
     })
   },
+  createTree(tree: TreeModel): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      $.ajax({
+        url: Settings.uBaseName + Settings.uServer + "tree.php",
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(tree.toJSON()),
+        dataType: "json",
+        success: function(response) {
+          if (response.code == 200) {
+            resolve(response.tree);
+          } else {
+            console.log(response.message);
+            reject(response.code);
+          }
+        },
+        error: function(response) {
+          console.log(response.statusText);
+          reject(response.status);
+        }
+      });
+    })
+  },
+  deleteTree(tree: TreeModel): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      $.ajax({
+        url: Settings.uBaseName + Settings.uServer + "tree.php",
+        type: 'DELETE',
+        contentType: 'application/json',
+        data: JSON.stringify(tree.toJSON()),
+        dataType: "json",
+        success: function(response) {
+          if (response.code == 200) {
+            resolve(response.tree[0]);
+          } else {
+            console.log(response.message);
+            reject(response.code);
+          }
+        },
+        error: function(response) {
+          console.log(response.statusText);
+          reject(response.status);
+        }
+      });
+    })
+  },
   //
   //
   //

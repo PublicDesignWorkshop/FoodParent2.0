@@ -61,9 +61,10 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
           props.tree.setAddress(self.state.address);
           if (props.async) {
             let food: FoodModel = foodStore.getFood(props.tree.getFoodId());
-            treeActions.updateTree(props.tree);
+            // treeActions.updateTree(props.tree);
+            self.setState({prevLat: parseFloat(self.props.tree.getLat().toFixed(Settings.iMarkerPrecision)), prevLng: parseFloat(self.props.tree.getLng().toFixed(Settings.iMarkerPrecision))});
           } else {
-            self.setState({editing: false, prevLat: props.tree.getLat(), prevLng: props.tree.getLng()});
+            self.setState({editing: false, prevLat: parseFloat(self.props.tree.getLat().toFixed(Settings.iMarkerPrecision)), prevLng: parseFloat(self.props.tree.getLng().toFixed(Settings.iMarkerPrecision))});
           }
           removeLoading();
         }, function() {

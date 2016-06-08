@@ -25,6 +25,9 @@ export function localization(value: any) {
   if (value.toString() == "607") return cl.e607;
 
   if (value.toString() == "634") return cl.e634;
+  if (value.toString() == "635") return cl.e635;
+  if (value.toString() == "636") return cl.e636;
+  if (value.toString() == "637") return cl.e637;
   if (value.toString() == "638") return cl.e638;
   if (value.toString() == "639") return cl.e639;
 

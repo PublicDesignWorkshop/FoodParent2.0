@@ -127,7 +127,7 @@
       "parent" => $data->{'parent'},
       "rate" => $data->{'rate'},
       "updated" => date("Y-m-d H:i:s"),
-      );
+    );
     $sql = "INSERT INTO `tree` VALUES ( NULL, :lat, :lng, :food, :flag, :owner, :description, :address, :public, :parent, :rate, :updated )";
 
     try {
@@ -165,28 +165,28 @@
     }
   }
 
-    function delete() {
-        $data = json_decode(file_get_contents('php://input'));
-        $params = array(
-            "id" => $data->{'id'},
-        );
-        $sql = "DELETE FROM `tree` WHERE (`id` = :id)";
-        try {
-            $pdo = getConnection();
-            $stmt = $pdo->prepare($sql);
-            $result = $stmt->execute($params);
-            $pdo = null;
-            $params = array(
-              "code" => 200,
-              "tree" => $result,
-            );
-            echo json_encode($params);
-        } catch(PDOException $e) {
-          $json = array(
-            "code" => $e->getCode(),
-            "message" => $e->getMessage(),
-          );
-          echo json_encode($json);
-        }
+  function delete() {
+    $data = json_decode(file_get_contents('php://input'));
+    $params = array(
+        "id" => $data->{'id'},
+    );
+    $sql = "DELETE FROM `tree` WHERE (`id` = :id)";
+    try {
+      $pdo = getConnection();
+      $stmt = $pdo->prepare($sql);
+      $result = $stmt->execute($params);
+      $pdo = null;
+      $params = array(
+        "code" => 200,
+        "tree" => $result,
+      );
+      echo json_encode($params);
+    } catch(PDOException $e) {
+      $json = array(
+        "code" => $e->getCode(),
+        "message" => $e->getMessage(),
+      );
+      echo json_encode($json);
     }
+  }
 ?>

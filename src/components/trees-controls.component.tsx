@@ -57,10 +57,10 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
     }
     let donation: JSX.Element;
     if (authStore.getAuth().getIsManager()) {
-      donation = <div className={styles.button + " " + styles.buttonbottom}>
-        <FontAwesome className='' name='sitemap' onClick={()=> {
+      donation = <div className={styles.button + " " + styles.buttonbottom} onClick={()=> {
 
-        }} />
+      }}>
+        <FontAwesome className='' name='sitemap'/>
       </div>
     }
     return (
@@ -93,15 +93,15 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
         }}>
           <FontAwesome className='' name='search-minus' />
         </div>
-        <div className={styles.button}>
-          <FontAwesome className='' name='filter' onClick={()=> {
-            self.context.router.push({pathname: Settings.uBaseName + '/tree/filter'});
-          }} />
+        <div className={styles.button} onClick={()=> {
+          self.context.router.push({pathname: Settings.uBaseName + '/tree/filter'});
+        }}>
+          <FontAwesome className='' name='filter'/>
         </div>
-        <div className={styles.button + " " + styles.buttonbottom}>
-          <FontAwesome className='' name='plus' onClick={()=> {
-            self.context.router.push({pathname: Settings.uBaseName + '/tree/add', query: { mode: "marker" }});
-          }} />
+        <div className={styles.button + " " + styles.buttonbottom} onClick={()=> {
+          self.context.router.push({pathname: Settings.uBaseName + '/tree/add', query: { mode: "marker" }});
+        }}>
+          <FontAwesome className='' name='plus' />
         </div>
         {donation}
       </div>

@@ -180,7 +180,9 @@ class TreeStore extends AbstractStore<TreeState> {
       handleResetTempTree: treeActions.resetTempTree,
       handleFetchedTrees: treeActions.fetchedTrees,
       handleUpdatedTree: treeActions.updatedTree,
+      handleCreatedTree: treeActions.createdTree,
       handleRefresh: treeActions.refresh,
+      handleDeletedTree: treeActions.deletedTree,
       // handleUpdateTree: treeActions.updateTree,
       // handleCreateTree: treeActions.createTree,
       handleSetCode: treeActions.setCode,
@@ -237,6 +239,38 @@ class TreeStore extends AbstractStore<TreeState> {
   }
   handleRefresh() {
     let self: TreeStore = this;
+  }
+  handleCreatedTree(props: ITreeProps) {
+    let self: TreeStore = this;
+    self.trees.push(new TreeModel(props));
+    self.temp = new TreeModel({
+      id: "0",
+      lat: Settings.vPosition.x,
+      lng: Settings.vPosition.y,
+      food: "1",
+      flag: "0",
+      public: "1",
+      description: "",
+      address: "",
+      owner: "0",
+      parent: "0",
+      rate: "-1",
+      updated: moment(new Date()).format(Settings.sServerDateFormat),
+    });
+    self.code = 200;
+  }
+  handleDeletedTree(props: ITreeProps) {
+    let self: TreeStore = this;
+    let i = -1;
+    for(let j = 0; j < self.trees.length; j++) {
+      if(self.trees[j].getId() === parseInt(props.id)) {
+        i = j;
+      }
+    }
+    if (i > -1) {
+      self.trees.splice(i, 1);
+    }
+    self.code = 200;
   }
 
 

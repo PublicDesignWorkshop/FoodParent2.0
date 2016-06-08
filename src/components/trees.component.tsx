@@ -23,7 +23,7 @@ import { flagActions } from './../actions/flag.actions';
 import MessageComponent from './message/message.component';
 
 export enum TreesMode {
-  NONE, TREES, TREEDETAIL, TREEADDMARKER, TREEADDINFO, TREEADDSAVE, TREESFILTER, TREENOTEEDIT, TREENOTEDELETE
+  NONE, TREES, TREEDETAIL, TREEDELETE, TREEADDMARKER, TREEADDINFO, TREEADDSAVE, TREESFILTER, TREENOTEEDIT, TREENOTEDELETE
 }
 export interface ITreesProps {
   params: any;
@@ -88,11 +88,12 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
           self.context.router.replace({pathname: Settings.uBaseName + '/tree/add', query: { mode: "marker" }});
         }
       }
-
     } else if (props.params.treeId) {
       mode = TreesMode.TREEDETAIL;
       treeId = parseInt(props.params.treeId);
-      if (props.location.query.note) {
+      if (props.location.query.mode) {
+        mode = TreesMode.TREEDELETE;
+      } else if (props.location.query.note) {
         mode = TreesMode.TREENOTEEDIT;
         noteId = parseInt(props.location.query.note);
         if (props.location.query.mode == "delete") {
