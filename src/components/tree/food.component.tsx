@@ -83,6 +83,17 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
 
   private updateProps(props: IFoodProps) {
     let self: FoodComponent = this;
+    var selected: IFoodOption;
+    let treeName: string = "";
+    if (props.tree.getId()) {
+      treeName = props.tree.getName();
+    }
+    props.foods.forEach(food => {
+      if (props.tree.getFoodId() == food.getId()) {
+        selected = {value: food.getId(), label: food.getName() + treeName};
+      }
+    });
+    self.setState({selected: selected});
   }
 
   private updateAttribute = (selected) => {
