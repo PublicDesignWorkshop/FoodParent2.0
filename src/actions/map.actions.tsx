@@ -1,8 +1,11 @@
 import { alt } from './../alt';
 import * as Alt from 'alt';
 import { AbstractActions } from "./abstract.actions";
+
+var Settings = require('./../constraints/settings.json');
 import { MapModel, IMapProps, IMapLocationProps, IMapTileProps, IMapZoomProps, IMapFirstProps, IMapActiveProps } from './../stores/map.store';
 import { TileMode } from './../components/map.component';
+import { addLoading, removeLoading } from './../utils/loadingtracker';
 
 interface IMapActions {
   addMap(id: string, map: L.Map): IMapProps;
@@ -13,6 +16,8 @@ interface IMapActions {
   setZoom(id: string, zoom: number): IMapZoomProps;
   setFirst(id: string, first: boolean): IMapFirstProps;
   setActive(id: string, active: boolean): IMapActiveProps;
+  moveToUserLocation(id: string);
+  movedToUserLocation(id: string, location: L.LatLng, zoom: number): IMapLocationProps;
 }
 
 class MapActions extends AbstractActions implements IMapActions {
@@ -45,6 +50,21 @@ class MapActions extends AbstractActions implements IMapActions {
   }
   setActive(id: string, active: boolean): IMapActiveProps {
     return {id, active};
+  }
+  moveToUserLocation(id: string) {
+    let self: MapActions = this;
+    return (dispatch) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position: Position) {
+          let location = new L.LatLng(position.coords.latitude, position.coords.longitude);
+          self.movedToUserLocation(id, location, Settings.iFocusZoom);
+        }, null);
+      }
+    }
+  }
+  movedToUserLocation(id: string, location: L.LatLng, zoom: number): IMapLocationProps {
+    let self: MapActions = this;
+    return {id: id, location: location, zoom: zoom};
   }
 }
 

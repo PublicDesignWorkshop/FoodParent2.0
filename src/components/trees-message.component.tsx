@@ -13,6 +13,7 @@ import TreesControlsComponent from './trees-controls.component';
 import { TreeModel, treeStore } from './../stores/tree.store';
 import { FoodModel, foodStore } from './../stores/food.store';
 import { NoteModel, noteStore } from './../stores/note.store';
+import { authStore } from './../stores/auth.store';
 import { checkLogin, checkAdmin } from './../utils/authentication';
 import { LogInStatus } from './app.component';
 import { noteActions } from './../actions/note.actions';
@@ -108,7 +109,9 @@ export default class TreesMessageComponent extends React.Component<ITreesMessage
               <span dangerouslySetInnerHTML={{__html: localization(636)}} />
               <span className={styles.button2} onClick={()=> {
                 if (tree && self.props.noteCode == 200) {
-                  treeActions.deleteTree(tree);
+                  if (authStore.getAuth().getIsAdmin()) {
+                    treeActions.deleteTree(tree);
+                  }
                 }
               }} >
                 DELETE

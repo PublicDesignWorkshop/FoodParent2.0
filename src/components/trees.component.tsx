@@ -225,6 +225,12 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
                 value: treeStore.getState().temp
               };
             },
+            position: function (props) {
+              return {
+                store: mapStore,
+                value: mapStore.getState().position
+              };
+            },
           }
         }>
           <MapComponent mode={self.state.mode} treeId={self.state.treeId} onRender={self.onMapRender} />

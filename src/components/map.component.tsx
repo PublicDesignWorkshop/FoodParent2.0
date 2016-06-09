@@ -34,6 +34,7 @@ export interface IMapProps {
   treeId: number;
   mode: TreesMode;
   onRender: Function;
+  position?: L.LatLng;
 
 
   // onZoom: Function;
@@ -55,12 +56,12 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   private markers: Array<L.Marker>;
   private selected: L.Marker;
   private newMarker: L.Marker;
-
-
-
-
   private userMarker: L.Circle;
   private userCenterMarker: L.Circle;
+
+
+
+
 
   // private position: L.LatLng;
 
@@ -158,6 +159,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
         break;
       }
       self.renderMarkers(nextProps.trees, nextProps);
+      self.renderUserLocation(nextProps.position);
     }
   }
   private renderMarkers = (trees: Array<TreeModel>, props: IMapProps) => {
@@ -285,41 +287,36 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
 
   private renderUserLocation(position: L.LatLng): void {
     let self: MapComponent = this;
-    // if (position) {
-    //   if (self.userMarker) {
-    //     self.userMarker.setLatLng(position);
-    //   } else {
-    //     self.userMarker = new L.Circle(position, 10, {
-    //       stroke: true,
-    //       color: "rgb(0, 0, 0)",
-    //       opacity: 0.75,
-    //       weight: 4,
-    //     });
-    //     self.map.addLayer(self.userMarker);
-    //   }
-    //   if (self.userCenterMarker) {
-    //     self.userCenterMarker.setLatLng(position);
-    //   } else {
-    //     self.userCenterMarker = new L.Circle(position, 1, {
-    //       stroke: true,
-    //       color: "rgb(0, 0, 0)",
-    //       opacity: 0.75,
-    //       fill: true,
-    //       fillColor: "rgb(0, 0, 0)",
-    //       fillOpacity: 0.75,
-    //       weight: 4,
-    //     });
-    //     self.map.addLayer(self.userCenterMarker);
-    //   }
-    //   self.context.router.push({pathname: Settings.uBaseName + '/'});
-    //   //self.props.onZoom(Settings.iFocusZoom);
-    //   setTimeout(function() {
-    //     var point: L.Point = L.CRS.EPSG3857.latLngToPoint(position, self.props.zoom);
-    //     var rMap = ReactDOM.findDOMNode(self.refs['map']);
-    //     self.map.panTo(L.CRS.EPSG3857.pointToLatLng(point, self.props.zoom));
-    //   }, 250);
-    //   self.props.offGeo();
-    // }
+    if (position) {
+      if (self.userMarker) {
+        self.userMarker.setLatLng(position);
+      } else {
+        self.userMarker = new L.Circle(position, 10, {
+          stroke: true,
+          color: "rgb(0, 0, 0)",
+          opacity: 0.75,
+          weight: 4,
+        });
+        self.map.addLayer(self.userMarker);
+      }
+      if (self.userCenterMarker) {
+        self.userCenterMarker.setLatLng(position);
+      } else {
+        self.userCenterMarker = new L.Circle(position, 1, {
+          stroke: true,
+          color: "rgb(0, 0, 0)",
+          opacity: 0.75,
+          fill: true,
+          fillColor: "rgb(0, 0, 0)",
+          fillOpacity: 0.75,
+          weight: 4,
+        });
+        self.map.addLayer(self.userCenterMarker);
+      }
+      // // self.context.router.push({pathname: Settings.uBaseName + '/'});
+      // var point: L.Point = L.CRS.EPSG3857.latLngToPoint(position, self.map.getZoom());
+      // self.map.setView(L.CRS.EPSG3857.pointToLatLng(point, self.map.getZoom()), Settings.iFocusZoom, {animate: false});
+    }
   }
 
   private afterRenderMap = () => {

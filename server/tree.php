@@ -167,24 +167,34 @@
 
   function delete() {
     $data = json_decode(file_get_contents('php://input'));
-    $params = array(
-        "id" => $data->{'id'},
-    );
-    $sql = "DELETE FROM `tree` WHERE (`id` = :id)";
-    try {
-      $pdo = getConnection();
-      $stmt = $pdo->prepare($sql);
-      $result = $stmt->execute($params);
-      $pdo = null;
+    $check = admin_check();
+
+    if ($check) {
       $params = array(
-        "code" => 200,
-        "tree" => $result,
+          "id" => $data->{'id'},
       );
-      echo json_encode($params);
-    } catch(PDOException $e) {
+      $sql = "DELETE FROM `tree` WHERE (`id` = :id)";
+      try {
+        $pdo = getConnection();
+        $stmt = $pdo->prepare($sql);
+        $result = $stmt->execute($params);
+        $pdo = null;
+        $params = array(
+          "code" => 200,
+          "tree" => $result,
+        );
+        echo json_encode($params);
+      } catch(PDOException $e) {
+        $json = array(
+          "code" => $e->getCode(),
+          "message" => $e->getMessage(),
+        );
+        echo json_encode($json);
+      }
+    } else {
       $json = array(
-        "code" => $e->getCode(),
-        "message" => $e->getMessage(),
+        "code" => 901,
+        "message" => "Access is not authorized.",
       );
       echo json_encode($json);
     }

@@ -65,9 +65,7 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
     return (
       <div className={styles.wrapper}>
         <div className={styles.button + " " + styles.buttontop} onClick={()=> {
-          if (navigator.geolocation) {
-            // navigator.geolocation.getCurrentPosition(self.props.onGeo, null);
-          }
+          mapActions.moveToUserLocation('map');
         }}>
           <FontAwesome className='' name='location-arrow' />
         </div>

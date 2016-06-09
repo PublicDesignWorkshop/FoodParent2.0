@@ -96,6 +96,7 @@ export class MapModel {
 
 export interface MapState {
   maps: Array<MapModel>;
+  position: L.LatLng;
   errorMessage: string;
 }
 
@@ -111,6 +112,7 @@ interface MapExtendedStore extends AltJS.AltStore<MapState> {
 
 class MapStore extends AbstractStore<MapState> {
   private maps: Array<MapModel>;
+  private position: L.LatLng;
   private errorMessage: string;
   constructor() {
     super();
@@ -129,6 +131,7 @@ class MapStore extends AbstractStore<MapState> {
       handleSetZoom: mapActions.setZoom,
       handleSetFirst: mapActions.setFirst,
       handleSetActive: mapActions.setActive,
+      handleMovedToUserLocation: mapActions.movedToUserLocation,
     });
     self.exportPublicMethods({
       getMap: self.getMap,
@@ -209,6 +212,23 @@ class MapStore extends AbstractStore<MapState> {
       }
       location = L.CRS.EPSG3857.pointToLatLng(point, props.zoom);
       maps[0].map.panTo(location, props.zoom);
+    }
+  }
+  handleMovedToUserLocation(props: IMapLocationProps) {
+    let self: MapStore = this;
+    let maps = self.maps.filter(map => map.getId() == props.id);
+    if (maps.length == 1) {
+      let location: L.LatLng = new L.LatLng(props.location.lat, props.location.lng);
+      let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, props.zoom);
+      let rMap = document.getElementById(props.id);
+      if (rMap.clientWidth > rMap.clientHeight) {
+        point.x += maps[0].map.getSize().x * 0.15;
+      } else {
+        //point.y += self.map.getSize().y * 0.15;
+      }
+      location = L.CRS.EPSG3857.pointToLatLng(point, props.zoom);
+      maps[0].map.setView(location, props.zoom);
+      self.position = props.location;
     }
   }
 

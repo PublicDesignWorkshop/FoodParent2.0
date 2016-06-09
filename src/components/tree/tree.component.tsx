@@ -84,6 +84,14 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
     if (self.props.treeId) {
       let tree: TreeModel = treeStore.getTree(self.props.treeId);
       let food: FoodModel = foodStore.getFood(tree.getFoodId());
+      let deleteTree: JSX.Element;
+      if (authStore.getAuth().getIsAdmin()) {
+        deleteTree = <div className={styles.button} onClick={()=> {
+          self.context.router.push({pathname: window.location.pathname, query: { mode: "delete" }});
+        }}>
+          DELETE TREE
+        </div>;
+      }
       if (authStore.getAuth().getIsManager()) {
         return (
           <div className={styles.wrapper}>
@@ -136,11 +144,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
                 <NoteListComponent noteId={self.props.noteId} />
               </AltContainer>
             </div>
-            <div className={styles.button} onClick={()=> {
-              self.context.router.push({pathname: window.location.pathname, query: { mode: "delete" }});
-            }}>
-              DELETE TREE
-            </div>
+            {deleteTree}
           </div>
         );
       } else {
