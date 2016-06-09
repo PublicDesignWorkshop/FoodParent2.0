@@ -60,9 +60,11 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
     let self: TreeComponent = this;
     if (props.trees.length != 0 && props.foods.length != 0) {
       let tree: TreeModel = treeStore.getTree(props.treeId);
-      setTimeout(function() {
-        personActions.fetchPersons(tree.getParents());
-      }, 0);
+      if (authStore.getAuth().getIsManager() && self.props.treeId != props.treeId) {
+        setTimeout(function() {
+          personActions.fetchPersons(tree.getParents());
+        }, 0);
+      }
       setTimeout(function() {
         noteActions.fetchNotesFromTreeIds([tree.getId()]);
       }, 0);

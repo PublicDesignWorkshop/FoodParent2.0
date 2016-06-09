@@ -41,9 +41,16 @@
     if (isset($_SESSION['user_auth'])) {
       $userauth = intval($_SESSION['user_auth']);
     }
-    if (($userauth != 1 && $userauth != 2) && $userid != intval($params['ids'])) {
+    if ($userid == null) {
+      $json = array(
+        "code" => 900,
+        "message" => "Not logged in.",
+      );
+      echo json_encode($json);
+    } else if (($userauth != 1 && $userauth != 2) && $userid != $params['ids']) {
       $json = array(
         "code" => 901,
+        "message" => "Access is not authorized.",
       );
       echo json_encode($json);
     } else {
@@ -60,10 +67,11 @@
         );
         echo json_encode($params);
       } catch(PDOException $e) {
-        $params = array(
-          "code" => 400,
+        $json = array(
+          "code" => $e->getCode(),
+          "message" => $e->getMessage(),
         );
-        echo json_encode($params);
+        echo json_encode($json);
       }
     }
   }
