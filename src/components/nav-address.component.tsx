@@ -68,7 +68,7 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
         self.context.router.push({pathname: Settings.uBaseName + '/tree/' + parseInt(value)});
       } else {
         geocoding(self.state.address, new L.LatLng(location.lat, location.lng), function(response) {
-          mapActions.moveTo(self.props.mapId, new L.LatLng(response.lat.toFixed(Settings.iMarkerPrecision), response.lng.toFixed(Settings.iMarkerPrecision)), Settings.iFocusZoom);
+          mapActions.moveToWithMarker(self.props.mapId, new L.LatLng(response.lat.toFixed(Settings.iMarkerPrecision), response.lng.toFixed(Settings.iMarkerPrecision)), Settings.iFocusZoom);
           // self.context.router.replace({pathname: window.location.pathname, query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
           // self.context.router.replace({pathname: Settings.uBaseName + '/', query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
           mapActions.setActive('map', true);

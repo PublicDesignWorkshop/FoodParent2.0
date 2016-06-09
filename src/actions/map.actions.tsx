@@ -12,6 +12,7 @@ interface IMapActions {
   update(id: string): string;
   panTo(id: string, location: L.LatLng, zoom: number): IMapLocationProps;
   moveTo(id: string, location: L.LatLng, zoom: number): IMapLocationProps;
+  moveToWithMarker(id: string, location: L.LatLng, zoom: number): IMapLocationProps;
   setTile(id: string, tile: TileMode): IMapTileProps;
   setZoom(id: string, zoom: number): IMapZoomProps;
   setFirst(id: string, first: boolean): IMapFirstProps;
@@ -65,6 +66,10 @@ class MapActions extends AbstractActions implements IMapActions {
   movedToUserLocation(id: string, location: L.LatLng, zoom: number): IMapLocationProps {
     let self: MapActions = this;
     return {id: id, location: location, zoom: zoom};
+  }
+  moveToWithMarker(id: string, location: L.LatLng, zoom: number): IMapLocationProps {
+    let self: MapActions = this;
+    return {id, location, zoom};
   }
 }
 

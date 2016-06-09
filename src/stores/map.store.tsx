@@ -125,6 +125,7 @@ class MapStore extends AbstractStore<MapState> {
     self.bindListeners({
       handleAddMap: mapActions.addMap,
       handleMoveTo: mapActions.moveTo,
+      handleMoveToWithMarker: mapActions.moveToWithMarker,
       handlePanTo: mapActions.panTo,
       handleUpdate: mapActions.update,
       handleSetTile: mapActions.setTile,
@@ -215,6 +216,23 @@ class MapStore extends AbstractStore<MapState> {
     }
   }
   handleMovedToUserLocation(props: IMapLocationProps) {
+    let self: MapStore = this;
+    let maps = self.maps.filter(map => map.getId() == props.id);
+    if (maps.length == 1) {
+      let location: L.LatLng = new L.LatLng(props.location.lat, props.location.lng);
+      let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, props.zoom);
+      let rMap = document.getElementById(props.id);
+      if (rMap.clientWidth > rMap.clientHeight) {
+        point.x += maps[0].map.getSize().x * 0.15;
+      } else {
+        //point.y += self.map.getSize().y * 0.15;
+      }
+      location = L.CRS.EPSG3857.pointToLatLng(point, props.zoom);
+      maps[0].map.setView(location, props.zoom);
+      self.position = props.location;
+    }
+  }
+  handleMoveToWithMarker(props: IMapLocationProps) {
     let self: MapStore = this;
     let maps = self.maps.filter(map => map.getId() == props.id);
     if (maps.length == 1) {

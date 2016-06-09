@@ -95,7 +95,7 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
     });
     self.setState({selected: selected});
   }
-
+  
   private updateAttribute = (selected) => {
     let self: FoodComponent = this;
     var foodId = 0;
