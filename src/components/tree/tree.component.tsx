@@ -33,7 +33,8 @@ export interface ITreeProps {
   noteId: number;
 }
 export interface ITreeStatus {
-  editable: boolean;
+  treeId?: number;
+  editable?: boolean;
 }
 export default class TreeComponent extends React.Component<ITreeProps, ITreeStatus> {
   static contextTypes: any;
@@ -66,7 +67,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
         }, 0);
       }
       // Fetch only when different tree is selected.
-      if (self.props.treeId != props.treeId) {
+      if (self.state.treeId != props.treeId) {
         setTimeout(function() {
           noteActions.fetchNotesFromTreeIds([tree.getId()]);
         }, 0);
@@ -79,8 +80,8 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
         if (tree.getOwner() == authStore.getAuth().getId() && authStore.getAuth().getId() != 0) {
           editable = true;
         }
-        self.setState({editable: editable});
       }
+      self.setState({editable: editable, treeId: props.treeId});
     }
   }
 

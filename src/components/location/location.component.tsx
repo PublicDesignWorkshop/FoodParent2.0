@@ -23,7 +23,8 @@ export interface ILocationProps {
   donateId: number;
 }
 export interface ILocationStatus {
-  editable: boolean;
+  locationId?: number;
+  editable?: boolean;
 }
 export default class LocationComponent extends React.Component<ILocationProps, ILocationStatus> {
   static contextTypes: any;
@@ -55,7 +56,7 @@ export default class LocationComponent extends React.Component<ILocationProps, I
         //   personActions.fetchPersons(tree.getParents());
         // }, 0);
       }
-      if (self.props.locationId != props.locationId) {
+      if (self.state.locationId == null || self.props.locationId != props.locationId) {
         setTimeout(function() {
           donateActions.fetchDonatesFromLocationIds([location.getId()]);
         }, 0);
@@ -66,8 +67,8 @@ export default class LocationComponent extends React.Component<ILocationProps, I
         if (authStore.getAuth().getIsManager()) {
           editable = true;
         }
-        self.setState({editable: editable});
       }
+      self.setState({editable: editable, locationId: props.locationId});
     }
   }
 
