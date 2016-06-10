@@ -166,7 +166,7 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
           treeActions.fetchTrees();
         }
       });
-    }, 500);
+    }, 1000);
 
   }
   public renderTree = (treeId: number) => {

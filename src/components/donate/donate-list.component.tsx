@@ -48,55 +48,59 @@ export default class DonateListComponent extends React.Component<IDonateListProp
       if (donate.getId()) {
         let food: FoodModel = foodStore.getFood(donate.getFoodId());
         let list: Array<JSX.Element> = new Array<JSX.Element>();
-        for (let i = 0; i < donate.getTrees().length; i++) {
-          if (donate.getTrees().length - 1 == i) {
-            list.push(<span className={styles.tree} key={"tree" + donate.getTrees()[i]}onClick={()=> {
-              self.context.router.push({pathname: window.location.pathname + "/tree/" + donate.getTrees()[i]});
-            }}>{"#" + donate.getTrees()[i]}</span>);
-          } else {
-            list.push(<span className={styles.tree} key={"tree" + donate.getTrees()[i]}onClick={()=> {
-              self.context.router.push({pathname: window.location.pathname + "/tree/" + donate.getTrees()[i]});
-            }}>{"#" + donate.getTrees()[i]}</span>);
-            // list.push(<span key={"tree" + donate.getTrees()[i] + "comma"}>, </span>);
-          }
-
-        }
+        donate.getTrees().forEach((treeId: number) => {
+          list.push(<span className={styles.tree} key={"tree" + treeId}onClick={()=> {
+            self.context.router.push({pathname: Settings.uBaseName + "/tree/" + treeId});
+          }}>{"#" + treeId}</span>);
+        });
         if (donate.getId() == self.props.donateId) {
           return (
-            <div className={styles.value + " " + styles.selected} key={"note" + i} onClick={()=> {
-              self.context.router.push({pathname: window.location.pathname, query: { donate: donate.getId() }});
-            }}>
+            <div className={styles.value + " " + styles.selected} key={"note" + i}>
               <FontAwesome className='' name='angle-right' />
-              <span className={styles.amount}>
+              <span className={styles.amount} onClick={()=> {
+                self.context.router.push({pathname: window.location.pathname, query: { donate: donate.getId() }});
+              }}>
                 {" \"" + food.getName() + " " + Math.floor(donate.getAmount()).toLocaleString() + "g\""}
               </span>
-              <span className={styles.comment}>
+              <span className={styles.comment} onClick={()=> {
+                self.context.router.push({pathname: window.location.pathname, query: { donate: donate.getId() }});
+              }}>
                 {" from "}
+              </span>
+              <span className={styles.comment}>
                 {list}
                 {". "}
               </span>
-              <span className={styles.date}>
+              <span className={styles.date} onClick={()=> {
+                self.context.router.push({pathname: window.location.pathname, query: { donate: donate.getId() }});
+              }}>
                 {" (" + donate.getFormattedDate() + ")"}
               </span>
             </div>
           );
         } else {
           return (
-            <div className={styles.value} key={"note" + i}  onClick={()=> {
+            <div className={styles.value} key={"note" + i}>
+            <FontAwesome className='' name='angle-right' />
+            <span className={styles.amount} onClick={()=> {
               self.context.router.push({pathname: window.location.pathname, query: { donate: donate.getId() }});
             }}>
-              <FontAwesome className='' name='angle-right' />
-              <span className={styles.amount}>
-                {" \"" + food.getName() + " " + Math.floor(donate.getAmount()).toLocaleString() + "g\""}
-              </span>
-              <span className={styles.comment}>
+              {" \"" + food.getName() + " " + Math.floor(donate.getAmount()).toLocaleString() + "g\""}
+            </span>
+            <span className={styles.comment} onClick={()=> {
+              self.context.router.push({pathname: window.location.pathname, query: { donate: donate.getId() }});
+            }}>
               {" from "}
+            </span>
+            <span className={styles.comment}>
               {list}
               {". "}
-              </span>
-              <span className={styles.date}>
-                {" (" + donate.getFormattedDate() + ")"}
-              </span>
+            </span>
+            <span className={styles.date} onClick={()=> {
+              self.context.router.push({pathname: window.location.pathname, query: { donate: donate.getId() }});
+            }}>
+              {" (" + donate.getFormattedDate() + ")"}
+            </span>
             </div>
           );
         }

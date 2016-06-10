@@ -86,7 +86,7 @@ export default class LocationComponent extends React.Component<ILocationProps, I
             <div className={styles.treeinfo}>
               <LocationNameComponent location={location} editable={self.state.editable} async={self.state.editable} />
               <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
-                self.context.router.push({pathname: Settings.uBaseName + '/'});
+                self.context.router.push({pathname: Settings.uBaseName + '/donations'});
                 //self.setState({editable: self.state.editable});
               }} /></div>
             </div>
