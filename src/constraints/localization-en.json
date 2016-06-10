@@ -19,6 +19,11 @@
   "e638": "The tree has been <strong>adopted</strong>.",
   "e639": "The tree has ben <strong>unadopted</strong>.",
 
+  "e664": "The location has been <strong>updated</strong>.",
+  "e665": "New location has been <strong>created</strong>.",
+  "e666": "Press the button to <strong>delete</strong> this location.",
+  "e667": "The location has been <strong>deleted</strong>.",
+
   "e900": "Not logged in.",
   "e901": "Access is not authorized.",
   "e902": "Failed to log in.",

@@ -17,11 +17,12 @@ import { authActions } from './../actions/auth.actions';
 import { personActions } from './../actions/person.actions';
 
 export interface INavProps {
+  location: any;
   auth?: AuthModel;
   query: any;
 }
 export interface INavStatus {
-
+  mapId?: string;
 }
 export default class NavComponent extends React.Component<INavProps, INavStatus> {
   static contextTypes: any;
@@ -29,8 +30,7 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
     super(props);
     let self: NavComponent = this;
     this.state = {
-      address: "",
-      editing: false,
+      mapId: "map",
     };
   }
   public componentDidMount() {
@@ -46,6 +46,11 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
   }
   private updateProps = (props: INavProps) => {
     let self: NavComponent = this;
+    if (props.location.pathname.indexOf(Settings.uBaseName + "/donation") > -1) {
+      self.setState({mapId: "map-donation"});
+    } else {
+      self.setState({mapId: "map"});
+    }
   }
 
   render() {
@@ -75,7 +80,7 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
                   maps: mapStore
                 }
               }>
-                <NavAddressComponent mapId="map" />
+                <NavAddressComponent mapId={self.state.mapId} />
               </AltContainer>
             </div>
             <div className={styles.right}>
@@ -115,7 +120,7 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
                   maps: mapStore
                 }
               }>
-                <NavAddressComponent mapId="map" />
+                <NavAddressComponent mapId={self.state.mapId} />
               </AltContainer>
             </div>
             <div className={styles.right}>

@@ -75,7 +75,7 @@ export default class AppComponent extends React.Component<IAppProps, IAppStatus>
               }
             }
           }>
-            <NavComponent query={self.state.query} />
+            <NavComponent query={self.state.query} location={self.props.location} />
           </AltContainer>
         </div>
         <div className={styles.body}>

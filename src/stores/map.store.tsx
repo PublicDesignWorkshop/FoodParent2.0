@@ -249,10 +249,6 @@ class MapStore extends AbstractStore<MapState> {
       self.position = props.location;
     }
   }
-
-
-
-
   getTile(id: string): TileMode {
     let self: MapStore = this;
     if (self.getState().maps) {

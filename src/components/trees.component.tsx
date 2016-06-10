@@ -90,7 +90,7 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
     } else if (props.params.treeId) {
       mode = TreesMode.TREEDETAIL;
       treeId = parseInt(props.params.treeId);
-      if (props.location.query.mode) {
+      if (props.location.query.mode == "delete") {
         mode = TreesMode.TREEDELETE;
       } else if (props.location.query.note) {
         mode = TreesMode.TREENOTEEDIT;

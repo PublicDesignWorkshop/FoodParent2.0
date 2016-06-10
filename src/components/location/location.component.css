@@ -1,0 +1,87 @@
+@media all {
+  :local(.wrapper) {
+    width: 100%;
+    padding: 8px;
+    background-color: rgba(244, 244, 244, 1);
+  }
+  :local(.treeinfo) {
+    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;           /* TWEENER - IE 10 */
+    display: -webkit-flex;          /* NEW - Chrome */
+    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    border-radius: 2px;
+    padding: 0 0 8px 0;
+  }
+  :local(.treeinfo .icon) {
+    /*
+    -webkit-filter: drop-shadow(0px 0px 1px rgba(94, 78, 81, 0.75));
+    filter: drop-shadow( 0px 0px 1px rgba(94, 78, 81, 0.75));
+    */
+    width: 36px;
+    height: 36px;
+    margin: 8px;
+  }
+  :local(.treeinfo .name) {
+    -webkit-flex-grow: 1;           /* NEW - Chrome */
+    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    font-size: x-large;
+    font-weight: 700;
+    color: rgba(94, 78, 81, 1);
+    margin: auto;
+    margin-right: 8px;
+  }
+  :local(.treeinfo .close) {
+    font-size: xx-large;
+    font-weight: 700;
+    color: rgba(94, 78, 81, 1);
+  }
+  :local(.treeinfo .close span) {
+    cursor: pointer;
+  }
+  :local(.basicinfo) {
+    border-radius: 2px;
+    background-color: rgba(94, 78, 81, 1);
+    padding: 4px 12px 12px 12px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  :local(.basicinfo2) {
+    border-radius: 2px;
+    background-color: rgba(94, 78, 81, 1);
+    padding: 4px 12px 12px 12px;
+    max-height: 280px;
+    overflow-y: auto;
+  }
+  .span[name="close"] {
+  }
+
+  :local(.button) {
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    display: inline-block;
+    font-weight: 700;
+    border: 1px solid rgba(93, 40, 49, 1);
+    color: rgba(93, 40, 49, 1);
+    padding: 6px 0;
+    margin: 4px 0;
+    cursor: pointer;
+    font-size: small;
+  }
+  :local(.button:hover) {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(93, 40, 49, 1);
+  }
+}
+
+
+@media screen and (max-device-width: 736px) {
+
+}
+
+@media screen and (max-device-aspect-ratio: 1/1) {
+
+}

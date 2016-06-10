@@ -57,7 +57,7 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
     let donation: JSX.Element;
     if (authStore.getAuth().getIsManager()) {
       donation = <div className={styles.button + " " + styles.buttonbottom} onClick={()=> {
-
+        self.context.router.push({pathname: Settings.uBaseName + '/donations'});
       }}>
         <FontAwesome className='' name='sitemap'/>
       </div>
