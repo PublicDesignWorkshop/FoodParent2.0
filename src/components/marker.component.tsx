@@ -154,6 +154,7 @@ module MarkerComponent {
 
     let marker: L.Marker = new L.Marker(new L.LatLng(location.getLat(), location.getLng()), {
       id: location.getId(),
+      name: location.getName(),
       selected: false,
       icon: icon,
       draggable: false,

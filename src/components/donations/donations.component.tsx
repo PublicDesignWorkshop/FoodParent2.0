@@ -11,6 +11,7 @@ import { locationStore, LocationModel, LocationState } from './../../stores/loca
 import { locationActions } from './../../actions/location.actions';
 import DonationsMapComponent from './donations-map.component' ;
 import DonationsPanelComponent from './donations-panel.component' ;
+import { authStore } from './../../stores/auth.store';
 import { mapStore } from './../../stores/map.store';
 import { TileMode } from './../map.component';
 import MessageComponent from './../message/message.component';
@@ -57,29 +58,34 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
   private updateProps = (props: IDonationsProps) => {
     let self: DonationsComponent = this;
     let locationId = null;
-    let noteId = null;
+    let donateId = null;
     let mode: DonationsMode = DonationsMode.DONATIONS;
     if (props.params.locationId) {
       mode = DonationsMode.LOCATIONDETAIL;
       locationId = parseInt(props.params.locationId);
       if (props.location.query.mode == "delete") {
         mode = DonationsMode.LOCATIONDELETE;
-      } else if (props.location.query.note) {
+      } else if (props.location.query.donate) {
         mode = DonationsMode.DONATIONNOTEEDIT;
-        noteId = parseInt(props.location.query.note);
+        donateId = parseInt(props.location.query.donate);
         if (props.location.query.mode == "delete") {
           mode = DonationsMode.DONATIONNOTEDELETE;
         }
       }
     }
-    self.setState({mode: mode, locationId: locationId, noteId: noteId});
+    self.setState({mode: mode, locationId: locationId, donateId: donateId});
   }
 
   public onMapRender = () => {
     let self: DonationsComponent = this;
     setTimeout(function() {
-      locationActions.fetchLocations();
-    }, 500);
+      if (authStore.getAuth().getIsGuest()) {
+        self.context.router.replace({pathname: Settings.uBaseName + '/'});
+      } else {
+        locationActions.fetchLocations();
+      }
+    }, 1000);
+
   }
   public renderLocation = (locationId: number) => {
     let self: DonationsComponent = this;
@@ -100,7 +106,7 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
             tile: function (props) {
               return {
                 store: mapStore,
-                value: mapStore.getTile('map'),
+                value: mapStore.getTile('map-donation'),
               };
             },
             tempLocation: function (props) {

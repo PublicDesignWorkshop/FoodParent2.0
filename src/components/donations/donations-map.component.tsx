@@ -150,7 +150,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
     for (let i = 0; i < self.markers.length;) {
       let bFound: boolean = false;
       locations.forEach((location: LocationModel) => {
-        if (location.getId() == self.markers[i].options.id && self.markers[i].getLatLng().lat == location.getLat() && self.markers[i].getLatLng().lng == location.getLng()) {
+        if (location.getId() == self.markers[i].options.id && self.markers[i].options.name == location.getName() && self.markers[i].getLatLng().lat == location.getLat() && self.markers[i].getLatLng().lng == location.getLng()) {
           bFound = true;
         }
       });

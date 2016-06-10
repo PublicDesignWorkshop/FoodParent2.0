@@ -3050,6 +3050,7 @@ declare namespace L {
         riseOffset?: number;
         id?: number;
         food?: number;
+        name?: string;
         selected?: boolean;
     }
 }

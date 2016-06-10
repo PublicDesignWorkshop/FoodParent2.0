@@ -9,6 +9,10 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './location.component.css';
 import { LocationModel, locationStore } from './../../stores/location.store';
 import { authStore } from './../../stores/auth.store';
+import LocationNameComponent from './location-name.component';
+import LocationLocationComponent from './location-location.component';
+import LocationAddressComponent from './location-address.component';
+import LocationDescriptionComponent from './location-description.component';
 
 export interface ILocationProps {
   locations?: Array<LocationModel>;
@@ -77,10 +81,16 @@ export default class LocationComponent extends React.Component<ILocationProps, I
         return (
           <div className={styles.wrapper}>
             <div className={styles.treeinfo}>
-
+              <LocationNameComponent location={location} editable={self.state.editable} async={self.state.editable} />
+              <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
+                self.context.router.push({pathname: Settings.uBaseName + '/'});
+                //self.setState({editable: self.state.editable});
+              }} /></div>
             </div>
             <div className={styles.basicinfo}>
-
+              <LocationLocationComponent location={location} editable={self.state.editable} async={self.state.editable} />
+              <LocationAddressComponent location={location} editable={self.state.editable} async={self.state.editable} />
+              <LocationDescriptionComponent location={location} editable={self.state.editable} async={self.state.editable} />
             </div>
             {deleteLocation}
           </div>

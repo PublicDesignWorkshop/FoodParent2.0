@@ -92,69 +92,69 @@ let PersonSource = {
   //     shouldFetch:() => true
   //   };
   // },
-  updatePerson(): AltJS.SourceModel<PersonModel> {
-    return {
-      remote(state: PersonState, update?: PersonModel) {
-        return new Promise<PersonModel>((resolve, reject) => {
-          //console.log(tree.toJSON());
-          $.ajax({
-            url: Settings.uBaseName + Settings.uServer + "person.php",
-            type: 'PUT',
-            contentType: 'application/json',
-            data: JSON.stringify(update.toJSON()),
-            dataType: "json",
-            success: function(response) {
-              resolve(response[0]);
-            },
-            error: function(response) {
-              console.log(response);
-              reject(response);
-            }
-          });
-        })
-      },
-      local(state: PersonState): PersonModel {
-        //TODO : Figure out why local doesn't work =(
-        return null;
-      },
-      success: personActions.updatePerson,
-      error: personActions.failed,
-      loading: personActions.loading,
-      shouldFetch:() => true
-    };
-  },
-
-  deletePerson(): AltJS.SourceModel<PersonModel> {
-    return {
-      remote(state: PersonState, remove?: PersonModel) {
-        return new Promise<PersonModel>((resolve, reject) => {
-          //console.log(tree.toJSON());
-          $.ajax({
-            url: Settings.uBaseName + Settings.uServer + "person.php",
-            type: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify(remove.toJSON()),
-            dataType: "json",
-            success: function(response) {
-              resolve(remove.toJSON());
-            },
-            error: function(response) {
-              console.log(response);
-              reject(response);
-            }
-          });
-        })
-      },
-      local(state: PersonState): PersonModel {
-        //TODO : Figure out why local doesn't work =(
-        return null;
-      },
-      success: personActions.deletePerson,
-      error: personActions.failed,
-      loading: personActions.loading,
-      shouldFetch:() => true
-    };
-  }
+  // updatePerson(): AltJS.SourceModel<PersonModel> {
+  //   return {
+  //     remote(state: PersonState, update?: PersonModel) {
+  //       return new Promise<PersonModel>((resolve, reject) => {
+  //         //console.log(tree.toJSON());
+  //         $.ajax({
+  //           url: Settings.uBaseName + Settings.uServer + "person.php",
+  //           type: 'PUT',
+  //           contentType: 'application/json',
+  //           data: JSON.stringify(update.toJSON()),
+  //           dataType: "json",
+  //           success: function(response) {
+  //             resolve(response[0]);
+  //           },
+  //           error: function(response) {
+  //             console.log(response);
+  //             reject(response);
+  //           }
+  //         });
+  //       })
+  //     },
+  //     local(state: PersonState): PersonModel {
+  //       //TODO : Figure out why local doesn't work =(
+  //       return null;
+  //     },
+  //     success: personActions.updatePerson,
+  //     error: personActions.failed,
+  //     loading: personActions.loading,
+  //     shouldFetch:() => true
+  //   };
+  // },
+  //
+  // deletePerson(): AltJS.SourceModel<PersonModel> {
+  //   return {
+  //     remote(state: PersonState, remove?: PersonModel) {
+  //       return new Promise<PersonModel>((resolve, reject) => {
+  //         //console.log(tree.toJSON());
+  //         $.ajax({
+  //           url: Settings.uBaseName + Settings.uServer + "person.php",
+  //           type: 'DELETE',
+  //           contentType: 'application/json',
+  //           data: JSON.stringify(remove.toJSON()),
+  //           dataType: "json",
+  //           success: function(response) {
+  //             resolve(remove.toJSON());
+  //           },
+  //           error: function(response) {
+  //             console.log(response);
+  //             reject(response);
+  //           }
+  //         });
+  //       })
+  //     },
+  //     local(state: PersonState): PersonModel {
+  //       //TODO : Figure out why local doesn't work =(
+  //       return null;
+  //     },
+  //     success: personActions.deletePerson,
+  //     error: personActions.failed,
+  //     loading: personActions.loading,
+  //     shouldFetch:() => true
+  //   };
+  // }
 };
 
 export const personSource = PersonSource;
