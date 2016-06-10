@@ -16,3 +16,11 @@ export function checkValidPickupAmountNumber(value: number) {
     throw new Error("602");
   }
 };
+
+export function checkValidDonateAmountNumber(value: number) {
+  if (isNaN(value)) {
+    throw new Error("603");
+  } else if (value <= 0) {
+    throw new Error("602");
+  }
+};

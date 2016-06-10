@@ -20,10 +20,12 @@ import DonateFoodComponent from './donate-food.component';
 import ImageZoomComponent from './../image/image-zoom.component';
 import { donateActions } from './../../actions/donate.actions';
 import { authStore } from './../../stores/auth.store';
+import { treeStore } from './../../stores/tree.store';
 import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
-import { checkValidPickupAmountNumber } from './../../utils/errorhandler';
+import { checkValidDonateAmountNumber } from './../../utils/errorhandler';
 import { localization } from './../../constraints/localization';
 import MessageLineComponent from './../message/message-line.component';
+import DonateSourceComponent from './donate-source.component';
 
 export interface IDonateAddProps {
   locationId: number;
@@ -90,7 +92,7 @@ export default class DonateAddComponent extends React.Component<IDonateAddProps,
     let self: DonateAddComponent = this;
     let error: any = null;
     try {
-      checkValidPickupAmountNumber(self.props.donate.getAmount());
+      checkValidDonateAmountNumber(self.props.donate.getAmount());
       donateActions.createDonate(donateStore.getTempDonate());
     } catch(e) {
       displayErrorMessage(localization(e.message));
@@ -179,6 +181,18 @@ export default class DonateAddComponent extends React.Component<IDonateAddProps,
               }
             }>
               <DonateFoodComponent donate={self.props.donate} editable={true} async={false} />
+            </AltContainer>
+            <AltContainer stores={
+              {
+                trees: function (props) {
+                  return {
+                    store: treeStore,
+                    value: treeStore.getState().trees
+                  };
+                }
+              }
+            }>
+              <DonateSourceComponent donate={self.props.donate} editable={true} async={false} />
             </AltContainer>
             <DonateCommentComponent donate={self.props.donate} editable={true} async={false} />
             <DonateDateComponent donate={self.props.donate} editable={true} async={false} />

@@ -1,3 +1,4 @@
+import * as $ from 'jquery';
 import { alt } from './../alt';
 import * as Alt from 'alt';
 import * as moment from 'moment';
@@ -10,6 +11,18 @@ import { AbstractStore } from './../stores/abstract.store';
 import { foodStore } from './food.store';
 import { AmountType } from './note.store';
 import { sortDonateByDateDESC } from './../utils/sort';
+import { TreeModel } from './../stores/tree.store';
+
+export interface IDonateSourceProps {
+  id: number,
+  tree: number,
+}
+
+export interface IDonateSourcesProps {
+  id: number,
+  trees: Array<number>,
+}
+
 
 export interface IDonateProps {
   id: string;
@@ -129,7 +142,10 @@ export class DonateModel {
     return this.trees[index];
   }
   public addTree(treeId: number): void {
-    this.trees.push(treeId);
+    let self: DonateModel = this;
+    if ($.inArray(treeId, self.trees) == -1) {
+      self.trees.push(treeId);
+    }
   }
   public getAmount(): number {
     return this.amount;
@@ -201,6 +217,10 @@ class DonateStore extends AbstractStore<DonateState> {
       handleUpdatedDonate: donateActions.updatedDonate,
       handleDeletedDonate: donateActions.deletedDonate,
       handleSetCode: donateActions.setCode,
+      handleSetTempDonateSource: donateActions.setTempDonateSource,
+      handleAddTempDonateSource: donateActions.addTempDonateSource,
+      handleSetDonateSource: donateActions.setDonateSource,
+      handleAddDonateSource: donateActions.addDonateSource,
     });
     self.exportPublicMethods({
       getTempDonate: self.getTempDonate,
@@ -291,6 +311,40 @@ class DonateStore extends AbstractStore<DonateState> {
   handleSetCode(code: any) {
     let self: DonateStore = this;
     self.code = code;
+  }
+  handleSetTempDonateSource(trees: Array<number>) {
+    let self: DonateStore = this;
+    self.temp.setTrees(trees);
+  }
+  handleAddTempDonateSource(tree: number) {
+    let self: DonateStore = this;
+    self.temp.addTree(tree);
+  }
+  handleAddDonateSource(props: IDonateSourceProps) {
+    let self: DonateStore = this;
+    let i = -1;
+    for(let j = 0; j < self.donates.length; j++) {
+      if(self.donates[j].getId() === props.id) {
+        i = j;
+      }
+    }
+    if (i > -1) {
+      self.donates[0].addTree(props.tree);
+    }
+    self.code = 200;
+  }
+  handleSetDonateSource(props: IDonateSourcesProps) {
+    let self: DonateStore = this;
+    let i = -1;
+    for(let j = 0; j < self.donates.length; j++) {
+      if(self.donates[j].getId() === props.id) {
+        i = j;
+      }
+    }
+    if (i > -1) {
+      self.donates[0].setTrees(props.trees);
+    }
+    self.code = 200;
   }
 }
 

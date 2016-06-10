@@ -35,6 +35,7 @@ export interface IMapProps {
   mode: DonationsMode;
   onRender: Function;
   position?: L.LatLng;
+  donateId: number;
 }
 export interface IMapStatus {
 
@@ -315,7 +316,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       zoomToBoundsOnClick: true,
       removeOutsideVisibleBounds: true,
       maxClusterRadius: Settings.iMaxClusterRadius,
-      disableClusteringAtZoom: Settings.iDisableClusteringAtZoom
+      disableClusteringAtZoom: 1
     });
     self.layer.addTo(self.map);
     self.layer2 = new L.MarkerClusterGroup();
@@ -415,7 +416,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       // marker = MarkerComponent.createEditableMarker(food, tree);
     } else {
       if (food) {
-        marker = MarkerComponent.createTreeSelectMarker(food, tree);
+        marker = MarkerComponent.createTreeSelectMarker(self.props.donateId, food, tree);
       }
     }
     if (marker) {

@@ -79,7 +79,6 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
   private updateProps(props: IDonateFoodProps) {
     let self: DonateFoodComponent = this;
     var selected: IDonateFoodTypeOption;
-    let treeName: string = "";
     props.foods.forEach(food => {
       if (props.donate.getFoodId() == food.getId()) {
         selected = {value: food.getId(), label: food.getName()};
@@ -94,8 +93,15 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
       foodId = parseInt(selected.value);
     }
     self.props.donate.setFoodId(foodId);
+    if (self.state.selected.value != selected.value) {
+      if (self.props.donate.getId() == 0) {
+        donateActions.setTempDonateSource([]);
+      } else {
+        donateActions.setDonateSource(self.props.donate.getId(), []);
+      }
+    }
     if (self.props.async) {
-      donateActions.updateDonate(self.props.donate);
+      // donateActions.updateDonate(self.props.donate);
     } else {
       self.setState({selected: selected});
     }

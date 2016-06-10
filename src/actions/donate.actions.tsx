@@ -4,7 +4,8 @@ import { browserHistory } from 'react-router';
 import { AbstractActions } from "./abstract.actions";
 
 var Settings = require('./../constraints/settings.json');
-import { DonateModel, IDonateProps } from './../stores/donate.store';
+import { DonateModel, IDonateProps, IDonateSourceProps, IDonateSourcesProps } from './../stores/donate.store';
+import { TreeModel } from './../stores/tree.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { donateSource } from './../sources/donate.source';
 import { displaySuccessMessage, displayErrorMessage } from './../utils/message';
@@ -21,6 +22,10 @@ interface IDonateActions {
   deleteDonate(donate: DonateModel);
   deletedDonate(props: IDonateProps);
   setCode(code: number);
+  setTempDonateSource(trees: Array<number>);
+  addTempDonateSource(tree: number);
+  setDonateSource(id: number, trees: Array<number>): IDonateSourcesProps;
+  addDonateSource(id: number, tree: number): IDonateSourceProps;
 }
 
 class DonateActions extends AbstractActions implements IDonateActions {
@@ -128,6 +133,24 @@ class DonateActions extends AbstractActions implements IDonateActions {
     return (dispatch) => {
       dispatch(code);
     }
+  }
+  setTempDonateSource(trees: Array<number>) {
+    let self: DonateActions = this;
+    return (dispatch) => {
+      dispatch(trees);
+    }
+  }
+  addTempDonateSource(tree: number) {
+    let self: DonateActions = this;
+    return tree;
+  }
+  setDonateSource(id: number, trees: Array<number>): IDonateSourcesProps {
+    let self: DonateActions = this;
+    return {id: id, trees: trees};
+  }
+  addDonateSource(id: number, tree: number): IDonateSourceProps {
+    let self: DonateActions = this;
+    return {id: id, tree: tree};
   }
 }
 

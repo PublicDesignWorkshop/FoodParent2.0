@@ -139,7 +139,7 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
             },
           }
         }>
-          <DonationsMapComponent mode={self.state.mode} locationId={self.state.locationId} onRender={self.onMapRender} />
+          <DonationsMapComponent mode={self.state.mode} donateId={self.state.donateId} locationId={self.state.locationId} onRender={self.onMapRender} />
           <DonationsPanelComponent mode={self.state.mode} locationId={self.state.locationId} donateId={self.state.donateId} />
           <MessageComponent />
         </AltContainer>

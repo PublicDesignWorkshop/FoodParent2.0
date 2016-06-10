@@ -7,6 +7,7 @@ import { FoodModel } from './../stores/food.store';
 import { treeStore, TreeModel } from './../stores/tree.store';
 import { locationStore, LocationModel } from './../stores/location.store';
 import { treeActions } from './../actions/tree.actions';
+import { donateActions } from './../actions/donate.actions';
 import { locationActions } from './../actions/location.actions';
 
 module MarkerComponent {
@@ -169,7 +170,7 @@ module MarkerComponent {
     return marker;
   }
 
-  export function createTreeSelectMarker(food: FoodModel, tree: TreeModel): L.Marker {
+  export function createTreeSelectMarker(donateId: number, food: FoodModel, tree: TreeModel): L.Marker {
     let icon: L.Icon = new L.Icon({
       iconUrl: Settings.uBaseName + Settings.uStaticImage + food.getIcon(),
       iconSize: new L.Point(40, 40),
@@ -185,11 +186,13 @@ module MarkerComponent {
       icon: icon,
       draggable: false,
       riseOnHover: true,
-    }).bindPopup(template, {
-      closeButton: false,
-      closeOnClick: false,
     });
     marker.on('click', function() {
+      if (donateId) {
+        donateActions.addDonateSource(donateId, tree.getId());
+      } else {
+        donateActions.addTempDonateSource(tree.getId());
+      }
       // browserHistory.push({pathname: Settings.uBaseName + '/tree/' + tree.getId()});
     });
     return marker;
