@@ -65,9 +65,12 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
           personActions.fetchPersons(tree.getParents());
         }, 0);
       }
-      setTimeout(function() {
-        noteActions.fetchNotesFromTreeIds([tree.getId()]);
-      }, 0);
+      // Fetch only when different tree is selected.
+      if (self.props.treeId != props.treeId) {
+        setTimeout(function() {
+          noteActions.fetchNotesFromTreeIds([tree.getId()]);
+        }, 0);
+      }
       let editable: boolean = false;
       if (tree) {
         if (authStore.getAuth().getIsManager()) {

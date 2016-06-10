@@ -55,9 +55,12 @@ export default class LocationComponent extends React.Component<ILocationProps, I
         //   personActions.fetchPersons(tree.getParents());
         // }, 0);
       }
-      setTimeout(function() {
-        donateActions.fetchDonatesFromLocationIds([location.getId()]);
-      }, 0);
+      if (self.props.locationId != props.locationId) {
+        setTimeout(function() {
+          donateActions.fetchDonatesFromLocationIds([location.getId()]);
+        }, 0);
+      }
+
       let editable: boolean = false;
       if (location) {
         if (authStore.getAuth().getIsManager()) {

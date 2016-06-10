@@ -23,6 +23,7 @@ export interface ILocationAddressStatus {
   editing?: boolean;
 }
 export default class LocationAddressComponent extends React.Component<ILocationAddressProps, ILocationAddressStatus> {
+  private loading: boolean;
   constructor(props : ILocationAddressProps) {
     super(props);
     let self: LocationAddressComponent = this;
@@ -32,6 +33,7 @@ export default class LocationAddressComponent extends React.Component<ILocationA
       address: "",
       editing: false,
     };
+    self.loading = false;
   }
   public componentDidMount() {
     let self: LocationAddressComponent = this;
@@ -54,18 +56,22 @@ export default class LocationAddressComponent extends React.Component<ILocationA
       if (props.location.getAddress() && props.location.getAddress().trim() != "" && props.location.getLat().toFixed(Settings.iMarkerPrecision) == self.state.prevLat.toFixed(Settings.iMarkerPrecision) && props.location.getLng().toFixed(Settings.iMarkerPrecision) == self.state.prevLng.toFixed(Settings.iMarkerPrecision)) {
         self.setState({address: props.location.getAddress().trim(), editing: false, prevLat: props.location.getLat(), prevLng: props.location.getLng()});
       } else {
-        reverseGeocoding(props.location.getLocation(), function(response: IReverseGeoLocation) {
-          self.setState({address: response.formatted, editing: false});
-          props.location.setAddress(self.state.address);
-          if (props.async) {
-            // treeActions.updateTree(props.tree);
-            self.setState({prevLat: parseFloat(self.props.location.getLat().toFixed(Settings.iMarkerPrecision)), prevLng: parseFloat(self.props.location.getLng().toFixed(Settings.iMarkerPrecision))});
-          } else {
-            self.setState({editing: false, prevLat: parseFloat(self.props.location.getLat().toFixed(Settings.iMarkerPrecision)), prevLng: parseFloat(self.props.location.getLng().toFixed(Settings.iMarkerPrecision))});
-          }
-        }, function() {
+        if (!self.loading) {
+          self.loading = true;
+          reverseGeocoding(props.location.getLocation(), function(response: IReverseGeoLocation) {
+            self.loading = false;
+            self.setState({address: response.formatted, editing: false});
+            props.location.setAddress(self.state.address);
+            if (props.async) {
+              // treeActions.updateTree(props.tree);
+              self.setState({prevLat: parseFloat(self.props.location.getLat().toFixed(Settings.iMarkerPrecision)), prevLng: parseFloat(self.props.location.getLng().toFixed(Settings.iMarkerPrecision))});
+            } else {
+              self.setState({editing: false, prevLat: parseFloat(self.props.location.getLat().toFixed(Settings.iMarkerPrecision)), prevLng: parseFloat(self.props.location.getLng().toFixed(Settings.iMarkerPrecision))});
+            }
+          }, function() {
 
-        });
+          });
+        }
       }
     }
   }
