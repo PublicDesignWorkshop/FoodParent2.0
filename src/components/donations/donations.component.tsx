@@ -14,6 +14,8 @@ import DonationsPanelComponent from './donations-panel.component' ;
 import { authStore } from './../../stores/auth.store';
 import { mapStore } from './../../stores/map.store';
 import { TileMode } from './../map.component';
+import { foodStore, FoodModel, FoodState } from './../../stores/food.store';
+import { foodActions } from './../../actions/food.actions';
 import MessageComponent from './../message/message.component';
 
 export enum DonationsMode {
@@ -82,6 +84,7 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
       if (authStore.getAuth().getIsGuest()) {
         self.context.router.replace({pathname: Settings.uBaseName + '/'});
       } else {
+        foodActions.fetchFoods();
         locationActions.fetchLocations();
       }
     }, 1000);
@@ -97,6 +100,12 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
       <div className={styles.wrapper}>
         <AltContainer stores={
           {
+            foods: function (props) {
+              return {
+                store: foodStore,
+                value: foodStore.getState().foods
+              };
+            },
             locations: function (props) {
               return {
                 store: locationStore,

@@ -25,14 +25,14 @@
     $params = null;
     if ($data != null) {
       $params = array(
-        "treeIds" => $data->{'treeIds'},
+        "locationIds" => $data->{'locationIds'},
       );
     } else {
       $params = array(
-        "treeIds" => $_GET['treeIds'],
+        "locationIds" => $_GET['locationIds'],
       );
     }
-    $sql = "SELECT * FROM `note` WHERE (`tree` IN (".$params["treeIds"].")) ORDER BY `date` DESC";
+    $sql = "SELECT * FROM `donate` WHERE (`location` IN (".$params["locationIds"].")) ORDER BY `date` DESC";
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);
@@ -41,7 +41,7 @@
       $pdo = null;
       $params = array(
         "code" => 200,
-        "notes" => $result,
+        "donates" => $result,
       );
       echo json_encode($params);
     } catch(PDOException $e) {

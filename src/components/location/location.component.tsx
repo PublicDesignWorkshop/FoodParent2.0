@@ -9,10 +9,13 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './location.component.css';
 import { LocationModel, locationStore } from './../../stores/location.store';
 import { authStore } from './../../stores/auth.store';
+import { donateStore, DonateModel } from './../../stores/donate.store';
+import { donateActions } from './../../actions/donate.actions';
 import LocationNameComponent from './location-name.component';
 import LocationLocationComponent from './location-location.component';
 import LocationAddressComponent from './location-address.component';
 import LocationDescriptionComponent from './location-description.component';
+import DonateListComponent from './../donate/donate-list.component';
 
 export interface ILocationProps {
   locations?: Array<LocationModel>;
@@ -53,7 +56,7 @@ export default class LocationComponent extends React.Component<ILocationProps, I
         // }, 0);
       }
       setTimeout(function() {
-        // noteActions.fetchNotesFromTreeIds([tree.getId()]);
+        donateActions.fetchDonatesFromLocationIds([location.getId()]);
       }, 0);
       let editable: boolean = false;
       if (location) {
@@ -91,6 +94,18 @@ export default class LocationComponent extends React.Component<ILocationProps, I
               <LocationLocationComponent location={location} editable={self.state.editable} async={self.state.editable} />
               <LocationAddressComponent location={location} editable={self.state.editable} async={self.state.editable} />
               <LocationDescriptionComponent location={location} editable={self.state.editable} async={self.state.editable} />
+              <AltContainer stores={
+                {
+                  donates: function (props) {
+                    return {
+                      store: donateStore,
+                      value: donateStore.getState().donates,
+                    };
+                  }
+                }
+              }>
+                <DonateListComponent donateId={self.props.donateId} />
+              </AltContainer>
             </div>
             {deleteLocation}
           </div>

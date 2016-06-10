@@ -128,7 +128,7 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
               }}>
                 <FontAwesome className='' name='angle-right' />
                 <span className={styles.comment}>
-                  {" " + Math.floor(note.getAmount()).toLocaleString() + "g has been picked up. "}
+                  {" \"" + Math.floor(note.getAmount()).toLocaleString() + "\" g has been picked up. "}
                 </span>
                 <span className={styles.star}>
                   {"\"" + pickuptime + "\""}
@@ -165,7 +165,7 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
               }}>
                 <FontAwesome className='' name='angle-right' />
                 <span className={styles.comment}>
-                  {" " + note.getAmount().toLocaleString() + "g has been picked up. "}
+                  {" \"" + note.getAmount().toLocaleString() + "\" g has been picked up. "}
                 </span>
                 <span className={styles.star}>
                   {"\"" + pickuptime + "\""}

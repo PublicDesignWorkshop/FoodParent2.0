@@ -1,0 +1,58 @@
+@media all {
+  :local(.wrapper) {
+    font-family: 'Open Sans', sans-serif;
+    font-size: small;
+  }
+  :local(.label) {
+    font-weight: 700;
+    padding-top: 8px;
+    padding-bottom: 4px;
+  }
+  :local(.label:not(:first-child)) {
+    padding-top: 8px;
+  }
+  :local(.value) {
+    padding: 4px 0 4px 16px;
+    cursor: pointer;
+  }
+
+  :local(.selected),
+  :local(.selected .tree),
+  :local(.selected .amount),
+  :local(.selected .date),
+  :local(.value:hover),
+  :local(.value:hover .tree),
+  :local(.value:hover .amount),
+  :local(.value:hover .date) {
+    color: rgba(255, 255, 255, 1);
+    font-size: small;
+    font-weight: 700;
+  }
+  :local(.value .tree:hover) {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+  }
+  :local(.tree) {
+    border-radius: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 1px 1px;
+    margin: 2px;
+    cursor: pointer;
+  }
+  :local(.amount) {
+
+  }
+  :local(.comment) {
+
+  }
+  :local(.date) {
+    font-size: x-small;
+    font-style: italic;
+  }
+  :local(.blankstar) {
+    color: rgba(255, 255, 255, 0.25) !important;
+  }
+}
+
+@media only screen and (orientation: portrait) {
+
+}
