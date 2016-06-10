@@ -12,6 +12,7 @@ import { locationActions } from './../../actions/location.actions';
 import DonationsMapComponent from './donations-map.component' ;
 import DonationsPanelComponent from './donations-panel.component' ;
 import { authStore } from './../../stores/auth.store';
+import { treeStore } from './../../stores/tree.store';
 import { mapStore } from './../../stores/map.store';
 import { TileMode } from './../map.component';
 import { foodStore, FoodModel, FoodState } from './../../stores/food.store';
@@ -100,6 +101,12 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
       <div className={styles.wrapper}>
         <AltContainer stores={
           {
+            trees: function (props) {
+              return {
+                store: treeStore,
+                value: treeStore.getState().trees
+              };
+            },
             foods: function (props) {
               return {
                 store: foodStore,

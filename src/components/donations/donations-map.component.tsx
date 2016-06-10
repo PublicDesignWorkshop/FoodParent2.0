@@ -13,6 +13,8 @@ var Settings = require('./../../constraints/settings.json');
 import './../../../node_modules/leaflet/dist/leaflet.css';
 import * as styles from './donations.component.css';
 import { locationStore, LocationModel, LocationState } from './../../stores/location.store';
+import { treeStore, TreeModel } from './../../stores/tree.store';
+import { foodStore, FoodModel } from './../../stores/food.store';
 import { locationActions } from './../../actions/location.actions';
 import MarkerComponent from './../marker.component';
 import { DonationsMode } from './donations.component';
@@ -25,10 +27,10 @@ export enum TileMode {
 }
 
 export interface IMapProps {
+  trees?: Array<TreeModel>;
   locations?: Array<LocationModel>;
   tempLocation?: LocationModel;
   tile?: TileMode;
-  // zoom?: number;
   locationId: number;
   mode: DonationsMode;
   onRender: Function;
@@ -43,7 +45,9 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   private grayTileLayer: L.TileLayer;
   private satTileLayer: any;
   private layer: L.MarkerClusterGroup;
+  private layer2: L.MarkerClusterGroup;
   private markers: Array<L.Marker>;
+  private markers2: Array<L.Marker>;
   private selected: L.Marker;
   private newMarker: L.Marker;
   private userMarker: L.Circle;
@@ -56,6 +60,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
     };
     let self: MapComponent = this;
     self.markers = new Array<L.Marker>();
+    self.markers2 = new Array<L.Marker>();
   }
   public componentDidMount() {
     let self: MapComponent = this;
@@ -142,6 +147,9 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       }
       self.renderMarkers(nextProps.locations, nextProps);
       self.renderUserLocation(nextProps.position);
+    }
+    if (nextProps.trees.length) {
+      self.renderTreeMarkers(nextProps.trees, nextProps);
     }
   }
   private renderMarkers = (locations: Array<LocationModel>, props: IMapProps) => {
@@ -310,6 +318,16 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       disableClusteringAtZoom: Settings.iDisableClusteringAtZoom
     });
     self.layer.addTo(self.map);
+    self.layer2 = new L.MarkerClusterGroup();
+    self.layer2.initialize({
+      spiderfyOnMaxZoom: false,
+      showCoverageOnHover: false,
+      zoomToBoundsOnClick: true,
+      removeOutsideVisibleBounds: true,
+      maxClusterRadius: Settings.iMaxClusterRadius,
+      disableClusteringAtZoom: Settings.iDisableClusteringAtZoom
+    });
+    self.layer2.addTo(self.map);
     // document.querySelector('.leaflet-bottom.leaflet-left').innerHTML = '<div class="leaflet-control-attribution leaflet-control"><div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a></div></div>';
     self.map.on("moveend", self.afterMoveMap);
     self.map.on('popupopen', function (event: any) {
@@ -356,6 +374,69 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
     return (
       <div id="map-donation" ref="map-donation" className={styles.map}></div>
     );
+  }
+
+  private renderTreeMarkers = (trees: Array<TreeModel>, props: IMapProps) => {
+    let self: MapComponent = this;
+    // Remove unnecessary markers
+    for (let i = 0; i < self.markers2.length;) {
+      let bFound: boolean = false;
+      trees.forEach((tree: TreeModel) => {
+        if (tree.getId() == self.markers2[i].options.id) {
+          bFound = true;
+        }
+      });
+      if (!bFound) {
+        self.removeTreeMarker(self.markers2[i]);
+        self.markers2 = _.without(self.markers2, self.markers2[i]);
+        i--;
+      }
+      i++;
+    }
+
+    trees.forEach((tree: TreeModel) => {
+      let bFound: boolean = false;
+      for (let i = 0; i < self.markers2.length && !bFound; i++) {
+        if (tree.getId() == self.markers2[i].options.id) {
+          bFound = true;
+        }
+      }
+      if (tree.getId() != 0 && !bFound) {
+        self.addTreeMarker(tree, false);
+      }
+    });
+  }
+
+  private addTreeMarker(tree: TreeModel, editable: boolean): void {
+    let self: MapComponent = this;
+    let food: FoodModel = foodStore.getFood(tree.getFoodId());
+    let marker: L.Marker;
+    if (editable) {
+      // marker = MarkerComponent.createEditableMarker(food, tree);
+    } else {
+      if (food) {
+        marker = MarkerComponent.createTreeSelectMarker(food, tree);
+      }
+    }
+    if (marker) {
+      /*
+      marker.on('click', function() {
+        s(self.selected);
+        if (self.selected) {
+          MarkerComponent.changeToNormalMarker(self.selected);
+        }
+        self.selected = marker;
+        MarkerComponent.changeToBigMarker(self.selected);
+        self.selected._bringToFront();
+      });
+      */
+      self.markers2.push(marker);
+      self.layer2.addLayer(marker);
+    }
+  }
+  private removeTreeMarker(marker: L.Marker): void {
+      let self: MapComponent = this;
+      self.layer2.removeLayer(marker);
   }
 }
 

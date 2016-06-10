@@ -14,8 +14,10 @@ import { DonationsMode } from './donations.component';
 import { LocationModel, locationStore } from './../../stores/location.store';
 import { locationActions } from './../../actions/location.actions';
 import { mapStore } from './../../stores/map.store';
+import { donateStore, DonateModel } from './../../stores/donate.store';
 import { TileMode } from './../map.component';
 import MessageComponent from './../message/message.component';
+import DonateAddComponent from './../donate/donate-add.component';
 
 export interface IDonationsPanelProps {
   locationId: number;
@@ -81,6 +83,24 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
             </div>
             <div className={styles.right}>
               <LocationComponent locations={self.props.locations} locationId={self.props.locationId} donateId={self.props.donateId} />
+              <AltContainer stores={
+                {
+                  donate: function (props) {
+                    return {
+                      store: donateStore,
+                      value: donateStore.getState().temp,
+                    };
+                  },
+                  code: function (props) {
+                    return {
+                      store: donateStore,
+                      value: donateStore.getState().code,
+                    };
+                  }
+                }
+              }>
+                <DonateAddComponent locationId={self.props.locationId} />
+              </AltContainer>
             </div>
           </div>
         );
