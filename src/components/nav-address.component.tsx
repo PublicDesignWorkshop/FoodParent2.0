@@ -9,6 +9,7 @@ import { geocoding, reverseGeocoding, IReverseGeoLocation } from './../utils/geo
 import { MapModel, mapStore } from './../stores/map.store';
 import { mapActions } from './../actions/map.actions';
 import { treeActions } from './../actions/tree.actions';
+import { localization } from './../constraints/localization';
 
 export enum NavSearchMode {
   NONE, TREES, DONATIONS
@@ -29,7 +30,7 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
     let self: NavAddressComponent = this;
     this.state = {
       mode: NavSearchMode.TREES,
-      address: "search by id or street address...",
+      address: localization(730),
       editing: false,
     };
   }
@@ -93,7 +94,7 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
       }
     } else {
       mapActions.setActive(self.props.mapId, true);
-      self.setState({address: "search by id or street address..."});
+      self.setState({address: localization(730)});
       // Address search mode (Disabled to decrease the number of Google Geo API calls)
       // let location: L.LatLng = mapStore.getCenter(self.props.mapId);
       // if (location && location.lat && location.lng) {
@@ -122,7 +123,7 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
     let self: NavAddressComponent = this;
     if (self.state.editing) {
       return (
-        <input autoFocus type="text" className={styles.edit} placeholder="enter a search location address..."
+        <input autoFocus autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text" className={styles.edit} placeholder={localization(730)}
           value={self.state.address}
           onChange={(event: any)=> {
             self.setState({address: event.target.value});
@@ -139,7 +140,11 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
     } else {
       return (
         <div className={styles.location} onClick={()=> {
-          self.setState({address: "", editing: true});
+          if (self.state.address == localization(730)) {
+            self.setState({address: "", editing: true});
+          } else {
+            self.setState({editing: true});
+          }
           mapActions.setActive(self.props.mapId, false);
         }}>
           {self.state.address}
