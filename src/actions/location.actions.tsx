@@ -131,7 +131,7 @@ class LocationActions extends AbstractActions implements ILocationActions {
   deletedLocation(props: ILocationProps) {
     let self: LocationActions = this;
     return (dispatch) => {
-      browserHistory.replace({pathname: Settings.uBaseName + '/'});
+      browserHistory.replace({pathname: Settings.uBaseName + '/donations'});
       dispatch(props);
     }
   }

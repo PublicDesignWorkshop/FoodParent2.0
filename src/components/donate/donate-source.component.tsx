@@ -72,9 +72,17 @@ export default class DonateSourceComponent extends React.Component<IDonateSource
       selected.forEach(option => {
         trees.push(parseInt(option.value));
       });
-      donateActions.setTempDonateSource(trees);
+      if (self.props.donate.getId() == 0) {
+        donateActions.setTempDonateSource(trees);
+      } else {
+        donateActions.setDonateSource(self.props.donate.getId(), trees);
+      }
     } else {
-      donateActions.setTempDonateSource([]);
+      if (self.props.donate.getId() == 0) {
+        donateActions.setTempDonateSource([]);
+      } else {
+        donateActions.setDonateSource(self.props.donate.getId(), []);
+      }
     }
   }
 

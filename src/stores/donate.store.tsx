@@ -329,7 +329,7 @@ class DonateStore extends AbstractStore<DonateState> {
       }
     }
     if (i > -1) {
-      self.donates[0].addTree(props.tree);
+      self.donates[i].addTree(props.tree);
     }
     self.code = 200;
   }
@@ -342,7 +342,7 @@ class DonateStore extends AbstractStore<DonateState> {
       }
     }
     if (i > -1) {
-      self.donates[0].setTrees(props.trees);
+      self.donates[i].setTrees(props.trees);
     }
     self.code = 200;
   }

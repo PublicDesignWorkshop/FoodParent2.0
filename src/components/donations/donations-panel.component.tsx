@@ -18,6 +18,8 @@ import { donateStore, DonateModel } from './../../stores/donate.store';
 import { TileMode } from './../map.component';
 import MessageComponent from './../message/message.component';
 import DonateAddComponent from './../donate/donate-add.component';
+import DonateEditComponent from './../donate/donate-edit.component';
+import LocationAddComponent from './../location/location-add.component';
 
 export interface IDonationsPanelProps {
   locationId: number;
@@ -113,6 +115,53 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
               </div>
               <div className={styles.right}>
                 <LocationComponent locations={self.props.locations} locationId={self.props.locationId} donateId={self.props.donateId} />
+                <AltContainer stores={
+                  {
+                    donate: function (props) {
+                      return {
+                        store: donateStore,
+                        value: donateStore.getDonate(self.props.donateId),
+                      };
+                    },
+                    code: function (props) {
+                      return {
+                        store: donateStore,
+                        value: donateStore.getState().code,
+                      };
+                    }
+                  }
+                }>
+                  <DonateEditComponent locationId={self.props.locationId} />
+                </AltContainer>
+              </div>
+            </div>
+          );
+        case DonationsMode.LOCATIONADDINFO:
+          return (
+            <div className={styles.wrapper + " " + styles.slidein}>
+              <div className={styles.left}>
+                <DonationsControlsComponent tile={self.props.tile} />
+              </div>
+              <div className={styles.right}>
+                <AltContainer stores={
+                  {
+                    location: function (props) {
+                      return {
+                        store: locationStore,
+                        value: locationStore.getState().temp,
+                      };
+                    },
+                    code: function (props) {
+                      return {
+                        store: locationStore,
+                        value: locationStore.getState().code,
+                      };
+                    }
+                  }
+                }>
+                  <LocationAddComponent />
+                </AltContainer>
+
               </div>
             </div>
           );

@@ -55,17 +55,15 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
         foodId = parseInt(selected.value);
       }
       // Apply filter for a new tree food type to help users to figure out the location
-      if (self.props.donate.getId() == 0) {
-        applyFilter(FilterMode.FOOD, [foodId], function(response) {
-          deleteFilter(function () {
-            treeActions.fetchTrees();
-          });
-        }, function(response) {
-
-        }, function(response) {
-
+      applyFilter(FilterMode.FOOD, [foodId], function(response) {
+        deleteFilter(function () {
+          treeActions.fetchTrees();
         });
-      }
+      }, function(response) {
+
+      }, function(response) {
+
+      });
     }
   }
   public componentWillUnmount() {
@@ -84,6 +82,22 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
         selected = {value: food.getId(), label: food.getName()};
       }
     });
+    var foodId = 0;
+    if (selected) {
+      foodId = parseInt(selected.value);
+    }
+    if (self.state.selected && self.state.selected.value != selected.value) {
+      // Apply filter for a new tree food type to help users to figure out the location
+      applyFilter(FilterMode.FOOD, [foodId], function(response) {
+        deleteFilter(function () {
+          treeActions.fetchTrees();
+        });
+      }, function(response) {
+
+      }, function(response) {
+
+      });
+    }
     self.setState({selected: selected});
   }
   private updateAttribute = (selected?: any) => {
@@ -94,6 +108,16 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
     }
     self.props.donate.setFoodId(foodId);
     if (self.state.selected == null || self.state.selected.value != selected.value) {
+      // Apply filter for a new tree food type to help users to figure out the location
+      applyFilter(FilterMode.FOOD, [foodId], function(response) {
+        deleteFilter(function () {
+          treeActions.fetchTrees();
+        });
+      }, function(response) {
+
+      }, function(response) {
+
+      });
       if (self.props.donate.getId() == 0) {
         donateActions.setTempDonateSource([]);
       } else {
@@ -104,20 +128,6 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
       // donateActions.updateDonate(self.props.donate);
     } else {
       self.setState({selected: selected});
-    }
-    if (self.props.donate.getId() == 0) {
-      applyFilter(FilterMode.FOOD, [foodId], function(response) {
-        deleteFilter(function () {
-          treeActions.fetchTrees();
-        });
-      }, function(response) {
-
-      }, function(response) {
-
-      });
-    } else {
-      // Apply filter for a new tree food type to help users to figure out the location
-      treeActions.fetchTrees(self.props.donate.getId());
     }
   }
 

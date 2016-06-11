@@ -74,7 +74,7 @@ export default class LocationNameComponent extends React.Component<ILocationName
           <div className={styles.name} onClick={()=> {
             self.setState({name: self.state.name, editing: true});
           }}>
-            <input autoFocus type="text" key={self.props.location.getId() + "description"} placeholder="enter description of tree..."
+            <input autoFocus type="text" key={self.props.location.getId() + "description"} placeholder="enter name of place..."
               value={self.state.name}
               onChange={(event: any)=> {
                 self.setState({name: event.target.value, editing: self.state.editing});
@@ -93,7 +93,9 @@ export default class LocationNameComponent extends React.Component<ILocationName
     } else {
       return (
         <div className={styles.wrapper}>
-          <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + Settings.uTemporaryLocationMarkerIcon} />
+          <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + Settings.uTemporaryLocationMarkerIcon} onClick={()=> {
+            self.setState({name: self.state.name, editing: true});
+          }} />
           <div className={styles.name} onClick={()=> {
             self.setState({name: self.state.name, editing: true});
           }}>

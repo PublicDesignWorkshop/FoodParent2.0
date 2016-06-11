@@ -16,9 +16,11 @@ import { treeStore } from './../../stores/tree.store';
 import { mapStore } from './../../stores/map.store';
 import { TileMode } from './../map.component';
 import { foodStore, FoodModel, FoodState } from './../../stores/food.store';
+import { donateStore } from './../../stores/donate.store';
 import { foodActions } from './../../actions/food.actions';
 import { treeActions } from './../../actions/tree.actions';
 import MessageComponent from './../message/message.component';
+import PopupDonationsComponent from './../message/popup-donations.component';
 
 export enum DonationsMode {
   NONE, DONATIONS, LOCATIONDETAIL, LOCATIONADDMARKER, LOCATIONADDINFO, LOCATIONDELETE, DONATIONNOTEEDIT, DONATIONNOTEDELETE
@@ -65,12 +67,28 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
     let locationId = null;
     let donateId = null;
     let mode: DonationsMode = DonationsMode.DONATIONS;
-    if (props.params.locationId) {
+    if (props.params.locationId == "add") {
+      if (props.location.query.mode == "marker") {
+        mode = DonationsMode.LOCATIONADDMARKER;
+        if (!locationStore.getState().temp) {
+          setTimeout(function () {
+            locationActions.resetTempLocation();
+          }, 0)
+        }
+      } else if (props.location.query.mode == "info") {
+        if (locationStore.getState().temp) {
+          mode = DonationsMode.LOCATIONADDINFO;
+        } else {
+          self.context.router.replace({pathname: Settings.uBaseName + '/donation/add', query: { mode: "marker" }});
+        }
+      }
+    } else if (props.params.locationId) {
       mode = DonationsMode.LOCATIONDETAIL;
       locationId = parseInt(props.params.locationId);
       if (props.location.query.mode == "delete") {
         mode = DonationsMode.LOCATIONDELETE;
-      } else if (props.location.query.donate) {
+      }
+      if (props.location.query.donate) {
         mode = DonationsMode.DONATIONNOTEEDIT;
         donateId = parseInt(props.location.query.donate);
         if (props.location.query.mode == "delete") {
@@ -143,6 +161,18 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
         }>
           <DonationsMapComponent mode={self.state.mode} donateId={self.state.donateId} locationId={self.state.locationId} onRender={self.onMapRender} />
           <DonationsPanelComponent mode={self.state.mode} locationId={self.state.locationId} donateId={self.state.donateId} />
+          <AltContainer stores={
+            {
+              donateCode: function (props) {
+                return {
+                  store: donateStore,
+                  value: donateStore.getState().code,
+                };
+              }
+            }
+          }>
+            <PopupDonationsComponent mode={self.state.mode} locationId={self.state.locationId} donateId={self.state.donateId} />
+          </AltContainer>
           <MessageComponent />
         </AltContainer>
       </div>

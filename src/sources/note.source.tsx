@@ -32,6 +32,12 @@ let NoteSource = {
     })
   },
   createNote(note: NoteModel): Promise<any> {
+    if (note.getAmountType() == AmountType.KG) {
+      note.setAmount(note.getAmount() * Settings.fKGToG);
+    } else if (note.getAmountType() == AmountType.LBS) {
+      note.setAmount(note.getAmount() * Settings.fLBSTOG);
+    }
+    note.setAmountType(AmountType.G);
     return new Promise<any>((resolve, reject) => {
       $.ajax({
         url: Settings.uBaseName + Settings.uServer + "note.php",

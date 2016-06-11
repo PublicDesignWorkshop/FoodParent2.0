@@ -33,6 +33,12 @@ let DonateSource = {
     })
   },
   createDonate(donate: DonateModel): Promise<any> {
+    if (donate.getAmountType() == AmountType.KG) {
+      donate.setAmount(donate.getAmount() * Settings.fKGToG);
+    } else if (donate.getAmountType() == AmountType.LBS) {
+      donate.setAmount(donate.getAmount() * Settings.fLBSTOG);
+    }
+    donate.setAmountType(AmountType.G);
     return new Promise<any>((resolve, reject) => {
       $.ajax({
         url: Settings.uBaseName + Settings.uServer + "donate.php",
@@ -56,6 +62,12 @@ let DonateSource = {
     })
   },
   updateDonate(donate: DonateModel): Promise<any> {
+    if (donate.getAmountType() == AmountType.KG) {
+      donate.setAmount(donate.getAmount() * Settings.fKGToG);
+    } else if (donate.getAmountType() == AmountType.LBS) {
+      donate.setAmount(donate.getAmount() * Settings.fLBSTOG);
+    }
+    donate.setAmountType(AmountType.G);
     return new Promise<any>((resolve, reject) => {
       if (donate.getAmountType() == AmountType.KG) {
         donate.setAmount(donate.getAmount() * Settings.fKGToG);

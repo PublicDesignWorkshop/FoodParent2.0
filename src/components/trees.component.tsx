@@ -14,7 +14,7 @@ import { treeActions } from './../actions/tree.actions';
 import { foodActions } from './../actions/food.actions';
 import MapComponent from './map.component' ;
 import TreesPanelComponent from './trees-panel.component';
-import TreesMessageComponent from './trees-message.component';
+import PopupComponent from './message/popup.component';
 import { TileMode } from './map.component';
 import { calcRating } from './../utils/rating';
 import { mapStore } from './../stores/map.store';
@@ -248,7 +248,7 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
               }
             }
           }>
-            <TreesMessageComponent mode={self.state.mode} treeId={self.state.treeId} noteId={self.state.noteId} />
+            <PopupComponent mode={self.state.mode} treeId={self.state.treeId} noteId={self.state.noteId} />
           </AltContainer>
           <MessageComponent />
         </AltContainer>
