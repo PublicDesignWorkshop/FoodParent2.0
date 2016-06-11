@@ -46,7 +46,7 @@
     text-align: center;
   }
   :local(.wrapper .left .logo:after) {
-    content: url(~static/images/logo-green-88x48.png);
+    content: url(~static/images/logo-green-background-88x48.png);
   }
   /*:local(.wrapper .left:hover .logo:after) {
     content: url(~static/images/logo-green-88x48.png);
