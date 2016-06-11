@@ -93,7 +93,7 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
       foodId = parseInt(selected.value);
     }
     self.props.donate.setFoodId(foodId);
-    if (self.state.selected.value != selected.value) {
+    if (self.state.selected == null || self.state.selected.value != selected.value) {
       if (self.props.donate.getId() == 0) {
         donateActions.setTempDonateSource([]);
       } else {
@@ -124,7 +124,13 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
   render() {
     let self: DonateFoodComponent = this;
     if (self.props.editable || self.props.donate.getId() == 0) {
-      var food: FoodModel = foodStore.getFood(self.props.donate.getFoodId());
+      let food: FoodModel = foodStore.getFood(self.props.donate.getFoodId());
+      let image: JSX.Element;
+      if (food) {
+         image = <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />;
+      } else {
+        image = <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + Settings.uTemporaryMarkerIcon} />;
+      }
       return (
         <div className={styles.wrapper}>
           <div className={styles.label} onMouseUp={()=> {
@@ -135,9 +141,9 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
             <FontAwesome className='' name='apple' /> Food Type
           </div>
           <div className={styles.edit}>
-            <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
+            {image}
             <div className={styles.type}>
-              <Select name="food-select" multi={false} searchable={true} clearable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
+              <Select name="food-select" multi={false} searchable={true} clearable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select food type..." />
             </div>
           </div>
         </div>

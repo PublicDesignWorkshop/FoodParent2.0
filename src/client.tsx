@@ -9,7 +9,7 @@ import './client.css';
 import './bootstrap-datetimepicker.css';
 ReactDOM.render(<Router history={browserHistory}>{Routes}</Router>, document.getElementById('app'));
 
-resetFilter();
+
 // Code Snipet for sending an email.
 // sendMailFromParent("jkim848@gatech.edu", "Mail Subject", "Mail Message", function(response) {
 //

@@ -183,6 +183,7 @@ class TreeStore extends AbstractStore<TreeState> {
       handleCreatedTree: treeActions.createdTree,
       handleRefresh: treeActions.refresh,
       handleDeletedTree: treeActions.deletedTree,
+      handleResetTrees: treeActions.resetTrees,
       // handleUpdateTree: treeActions.updateTree,
       // handleCreateTree: treeActions.createTree,
       handleSetCode: treeActions.setCode,
@@ -230,6 +231,11 @@ class TreeStore extends AbstractStore<TreeState> {
       rate: "-1",
       updated: moment(new Date()).format(Settings.sServerDateFormat),
     });
+    self.code = 200;
+  }
+  handleResetTrees() {
+    let self: TreeStore = this;
+    self.trees = new Array<TreeModel>();
     self.code = 200;
   }
   handleSetCode(code: number) {

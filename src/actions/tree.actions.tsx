@@ -11,6 +11,7 @@ import { displaySuccessMessage, displayErrorMessage } from './../utils/message';
 import { localization } from './../constraints/localization';
 
 interface ITreeActions {
+  resetTrees();
   fetchTrees(id?: number);
   fetchedTrees(treesProps: Array<ITreeProps>);
   updateTree(tree: TreeModel);
@@ -29,6 +30,12 @@ interface ITreeActions {
 }
 
 class TreeActions extends AbstractActions implements ITreeActions {
+  resetTrees() {
+    let self: TreeActions = this;
+    return (dispatch) => {
+      dispatch();
+    }
+  }
   setCode(code: number) {
     let self: TreeActions = this;
     return (dispatch) => {

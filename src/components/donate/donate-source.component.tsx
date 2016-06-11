@@ -92,7 +92,7 @@ export default class DonateSourceComponent extends React.Component<IDonateSource
           </div>
           <div className={styles.edit}>
             <div className={styles.type}>
-              <Select name="tree-select" multi={true} searchable={true} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
+              <Select name="tree-select" multi={true} searchable={true} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select source trees..." />
             </div>
           </div>
         </div>

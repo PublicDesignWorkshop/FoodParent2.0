@@ -17,6 +17,7 @@ import { mapStore } from './../../stores/map.store';
 import { TileMode } from './../map.component';
 import { foodStore, FoodModel, FoodState } from './../../stores/food.store';
 import { foodActions } from './../../actions/food.actions';
+import { treeActions } from './../../actions/tree.actions';
 import MessageComponent from './../message/message.component';
 
 export enum DonationsMode {
@@ -49,6 +50,7 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
   }
   public componentDidMount() {
     let self: DonationsComponent = this;
+    treeActions.resetTrees();
     self.updateProps(self.props);
   }
   public componentWillUnmount() {

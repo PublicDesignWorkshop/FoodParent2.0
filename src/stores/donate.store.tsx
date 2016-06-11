@@ -200,7 +200,7 @@ class DonateStore extends AbstractStore<DonateState> {
     self.temp = new DonateModel({
       id: "0",
       location: "0",
-      food: "1",
+      food: "0",
       tree: "0",
       person: "0",
       comment: "",
@@ -261,7 +261,7 @@ class DonateStore extends AbstractStore<DonateState> {
     self.temp = new DonateModel({
       id: "0",
       location: "0",
-      food: "1",
+      food: "0",
       tree: "0",
       person: "0",
       comment: "",
@@ -298,7 +298,7 @@ class DonateStore extends AbstractStore<DonateState> {
     self.temp = new DonateModel({
       id: "0",
       location: "0",
-      food: "1",
+      food: "0",
       tree: "0",
       person: "0",
       comment: "",

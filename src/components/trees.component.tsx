@@ -21,6 +21,7 @@ import { mapStore } from './../stores/map.store';
 import { flagStore } from './../stores/flag.store';
 import { flagActions } from './../actions/flag.actions';
 import MessageComponent from './message/message.component';
+import { resetFilter } from './../utils/filter';
 
 export enum TreesMode {
   NONE, TREES, TREEDETAIL, TREEDELETE, TREEADDMARKER, TREEADDINFO, TREEADDSAVE, TREESFILTER, TREENOTEEDIT, TREENOTEDELETE
@@ -56,6 +57,8 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
   }
   public componentDidMount() {
     let self: TreesComponent = this;
+    treeActions.resetTrees();
+    resetFilter();
     self.updateProps(self.props);
   }
   public componentWillUnmount() {
