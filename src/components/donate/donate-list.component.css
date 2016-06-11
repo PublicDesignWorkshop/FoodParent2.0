@@ -29,11 +29,11 @@
     font-weight: 700;
   }
   :local(.value .tree:hover) {
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: rgba(107, 170, 119, 1);
   }
   :local(.tree) {
     border-radius: 2px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+
     padding: 1px 1px;
     margin: 2px;
     cursor: pointer;

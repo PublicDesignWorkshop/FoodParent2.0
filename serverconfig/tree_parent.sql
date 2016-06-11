@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2016 at 11:03 PM
+-- Generation Time: Jun 11, 2016 at 06:19 PM
 -- Server version: 10.1.13-MariaDB
--- PHP Version: 5.5.35
+-- PHP Version: 5.6.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,24 @@ SET time_zone = "+00:00";
 --
 -- Database: `tree_parent`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `donate`
+--
+
+CREATE TABLE `donate` (
+  `id` int(11) NOT NULL,
+  `location` int(11) NOT NULL,
+  `food` int(11) NOT NULL,
+  `tree` varchar(128) NOT NULL,
+  `person` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `picture` varchar(128) NOT NULL,
+  `amount` float NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -61,33 +79,68 @@ CREATE TABLE `food` (
 --
 
 INSERT INTO `food` (`id`, `name`, `icon`, `description`, `season`, `updated`) VALUES
-(1, '*Other', 'unknown.svg', '', 0, '2016-01-30 00:00:00'),
-(2, 'Blackberries', 'blackberries.svg', '', 1, '2016-01-30 00:00:00'),
-(3, 'Pears', 'pears.svg', '', 0, '2016-01-30 00:00:00'),
-(4, 'Mulberries', 'mulberries.svg', '', 0, '2016-01-30 00:00:00'),
-(5, 'Crabapples', 'crabapples.svg', '', 0, '2016-01-30 00:00:00'),
-(6, 'Apples', 'apples.svg', '', 1, '0000-00-00 00:00:00'),
-(7, 'Blueberries', 'blueberries.svg', '', 0, '0000-00-00 00:00:00'),
-(8, 'Elderberries', 'elderberries.svg', '', 0, '0000-00-00 00:00:00'),
-(9, 'Figs', 'figs.svg', '', 0, '0000-00-00 00:00:00'),
-(10, 'Flying Dragon', 'flyingdragon.svg', '', 0, '0000-00-00 00:00:00'),
-(11, 'Ginkgo', 'ginkgo.svg', '', 0, '0000-00-00 00:00:00'),
-(12, 'Muscadines', 'muscadines.svg', '', 0, '0000-00-00 00:00:00'),
-(13, 'Nectarines', 'nectarines.svg', '', 0, '0000-00-00 00:00:00'),
-(14, 'Pawpaw', 'pawpaw.svg', '', 0, '0000-00-00 00:00:00'),
-(15, 'Raspberries', 'raspberries.svg', '', 0, '0000-00-00 00:00:00'),
-(16, 'Peaches', 'peaches.svg', '', 0, '0000-00-00 00:00:00'),
-(17, 'Pecans', 'pecans.svg', '', 0, '0000-00-00 00:00:00'),
-(18, 'Serviceberries', 'serviceberries.svg', '', 0, '0000-00-00 00:00:00'),
-(19, 'Persimmons', 'persimmons.svg', '', 0, '0000-00-00 00:00:00'),
-(20, 'Plums', 'plums.svg', '', 0, '0000-00-00 00:00:00'),
-(21, 'Pomegranates', 'pomegranates.svg', '', 0, '0000-00-00 00:00:00'),
-(22, 'Prickly Pears', 'pricklypears.svg', '', 0, '0000-00-00 00:00:00'),
-(23, 'Cherries', 'cherries.svg', '', 0, '0000-00-00 00:00:00'),
-(24, 'Quinces', 'quinces.svg', '', 0, '0000-00-00 00:00:00'),
-(25, 'Black Walnuts', 'blackwalnuts.svg', '', 0, '0000-00-00 00:00:00'),
-(26, 'Kiwis', 'kiwis.svg', '', 0, '0000-00-00 00:00:00'),
-(27, 'Loquat', 'loquat.svg', '', 0, '0000-00-00 00:00:00');
+(1, 'Other', 'Marker_Other.svg', '', 0, '0000-00-00 00:00:00'),
+(2, 'Blackberries', 'Marker_Blackberries.svg', '', 0, '2016-01-30 00:00:00'),
+(3, 'Pears', 'Marker_Pears.svg', '', 1, '2016-01-30 00:00:00'),
+(4, 'Mulberries', 'Marker_Mulberries.svg', '', 0, '2016-01-30 00:00:00'),
+(5, 'Crabapples', 'Marker_Crabapples.svg', '', 0, '2016-01-30 00:00:00'),
+(6, 'Apples', 'Marker_Apples.svg', '', 0, '0000-00-00 00:00:00'),
+(7, 'Blueberries', 'Marker_Blueberries.svg', '', 0, '0000-00-00 00:00:00'),
+(8, 'Elderberries', 'Marker_Elderberries.svg', '', 0, '0000-00-00 00:00:00'),
+(9, 'Figs', 'Marker_Figs.svg', '', 0, '0000-00-00 00:00:00'),
+(10, 'Flying Dragon', 'Marker_FlyingDragon.svg', '', 0, '0000-00-00 00:00:00'),
+(11, 'Ginkgo', 'Marker_Ginkgo.svg', '', 0, '0000-00-00 00:00:00'),
+(12, 'Muscadines', 'Marker_Muscadines.svg', '', 0, '0000-00-00 00:00:00'),
+(13, 'Nectarines', 'Marker_Nectarines.svg', '', 0, '0000-00-00 00:00:00'),
+(14, 'Pawpaw', 'Marker_Pawpaws.svg', '', 0, '0000-00-00 00:00:00'),
+(15, 'Raspberries', 'Marker_Raspberries.svg', '', 0, '0000-00-00 00:00:00'),
+(16, 'Peaches', 'Marker_Peaches.svg', '', 0, '0000-00-00 00:00:00'),
+(17, 'Pecans', 'Marker_Pecans.svg', '', 0, '0000-00-00 00:00:00'),
+(18, 'Serviceberries', 'Marker_Serviceberries.svg', '', 0, '0000-00-00 00:00:00'),
+(19, 'Persimmons', 'Marker_Persimmons.svg', '', 0, '0000-00-00 00:00:00'),
+(20, 'Plums', 'Marker_Plums.svg', '', 0, '0000-00-00 00:00:00'),
+(21, 'Pomegranates', 'Marker_Pomegranates.svg', '', 0, '0000-00-00 00:00:00'),
+(22, 'Prickly Pears', 'Marker_PricklyPears.svg', '', 0, '0000-00-00 00:00:00'),
+(24, 'Quinces', 'Marker_Quinces.svg', '', 0, '0000-00-00 00:00:00'),
+(25, 'Black Walnuts', 'Marker_BlackWalnuts.svg', '', 0, '0000-00-00 00:00:00'),
+(26, 'Kiwis', 'Marker_Kiwis.svg', '', 0, '0000-00-00 00:00:00'),
+(29, 'Cherries', 'Marker_Cherries.svg', '', 0, '0000-00-00 00:00:00'),
+(30, 'Loquat', 'Marker_Loquats.svg', '', 0, '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `location`
+--
+
+CREATE TABLE `location` (
+  `id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `lat` double NOT NULL,
+  `lng` double NOT NULL,
+  `description` varchar(128) NOT NULL,
+  `address` varchar(128) NOT NULL,
+  `updated` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `note`
+--
+
+CREATE TABLE `note` (
+  `id` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `tree` int(11) NOT NULL,
+  `person` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `picture` varchar(128) NOT NULL,
+  `rate` tinyint(1) NOT NULL DEFAULT '0',
+  `amount` float NOT NULL DEFAULT '0',
+  `proper` tinyint(1) NOT NULL DEFAULT '0',
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -140,6 +193,12 @@ CREATE TABLE `tree` (
 --
 
 --
+-- Indexes for table `donate`
+--
+ALTER TABLE `donate`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `flag`
 --
 ALTER TABLE `flag`
@@ -149,6 +208,18 @@ ALTER TABLE `flag`
 -- Indexes for table `food`
 --
 ALTER TABLE `food`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `location`
+--
+ALTER TABLE `location`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `note`
+--
+ALTER TABLE `note`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -169,6 +240,11 @@ ALTER TABLE `tree`
 --
 
 --
+-- AUTO_INCREMENT for table `donate`
+--
+ALTER TABLE `donate`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `flag`
 --
 ALTER TABLE `flag`
@@ -177,17 +253,27 @@ ALTER TABLE `flag`
 -- AUTO_INCREMENT for table `food`
 --
 ALTER TABLE `food`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+--
+-- AUTO_INCREMENT for table `location`
+--
+ALTER TABLE `location`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `note`
+--
+ALTER TABLE `note`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `tree`
 --
 ALTER TABLE `tree`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
