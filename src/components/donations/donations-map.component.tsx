@@ -100,55 +100,50 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   }
   public componentWillReceiveProps (nextProps: IMapProps) {
     let self: MapComponent = this;
-    if (nextProps.locations.length) {
-      switch(nextProps.tile) {
-        case TileMode.GRAY:
-          if (!self.map.hasLayer(self.grayTileLayer)) {
-            self.grayTileLayer.addTo(self.map);
-            self.map.removeLayer(self.satTileLayer);
-          }
-          break;
-        case TileMode.SATELLITE:
-          if (!self.map.hasLayer(self.satTileLayer)) {
-            self.map.addLayer(self.satTileLayer);
-            self.map.removeLayer(self.grayTileLayer);
-          }
-          break;
-      }
-
-      // self.map.setZoom(nextProps.zoom);
-      // self.renderUserLocation(nextProps.position);
-      switch(nextProps.mode) {
-        case DonationsMode.LOCATIONADDMARKER:
-        case DonationsMode.LOCATIONADDINFO:
-          if (nextProps.tempLocation) {
-            var point: L.Point = L.CRS.EPSG3857.latLngToPoint(self.map.getCenter(), self.map.getZoom());
-            var rMap = ReactDOM.findDOMNode(self.refs['map-donation']);
-            if (rMap.clientWidth > rMap.clientHeight) {
-              point.x -= self.map.getSize().x * 0.15;
-            } else {
-              //point.y += self.map.getSize().y * 0.15;
-            }
-            if (!self.newMarker) {
-              let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, self.map.getZoom());
-              nextProps.tempLocation.setLat(location.lat);
-              nextProps.tempLocation.setLng(location.lng);
-              self.newMarker = MarkerComponent.createTemporaryLocationMarker(nextProps.tempLocation);
-              self.map.addLayer(self.newMarker);
-              self.newMarker.openPopup();
-            }
-          }
-          break;
-        default:
-          if (self.newMarker) {
-            self.map.removeLayer(self.newMarker);
-            self.newMarker = null;
-          }
+    switch(nextProps.tile) {
+      case TileMode.GRAY:
+        if (!self.map.hasLayer(self.grayTileLayer)) {
+          self.grayTileLayer.addTo(self.map);
+          self.map.removeLayer(self.satTileLayer);
+        }
         break;
-      }
-      self.renderMarkers(nextProps.locations, nextProps);
-      self.renderUserLocation(nextProps.position);
+      case TileMode.SATELLITE:
+        if (!self.map.hasLayer(self.satTileLayer)) {
+          self.map.addLayer(self.satTileLayer);
+          self.map.removeLayer(self.grayTileLayer);
+        }
+        break;
     }
+    switch(nextProps.mode) {
+      case DonationsMode.LOCATIONADDMARKER:
+      case DonationsMode.LOCATIONADDINFO:
+        if (nextProps.tempLocation) {
+          var point: L.Point = L.CRS.EPSG3857.latLngToPoint(self.map.getCenter(), self.map.getZoom());
+          var rMap = ReactDOM.findDOMNode(self.refs['map-donation']);
+          if (rMap.clientWidth > rMap.clientHeight) {
+            point.x -= self.map.getSize().x * 0.15;
+          } else {
+            //point.y += self.map.getSize().y * 0.15;
+          }
+          if (!self.newMarker) {
+            let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, self.map.getZoom());
+            nextProps.tempLocation.setLat(location.lat);
+            nextProps.tempLocation.setLng(location.lng);
+            self.newMarker = MarkerComponent.createTemporaryLocationMarker(nextProps.tempLocation);
+            self.map.addLayer(self.newMarker);
+            self.newMarker.openPopup();
+          }
+        }
+        break;
+      default:
+        if (self.newMarker) {
+          self.map.removeLayer(self.newMarker);
+          self.newMarker = null;
+        }
+      break;
+    }
+    self.renderMarkers(nextProps.locations, nextProps);
+    self.renderUserLocation(nextProps.position);
     if (nextProps.trees.length) {
       self.renderTreeMarkers(nextProps.trees, nextProps);
     }
