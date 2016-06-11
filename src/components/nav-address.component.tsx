@@ -123,7 +123,7 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
     let self: NavAddressComponent = this;
     if (self.state.editing) {
       return (
-        <input autoFocus autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text" className={styles.edit} placeholder={localization(730)}
+        <input autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" type="text" className={styles.edit} placeholder={localization(730)}
           value={self.state.address}
           onChange={(event: any)=> {
             self.setState({address: event.target.value});

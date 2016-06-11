@@ -2,6 +2,8 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import { Router, Link } from 'react-router';
 import * as AltContainer from 'alt-container';
+import * as FontAwesome from 'react-fontawesome';
+import './../../node_modules/font-awesome/css/font-awesome.css';
 
 var Settings = require('./../constraints/settings.json');
 import * as styles from './nav.component.css';
@@ -83,14 +85,15 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
                 <NavAddressComponent mapId={self.state.mapId} />
               </AltContainer>
             </div>
-            <div className={styles.right}>
-              <div className={styles.login} onClick={()=> {
-                if (self.props.query && self.props.query.user == "login") {
-                  self.context.router.push({pathname: window.location.pathname});
-                } else {
-                  self.context.router.push({pathname: window.location.pathname, query: { user: "login" }});
-                }
-              }}>
+            <div className={styles.right} onClick={()=> {
+              if (self.props.query && self.props.query.user == "login") {
+                self.context.router.push({pathname: window.location.pathname});
+              } else {
+                self.context.router.push({pathname: window.location.pathname, query: { user: "login" }});
+              }
+            }}>
+              <FontAwesome className={styles.icon}  name='user' />
+              <div className={styles.login}>
                 PARENT IN
               </div>
             </div>
@@ -124,14 +127,15 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
               </AltContainer>
             </div>
             <div className={styles.right}>
-              <div className={styles.login} onClick={()=> {
+              <FontAwesome className={styles.icon}  name='user' onClick={()=> {
                 if (self.props.query && self.props.query.user && parseInt(self.props.query.user) == self.props.auth.getId()) {
                   self.context.router.push({pathname: window.location.pathname});
                 } else {
                   authActions.fetchPerson(self.props.auth.getId());
                   self.context.router.push({pathname: window.location.pathname, query: { user: self.props.auth.getId() }});
                 }
-              }}>
+              }} />
+              <div className={styles.login}>
                 {self.props.auth.getContact()}
               </div>
             </div>
