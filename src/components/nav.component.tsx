@@ -126,15 +126,15 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
                 <NavAddressComponent mapId={self.state.mapId} />
               </AltContainer>
             </div>
-            <div className={styles.right}>
-              <FontAwesome className={styles.icon}  name='user' onClick={()=> {
-                if (self.props.query && self.props.query.user && parseInt(self.props.query.user) == self.props.auth.getId()) {
-                  self.context.router.push({pathname: window.location.pathname});
-                } else {
-                  authActions.fetchPerson(self.props.auth.getId());
-                  self.context.router.push({pathname: window.location.pathname, query: { user: self.props.auth.getId() }});
-                }
-              }} />
+            <div className={styles.right} onClick={()=> {
+              if (self.props.query && self.props.query.user && parseInt(self.props.query.user) == self.props.auth.getId()) {
+                self.context.router.push({pathname: window.location.pathname});
+              } else {
+                authActions.fetchPerson(self.props.auth.getId());
+                self.context.router.push({pathname: window.location.pathname, query: { user: self.props.auth.getId() }});
+              }
+            }}>
+              <FontAwesome className={styles.icon}  name='user'/>
               <div className={styles.login}>
                 {self.props.auth.getContact()}
               </div>
