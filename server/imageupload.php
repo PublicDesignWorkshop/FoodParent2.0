@@ -42,9 +42,26 @@ if(isset($_GET['files'])) {
 		$dest = imagecreatetruecolor($newWidth, $newHeight);
 		$source = imagecreatefromjpeg($file['tmp_name']);
 
+		$exif = exif_read_data($file['tmp_name']);
+		if (!empty($exif['Orientation'])) {
+			switch ($exif['Orientation']) {
+				case 3:
+          $source = imagerotate($source, 180, 0);
+          break;
+      	case 6:
+          $source = imagerotate($source, -90, 0);
+          break;
+      	case 8:
+          $source = imagerotate($source, 90, 0);
+          break;
+        }
+		}
+
 		// Resize
 		imagecopyresized($dest, $source, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
 		imagecopyresized($thumb, $source, 0, 0, 0, 0, $thumbWidth, $thumbHeight, $origWidth, $origHeight);
+
+
 
 		// Save
 		if (imagejpeg($dest, $uploaddir.$destName, 75) && imagejpeg($thumb, $uploaddir.$thumbName, 75)) {
