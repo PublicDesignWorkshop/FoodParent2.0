@@ -1,3 +1,4 @@
+import * as $ from 'jquery';
 import * as React from 'react';
 import { render } from 'react-dom';
 import { Link } from 'react-router';
@@ -54,9 +55,17 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
     let self: DonationsComponent = this;
     treeActions.resetTrees();
     self.updateProps(self.props);
+    $(document).on('keyup',function(evt) {
+      if (evt.keyCode == 27) {
+        if (self.state.mode != DonationsMode.DONATIONS) {
+          self.context.router.push({pathname: Settings.uBaseName + '/donations'});
+        }
+      }
+    });
   }
   public componentWillUnmount() {
     let self: DonationsComponent = this;
+    $(document).off('keyup');
   }
   public componentWillReceiveProps (nextProps: IDonationsProps) {
     let self: DonationsComponent = this;

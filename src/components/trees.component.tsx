@@ -1,3 +1,4 @@
+import * as $ from 'jquery';
 import * as React from 'react';
 import { render } from 'react-dom';
 import { Link } from 'react-router';
@@ -60,9 +61,17 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
     treeActions.resetTrees();
     resetFilter();
     self.updateProps(self.props);
+    $(document).on('keyup',function(evt) {
+      if (evt.keyCode == 27) {
+        if (self.state.mode != TreesMode.TREES) {
+          self.context.router.push({pathname: Settings.uBaseName + '/'});
+        }
+      }
+    });
   }
   public componentWillUnmount() {
     let self: TreesComponent = this;
+    $(document).off('keyup');
   }
   public componentWillReceiveProps (nextProps: ITreesProps) {
     let self: TreesComponent = this;

@@ -110,7 +110,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                   }
                 }
               }>
-                <NoteAddComponent treeId={self.props.treeId} mode={self.props.mode} />
+                <NoteAddComponent treeId={self.props.treeId} />
               </AltContainer>
             </div>
           </div>
