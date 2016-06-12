@@ -74,6 +74,28 @@
       return '{"error":{"text":'. $e->getMessage() .'}}';
     }
 
+    $sql = "SELECT DISTINCT tree.food from note join tree on note.tree = tree.id WHERE note.rate > 3 and datediff(note.date,CURRENT_DATE) < 30";
+    try {
+      $pdo = getConnection();
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute();
+      $result = $stmt->fetchAll();
+      $trees = [];
+      foreach ($result as $tree) {
+        array_push($trees, $tree['food']);
+      }
+      $sql = "UPDATE `food` SET `season` = 1 WHERE `id` IN (" . implode(",", $trees) . ")";
+      try {
+        $pdo = getConnection();
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+      } catch(PDOException $e) {
+        return '{"error":{"text":'. $e->getMessage() .'}}';
+      }
+    } catch(PDOException $e) {
+      return '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+
 
   }
 ?>
