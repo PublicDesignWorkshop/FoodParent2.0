@@ -25,8 +25,8 @@
   "iMarkerPrecision": 5,
   "uTemporaryMarkerIcon": "unknown.svg",
   "uTemporaryLocationMarkerIcon": "foodbox.svg",
-  "iMaxClusterRadius": 40,
-  "iDisableClusteringAtZoom": 14,
+  "iMaxClusterRadius": 30,
+  "iDisableClusteringAtZoom": 16,
   "iMessageDuration": 2000,
 
 
