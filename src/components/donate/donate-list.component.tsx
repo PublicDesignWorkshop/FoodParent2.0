@@ -9,7 +9,6 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './donate-list.component.css';
 import { DonateModel, donateStore } from './../../stores/donate.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
-import ErrorMessage from './../error-message.component';
 
 export interface IDonateListProps {
   donates?: Array<DonateModel>;

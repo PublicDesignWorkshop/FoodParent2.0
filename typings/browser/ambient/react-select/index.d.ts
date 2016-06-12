@@ -203,7 +203,7 @@ declare namespace ReactSelect {
          * function which returns a custom way to render the value selected
          * @default false
          */
-        valueRenderer?: () => void;
+        valueRenderer?: (any) => any;
         /**
          *  optional style to apply to the control
          */

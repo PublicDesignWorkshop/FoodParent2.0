@@ -8,7 +8,6 @@ import TextareaAutosize from 'react-textarea-autosize';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './signup.component.css';
 import { PersonModel, personStore } from './../../stores/person.store';
-import ErrorMessage from './../error-message.component';
 import UserContact from './user-contact.component';
 import UserName from './user-name.component';
 import UserNeighborhood from './user-neighborhood.component';

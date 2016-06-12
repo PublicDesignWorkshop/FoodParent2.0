@@ -131,6 +131,17 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
     });
   }
 
+  renderOptionValue(option): JSX.Element {
+    let food: FoodModel = foodStore.getFood(option.value);
+    let label: JSX.Element;
+    if (food) {
+       label = <span><img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} /><span>{option.label}</span></span>;
+    } else {
+      label = <span><img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + Settings.uTemporaryMarkerIcon} /><span>{option.label}</span></span>;
+    }
+    return label;
+  }
+
   render() {
     let self: FilterFoodComponent = this;
     return (
@@ -143,7 +154,7 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
           <FontAwesome className='' name='apple ' /> Food Types
         </div>
         <div className={styles.value}>
-          <Select name="food-select" multi={true} searchable={true} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select food types..." />
+          <Select name="food-select" multi={true} searchable={true} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select food types..." valueRenderer={self.renderOptionValue} />
           <div className={styles.button} onClick={()=> {
             self.resetAttribute();
           }}>

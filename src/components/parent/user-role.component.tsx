@@ -9,7 +9,6 @@ import './../../../node_modules/react-select/dist/react-select.css';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './user-role.component.css';
 import { PersonModel, personStore } from './../../stores/person.store';
-import ErrorMessage from './../error-message.component';
 
 export interface IUserRoleProps {
   person?: PersonModel;
@@ -72,7 +71,7 @@ export default class UserRoleComponent extends React.Component<IUserRoleProps, I
 
           </div>
           <div className={styles.message}>
-            <ErrorMessage error={self.props.error} match={new Array<string>()} />
+
           </div>
         </div>
       );
