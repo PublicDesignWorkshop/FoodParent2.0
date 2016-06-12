@@ -77,7 +77,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
       return (
         <div className={styles.wrapper}>
           <div className={styles.left}>
-            <TreesControlsComponent tile={self.props.tile} />
+            <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
           </div>
           <div className={styles.right}>
           </div>
@@ -90,7 +90,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
         return (
           <div className={styles.wrapper + " " + styles.slidein}>
             <div className={styles.left}>
-              <TreesControlsComponent tile={self.props.tile} />
+              <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
             </div>
             <div className={styles.right}>
               <TreeComponent trees={self.props.trees} foods={self.props.foods} treeId={self.props.treeId} noteId={self.props.noteId} />
@@ -110,7 +110,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                   }
                 }
               }>
-                <NoteAddComponent treeId={self.props.treeId} />
+                <NoteAddComponent treeId={self.props.treeId} mode={self.props.mode} />
               </AltContainer>
             </div>
           </div>
@@ -120,7 +120,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
           return (
             <div className={styles.wrapper + " " + styles.slidein}>
               <div className={styles.left}>
-                <TreesControlsComponent tile={self.props.tile} />
+                <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
               </div>
               <div className={styles.right}>
                 <TreeComponent trees={self.props.trees} foods={self.props.foods} treeId={self.props.treeId} noteId={self.props.noteId} />
@@ -149,7 +149,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
           return (
             <div className={styles.wrapper + " " + styles.slidein}>
               <div className={styles.left}>
-                <TreesControlsComponent tile={self.props.tile} />
+                <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
               </div>
               <div className={styles.right}>
                 <AltContainer stores={
@@ -171,7 +171,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
           return (
             <div className={styles.wrapper + " " + styles.slidein}>
               <div className={styles.left}>
-                <TreesControlsComponent tile={self.props.tile} />
+                <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
               </div>
               <div className={styles.right}>
                 <AltContainer stores={
@@ -192,7 +192,6 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                 }>
                   <TreeAddComponent trees={self.props.trees} foods={self.props.foods} />
                 </AltContainer>
-
               </div>
             </div>
           );

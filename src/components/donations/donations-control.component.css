@@ -37,6 +37,15 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom-left-radius: 2px;
   }
+  :local(.icon) {
+    transition: 0.25s;
+  }
+  :local(.cancel) {
+    transition: 0.25s;
+    -ms-transform: rotate(45deg); /* IE 9 */
+    -webkit-transform: rotate(45deg); /* Safari */
+    transform: rotate(45deg);
+  }
 }
 
 @media screen and (max-device-width: 667px) {

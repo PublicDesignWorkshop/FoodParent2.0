@@ -11,8 +11,10 @@ import { TileMode } from './../map.component';
 import { mapActions } from './../../actions/map.actions';
 import { mapStore } from './../../stores/map.store';
 import { authStore } from './../../stores/auth.store';
+import { DonationsMode } from './donations.component';
 
 export interface IDonationsControlsProps {
+  mode: DonationsMode;
   tile: TileMode;
 }
 export interface IDonationsControlsStatus {
@@ -57,6 +59,19 @@ export default class DonationsControlsComponent extends React.Component<IDonatio
         <FontAwesome className='' name='apple'/>
       </div>
     }
+    let add: JSX.Element = <div className={styles.button + " " + styles.buttonbottom} onClick={()=> {
+      self.context.router.push({pathname: Settings.uBaseName + '/donation/add', query: { mode: "marker" }});
+    }}>
+      <FontAwesome className={styles.icon} name='plus' />
+    </div>;
+    if (self.props.mode == DonationsMode.LOCATIONADDMARKER || self.props.mode == DonationsMode.LOCATIONADDINFO) {
+      add = <div className={styles.button + " " + styles.buttonbottom} onClick={()=> {
+        self.context.router.goBack();
+      }}>
+        <FontAwesome className={styles.cancel} name='plus' />
+      </div>;
+    }
+
     return (
       <div className={styles.wrapper}>
         <div className={styles.button + " " + styles.buttontop} onClick={()=> {
@@ -85,11 +100,7 @@ export default class DonationsControlsComponent extends React.Component<IDonatio
         }}>
           <FontAwesome className='' name='search-minus' />
         </div>
-        <div className={styles.button + " " + styles.buttonbottom} onClick={()=> {
-          self.context.router.push({pathname: Settings.uBaseName + '/donation/add', query: { mode: "marker" }});
-        }}>
-          <FontAwesome className='' name='plus' />
-        </div>
+        {add}
         {tree}
       </div>
     );

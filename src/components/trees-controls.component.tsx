@@ -16,8 +16,10 @@ import { TileMode } from './map.component';
 import { mapActions } from './../actions/map.actions';
 import { mapStore } from './../stores/map.store';
 import { authStore } from './../stores/auth.store';
+import { TreesMode } from './trees.component';
 
 export interface ITreesControlsProps {
+  mode: TreesMode;
   tile: TileMode;
 }
 export interface ITreesControlsStatus {
@@ -54,12 +56,24 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
     if (self.props.tile == TileMode.SATELLITE) {
       tile = 'map';
     }
+    let add: JSX.Element = <div className={styles.button + " " + styles.buttonbottom} onClick={()=> {
+      self.context.router.push({pathname: Settings.uBaseName + '/tree/add', query: { mode: "marker" }});
+    }}>
+      <FontAwesome className={styles.icon} name='plus' />
+    </div>;
+    if (self.props.mode == TreesMode.TREEADDMARKER || self.props.mode == TreesMode.TREEADDINFO) {
+      add = <div className={styles.button + " " + styles.buttonbottom} onClick={()=> {
+        self.context.router.goBack();
+      }}>
+        <FontAwesome className={styles.cancel} name='plus' />
+      </div>;
+    }
     let donation: JSX.Element;
     if (authStore.getAuth().getIsManager()) {
       donation = <div className={styles.button + " " + styles.buttonbottom} onClick={()=> {
         self.context.router.push({pathname: Settings.uBaseName + '/donations'});
       }}>
-        <FontAwesome className='' name='sitemap'/>
+        <FontAwesome className={styles.icon} name='sitemap'/>
       </div>
     }
     return (
@@ -67,7 +81,7 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
         <div className={styles.button + " " + styles.buttontop} onClick={()=> {
           mapActions.moveToUserLocation('map');
         }}>
-          <FontAwesome className='' name='location-arrow' />
+          <FontAwesome className={styles.icon} name='location-arrow' />
         </div>
         <div className={styles.button} onClick={()=> {
           if (self.props.tile == TileMode.GRAY) {
@@ -88,18 +102,14 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
           let zoom: number = Math.min(Settings.iMaxZoom, mapStore.getZoom('map') - 1);
           mapActions.setZoom('map', zoom);
         }}>
-          <FontAwesome className='' name='search-minus' />
+          <FontAwesome className={styles.icon} name='search-minus' />
         </div>
         <div className={styles.button} onClick={()=> {
           self.context.router.push({pathname: Settings.uBaseName + '/tree/filter'});
         }}>
-          <FontAwesome className='' name='filter'/>
+          <FontAwesome className={styles.icon} name='filter'/>
         </div>
-        <div className={styles.button + " " + styles.buttonbottom} onClick={()=> {
-          self.context.router.push({pathname: Settings.uBaseName + '/tree/add', query: { mode: "marker" }});
-        }}>
-          <FontAwesome className='' name='plus' />
-        </div>
+        {add}
         {donation}
       </div>
     );

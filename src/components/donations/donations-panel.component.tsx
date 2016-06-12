@@ -68,7 +68,7 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
       return (
         <div className={styles.wrapper}>
           <div className={styles.left}>
-            <DonationsControlsComponent tile={self.props.tile} />
+            <DonationsControlsComponent tile={self.props.tile} mode={self.props.mode} />
           </div>
           <div className={styles.right}>
           </div>
@@ -81,7 +81,7 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
         return (
           <div className={styles.wrapper + " " + styles.slidein}>
             <div className={styles.left}>
-              <DonationsControlsComponent tile={self.props.tile} />
+              <DonationsControlsComponent tile={self.props.tile} mode={self.props.mode} />
             </div>
             <div className={styles.right}>
               <LocationComponent locations={self.props.locations} locationId={self.props.locationId} donateId={self.props.donateId} />
@@ -111,7 +111,7 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
           return (
             <div className={styles.wrapper + " " + styles.slidein}>
               <div className={styles.left}>
-                <DonationsControlsComponent tile={self.props.tile} />
+                <DonationsControlsComponent tile={self.props.tile} mode={self.props.mode} />
               </div>
               <div className={styles.right}>
                 <LocationComponent locations={self.props.locations} locationId={self.props.locationId} donateId={self.props.donateId} />
@@ -140,7 +140,7 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
           return (
             <div className={styles.wrapper + " " + styles.slidein}>
               <div className={styles.left}>
-                <DonationsControlsComponent tile={self.props.tile} />
+                <DonationsControlsComponent tile={self.props.tile} mode={self.props.mode} />
               </div>
               <div className={styles.right}>
                 <AltContainer stores={
