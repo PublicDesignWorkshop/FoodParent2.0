@@ -14,7 +14,7 @@
   "uSatTileMap" : "//oatile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg",
   "sGoogleMapTileType": "HYBRID",
   "iPopupDelay": 150,
-  "iDefaultZoom": 13,
+  "iDefaultZoom": 14,
   "iMaxZoom": 20,
   "iMinZoom": 5,
   "iFocusZoom": 17,
@@ -26,7 +26,7 @@
   "uTemporaryMarkerIcon": "unknown.svg",
   "uTemporaryLocationMarkerIcon": "foodbox.svg",
   "iMaxClusterRadius": 40,
-  "iDisableClusteringAtZoom": 10,
+  "iDisableClusteringAtZoom": 14,
   "iMessageDuration": 2000,
 
 
