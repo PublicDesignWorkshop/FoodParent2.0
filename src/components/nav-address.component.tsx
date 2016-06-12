@@ -83,14 +83,22 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
           self.context.router.push({pathname: Settings.uBaseName + '/donation/' + parseInt(value)});
         }
       } else {
-        geocoding(self.state.address, new L.LatLng(location.lat, location.lng), function(response) {
-          mapActions.moveToWithMarker(self.props.mapId, new L.LatLng(response.lat.toFixed(Settings.iMarkerPrecision), response.lng.toFixed(Settings.iMarkerPrecision)), Settings.iFocusZoom);
-          // self.context.router.replace({pathname: window.location.pathname, query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
-          // self.context.router.replace({pathname: Settings.uBaseName + '/', query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
+        let temp = value.split(',');
+        temp[0] = parseFloat(temp[0]);
+        temp[1] = parseFloat(temp[1]);
+        if (temp[0] && temp[1] && !isNaN(temp[0]) && !isNaN(temp[1])) {
+          mapActions.moveToWithMarker(self.props.mapId, new L.LatLng(temp[0].toFixed(Settings.iMarkerPrecision), temp[1].toFixed(Settings.iMarkerPrecision)), Settings.iFocusZoom);
           mapActions.setActive(self.props.mapId, true);
-        }, function() {
-          mapActions.setActive(self.props.mapId, true);
-        });
+        } else {
+          geocoding(self.state.address, new L.LatLng(location.lat, location.lng), function(response) {
+            mapActions.moveToWithMarker(self.props.mapId, new L.LatLng(response.lat.toFixed(Settings.iMarkerPrecision), response.lng.toFixed(Settings.iMarkerPrecision)), Settings.iFocusZoom);
+            // self.context.router.replace({pathname: window.location.pathname, query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
+            // self.context.router.replace({pathname: Settings.uBaseName + '/', query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
+            mapActions.setActive(self.props.mapId, true);
+          }, function() {
+            mapActions.setActive(self.props.mapId, true);
+          });
+        }
       }
     } else {
       mapActions.setActive(self.props.mapId, true);
