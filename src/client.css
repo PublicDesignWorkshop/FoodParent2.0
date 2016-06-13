@@ -54,6 +54,15 @@
   .leaflet-top, .leaflet-bottom {
     z-index: 0 !important;
   }
+  .leaflet-icon-hidden {
+    -webkit-filter: blur(2px) !important; /* Chrome, Safari, Opera */
+    filter: blur(2px) !important;
+  }
+  .leaflet-icon-dead {
+    -webkit-filter: opacity(30%) drop-shadow(1px 1px 1px black) !important; /* Chrome, Safari, Opera */
+    filter: opacity(30%) drop-shadow(1px 1px 1px black) !important;
+  }
+
   /* Let's get this party started */
   ::-webkit-scrollbar {
     width: 4px;

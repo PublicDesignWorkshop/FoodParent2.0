@@ -10,22 +10,26 @@ import { treeStore } from './../stores/tree.store';
 export interface IFlagProps {
   id: string;
   name: string;
+  classname: string;
 }
 
 export class FlagModel {
   id: number;
   name: string;
+  classname: string;
 
   constructor(props: IFlagProps) {
     let self: FlagModel = this;
     self.id = parseInt(props.id);
     self.name = props.name;
+    self.classname = props.classname;
   }
   private toJSON(): any {
     let self: FlagModel = this;
     return {
       id: self.id,
       name: self.name,
+      classname: self.classname,
     }
   }
   public getId(): number {
@@ -34,11 +38,14 @@ export class FlagModel {
   public getName(): string {
     return this.name;
   }
+  public getClassName(): string {
+    return this.classname;
+  }
 }
 
 export interface FlagState {
   flags: Array<FlagModel>;
-  errorMessage: string;
+  code: any;
 }
 
 interface FlagExtendedStore extends AltJS.AltStore<FlagState> {
@@ -47,12 +54,12 @@ interface FlagExtendedStore extends AltJS.AltStore<FlagState> {
 
 class FlagStore extends AbstractStore<FlagState> {
   private flags: Array<FlagModel>;
-  private errorMessage: string
+  private code: any;
   constructor() {
     super();
     let self: FlagStore = this;
     self.flags = new Array<FlagModel>();
-    self.errorMessage = null;
+    self.code = 200;
     //TODO: pass state generics to make sure methods/actions expect the same type
     self.bindListeners({
       handleUpdateFlags: flagActions.updateFlags,
@@ -67,11 +74,11 @@ class FlagStore extends AbstractStore<FlagState> {
     flagsProps.forEach((props: IFlagProps) => {
       self.flags.push(new FlagModel(props));
     });
-    self.errorMessage = null;
+    self.code = 200;
   }
-  handleFailed(code: number) {
+  handleSetCode(code: number) {
     let self: FlagStore = this;
-    // this.errorMessage = errorMessage;
+    self.code = code;
   }
   getFlag(id: number): FlagModel {
     let self: FlagStore = this;

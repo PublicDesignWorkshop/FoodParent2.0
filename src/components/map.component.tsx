@@ -14,6 +14,7 @@ import * as styles from './trees.component.css';
 import './../../node_modules/leaflet/dist/leaflet.css';
 import { TreeModel, treeStore } from './../stores/tree.store';
 import { FoodModel, foodStore } from './../stores/food.store';
+import { FlagModel } from './../stores/flag.store';
 import { treeActions } from './../actions/tree.actions';
 import MarkerComponent from './marker.component';
 import { TreesMode } from './trees.component';
@@ -28,21 +29,13 @@ export enum TileMode {
 export interface IMapProps {
   foods?: Array<FoodModel>;
   trees?: Array<TreeModel>;
+  flags?: Array<FlagModel>;
   tempTree?: TreeModel;
   tile?: TileMode;
-  // zoom?: number;
   treeId: number;
   mode: TreesMode;
   onRender: Function;
   position?: L.LatLng;
-
-
-  // onZoom: Function;
-  // position: L.LatLng;
-  // offGeo: Function;
-
-
-  // location: any;
 }
 export interface IMapStatus {
 
@@ -58,14 +51,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   private newMarker: L.Marker;
   private userMarker: L.Circle;
   private userCenterMarker: L.Circle;
-
-
-
-
-
-  // private position: L.LatLng;
-
-
   constructor(props : IMapProps) {
     super(props);
     this.state = {
@@ -126,10 +111,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
         break;
     }
 
-    if (nextProps.foods.length) {
-
-      // self.map.setZoom(nextProps.zoom);
-      // self.renderUserLocation(nextProps.position);
+    if (nextProps.foods.length && nextProps.flags.length) {
       switch(nextProps.mode) {
         case TreesMode.TREEADDMARKER:
         case TreesMode.TREEADDINFO:
@@ -215,7 +197,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
           //   //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
           // }, Settings.iPopupDelay);
           if(self.markers[i].getPopup()._isOpen === true && self.selected && self.selected.options.id == props.treeId) {
-            // popup is already open
+            // When popup is already open.
           } else {
             setTimeout(function() {
               self.markers[i].openPopup();
@@ -264,17 +246,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
         marker = MarkerComponent.createUneditableMarker(food, tree);
       }
       if (marker) {
-        /*
-        marker.on('click', function() {
-          s(self.selected);
-          if (self.selected) {
-            MarkerComponent.changeToNormalMarker(self.selected);
-          }
-          self.selected = marker;
-          MarkerComponent.changeToBigMarker(self.selected);
-          self.selected._bringToFront();
-        });
-        */
         self.markers.push(marker);
         self.layer.addLayer(marker);
       }

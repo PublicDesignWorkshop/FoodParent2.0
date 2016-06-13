@@ -5,6 +5,7 @@ import './marker.component.css';
 var Settings = require('./../constraints/settings.json');
 import { FoodModel } from './../stores/food.store';
 import { treeStore, TreeModel } from './../stores/tree.store';
+import { flagStore, FlagModel } from './../stores/flag.store';
 import { locationStore, LocationModel } from './../stores/location.store';
 import { treeActions } from './../actions/tree.actions';
 import { donateActions } from './../actions/donate.actions';
@@ -35,11 +36,20 @@ module MarkerComponent {
   }
 
   export function createUneditableMarker(food: FoodModel, tree: TreeModel): L.Marker {
+    let classname: string = "";
+    tree.getFlags().forEach((flagId: number) => {
+      let flag: FlagModel = flagStore.getFlag(flagId);
+      if (flag) {
+        classname = flag.getClassName() + " ";
+      }
+    });
+
     let icon: L.Icon = new L.Icon({
       iconUrl: Settings.uBaseName + Settings.uStaticImage + food.getIcon(),
       iconSize: new L.Point(40, 40),
       iconAnchor: new L.Point(20, 40),
       popupAnchor: new L.Point(1, -36),
+      className: classname,
     });
 
     let template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">' + food.getName() + '</span>#<span class="marker-tree">' + tree.getId() + '</span></div><div class="marker-right"></div>';

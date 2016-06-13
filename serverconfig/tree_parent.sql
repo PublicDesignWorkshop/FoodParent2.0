@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2016 at 06:19 PM
+-- Generation Time: Jun 13, 2016 at 03:41 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.21
 
@@ -47,6 +47,7 @@ CREATE TABLE `donate` (
 CREATE TABLE `flag` (
   `id` int(11) NOT NULL,
   `name` varchar(16) NOT NULL,
+  `classname` varchar(128) NOT NULL,
   `filter` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -54,10 +55,10 @@ CREATE TABLE `flag` (
 -- Dumping data for table `flag`
 --
 
-INSERT INTO `flag` (`id`, `name`, `filter`) VALUES
-(1, 'dead', 0),
-(2, 'verified', 1),
-(3, 'hidden', 0);
+INSERT INTO `flag` (`id`, `name`, `classname`, `filter`) VALUES
+(1, 'dead', 'leaflet-icon-dead', 0),
+(2, 'verified', '', 1),
+(3, 'hidden', 'leaflet-icon-hidden', 0);
 
 -- --------------------------------------------------------
 
@@ -82,23 +83,23 @@ INSERT INTO `food` (`id`, `name`, `icon`, `description`, `season`, `updated`) VA
 (1, 'Other', 'Marker_Other.svg', '', 0, '0000-00-00 00:00:00'),
 (2, 'Blackberries', 'Marker_Blackberries.svg', '', 0, '2016-01-30 00:00:00'),
 (3, 'Pears', 'Marker_Pears.svg', '', 1, '2016-01-30 00:00:00'),
-(4, 'Mulberries', 'Marker_Mulberries.svg', '', 0, '2016-01-30 00:00:00'),
+(4, 'Mulberries', 'Marker_Mulberries.svg', '', 1, '2016-01-30 00:00:00'),
 (5, 'Crabapples', 'Marker_Crabapples.svg', '', 0, '2016-01-30 00:00:00'),
-(6, 'Apples', 'Marker_Apples.svg', '', 0, '0000-00-00 00:00:00'),
-(7, 'Blueberries', 'Marker_Blueberries.svg', '', 0, '0000-00-00 00:00:00'),
+(6, 'Apples', 'Marker_Apples.svg', '', 1, '0000-00-00 00:00:00'),
+(7, 'Blueberries', 'Marker_Blueberries.svg', '', 1, '0000-00-00 00:00:00'),
 (8, 'Elderberries', 'Marker_Elderberries.svg', '', 0, '0000-00-00 00:00:00'),
-(9, 'Figs', 'Marker_Figs.svg', '', 0, '0000-00-00 00:00:00'),
+(9, 'Figs', 'Marker_Figs.svg', '', 1, '0000-00-00 00:00:00'),
 (10, 'Flying Dragon', 'Marker_FlyingDragon.svg', '', 0, '0000-00-00 00:00:00'),
 (11, 'Ginkgo', 'Marker_Ginkgo.svg', '', 0, '0000-00-00 00:00:00'),
 (12, 'Muscadines', 'Marker_Muscadines.svg', '', 0, '0000-00-00 00:00:00'),
-(13, 'Nectarines', 'Marker_Nectarines.svg', '', 0, '0000-00-00 00:00:00'),
+(13, 'Nectarines', 'Marker_Nectarines.svg', '', 1, '0000-00-00 00:00:00'),
 (14, 'Pawpaw', 'Marker_Pawpaws.svg', '', 0, '0000-00-00 00:00:00'),
 (15, 'Raspberries', 'Marker_Raspberries.svg', '', 0, '0000-00-00 00:00:00'),
-(16, 'Peaches', 'Marker_Peaches.svg', '', 0, '0000-00-00 00:00:00'),
+(16, 'Peaches', 'Marker_Peaches.svg', '', 1, '0000-00-00 00:00:00'),
 (17, 'Pecans', 'Marker_Pecans.svg', '', 0, '0000-00-00 00:00:00'),
-(18, 'Serviceberries', 'Marker_Serviceberries.svg', '', 0, '0000-00-00 00:00:00'),
-(19, 'Persimmons', 'Marker_Persimmons.svg', '', 0, '0000-00-00 00:00:00'),
-(20, 'Plums', 'Marker_Plums.svg', '', 0, '0000-00-00 00:00:00'),
+(18, 'Serviceberries', 'Marker_Serviceberries.svg', '', 1, '0000-00-00 00:00:00'),
+(19, 'Persimmons', 'Marker_Persimmons.svg', '', 1, '0000-00-00 00:00:00'),
+(20, 'Plums', 'Marker_Plums.svg', '', 1, '0000-00-00 00:00:00'),
 (21, 'Pomegranates', 'Marker_Pomegranates.svg', '', 0, '0000-00-00 00:00:00'),
 (22, 'Prickly Pears', 'Marker_PricklyPears.svg', '', 0, '0000-00-00 00:00:00'),
 (24, 'Quinces', 'Marker_Quinces.svg', '', 0, '0000-00-00 00:00:00'),
@@ -268,7 +269,7 @@ ALTER TABLE `note`
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tree`
 --
