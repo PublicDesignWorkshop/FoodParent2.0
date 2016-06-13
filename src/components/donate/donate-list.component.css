@@ -33,10 +33,16 @@
   }
   :local(.tree) {
     border-radius: 2px;
-
+    display: inline-block;
     padding: 1px 1px;
     margin: 2px;
     cursor: pointer;
+  }
+  :local(.tree2) {
+    border-radius: 2px;
+    display: inline-block;
+    padding: 1px 1px;
+    margin: 2px;
   }
   :local(.amount) {
 

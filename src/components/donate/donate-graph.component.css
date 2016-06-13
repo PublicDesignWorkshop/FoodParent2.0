@@ -48,12 +48,9 @@
   :local(.comment) {
     width: 100px;
     font-weight: 700;
-    overflow:hidden;
-    display:inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
   :local(.tree) {
+    display: inline-block;
     margin: 0 2px 0 0;
     font-weight: 700;
   }

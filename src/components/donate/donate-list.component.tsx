@@ -48,13 +48,13 @@ export default class DonateListComponent extends React.Component<IDonateListProp
     let donates: Array<JSX.Element> = list.map(function(donate: DonateModel, i: number) {
       if (donate.getId()) {
         let food: FoodModel = foodStore.getFood(donate.getFoodId());
-        let list: Array<JSX.Element> = new Array<JSX.Element>();
-        donate.getTrees().forEach((treeId: number) => {
-          list.push(<span className={styles.tree} key={"tree" + treeId} onClick={()=> {
-            self.context.router.push({pathname: Settings.uBaseName + "/tree/" + treeId});
-          }}>{"#" + treeId}</span>);
-        });
         if (donate.getId() == self.props.donateId) {
+          let list: Array<JSX.Element> = new Array<JSX.Element>();
+          donate.getTrees().forEach((treeId: number) => {
+            list.push(<span className={styles.tree} key={"tree" + treeId} onClick={()=> {
+              self.context.router.push({pathname: Settings.uBaseName + "/tree/" + treeId});
+            }}>{"#" + treeId}</span>);
+          });
           return (
             <div className={styles.value + " " + styles.selected} key={"note" + i}>
               <FontAwesome className='' name='angle-right' />
@@ -80,6 +80,10 @@ export default class DonateListComponent extends React.Component<IDonateListProp
             </div>
           );
         } else {
+          let list: Array<JSX.Element> = new Array<JSX.Element>();
+          donate.getTrees().forEach((treeId: number) => {
+            list.push(<span className={styles.tree2} key={"tree" + treeId}>{"#" + treeId}</span>);
+          });
           return (
             <div className={styles.value} key={"note" + i}>
             <FontAwesome className='' name='angle-right' />

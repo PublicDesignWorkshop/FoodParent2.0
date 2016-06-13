@@ -94,6 +94,13 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
             }
           }
         });
+        let isKilogram: boolean = false;
+        accumulated.forEach((accum: number) => {
+          if (accum > 100000) {
+            isKilogram = true;
+          }
+        });
+
         let data = [];
         for (let i = 0; i < lists.length; i++) {
           data.push({
@@ -102,14 +109,17 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
     				data: lists[i],
           })
         }
-
+        let scaleLabel: string = "<%=parseFloat(value).toLocaleString()%>g";
+        if (isKilogram) {
+          scaleLabel = "<%=(parseFloat(value) * 0.001).toLocaleString()%>kg";
+        }
         let chart = new Chart(ctx).Scatter(data, {
   				bezierCurve: true,
   				showTooltips: true,
   				scaleShowHorizontalLines: true,
   				scaleShowLabels: true,
   				scaleType: "date",
-  				scaleLabel: "<%=value.toLocaleString()%>g",
+  				scaleLabel: scaleLabel,
           customTooltips: function(tooltip) {
             if (self.state.clicked) {
               if (tooltip.text && self.state.donateId != parseInt(tooltip.text)) {
@@ -181,7 +191,9 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
           }}>
             <div><span>Posted on </span><span className={styles.highlight}>{donate.getFormattedDate()}</span></div>
             {image}
-            {comment}
+            <div className={styles.comment}>
+              {comment}
+            </div>
             {list}
           </div>
         </div>;
@@ -190,7 +202,9 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
           <div className={styles.button}>
             <div><span>Posted on </span><span className={styles.highlight}>{donate.getFormattedDate()}</span></div>
             {image}
-            {comment}
+            <div className={styles.comment}>
+              {comment}
+            </div>
             {list}
           </div>
         </div>;
