@@ -122,7 +122,9 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
                 }
                 self.setState({x: x, y: ($("#wrapper").offset().top + y), noteId: parseInt(tooltip.text), visible: true, clicked: false});
               } else if (isTouchDevice() && isMobile() && !tooltip.text) {
-                self.setState({visible: false, clicked: false});
+                setTimeout(function () {
+                  self.setState({visible: false, clicked: false});
+                }, 1000);
               }
             } else {
               if (!tooltip.text) {
