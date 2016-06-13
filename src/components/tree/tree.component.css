@@ -1,7 +1,7 @@
 @media all {
   :local(.wrapper) {
     width: 100%;
-    padding: 8px;
+    padding: 8px 8px 4px 8px;
     background-color: rgba(244, 244, 244, 1);
   }
   :local(.treeinfo) {

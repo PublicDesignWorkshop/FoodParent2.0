@@ -20,6 +20,7 @@ import MessageComponent from './../message/message.component';
 import DonateAddComponent from './../donate/donate-add.component';
 import DonateEditComponent from './../donate/donate-edit.component';
 import LocationAddComponent from './../location/location-add.component';
+import { mapActions } from './../../actions/map.actions';
 
 export interface IDonationsPanelProps {
   locationId: number;
@@ -85,6 +86,16 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
             </div>
             <div className={styles.right}>
               <LocationComponent locations={self.props.locations} locationId={self.props.locationId} donateId={self.props.donateId} />
+              <div className={styles.buttongroup}>
+                <div className={styles.button2} onClick={()=> {
+                  let location: LocationModel = locationStore.getLocation(self.props.locationId);
+                  if (location) {
+                    mapActions.moveToWithMarker('map-donation', location.getLocation(), Settings.iFocusZoom);
+                  }
+                }}>LOCATE ME</div>
+                <div className={styles.button2 + " " + styles.selected}>NEW DONATION</div>
+                <div className={styles.button2}>SEE GRAPH</div>
+              </div>
               <AltContainer stores={
                 {
                   donate: function (props) {
@@ -115,6 +126,18 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
               </div>
               <div className={styles.right}>
                 <LocationComponent locations={self.props.locations} locationId={self.props.locationId} donateId={self.props.donateId} />
+                <div className={styles.buttongroup}>
+                  <div className={styles.button2} onClick={()=> {
+                    let location: LocationModel = locationStore.getLocation(self.props.locationId);
+                    if (location) {
+                      mapActions.moveToWithMarker('map-donation', location.getLocation(), Settings.iFocusZoom);
+                    }
+                  }}>LOCATE ME</div>
+                  <div className={styles.button2} onClick={()=> {
+                    self.context.router.push({pathname: window.location.pathname});
+                  }}>NEW NOTE</div>
+                  <div className={styles.button2}>SEE GRAPH</div>
+                </div>
                 <AltContainer stores={
                   {
                     donate: function (props) {

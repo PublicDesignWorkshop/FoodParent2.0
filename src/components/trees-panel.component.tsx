@@ -22,6 +22,7 @@ import { authStore } from './../stores/auth.store';
 import { NoteModel, noteStore, NoteType, PickupTime, AmountType } from './../stores/note.store';
 import { TileMode } from './map.component';
 import { noteActions } from './../actions/note.actions';
+import { mapActions } from './../actions/map.actions';
 
 export interface ITreesPanelProps {
   treeId: number;
@@ -94,6 +95,16 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
             </div>
             <div className={styles.right}>
               <TreeComponent trees={self.props.trees} foods={self.props.foods} treeId={self.props.treeId} noteId={self.props.noteId} />
+              <div className={styles.buttongroup}>
+                <div className={styles.button2} onClick={()=> {
+                  let tree: TreeModel = treeStore.getTree(self.props.treeId);
+                  if (tree) {
+                    mapActions.moveToWithMarker('map', tree.getLocation(), Settings.iFocusZoom);
+                  }
+                }}>LOCATE ME</div>
+                <div className={styles.button2 + " " + styles.selected}>NEW NOTE</div>
+                <div className={styles.button2}>SEE GRAPH</div>
+              </div>
               <AltContainer stores={
                 {
                   note: function (props) {
@@ -124,6 +135,18 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
               </div>
               <div className={styles.right}>
                 <TreeComponent trees={self.props.trees} foods={self.props.foods} treeId={self.props.treeId} noteId={self.props.noteId} />
+                <div className={styles.buttongroup}>
+                  <div className={styles.button2} onClick={()=> {
+                    let tree: TreeModel = treeStore.getTree(self.props.treeId);
+                    if (tree) {
+                      mapActions.moveToWithMarker('map', tree.getLocation(), Settings.iFocusZoom);
+                    }
+                  }}>LOCATE ME</div>
+                  <div className={styles.button2} onClick={()=> {
+                    self.context.router.push({pathname: window.location.pathname});
+                  }}>NEW NOTE</div>
+                  <div className={styles.button2}>SEE GRAPH</div>
+                </div>
                 <AltContainer stores={
                   {
                     note: function (props) {
