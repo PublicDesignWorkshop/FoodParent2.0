@@ -21,6 +21,7 @@ import DonateAddComponent from './../donate/donate-add.component';
 import DonateEditComponent from './../donate/donate-edit.component';
 import LocationAddComponent from './../location/location-add.component';
 import { mapActions } from './../../actions/map.actions';
+import DonateGraphComponent from  './../donate/donate-graph.component';
 
 export interface IDonationsPanelProps {
   locationId: number;
@@ -94,7 +95,9 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
                   }
                 }}>LOCATE ME</div>
                 <div className={styles.button2 + " " + styles.selected}>NEW DONATION</div>
-                <div className={styles.button2}>SEE GRAPH</div>
+                <div className={styles.button2} onClick={()=> {
+                  self.context.router.push({pathname: window.location.pathname, query: { mode: "graph" }});
+                }}>SEE GRAPH</div>
               </div>
               <AltContainer stores={
                 {
@@ -136,7 +139,9 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
                   <div className={styles.button2} onClick={()=> {
                     self.context.router.push({pathname: window.location.pathname});
                   }}>NEW NOTE</div>
-                  <div className={styles.button2}>SEE GRAPH</div>
+                  <div className={styles.button2} onClick={()=> {
+                    self.context.router.push({pathname: window.location.pathname, query: { mode: "graph" }});
+                  }}>SEE GRAPH</div>
                 </div>
                 <AltContainer stores={
                   {
@@ -155,6 +160,47 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
                   }
                 }>
                   <DonateEditComponent locationId={self.props.locationId} />
+                </AltContainer>
+              </div>
+            </div>
+          );
+        case DonationsMode.DONATIONGRAPH:
+          return (
+            <div className={styles.wrapper + " " + styles.slidein}>
+              <div className={styles.left}>
+                <DonationsControlsComponent tile={self.props.tile} mode={self.props.mode} />
+              </div>
+              <div className={styles.right}>
+                <LocationComponent locations={self.props.locations} locationId={self.props.locationId} donateId={self.props.donateId} />
+                <div className={styles.buttongroup}>
+                  <div className={styles.button2} onClick={()=> {
+                    let location: LocationModel = locationStore.getLocation(self.props.locationId);
+                    if (location) {
+                      mapActions.moveToWithMarker('map-donation', location.getLocation(), Settings.iFocusZoom);
+                    }
+                  }}>LOCATE ME</div>
+                  <div className={styles.button2} onClick={()=> {
+                    self.context.router.push({pathname: window.location.pathname});
+                  }}>NEW NOTE</div>
+                  <div className={styles.button2 + " " + styles.selected}>SEE GRAPH</div>
+                </div>
+                <AltContainer stores={
+                  {
+                    location: function (props) {
+                      return {
+                        store: locationStore,
+                        value: locationStore.getLocation(self.props.locationId),
+                      };
+                    },
+                    donates: function (props) {
+                      return {
+                        store: donateStore,
+                        value: donateStore.getState().donates,
+                      };
+                    }
+                  }
+                }>
+                  <DonateGraphComponent />
                 </AltContainer>
               </div>
             </div>

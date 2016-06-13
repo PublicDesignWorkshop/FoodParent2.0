@@ -25,6 +25,16 @@ export function sortNoteByDateASC(a: NoteModel, b: NoteModel): number {
   }
 }
 
+export function sortDonateByDateASC(a: DonateModel, b: DonateModel): number {
+  if (a.getDate().valueOf() > b.getDate().valueOf()) {
+    return 1;
+  } else if (a.getDate().valueOf() < b.getDate().valueOf()) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
+
 export function sortDonateByDateDESC(a: DonateModel, b: DonateModel): number {
   if (a.getDate().valueOf() > b.getDate().valueOf()) {
     return -1;

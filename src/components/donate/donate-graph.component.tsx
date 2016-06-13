@@ -9,27 +9,28 @@ import * as $ from 'jquery';
 import * as moment from 'moment';
 
 var Settings = require('./../../constraints/settings.json');
-import * as styles from './tree-graph.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
-import { NoteModel, noteStore, NoteType, PickupTime } from './../../stores/note.store';
-import { sortNoteByDateASC } from './../../utils/sort';
+import * as styles from './donate-graph.component.css';
+import { LocationModel, locationStore } from './../../stores/location.store';
+import { DonateModel, donateStore } from './../../stores/donate.store';
+import { FoodModel, foodStore } from './../../stores/food.store';
+import { sortDonateByDateASC } from './../../utils/sort';
 import { google10Color } from './../../utils/color';
 import { isTouchDevice, isMobile } from './../../utils/device';
 
 
-export interface ITreeGraphOption {
+export interface IDonateGraphOption {
   x: Date;
   y: number;
   r: number;
   tooltip: any;
 }
 
-export interface ITreeGraphProps {
-  tree?: TreeModel;
-  notes?: Array<NoteModel>;
+export interface IDonateGraphProps {
+  location?: LocationModel;
+  donates?: Array<DonateModel>;
 }
-export interface ITreeGraphStatus {
-  noteId?: number;
+export interface IDonateGraphStatus {
+  donateId?: number;
   x?: number;
   y?: number;
   width?: number;
@@ -38,34 +39,34 @@ export interface ITreeGraphStatus {
   clicked?: boolean;
 }
 
-export default class TreeGraphComponent extends React.Component<ITreeGraphProps, ITreeGraphStatus> {
+export default class DonateGraphComponent extends React.Component<IDonateGraphProps, IDonateGraphStatus> {
   private timeout: any;
   static contextTypes: any;
-  constructor(props : ITreeGraphProps) {
+  constructor(props : IDonateGraphProps) {
     super(props);
-    let self: TreeGraphComponent = this;
+    let self: DonateGraphComponent = this;
     this.state = {
       visible: false,
       clicked: false,
     };
   }
   public componentDidMount() {
-    let self: TreeGraphComponent = this;
+    let self: DonateGraphComponent = this;
     self.updateProps(self.props);
     let rWrapper = ReactDOM.findDOMNode(self.refs['wrapper']);
     self.setState({width: rWrapper.clientWidth - 16, height: Math.floor((rWrapper.clientWidth - 16) * 9 / 16)});
     self.updateProps(self.props);
   }
   public componentWillUnmount() {
-    let self: TreeGraphComponent = this;
+    let self: DonateGraphComponent = this;
   }
-  public componentWillReceiveProps (nextProps: ITreeGraphProps) {
-    let self: TreeGraphComponent = this;
+  public componentWillReceiveProps (nextProps: IDonateGraphProps) {
+    let self: DonateGraphComponent = this;
     self.updateProps(nextProps);
   }
 
-  private updateProps(props: ITreeGraphProps) {
-    let self: TreeGraphComponent = this;
+  private updateProps(props: IDonateGraphProps) {
+    let self: DonateGraphComponent = this;
     if (self.timeout) {
       clearTimeout(self.timeout);
     }
@@ -73,22 +74,23 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
       if (self.state.width && self.state.height) {
         let rChart: any = document.getElementById("chart");
         let ctx = rChart.getContext("2d");
-        let lists: Array<Array<ITreeGraphOption>> = new Array<Array<ITreeGraphOption>>();
-        let notes: Array<NoteModel> = props.notes.sort(sortNoteByDateASC);
+        let lists: Array<Array<IDonateGraphOption>> = new Array<Array<IDonateGraphOption>>();
+        let donates: Array<DonateModel> = props.donates.sort(sortDonateByDateASC);
         let currentYear: number = moment(new Date()).year();
-        let earlestYear: number = moment(notes[0].getDate()).year();
-        let latestYear: number = moment(notes[notes.length - 1].getDate()).year();
-        notes.forEach((note: NoteModel) => {
+        let earlestYear: number = moment(donates[0].getDate()).year();
+        let latestYear: number = moment(donates[donates.length - 1].getDate()).year();
+        let accumulated: Array<number> = new Array<number>();
+        donates.forEach((donate: DonateModel) => {
           for (let i = earlestYear; i <= latestYear; i++) {
-            if (note.getDate().year() == i) {
+            if (donate.getDate().year() == i) {
               if (lists[i - earlestYear] == null) {
-                lists[i - earlestYear] = Array<ITreeGraphOption>();
+                lists[i - earlestYear] = Array<IDonateGraphOption>();
               }
-              if (note.getNoteType() == NoteType.POST) {
-                lists[i - earlestYear].push({x: moment(note.getDate()).year(currentYear).toDate(), y: note.getRate(), r: 1, tooltip: note.getId()});
-              } else if (note.getNoteType() == NoteType.PICKUP) {
-                lists[i - earlestYear].push({x: moment(note.getDate()).year(currentYear).toDate(), y: note.getRate(), r: 1.5, tooltip: note.getId()});
+              if (accumulated[i - earlestYear] == null) {
+                accumulated[i - earlestYear] = 0;
               }
+              accumulated[i - earlestYear] += donate.getAmount();
+              lists[i - earlestYear].push({x: moment(donate.getDate()).year(currentYear).toDate(), y: accumulated[i - earlestYear], r: 1.25, tooltip: donate.getId()});
             }
           }
         });
@@ -107,10 +109,10 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
   				scaleShowHorizontalLines: true,
   				scaleShowLabels: true,
   				scaleType: "date",
-  				scaleLabel: "★x<%=value%>",
+  				scaleLabel: "<%=value.toLocaleString()%>g",
           customTooltips: function(tooltip) {
             if (self.state.clicked) {
-              if (tooltip.text && self.state.noteId != parseInt(tooltip.text)) {
+              if (tooltip.text && self.state.donateId != parseInt(tooltip.text)) {
                 let x = tooltip.x;
                 if (tooltip.x > self.state.width / 2) {
                   x -= $("#tooltip").outerWidth();
@@ -119,7 +121,7 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
                 if (tooltip.y > self.state.height / 2) {
                   y -= $("#tooltip").outerHeight();
                 }
-                self.setState({x: x, y: ($("#wrapper").offset().top + y), noteId: parseInt(tooltip.text), visible: true, clicked: false});
+                self.setState({x: x, y: ($("#wrapper").offset().top + y), donateId: parseInt(tooltip.text), visible: true, clicked: false});
               } else if (isTouchDevice() && isMobile() && !tooltip.text) {
                 setTimeout(function () {
                   self.setState({visible: false, clicked: false});
@@ -137,7 +139,7 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
                 if (tooltip.y > self.state.height / 2) {
                   y -= $("#tooltip").outerHeight();
                 }
-                self.setState({x: x, y: ($("#wrapper").offset().top + y), noteId: parseInt(tooltip.text), visible: true});
+                self.setState({x: x, y: ($("#wrapper").offset().top + y), donateId: parseInt(tooltip.text), visible: true});
               }
             }
           },
@@ -148,46 +150,48 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
   }
 
   render() {
-    let self: TreeGraphComponent = this;
+    let self: DonateGraphComponent = this;
     var divStyle = {
       left: self.state.x,
       top: self.state.y,
     };
-    let note: NoteModel = noteStore.getNote(self.state.noteId);
+    let donate: DonateModel = donateStore.getDonate(self.state.donateId);
     let tooltip: JSX.Element = <div id="tooltip" style={divStyle} className={styles.tooltip + " " + styles.hidden}></div>;
-    if (note && self.state.visible) {
+    if (donate && self.state.visible) {
       let image: JSX.Element;
-      if (note.getImage(0)) {
-         image = <img className={styles.image} src={Settings.uBaseName + Settings.uContentImage + note.getImage(0)} />;
+      if (donate.getImage(0)) {
+         image = <img className={styles.image} src={Settings.uBaseName + Settings.uContentImage + donate.getImage(0)} />;
       }
+      let food: FoodModel = foodStore.getFood(donate.getFoodId());
       let comment: JSX.Element;
-      if (note.getNoteType() == NoteType.POST) {
-        comment = <div className={styles.comment}>{note.getComment()}</div>;
-      } else if (note.getNoteType() == NoteType.PICKUP) {
-        if (note.getPicupTime() == PickupTime.EARLY) {
-          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "g (early)"}</div>;
-        } else if (note.getPicupTime() == PickupTime.PROPER) {
-          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "g (proper)"}</div>;
-        } else if (note.getPicupTime() == PickupTime.LATE) {
-          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "g (late)"}</div>;
-        }
+      if (food) {
+        comment = <div className={styles.comment}>{food.getName() + ": " + Math.floor(donate.getAmount()).toLocaleString() + "g"}</div>;
+      } else {
+        comment = <div className={styles.comment}>{"Unknown: " + Math.floor(donate.getAmount()).toLocaleString() + "g"}</div>;
       }
+      let list: Array<JSX.Element> = new Array<JSX.Element>();
+      list.push(<span key={"tree"}>From </span>)
+      donate.getTrees().forEach((treeId: number) => {
+        list.push(<span className={styles.tree} key={"tree" + treeId}>{"#" + treeId}</span>);
+      });
       if (self.state.clicked) {
         tooltip = <div id="tooltip" style={divStyle} className={styles.tooltip}>
           <div className={styles.button} onClick={()=> {
-            self.context.router.push({pathname: window.location.pathname, query: { note: self.state.noteId }});
+            self.context.router.push({pathname: window.location.pathname, query: { donate: self.state.donateId }});
           }}>
-            <div><span>Posted on </span><span className={styles.highlight}>{note.getFormattedDate()}</span></div>
+            <div><span>Posted on </span><span className={styles.highlight}>{donate.getFormattedDate()}</span></div>
             {image}
             {comment}
+            {list}
           </div>
         </div>;
       } else {
         tooltip = <div id="tooltip" style={divStyle} className={styles.tooltip + " " + styles.unclicked}>
           <div className={styles.button}>
-            <div><span>Posted on </span><span className={styles.highlight}>{note.getFormattedDate()}</span></div>
+            <div><span>Posted on </span><span className={styles.highlight}>{donate.getFormattedDate()}</span></div>
             {image}
             {comment}
+            {list}
           </div>
         </div>;
       }
@@ -206,7 +210,7 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
     )
   }
 }
-TreeGraphComponent.contextTypes = {
+DonateGraphComponent.contextTypes = {
   router: function () {
     return React.PropTypes.func.isRequired;
   }

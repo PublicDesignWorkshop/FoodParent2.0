@@ -9,6 +9,7 @@ var Settings = require('./../../constraints/settings.json');
 import * as styles from './donate-list.component.css';
 import { DonateModel, donateStore } from './../../stores/donate.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
+import { sortDonateByDateDESC } from './../../utils/sort';
 
 export interface IDonateListProps {
   donates?: Array<DonateModel>;
@@ -43,12 +44,13 @@ export default class DonateListComponent extends React.Component<IDonateListProp
 
   render() {
     let self: DonateListComponent = this;
-    let donates: Array<JSX.Element> = self.props.donates.map(function(donate: DonateModel, i: number) {
+    let list: Array<DonateModel> = self.props.donates.sort(sortDonateByDateDESC);
+    let donates: Array<JSX.Element> = list.map(function(donate: DonateModel, i: number) {
       if (donate.getId()) {
         let food: FoodModel = foodStore.getFood(donate.getFoodId());
         let list: Array<JSX.Element> = new Array<JSX.Element>();
         donate.getTrees().forEach((treeId: number) => {
-          list.push(<span className={styles.tree} key={"tree" + treeId}onClick={()=> {
+          list.push(<span className={styles.tree} key={"tree" + treeId} onClick={()=> {
             self.context.router.push({pathname: Settings.uBaseName + "/tree/" + treeId});
           }}>{"#" + treeId}</span>);
         });

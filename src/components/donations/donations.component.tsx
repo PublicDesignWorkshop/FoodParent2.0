@@ -24,7 +24,7 @@ import MessageComponent from './../message/message.component';
 import PopupDonationsComponent from './../message/popup-donations.component';
 
 export enum DonationsMode {
-  NONE, DONATIONS, LOCATIONDETAIL, LOCATIONADDMARKER, LOCATIONADDINFO, LOCATIONDELETE, DONATIONNOTEEDIT, DONATIONNOTEDELETE
+  NONE, DONATIONS, LOCATIONDETAIL, LOCATIONADDMARKER, LOCATIONADDINFO, LOCATIONDELETE, DONATIONNOTEEDIT, DONATIONNOTEDELETE, DONATIONGRAPH
 }
 export interface IDonationsProps {
   params: any;
@@ -94,6 +94,9 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
     } else if (props.params.locationId) {
       mode = DonationsMode.LOCATIONDETAIL;
       locationId = parseInt(props.params.locationId);
+      if (props.location.query.mode == "graph") {
+        mode = DonationsMode.DONATIONGRAPH;
+      }
       if (props.location.query.mode == "delete") {
         mode = DonationsMode.LOCATIONDELETE;
       }
