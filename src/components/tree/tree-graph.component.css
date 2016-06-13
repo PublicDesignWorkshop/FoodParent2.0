@@ -1,0 +1,17 @@
+@media all {
+  :local(.wrapper) {
+    font-family: 'Open Sans', sans-serif;
+    font-size: small;
+    padding: 8px;
+    color: rgba(94, 78, 81, 1);
+  }
+}
+
+
+@media screen and (max-device-width: 667px) {
+
+}
+
+@media screen and (max-device-aspect-ratio: 1/1) {
+
+}

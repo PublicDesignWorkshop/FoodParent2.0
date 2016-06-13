@@ -23,6 +23,7 @@ import { NoteModel, noteStore, NoteType, PickupTime, AmountType } from './../sto
 import { TileMode } from './map.component';
 import { noteActions } from './../actions/note.actions';
 import { mapActions } from './../actions/map.actions';
+import TreeGraphComponent from './tree/tree-graph.component';
 
 export interface ITreesPanelProps {
   treeId: number;
@@ -88,44 +89,87 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
       switch(self.props.mode) {
         case TreesMode.TREEDETAIL:
         case TreesMode.TREEDELETE:
-        return (
-          <div className={styles.wrapper + " " + styles.slidein}>
-            <div className={styles.left}>
-              <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
-            </div>
-            <div className={styles.right}>
-              <TreeComponent trees={self.props.trees} foods={self.props.foods} treeId={self.props.treeId} noteId={self.props.noteId} />
-              <div className={styles.buttongroup}>
-                <div className={styles.button2} onClick={()=> {
-                  let tree: TreeModel = treeStore.getTree(self.props.treeId);
-                  if (tree) {
-                    mapActions.moveToWithMarker('map', tree.getLocation(), Settings.iFocusZoom);
-                  }
-                }}>LOCATE ME</div>
-                <div className={styles.button2 + " " + styles.selected}>NEW NOTE</div>
-                <div className={styles.button2}>SEE GRAPH</div>
+          return (
+            <div className={styles.wrapper + " " + styles.slidein}>
+              <div className={styles.left}>
+                <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
               </div>
-              <AltContainer stores={
-                {
-                  note: function (props) {
-                    return {
-                      store: noteStore,
-                      value: noteStore.getState().temp,
-                    };
-                  },
-                  code: function (props) {
-                    return {
-                      store: noteStore,
-                      value: noteStore.getState().code,
-                    };
+              <div className={styles.right}>
+                <TreeComponent trees={self.props.trees} foods={self.props.foods} treeId={self.props.treeId} noteId={self.props.noteId} />
+                <div className={styles.buttongroup}>
+                  <div className={styles.button2} onClick={()=> {
+                    let tree: TreeModel = treeStore.getTree(self.props.treeId);
+                    if (tree) {
+                      mapActions.moveToWithMarker('map', tree.getLocation(), Settings.iFocusZoom);
+                    }
+                  }}>LOCATE ME</div>
+                  <div className={styles.button2 + " " + styles.selected}>NEW NOTE</div>
+                  <div className={styles.button2} onClick={()=> {
+                    self.context.router.push({pathname: window.location.pathname, query: { mode: "graph" }});
+                  }}>SEE GRAPH</div>
+                </div>
+                <AltContainer stores={
+                  {
+                    note: function (props) {
+                      return {
+                        store: noteStore,
+                        value: noteStore.getState().temp,
+                      };
+                    },
+                    code: function (props) {
+                      return {
+                        store: noteStore,
+                        value: noteStore.getState().code,
+                      };
+                    }
                   }
-                }
-              }>
-                <NoteAddComponent treeId={self.props.treeId} />
-              </AltContainer>
+                }>
+                  <NoteAddComponent treeId={self.props.treeId} />
+                </AltContainer>
+              </div>
             </div>
-          </div>
-        );
+          );
+        case TreesMode.TREEGRAPH:
+          return (
+            <div className={styles.wrapper + " " + styles.slidein}>
+              <div className={styles.left}>
+                <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
+              </div>
+              <div className={styles.right}>
+                <TreeComponent trees={self.props.trees} foods={self.props.foods} treeId={self.props.treeId} noteId={self.props.noteId} />
+                <div className={styles.buttongroup}>
+                  <div className={styles.button2} onClick={()=> {
+                    let tree: TreeModel = treeStore.getTree(self.props.treeId);
+                    if (tree) {
+                      mapActions.moveToWithMarker('map', tree.getLocation(), Settings.iFocusZoom);
+                    }
+                  }}>LOCATE ME</div>
+                  <div className={styles.button2} onClick={()=> {
+                    self.context.router.push({pathname: window.location.pathname});
+                  }}>NEW NOTE</div>
+                  <div className={styles.button2 + " " + styles.selected}>SEE GRAPH</div>
+                </div>
+                <AltContainer stores={
+                  {
+                    tree: function (props) {
+                      return {
+                        store: treeStore,
+                        value: treeStore.getTree(self.props.treeId),
+                      };
+                    },
+                    notes: function (props) {
+                      return {
+                        store: noteStore,
+                        value: noteStore.getState().notes,
+                      };
+                    }
+                  }
+                }>
+                  <TreeGraphComponent />
+                </AltContainer>
+              </div>
+            </div>
+          );
         case TreesMode.TREENOTEEDIT:
         case TreesMode.TREENOTEDELETE:
           return (
@@ -145,7 +189,9 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                   <div className={styles.button2} onClick={()=> {
                     self.context.router.push({pathname: window.location.pathname});
                   }}>NEW NOTE</div>
-                  <div className={styles.button2}>SEE GRAPH</div>
+                  <div className={styles.button2} onClick={()=> {
+                    self.context.router.push({pathname: window.location.pathname, query: { mode: "graph" }});
+                  }}>SEE GRAPH</div>
                 </div>
                 <AltContainer stores={
                   {

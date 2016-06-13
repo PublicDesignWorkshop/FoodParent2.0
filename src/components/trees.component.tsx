@@ -25,7 +25,7 @@ import MessageComponent from './message/message.component';
 import { resetFilter } from './../utils/filter';
 
 export enum TreesMode {
-  NONE, TREES, TREEDETAIL, TREEDELETE, TREEADDMARKER, TREEADDINFO, TREEADDSAVE, TREESFILTER, TREENOTEEDIT, TREENOTEDELETE
+  NONE, TREES, TREEDETAIL, TREEDELETE, TREEADDMARKER, TREEADDINFO, TREEADDSAVE, TREESFILTER, TREENOTEEDIT, TREENOTEDELETE, TREEGRAPH
 }
 export interface ITreesProps {
   params: any;
@@ -102,7 +102,9 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
     } else if (props.params.treeId) {
       mode = TreesMode.TREEDETAIL;
       treeId = parseInt(props.params.treeId);
-      if (props.location.query.mode == "delete") {
+      if (props.location.query.mode == "graph") {
+        mode = TreesMode.TREEGRAPH;
+      } else if (props.location.query.mode == "delete") {
         mode = TreesMode.TREEDELETE;
       } else if (props.location.query.note) {
         mode = TreesMode.TREENOTEEDIT;
