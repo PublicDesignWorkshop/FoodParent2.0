@@ -7,7 +7,7 @@
     height: 100%;
     transition: 0.25s;
     padding: 48px 0 0 0;
-
+    overflow-x: hidden;
   }
   :local(.slidein) {
     right: 0;
