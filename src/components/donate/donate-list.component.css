@@ -12,7 +12,7 @@
     padding-top: 8px;
   }
   :local(.value) {
-    padding: 4px 0 4px 16px;
+    padding: 2px 0 2px 16px;
     cursor: pointer;
   }
 
@@ -32,17 +32,13 @@
     color: rgba(107, 170, 119, 1);
   }
   :local(.tree) {
-    border-radius: 2px;
     display: inline-block;
-    padding: 1px 1px;
-    margin: 2px;
+    padding: 0 1px;
     cursor: pointer;
   }
   :local(.tree2) {
-    border-radius: 2px;
     display: inline-block;
-    padding: 1px 1px;
-    margin: 2px;
+    padding: 0 1px;
   }
   :local(.amount) {
 

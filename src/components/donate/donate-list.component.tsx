@@ -85,27 +85,23 @@ export default class DonateListComponent extends React.Component<IDonateListProp
             list.push(<span className={styles.tree2} key={"tree" + treeId}>{"#" + treeId}</span>);
           });
           return (
-            <div className={styles.value} key={"note" + i}>
-            <FontAwesome className='' name='angle-right' />
-            <span className={styles.amount} onClick={()=> {
+            <div className={styles.value} key={"note" + i} onClick={()=> {
               self.context.router.push({pathname: window.location.pathname, query: { donate: donate.getId() }});
             }}>
-              {" \"" + food.getName() + " " + Math.floor(donate.getAmount()).toLocaleString() + "g\""}
-            </span>
-            <span className={styles.comment} onClick={()=> {
-              self.context.router.push({pathname: window.location.pathname, query: { donate: donate.getId() }});
-            }}>
-              {" from "}
-            </span>
-            <span className={styles.comment}>
-              {list}
-              {". "}
-            </span>
-            <span className={styles.date} onClick={()=> {
-              self.context.router.push({pathname: window.location.pathname, query: { donate: donate.getId() }});
-            }}>
-              {" (" + donate.getFormattedDate() + ")"}
-            </span>
+              <FontAwesome className='' name='angle-right' />
+              <span className={styles.amount}>
+                {" \"" + food.getName() + " " + Math.floor(donate.getAmount()).toLocaleString() + "g\""}
+              </span>
+              <span className={styles.comment}>
+                {" from "}
+              </span>
+              <span className={styles.comment}>
+                {list}
+                {". "}
+              </span>
+              <span className={styles.date}>
+                {" (" + donate.getFormattedDate() + ")"}
+              </span>
             </div>
           );
         }
