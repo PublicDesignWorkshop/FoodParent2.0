@@ -8,6 +8,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 var Settings = require('./../../constraints/settings.json');
 import * as styles from './note-list.component.css';
 import { NoteModel, noteStore, NoteType, PickupTime } from './../../stores/note.store';
+import { sortNoteByDateDESC } from './../../utils/sort';
 
 export interface INoteListProps {
   notes?: Array<NoteModel>;
@@ -42,7 +43,8 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
 
   render() {
     let self: NoteListComponent = this;
-    let notes: Array<JSX.Element> = self.props.notes.map(function(note: NoteModel, i: number) {
+    let sorted: Array<NoteModel> = self.props.notes.sort(sortNoteByDateDESC);
+    let notes: Array<JSX.Element> = sorted.map(function(note: NoteModel, i: number) {
       if (note.getId()) {
         let pickuptime: string = "Early";
         if (note.getPicupTime() == PickupTime.PROPER) {

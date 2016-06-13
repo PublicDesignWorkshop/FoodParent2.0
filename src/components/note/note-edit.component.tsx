@@ -249,11 +249,6 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
               <NoteDateComponent note={self.props.note} editable={self.state.editable} async={false} />
               <NoteAmountComponent note={self.props.note} editable={self.state.editable} async={false} error={self.state.error} />
             </div>
-            <div className={styles.button2} onClick={()=> {
-              self.context.router.push({pathname: Settings.uBaseName + '/tree/' + self.props.treeId});
-            }}>
-              CLOSE
-            </div>
             {image}
           </div>
         );

@@ -8,3 +8,4 @@
 /// <reference path="browser/ambient/react-select/index.d.ts" />
 /// <reference path="browser/ambient/react/index.d.ts" />
 /// <reference path="browser/ambient/underscore/index.d.ts" />
+/// <reference path="browser/ambient/chart.js/index.d.ts" />

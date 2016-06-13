@@ -23,7 +23,7 @@
   "uReverseGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCVpuJwOhwgzCmv78WRCybpJ6azSd6lMis",
   "uGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCVpuJwOhwgzCmv78WRCybpJ6azSd6lMis",
   "iMarkerPrecision": 5,
-  "uTemporaryMarkerIcon": "unknown.svg",
+  "uTemporaryMarkerIcon": "Marker_Other.svg",
   "uTemporaryLocationMarkerIcon": "foodbox.svg",
   "iMaxClusterRadius": 30,
   "iDisableClusteringAtZoom": 16,
