@@ -8,7 +8,7 @@ import { browserHistory } from 'react-router';
 var Settings = require('./../constraints/settings.json');
 import { mapActions } from './../actions/map.actions';
 import { AbstractStore } from './../stores/abstract.store';
-import { TileMode } from './../components/map.component';
+import { TileMode } from './../utils/enum';
 
 export interface IMapProps {
   id: string;

@@ -1,21 +1,25 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
 import TextareaAutosize from 'react-textarea-autosize';
 
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './signup.component.css';
-import { PersonModel, personStore } from './../../stores/person.store';
+var Settings = require('./../../constraints/settings.json');
+
 import UserContact from './user-contact.component';
 import UserName from './user-name.component';
 import UserNeighborhood from './user-neighborhood.component';
-import { personActions } from './../../actions/person.actions';
-import { checkValidEmailAddress } from './../../utils/errorhandler';
-import { localization } from './../../constraints/localization';
 import MessageLineComponent from './../message/message-line.component';
+
+import { PersonModel, personStore } from './../../stores/person.store';
+import { personActions } from './../../actions/person.actions';
+
+import { checkValidEmailAddress } from './../../utils/errorhandler';
 import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
+import { localization } from './../../constraints/localization';
 
 export interface ISignUpProps {
   open: boolean;
@@ -24,6 +28,7 @@ export interface ISignUpProps {
 export interface ISignUpStatus {
   error?: any;
 }
+
 export default class SignUpComponent extends React.Component<ISignUpProps, ISignUpStatus> {
   static contextTypes: any;
   constructor(props : ISignUpProps) {
@@ -33,13 +38,16 @@ export default class SignUpComponent extends React.Component<ISignUpProps, ISign
       error: null,
     };
   }
+
   public componentDidMount() {
     let self: SignUpComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: SignUpComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: ISignUpProps) {
     let self: SignUpComponent = this;
     self.updateProps(nextProps);
@@ -74,7 +82,7 @@ export default class SignUpComponent extends React.Component<ISignUpProps, ISign
               <FontAwesome className='' name='user-plus' />
               </div>
               <div className={styles.name}>
-                BECOME A PARENT
+                {localization(987)}
               </div>
               <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
                 self.context.router.goBack();
@@ -88,7 +96,7 @@ export default class SignUpComponent extends React.Component<ISignUpProps, ISign
                 self.submitSignUp();
               }}>
                 <div className={styles.button}>
-                  SIGN UP
+                  {localization(684)}
                 </div>
               </div>
 
@@ -100,7 +108,7 @@ export default class SignUpComponent extends React.Component<ISignUpProps, ISign
               self.context.router.push({pathname: window.location.pathname, query: { user: 'login' }});
             }}>
               <div className={styles.button2}>
-                PARENT IN
+                {localization(993)}
               </div>
             </div>
           </div>
@@ -122,19 +130,3 @@ SignUpComponent.contextTypes = {
     return React.PropTypes.func.isRequired;
   }
 };
-
-
-// <div className={styles.button} onClick={()=> {
-//   let error: Array<string> = new Array<string>();
-//   let bError: boolean = false;
-//   if (self.props.person.getContact().trim() == "") {
-//     error.push("e502");
-//     bError = true;
-//   }
-//   if (!bError) {
-//     personStore.createPerson(self.props.person);
-//   }
-//   self.setState({error: error});
-// }}>
-//   SIGN UP
-// </div>

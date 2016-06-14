@@ -3,7 +3,7 @@ import 'es6-promise';
 
 var Settings = require('./../constraints/settings.json');
 import { donateActions } from './../actions/donate.actions';
-import { AmountType } from './../stores/note.store';
+import { AmountType } from './../utils/enum';
 import { donateStore, DonateModel, DonateState } from './../stores/donate.store';
 
 

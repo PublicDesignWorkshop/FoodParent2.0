@@ -1,21 +1,20 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './donate-amount.component.css';
-import { AmountType } from './../../stores/note.store';
-import { DonateModel, donateStore } from './../../stores/donate.store';
+var Settings = require('./../../constraints/settings.json');
+
 import MessageLineComponent from './../message/message-line.component';
 
-export interface IAmountTypeOption {
-  value: number;
-  label: string;
-}
+import { DonateModel } from './../../stores/donate.store';
+
+import { AmountType, ISelectOption } from './../../utils/enum';
+import { localization } from './../../constraints/localization';
 
 export interface IDonateAmountProps {
   donate: DonateModel;
@@ -25,8 +24,8 @@ export interface IDonateAmountProps {
 }
 export interface IDonateAmountStatus {
   amount?: any;
-  options?: Array<IAmountTypeOption>;
-  selected?: IAmountTypeOption;
+  options?: Array<ISelectOption>;
+  selected?: ISelectOption;
 }
 export default class DonateAmountComponent extends React.Component<IDonateAmountProps, IDonateAmountStatus> {
   constructor(props : IDonateAmountProps) {
@@ -51,11 +50,11 @@ export default class DonateAmountComponent extends React.Component<IDonateAmount
   private updateProps(props: IDonateAmountProps) {
     let self: DonateAmountComponent = this;
     if (props.donate) {
-      let options = new Array<IAmountTypeOption>();
+      let options = new Array<ISelectOption>();
       options.push({value: 1, label: "g"});
       options.push({value: 2, label: "kg"});
       options.push({value: 3, label: "libs."});
-      let selected: IAmountTypeOption;
+      let selected: ISelectOption;
       if (self.props.donate.getAmountType() == AmountType.G) {
         selected = options[0];
       } else if (self.props.donate.getAmountType() == AmountType.KG) {
@@ -93,23 +92,19 @@ export default class DonateAmountComponent extends React.Component<IDonateAmount
     if (self.props.editable || self.props.donate.getId() == 0) {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onMouseUp={()=> {
-            // if (self.props.editable) {
-            //   self.setState({editing: true});
-            // }
-          }}>
-            <FontAwesome className='' name='shopping-basket' /> Pickup
+          <div className={styles.label}>
+            <FontAwesome className='' name='shopping-basket' /> {localization(609)}
           </div>
           <div className={styles.edit}>
-            <input type="number" className={styles.input} key={self.props.donate.getId() + "amount"} placeholder="enter weight..."
+            <input type="number" className={styles.input} key={self.props.donate.getId() + "amount"} placeholder={localization(673)}
               value={self.state.amount}
               onChange={(event: any)=> {
                 self.setState({amount: event.target.value});
               }}
               onKeyPress={(event)=> {
-                // if (event.key == 'Enter') {
-                //   self.updateAttribute();
-                // }
+                if (event.key == 'Enter') {
+                  self.updateAttribute();
+                }
               }}
               onBlur={()=> {
                 self.updateAttribute();
@@ -125,7 +120,7 @@ export default class DonateAmountComponent extends React.Component<IDonateAmount
       return (
         <div className={styles.wrapper}>
           <div className={styles.label}>
-            <FontAwesome className='' name='shopping-basket' /> Amount
+            <FontAwesome className='' name='shopping-basket' /> {localization(609)}
           </div>
           <div className={styles.value}>
             {self.state.amount.toLocaleString() + "g"}

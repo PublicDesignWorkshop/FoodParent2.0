@@ -1,30 +1,22 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
 
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './popup-donations.component.css';
-import TreeComponent from './../tree/tree.component';
-import { TreesMode } from './../trees.component';
-import { DonationsMode } from './../donations/donations.component';
-import TreesControlsComponent from './../trees-controls.component';
-import { TreeModel, treeStore } from './../../stores/tree.store';
-import { FoodModel, foodStore } from './../../stores/food.store';
+var Settings = require('./../../constraints/settings.json');
+
 import { DonateModel, donateStore } from './../../stores/donate.store';
-import { LocationModel, locationStore } from './../../stores/location.store';
-import { authStore } from './../../stores/auth.store';
-import { checkLogin, checkAdmin } from './../../utils/authentication';
-import { LogInStatus } from './../app.component';
-import { noteActions } from './../../actions/note.actions';
-import { treeActions } from './../../actions/tree.actions';
 import { donateActions } from './../../actions/donate.actions';
+import { LocationModel, locationStore } from './../../stores/location.store';
 import { locationActions } from './../../actions/location.actions';
+import { authStore } from './../../stores/auth.store';
+
 import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
 import { localization } from './../../constraints/localization';
-
+import { DonationsMode } from './../../utils/enum';
 
 export interface IPopupDonationsProps {
   mode: DonationsMode;
@@ -35,6 +27,7 @@ export interface IPopupDonationsProps {
 export interface IPopupDonationsStatus {
 
 }
+
 export default class PopupDonationsComponent extends React.Component<IPopupDonationsProps, IPopupDonationsStatus> {
   static contextTypes: any;
   constructor(props : IPopupDonationsProps) {
@@ -44,17 +37,21 @@ export default class PopupDonationsComponent extends React.Component<IPopupDonat
 
     };
   }
+
   public componentDidMount() {
     let self: PopupDonationsComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: PopupDonationsComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IPopupDonationsProps) {
     let self: PopupDonationsComponent = this;
     self.updateProps(nextProps);
   }
+
   private updateProps = (props: IPopupDonationsProps) => {
     let self: PopupDonationsComponent = this;
   }
@@ -66,11 +63,12 @@ export default class PopupDonationsComponent extends React.Component<IPopupDonat
         return (
           <div className={styles.wrapper + " " + styles.slidein}>
             <div className={styles.message}>
+              <span dangerouslySetInnerHTML={{__html: localization(663)}} />
               <strong>Move</strong> the <strong>New Place</strong> to a designated location.
               <span className={styles.button} onClick={()=> {
                 self.context.router.replace({pathname: Settings.uBaseName + '/donation/add', query: { mode: "info" }});
               }} >
-                NEXT
+                {localization(929)}
               </span>
             </div>
           </div>
@@ -79,11 +77,11 @@ export default class PopupDonationsComponent extends React.Component<IPopupDonat
         return (
           <div className={styles.wrapper + " " + styles.slidein}>
             <div className={styles.message}>
-              <strong>Fill out</strong> information for the <strong>New Place</strong>.
+              <span dangerouslySetInnerHTML={{__html: localization(662)}} />
               <span className={styles.button} onClick={()=> {
                 locationActions.createLocation(locationStore.getState().temp);
-              }} >
-                SAVE
+              }}>
+                {localization(930)}
               </span>
             </div>
           </div>
@@ -98,8 +96,8 @@ export default class PopupDonationsComponent extends React.Component<IPopupDonat
                 if (self.props.donateCode == 200) {
                   donateActions.deleteDonate(donate);
                 }
-              }} >
-                DELETE
+              }}>
+                {localization(931)}
               </span>
             </div>
           </div>
@@ -117,7 +115,7 @@ export default class PopupDonationsComponent extends React.Component<IPopupDonat
                   }
                 }
               }} >
-                DELETE
+                {localization(931)}
               </span>
             </div>
           </div>

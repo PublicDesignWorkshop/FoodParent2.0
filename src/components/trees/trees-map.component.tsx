@@ -1,32 +1,30 @@
+import * as $ from 'jquery';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
+import Routes from './../../routes';
+
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import 'googletile';
 import * as _ from 'underscore';
-import * as $ from 'jquery';
 import * as moment from 'moment';
 
-import Routes from './../routes';
-var Settings = require('./../constraints/settings.json');
+import './../../../node_modules/leaflet/dist/leaflet.css';
 import * as styles from './trees.component.css';
-import './../../node_modules/leaflet/dist/leaflet.css';
-import { TreeModel, treeStore } from './../stores/tree.store';
-import { FoodModel, foodStore } from './../stores/food.store';
-import { FlagModel } from './../stores/flag.store';
-import { treeActions } from './../actions/tree.actions';
-import MarkerComponent from './marker.component';
-import { TreesMode } from './trees.component';
+var Settings = require('./../../constraints/settings.json');
 
-import { mapActions } from './../actions/map.actions';
-import { mapStore } from './../stores/map.store';
+import MarkerFactory from './../../utils/marker.factory';
 
-export enum TileMode {
-  GRAY, SATELLITE
-}
+import { TreeModel } from './../../stores/tree.store';
+import { FoodModel, foodStore } from './../../stores/food.store';
+import { FlagModel } from './../../stores/flag.store';
+import { mapStore } from './../../stores/map.store';
+import { mapActions } from './../../actions/map.actions';
 
-export interface IMapProps {
+import { TreesMode, TileMode } from './../../utils/enum';
+
+export interface ITreesMapProps {
   foods?: Array<FoodModel>;
   trees?: Array<TreeModel>;
   flags?: Array<FlagModel>;
@@ -37,10 +35,11 @@ export interface IMapProps {
   onRender: Function;
   position?: L.LatLng;
 }
-export interface IMapStatus {
+export interface ITreesMapStatus {
 
 }
-export default class MapComponent extends React.Component<IMapProps, IMapStatus> {
+
+export default class TreesMapComponent extends React.Component<ITreesMapProps, ITreesMapStatus> {
   static contextTypes: any;
   private map: L.Map;
   private grayTileLayer: L.TileLayer;
@@ -51,16 +50,16 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   private newMarker: L.Marker;
   private userMarker: L.Circle;
   private userCenterMarker: L.Circle;
-  constructor(props : IMapProps) {
+  constructor(props : ITreesMapProps) {
     super(props);
     this.state = {
 
     };
-    let self: MapComponent = this;
+    let self: TreesMapComponent = this;
     self.markers = new Array<L.Marker>();
   }
   public componentDidMount() {
-    let self: MapComponent = this;
+    let self: TreesMapComponent = this;
     self.map = this.map = L.map("map", {
         zoomControl: false,
         closePopupOnClick: false,
@@ -92,10 +91,10 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
     }, Settings.iPopupDelay);
   }
   public componentWillUnmount() {
-    let self: MapComponent = this;
+    let self: TreesMapComponent = this;
   }
-  public componentWillReceiveProps (nextProps: IMapProps) {
-    let self: MapComponent = this;
+  public componentWillReceiveProps (nextProps: ITreesMapProps) {
+    let self: TreesMapComponent = this;
     switch(nextProps.tile) {
       case TileMode.GRAY:
         if (!self.map.hasLayer(self.grayTileLayer)) {
@@ -127,7 +126,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
               let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, self.map.getZoom());
               nextProps.tempTree.setLat(location.lat);
               nextProps.tempTree.setLng(location.lng);
-              self.newMarker = MarkerComponent.createTemporaryMarker(nextProps.tempTree);
+              self.newMarker = MarkerFactory.createTemporaryMarker(nextProps.tempTree);
               self.map.addLayer(self.newMarker);
               self.newMarker.openPopup();
             }
@@ -144,8 +143,8 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       self.renderUserLocation(nextProps.position);
     }
   }
-  private renderMarkers = (trees: Array<TreeModel>, props: IMapProps) => {
-    let self: MapComponent = this;
+  private renderMarkers = (trees: Array<TreeModel>, props: ITreesMapProps) => {
+    let self: TreesMapComponent = this;
     // Remove unnecessary markers
     for (let i = 0; i < self.markers.length;) {
       let bFound: boolean = false;
@@ -189,13 +188,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       for (let i = 0; i < self.markers.length; i++) {
         if (self.markers[i].options.id == props.treeId) {
           bFound = true;
-          // setTimeout(function() {
-          //   let marker: L.Marker = self.markers[i];
-          //   self.selected = marker;
-          //   self.selected._bringToFront();
-          //   mapActions.moveTo('map', self.selected.getLatLng(), Settings.iFocusZoom);
-          //   //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
-          // }, Settings.iPopupDelay);
           if(self.markers[i].getPopup()._isOpen === true && self.selected && self.selected.options.id == props.treeId) {
             // When popup is already open.
           } else {
@@ -209,7 +201,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
               }, 0);
               var marker: L.Marker = self.markers[i];
               self.selected = marker;
-              // self.selected._bringToFront();
               // Move the map slight off from the center using CRS projection
               var point: L.Point = L.CRS.EPSG3857.latLngToPoint(self.selected.getLatLng(), Settings.iFocusZoom);
               var rMap = ReactDOM.findDOMNode(self.refs['map']);
@@ -220,8 +211,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
               }
               let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, Settings.iFocusZoom);
               self.map.setView(location, Settings.iFocusZoom, {animate: false});
-              // mapActions.moveTo('map', location, mapStore.getZoom('map'));
-              //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
             }
           }
           break;
@@ -236,14 +225,14 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   }
 
   private addMarker(tree: TreeModel, editable: boolean): void {
-    let self: MapComponent = this;
+    let self: TreesMapComponent = this;
     let marker: L.Marker;
     let food: FoodModel = foodStore.getFood(tree.getFoodId());
     if (food) {
       if (editable) {
-        marker = MarkerComponent.createEditableMarker(food, tree);
+        marker = MarkerFactory.createEditableMarker(food, tree);
       } else {
-        marker = MarkerComponent.createUneditableMarker(food, tree);
+        marker = MarkerFactory.createUneditableMarker(food, tree);
       }
       if (marker) {
         self.markers.push(marker);
@@ -251,13 +240,14 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       }
     }
   }
+
   private removeMarker(marker: L.Marker): void {
-      let self: MapComponent = this;
+      let self: TreesMapComponent = this;
       self.layer.removeLayer(marker);
   }
 
   private renderUserLocation(position: L.LatLng): void {
-    let self: MapComponent = this;
+    let self: TreesMapComponent = this;
     if (position) {
       if (self.userMarker) {
         self.userMarker.setLatLng(position);
@@ -284,14 +274,11 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
         });
         self.map.addLayer(self.userCenterMarker);
       }
-      // // self.context.router.push({pathname: Settings.uBaseName + '/'});
-      // var point: L.Point = L.CRS.EPSG3857.latLngToPoint(position, self.map.getZoom());
-      // self.map.setView(L.CRS.EPSG3857.pointToLatLng(point, self.map.getZoom()), Settings.iFocusZoom, {animate: false});
     }
   }
 
   private afterRenderMap = () => {
-    let self: MapComponent = this;
+    let self: TreesMapComponent = this;
     self.layer = new L.MarkerClusterGroup();
     self.layer.initialize({
       spiderfyOnMaxZoom: false,
@@ -302,7 +289,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       disableClusteringAtZoom: Settings.iDisableClusteringAtZoom
     });
     self.layer.addTo(self.map);
-    // document.querySelector('.leaflet-bottom.leaflet-left').innerHTML = '<div class="leaflet-control-attribution leaflet-control"><div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a></div></div>';
     self.map.on("moveend", self.afterMoveMap);
     self.map.on('popupopen', function (event: any) {
       if (!mapStore.getFirst('map')) {
@@ -318,25 +304,20 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
           //point.y += self.map.getSize().y * 0.15;
         }
         let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, mapStore.getZoom('map'));
-        //mapActions.moveTo('map', location, mapStore.getZoom('map'));
         self.map.setView(location, mapStore.getZoom('map'), {animate: true});
-        //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
       }
     });
     self.map.on('popupclose', function (event: any) {
       self.selected = null;
       // self.context.router.push({pathname: Settings.uBaseName + '/'});
     });
-    self.map.on('zoomend', function (event: any) {
-      // self.props.onZoom(event.target._zoom);
-    });
     self.props.onRender();
     mapActions.addMap('map', self.map);
   }
 
   private afterMoveMap = () => {
-    var self: MapComponent = this;
-    // Update mapStore to update address of the map when the map is dragged.
+    var self: TreesMapComponent = this;
+    // Update mapStore to update address of the map when the map is dragged (not activated to decrease the number of reverse-geo api calls).
     // if (mapStore.getActive('map')) {
     //   setTimeout(function() {
     //     mapActions.update('map');
@@ -344,17 +325,15 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
     // }
   }
   render() {
-    let self: MapComponent = this;
+    let self: TreesMapComponent = this;
     return (
       <div id="map" ref="map" className={styles.map}></div>
     );
   }
 }
 
-MapComponent.contextTypes = {
+TreesMapComponent.contextTypes = {
   router: function () {
     return React.PropTypes.func.isRequired;
   }
-  // ,
-  // address: React.PropTypes.string,
 };

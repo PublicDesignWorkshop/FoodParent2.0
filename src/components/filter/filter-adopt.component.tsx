@@ -1,31 +1,28 @@
+import * as $ from 'jquery';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-import * as $ from 'jquery';
-
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './filter-adopt.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
-import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
-import { LogInStatus } from './../app.component';
+var Settings = require('./../../constraints/settings.json');
+
 import { authStore } from './../../stores/auth.store';
 import { treeActions } from './../../actions/tree.actions';
 
-export interface IFilterAdoptOption {
-  value: number;
-  label: string;
-}
+import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
+import { ISelectOption } from './../../utils/enum';
+import { localization } from './../../constraints/localization';
 
 export interface IFilterAdoptProps {
 
 }
 export interface IFilterAdoptStatus {
-  options?: Array<IFilterAdoptOption>;
-  selected?: IFilterAdoptOption;
+  options?: Array<ISelectOption>;
+  selected?: ISelectOption;
 }
 
 export default class FilterAdoptComponent extends React.Component<IFilterAdoptProps, IFilterAdoptStatus> {
@@ -60,16 +57,16 @@ export default class FilterAdoptComponent extends React.Component<IFilterAdoptPr
           let adopts: Array<number> = response.adopt.split(",").map(function(item) {
             return parseInt(item);
           });
-          var selected: IFilterAdoptOption;
+          var selected: ISelectOption;
           adopts.forEach(adoptId => {
             if (adoptId == 0) {
-              selected = {value: 0, label: "All"};
+              selected = {value: 0, label: localization(631)};
             } else if (adoptId == 1) {
-              selected ={value: 1, label: "My Trees"};
+              selected ={value: 1, label: localization(630)};
             } else if (adoptId == 2) {
-              selected = {value: 2, label: "Adopted"};
+              selected = {value: 2, label: localization(629)};
             } else if (adoptId == 3) {
-              selected = {value: 3, label: "Unadopted"};
+              selected = {value: 3, label: localization(628)};
             }
           });
           self.setState({selected: selected});
@@ -82,16 +79,16 @@ export default class FilterAdoptComponent extends React.Component<IFilterAdoptPr
       }, 500);
     }
 
-    var options = new Array<IFilterAdoptOption>();
+    var options = new Array<ISelectOption>();
     if (!authStore.getAuth().getIsGuest()) {
-      options.push({value: 0, label: "All"});
-      options.push({value: 1, label: "My Trees"});
-      options.push({value: 2, label: "Adopted"});
-      options.push({value: 3, label: "Unadopted"});
+      options.push({value: 0, label: localization(631)});
+      options.push({value: 1, label: localization(630)});
+      options.push({value: 2, label: localization(629)});
+      options.push({value: 3, label: localization(628)});
     } else {
-      options.push({value: 0, label: "All"});
-      options.push({value: 2, label: "Adopted"});
-      options.push({value: 3, label: "Unadopted"});
+      options.push({value: 0, label: localization(631)});
+      options.push({value: 2, label: localization(629)});
+      options.push({value: 3, label: localization(628)});
     }
     self.setState({options: options});
   }
@@ -124,15 +121,11 @@ export default class FilterAdoptComponent extends React.Component<IFilterAdoptPr
     let self: FilterAdoptComponent = this;
     return (
       <div className={styles.wrapper}>
-        <div className={styles.label} onMouseUp={()=> {
-          // if (self.props.editable) {
-          //   self.setState({editing: true});
-          // }
-        }}>
-          <FontAwesome className='' name='chain' /> Adopt Types
+        <div className={styles.label}>
+          <FontAwesome className='' name='chain' /> {localization(632)}
         </div>
         <div className={styles.value}>
-          <Select name="adopt-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select adopt types..." />
+          <Select name="adopt-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder={localization(627)} />
         </div>
       </div>
     );

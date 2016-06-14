@@ -1,14 +1,19 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
 import TextareaAutosize from 'react-textarea-autosize';
 
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './note-list.component.css';
-import { NoteModel, noteStore, NoteType, PickupTime } from './../../stores/note.store';
+var Settings = require('./../../constraints/settings.json');
+
+import { NoteModel, noteStore } from './../../stores/note.store';
+
 import { sortNoteByDateDESC } from './../../utils/sort';
+import { NoteType, PickupTime } from './../../utils/enum';
+import { localization } from './../../constraints/localization';
 
 export interface INoteListProps {
   notes?: Array<NoteModel>;
@@ -25,13 +30,16 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
     this.state = {
     };
   }
+
   public componentDidMount() {
     let self: NoteListComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: NoteListComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: INoteListProps) {
     let self: NoteListComponent = this;
     self.updateProps(nextProps);
@@ -46,11 +54,11 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
     let sorted: Array<NoteModel> = self.props.notes.sort(sortNoteByDateDESC);
     let notes: Array<JSX.Element> = sorted.map(function(note: NoteModel, i: number) {
       if (note.getId()) {
-        let pickuptime: string = "Early";
+        let pickuptime: string = localization(988);
         if (note.getPicupTime() == PickupTime.PROPER) {
-          pickuptime = "Proper";
+          pickuptime = localization(989);
         } else if (note.getPicupTime() == PickupTime.LATE) {
-          pickuptime = "Late"
+          pickuptime = localization(990);
         }
         let rate: JSX.Element = <span><span className={styles.blankstar}>
           <FontAwesome className='' name='star-o' />
@@ -129,7 +137,7 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
               }}>
                 <FontAwesome className='' name='angle-right' />
                 <span className={styles.comment}>
-                  {" \"" + Math.floor(note.getAmount()).toLocaleString() + "\" g has been picked up. "}
+                  {" \"" + Math.floor(note.getAmount()).toLocaleString() + "\" g " + localization(991)}
                 </span>
                 <span className={styles.star}>
                   {"\"" + pickuptime + "\""}
@@ -166,7 +174,7 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
               }}>
                 <FontAwesome className='' name='angle-right' />
                 <span className={styles.comment}>
-                  {" \"" + note.getAmount().toLocaleString() + "\" g has been picked up. "}
+                  {" \"" + note.getAmount().toLocaleString() + "\" g " + localization(991)}
                 </span>
                 <span className={styles.star}>
                   {"\"" + pickuptime + "\""}
@@ -185,14 +193,13 @@ export default class NoteListComponent extends React.Component<INoteListProps, I
     return(
       <div className={styles.wrapper}>
         <div className={styles.label}>
-          <FontAwesome className='' name='comments' /> Recent Posts
+          <FontAwesome className='' name='comments' /> {localization(992)}
         </div>
         {notes}
       </div>
     );
   }
 }
-
 
 NoteListComponent.contextTypes = {
   router: function () {

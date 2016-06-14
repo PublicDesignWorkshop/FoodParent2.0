@@ -1,22 +1,19 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
 
-var Settings = require('./../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './trees-controls.component.css';
-import TreeComponent from './tree/tree.component';
-import { TreeModel, treeStore } from './../stores/tree.store';
-import { FoodModel, foodStore } from './../stores/food.store';
-import { checkLogin, checkAdmin } from './../utils/authentication';
-import { LogInStatus } from './app.component';
-import { TileMode } from './map.component';
-import { mapActions } from './../actions/map.actions';
-import { mapStore } from './../stores/map.store';
-import { authStore } from './../stores/auth.store';
-import { TreesMode } from './trees.component';
+var Settings = require('./../../constraints/settings.json');
+
+import TreeComponent from './../tree/tree.component';
+import { mapStore } from './../../stores/map.store';
+import { mapActions } from './../../actions/map.actions';
+import { authStore } from './../../stores/auth.store';
+
+import { TileMode, TreesMode } from './../../utils/enum';
 
 export interface ITreesControlsProps {
   mode: TreesMode;
@@ -25,6 +22,7 @@ export interface ITreesControlsProps {
 export interface ITreesControlsStatus {
 
 }
+
 export default class TreesControlsComponent extends React.Component<ITreesControlsProps, ITreesControlsStatus> {
   static contextTypes: any;
   constructor(props : ITreesControlsProps) {
@@ -34,19 +32,16 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
 
     };
   }
+
   public componentDidMount() {
     let self: TreesControlsComponent = this;
-    self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: TreesControlsComponent = this;
   }
-  public componentWillReceiveProps (nextProps: ITreesControlsProps) {
-    let self: TreesControlsComponent = this;
-    self.updateProps(nextProps);
-  }
 
-  private updateProps = (props: ITreesControlsProps) => {
+  public componentWillReceiveProps (nextProps: ITreesControlsProps) {
     let self: TreesControlsComponent = this;
   }
 

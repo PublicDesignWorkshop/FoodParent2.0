@@ -2,17 +2,16 @@ import * as $ from 'jquery';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+
+import TextareaAutosize from 'react-textarea-autosize';
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
-import TextareaAutosize from 'react-textarea-autosize';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './message-line.component.css';
+var Settings = require('./../../constraints/settings.json');
+
+import { MessageLineType } from './../../utils/enum';
 import { localization } from './../../constraints/localization';
 
-export enum MessageLineType {
-  NONE, ERROR, SUCCESS, WAITING
-}
 export interface IMessageLineProps {
   code: any;
   match: Array<any>;

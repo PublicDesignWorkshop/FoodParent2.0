@@ -1,14 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './user-role.component.css';
+var Settings = require('./../../constraints/settings.json');
+
 import { PersonModel, personStore } from './../../stores/person.store';
+
+import { localization } from './../../constraints/localization';
 
 export interface IUserRoleProps {
   person?: PersonModel;
@@ -19,6 +22,7 @@ export interface IUserRoleProps {
 export interface IUserRoleStatus {
   role?: string;
 }
+
 export default class UserRoleComponent extends React.Component<IUserRoleProps, IUserRoleStatus> {
   constructor(props : IUserRoleProps) {
     super(props);
@@ -27,13 +31,16 @@ export default class UserRoleComponent extends React.Component<IUserRoleProps, I
       role: "",
     };
   }
+
   public componentDidMount() {
     let self: UserRoleComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: UserRoleComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IUserRoleProps) {
     let self: UserRoleComponent = this;
     self.updateProps(nextProps);
@@ -45,27 +52,14 @@ export default class UserRoleComponent extends React.Component<IUserRoleProps, I
       self.setState({role: props.person.getFormattedAuth()});
     }
   }
-  // private updateAttribute = (selected?: any) => {
-  //   let self: UserNameComponent = this;
-  //   self.props.person.setName(self.state.name);
-  //   if (self.props.async) {
-  //     // personStore.updatePerson(self.props.person);
-  //   } else {
-  //
-  //   }
-  // }
 
   render() {
     let self: UserRoleComponent = this;
     if (self.props.person && (self.props.editable || self.props.person.getId() == 0)) {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onMouseUp={()=> {
-            // if (self.props.editable) {
-            //   self.setState({editing: true});
-            // }
-          }}>
-            <FontAwesome className='' name='long-arrow-right' /> Role
+          <div className={styles.label}>
+            <FontAwesome className='' name='long-arrow-right' /> {localization(678)}
           </div>
           <div className={styles.edit}>
 
@@ -79,7 +73,7 @@ export default class UserRoleComponent extends React.Component<IUserRoleProps, I
       return (
         <div className={styles.wrapper2}>
           <div className={styles.label}>
-            <FontAwesome className='' name='long-arrow-right' /> Role
+            <FontAwesome className='' name='long-arrow-right' /> {localization(678)}
           </div>
           <div className={styles.value}>
             {self.state.role}
@@ -87,6 +81,5 @@ export default class UserRoleComponent extends React.Component<IUserRoleProps, I
         </div>
       );
     }
-
   }
 }

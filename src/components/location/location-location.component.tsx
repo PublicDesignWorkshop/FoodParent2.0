@@ -1,15 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './location-location.component.css';
-import { LocationModel, locationStore } from './../../stores/location.store';
-import { reverseGeocoding, IReverseGeoLocation } from './../../utils/geolocation';
-import { FoodModel, foodStore } from './../../stores/food.store';
+var Settings = require('./../../constraints/settings.json');
+
+import { LocationModel } from './../../stores/location.store';
 import { locationActions } from './../../actions/location.actions';
+
+import { reverseGeocoding, IReverseGeoLocation } from './../../utils/geolocation';
+import { localization } from './../../constraints/localization';
 
 export interface ILocationLocationProps {
   location: LocationModel;
@@ -22,6 +24,7 @@ export interface ILocationLocationStatus {
   editingLatitude?: boolean;
   editingLongitude?: boolean;
 }
+
 export default class LocationLocationComponent extends React.Component<ILocationLocationProps, ILocationLocationStatus> {
   constructor(props : ILocationLocationProps) {
     super(props);
@@ -33,13 +36,16 @@ export default class LocationLocationComponent extends React.Component<ILocation
       editingLongitude: false,
     };
   }
+
   public componentDidMount() {
     let self: LocationLocationComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: LocationLocationComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: ILocationLocationProps) {
     let self: LocationLocationComponent = this;
     self.updateProps(nextProps);
@@ -72,10 +78,10 @@ export default class LocationLocationComponent extends React.Component<ILocation
           <div className={styles.label} onClick={()=> {
             self.setState({editingLatitude: true, editingLongitude: false});
           }}>
-            <FontAwesome className='' name='at' /> Location
+            <FontAwesome className='' name='at' /> {localization(669)}
           </div>
           <div className={styles.location}>
-            <input autoFocus type="text" className={styles.edit} key={self.props.location.getId() + "latitude"} placeholder="enter latitude of place location..."
+            <input autoFocus type="text" className={styles.edit} key={self.props.location.getId() + "latitude"} placeholder={localization(978)}
               value={self.state.latitude}
               onChange={(event: any)=> {
                 self.setState({latitude: event.target.value});
@@ -103,7 +109,7 @@ export default class LocationLocationComponent extends React.Component<ILocation
           <div className={styles.label} onClick={()=> {
             self.setState({editingLatitude: false, editingLongitude: true});
           }}>
-            <FontAwesome className='' name='at' /> Location
+            <FontAwesome className='' name='at' /> {localization(669)}
           </div>
           <div className={styles.location}>
             <div className={styles.name} onClick={()=> {
@@ -112,7 +118,7 @@ export default class LocationLocationComponent extends React.Component<ILocation
               {self.state.latitude}
             </div>
             <div className={styles.comma}>,</div>
-            <input autoFocus type="text" className={styles.edit} key={self.props.location.getId() + "longitude"} placeholder="enter longitude of place location..."
+            <input autoFocus type="text" className={styles.edit} key={self.props.location.getId() + "longitude"} placeholder={localization(979)}
               value={self.state.longitude}
               onChange={(event: any)=> {
                 self.setState({longitude: event.target.value});
@@ -132,7 +138,7 @@ export default class LocationLocationComponent extends React.Component<ILocation
       return (
         <div className={styles.wrapper}>
           <div className={styles.label}>
-            <FontAwesome className='' name='at' /> Location
+            <FontAwesome className='' name='at' /> {localization(669)}
           </div>
           <div className={styles.location}>
             <div className={styles.name} onClick={()=> {
@@ -154,6 +160,5 @@ export default class LocationLocationComponent extends React.Component<ILocation
         </div>
       );
     }
-
   }
 }

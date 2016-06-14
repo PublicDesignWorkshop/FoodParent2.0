@@ -1,29 +1,26 @@
+import * as $ from 'jquery';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
-import * as Select from 'react-select';
-import './../../../node_modules/react-select/dist/react-select.css';
-import * as $ from 'jquery';
+
 import * as moment from 'moment';
 
-var Settings = require('./../../constraints/settings.json');
+import * as Select from 'react-select';
+import './../../../node_modules/react-select/dist/react-select.css';
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './donate-graph.component.css';
-import { LocationModel, locationStore } from './../../stores/location.store';
+var Settings = require('./../../constraints/settings.json');
+
+import { LocationModel } from './../../stores/location.store';
 import { DonateModel, donateStore } from './../../stores/donate.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
+
 import { sortDonateByDateASC } from './../../utils/sort';
 import { google10Color } from './../../utils/color';
 import { isTouchDevice, isMobile } from './../../utils/device';
-
-
-export interface IDonateGraphOption {
-  x: Date;
-  y: number;
-  r: number;
-  tooltip: any;
-}
+import { IGraphOption } from './../../utils/enum';
+import { localization } from './../../constraints/localization';
 
 export interface IDonateGraphProps {
   location?: LocationModel;
@@ -50,6 +47,7 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
       clicked: false,
     };
   }
+
   public componentDidMount() {
     let self: DonateGraphComponent = this;
     self.updateProps(self.props);
@@ -57,9 +55,11 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
     self.setState({width: rWrapper.clientWidth - 16, height: Math.floor((rWrapper.clientWidth - 16) * 9 / 16)});
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: DonateGraphComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IDonateGraphProps) {
     let self: DonateGraphComponent = this;
     self.updateProps(nextProps);
@@ -74,7 +74,7 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
       if (self.state.width && self.state.height) {
         let rChart: any = document.getElementById("chart");
         let ctx = rChart.getContext("2d");
-        let lists: Array<Array<IDonateGraphOption>> = new Array<Array<IDonateGraphOption>>();
+        let lists: Array<Array<IGraphOption>> = new Array<Array<IGraphOption>>();
         let donates: Array<DonateModel> = props.donates.sort(sortDonateByDateASC);
         let currentYear: number = moment(new Date()).year();
         let earlestYear: number = moment(donates[0].getDate()).year();
@@ -84,7 +84,7 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
           for (let i = earlestYear; i <= latestYear; i++) {
             if (donate.getDate().year() == i) {
               if (lists[i - earlestYear] == null) {
-                lists[i - earlestYear] = Array<IDonateGraphOption>();
+                lists[i - earlestYear] = Array<IGraphOption>();
               }
               if (accumulated[i - earlestYear] == null) {
                 accumulated[i - earlestYear] = 0;
@@ -156,7 +156,7 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
           tooltipTemplate: "<%=tooltip%>"
   			});
       }
-    }, 500);
+    }, Settings.iGraphDelay);
   }
 
   render() {
@@ -177,7 +177,7 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
       if (food) {
         comment = <div className={styles.comment}>{food.getName() + ": " + Math.floor(donate.getAmount()).toLocaleString() + "g"}</div>;
       } else {
-        comment = <div className={styles.comment}>{"Unknown: " + Math.floor(donate.getAmount()).toLocaleString() + "g"}</div>;
+        comment = <div className={styles.comment}>{localization(613) + ": " + Math.floor(donate.getAmount()).toLocaleString() + "g"}</div>;
       }
       let list: Array<JSX.Element> = new Array<JSX.Element>();
       list.push(<span key={"tree"}>From </span>)

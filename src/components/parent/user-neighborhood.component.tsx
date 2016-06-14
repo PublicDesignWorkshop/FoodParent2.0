@@ -1,15 +1,19 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './user-neighborhood.component.css';
-import { PersonModel, personStore } from './../../stores/person.store';
+var Settings = require('./../../constraints/settings.json');
+
 import MessageLineComponent from './../message/message-line.component';
+
+import { PersonModel, personStore } from './../../stores/person.store';
+
+import { localization } from './../../constraints/localization';
 
 export interface IUserNeighborhoodProps {
   person?: PersonModel;
@@ -20,6 +24,7 @@ export interface IUserNeighborhoodProps {
 export interface IUserNeighborhoodStatus {
   neighborhood?: string;
 }
+
 export default class UserNeighborhoodComponent extends React.Component<IUserNeighborhoodProps, IUserNeighborhoodStatus> {
   constructor(props : IUserNeighborhoodProps) {
     super(props);
@@ -28,13 +33,16 @@ export default class UserNeighborhoodComponent extends React.Component<IUserNeig
       neighborhood: "",
     };
   }
+
   public componentDidMount() {
     let self: UserNeighborhoodComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: UserNeighborhoodComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IUserNeighborhoodProps) {
     let self: UserNeighborhoodComponent = this;
     self.updateProps(nextProps);
@@ -46,6 +54,7 @@ export default class UserNeighborhoodComponent extends React.Component<IUserNeig
       self.setState({neighborhood: props.person.getNeighborhood()});
     }
   }
+
   private updateAttribute = (selected?: any) => {
     let self: UserNeighborhoodComponent = this;
     self.props.person.setNeighborhood(self.state.neighborhood);
@@ -61,23 +70,19 @@ export default class UserNeighborhoodComponent extends React.Component<IUserNeig
     if (self.props.person && self.props.editable) {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onMouseUp={()=> {
-            // if (self.props.editable) {
-            //   self.setState({editing: true});
-            // }
-          }}>
-            <FontAwesome className='' name='map-signs' /> Neighborhood
+          <div className={styles.label}>
+            <FontAwesome className='' name='map-signs' /> {localization(679)}
           </div>
           <div className={styles.edit}>
-            <input type="text" className={styles.input} key={self.props.person.getId() + "neighborhood"} placeholder="optional..."
+            <input type="text" className={styles.input} key={self.props.person.getId() + "neighborhood"} placeholder={localization(682)}
               value={self.state.neighborhood}
               onChange={(event: any)=> {
                 self.setState({neighborhood: event.target.value});
               }}
               onKeyPress={(event)=> {
-                // if (event.key == 'Enter') {
-                //   self.updateAttribute();
-                // }
+                if (event.key == 'Enter') {
+                  self.updateAttribute();
+                }
               }}
               onBlur={()=> {
                 self.updateAttribute();
@@ -92,7 +97,7 @@ export default class UserNeighborhoodComponent extends React.Component<IUserNeig
       return (
         <div className={styles.wrapper2}>
           <div className={styles.label}>
-            <FontAwesome className='' name='map-signs' /> Neighborhood
+            <FontAwesome className='' name='map-signs' /> {localization(679)}
           </div>
           <div className={styles.value}>
             {self.state.neighborhood}

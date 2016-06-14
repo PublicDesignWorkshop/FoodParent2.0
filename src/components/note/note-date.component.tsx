@@ -1,14 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
 import * as DateTimeField from 'react-bootstrap-datetimepicker';
 import * as moment from 'moment';
-
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './note-date.component.css';
+var Settings = require('./../../constraints/settings.json');
+
 import { NoteModel, noteStore } from './../../stores/note.store';
+
+import { localization } from './../../constraints/localization';
 
 export interface INoteDateProps {
   note: NoteModel;
@@ -18,6 +21,7 @@ export interface INoteDateProps {
 export interface INoteDateStatus {
 
 }
+
 export default class NoteDateComponent extends React.Component<INoteDateProps, INoteDateStatus> {
   constructor(props : INoteDateProps) {
     super(props);
@@ -26,13 +30,16 @@ export default class NoteDateComponent extends React.Component<INoteDateProps, I
       date: moment(new Date()),
     };
   }
+
   public componentDidMount() {
     let self: NoteDateComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: NoteDateComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: INoteDateProps) {
     let self: NoteDateComponent = this;
     self.updateProps(nextProps);
@@ -41,6 +48,7 @@ export default class NoteDateComponent extends React.Component<INoteDateProps, I
   private updateProps(props: INoteDateProps) {
     let self: NoteDateComponent = this;
   }
+
   private updateAttribute = (date: moment.Moment) => {
     let self: NoteDateComponent = this;
     self.props.note.setDate(date);
@@ -55,12 +63,8 @@ export default class NoteDateComponent extends React.Component<INoteDateProps, I
     if (self.props.editable || self.props.note.getId() == 0) {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onMouseUp={()=> {
-            // if (self.props.editable) {
-            //   self.setState({editing: true});
-            // }
-          }}>
-            <FontAwesome className='' name='calendar-o' /> Date
+          <div className={styles.label}>
+            <FontAwesome className='' name='calendar-o' /> {localization(935)}
           </div>
           <div className={styles.edit}>
             <DateTimeField mode="date" dateTime={self.props.note.getDate().format(Settings.sUIDateFormat)} format={Settings.sUIDateFormat} onChange={(event: any)=> {
@@ -72,12 +76,8 @@ export default class NoteDateComponent extends React.Component<INoteDateProps, I
     } else {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onMouseUp={()=> {
-            // if (self.props.editable) {
-            //   self.setState({editing: true});
-            // }
-          }}>
-            <FontAwesome className='' name='calendar-o' /> Date
+          <div className={styles.label}>
+            <FontAwesome className='' name='calendar-o' /> {localization(935)}
           </div>
           <div className={styles.edit2}>
             {self.props.note.getDate().format(Settings.sUIDateFormat)}
@@ -85,6 +85,5 @@ export default class NoteDateComponent extends React.Component<INoteDateProps, I
         </div>
       );
     }
-
   }
 }

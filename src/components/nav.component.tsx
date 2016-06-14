@@ -2,21 +2,23 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import { Router, Link } from 'react-router';
 import * as AltContainer from 'alt-container';
+
 import * as FontAwesome from 'react-fontawesome';
 import './../../node_modules/font-awesome/css/font-awesome.css';
-
-var Settings = require('./../constraints/settings.json');
 import * as styles from './nav.component.css';
-import { LogInStatus } from './app.component';
-import NavAddressComponent from './nav-address.component';
-import { MapModel, mapStore } from './../stores/map.store';
-import { personStore } from './../stores/person.store';
-import { AuthModel, AuthStatus } from './../stores/auth.store';
+var Settings = require('./../constraints/settings.json');
+
+import NavSearchComponent from './nav-search.component';
 import LoginComponent from './parent/login.component';
 import UserComponent from './parent/user.component';
 import SignUpComponent from './parent/signup.component';
+
+import { mapStore } from './../stores/map.store';
+import { personStore } from './../stores/person.store';
+import { AuthModel, AuthStatus } from './../stores/auth.store';
 import { authActions } from './../actions/auth.actions';
-import { personActions } from './../actions/person.actions';
+
+import { localization } from './../constraints/localization';
 
 export interface INavProps {
   location: any;
@@ -35,17 +37,21 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
       mapId: "map",
     };
   }
+
   public componentDidMount() {
     let self: NavComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: NavComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: INavProps) {
     let self: NavComponent = this;
     self.updateProps(nextProps);
   }
+
   private updateProps = (props: INavProps) => {
     let self: NavComponent = this;
     if (props.location.pathname.indexOf(Settings.uBaseName + "/donation") > -1) {
@@ -72,7 +78,7 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
               self.context.router.push({pathname: Settings.uBaseName + '/'});
             }}>
               <div className={styles.title}>
-                FoodParent
+                {localization(994)}
               </div>
               <div className={styles.logo}></div>
             </div>
@@ -82,7 +88,7 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
                   maps: mapStore
                 }
               }>
-                <NavAddressComponent mapId={self.state.mapId} />
+                <NavSearchComponent mapId={self.state.mapId} />
               </AltContainer>
             </div>
             <div className={styles.right} onClick={()=> {
@@ -94,7 +100,7 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
             }}>
               <FontAwesome className={styles.icon}  name='user' />
               <div className={styles.login}>
-                PARENT IN
+                {localization(993)}
               </div>
             </div>
             {login}
@@ -113,7 +119,7 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
               self.context.router.push({pathname: Settings.uBaseName + '/'});
             }}>
               <div className={styles.title}>
-                FoodParent
+                {localization(994)}
               </div>
               <div className={styles.logo}></div>
             </div>
@@ -123,7 +129,7 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
                   maps: mapStore
                 }
               }>
-                <NavAddressComponent mapId={self.state.mapId} />
+                <NavSearchComponent mapId={self.state.mapId} />
               </AltContainer>
             </div>
             <div className={styles.right} onClick={()=> {
@@ -144,75 +150,6 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
         );
     }
   }
-
-
-
-    //
-    //
-    //
-    //
-    // switch(self.props.login) {
-    //   case LogInStatus.GUEST:
-    //     return (
-    //       <div className={styles.wrapper}>
-    //         <div className={styles.left}>
-    //           <div className={styles.title} onClick={()=> {
-    //             self.context.router.push({pathname: Settings.uBaseName + '/'});
-    //           }}>
-    //             FoodParent
-    //           </div>
-    //           <div className={styles.logo}></div>
-    //         </div>
-    //         <div className={styles.center}>
-    //           <AltContainer stores={
-    //             {
-    //               maps: mapStore
-    //             }
-    //           }>
-    //             <NavAddressComponent mapId="map" />
-    //           </AltContainer>
-    //         </div>
-    //         <div className={styles.right}>
-    //           <div className={styles.login} onClick={()=> {
-    //             self.context.router.push({pathname: window.location.pathname, query: { login: true }});
-    //           }}>
-    //             PARENT IN
-    //           </div>
-    //         </div>
-    //       </div>
-    //     );
-    //   case LogInStatus.PARENT:
-    //   case LogInStatus.MANAGER:
-    //     return (
-    //       <div className={styles.wrapper}>
-    //         <div className={styles.left}>
-    //           <div className={styles.title} onClick={()=> {
-    //             self.context.router.push({pathname: Settings.uBaseName + '/'});
-    //           }}>
-    //             FoodParent
-    //           </div>
-    //           <div className={styles.logo}></div>
-    //         </div>
-    //         <div className={styles.center}>
-    //           <AltContainer stores={
-    //             {
-    //               maps: mapStore
-    //             }
-    //           }>
-    //             <NavAddressComponent mapId="map" />
-    //           </AltContainer>
-    //         </div>
-    //         <div className={styles.right}>
-    //           <div className={styles.login} onClick={()=> {
-    //             self.context.router.push({pathname: window.location.pathname, query: { login: true }});
-    //           }}>
-    //             {self.props.contact}
-    //           </div>
-    //         </div>
-    //       </div>
-    //     );
-    // }
-  // }
 }
 
 NavComponent.contextTypes = {

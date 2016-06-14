@@ -9,16 +9,8 @@ import { noteActions } from './../actions/note.actions';
 import { AbstractStore } from './../stores/abstract.store';
 import { foodStore } from './food.store';
 import { sortNoteByDateDESC } from './../utils/sort';
+import { NoteType, AmountType, PickupTime } from './../utils/enum';
 
-export enum PickupTime {
-  NONE, EARLY, PROPER, LATE
-}
-export enum NoteType {
-  NONE, CHANGE, POST, PICKUP
-}
-export enum AmountType {
-  NONE, G, KG, LBS
-}
 
 export interface INoteProps {
   id: string;

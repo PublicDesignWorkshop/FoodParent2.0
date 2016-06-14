@@ -1,23 +1,23 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
+import * as AltContainer from 'alt-container';
+
+import * as moment from 'moment';
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
-import * as AltContainer from 'alt-container';
-import * as moment from 'moment';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './trees-filter.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
-import { FoodModel, foodStore } from './../../stores/food.store';
-import { FlagModel, flagStore } from './../../stores/flag.store';
-import { checkLogin, checkAdmin } from './../../utils/authentication';
-import { LogInStatus } from './../app.component';
+var Settings = require('./../../constraints/settings.json');
+
 import FilterFoodComponent from './filter-food.component';
 import FilterFlagComponent from './filter-flag.component';
 import FilterOwnershipComponent from './filter-ownership.component';
 import FilterAdoptComponent from './filter-adopt.component';
 import FilterRateComponent from './filter-rate.component';
+
+import { TreeModel } from './../../stores/tree.store';
+import { FoodModel } from './../../stores/food.store';
+import { FlagModel } from './../../stores/flag.store';
 import { authStore } from './../../stores/auth.store';
 
 export interface ITreesFilterProps {
@@ -29,6 +29,7 @@ export interface ITreesFilterStatus {
   userId?: number;
   open?: boolean;
 }
+
 export default class TreesFilterComponent extends React.Component<ITreesFilterProps, ITreesFilterStatus> {
   static contextTypes: any;
   constructor(props : ITreesFilterProps) {
@@ -39,13 +40,16 @@ export default class TreesFilterComponent extends React.Component<ITreesFilterPr
       open: false,
     };
   }
+
   public componentDidMount() {
     let self: TreesFilterComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: TreesFilterComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: ITreesFilterProps) {
     let self: TreesFilterComponent = this;
     self.updateProps(nextProps);

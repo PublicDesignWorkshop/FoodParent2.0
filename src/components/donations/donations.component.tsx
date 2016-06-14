@@ -1,31 +1,31 @@
 import * as $ from 'jquery';
+import * as L from 'leaflet';
 import * as React from 'react';
 import { render } from 'react-dom';
 import { Link } from 'react-router';
-import * as L from 'leaflet';
 import * as AltContainer from 'alt-container';
 
-var Settings = require('./../../constraints/settings.json');
-import * as styles from './donations.component.css';
 import './../../../node_modules/leaflet/dist/leaflet.css';
-import { locationStore, LocationModel, LocationState } from './../../stores/location.store';
-import { locationActions } from './../../actions/location.actions';
+import * as styles from './donations.component.css';
+var Settings = require('./../../constraints/settings.json');
+
 import DonationsMapComponent from './donations-map.component' ;
 import DonationsPanelComponent from './donations-panel.component' ;
-import { authStore } from './../../stores/auth.store';
-import { treeStore } from './../../stores/tree.store';
-import { mapStore } from './../../stores/map.store';
-import { TileMode } from './../map.component';
-import { foodStore, FoodModel, FoodState } from './../../stores/food.store';
-import { donateStore } from './../../stores/donate.store';
-import { foodActions } from './../../actions/food.actions';
-import { treeActions } from './../../actions/tree.actions';
 import MessageComponent from './../message/message.component';
 import PopupDonationsComponent from './../message/popup-donations.component';
 
-export enum DonationsMode {
-  NONE, DONATIONS, LOCATIONDETAIL, LOCATIONADDMARKER, LOCATIONADDINFO, LOCATIONDELETE, DONATIONNOTEEDIT, DONATIONNOTEDELETE, DONATIONGRAPH
-}
+import { locationStore, LocationModel } from './../../stores/location.store';
+import { locationActions } from './../../actions/location.actions';
+import { foodStore } from './../../stores/food.store';
+import { foodActions } from './../../actions/food.actions';
+import { authStore } from './../../stores/auth.store';
+import { treeStore } from './../../stores/tree.store';
+import { treeActions } from './../../actions/tree.actions';
+import { mapStore } from './../../stores/map.store';
+import { donateStore } from './../../stores/donate.store';
+
+import { TileMode, DonationsMode } from './../../utils/enum';
+
 export interface IDonationsProps {
   params: any;
   location: any;
@@ -38,6 +38,7 @@ export interface IDonationsStatus {
   tile?: TileMode;
   location?: L.LatLng;
 }
+
 export default class DonationsComponent extends React.Component<IDonationsProps, IDonationsStatus> {
   static contextTypes: any;
   constructor(props : IDonationsProps) {
@@ -51,6 +52,7 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
       tile: TileMode.GRAY
     };
   }
+
   public componentDidMount() {
     let self: DonationsComponent = this;
     treeActions.resetTrees();
@@ -63,14 +65,17 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
       }
     });
   }
+
   public componentWillUnmount() {
     let self: DonationsComponent = this;
     $(document).off('keyup');
   }
+
   public componentWillReceiveProps (nextProps: IDonationsProps) {
     let self: DonationsComponent = this;
     self.updateProps(nextProps);
   }
+
   private updateProps = (props: IDonationsProps) => {
     let self: DonationsComponent = this;
     let locationId = null;
@@ -120,11 +125,8 @@ export default class DonationsComponent extends React.Component<IDonationsProps,
         foodActions.fetchFoods();
         locationActions.fetchLocations();
       }
-    }, 1000);
+    }, Settings.iMapRenderDelay);
 
-  }
-  public renderLocation = (locationId: number) => {
-    let self: DonationsComponent = this;
   }
 
   render() {

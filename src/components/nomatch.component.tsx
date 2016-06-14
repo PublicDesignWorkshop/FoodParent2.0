@@ -4,6 +4,8 @@ import * as AltContainer from 'alt-container';
 
 import * as styles from './nomatch.component.css';
 
+import { localization } from './../constraints/localization';
+
 export interface INoMatchProps {
   location: any;
 }
@@ -37,7 +39,7 @@ export default class NoMatchComponent extends React.Component<INoMatchProps, INo
     let self: NoMatchComponent = this;
     return (
       <div className={styles.wrapper}>
-        Page Not Found...
+        {localization(404)}
       </div>
     );
   }

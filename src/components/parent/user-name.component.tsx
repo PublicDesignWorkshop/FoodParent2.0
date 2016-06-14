@@ -1,15 +1,19 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './user-name.component.css';
-import { PersonModel, personStore } from './../../stores/person.store';
+var Settings = require('./../../constraints/settings.json');
+
 import MessageLineComponent from './../message/message-line.component';
+
+import { PersonModel, personStore } from './../../stores/person.store';
+
+import { localization } from './../../constraints/localization';
 
 export interface IUserNameProps {
   person?: PersonModel;
@@ -20,6 +24,7 @@ export interface IUserNameProps {
 export interface IUserNameStatus {
   name?: string;
 }
+
 export default class UserNameComponent extends React.Component<IUserNameProps, IUserNameStatus> {
   constructor(props : IUserNameProps) {
     super(props);
@@ -28,13 +33,16 @@ export default class UserNameComponent extends React.Component<IUserNameProps, I
       name: "",
     };
   }
+
   public componentDidMount() {
     let self: UserNameComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: UserNameComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IUserNameProps) {
     let self: UserNameComponent = this;
     self.updateProps(nextProps);
@@ -46,6 +54,7 @@ export default class UserNameComponent extends React.Component<IUserNameProps, I
       self.setState({name: props.person.getName()});
     }
   }
+
   private updateAttribute = (selected?: any) => {
     let self: UserNameComponent = this;
     self.props.person.setName(self.state.name);
@@ -61,23 +70,19 @@ export default class UserNameComponent extends React.Component<IUserNameProps, I
     if (self.props.person && self.props.editable) {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onMouseUp={()=> {
-            // if (self.props.editable) {
-            //   self.setState({editing: true});
-            // }
-          }}>
-            <FontAwesome className='' name='microphone' /> Name
+          <div className={styles.label}>
+            <FontAwesome className='' name='microphone' /> {localization(680)}
           </div>
           <div className={styles.edit}>
-            <input type="text" className={styles.input} key={self.props.person.getId() + "name"} placeholder="optional..."
+            <input type="text" className={styles.input} key={self.props.person.getId() + "name"} placeholder={localization(682)}
               value={self.state.name}
               onChange={(event: any)=> {
                 self.setState({name: event.target.value});
               }}
               onKeyPress={(event)=> {
-                // if (event.key == 'Enter') {
-                //   self.updateAttribute();
-                // }
+                if (event.key == 'Enter') {
+                  self.updateAttribute();
+                }
               }}
               onBlur={()=> {
                 self.updateAttribute();
@@ -92,7 +97,7 @@ export default class UserNameComponent extends React.Component<IUserNameProps, I
       return (
         <div className={styles.wrapper2}>
           <div className={styles.label}>
-            <FontAwesome className='' name='microphone' /> Name
+            <FontAwesome className='' name='microphone' /> {localization(680)}
           </div>
           <div className={styles.value}>
             {self.state.name}

@@ -1,25 +1,27 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
+import * as AltContainer from 'alt-container';
+
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
-import * as AltContainer from 'alt-container';
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './user.component.css';
-import { fetchUser, processLogout } from './../../utils/authentication';
-import { LogInStatus } from './../app.component';
-import { treeStore } from './../../stores/tree.store';
+var Settings = require('./../../constraints/settings.json');
+
 import UserContactComponent from './user-contact.component';
 import UserNameComponent from './user-name.component';
 import UserRoleComponent from './user-role.component';
 import UserNeighborhood from './user-neighborhood.component';
-import { PersonModel, personStore } from './../../stores/person.store';
-import { personActions } from './../../actions/person.actions';
-import { authActions } from './../../actions/auth.actions';
+
+import { processLogout } from './../../utils/authentication';
+import { treeStore } from './../../stores/tree.store';
+import { personStore } from './../../stores/person.store';
 import { AuthModel, authStore } from './../../stores/auth.store';
+import { authActions } from './../../actions/auth.actions';
+
+import { localization } from './../../constraints/localization';
 
 export interface IUserProps {
   open: any;
@@ -30,6 +32,7 @@ export interface IUserStatus {
   error?: Array<string>;
   editable?: boolean;
 }
+
 export default class UserComponent extends React.Component<IUserProps, IUserStatus> {
   static contextTypes: any;
   constructor(props : IUserProps) {
@@ -45,13 +48,6 @@ export default class UserComponent extends React.Component<IUserProps, IUserStat
     if (self.props.userId) {
       authActions.fetchPerson(self.props.userId);
     }
-    // if (self.props.userId) {
-    //   let ids: Array<number> = new Array<number>();
-    //   ids.push(self.props.userId);
-    //   setTimeout(function () {
-    //     personStore.fetchPersons(ids);
-    //   }, 1);
-    // }
   }
   public componentWillUnmount() {
     let self: UserComponent = this;
@@ -70,15 +66,6 @@ export default class UserComponent extends React.Component<IUserProps, IUserStat
   private submitLogout = () => {
     let self: UserComponent = this;
     authActions.processLogout();
-    // processLogout(function(response) { // Lgout success
-    //   //self.context.router.push({pathname: window.location.pathname});
-    //   self.context.router.replace({pathname: Settings.uBaseName + '/'});
-    //   // treeStore.fetchTrees();
-    // }, function(response) { // Login fail
-    //
-    // }, function(response) { // Error
-    //
-    // });
   }
 
   render() {
@@ -93,7 +80,7 @@ export default class UserComponent extends React.Component<IUserProps, IUserStat
                 <FontAwesome className='' name='user' />
               </div>
               <div className={styles.name}>
-                PARENT INFO
+                {localization(676)}
               </div>
               <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
                 self.context.router.goBack();
@@ -120,7 +107,7 @@ export default class UserComponent extends React.Component<IUserProps, IUserStat
               self.submitLogout();
             }}>
               <div className={styles.button}>
-                SIGN OUT
+                {localization(677)}
               </div>
             </div>
           </div>

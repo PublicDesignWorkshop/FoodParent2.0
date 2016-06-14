@@ -1,27 +1,27 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
+import * as AltContainer from 'alt-container';
+
+import * as moment from 'moment';
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
-import * as AltContainer from 'alt-container';
-import * as moment from 'moment';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './donations-panel.component.css';
+var Settings = require('./../../constraints/settings.json');
+
 import LocationComponent from './../location/location.component';
 import DonationsControlsComponent from './donations-control.component';
-import { DonationsMode } from './donations.component';
-import { LocationModel, locationStore } from './../../stores/location.store';
-import { locationActions } from './../../actions/location.actions';
-import { mapStore } from './../../stores/map.store';
-import { donateStore, DonateModel } from './../../stores/donate.store';
-import { TileMode } from './../map.component';
-import MessageComponent from './../message/message.component';
 import DonateAddComponent from './../donate/donate-add.component';
 import DonateEditComponent from './../donate/donate-edit.component';
 import LocationAddComponent from './../location/location-add.component';
-import { mapActions } from './../../actions/map.actions';
 import DonateGraphComponent from  './../donate/donate-graph.component';
+
+import { LocationModel, locationStore } from './../../stores/location.store';
+import { donateStore } from './../../stores/donate.store';
+import { mapActions } from './../../actions/map.actions';
+
+import { TileMode, DonationsMode } from './../../utils/enum';
+import { localization } from './../../constraints/localization';
 
 export interface IDonationsPanelProps {
   locationId: number;
@@ -33,6 +33,7 @@ export interface IDonationsPanelProps {
 export interface IDonationsPanelStatus {
   open?: boolean;
 }
+
 export default class DonationsPanelComponent extends React.Component<IDonationsPanelProps, IDonationsPanelStatus> {
   static contextTypes: any;
   constructor(props : IDonationsPanelProps) {
@@ -42,13 +43,16 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
       open: false,
     };
   }
+
   public componentDidMount() {
     let self: DonationsPanelComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: DonationsPanelComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IDonationsPanelProps) {
     let self: DonationsPanelComponent = this;
     self.updateProps(nextProps);
@@ -93,11 +97,11 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
                   if (location) {
                     mapActions.moveToWithMarker('map-donation', location.getLocation(), Settings.iFocusZoom);
                   }
-                }}>LOCATE ME</div>
-                <div className={styles.button2 + " " + styles.selected}>NEW DONATION</div>
+                }}>{localization(960)}</div>
+                <div className={styles.button2 + " " + styles.selected}>{localization(964)}</div>
                 <div className={styles.button2} onClick={()=> {
                   self.context.router.push({pathname: window.location.pathname, query: { mode: "graph" }});
-                }}>SEE GRAPH</div>
+                }}>{localization(963)}</div>
               </div>
               <AltContainer stores={
                 {
@@ -135,13 +139,13 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
                     if (location) {
                       mapActions.moveToWithMarker('map-donation', location.getLocation(), Settings.iFocusZoom);
                     }
-                  }}>LOCATE ME</div>
+                  }}>{localization(960)}</div>
                   <div className={styles.button2} onClick={()=> {
                     self.context.router.push({pathname: window.location.pathname});
-                  }}>NEW NOTE</div>
+                  }}>{localization(964)}</div>
                   <div className={styles.button2} onClick={()=> {
                     self.context.router.push({pathname: window.location.pathname, query: { mode: "graph" }});
-                  }}>SEE GRAPH</div>
+                  }}>{localization(963)}</div>
                 </div>
                 <AltContainer stores={
                   {
@@ -178,11 +182,11 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
                     if (location) {
                       mapActions.moveToWithMarker('map-donation', location.getLocation(), Settings.iFocusZoom);
                     }
-                  }}>LOCATE ME</div>
+                  }}>{localization(960)}</div>
                   <div className={styles.button2} onClick={()=> {
                     self.context.router.push({pathname: window.location.pathname});
-                  }}>NEW NOTE</div>
-                  <div className={styles.button2 + " " + styles.selected}>SEE GRAPH</div>
+                  }}>{localization(964)}</div>
+                  <div className={styles.button2 + " " + styles.selected}>{localization(963)}</div>
                 </div>
                 <AltContainer stores={
                   {
@@ -230,7 +234,6 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
                 }>
                   <LocationAddComponent />
                 </AltContainer>
-
               </div>
             </div>
           );

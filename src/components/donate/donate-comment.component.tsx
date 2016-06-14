@@ -1,13 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
 import TextareaAutosize from 'react-textarea-autosize';
 
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './donate-comment.component.css';
-import { DonateModel, donateStore } from './../../stores/donate.store';
+var Settings = require('./../../constraints/settings.json');
+
+import { DonateModel } from './../../stores/donate.store';
+
+import { localization } from './../../constraints/localization';
 
 export interface IDonateCommentProps {
   donate: DonateModel;
@@ -17,6 +21,7 @@ export interface IDonateCommentProps {
 export interface IDonateCommentStatus {
   comment?: string;
 }
+
 export default class DonateCommentComponent extends React.Component<IDonateCommentProps, IDonateCommentStatus> {
   constructor(props : IDonateCommentProps) {
     super(props);
@@ -25,13 +30,16 @@ export default class DonateCommentComponent extends React.Component<IDonateComme
       comment: "",
     };
   }
+
   public componentDidMount() {
     let self: DonateCommentComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: DonateCommentComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IDonateCommentProps) {
     let self: DonateCommentComponent = this;
     self.updateProps(nextProps);
@@ -58,23 +66,19 @@ export default class DonateCommentComponent extends React.Component<IDonateComme
     if (self.props.editable || self.props.donate.getId() == 0) {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onMouseUp={()=> {
-            // if (self.props.editable) {
-            //   self.setState({editing: true});
-            // }
-          }}>
-            <FontAwesome className='' name='comment-o' /> Comment
+          <div className={styles.label}>
+            <FontAwesome className='' name='comment-o' /> {localization(999)}
           </div>
           <div className={styles.edit}>
-            <TextareaAutosize type="text" className={styles.input} key={self.props.donate.getId() + "comment"} placeholder="enter comment..."
+            <TextareaAutosize type="text" className={styles.input} key={self.props.donate.getId() + "comment"} placeholder={localization(601)}
               value={self.state.comment}
               onChange={(event: any)=> {
                 self.setState({comment: event.target.value});
               }}
               onKeyPress={(event)=> {
-                // if (event.key == 'Enter') {
-                //   self.updateAttribute();
-                // }
+                if (event.key == 'Enter') {
+                  self.updateAttribute();
+                }
               }}
               onBlur={()=> {
                 self.updateAttribute();
@@ -86,7 +90,7 @@ export default class DonateCommentComponent extends React.Component<IDonateComme
       return (
         <div className={styles.wrapper}>
           <div className={styles.label}>
-            <FontAwesome className='' name='comment-o' /> Comment
+            <FontAwesome className='' name='comment-o' /> {localization(999)}
           </div>
           <div className={styles.value}>
             {

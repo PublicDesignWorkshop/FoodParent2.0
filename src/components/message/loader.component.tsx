@@ -18,12 +18,15 @@ export default class LoaderComponent extends React.Component<ILoaderProps, ILoad
 
     };
   }
+
   public componentDidMount() {
     let self: LoaderComponent = this;
   }
+
   public componentWillUnmount() {
     let self: LoaderComponent = this;
   }
+  
   public componentWillReceiveProps (nextProps: ILoaderProps) {
     let self: LoaderComponent = this;
   }

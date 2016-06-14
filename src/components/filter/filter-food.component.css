@@ -85,7 +85,6 @@
   }
 }
 
-
 @media screen and (max-device-aspect-ratio: 1/1) {
   :local(.wrapper) .Select--multi:not(.is-disabled) .Select-value {
     width: 95%;

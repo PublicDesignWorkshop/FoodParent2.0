@@ -1,29 +1,27 @@
+import * as $ from 'jquery';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-import * as $ from 'jquery';
-
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './filter-rate.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
-import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
+var Settings = require('./../../constraints/settings.json');
+
 import { treeActions } from './../../actions/tree.actions';
 
-export interface IFilterRateOption {
-  value: number;
-  label: string;
-}
+import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
+import { ISelectOption } from './../../utils/enum';
+import { localization } from './../../constraints/localization';
 
 export interface IFilterRateProps {
 
 }
 export interface IFilterRateStatus {
-  options?: Array<IFilterRateOption>;
-  selected?: Array<IFilterRateOption>;
+  options?: Array<ISelectOption>;
+  selected?: Array<ISelectOption>;
 }
 
 export default class FilterRateComponent extends React.Component<IFilterRateProps, IFilterRateStatus> {
@@ -37,13 +35,16 @@ export default class FilterRateComponent extends React.Component<IFilterRateProp
       selected: null,
     };
   }
+
   public componentDidMount() {
     let self: FilterRateComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: FilterRateComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IFilterRateProps) {
     let self: FilterRateComponent = this;
     self.updateProps(nextProps);
@@ -57,20 +58,20 @@ export default class FilterRateComponent extends React.Component<IFilterRateProp
         let rates: Array<number> = response.rates.split(",").map(function(item) {
           return parseInt(item);
         });
-        var selected = new Array<IFilterRateOption>();
+        var selected = new Array<ISelectOption>();
         rates.forEach(rate => {
           if (rate == 0) {
-            selected.push({value: 0, label: "☆☆☆☆☆ (Initial State)"});
+            selected.push({value: 0, label: localization(936)});
           } else if (rate == 1) {
-            selected.push({value: 1, label: "★☆☆☆☆"});
+            selected.push({value: 1, label: localization(937)});
           } else if (rate == 2) {
-            selected.push({value: 2, label: "★★☆☆☆"});
+            selected.push({value: 2, label: localization(938)});
           } else if (rate == 3) {
-            selected.push({value: 3, label: "★★★☆☆"});
+            selected.push({value: 3, label: localization(939)});
           } else if (rate == 4) {
-            selected.push({value: 4, label: "★★★★☆"});
+            selected.push({value: 4, label: localization(940)});
           } else if (rate == 5) {
-            selected.push({value: 5, label: "★★★★★ (Fully Grown)"});
+            selected.push({value: 5, label: localization(941)});
           }
         });
         self.setState({selected: selected});
@@ -81,14 +82,13 @@ export default class FilterRateComponent extends React.Component<IFilterRateProp
 
       });
     }
-
-    var options = new Array<IFilterRateOption>();
-    options.push({value: 0, label: "☆☆☆☆☆ (Initial State)"});
-    options.push({value: 1, label: "★☆☆☆☆"});
-    options.push({value: 2, label: "★★☆☆☆"});
-    options.push({value: 3, label: "★★★☆☆"});
-    options.push({value: 4, label: "★★★★☆"});
-    options.push({value: 5, label: "★★★★★ (Fully Grown)"});
+    var options = new Array<ISelectOption>();
+    options.push({value: 0, label: localization(936)});
+    options.push({value: 1, label: localization(937)});
+    options.push({value: 2, label: localization(938)});
+    options.push({value: 3, label: localization(939)});
+    options.push({value: 4, label: localization(940)});
+    options.push({value: 5, label: localization(941)});
     self.setState({options: options});
   }
 
@@ -124,20 +124,20 @@ export default class FilterRateComponent extends React.Component<IFilterRateProp
       let rates: Array<number> = response.rates.split(",").map(function(item) {
         return parseInt(item);
       });
-      var selected = new Array<IFilterRateOption>();
+      var selected = new Array<ISelectOption>();
       rates.forEach(rate => {
         if (rate == 0) {
-          selected.push({value: 0, label: "☆☆☆☆☆ (Initial State)"});
+          selected.push({value: 0, label: localization(936)});
         } else if (rate == 1) {
-          selected.push({value: 1, label: "★☆☆☆☆"});
+          selected.push({value: 1, label: localization(937)});
         } else if (rate == 2) {
-          selected.push({value: 2, label: "★★☆☆☆"});
+          selected.push({value: 2, label: localization(938)});
         } else if (rate == 3) {
-          selected.push({value: 3, label: "★★★☆☆"});
+          selected.push({value: 3, label: localization(939)});
         } else if (rate == 4) {
-          selected.push({value: 4, label: "★★★★☆"});
+          selected.push({value: 4, label: localization(940)});
         } else if (rate == 5) {
-          selected.push({value: 5, label: "★★★★★ (Fully Grown)"});
+          selected.push({value: 5, label: localization(941)});
         }
       });
       self.setState({selected: selected});
@@ -149,19 +149,27 @@ export default class FilterRateComponent extends React.Component<IFilterRateProp
     });
   }
 
+  renderOptionValue(option): JSX.Element {
+    let stars: Array<JSX.Element> = new Array<JSX.Element>();
+    for (let i=0; i <5; i++) {
+      if (i >= option.value) {
+        stars.push(<FontAwesome key={"star" + i} className='' name='star-o' />);
+      } else {
+        stars.push(<FontAwesome key={"star" + i} className='' name='star' />);
+      }
+    }
+    return (<span>{stars}<span>{" (" + option.label + ")"}</span></span>);
+  }
+
   render() {
     let self: FilterRateComponent = this;
     return (
       <div className={styles.wrapper}>
-        <div className={styles.label} onMouseUp={()=> {
-          // if (self.props.editable) {
-          //   self.setState({editing: true});
-          // }
-        }}>
-          <FontAwesome className='' name='star' /> Rates
+        <div className={styles.label}>
+          <FontAwesome className='' name='star' /> {localization(670)}
         </div>
         <div className={styles.value}>
-          <Select name="rate-select" multi={true} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select rate types..." />
+          <Select name="rate-select" multi={true} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} valueRenderer={self.renderOptionValue} optionRenderer={self.renderOptionValue} placeholder={localization(671)} />
         </div>
       </div>
     );

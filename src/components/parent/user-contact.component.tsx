@@ -1,15 +1,19 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './user-contact.component.css';
-import { PersonModel, personStore } from './../../stores/person.store';
+var Settings = require('./../../constraints/settings.json');
+
 import MessageLineComponent from './../message/message-line.component';
+
+import { PersonModel, personStore } from './../../stores/person.store';
+
+import { localization } from './../../constraints/localization';
 
 export interface IUserContactProps {
   person?: PersonModel;
@@ -20,6 +24,7 @@ export interface IUserContactProps {
 export interface IUserContactStatus {
   contact?: string;
 }
+
 export default class UserContactComponent extends React.Component<IUserContactProps, IUserContactStatus> {
   constructor(props : IUserContactProps) {
     super(props);
@@ -28,13 +33,16 @@ export default class UserContactComponent extends React.Component<IUserContactPr
       contact: "",
     };
   }
+
   public componentDidMount() {
     let self: UserContactComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: UserContactComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IUserContactProps) {
     let self: UserContactComponent = this;
     self.updateProps(nextProps);
@@ -46,6 +54,7 @@ export default class UserContactComponent extends React.Component<IUserContactPr
       self.setState({contact: props.person.getContact()});
     }
   }
+
   private updateAttribute = (selected?: any) => {
     let self: UserContactComponent = this;
     self.props.person.setContact(self.state.contact);
@@ -61,24 +70,20 @@ export default class UserContactComponent extends React.Component<IUserContactPr
     if (self.props.person && self.props.editable) {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onMouseUp={()=> {
-            // if (self.props.editable) {
-            //   self.setState({editing: true});
-            // }
-          }}>
-            <FontAwesome className='' name='at' /> Contact (E-mail)
+          <div className={styles.label}>
+            <FontAwesome className='' name='at' /> {localization(681)}
           </div>
           <div className={styles.edit}>
-            <input type="email" className={styles.input} key={self.props.person.getId() + "contact"} placeholder="enter e-mail address..."
+            <input type="email" className={styles.input} key={self.props.person.getId() + "contact"} placeholder={localization(683)}
               autoComplete
               value={self.state.contact}
               onChange={(event: any)=> {
                 self.setState({contact: event.target.value});
               }}
               onKeyPress={(event)=> {
-                // if (event.key == 'Enter') {
-                //   self.updateAttribute();
-                // }
+                if (event.key == 'Enter') {
+                  self.updateAttribute();
+                }
               }}
               onBlur={()=> {
                 self.updateAttribute();
@@ -93,7 +98,7 @@ export default class UserContactComponent extends React.Component<IUserContactPr
       return (
         <div className={styles.wrapper2}>
           <div className={styles.label}>
-            <FontAwesome className='' name='at' /> Contact (E-mail)
+            <FontAwesome className='' name='at' /> {localization(681)}
           </div>
           <div className={styles.value}>
             {self.state.contact}

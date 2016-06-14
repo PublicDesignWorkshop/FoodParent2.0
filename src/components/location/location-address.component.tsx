@@ -1,15 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './location-address.component.css';
-import { LocationModel, locationStore } from './../../stores/location.store';
-import { reverseGeocoding, IReverseGeoLocation } from './../../utils/geolocation';
-import { FoodModel, foodStore } from './../../stores/food.store';
+var Settings = require('./../../constraints/settings.json');
+
+import { LocationModel } from './../../stores/location.store';
 import { locationActions } from './../../actions/location.actions';
+
+import { reverseGeocoding, IReverseGeoLocation } from './../../utils/geolocation';
+import { localization } from './../../constraints/localization';
 
 export interface ILocationAddressProps {
   location: LocationModel;
@@ -22,6 +24,7 @@ export interface ILocationAddressStatus {
   address?: string;
   editing?: boolean;
 }
+
 export default class LocationAddressComponent extends React.Component<ILocationAddressProps, ILocationAddressStatus> {
   private loading: boolean;
   constructor(props : ILocationAddressProps) {
@@ -35,6 +38,7 @@ export default class LocationAddressComponent extends React.Component<ILocationA
     };
     self.loading = false;
   }
+
   public componentDidMount() {
     let self: LocationAddressComponent = this;
     self.updateProps(self.props);
@@ -42,9 +46,11 @@ export default class LocationAddressComponent extends React.Component<ILocationA
       self.setState({prevLat: parseFloat(self.props.location.getLat().toFixed(Settings.iMarkerPrecision)), prevLng: parseFloat(self.props.location.getLng().toFixed(Settings.iMarkerPrecision))});
     }
   }
+
   public componentWillUnmount() {
     let self: LocationAddressComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: ILocationAddressProps) {
     let self: LocationAddressComponent = this;
     self.updateProps(nextProps);
@@ -105,10 +111,10 @@ export default class LocationAddressComponent extends React.Component<ILocationA
       return (
         <div className={styles.wrapper}>
           <div className={styles.label}>
-            <FontAwesome className='' name='map-signs' /> Address
+            <FontAwesome className='' name='map-signs' /> {localization(967)}
           </div>
           <div className={styles.editname}>
-            <input autoFocus type="text" className={styles.edit} key={self.props.location.getId() + "address"} placeholder="enter address of place..."
+            <input autoFocus type="text" className={styles.edit} key={self.props.location.getId() + "address"} placeholder={localization(972)}
               value={self.state.address}
               onChange={(event: any)=> {
                 self.setState({address: event.target.value, editing: self.state.editing});
@@ -133,7 +139,7 @@ export default class LocationAddressComponent extends React.Component<ILocationA
               self.setState({editing: true});
             }
           }}>
-            <FontAwesome className='' name='map-signs' /> Address
+            <FontAwesome className='' name='map-signs' /> {localization(967)}
           </div>
           <div className={styles.name} onClick={()=> {
             if (self.props.editable) {

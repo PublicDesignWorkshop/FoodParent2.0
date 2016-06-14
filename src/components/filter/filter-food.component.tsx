@@ -1,30 +1,28 @@
+import * as $ from 'jquery';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-import * as $ from 'jquery';
-
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './filter-food.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
+var Settings = require('./../../constraints/settings.json');
+
 import { FoodModel, foodStore } from './../../stores/food.store';
-import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
 import { treeActions } from './../../actions/tree.actions';
 
-export interface IFilterFoodOption {
-  value: number;
-  label: string;
-}
+import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
+import { ISelectOption } from './../../utils/enum';
+import { localization } from './../../constraints/localization';
 
 export interface IFilterFoodProps {
   foods: Array<FoodModel>;
 }
 export interface IFilterFoodStatus {
-  options?: Array<IFilterFoodOption>;
-  selected?: Array<IFilterFoodOption>;
+  options?: Array<ISelectOption>;
+  selected?: Array<ISelectOption>;
 }
 
 export default class FilterFoodComponent extends React.Component<IFilterFoodProps, IFilterFoodStatus> {
@@ -38,13 +36,16 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
       selected: null,
     };
   }
+
   public componentDidMount() {
     let self: FilterFoodComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: FilterFoodComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IFilterFoodProps) {
     let self: FilterFoodComponent = this;
     self.updateProps(nextProps);
@@ -59,7 +60,7 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
           let foods: Array<number> = response.foods.split(",").map(function(item) {
             return parseInt(item);
           });
-          var selected = new Array<IFilterFoodOption>();
+          var selected = new Array<ISelectOption>();
           foods.forEach(food => {
             if (food != -1 && food != 0) {
               let label: string = foodStore.getFood(food).getName();
@@ -75,7 +76,7 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
         });
       }
 
-      var options = new Array<IFilterFoodOption>();
+      var options = new Array<ISelectOption>();
       props.foods.forEach(food => {
         options.push({value: food.getId(), label: food.getName()});
       });
@@ -115,7 +116,7 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
       let foods: Array<number> = response.foods.split(",").map(function(item) {
         return parseInt(item);
       });
-      var selected = new Array<IFilterFoodOption>();
+      var selected = new Array<ISelectOption>();
       foods.forEach(food => {
         if (food != 0 && food != -1) {
           let label: string = foodStore.getFood(food).getName();
@@ -146,15 +147,11 @@ export default class FilterFoodComponent extends React.Component<IFilterFoodProp
     let self: FilterFoodComponent = this;
     return (
       <div className={styles.wrapper}>
-        <div className={styles.label} onMouseUp={()=> {
-          // if (self.props.editable) {
-          //   self.setState({editing: true});
-          // }
-        }}>
-          <FontAwesome className='' name='apple ' /> Food Types
+        <div className={styles.label}>
+          <FontAwesome className='' name='apple ' /> {localization(633)}
         </div>
         <div className={styles.value}>
-          <Select name="food-select" multi={true} searchable={true} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select food types..." valueRenderer={self.renderOptionValue} />
+          <Select name="food-select" multi={true} searchable={true} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder={localization(971)} valueRenderer={self.renderOptionValue} optionRenderer={self.renderOptionValue} />
           <div className={styles.button} onClick={()=> {
             self.resetAttribute();
           }}>

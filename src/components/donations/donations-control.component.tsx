@@ -1,17 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
 
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './donations-control.component.css';
-import { TileMode } from './../map.component';
-import { mapActions } from './../../actions/map.actions';
+var Settings = require('./../../constraints/settings.json');
+
 import { mapStore } from './../../stores/map.store';
+import { mapActions } from './../../actions/map.actions';
 import { authStore } from './../../stores/auth.store';
-import { DonationsMode } from './donations.component';
+import { TileMode, DonationsMode } from './../../utils/enum';
 
 export interface IDonationsControlsProps {
   mode: DonationsMode;
@@ -20,6 +20,7 @@ export interface IDonationsControlsProps {
 export interface IDonationsControlsStatus {
 
 }
+
 export default class DonationsControlsComponent extends React.Component<IDonationsControlsProps, IDonationsControlsStatus> {
   static contextTypes: any;
   constructor(props : IDonationsControlsProps) {
@@ -29,13 +30,16 @@ export default class DonationsControlsComponent extends React.Component<IDonatio
 
     };
   }
+
   public componentDidMount() {
     let self: DonationsControlsComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: DonationsControlsComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IDonationsControlsProps) {
     let self: DonationsControlsComponent = this;
     self.updateProps(nextProps);

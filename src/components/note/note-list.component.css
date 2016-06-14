@@ -2,6 +2,11 @@
   :local(.wrapper) {
     font-family: 'Open Sans', sans-serif;
     font-size: small;
+
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
   :local(.label) {
     font-weight: 700;
@@ -18,13 +23,15 @@
 
   :local(.selected),
   :local(.selected .star),
-  :local(.selected .date),
-  :local(.value:hover),
-  :local(.value:hover .star),
-  :local(.value:hover .date) {
+  :local(.selected .date) {
     color: rgba(255, 255, 255, 1);
     font-size: small;
     font-weight: 700;
+  }
+  :local(.value:hover),
+  :local(.value:hover .star),
+  :local(.value:hover .date) {
+    text-decoration: underline;
   }
   :local(.star) {
     font-weight: 700;

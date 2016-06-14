@@ -1,29 +1,32 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
+import * as AltContainer from 'alt-container';
+
+import * as moment from 'moment';
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
-import * as AltContainer from 'alt-container';
-import * as moment from 'moment';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './note-edit.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
-import { LogInStatus } from './../app.component';
-import { uploadImage } from './../../utils/upload';
-import { FoodModel, foodStore } from './../../stores/food.store';
-import { NoteModel, noteStore, NoteType, PickupTime, AmountType } from './../../stores/note.store';
+var Settings = require('./../../constraints/settings.json');
+
 import NoteCommentComponent from './note-comment.component';
 import NoteDateComponent from './note-date.component';
 import NoteAmountComponent from './note-amount.component';
 import NoteRateComponent from './note-rate.component';
 import ImageZoomComponent from './../image/image-zoom.component';
-import { noteActions } from './../../actions/note.actions';
+import MessageLineComponent from './../message/message-line.component';
+
+import { TreeModel, treeStore } from './../../stores/tree.store';
+import { FoodModel, foodStore } from './../../stores/food.store';
+import { NoteModel } from './../../stores/note.store';
 import { authStore } from './../../stores/auth.store';
+import { noteActions } from './../../actions/note.actions';
+
 import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
 import { checkValidPickupAmountNumber } from './../../utils/errorhandler';
+import { uploadImage } from './../../utils/upload';
+import { NoteType, PickupTime, AmountType } from './../../utils/enum';
 import { localization } from './../../constraints/localization';
-import MessageLineComponent from './../message/message-line.component';
 
 export interface INoteEditProps {
   trees: Array<TreeModel>;
@@ -37,6 +40,7 @@ export interface INoteEditStatus {
   image?: string;
   error?: any;
 }
+
 export default class NoteEditComponent extends React.Component<INoteEditProps, INoteEditStatus> {
   static contextTypes: any;
   constructor(props : INoteEditProps) {
@@ -48,13 +52,16 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
       error: null,
     };
   }
+
   public componentDidMount() {
     let self: NoteEditComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: NoteEditComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: INoteEditProps) {
     let self: NoteEditComponent = this;
     self.updateProps(nextProps);
@@ -127,7 +134,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
             return (
               <div className={styles.image + " " + styles.selected} key={"noteimage" + i}>
                 <div className={styles.cover}>
-                  cover
+                  {localization(995)}
                 </div>
                 <div className={styles.remove} onClick={()=> {
 
@@ -164,7 +171,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
                 <div className={styles.cover2} onClick={()=> {
                   self.onImageClick(image);
                 }}>
-                  set as a cover
+                  {localization(996)}
                 </div>
                 <div className={styles.remove} onClick={()=> {
 
@@ -220,21 +227,21 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
                 self.submitUpdate();
               }
             }}>
-              UPDATE
+              {localization(934)}
             </div>
             <MessageLineComponent code={self.props.code} match={[90, 91, 92, 93]} />
             <div className={styles.button2} onClick={()=> {
               self.context.router.push({pathname: Settings.uBaseName + '/tree/' + self.props.treeId});
             }}>
-              CLOSE
+              {localization(993)}
             </div>
             <div className={styles.or}>
-              OR
+              {localization(992)}
             </div>
             <div className={styles.button3} onClick={()=> {
               self.context.router.push({pathname: window.location.pathname, query: { note: self.props.note.getId(), mode: "delete" }});
             }}>
-              DELETE
+              {localization(991)}
             </div>
             {image}
           </div>

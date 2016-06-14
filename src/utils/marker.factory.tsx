@@ -1,17 +1,20 @@
-import * as L from 'leaflet';
 import { browserHistory } from 'react-router';
 
-import './marker.component.css';
+import * as L from 'leaflet';
+import './marker.factory.css';
 var Settings = require('./../constraints/settings.json');
+
 import { FoodModel } from './../stores/food.store';
 import { treeStore, TreeModel } from './../stores/tree.store';
-import { flagStore, FlagModel } from './../stores/flag.store';
-import { locationStore, LocationModel } from './../stores/location.store';
 import { treeActions } from './../actions/tree.actions';
-import { donateActions } from './../actions/donate.actions';
+import { flagStore, FlagModel } from './../stores/flag.store';
+import { LocationModel } from './../stores/location.store';
 import { locationActions } from './../actions/location.actions';
+import { donateActions } from './../actions/donate.actions';
 
-module MarkerComponent {
+import { localization } from './../constraints/localization';
+
+module MarkerFactory {
   export function createEditableMarker(food: FoodModel, tree: TreeModel): L.Marker {
     let icon: L.Icon = new L.Icon({
       iconUrl: Settings.uBaseName + Settings.uStaticImage + food.getIcon(),
@@ -30,7 +33,6 @@ module MarkerComponent {
     });
     marker.on('click', function() {
       browserHistory.push({pathname: Settings.uBaseName + '/tree/' + tree.getId()});
-      //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
     });
     return marker;
   }
@@ -79,7 +81,7 @@ module MarkerComponent {
       popupAnchor: new L.Point(1, -36),
     });
 
-    let template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">New&nbsp;Tree</span></div><div class="marker-right"></div>';
+    let template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">' + localization(692) + '</span></div><div class="marker-right"></div>';
 
     let marker: L.Marker = new L.Marker(new L.LatLng(tree.getLat(), tree.getLng()), {
       id: tree.getId(),
@@ -92,10 +94,7 @@ module MarkerComponent {
       closeButton: false,
       closeOnClick: false,
     });
-    marker.on('click', function() {
-      // marker.openPopup();
-      //browserHistory.push({pathname: Settings.uBaseName + '/trees/' + tree.getId()});
-    });
+
     marker.on('dragend', function() {
       tree.setLat(marker.getLatLng().lat);
       tree.setLng(marker.getLatLng().lng);
@@ -103,12 +102,6 @@ module MarkerComponent {
         treeActions.refresh();
       }, 0);
       marker.openPopup();
-      // let tree: TreeModel = treeStore.getTree(marker.options.id);
-      // if (tree) {
-      //   tree.setLat(marker.getLatLng().lat);
-      //   tree.setLng(marker.getLatLng().lng);
-      //   browserHistory.replace({pathname: Settings.uBaseName + '/tree/add', query: { mode: "marker" }});
-      // }
     });
     return marker;
   }
@@ -122,7 +115,7 @@ module MarkerComponent {
       popupAnchor: new L.Point(1, -36),
     });
 
-    let template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">New&nbsp;Location</span></div><div class="marker-right"></div>';
+    let template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">' + localization(693) + '</span></div><div class="marker-right"></div>';
 
     let marker: L.Marker = new L.Marker(new L.LatLng(location.getLat(), location.getLng()), {
       id: location.getId(),
@@ -134,10 +127,6 @@ module MarkerComponent {
       closeButton: false,
       closeOnClick: false,
     });
-    marker.on('click', function() {
-      // marker.openPopup();
-      //browserHistory.push({pathname: Settings.uBaseName + '/trees/' + tree.getId()});
-    });
     marker.on('dragend', function() {
       location.setLat(marker.getLatLng().lat);
       location.setLng(marker.getLatLng().lng);
@@ -145,12 +134,6 @@ module MarkerComponent {
         locationActions.refresh();
       }, 0);
       marker.openPopup();
-      // let tree: TreeModel = treeStore.getTree(marker.options.id);
-      // if (tree) {
-      //   tree.setLat(marker.getLatLng().lat);
-      //   tree.setLng(marker.getLatLng().lng);
-      //   browserHistory.replace({pathname: Settings.uBaseName + '/tree/add', query: { mode: "marker" }});
-      // }
     });
     return marker;
   }
@@ -203,10 +186,9 @@ module MarkerComponent {
       } else {
         donateActions.addTempDonateSource(tree.getId());
       }
-      // browserHistory.push({pathname: Settings.uBaseName + '/tree/' + tree.getId()});
     });
     return marker;
   }
 }
 
-export default MarkerComponent;
+export default MarkerFactory;

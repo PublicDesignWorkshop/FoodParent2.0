@@ -1,22 +1,23 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
 
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './tree-add.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
+var Settings = require('./../../constraints/settings.json');
+
+import TreeFoodComponent from './tree-food.component';
+import TreeAddressComponent from './tree-address.component';
+import TreeDescriptionComponent from './tree-description.component';
+import TreeFlagComponent from './tree-flag.component';
+import TreeOwnershipComponent from './tree-ownership.component';
+import TreeLocationComponent from './tree-location.component';
+
+import { TreeModel } from './../../stores/tree.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
-import { FlagModel, flagStore } from './../../stores/flag.store';
-import FoodComponent from './food.component';
-import AddressComponent from './address.component';
-import DescriptionComponent from './description.component';
-import FlagComponent from './flag.component';
-import OwnershipComponent from './ownership.component';
-import LocationComponent from './location.component';
-import { LogInStatus } from './../app.component';
+import { flagStore } from './../../stores/flag.store';
 import { authStore } from './../../stores/auth.store';
 
 export interface ITreeAddProps {
@@ -27,6 +28,7 @@ export interface ITreeAddProps {
 export interface ITreeAddStatus {
 
 }
+
 export default class TreeAddComponent extends React.Component<ITreeAddProps, ITreeAddStatus> {
   static contextTypes: any;
   constructor(props : ITreeAddProps) {
@@ -50,13 +52,13 @@ export default class TreeAddComponent extends React.Component<ITreeAddProps, ITr
 
   private updateProps = (props: ITreeAddProps) => {
     let self: TreeAddComponent = this;
-    if (props.foods.length != 0) {
-      if (authStore.getAuth().getIsManager()) {
-
-      } else {
-
-      }
-    }
+    // if (props.foods.length != 0) {
+    //   if (authStore.getAuth().getIsManager()) {
+    //
+    //   } else {
+    //
+    //   }
+    // }
   }
 
   render() {
@@ -66,7 +68,7 @@ export default class TreeAddComponent extends React.Component<ITreeAddProps, ITr
       return (
         <div className={styles.wrapper}>
           <div className={styles.treeinfo}>
-            <FoodComponent tree={self.props.tree} foods={self.props.foods} editable={true} async={false} />
+            <TreeFoodComponent tree={self.props.tree} foods={self.props.foods} editable={true} async={false} />
             <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
               self.context.router.push({pathname: Settings.uBaseName + '/'});
             }}/></div>
@@ -82,9 +84,9 @@ export default class TreeAddComponent extends React.Component<ITreeAddProps, ITr
                 }
               }
             }>
-              <LocationComponent tree={self.props.tree} editable={true} async={false} />
-              <AddressComponent tree={self.props.tree} editable={true} async={false} />
-              <DescriptionComponent tree={self.props.tree} editable={true} async={false} />
+              <TreeLocationComponent tree={self.props.tree} editable={true} async={false} />
+              <TreeAddressComponent tree={self.props.tree} editable={true} async={false} />
+              <TreeDescriptionComponent tree={self.props.tree} editable={true} async={false} />
             </AltContainer>
           </div>
         </div>
@@ -103,22 +105,3 @@ TreeAddComponent.contextTypes = {
     return React.PropTypes.func.isRequired;
   }
 };
-
-
-/*
-
-<FlagComponent tree={tree} flags={flagStore.getState().flags} editable={true} async={false} />
-<OwnershipComponent tree={tree} editable={true} async={false} />
-
-
-<LocationComponent tree={tree} editable={self.state.editable} />
-<AddressComponent tree={tree} editable={self.state.editable} />
-<DescriptionComponent tree={tree} editable={self.state.editable} />
-<FlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} />
-<OwnershipComponent tree={tree} editable={self.state.editable} />
-*/
-
-/*
-<img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
-<div className={styles.name}>{food.getName() + ' #' + tree.getId()}</div>
-*/

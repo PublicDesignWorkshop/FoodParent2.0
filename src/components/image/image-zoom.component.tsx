@@ -1,15 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
-import * as moment from 'moment';
+
 import { PinchView } from 'react-pinch-zoom-pan';
 
-var Settings = require('./../../constraints/settings.json');
+import * as moment from 'moment';
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './image-zoom.component.css';
-import { NoteModel, noteStore } from './../../stores/note.store';
+var Settings = require('./../../constraints/settings.json');
 
 export interface IImageZoomProps {
   title: string;
@@ -21,6 +21,7 @@ export interface IImageZoomStatus {
   width?: number;
   height?: number;
 }
+
 export default class ImageZoomComponent extends React.Component<IImageZoomProps, IImageZoomStatus> {
   constructor(props : IImageZoomProps) {
     super(props);
@@ -29,15 +30,18 @@ export default class ImageZoomComponent extends React.Component<IImageZoomProps,
       open: false,
     };
   }
+  
   public componentDidMount() {
     let self: ImageZoomComponent = this;
     self.updateProps(self.props);
     let container = ReactDOM.findDOMNode(self.refs['container']);
     self.setState({width: container.clientWidth, height: container.clientHeight - 68});
   }
+
   public componentWillUnmount() {
     let self: ImageZoomComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IImageZoomProps) {
     let self: ImageZoomComponent = this;
     self.updateProps(nextProps);

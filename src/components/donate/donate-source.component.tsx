@@ -2,24 +2,25 @@ import * as $ from 'jquery';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+
+
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './donate-source.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
-import { DonateModel, donateStore } from './../../stores/donate.store';
+var Settings = require('./../../constraints/settings.json');
+
 import MessageLineComponent from './../message/message-line.component';
-import { applyFilter, FilterMode, deleteFilter } from './../../utils/filter';
-import { treeActions } from './../../actions/tree.actions';
+
+import { TreeModel } from './../../stores/tree.store';
+import { DonateModel } from './../../stores/donate.store';
 import { donateActions } from './../../actions/donate.actions';
 
-export interface IDonateSourceTypeOption {
-  value: any;
-  label: string;
-}
+import { applyFilter, FilterMode, deleteFilter } from './../../utils/filter';
+import { ISelectOption } from './../../utils/enum';
+import { localization } from './../../constraints/localization';
+
 
 export interface IDonateSourceProps {
   donate: DonateModel;
@@ -28,8 +29,8 @@ export interface IDonateSourceProps {
   trees?: Array<TreeModel>;
 }
 export interface IDonateSourceStatus {
-  options?: Array<IDonateSourceTypeOption>;
-  selected?: Array<IDonateSourceTypeOption>;
+  options?: Array<ISelectOption>;
+  selected?: Array<ISelectOption>;
 }
 export default class DonateSourceComponent extends React.Component<IDonateSourceProps, IDonateSourceStatus> {
   constructor(props : IDonateSourceProps) {
@@ -53,8 +54,8 @@ export default class DonateSourceComponent extends React.Component<IDonateSource
   private updateProps(props: IDonateSourceProps) {
     let self: DonateSourceComponent = this;
     if (props.donate && props.trees) {
-      let options = new Array<IDonateSourceTypeOption>();
-      let selected = new Array<IDonateSourceTypeOption>();
+      let options = new Array<ISelectOption>();
+      let selected = new Array<ISelectOption>();
       props.trees.forEach(tree => {
         options.push({value: tree.getId(), label: tree.getName()});
         if ($.inArray(tree.getId(), props.donate.getTrees()) > -1) {
@@ -91,16 +92,12 @@ export default class DonateSourceComponent extends React.Component<IDonateSource
     if (self.props.editable || self.props.donate.getId() == 0) {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onMouseUp={()=> {
-            // if (self.props.editable) {
-            //   self.setState({editing: true});
-            // }
-          }}>
-            <FontAwesome className='' name='mail-forward' /> Source Trees
+          <div className={styles.label}>
+            <FontAwesome className='' name='mail-forward' /> {localization(610)}
           </div>
           <div className={styles.edit}>
             <div className={styles.type}>
-              <Select name="tree-select" multi={true} searchable={true} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select source trees..." />
+              <Select name="tree-select" multi={true} searchable={true} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder={localization(611)} />
             </div>
           </div>
         </div>

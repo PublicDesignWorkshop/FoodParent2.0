@@ -1,15 +1,19 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
 import TextareaAutosize from 'react-textarea-autosize';
 
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './donate-list.component.css';
-import { DonateModel, donateStore } from './../../stores/donate.store';
+var Settings = require('./../../constraints/settings.json');
+
+import { DonateModel } from './../../stores/donate.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
+
 import { sortDonateByDateDESC } from './../../utils/sort';
+import { localization } from './../../constraints/localization';
 
 export interface IDonateListProps {
   donates?: Array<DonateModel>;
@@ -18,6 +22,7 @@ export interface IDonateListProps {
 export interface IDonateListStatus {
 
 }
+
 export default class DonateListComponent extends React.Component<IDonateListProps, IDonateListStatus> {
   static contextTypes: any;
   constructor(props : IDonateListProps) {
@@ -26,13 +31,16 @@ export default class DonateListComponent extends React.Component<IDonateListProp
     this.state = {
     };
   }
+
   public componentDidMount() {
     let self: DonateListComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: DonateListComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IDonateListProps) {
     let self: DonateListComponent = this;
     self.updateProps(nextProps);
@@ -112,7 +120,7 @@ export default class DonateListComponent extends React.Component<IDonateListProp
     return(
       <div className={styles.wrapper}>
         <div className={styles.label}>
-          <FontAwesome className='' name='comments' /> Recent Donates
+          <FontAwesome className='' name='comments' /> {localization(612)}
         </div>
         {donates}
       </div>

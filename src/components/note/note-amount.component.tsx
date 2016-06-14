@@ -1,24 +1,20 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './note-amount.component.css';
-import { NoteModel, noteStore, AmountType, PickupTime } from './../../stores/note.store';
+var Settings = require('./../../constraints/settings.json');
+
 import MessageLineComponent from './../message/message-line.component';
 
-export interface IPickupTimeOption {
-  value: number;
-  label: string;
-}
-export interface IAmountTypeOption {
-  value: number;
-  label: string;
-}
+import { NoteModel, noteStore } from './../../stores/note.store';
+
+import { PickupTime, AmountType, ISelectOption } from './../../utils/enum';
+import { localization } from './../../constraints/localization';
 
 export interface INoteAmountProps {
   note: NoteModel;
@@ -28,10 +24,10 @@ export interface INoteAmountProps {
 }
 export interface INoteAmountStatus {
   amount?: any;
-  options?: Array<IAmountTypeOption>;
-  selected?: IAmountTypeOption;
-  options2?: Array<IPickupTimeOption>;
-  selected2?: IPickupTimeOption;
+  options?: Array<ISelectOption>;
+  selected?: ISelectOption;
+  options2?: Array<ISelectOption>;
+  selected2?: ISelectOption;
 }
 export default class NoteAmountComponent extends React.Component<INoteAmountProps, INoteAmountStatus> {
   constructor(props : INoteAmountProps) {
@@ -56,11 +52,11 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
   private updateProps(props: INoteAmountProps) {
     let self: NoteAmountComponent = this;
     if (props.note) {
-      let options = new Array<IAmountTypeOption>();
+      let options = new Array<ISelectOption>();
       options.push({value: 1, label: "g"});
       options.push({value: 2, label: "kg"});
       options.push({value: 3, label: "libs."});
-      let selected: IAmountTypeOption;
+      let selected: ISelectOption;
       if (self.props.note.getAmountType() == AmountType.G) {
         selected = options[0];
       } else if (self.props.note.getAmountType() == AmountType.KG) {
@@ -68,11 +64,11 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
       } else if (self.props.note.getAmountType() == AmountType.LBS) {
         selected = options[2];
       }
-      let options2 = new Array<IPickupTimeOption>();
-      options2.push({value: 1, label: "Early"});
-      options2.push({value: 2, label: "Proper"});
-      options2.push({value: 3, label: "Late"});
-      let selected2: IPickupTimeOption;
+      let options2 = new Array<ISelectOption>();
+      options2.push({value: 1, label: localization(988)});
+      options2.push({value: 2, label: localization(989)});
+      options2.push({value: 3, label: localization(990)});
+      let selected2: ISelectOption;
       if (self.props.note.getPicupTime() == PickupTime.EARLY) {
         selected2 = options2[0];
       } else if (self.props.note.getPicupTime() == PickupTime.PROPER) {
@@ -130,23 +126,19 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
     if (self.props.editable || self.props.note.getId() == 0) {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onMouseUp={()=> {
-            // if (self.props.editable) {
-            //   self.setState({editing: true});
-            // }
-          }}>
-            <FontAwesome className='' name='shopping-basket' /> Pickup
+          <div className={styles.label}>
+            <FontAwesome className='' name='shopping-basket' /> {localization(998)}
           </div>
           <div className={styles.edit}>
-            <input type="number" className={styles.input} key={self.props.note.getId() + "amount"} placeholder="enter weight..."
+            <input type="number" className={styles.input} key={self.props.note.getId() + "amount"} placeholder={localization(673)}
               value={self.state.amount}
               onChange={(event: any)=> {
                 self.setState({amount: event.target.value});
               }}
               onKeyPress={(event)=> {
-                // if (event.key == 'Enter') {
-                //   self.updateAttribute();
-                // }
+                if (event.key == 'Enter') {
+                  self.updateAttribute();
+                }
               }}
               onBlur={()=> {
                 self.updateAttribute();
@@ -163,7 +155,7 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
       return (
         <div className={styles.wrapper}>
           <div className={styles.label}>
-            <FontAwesome className='' name='shopping-basket' /> Pickup
+            <FontAwesome className='' name='shopping-basket' /> {localization(998)}
           </div>
           <div className={styles.value}>
             {self.state.amount.toLocaleString() + "g"}

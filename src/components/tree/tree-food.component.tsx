@@ -1,49 +1,48 @@
+import * as $ from 'jquery';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-import * as $ from 'jquery';
-
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
+import * as styles from './tree-food.component.css';
 var Settings = require('./../../constraints/settings.json');
-import * as styles from './food.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
+
+import { TreeModel } from './../../stores/tree.store';
+import { treeActions } from './../../actions/tree.actions';
 import { FoodModel, foodStore } from './../../stores/food.store';
 import { applyFilter, FilterMode, deleteFilter } from './../../utils/filter';
-import { treeActions } from './../../actions/tree.actions';
 
-export interface IFoodOption {
-  value: any;
-  label: string;
-}
+import { localization } from './../../constraints/localization';
+import { ISelectOption } from './../../utils/enum';
 
-export interface IFoodProps {
+export interface ITreeFoodProps {
   tree: TreeModel;
   foods: Array<FoodModel>;
   editable: boolean;
   async: boolean;
 }
-export interface IFoodStatus {
-  options?: Array<IFoodOption>;
-  selected?: IFoodOption;
+export interface ITreeFoodStatus {
+  options?: Array<ISelectOption>;
+  selected?: ISelectOption;
 }
 
-export default class FoodComponent extends React.Component<IFoodProps, IFoodStatus> {
-  constructor(props : IFoodProps) {
+export default class TreeFoodComponent extends React.Component<ITreeFoodProps, ITreeFoodStatus> {
+  constructor(props : ITreeFoodProps) {
     super(props);
-    let self: FoodComponent = this;
+    let self: TreeFoodComponent = this;
     this.state = {
       options: null,
       selected: null,
     };
   }
   public componentDidMount() {
-    let self: FoodComponent = this;
+    let self: TreeFoodComponent = this;
     if (self.props.tree && self.props.foods) {
-      var options = new Array<IFoodOption>();
-      var selected: IFoodOption;
+      var options = new Array<ISelectOption>();
+      var selected: ISelectOption;
       let treeName: string = "";
       if (self.props.tree.getId()) {
         treeName = self.props.tree.getName();
@@ -73,17 +72,19 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
       }
     }
   }
+
   public componentWillUnmount() {
-    let self: FoodComponent = this;
+    let self: TreeFoodComponent = this;
   }
-  public componentWillReceiveProps (nextProps: IFoodProps) {
-    let self: FoodComponent = this;
+
+  public componentWillReceiveProps (nextProps: ITreeFoodProps) {
+    let self: TreeFoodComponent = this;
     self.updateProps(nextProps);
   }
 
-  private updateProps(props: IFoodProps) {
-    let self: FoodComponent = this;
-    var selected: IFoodOption;
+  private updateProps(props: ITreeFoodProps) {
+    let self: TreeFoodComponent = this;
+    var selected: ISelectOption;
     let treeName: string = "";
     if (props.tree.getId()) {
       treeName = props.tree.getName();
@@ -95,9 +96,9 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
     });
     self.setState({selected: selected});
   }
-  
+
   private updateAttribute = (selected) => {
-    let self: FoodComponent = this;
+    let self: TreeFoodComponent = this;
     var foodId = 0;
     if (selected) {
       foodId = parseInt(selected.value);
@@ -125,14 +126,14 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
   }
 
   render() {
-    let self: FoodComponent = this;
+    let self: TreeFoodComponent = this;
     var food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
     if (self.props.editable) {
       return (
         <div className={styles.wrapper}>
           <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
           <div className={styles.name}>
-            <Select name="food-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
+            <Select name="food-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder={localization(971)} />
           </div>
         </div>
       );
@@ -141,7 +142,7 @@ export default class FoodComponent extends React.Component<IFoodProps, IFoodStat
         <div className={styles.wrapper}>
         <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
           <div className={styles.name}>
-            <Select name="food-select" multi={false} disabled searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownerships..." />
+            <Select name="food-select" multi={false} disabled searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder={localization(971)} />
           </div>
         </div>
       );

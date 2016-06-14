@@ -9,7 +9,7 @@ var Settings = require('./../constraints/settings.json');
 import { donateActions } from './../actions/donate.actions';
 import { AbstractStore } from './../stores/abstract.store';
 import { foodStore } from './food.store';
-import { AmountType } from './note.store';
+import { AmountType } from './../utils/enum';
 import { sortDonateByDateDESC } from './../utils/sort';
 import { TreeModel } from './../stores/tree.store';
 

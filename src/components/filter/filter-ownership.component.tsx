@@ -1,29 +1,27 @@
+import * as $ from 'jquery';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-import * as $ from 'jquery';
-
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './filter-ownership.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
-import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
+var Settings = require('./../../constraints/settings.json');
+
 import { treeActions } from './../../actions/tree.actions';
 
-export interface IFilterOwnershipOption {
-  value: number;
-  label: string;
-}
+import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
+import { ISelectOption } from './../../utils/enum';
+import { localization } from './../../constraints/localization';
 
 export interface IFilterOwnershipProps {
 
 }
 export interface IFilterOwnershipStatus {
-  options?: Array<IFilterOwnershipOption>;
-  selected?: Array<IFilterOwnershipOption>;
+  options?: Array<ISelectOption>;
+  selected?: Array<ISelectOption>;
 }
 
 export default class FilterOwnershipComponent extends React.Component<IFilterOwnershipProps, IFilterOwnershipStatus> {
@@ -57,12 +55,12 @@ export default class FilterOwnershipComponent extends React.Component<IFilterOwn
         let ownerships: Array<number> = response.ownerships.split(",").map(function(item) {
           return parseInt(item);
         });
-        var selected = new Array<IFilterOwnershipOption>();
+        var selected = new Array<ISelectOption>();
         ownerships.forEach(ownershipId => {
           if (ownershipId == 0) {
-            selected.push({value: 0, label: "private"});
+            selected.push({value: 0, label: localization(974)});
           } else if (ownershipId == 1) {
-            selected.push({value: 1, label: "public"});
+            selected.push({value: 1, label: localization(975)});
           }
         });
         self.setState({selected: selected});
@@ -74,9 +72,9 @@ export default class FilterOwnershipComponent extends React.Component<IFilterOwn
       });
     }
 
-    var options = new Array<IFilterOwnershipOption>();
-    options.push({value: 0, label: "private"});
-    options.push({value: 1, label: "public"});
+    var options = new Array<ISelectOption>();
+    options.push({value: 0, label: localization(974)});
+    options.push({value: 1, label: localization(975)});
     self.setState({options: options});
   }
 
@@ -112,12 +110,12 @@ export default class FilterOwnershipComponent extends React.Component<IFilterOwn
       let ownerships: Array<number> = response.ownerships.split(",").map(function(item) {
         return parseInt(item);
       });
-      var selected = new Array<IFilterOwnershipOption>();
+      var selected = new Array<ISelectOption>();
       ownerships.forEach(ownershipId => {
         if (ownershipId == 0) {
-          selected.push({value: 0, label: "private"});
+          selected.push({value: 0, label: localization(974)});
         } else if (ownershipId == 1) {
-          selected.push({value: 1, label: "public"});
+          selected.push({value: 1, label: localization(975)});
         }
       });
       self.setState({selected: selected});
@@ -133,15 +131,11 @@ export default class FilterOwnershipComponent extends React.Component<IFilterOwn
     let self: FilterOwnershipComponent = this;
     return (
       <div className={styles.wrapper}>
-        <div className={styles.label} onMouseUp={()=> {
-          // if (self.props.editable) {
-          //   self.setState({editing: true});
-          // }
-        }}>
-          <FontAwesome className='' name='home' /> Ownership Types
+        <div className={styles.label}>
+          <FontAwesome className='' name='home' /> {localization(977)}
         </div>
         <div className={styles.value}>
-          <Select name="ownership-select" multi={true} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select ownership types..." />
+          <Select name="ownership-select" multi={true} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder={localization(976)} />
         </div>
       </div>
     );

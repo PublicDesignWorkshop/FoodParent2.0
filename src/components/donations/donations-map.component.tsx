@@ -1,30 +1,28 @@
+import * as _ from 'underscore';
+import * as $ from 'jquery';
+import * as L from 'leaflet';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
-import * as L from 'leaflet';
+import Routes from './../../routes';
+
 import 'leaflet.markercluster';
 import 'googletile';
-import * as _ from 'underscore';
-import * as $ from 'jquery';
-import * as moment from 'moment';
 
-import Routes from './../../routes';
-var Settings = require('./../../constraints/settings.json');
+import * as moment from 'moment';
 import './../../../node_modules/leaflet/dist/leaflet.css';
 import * as styles from './donations.component.css';
-import { locationStore, LocationModel, LocationState } from './../../stores/location.store';
-import { treeStore, TreeModel } from './../../stores/tree.store';
+var Settings = require('./../../constraints/settings.json');
+
+
+import { LocationModel } from './../../stores/location.store';
+import { TreeModel } from './../../stores/tree.store';
 import { foodStore, FoodModel } from './../../stores/food.store';
-import { locationActions } from './../../actions/location.actions';
-import MarkerComponent from './../marker.component';
-import { DonationsMode } from './donations.component';
-
-import { mapActions } from './../../actions/map.actions';
 import { mapStore } from './../../stores/map.store';
+import { mapActions } from './../../actions/map.actions';
 
-export enum TileMode {
-  GRAY, SATELLITE
-}
+import MarkerFactory from './../../utils/marker.factory';
+import { TileMode, DonationsMode } from './../../utils/enum';
 
 export interface IMapProps {
   trees?: Array<TreeModel>;
@@ -40,6 +38,7 @@ export interface IMapProps {
 export interface IMapStatus {
 
 }
+
 export default class MapComponent extends React.Component<IMapProps, IMapStatus> {
   static contextTypes: any;
   private map: L.Map;
@@ -53,7 +52,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
   private newMarker: L.Marker;
   private userMarker: L.Circle;
   private userCenterMarker: L.Circle;
-
   constructor(props : IMapProps) {
     super(props);
     this.state = {
@@ -129,7 +127,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
             let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, self.map.getZoom());
             nextProps.tempLocation.setLat(location.lat);
             nextProps.tempLocation.setLng(location.lng);
-            self.newMarker = MarkerComponent.createTemporaryLocationMarker(nextProps.tempLocation);
+            self.newMarker = MarkerFactory.createTemporaryLocationMarker(nextProps.tempLocation);
             self.map.addLayer(self.newMarker);
             self.newMarker.openPopup();
           }
@@ -245,20 +243,9 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
     if (editable) {
       // marker = MarkerComponent.createEditableMarker(food, tree);
     } else {
-      marker = MarkerComponent.createUneditableLocationMarker(location);
+      marker = MarkerFactory.createUneditableLocationMarker(location);
     }
     if (marker) {
-      /*
-      marker.on('click', function() {
-        s(self.selected);
-        if (self.selected) {
-          MarkerComponent.changeToNormalMarker(self.selected);
-        }
-        self.selected = marker;
-        MarkerComponent.changeToBigMarker(self.selected);
-        self.selected._bringToFront();
-      });
-      */
       self.markers.push(marker);
       self.layer.addLayer(marker);
     }
@@ -296,9 +283,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
         });
         self.map.addLayer(self.userCenterMarker);
       }
-      // // self.context.router.push({pathname: Settings.uBaseName + '/'});
-      // var point: L.Point = L.CRS.EPSG3857.latLngToPoint(position, self.map.getZoom());
-      // self.map.setView(L.CRS.EPSG3857.pointToLatLng(point, self.map.getZoom()), Settings.iFocusZoom, {animate: false});
     }
   }
 
@@ -324,7 +308,6 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       disableClusteringAtZoom: Settings.iDisableClusteringAtZoom
     });
     self.layer2.addTo(self.map);
-    // document.querySelector('.leaflet-bottom.leaflet-left').innerHTML = '<div class="leaflet-control-attribution leaflet-control"><div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a></div></div>';
     self.map.on("moveend", self.afterMoveMap);
     self.map.on('popupopen', function (event: any) {
       if (!mapStore.getFirst('map-donation')) {
@@ -340,17 +323,12 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
           //point.y += self.map.getSize().y * 0.15;
         }
         let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, mapStore.getZoom('map-donation'));
-        //mapActions.moveTo('map', location, mapStore.getZoom('map'));
         self.map.setView(location, mapStore.getZoom('map-donation'), {animate: true});
-        //self.context.router.push({pathname: Settings.uBaseName + '/trees/' + self.selected.options.id});
       }
     });
     self.map.on('popupclose', function (event: any) {
       self.selected = null;
       // self.context.router.push({pathname: Settings.uBaseName + '/'});
-    });
-    self.map.on('zoomend', function (event: any) {
-      // self.props.onZoom(event.target._zoom);
     });
     self.props.onRender();
     mapActions.addMap('map-donation', self.map);
@@ -411,21 +389,10 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
       // marker = MarkerComponent.createEditableMarker(food, tree);
     } else {
       if (food) {
-        marker = MarkerComponent.createTreeSelectMarker(self.props.donateId, food, tree);
+        marker = MarkerFactory.createTreeSelectMarker(self.props.donateId, food, tree);
       }
     }
     if (marker) {
-      /*
-      marker.on('click', function() {
-        s(self.selected);
-        if (self.selected) {
-          MarkerComponent.changeToNormalMarker(self.selected);
-        }
-        self.selected = marker;
-        MarkerComponent.changeToBigMarker(self.selected);
-        self.selected._bringToFront();
-      });
-      */
       self.markers2.push(marker);
       self.layer2.addLayer(marker);
     }

@@ -1,30 +1,28 @@
+import * as $ from 'jquery';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-import * as $ from 'jquery';
-
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './filter-flag.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
+var Settings = require('./../../constraints/settings.json');
+
 import { FlagModel, flagStore } from './../../stores/flag.store';
-import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
 import { treeActions } from './../../actions/tree.actions';
 
-export interface IFilterFlagOption {
-  value: number;
-  label: string;
-}
+import { resetFilter, readFilter, applyFilter, FilterMode } from './../../utils/filter';
+import { ISelectOption } from './../../utils/enum';
+import { localization } from './../../constraints/localization';
 
 export interface IFilterFlagProps {
   flags: Array<FlagModel>;
 }
 export interface IFilterFlagStatus {
-  options?: Array<IFilterFlagOption>;
-  selected?: Array<IFilterFlagOption>;
+  options?: Array<ISelectOption>;
+  selected?: Array<ISelectOption>;
 }
 
 export default class FilterFlagComponent extends React.Component<IFilterFlagProps, IFilterFlagStatus> {
@@ -38,13 +36,16 @@ export default class FilterFlagComponent extends React.Component<IFilterFlagProp
       selected: null,
     };
   }
+
   public componentDidMount() {
     let self: FilterFlagComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: FilterFlagComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IFilterFlagProps) {
     let self: FilterFlagComponent = this;
     self.updateProps(nextProps);
@@ -59,7 +60,7 @@ export default class FilterFlagComponent extends React.Component<IFilterFlagProp
           let flags: Array<number> = response.flags.split(",").map(function(item) {
             return parseInt(item);
           });
-          var selected = new Array<IFilterFlagOption>();
+          var selected = new Array<ISelectOption>();
           flags.forEach(flagId => {
             if (flagId == 0) {
               selected.push({value: 0, label: "*unknown"});
@@ -81,7 +82,7 @@ export default class FilterFlagComponent extends React.Component<IFilterFlagProp
         });
       }
 
-      var options = new Array<IFilterFlagOption>();
+      var options = new Array<ISelectOption>();
       options.push({value: 0, label: "*unknown"})
       props.flags.forEach(flag => {
         options.push({value: flag.getId(), label: flag.getName()});
@@ -122,7 +123,7 @@ export default class FilterFlagComponent extends React.Component<IFilterFlagProp
       let flags: Array<number> = response.flags.split(",").map(function(item) {
         return parseInt(item);
       });
-      var selected = new Array<IFilterFlagOption>();
+      var selected = new Array<ISelectOption>();
       flags.forEach(flagId => {
         if (flagId != 0) {
           let label: string = flagStore.getFlag(flagId).getName();
@@ -142,12 +143,8 @@ export default class FilterFlagComponent extends React.Component<IFilterFlagProp
     let self: FilterFlagComponent = this;
     return (
       <div className={styles.wrapper}>
-        <div className={styles.label} onMouseUp={()=> {
-          // if (self.props.editable) {
-          //   self.setState({editing: true});
-          // }
-        }}>
-          <FontAwesome className='' name='tags' /> Flag Types
+        <div className={styles.label}>
+          <FontAwesome className='' name='tags' /> {localization(969)}
         </div>
         <div className={styles.value}>
           <Select name="flag-select" multi={true} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select flag types..." />

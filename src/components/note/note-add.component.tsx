@@ -1,29 +1,32 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
+import * as AltContainer from 'alt-container';
+
+import * as moment from 'moment';
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
-import * as AltContainer from 'alt-container';
-import * as moment from 'moment';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './note-add.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
-import { FoodModel, foodStore } from './../../stores/food.store';
-import { LogInStatus } from './../app.component';
-import { uploadImage } from './../../utils/upload';
-import { NoteModel, noteStore, NoteType, PickupTime, AmountType } from './../../stores/note.store';
+var Settings = require('./../../constraints/settings.json');
+
 import NoteCommentComponent from './note-comment.component';
 import NoteDateComponent from './note-date.component';
 import NoteAmountComponent from './note-amount.component';
 import NoteRateComponent from './note-rate.component';
 import ImageZoomComponent from './../image/image-zoom.component';
+import MessageLineComponent from './../message/message-line.component';
+
+import { TreeModel, treeStore } from './../../stores/tree.store';
+import { FoodModel, foodStore } from './../../stores/food.store';
+import { NoteModel, noteStore } from './../../stores/note.store';
 import { noteActions } from './../../actions/note.actions';
 import { authStore } from './../../stores/auth.store';
+
+import { uploadImage } from './../../utils/upload';
 import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
+import { NoteType, PickupTime, AmountType } from './../../utils/enum';
 import { checkValidPickupAmountNumber } from './../../utils/errorhandler';
 import { localization } from './../../constraints/localization';
-import MessageLineComponent from './../message/message-line.component';
 
 export interface INoteAddProps {
   treeId: number;
@@ -46,16 +49,19 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
       error: null,
     };
   }
+
   public componentDidMount() {
     let self: NoteAddComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: NoteAddComponent = this;
     setTimeout(function() {
       noteActions.resetTempNote();
     }, 0);
   }
+
   public componentWillReceiveProps (nextProps: INoteAddProps) {
     let self: NoteAddComponent = this;
     self.updateProps(nextProps);
@@ -118,7 +124,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
           return (
             <div className={styles.image + " " + styles.selected} key={"noteimage" + i}>
               <div className={styles.cover}>
-                cover
+                {localization(995)}
               </div>
               <div className={styles.remove} onClick={()=> {
 
@@ -139,7 +145,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
               <div className={styles.cover2} onClick={()=> {
                 self.onImageClick(image);
               }}>
-                set as a cover
+                {localization(996)}
               </div>
               <div className={styles.remove} onClick={()=> {
 
@@ -184,7 +190,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
               self.submitCreate();
             }
           }}>
-            POST NEW NOTE
+            {localization(997)}
           </div>
           {image}
         </div>

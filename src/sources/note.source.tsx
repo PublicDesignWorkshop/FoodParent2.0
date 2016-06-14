@@ -3,8 +3,8 @@ import 'es6-promise';
 
 var Settings = require('./../constraints/settings.json');
 import { noteActions } from './../actions/note.actions';
-import { noteStore, NoteModel, NoteState, NoteType, AmountType } from './../stores/note.store';
-
+import { noteStore, NoteModel, NoteState } from './../stores/note.store';
+import { NoteType, AmountType } from './../utils/enum';
 
 let NoteSource = {
   fetchNotesFromTreeIds(treeIds: Array<number>): Promise<any> {

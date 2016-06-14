@@ -14,6 +14,7 @@
   "uSatTileMap" : "//oatile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg",
   "sGoogleMapTileType": "HYBRID",
   "iPopupDelay": 150,
+  "iGraphDelay": 500,
   "iDefaultZoom": 14,
   "iMaxZoom": 20,
   "iMinZoom": 5,
@@ -28,7 +29,7 @@
   "iMaxClusterRadius": 30,
   "iDisableClusteringAtZoom": 16,
   "iMessageDuration": 2000,
-
+  "iMapRenderDelay": 1000,
 
 
   "iMessageLineDuration": 5000,

@@ -1,74 +1,73 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
 
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
+import * as styles from './popup-trees.component.css';
 var Settings = require('./../../constraints/settings.json');
-import * as styles from './popup.component.css';
-import TreeComponent from './../tree/tree.component';
-import { TreesMode } from './../trees.component';
-import { DonationsMode } from './../donations/donations.component';
-import TreesControlsComponent from './../trees-controls.component';
+
 import { TreeModel, treeStore } from './../../stores/tree.store';
-import { FoodModel, foodStore } from './../../stores/food.store';
-import { NoteModel, noteStore } from './../../stores/note.store';
-import { authStore } from './../../stores/auth.store';
-import { checkLogin, checkAdmin } from './../../utils/authentication';
-import { LogInStatus } from './../app.component';
-import { noteActions } from './../../actions/note.actions';
 import { treeActions } from './../../actions/tree.actions';
+import { NoteModel, noteStore } from './../../stores/note.store';
+import { noteActions } from './../../actions/note.actions';
+import { authStore } from './../../stores/auth.store';
+
 import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
+import { TreesMode } from './../../utils/enum';
 import { localization } from './../../constraints/localization';
 
-
-export interface IPopupProps {
+export interface IPopupTreesProps {
   mode: TreesMode;
   treeId: number;
   noteId: number;
   noteCode?: any;
 }
-export interface IPopupStatus {
+export interface IPopupTreesStatus {
 
 }
-export default class PopupComponent extends React.Component<IPopupProps, IPopupStatus> {
+
+export default class PopupTreesComponent extends React.Component<IPopupTreesProps, IPopupTreesStatus> {
   static contextTypes: any;
-  constructor(props : IPopupProps) {
+  constructor(props : IPopupTreesProps) {
     super(props);
-    let self: PopupComponent = this;
+    let self: PopupTreesComponent = this;
     this.state = {
 
     };
   }
+
   public componentDidMount() {
-    let self: PopupComponent = this;
+    let self: PopupTreesComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
-    let self: PopupComponent = this;
+    let self: PopupTreesComponent = this;
   }
-  public componentWillReceiveProps (nextProps: IPopupProps) {
-    let self: PopupComponent = this;
+
+  public componentWillReceiveProps (nextProps: IPopupTreesProps) {
+    let self: PopupTreesComponent = this;
     self.updateProps(nextProps);
   }
 
-  private updateProps = (props: IPopupProps) => {
-    let self: PopupComponent = this;
+  private updateProps = (props: IPopupTreesProps) => {
+    let self: PopupTreesComponent = this;
   }
 
   render() {
-    let self: PopupComponent = this;
+    let self: PopupTreesComponent = this;
     switch (self.props.mode) {
       case TreesMode.TREEADDMARKER:
         return (
           <div className={styles.wrapper + " " + styles.slidein}>
             <div className={styles.message}>
-              <strong>Move</strong> the <strong>New Tree</strong> to a designated location.
+              <span dangerouslySetInnerHTML={{__html: localization(640)}} />
               <span className={styles.button} onClick={()=> {
                 self.context.router.replace({pathname: Settings.uBaseName + '/tree/add', query: { mode: "info" }});
-              }} >
-                NEXT
+              }}>
+                {localization(929)}
               </span>
             </div>
           </div>
@@ -77,11 +76,11 @@ export default class PopupComponent extends React.Component<IPopupProps, IPopupS
         return (
           <div className={styles.wrapper + " " + styles.slidein}>
             <div className={styles.message}>
-              <strong>Fill out</strong> information for the <strong>New Tree</strong>.
+              <span dangerouslySetInnerHTML={{__html: localization(641)}} />
               <span className={styles.button} onClick={()=> {
                 treeActions.createTree(treeStore.getState().temp);
-              }} >
-                SAVE
+              }}>
+                {localization(930)}
               </span>
             </div>
           </div>
@@ -96,8 +95,8 @@ export default class PopupComponent extends React.Component<IPopupProps, IPopupS
                 if (self.props.noteCode == 200) {
                   noteActions.deleteNote(note);
                 }
-              }} >
-                DELETE
+              }}>
+                {localization(931)}
               </span>
             </div>
           </div>
@@ -114,8 +113,8 @@ export default class PopupComponent extends React.Component<IPopupProps, IPopupS
                     treeActions.deleteTree(tree);
                   }
                 }
-              }} >
-                DELETE
+              }}>
+                {localization(931)}
               </span>
             </div>
           </div>
@@ -129,7 +128,7 @@ export default class PopupComponent extends React.Component<IPopupProps, IPopupS
   }
 }
 
-PopupComponent.contextTypes = {
+PopupTreesComponent.contextTypes = {
   router: function () {
     return React.PropTypes.func.isRequired;
   }

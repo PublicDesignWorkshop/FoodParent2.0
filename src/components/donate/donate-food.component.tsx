@@ -1,24 +1,22 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-
-var Settings = require('./../../constraints/settings.json');
 import * as styles from './donate-food.component.css';
-import { FoodModel, foodStore } from './../../stores/food.store';
-import { DonateModel, donateStore } from './../../stores/donate.store';
-import MessageLineComponent from './../message/message-line.component';
-import { applyFilter, FilterMode, deleteFilter } from './../../utils/filter';
-import { treeActions } from './../../actions/tree.actions';
-import { donateActions } from './../../actions/donate.actions';
+var Settings = require('./../../constraints/settings.json');
 
-export interface IDonateFoodTypeOption {
-  value: any;
-  label: string;
-}
+import { FoodModel, foodStore } from './../../stores/food.store';
+import { DonateModel } from './../../stores/donate.store';
+import { donateActions } from './../../actions/donate.actions';
+import { treeActions } from './../../actions/tree.actions';
+
+import { applyFilter, FilterMode, deleteFilter } from './../../utils/filter';
+import { ISelectOption } from './../../utils/enum';
+import { localization } from './../../constraints/localization';
 
 export interface IDonateFoodProps {
   donate: DonateModel;
@@ -27,9 +25,10 @@ export interface IDonateFoodProps {
   foods?: Array<FoodModel>;
 }
 export interface IDonateFoodStatus {
-  options?: Array<IDonateFoodTypeOption>;
-  selected?: IDonateFoodTypeOption;
+  options?: Array<ISelectOption>;
+  selected?: ISelectOption;
 }
+
 export default class DonateFoodComponent extends React.Component<IDonateFoodProps, IDonateFoodStatus> {
   constructor(props : IDonateFoodProps) {
     super(props);
@@ -38,11 +37,12 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
 
     };
   }
+
   public componentDidMount() {
     let self: DonateFoodComponent = this;
     if (self.props.donate && self.props.foods) {
-      var options = new Array<IDonateFoodTypeOption>();
-      var selected: IDonateFoodTypeOption;
+      var options = new Array<ISelectOption>();
+      var selected: ISelectOption;
       self.props.foods.forEach(food => {
         options.push({value: food.getId(), label: food.getName()});
         if (self.props.donate.getFoodId() == food.getId()) {
@@ -66,9 +66,11 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
       });
     }
   }
+
   public componentWillUnmount() {
     let self: DonateFoodComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: IDonateFoodProps) {
     let self: DonateFoodComponent = this;
     self.updateProps(nextProps);
@@ -76,7 +78,7 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
 
   private updateProps(props: IDonateFoodProps) {
     let self: DonateFoodComponent = this;
-    var selected: IDonateFoodTypeOption;
+    var selected: ISelectOption;
     props.foods.forEach(food => {
       if (props.donate.getFoodId() == food.getId()) {
         selected = {value: food.getId(), label: food.getName()};
@@ -143,17 +145,13 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
       }
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label} onMouseUp={()=> {
-            // if (self.props.editable) {
-            //   self.setState({editing: true});
-            // }
-          }}>
-            <FontAwesome className='' name='apple' /> Food Type
+          <div className={styles.label}>
+            <FontAwesome className='' name='apple' /> {localization(633)}
           </div>
           <div className={styles.edit}>
             {image}
             <div className={styles.type}>
-              <Select name="food-select" multi={false} searchable={true} clearable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder="select food type..." />
+              <Select name="food-select" multi={false} searchable={true} clearable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder={localization(971)} />
             </div>
           </div>
         </div>
@@ -164,6 +162,5 @@ export default class DonateFoodComponent extends React.Component<IDonateFoodProp
         </div>
       );
     }
-
   }
 }

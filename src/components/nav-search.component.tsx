@@ -2,51 +2,53 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import { Router, Link } from 'react-router';
 
+import * as styles from './nav-search.component.css';
 var Settings = require('./../constraints/settings.json');
-import * as styles from './nav-address.component.css';
-import { LogInStatus } from './app.component';
-import { geocoding, reverseGeocoding, IReverseGeoLocation } from './../utils/geolocation';
+
 import { MapModel, mapStore } from './../stores/map.store';
 import { mapActions } from './../actions/map.actions';
 import { treeActions } from './../actions/tree.actions';
+
 import { localization } from './../constraints/localization';
+import { NavSearchMode } from './../utils/enum';
+import { geocoding, reverseGeocoding, IReverseGeoLocation } from './../utils/geolocation';
 
-export enum NavSearchMode {
-  NONE, TREES, DONATIONS
-}
-
-export interface INavAddressProps {
+export interface INavSearchProps {
   mapId: string;
 }
-export interface INavAddressStatus {
+export interface INavSearchStatus {
   mode?: NavSearchMode;
-  address?: string;
+  search?: string;
   editing?: boolean;
 }
-export default class NavAddressComponent extends React.Component<INavAddressProps, INavAddressStatus> {
+export default class NavSearchComponent extends React.Component<INavSearchProps, INavSearchStatus> {
   static contextTypes: any;
-  constructor(props : INavAddressProps) {
+  constructor(props : INavSearchProps) {
     super(props);
-    let self: NavAddressComponent = this;
+    let self: NavSearchComponent = this;
     this.state = {
       mode: NavSearchMode.TREES,
-      address: localization(730),
+      search: localization(730),
       editing: false,
     };
   }
+
   public componentDidMount() {
-    let self: NavAddressComponent = this;
+    let self: NavSearchComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
-    let self: NavAddressComponent = this;
+    let self: NavSearchComponent = this;
   }
-  public componentWillReceiveProps (nextProps: INavAddressProps) {
-    let self: NavAddressComponent = this;
+
+  public componentWillReceiveProps (nextProps: INavSearchProps) {
+    let self: NavSearchComponent = this;
     self.updateProps(nextProps);
   }
-  private updateProps = (props: INavAddressProps) => {
-    let self: NavAddressComponent = this;
+
+  private updateProps = (props: INavSearchProps) => {
+    let self: NavSearchComponent = this;
     let mode: NavSearchMode = NavSearchMode.TREES;
     if (props.mapId == 'map-donation') {
       mode = NavSearchMode.DONATIONS;
@@ -66,12 +68,12 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
     // }, 250);
   }
 
-  private searchAddress = () => {
-    let self: NavAddressComponent = this;
+  private submitSearch = () => {
+    let self: NavSearchComponent = this;
     let location: L.LatLng = mapStore.getCenter(self.props.mapId);
     self.setState({editing: false});
-    if (self.state.address.trim() != "") {
-      let value: any = self.state.address.trim();
+    if (self.state.search.trim() != "") {
+      let value: any = self.state.search.trim();
       if (!isNaN(value)) {
         setTimeout(function() {
           mapActions.setFirst(self.props.mapId, true);
@@ -90,10 +92,8 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
           mapActions.moveToWithMarker(self.props.mapId, new L.LatLng(temp[0].toFixed(Settings.iMarkerPrecision), temp[1].toFixed(Settings.iMarkerPrecision)), Settings.iFocusZoom);
           mapActions.setActive(self.props.mapId, true);
         } else {
-          geocoding(self.state.address, new L.LatLng(location.lat, location.lng), function(response) {
+          geocoding(self.state.search, new L.LatLng(location.lat, location.lng), function(response) {
             mapActions.moveToWithMarker(self.props.mapId, new L.LatLng(response.lat.toFixed(Settings.iMarkerPrecision), response.lng.toFixed(Settings.iMarkerPrecision)), Settings.iFocusZoom);
-            // self.context.router.replace({pathname: window.location.pathname, query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
-            // self.context.router.replace({pathname: Settings.uBaseName + '/', query: { lat: response.lat.toFixed(Settings.iMarkerPrecision), lng: response.lng.toFixed(Settings.iMarkerPrecision), move: true }});
             mapActions.setActive(self.props.mapId, true);
           }, function() {
             mapActions.setActive(self.props.mapId, true);
@@ -102,8 +102,8 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
       }
     } else {
       mapActions.setActive(self.props.mapId, true);
-      self.setState({address: localization(730)});
-      // Address search mode (Disabled to decrease the number of Google Geo API calls)
+      self.setState({search: localization(730)});
+      // Address search mode (Disabled to decrease the number of Google Geo API calls).
       // let location: L.LatLng = mapStore.getCenter(self.props.mapId);
       // if (location && location.lat && location.lng) {
       //   reverseGeocoding(new L.LatLng(location.lat, location.lng), function(response: IReverseGeoLocation) {
@@ -128,41 +128,41 @@ export default class NavAddressComponent extends React.Component<INavAddressProp
   }
 
   render() {
-    let self: NavAddressComponent = this;
+    let self: NavSearchComponent = this;
     if (self.state.editing) {
       return (
         <input autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" type="text" className={styles.edit} placeholder={localization(730)}
-          value={self.state.address}
+          value={self.state.search}
           onChange={(event: any)=> {
-            self.setState({address: event.target.value});
+            self.setState({search: event.target.value});
           }}
           onKeyPress={(event)=> {
             if (event.key == 'Enter') {
-              self.searchAddress();
+              self.submitSearch();
             }
           }}
           onBlur={()=> {
-            self.searchAddress();
+            self.submitSearch();
           }} />
       );
     } else {
       return (
         <div className={styles.location} onClick={()=> {
-          if (self.state.address == localization(730)) {
-            self.setState({address: "", editing: true});
+          if (self.state.search == localization(730)) {
+            self.setState({search: "", editing: true});
           } else {
             self.setState({editing: true});
           }
           mapActions.setActive(self.props.mapId, false);
         }}>
-          {self.state.address}
+          {self.state.search}
         </div>
       );
     }
   }
 }
 
-NavAddressComponent.contextTypes = {
+NavSearchComponent.contextTypes = {
   router: function () {
     return React.PropTypes.func.isRequired;
   }

@@ -1,27 +1,32 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
 
-var Settings = require('./../../constraints/settings.json');
+
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './login-parent.component.css';
-import { processLogin } from './../../utils/authentication';
-import { treeStore } from './../../stores/tree.store';
-import { authActions } from './../../actions/auth.actions';
-import { checkValidEmailAddress } from './../../utils/errorhandler';
-import { localization } from './../../constraints/localization';
+var Settings = require('./../../constraints/settings.json');
+
 import MessageLineComponent from './../message/message-line.component';
+
+import { authActions } from './../../actions/auth.actions';
+
+import { processLogin } from './../../utils/authentication';
+import { checkValidEmailAddress } from './../../utils/errorhandler';
 import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
+import { localization } from './../../constraints/localization';
 
 export interface ILoginParentProps {
+
 }
 export interface ILoginParentStatus {
   contact?: string;
   password?: string;
   error?: any;
 }
+
 export default class LoginParentComponent extends React.Component<ILoginParentProps, ILoginParentStatus> {
   static contextTypes: any;
   constructor(props : ILoginParentProps) {
@@ -33,21 +38,25 @@ export default class LoginParentComponent extends React.Component<ILoginParentPr
       error: null,
     };
   }
+
   public componentDidMount() {
     let self: LoginParentComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: LoginParentComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: ILoginParentProps) {
     let self: LoginParentComponent = this;
     self.updateProps(nextProps);
   }
+
   private updateProps = (props: ILoginParentProps) => {
     let self: LoginParentComponent = this;
-
   }
+
   private submitLogin = () => {
     let self: LoginParentComponent = this;
     let error: any = null;
@@ -66,10 +75,10 @@ export default class LoginParentComponent extends React.Component<ILoginParentPr
     return (
       <div className={styles.wrapper}>
         <div className={styles.contactlabel}>
-          <FontAwesome className='' name='caret-right' /><label htmlFor={"parentin-contact"}> Parent Contact (E-mail)</label>
+          <FontAwesome className='' name='caret-right' /><label htmlFor={"parentin-contact"}> {localization(687)}</label>
         </div>
         <div className={styles.contactname}>
-          <input type="email" className={styles.contactinput} id={"parentin-contact"} key={"parentin-contact"} placeholder="enter e-mail address..."
+          <input type="email" className={styles.contactinput} id={"parentin-contact"} key={"parentin-contact"} placeholder={localization(683)}
             value={self.state.contact}
             autoComplete
             onChange={(event: any)=> {
@@ -88,7 +97,7 @@ export default class LoginParentComponent extends React.Component<ILoginParentPr
           self.submitLogin();
         }}>
           <div className={styles.button}>
-            SIGN IN
+            {localization(688)}
           </div>
         </div>
       </div>

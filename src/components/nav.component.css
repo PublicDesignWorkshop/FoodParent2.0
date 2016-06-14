@@ -122,7 +122,6 @@
   }
 }
 
-
 @media screen and (max-device-width: 1024px) {
   :local(.wrapper .title) {
     display: none;

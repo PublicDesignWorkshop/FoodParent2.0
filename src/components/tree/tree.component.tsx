@@ -1,29 +1,32 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
 
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './tree.component.css';
+var Settings = require('./../../constraints/settings.json');
+
+import TreeFoodComponent from './tree-food.component';
+import TreeAddressComponent from './tree-address.component';
+import TreeDescriptionComponent from './tree-description.component';
+import TreeFlagComponent from './tree-flag.component';
+import TreeOwnershipComponent from './tree-ownership.component';
+import TreeLocationComponent from './tree-location.component';
+import TreeParentsComponent from './tree-parents.component';
+import NoteListComponent from './../note/note-list.component';
+
 import { TreeModel, treeStore } from './../../stores/tree.store';
 import { FoodModel, foodStore } from './../../stores/food.store';
-import { FlagModel, flagStore } from './../../stores/flag.store';
+import { flagStore } from './../../stores/flag.store';
 import { NoteModel, noteStore } from './../../stores/note.store';
+import { noteActions } from './../../actions/note.actions';
 import { authStore } from './../../stores/auth.store';
 import { personStore } from './../../stores/person.store';
-import FoodComponent from './food.component';
-import AddressComponent from './address.component';
-import DescriptionComponent from './description.component';
-import FlagComponent from './flag.component';
-import OwnershipComponent from './ownership.component';
-import LocationComponent from './location.component';
-import TreeParentsComponent from './tree-parents.component';
-import { LogInStatus } from './../app.component';
-import NoteListComponent from './../note/note-list.component';
 import { personActions } from './../../actions/person.actions';
-import { noteActions } from './../../actions/note.actions';
+
+import { localization } from './../../constraints/localization';
 
 export interface ITreeProps {
   foods?: Array<FoodModel>;
@@ -49,9 +52,11 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
     let self: TreeComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: TreeComponent = this;
   }
+
   public componentWillReceiveProps (nextProps: ITreeProps) {
     let self: TreeComponent = this;
     self.updateProps(nextProps);
@@ -95,23 +100,22 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
         deleteTree = <div className={styles.button} onClick={()=> {
           self.context.router.push({pathname: window.location.pathname, query: { mode: "delete" }});
         }}>
-          DELETE TREE
+          {localization(965)}
         </div>;
       }
       if (authStore.getAuth().getIsManager()) {
         return (
           <div className={styles.wrapper}>
             <div className={styles.treeinfo}>
-              <FoodComponent tree={tree} foods={self.props.foods} editable={self.state.editable} async={self.state.editable} />
+              <TreeFoodComponent tree={tree} foods={self.props.foods} editable={self.state.editable} async={self.state.editable} />
               <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
                 self.context.router.push({pathname: Settings.uBaseName + '/'});
-                //self.setState({editable: self.state.editable});
               }} /></div>
             </div>
             <div className={styles.basicinfo}>
-              <LocationComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
-              <AddressComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
-              <DescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              <TreeLocationComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              <TreeAddressComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              <TreeDescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
               <AltContainer stores={
                 {
                   flags: function (props) {
@@ -122,9 +126,9 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
                   }
                 }
               }>
-                <FlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} async={self.state.editable} />
+                <TreeFlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} async={self.state.editable} />
               </AltContainer>
-              <OwnershipComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              <TreeOwnershipComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
               <AltContainer stores={
                 {
                   persons: function (props) {
@@ -157,16 +161,15 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
         return (
           <div className={styles.wrapper}>
             <div className={styles.treeinfo}>
-              <FoodComponent tree={tree} foods={self.props.foods} editable={self.state.editable} async={self.state.editable} />
+              <TreeFoodComponent tree={tree} foods={self.props.foods} editable={self.state.editable} async={self.state.editable} />
               <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
                 self.context.router.push({pathname: Settings.uBaseName + '/'});
-                //self.setState({editable: self.state.editable});
               }}/></div>
             </div>
             <div className={styles.basicinfo}>
-              <LocationComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
-              <AddressComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
-              <DescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              <TreeLocationComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              <TreeAddressComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              <TreeDescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
               <AltContainer stores={
                 {
                   persons: function (props) {
@@ -196,47 +199,6 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
         );
       }
     }
-    //
-    //
-    //   if (self.props.login == LogInStatus.ADMIN || self.props.login == LogInStatus.MANAGER) {
-    //
-    //   } else {
-    //     return (
-    //       <div className={styles.wrapper}>
-    //         <div className={styles.treeinfo}>
-    //           <FoodComponent tree={tree} foods={self.props.foods} editable={self.state.editable} async={self.state.editable} />
-    //           <div className={styles.close}><FontAwesome className='' name='close' onClick={()=> {
-    //             self.context.router.push({pathname: Settings.uBaseName + '/'});
-    //             //self.setState({editable: self.state.editable});
-    //           }}/></div>
-    //         </div>
-    //         <div className={styles.basicinfo2}>
-    //           <AltContainer stores={
-    //             {
-    //               flags: function (props) {
-    //                 return {
-    //                   store: flagStore,
-    //                   value: flagStore.getState().flags
-    //                 };
-    //               }
-    //             }
-    //           }>
-    //             <LocationComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
-    //             <AddressComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
-    //             <DescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
-    //             <TreeParentsComponent login={self.props.login} tree={tree} userId={self.props.userId} />
-    //             <NoteListComponent notes={self.props.notes} noteId={self.props.noteId} />
-    //           </AltContainer>
-    //         </div>
-    //       </div>
-    //     );
-    //   }
-    // } else {
-    //   return (
-    //     <div className={styles.wrapper}>
-    //     </div>
-    //   );
-    // }
   }
 }
 

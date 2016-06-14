@@ -1,32 +1,34 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+
 import * as FontAwesome from 'react-fontawesome';
 import './../../../node_modules/font-awesome/css/font-awesome.css';
-
+import * as styles from './tree-address.component.css';
 var Settings = require('./../../constraints/settings.json');
-import * as styles from './address.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
-import { reverseGeocoding, IReverseGeoLocation } from './../../utils/geolocation';
-import { FoodModel, foodStore } from './../../stores/food.store';
+
+import { TreeModel } from './../../stores/tree.store';
 import { treeActions } from './../../actions/tree.actions';
 
-export interface IAddressProps {
+import { reverseGeocoding, IReverseGeoLocation } from './../../utils/geolocation';
+import { localization } from './../../constraints/localization';
+
+export interface ITreeAddressProps {
   tree: TreeModel;
   editable: boolean;
   async: boolean;
 }
-export interface IAddressStatus {
+export interface ITreeAddressStatus {
   prevLat?: number;
   prevLng?: number;
   address?: string;
   editing?: boolean;
 }
-export default class AddressComponent extends React.Component<IAddressProps, IAddressStatus> {
+export default class TreeAddressComponent extends React.Component<ITreeAddressProps, ITreeAddressStatus> {
   private loading: boolean;
-  constructor(props : IAddressProps) {
+  constructor(props : ITreeAddressProps) {
     super(props);
-    let self: AddressComponent = this;
+    let self: TreeAddressComponent = this;
     this.state = {
       prevLat: 0,
       prevLng: 0,
@@ -36,22 +38,22 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
     self.loading = false;
   }
   public componentDidMount() {
-    let self: AddressComponent = this;
+    let self: TreeAddressComponent = this;
     self.updateProps(self.props);
     if (self.props.tree) {
       self.setState({prevLat: parseFloat(self.props.tree.getLat().toFixed(Settings.iMarkerPrecision)), prevLng: parseFloat(self.props.tree.getLng().toFixed(Settings.iMarkerPrecision))});
     }
   }
   public componentWillUnmount() {
-    let self: AddressComponent = this;
+    let self: TreeAddressComponent = this;
   }
-  public componentWillReceiveProps (nextProps: IAddressProps) {
-    let self: AddressComponent = this;
+  public componentWillReceiveProps (nextProps: ITreeAddressProps) {
+    let self: TreeAddressComponent = this;
     self.updateProps(nextProps);
   }
 
-  private updateProps = (props: IAddressProps) => {
-    let self: AddressComponent = this;
+  private updateProps = (props: ITreeAddressProps) => {
+    let self: TreeAddressComponent = this;
     if (props.tree) {
       if (props.tree.getAddress() && props.tree.getAddress().trim() != "" && props.tree.getLat().toFixed(Settings.iMarkerPrecision) == self.state.prevLat.toFixed(Settings.iMarkerPrecision) && props.tree.getLng().toFixed(Settings.iMarkerPrecision) == self.state.prevLng.toFixed(Settings.iMarkerPrecision)) {
         self.setState({address: props.tree.getAddress().trim(), editing: false, prevLat: props.tree.getLat(), prevLng: props.tree.getLng()});
@@ -63,7 +65,7 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
             self.setState({address: response.formatted, editing: false});
             props.tree.setAddress(self.state.address);
             if (props.async) {
-              let food: FoodModel = foodStore.getFood(props.tree.getFoodId());
+              // Disable update to decrease the number of Google API calls.
               // treeActions.updateTree(props.tree);
               self.setState({prevLat: parseFloat(self.props.tree.getLat().toFixed(Settings.iMarkerPrecision)), prevLng: parseFloat(self.props.tree.getLng().toFixed(Settings.iMarkerPrecision))});
             } else {
@@ -77,8 +79,7 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
   }
 
   private updateAttribute = () => {
-    let self: AddressComponent = this;
-    let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
+    let self: TreeAddressComponent = this;
     if (self.state.address.trim() != "") {
       self.props.tree.setAddress(self.state.address);
       if (self.props.async) {
@@ -101,15 +102,15 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
   }
 
   render() {
-    let self: AddressComponent = this;
+    let self: TreeAddressComponent = this;
     if (self.state.editing) {
       return (
         <div className={styles.wrapper}>
           <div className={styles.label}>
-            <FontAwesome className='' name='map-signs' /> Address
+            <FontAwesome className='' name='map-signs' /> {localization(967)}
           </div>
           <div className={styles.editname}>
-            <input autoFocus type="text" className={styles.edit} key={self.props.tree.getId() + "address"} placeholder="enter address of tree..."
+            <input autoFocus type="text" className={styles.edit} key={self.props.tree.getId() + "address"} placeholder={localization(972)}
               value={self.state.address}
               onChange={(event: any)=> {
                 self.setState({address: event.target.value, editing: self.state.editing});
@@ -134,7 +135,7 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
               self.setState({editing: true});
             }
           }}>
-            <FontAwesome className='' name='map-signs' /> Address
+            <FontAwesome className='' name='map-signs' /> {localization(967)}
           </div>
           <div className={styles.name} onClick={()=> {
             if (self.props.editable) {
@@ -146,6 +147,5 @@ export default class AddressComponent extends React.Component<IAddressProps, IAd
         </div>
       );
     }
-
   }
 }

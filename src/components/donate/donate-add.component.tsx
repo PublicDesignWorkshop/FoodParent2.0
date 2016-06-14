@@ -1,31 +1,35 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as AltContainer from 'alt-container';
+
 import * as moment from 'moment';
 
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './donate-add.component.css';
-import { LocationModel, locationStore } from './../../stores/location.store';
-import { FoodModel, foodStore } from './../../stores/food.store';
-import { uploadImage } from './../../utils/upload';
-import { AmountType } from './../../stores/note.store';
-import { donateStore, DonateModel } from './../../stores/donate.store';
+var Settings = require('./../../constraints/settings.json');
+
 import DonateCommentComponent from './donate-comment.component';
 import DonateDateComponent from './donate-date.component';
 import DonateAmountComponent from './donate-amount.component';
 import DonateFoodComponent from './donate-food.component';
 import ImageZoomComponent from './../image/image-zoom.component';
+import MessageLineComponent from './../message/message-line.component';
+import DonateSourceComponent from './donate-source.component';
+
+import { LocationModel, locationStore } from './../../stores/location.store';
+import { FoodModel, foodStore } from './../../stores/food.store';
+import { donateStore, DonateModel } from './../../stores/donate.store';
 import { donateActions } from './../../actions/donate.actions';
 import { authStore } from './../../stores/auth.store';
 import { treeStore } from './../../stores/tree.store';
+
 import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
 import { checkValidDonateAmountNumber } from './../../utils/errorhandler';
+import { uploadImage } from './../../utils/upload';
+import { AmountType, ISelectOption } from './../../utils/enum';
 import { localization } from './../../constraints/localization';
-import MessageLineComponent from './../message/message-line.component';
-import DonateSourceComponent from './donate-source.component';
 
 export interface IDonateAddProps {
   locationId: number;
@@ -37,6 +41,7 @@ export interface IDonateAddStatus {
   image?: string;
   error?: any;
 }
+
 export default class DonateAddComponent extends React.Component<IDonateAddProps, IDonateAddStatus> {
   static contextTypes: any;
   constructor(props : IDonateAddProps) {
@@ -48,16 +53,19 @@ export default class DonateAddComponent extends React.Component<IDonateAddProps,
       error: null,
     };
   }
+
   public componentDidMount() {
     let self: DonateAddComponent = this;
     self.updateProps(self.props);
   }
+
   public componentWillUnmount() {
     let self: DonateAddComponent = this;
     setTimeout(function() {
       donateActions.resetTempDonate();
     }, 0);
   }
+
   public componentWillReceiveProps (nextProps: IDonateAddProps) {
     let self: DonateAddComponent = this;
     self.updateProps(nextProps);
@@ -204,7 +212,7 @@ export default class DonateAddComponent extends React.Component<IDonateAddProps,
               self.submitCreate();
             }
           }}>
-            POST NEW DONATE
+            {localization(608)}
           </div>
           {image}
         </div>

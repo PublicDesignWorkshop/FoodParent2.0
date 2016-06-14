@@ -19,7 +19,7 @@ ReactDOM.render(<Router history={browserHistory}>{Routes}</Router>, document.get
 //
 // });
 
-// Code snipet for full screen mode (doesn't work).
+// Code snipet for full screen mode (doesn't work for now).
 // var elem: any = document.querySelector("#app");
 // if (elem.requestFullscreen) {
 //   alert("full screen");

@@ -1,28 +1,24 @@
+import * as $ from 'jquery';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import * as FontAwesome from 'react-fontawesome';
-import './../../../node_modules/font-awesome/css/font-awesome.css';
+
+import * as moment from 'moment';
 import * as Select from 'react-select';
 import './../../../node_modules/react-select/dist/react-select.css';
-import * as $ from 'jquery';
-import * as moment from 'moment';
-
-var Settings = require('./../../constraints/settings.json');
+import * as FontAwesome from 'react-fontawesome';
+import './../../../node_modules/font-awesome/css/font-awesome.css';
 import * as styles from './tree-graph.component.css';
-import { TreeModel, treeStore } from './../../stores/tree.store';
-import { NoteModel, noteStore, NoteType, PickupTime } from './../../stores/note.store';
+var Settings = require('./../../constraints/settings.json');
+
+import { TreeModel } from './../../stores/tree.store';
+import { NoteModel, noteStore } from './../../stores/note.store';
+
 import { sortNoteByDateASC } from './../../utils/sort';
 import { google10Color } from './../../utils/color';
 import { isTouchDevice, isMobile } from './../../utils/device';
-
-
-export interface ITreeGraphOption {
-  x: Date;
-  y: number;
-  r: number;
-  tooltip: any;
-}
+import { IGraphOption, NoteType, PickupTime } from './../../utils/enum';
+import { localization } from './../../constraints/localization';
 
 export interface ITreeGraphProps {
   tree?: TreeModel;
@@ -73,7 +69,7 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
       if (self.state.width && self.state.height) {
         let rChart: any = document.getElementById("chart");
         let ctx = rChart.getContext("2d");
-        let lists: Array<Array<ITreeGraphOption>> = new Array<Array<ITreeGraphOption>>();
+        let lists: Array<Array<IGraphOption>> = new Array<Array<IGraphOption>>();
         let notes: Array<NoteModel> = props.notes.sort(sortNoteByDateASC);
         let currentYear: number = moment(new Date()).year();
         let earlestYear: number = moment(notes[0].getDate()).year();
@@ -82,7 +78,7 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
           for (let i = earlestYear; i <= latestYear; i++) {
             if (note.getDate().year() == i) {
               if (lists[i - earlestYear] == null) {
-                lists[i - earlestYear] = Array<ITreeGraphOption>();
+                lists[i - earlestYear] = Array<IGraphOption>();
               }
               if (note.getNoteType() == NoteType.POST) {
                 lists[i - earlestYear].push({x: moment(note.getDate()).year(currentYear).toDate(), y: note.getRate(), r: 1, tooltip: note.getId()});
@@ -123,7 +119,7 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
               } else if (isTouchDevice() && isMobile() && !tooltip.text) {
                 setTimeout(function () {
                   self.setState({visible: false, clicked: false});
-                }, 100);
+                }, Settings.iPopupDelay);
               }
             } else {
               if (!tooltip.text) {
@@ -144,7 +140,7 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
           tooltipTemplate: "<%=tooltip%>"
   			});
       }
-    }, 500);
+    }, Settings.iGraphDelay);
   }
 
   render() {
@@ -165,11 +161,11 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
         comment = <div className={styles.comment}>{note.getComment()}</div>;
       } else if (note.getNoteType() == NoteType.PICKUP) {
         if (note.getPicupTime() == PickupTime.EARLY) {
-          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "g (early)"}</div>;
+          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "g (" + localization(988) + ")"}</div>;
         } else if (note.getPicupTime() == PickupTime.PROPER) {
-          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "g (proper)"}</div>;
+          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "g (" + localization(989) + ")"}</div>;
         } else if (note.getPicupTime() == PickupTime.LATE) {
-          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "g (late)"}</div>;
+          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "g (" + localization(990) + ")"}</div>;
         }
       }
       if (self.state.clicked) {
@@ -206,6 +202,7 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
     )
   }
 }
+
 TreeGraphComponent.contextTypes = {
   router: function () {
     return React.PropTypes.func.isRequired;
