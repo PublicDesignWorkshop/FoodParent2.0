@@ -19,14 +19,17 @@
   :local(.selected),
   :local(.selected .tree),
   :local(.selected .amount),
-  :local(.selected .date),
-  :local(.value:hover),
-  :local(.value:hover .tree),
-  :local(.value:hover .amount),
-  :local(.value:hover .date) {
+  :local(.selected .date) {
     color: rgba(255, 255, 255, 1);
     font-size: small;
     font-weight: 700;
+  }
+  :local(.value:hover .tree),
+  :local(.value:hover .tree2),
+  :local(.value:hover .amount),
+  :local(.value:hover .date),
+  :local(.value:hover .comment) {
+    text-decoration: underline;
   }
   :local(.value .tree:hover) {
     color: rgba(107, 170, 119, 1);
