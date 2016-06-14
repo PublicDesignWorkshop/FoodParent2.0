@@ -39,6 +39,7 @@ export interface INoteEditStatus {
   editable?: boolean;
   image?: string;
   error?: any;
+  uploading?: boolean;
 }
 
 export default class NoteEditComponent extends React.Component<INoteEditProps, INoteEditStatus> {
@@ -50,6 +51,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
       image: null,
       editable: false,
       error: null,
+      uploading: false,
     };
   }
 
@@ -201,20 +203,27 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
         }
       });
       if (self.state.editable) {
+        let imageUpload: JSX.Element = <input className={styles.upload} type="file" accept="image/*" capture="camera" onChange={(event: any)=> {
+          if (event.target.files[0] != null) {
+            self.setState({uploading: true});
+            uploadImage(event.target.files[0], tree.getId().toString(), function(filename: string) {  // success
+              self.setState({uploading: false});
+              console.log("Image file uploaded: " + filename);
+              self.props.note.addImage(filename);
+              self.forceUpdate();
+            }, function() { // fail
+
+            });
+          }
+        }} />
+        if (self.state.uploading) {
+          imageUpload = <div className={styles.uploading} type="file" accept="image/*" capture="camera" />
+        }
         return (
           <div className={styles.wrapper}>
             {images}
             <div className={styles.image}>
-              <input className={styles.upload} type="file" accept="image/*" capture="camera" onChange={(event: any)=> {
-                if (event.target.files[0] != null) {
-                  uploadImage(event.target.files[0], tree.getId().toString(), function(filename: string) {  // success
-                    self.props.note.addImage(filename);
-                    self.forceUpdate();
-                  }, function() { // fail
-
-                  });
-                }
-              }} />
+              {imageUpload}
             </div>
             <div className={styles.inner}>
               <NoteRateComponent note={self.props.note} editable={self.state.editable} async={false} />
@@ -233,15 +242,15 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
             <div className={styles.button2} onClick={()=> {
               self.context.router.push({pathname: Settings.uBaseName + '/tree/' + self.props.treeId});
             }}>
-              {localization(993)}
+              {localization(933)}
             </div>
             <div className={styles.or}>
-              {localization(992)}
+              {localization(932)}
             </div>
             <div className={styles.button3} onClick={()=> {
               self.context.router.push({pathname: window.location.pathname, query: { note: self.props.note.getId(), mode: "delete" }});
             }}>
-              {localization(991)}
+              {localization(931)}
             </div>
             {image}
           </div>

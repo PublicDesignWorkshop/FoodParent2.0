@@ -40,6 +40,7 @@ export interface IDonateEditStatus {
   editable?: boolean;
   image?: string;
   error?: any;
+  uploading?: boolean;
 }
 
 export default class DonateEditComponent extends React.Component<IDonateEditProps, IDonateEditStatus> {
@@ -51,6 +52,7 @@ export default class DonateEditComponent extends React.Component<IDonateEditProp
       editable: false,
       image: null,
       error: null,
+      uploading:  false,
     };
   }
 
@@ -168,21 +170,27 @@ export default class DonateEditComponent extends React.Component<IDonateEditProp
           );
         }
       });
+      let imageUpload: JSX.Element = <input className={styles.upload} type="file" accept="image/*" capture="camera" onChange={(event: any)=> {
+        if (event.target.files[0] != null) {
+          self.setState({uploading: true});
+          uploadImage(event.target.files[0], "d" + location.getId().toString(), function(filename: string) {  // success
+            self.setState({uploading: false});
+            console.log("Image file uploaded: " + filename);
+            self.props.donate.addImage(filename);
+            self.forceUpdate();
+          }, function() { // fail
+
+          });
+        }
+      }} />
+      if (self.state.uploading) {
+        imageUpload = <div className={styles.uploading} type="file" accept="image/*" capture="camera" />
+      }
       return (
         <div className={styles.wrapper}>
           {images}
           <div className={styles.image}>
-            <input className={styles.upload} type="file" accept="image/*" capture="camera" onChange={(event: any)=> {
-              if (event.target.files[0] != null) {
-                uploadImage(event.target.files[0], "d" + location.getId().toString(), function(filename: string) {  // success
-                  console.log("Image file uploaded: " + filename);
-                  self.props.donate.addImage(filename);
-                  self.forceUpdate();
-                }, function() { // fail
-
-                });
-              }
-            }} />
+            {imageUpload}
           </div>
           <div className={styles.inner}>
             <AltContainer stores={

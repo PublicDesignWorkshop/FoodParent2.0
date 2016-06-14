@@ -11,6 +11,34 @@
     padding: 4px 8px;
   }
 
+  :local(.uploading) {
+    width: 100%;
+    outline: none;
+    height: 100px;
+    border: 1px dashed rgba(107, 170, 119, 1);
+    overflow: hidden;
+    border-radius: 2px;
+  }
+  :local(.uploading::-webkit-file-upload-button) {
+    visibility: hidden;
+    outline: none;
+  }
+  :local(.uploading::before) {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    content: 'UPLOADING...';
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 2px;
+    font-weight: 700;
+    color: rgba(244, 244, 244, 1);
+    background-color: rgba(107, 170, 119, 1);
+    padding: 40px 0;
+    cursor: pointer;
+    font-size: medium;
+  }
+
   :local(.upload) {
     width: 100%;
     outline: none;
