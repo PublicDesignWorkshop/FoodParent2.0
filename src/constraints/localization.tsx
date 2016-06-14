@@ -1,12 +1,15 @@
 var en = require('./localization-en.json');
-
+var ko = require('./localization-ko.json');
 
 var cl = en;
 
 export function setCurrentLocalization(language: string) {
-  if (language == "EN" || language == "en") {
-    cl = en;
+  if (language == "KO" || language == "ko") {
+    cl = ko;
   }
+  // if (language == "EN" || language == "en" || language == "en-US") {
+  //   cl = en;
+  // }
 }
 
 export function localization(value: any) {

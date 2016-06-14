@@ -3,10 +3,13 @@ import * as ReactDOM from 'react-dom';
 import { Router, browserHistory  } from 'react-router';
 import Routes from './routes';
 import { resetFilter } from './utils/filter';
+import { setCurrentLocalization } from './constraints/localization';
 //import { sendMailFromParent } from './utils/mail';
 
 import './client.css';
 import './bootstrap-datetimepicker.css';
+var language = window.navigator.userLanguage || window.navigator.language;
+setCurrentLocalization(language);
 ReactDOM.render(<Router history={browserHistory}>{Routes}</Router>, document.getElementById('app'));
 
 
