@@ -80,9 +80,9 @@ export default class NavSearchComponent extends React.Component<INavSearchProps,
         }, 0);
         if (self.state.mode == NavSearchMode.TREES) {
           treeActions.fetchTrees(parseInt(value));
-          self.context.router.push({pathname: Settings.uBaseName + '/tree/' + parseInt(value)});
+          self.context.router.push({pathname: Settings.uBaseName + '/tree/' + parseInt(value), query: { mode: "graph" }});
         } else if (self.state.mode == NavSearchMode.DONATIONS) {
-          self.context.router.push({pathname: Settings.uBaseName + '/donation/' + parseInt(value)});
+          self.context.router.push({pathname: Settings.uBaseName + '/donation/' + parseInt(value), query: { mode: "graph" }});
         }
       } else {
         let temp = value.split(',');
