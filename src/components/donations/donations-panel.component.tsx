@@ -92,7 +92,7 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
             <div className={styles.right}>
               <LocationComponent locations={self.props.locations} locationId={self.props.locationId} donateId={self.props.donateId} />
               <div className={styles.buttongroup}>
-                <div className={styles.button2} onClick={()=> {
+                <div className={styles.button2 + " " + styles.locate} onClick={()=> {
                   let location: LocationModel = locationStore.getLocation(self.props.locationId);
                   if (location) {
                     mapActions.moveToWithMarker('map-donation', location.getLocation(), Settings.iFocusZoom);
@@ -134,7 +134,7 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
               <div className={styles.right}>
                 <LocationComponent locations={self.props.locations} locationId={self.props.locationId} donateId={self.props.donateId} />
                 <div className={styles.buttongroup}>
-                  <div className={styles.button2} onClick={()=> {
+                  <div className={styles.button2 + " " + styles.locate} onClick={()=> {
                     let location: LocationModel = locationStore.getLocation(self.props.locationId);
                     if (location) {
                       mapActions.moveToWithMarker('map-donation', location.getLocation(), Settings.iFocusZoom);
@@ -177,7 +177,7 @@ export default class DonationsPanelComponent extends React.Component<IDonationsP
               <div className={styles.right}>
                 <LocationComponent locations={self.props.locations} locationId={self.props.locationId} donateId={self.props.donateId} />
                 <div className={styles.buttongroup}>
-                  <div className={styles.button2} onClick={()=> {
+                  <div className={styles.button2 + " " + styles.locate} onClick={()=> {
                     let location: LocationModel = locationStore.getLocation(self.props.locationId);
                     if (location) {
                       mapActions.moveToWithMarker('map-donation', location.getLocation(), Settings.iFocusZoom);

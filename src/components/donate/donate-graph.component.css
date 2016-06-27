@@ -54,6 +54,29 @@
     margin: 0 2px 0 0;
     font-weight: 700;
   }
+
+  :local(.wrapper) .scatter-legend {
+    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;           /* TWEENER - IE 10 */
+    display: -webkit-flex;          /* NEW - Chrome */
+    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    -webkit-justify-content: space-around; /* Safari 6.1+ */
+    justify-content: space-around;
+  }
+  :local(.wrapper) .scatter-legend span {
+    margin: 4px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+  }
+  :local(.wrapper) .scatter-legend .scatter-legend-marker {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 0px;
+  }
 }
 
 @media screen and (max-device-width: 667px) {

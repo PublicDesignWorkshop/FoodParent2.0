@@ -34,6 +34,7 @@ export interface IDonateGraphStatus {
   height?: number;
   visible?: boolean;
   clicked?: boolean;
+  legend?: string;
 }
 
 export default class DonateGraphComponent extends React.Component<IDonateGraphProps, IDonateGraphStatus> {
@@ -161,8 +162,10 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
               }
             }
           },
-          tooltipTemplate: "<%=tooltip%>"
+          tooltipTemplate: "<%=tooltip%>",
+          legendTemplate: "<div class=\"<%=name.toLowerCase()%>-legend\"><%for(var i=0;i<datasets.length;i++){%><div><span class=\"<%=name.toLowerCase()%>-legend-marker\" style=\"background-color:<%=datasets[i].strokeColor%>\"></span><span><%=datasets[i].label%></span></div><%}%></div>"
   			});
+        self.setState({legend: chart.generateLegend()});
       }
     }, Settings.iGraphDelay);
   }
@@ -227,6 +230,7 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
             self.setState({clicked: false});
           }
         }} />
+        <div dangerouslySetInnerHTML={{__html: self.state.legend}} />
         {tooltip}
       </div>
     )
