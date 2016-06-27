@@ -28,7 +28,7 @@
     display: -ms-flexbox;           /* TWEENER - IE 10 */
     display: -webkit-flex;          /* NEW - Chrome */
     display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
-
+    margin-top: 8px;
     padding: 16px 0 4px 0;
     font-size: small;
   }

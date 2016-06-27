@@ -9,6 +9,8 @@ import * as styles from './tree-parent-list.component.css';
 var Settings = require('./../../constraints/settings.json');
 
 import { PersonModel } from './../../stores/person.store';
+import { FoodModel, foodStore } from './../../stores/food.store';
+import { foodActions } from './../../actions/food.actions';
 import { TreeModel } from './../../stores/tree.store';
 import { treeActions } from './../../actions/tree.actions';
 import { authStore } from './../../stores/auth.store';
@@ -39,7 +41,7 @@ export default class TreeParentListComponent extends React.Component<ITreeParent
   public componentWillUnmount() {
     let self: TreeParentListComponent = this;
   }
-  
+
   public componentWillReceiveProps (nextProps: ITreeParentListProps) {
     let self: TreeParentListComponent = this;
     self.updateProps(nextProps);
@@ -51,6 +53,7 @@ export default class TreeParentListComponent extends React.Component<ITreeParent
 
   render() {
     let self: TreeParentListComponent = this;
+    let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
     let list: Array<JSX.Element> = new Array<JSX.Element>();
     let parents: Array<number> = self.props.tree.getParents();
     self.props.persons.forEach((person: PersonModel) => {
@@ -72,9 +75,22 @@ export default class TreeParentListComponent extends React.Component<ITreeParent
         treeActions.unadoptTree(self.props.tree);
       }}>{localization(986)}</span>;
     }
+    let adoptable: JSX.Element;
+    if (food != null && !food.getAdaptability()) {
+      adoptable = <span className={styles.adopt} onClick={()=> {
+        food.setAdaptability(true);
+        foodActions.updateFood(food);
+      }}>{localization(624)}</span>;
+    } else if (food != null && food.getAdaptability()) {
+      adoptable = <span className={styles.adopt} onClick={()=> {
+        food.setAdaptability(false);
+        foodActions.updateFood(food);
+      }}>{localization(625)}</span>;
+    }
     return (
       <div className={styles.wrapper}>
         {list}
+        {adoptable}
         {adopt}
       </div>
     );

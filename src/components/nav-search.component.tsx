@@ -103,28 +103,7 @@ export default class NavSearchComponent extends React.Component<INavSearchProps,
     } else {
       mapActions.setActive(self.props.mapId, true);
       self.setState({search: localization(730)});
-      // Address search mode (Disabled to decrease the number of Google Geo API calls).
-      // let location: L.LatLng = mapStore.getCenter(self.props.mapId);
-      // if (location && location.lat && location.lng) {
-      //   reverseGeocoding(new L.LatLng(location.lat, location.lng), function(response: IReverseGeoLocation) {
-      //     self.setState({address: response.formatted, editing: false});
-      //     mapActions.setActive(self.props.mapId, true);
-      //   }, function() {
-      //     mapActions.setActive(self.props.mapId, true);
-      //   });
-      // }
     }
-    //  else {
-    //   if (self.props.location.query.lat && self.props.location.query.lng) {
-    //     addLoading();
-    //     reverseGeocoding(new L.LatLng(self.props.location.query.lat, self.props.location.query.lng), function(response: IReverseGeoLocation) {
-    //       self.setState({address: response.road + ", " + response.county + ", " + response.state + ", " + response.postcode, editing: false});
-    //       removeLoading();
-    //     }, function() {
-    //       removeLoading();
-    //     });
-    //   }
-    // }
   }
 
   render() {

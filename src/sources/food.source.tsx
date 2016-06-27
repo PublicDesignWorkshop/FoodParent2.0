@@ -7,56 +7,97 @@ import { foodStore, FoodModel, FoodState } from './../stores/food.store';
 
 
 let FoodSource = {
-  fetchFoods(): Promise<any> {
+  fetchFoods(id?: number): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       $.ajax({
         url: Settings.uBaseName + Settings.uServer + "foods.php",
+        type: 'GET',
         data: {},
         dataType: "json",
         success: function(response) {
           if (response.code == 200) {
             resolve(response.foods);
           } else {
+            console.log(response.message);
             reject(response.code);
           }
         },
         error: function(response) {
+          console.log(response.statusText);
           reject(response.status);
         }
       });
     })
   },
-
-  //
-  // fetchFoods(): AltJS.SourceModel<Array<FoodModel>> {
-  //   return {
-  //     remote(state: FoodState) {
-  //       return new Promise<Array<FoodModel>>((resolve, reject) => {
-  //         $.ajax({
-  //           url: Settings.uBaseName + Settings.uServer + "foods.php",
-  //           data: {
-  //
-  //           },
-  //           success: function(response) {
-  //             resolve($.parseJSON(response));
-  //           },
-  //           error: function(response) {
-  //             console.log(response);
-  //             reject(response);
-  //           }
-  //         });
-  //       })
-  //     },
-  //     local(state: FoodState): Array<FoodModel> {
-  //       //TODO : Figure out why local doesn't work =(
-  //       return null;
-  //     },
-  //     success:foodActions.fetchFoods,
-  //     error:foodActions.failed,
-  //     loading:foodActions.loading,
-  //     shouldFetch:() => true
-  //   };
-  // }
+  updateFood(food: FoodModel): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      $.ajax({
+        url: Settings.uBaseName + Settings.uServer + "food.php",
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(food.toJSON()),
+        dataType: "json",
+        success: function(response) {
+          if (response.code == 200) {
+            resolve(response.foods[0]);
+          } else {
+            console.log(response.message);
+            reject(response.code);
+          }
+        },
+        error: function(response) {
+          console.log(response.statusText);
+          reject(response.status);
+        }
+      });
+    })
+  },
+  createFood(food: FoodModel): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      $.ajax({
+        url: Settings.uBaseName + Settings.uServer + "food.php",
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(food.toJSON()),
+        dataType: "json",
+        success: function(response) {
+          if (response.code == 200) {
+            resolve(response.food);
+          } else {
+            console.log(response.message);
+            reject(response.code);
+          }
+        },
+        error: function(response) {
+          console.log(response.statusText);
+          reject(response.status);
+        }
+      });
+    })
+  },
+  deleteFood(food: FoodModel): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      $.ajax({
+        url: Settings.uBaseName + Settings.uServer + "food.php",
+        type: 'DELETE',
+        contentType: 'application/json',
+        data: JSON.stringify(food.toJSON()),
+        dataType: "json",
+        success: function(response) {
+          if (response.code == 200) {
+            resolve(response.food[0]);
+          } else {
+            console.log(response.message);
+            reject(response.code);
+          }
+        },
+        error: function(response) {
+          console.log(response.statusText);
+          reject(response.status);
+        }
+      });
+    })
+  }
 };
 
 export const foodSource = FoodSource;

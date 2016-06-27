@@ -92,7 +92,7 @@ export default class SignUpComponent extends React.Component<ISignUpProps, ISign
               <UserContact person={person} editable={true} async={false} error={self.state.error} />
               <UserName person={person} editable={true} async={false} error={self.state.error} />
               <UserNeighborhood person={person} editable={true} async={false} error={self.state.error} />
-              <div className={styles.buttongroup} onClick={()=> {
+              <div className={styles.buttongroup2} onClick={()=> {
                 self.submitSignUp();
               }}>
                 <div className={styles.button}>

@@ -84,7 +84,7 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
           earlestYear = currentYear;
           latestYear = currentYear;
         } else {
-          earlestYear = moment(new Date()).year();
+          earlestYear = moment(donates[0].getDate()).year();
           latestYear = moment(donates[donates.length - 1].getDate()).year();
         }
 

@@ -4,26 +4,67 @@ import { AbstractActions } from "./abstract.actions";
 import { FoodModel, IFoodProps } from './../stores/food.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { foodSource } from './../sources/food.source';
+import { displaySuccessMessage, displayErrorMessage } from './../utils/message';
+import { localization } from './../constraints/localization';
 
 interface IFoodActions {
   fetchFoods();
-  updateFoods(foodsProps: Array<IFoodProps>);
-  failed(code: number);
-  // updateFood(tree: FoodModel): void;
-  // failed(errorMessage: any);
-  // loading(): void;
+  fetchedFoods(foodsProps: Array<IFoodProps>);
+  updateFood(food: FoodModel);
+  updatedFood(props: IFoodProps);
+  setCode(code: number);
 }
 
 class FoodActions extends AbstractActions implements IFoodActions {
+  setCode(code: number) {
+    let self: FoodActions = this;
+    return (dispatch) => {
+      dispatch(code);
+    }
+  }
   fetchFoods() {
     let self: FoodActions = this;
     return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
-      foodSource.fetchFoods().then((foodsProps) => {
-        self.updateFoods(foodsProps);
+      addLoading();
+      dispatch();
+      self.setCode(90);
+      foodSource.fetchFoods().then((response) => {
+        self.fetchedFoods(response);
+        removeLoading();
       }).catch((code) => {
-        self.failed(parseInt(code));
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
       });
+    }
+  }
+  fetchedFoods(foodsProps: Array<IFoodProps>) {
+    let self: FoodActions = this;
+    return (dispatch) => {
+      dispatch(foodsProps);
+    }
+  }
+  updateFood(food: FoodModel) {
+    let self: FoodActions = this;
+    return (dispatch) => {
+      addLoading();
+      dispatch();
+      self.setCode(92);
+      foodSource.updateFood(food).then((response) => {
+        displaySuccessMessage(localization(634));
+        self.updatedFood(response);
+        removeLoading();
+      }).catch((code) => {
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
+      });
+    }
+  }
+  updatedFood(props: IFoodProps) {
+    let self: FoodActions = this;
+    return (dispatch) => {
+      dispatch(props);
     }
   }
   updateFoods(foodsProps: Array<IFoodProps>) {
@@ -33,36 +74,6 @@ class FoodActions extends AbstractActions implements IFoodActions {
       dispatch(foodsProps);
     }
   }
-  failed(code: number) {
-    let self: FoodActions = this;
-  }
-  //
-  // fetchFoods(trees: Array<FoodModel>) {
-  //   let self: FoodActions = this;
-  //   console.warn("Fetch Foods");
-  //   removeLoading();
-  //   return trees;
-  // }
-  // updateFood(tree: FoodModel) {
-  //   let self: FoodActions = this;
-  //   console.warn("Update Food");
-  //   removeLoading();
-  //   return tree;
-  // }
-  // failed(errorMessage:any) {
-  //   let self: FoodActions = this;
-  //   console.warn("Food Failed");
-  //   removeLoading();
-  //   return errorMessage;
-  // }
-  // loading() {
-  //   let self: FoodActions = this;
-  //   addLoading();
-  //   return (dispatch) => {
-  //     // we dispatch an event here so we can have "loading" state.
-  //     dispatch();
-  //   }
-  // }
 }
 
 export const foodActions = alt.createActions<IFoodActions>(FoodActions);

@@ -11,9 +11,11 @@ var Settings = require('./../../constraints/settings.json');
 import TreeParentListComponent from './tree-parent-list.component';
 
 import { TreeModel } from './../../stores/tree.store';
+import { FoodModel, foodStore } from './../../stores/food.store';
 import { treeActions } from './../../actions/tree.actions';
 import { PersonModel, personStore } from './../../stores/person.store';
 import { authStore } from './../../stores/auth.store';
+import { personActions } from './../../actions/person.actions';
 
 import { localization } from './../../constraints/localization';
 
@@ -38,6 +40,9 @@ export default class TreeParentsComponent extends React.Component<ITreeParentsPr
   public componentDidMount() {
     let self: TreeParentsComponent = this;
     self.updateProps(self.props);
+    setTimeout(function() {
+      personActions.fetchPersons(self.props.tree.getParents());
+    }, 0);
   }
 
   public componentWillUnmount() {
@@ -51,10 +56,12 @@ export default class TreeParentsComponent extends React.Component<ITreeParentsPr
 
   private updateProps(props: ITreeParentsProps) {
     let self: TreeParentsComponent = this;
+
   }
 
   render() {
     let self: TreeParentsComponent = this;
+    let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
     if (authStore.getAuth().getIsManager()) {
       return (
         <div className={styles.wrapper}>
@@ -62,7 +69,18 @@ export default class TreeParentsComponent extends React.Component<ITreeParentsPr
             <FontAwesome className='' name='chain' /> {localization(984)}
           </div>
           <div className={styles.editname}>
-            <TreeParentListComponent tree={self.props.tree} persons={self.props.persons} />
+            <AltContainer stores={
+              {
+                persons: function (props) {
+                  return {
+                    store: personStore,
+                    value: personStore.getState().persons,
+                  };
+                }
+              }
+            }>
+              <TreeParentListComponent tree={self.props.tree} />
+            </AltContainer>
           </div>
         </div>
       );
@@ -75,7 +93,9 @@ export default class TreeParentsComponent extends React.Component<ITreeParentsPr
         status = parents.length + " " + localization(983);
       }
       let adopt: JSX.Element;
-      if (!authStore.getAuth().getIsGuest()) {
+      if (food != null && !food.getAdaptability()) {
+        adopt = <span className={styles.unableadopt}>{localization(626)}</span>;
+      } else if (!authStore.getAuth().getIsGuest()) {
         adopt = <span className={styles.adopt} onClick={()=> {
           self.props.tree.addParent(authStore.getAuth().getId());
           treeActions.adoptTree(self.props.tree);

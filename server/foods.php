@@ -3,7 +3,7 @@
   header("Cache-Control: post-check=0, pre-check=0", false);
   header("Pragma: no-cache");
 
-  require_once('database.php');
+  include_once 'functions.php';
 
   switch($_SERVER['REQUEST_METHOD']){
     case 'POST':

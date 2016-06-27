@@ -2,6 +2,8 @@
   :local(.wrapper) {
     font-family: 'Open Sans', sans-serif;
     font-size: small;
+    line-height: 2;
+    word-break: break-all;
   }
   :local(.name) {
     display: inline-block;
@@ -42,6 +44,7 @@
   }
   :local(.parent:hover) {
     font-weight: 700;
+    border: 2px solid rgba(255, 255, 255, 0.5);
   }
   :local(.adopt) {
     border-radius: 2px;

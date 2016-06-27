@@ -35,6 +35,9 @@ export function localization(value: any) {
   if (value.toString() == "612") return cl.e612;
   if (value.toString() == "613") return cl.e613;
 
+  if (value.toString() == "624") return cl.e624;
+  if (value.toString() == "625") return cl.e625;
+  if (value.toString() == "626") return cl.e626;
   if (value.toString() == "627") return cl.e627;
   if (value.toString() == "628") return cl.e628;
   if (value.toString() == "629") return cl.e629;

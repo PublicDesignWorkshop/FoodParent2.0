@@ -10,6 +10,7 @@ export interface IFoodProps {
   name: string;
   icon: string;
   description: string;
+  adopt: string;
   updated: string;
 }
 
@@ -18,6 +19,7 @@ export class FoodModel {
   name: string;
   icon: string;
   description: string;
+  adopt: boolean;
   updated: moment.Moment;
 
   constructor(props: IFoodProps) {
@@ -27,14 +29,39 @@ export class FoodModel {
     self.icon = props.icon;
     self.description = props.description;
     self.updated = moment(props.updated);
+    if (props.adopt == "1") {
+      self.adopt = true;
+    } else {
+      self.adopt = false;
+    }
   }
-  private toJSON(): any {
+  public toJSON(): any {
     let self: FoodModel = this;
+    let adopt: string;
+    if (self.adopt) {
+      adopt = "1";
+    } else {
+      adopt = "0";
+    }
     return {
       id: self.id,
       name: self.name,
       icon: self.icon,
-      description: self.description
+      description: self.description,
+      adopt: adopt
+    }
+  }
+  public update(props: IFoodProps) {
+    let self: FoodModel = this;
+    self.id = parseInt(props.id);
+    self.name = props.name;
+    self.icon = props.icon;
+    self.description = props.description;
+    self.updated = moment(props.updated);
+    if (props.adopt == "1") {
+      self.adopt = true;
+    } else {
+      self.adopt = false;
     }
   }
   public getId(): number {
@@ -49,6 +76,12 @@ export class FoodModel {
   public getDescription(): string {
     return this.description;
   }
+  public getAdaptability(): boolean {
+    return this.adopt;
+  }
+  public setAdaptability(adopt: boolean) {
+    this.adopt = adopt;
+  }
 }
 
 export interface FoodState {
@@ -62,42 +95,47 @@ interface FoodExtendedStore extends AltJS.AltStore<FoodState> {
 
 class FoodStore extends AbstractStore<FoodState> {
   private foods: Array<FoodModel>;
-  private errorMessage: string
+  private code: any;
   constructor() {
     super();
     let self: FoodStore = this;
     self.foods = new Array<FoodModel>();
-    self.errorMessage = null;
-    //TODO: pass state generics to make sure methods/actions expect the same type
+    self.code = 200;
     self.bindListeners({
-      handleUpdateFoods: foodActions.updateFoods,
-      handleFailed: foodActions.failed
+      handleFetchedFoods: foodActions.fetchedFoods,
+      handleUpdatedFood: foodActions.updatedFood,
+      handleSetCode: foodActions.setCode,
     });
     self.exportPublicMethods({
-      getFood: self.getFood
+      getFood: self.getFood,
     });
   }
-  handleUpdateFoods(foodsProps: Array<IFoodProps>) {
+  getFood(id: number): FoodModel {
+    let self: FoodStore = this;
+    let foods = self.getState().foods.filter(food => food.getId() == id);
+    if (foods.length == 1) {
+      return foods[0];
+    }
+    return null;
+  }
+  handleFetchedFoods(foodsProps: Array<IFoodProps>) {
     let self: FoodStore = this;
     self.foods = new Array<FoodModel>();
     foodsProps.forEach((props: IFoodProps) => {
       self.foods.push(new FoodModel(props));
     });
-    self.errorMessage = null;
+    self.code = 200;
   }
-  handleFailed(code: number) {
+  handleUpdatedFood(foodProps: IFoodProps) {
     let self: FoodStore = this;
-    // this.errorMessage = errorMessage;
-  }
-  getFood(id: number): FoodModel {
-    let self: FoodStore = this;
-    let foods = self.getState().foods;
-    for(var i = 0; i < foods.length; i++) {
-      if(foods[i].id === id) {
-        return foods[i];
-      }
+    let foods = self.foods.filter(food => food.getId() == parseInt(foodProps.id));
+    if (foods.length == 1) {
+      foods[0].update(foodProps);
     }
-    return null;
+  }
+  handleSetCode(code: number) {
+    let self: FoodStore = this;
+    self.code = code;
   }
 }
 

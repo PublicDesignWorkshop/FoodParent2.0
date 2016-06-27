@@ -5,7 +5,6 @@ import { AbstractActions } from "./abstract.actions";
 var Settings = require('./../constraints/settings.json');
 import { MapModel, IMapProps, IMapLocationProps, IMapTileProps, IMapZoomProps, IMapFirstProps, IMapActiveProps } from './../stores/map.store';
 import { TileMode } from './../utils/enum';
-import { addLoading, removeLoading } from './../utils/loadingtracker';
 
 interface IMapActions {
   addMap(id: string, map: L.Map): IMapProps;

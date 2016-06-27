@@ -73,8 +73,15 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
         let lists: Array<Array<IGraphOption>> = new Array<Array<IGraphOption>>();
         let notes: Array<NoteModel> = props.notes.sort(sortNoteByDateASC);
         let currentYear: number = moment(new Date()).year();
-        let earlestYear: number = moment(notes[0].getDate()).year();
-        let latestYear: number = moment(notes[notes.length - 1].getDate()).year();
+        let earlestYear: number;
+        let latestYear: number;
+        if (notes.length == 0) {
+          earlestYear = currentYear;
+          latestYear = currentYear;
+        } else {
+          earlestYear = moment(notes[0].getDate()).year();
+          latestYear = moment(notes[notes.length - 1].getDate()).year();
+        }
         notes.forEach((note: NoteModel) => {
           for (let i = earlestYear; i <= latestYear; i++) {
             if (note.getDate().year() == i) {
