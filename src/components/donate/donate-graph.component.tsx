@@ -77,8 +77,16 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
         let lists: Array<Array<IGraphOption>> = new Array<Array<IGraphOption>>();
         let donates: Array<DonateModel> = props.donates.sort(sortDonateByDateASC);
         let currentYear: number = moment(new Date()).year();
-        let earlestYear: number = moment(donates[0].getDate()).year();
-        let latestYear: number = moment(donates[donates.length - 1].getDate()).year();
+        let earlestYear: number;
+        let latestYear: number;
+        if (donates.length == 0) {
+          earlestYear = currentYear;
+          latestYear = currentYear;
+        } else {
+          earlestYear = moment(new Date()).year();
+          latestYear = moment(donates[donates.length - 1].getDate()).year();
+        }
+
         let accumulated: Array<number> = new Array<number>();
         donates.forEach((donate: DonateModel) => {
           for (let i = earlestYear; i <= latestYear; i++) {

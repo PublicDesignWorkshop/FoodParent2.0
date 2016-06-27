@@ -78,6 +78,9 @@
   :local(.button2.selected:hover) {
     color: rgba(107, 170, 119, 1);
   }
+  :local(.locate) {
+    display: block;
+  }
 }
 
 @media screen and (max-device-width: 1024px) {
@@ -89,6 +92,9 @@
     right: 0;
     transition: 0.25s;
     overflow-y: auto;
+  }
+  :local(.locate) {
+    display: none;
   }
 }
 
@@ -103,5 +109,8 @@
     right: 0;
     transition: 0.25s;
     overflow-y: auto;
+  }
+  :local(.locate) {
+    display: none;
   }
 }

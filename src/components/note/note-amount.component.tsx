@@ -13,7 +13,7 @@ import MessageLineComponent from './../message/message-line.component';
 
 import { NoteModel, noteStore } from './../../stores/note.store';
 
-import { PickupTime, AmountType, ISelectOption } from './../../utils/enum';
+import { PickupTime, AmountType, ISelectOption, NoteType } from './../../utils/enum';
 import { localization } from './../../constraints/localization';
 
 export interface INoteAmountProps {
@@ -123,6 +123,16 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
 
   render() {
     let self: NoteAmountComponent = this;
+    let value: JSX.Element;
+    let label: JSX.Element;
+    if (self.props.note.getNoteType() == NoteType.PICKUP) {
+      label = <div className={styles.label}>
+        <FontAwesome className='' name='shopping-basket' /> {localization(998)}
+      </div>;
+      value = <div className={styles.value}>
+        {(self.state.amount * Settings.fGToLBS).toLocaleString() + "lbs."}
+      </div>
+    }
     if (self.props.editable || self.props.note.getId() == 0) {
       return (
         <div className={styles.wrapper}>
@@ -154,12 +164,8 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
     } else {
       return (
         <div className={styles.wrapper}>
-          <div className={styles.label}>
-            <FontAwesome className='' name='shopping-basket' /> {localization(998)}
-          </div>
-          <div className={styles.value}>
-            {self.state.amount.toLocaleString() + "g"}
-          </div>
+          {label}
+          {value}
         </div>
       );
     }

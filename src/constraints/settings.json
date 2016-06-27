@@ -11,7 +11,9 @@
     "y": -84.3806
   },
   "uGrayTileMap" : "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
-  "uSatTileMap" : "//oatile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg",
+  "uSatTileMap" : "//api.mapbox.com/styles/v1/jkim848/cipy54dx6000fbjnf70ublypr/tiles/256/{z}/{x}/{y}?access_token=",
+  "uMapboxAttribution": "Imagery © <a href=\"http://mapbox.com\">Mapbox</a>",
+  "sMapboxAccessToken": "pk.eyJ1IjoiamtpbTg0OCIsImEiOiJjaXB5NHJsMHcweGZ6ZnRtMmE4cGJiaTZlIn0.bWtmOU1OJZ10SE2hd8ksvQ",
   "sGoogleMapTileType": "HYBRID",
   "iPopupDelay": 150,
   "iGraphDelay": 500,
@@ -34,5 +36,6 @@
 
   "iMessageLineDuration": 5000,
   "fKGToG": 1000,
-  "fLBSTOG": 453.592
+  "fLBSTOG": 453.592,
+  "fGToLBS": 0.00220462
 }

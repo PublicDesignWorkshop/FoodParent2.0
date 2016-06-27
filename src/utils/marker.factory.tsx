@@ -32,7 +32,7 @@ module MarkerFactory {
       riseOnHover: true,
     });
     marker.on('click', function() {
-      browserHistory.push({pathname: Settings.uBaseName + '/tree/' + tree.getId()});
+      browserHistory.push({pathname: Settings.uBaseName + '/tree/' + tree.getId(), query: { mode: "graph" }});
     });
     return marker;
   }
@@ -68,7 +68,7 @@ module MarkerFactory {
       closeOnClick: false,
     });
     marker.on('click', function() {
-      browserHistory.push({pathname: Settings.uBaseName + '/tree/' + tree.getId()});
+      browserHistory.push({pathname: Settings.uBaseName + '/tree/' + tree.getId(), query: { mode: "graph" }});
     });
     return marker;
   }
@@ -158,7 +158,7 @@ module MarkerFactory {
       closeOnClick: false,
     });
     marker.on('click', function() {
-      browserHistory.push({pathname: Settings.uBaseName + '/donation/' + location.getId()});
+      browserHistory.push({pathname: Settings.uBaseName + '/donation/' + location.getId(), query: { mode: "graph" }});
     });
     return marker;
   }

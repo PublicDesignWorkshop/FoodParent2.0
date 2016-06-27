@@ -19,7 +19,8 @@ _*{} is variable that can be different based on your environment._
 ### Compilation and Bundle
 * Open terminal or command prompt and move to the app directory.
 * Run `npm install` to install all dependency libaries.
-* Run `npm run dev` or `npm run build` to generate compiled `foodparent.js` and `foodparent.map.js` file under {app-root-directory}/dist directory.
+* Run `npm run dts` to generate `*.css.d.ts` files.
+* Run `npm run dev` to generate compiled `foodparent.js` and `foodparent.map.js` file under {app-root-directory}/dist directory.
 
 *If you change the directory, you need to cancel the build and re-run `npm run dev` or `npm run build`.
 

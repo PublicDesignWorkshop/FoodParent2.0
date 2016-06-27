@@ -87,6 +87,15 @@ export default class NoteRateComponent extends React.Component<INoteRateProps, I
 
   render() {
     let self: NoteRateComponent = this;
+    let value: JSX.Element;
+    let stars: Array<JSX.Element> = new Array<JSX.Element>();
+    for (let i=0; i <5; i++) {
+      if (i >= self.props.note.getRate()) {
+        stars.push(<FontAwesome key={"star" + i} className='' name='star-o' />);
+      } else {
+        stars.push(<FontAwesome key={"star" + i} className='' name='star' />);
+      }
+    }
     if (self.props.editable || self.props.note.getId() == 0) {
       return (
         <div className={styles.wrapper}>
@@ -106,7 +115,7 @@ export default class NoteRateComponent extends React.Component<INoteRateProps, I
               <FontAwesome className='' name='star' /> {localization(670)}
             </div>
             <div className={styles.edit}>
-              {self.state.options[self.props.note.getRate()].label}
+              <span>{stars}<span>{" (" + self.state.options[self.props.note.getRate()].label + ")"}</span></span>
             </div>
           </div>
         );
