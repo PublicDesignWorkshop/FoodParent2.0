@@ -69,7 +69,7 @@ export default class DonateListComponent extends React.Component<IDonateListProp
               <span className={styles.amount} onClick={()=> {
                 self.context.router.push({pathname: window.location.pathname, query: { donate: donate.getId() }});
               }}>
-                {" \"" + food.getName() + " " + Math.floor(donate.getAmount()).toLocaleString() + "g\""}
+                {" \"" + food.getName() + " " + (donate.getAmount()).toLocaleString() + "lbs.\""}
               </span>
               <span className={styles.comment} onClick={()=> {
                 self.context.router.push({pathname: window.location.pathname, query: { donate: donate.getId() }});
@@ -98,7 +98,7 @@ export default class DonateListComponent extends React.Component<IDonateListProp
             }}>
               <FontAwesome className='' name='angle-right' />
               <span className={styles.amount}>
-                {" \"" + food.getName() + " " + Math.floor(donate.getAmount()).toLocaleString() + "g\""}
+                {" \"" + food.getName() + " " + (donate.getAmount()).toLocaleString() + "lbs.\""}
               </span>
               <span className={styles.comment}>
                 {" from "}

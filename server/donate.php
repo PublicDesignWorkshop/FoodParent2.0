@@ -77,11 +77,11 @@
       try {
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
-        $result = $stmt->fetch();
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         $pdo = null;
         $params = array(
           "code" => 200,
-          "donates" => $result,
+          "donate" => $result[0],
         );
         echo json_encode($params);
       } catch(PDOException $e) {

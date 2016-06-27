@@ -123,7 +123,7 @@ export default class DonateAmountComponent extends React.Component<IDonateAmount
             <FontAwesome className='' name='shopping-basket' /> {localization(609)}
           </div>
           <div className={styles.value}>
-            {self.state.amount.toLocaleString() + "g"}
+            {(self.state.amount).toLocaleString() + "lbs"}
           </div>
         </div>
       );

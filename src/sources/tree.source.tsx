@@ -41,7 +41,8 @@ let TreeSource = {
         dataType: "json",
         success: function(response) {
           if (response.code == 200) {
-            resolve(response.trees[0]);
+            console.log(response.tree);
+            resolve(response.tree);
           } else {
             console.log(response.message);
             reject(response.code);

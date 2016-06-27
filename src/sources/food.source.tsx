@@ -39,7 +39,7 @@ let FoodSource = {
         dataType: "json",
         success: function(response) {
           if (response.code == 200) {
-            resolve(response.foods[0]);
+            resolve(response.food);
           } else {
             console.log(response.message);
             reject(response.code);

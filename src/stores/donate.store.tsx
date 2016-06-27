@@ -52,7 +52,7 @@ export class DonateModel {
   constructor(props: IDonateProps) {
     let self: DonateModel = this;
     self.update(props);
-    self.atype = AmountType.G;
+    self.atype = AmountType.LBS;
   }
   public update(props: IDonateProps) {
     let self: DonateModel = this;
@@ -68,7 +68,7 @@ export class DonateModel {
     }
     self.person = parseInt(props.person);
     self.comment = props.comment;
-    self.amount = parseFloat(props.amount);
+    self.amount = parseFloat(props.amount) * Settings.fGToLBS;
     self.date = moment(props.date);
     if (props.picture && props.picture != "") {
       self.images = props.picture.split(',').map((image: string) => {

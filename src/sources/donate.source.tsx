@@ -83,7 +83,7 @@ let DonateSource = {
         dataType: "json",
         success: function(response) {
           if (response.code == 200) {
-            resolve(response.donates[0]);
+            resolve(response.donate);
           } else {
             console.log(response.message);
             reject(response.code);

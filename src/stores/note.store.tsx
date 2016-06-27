@@ -41,7 +41,7 @@ export class NoteModel {
   constructor(props: INoteProps) {
     let self: NoteModel = this;
     self.update(props);
-    self.atype = AmountType.G;
+    self.atype = AmountType.LBS;
   }
   public update(props: INoteProps) {
     let self: NoteModel = this;
@@ -51,7 +51,7 @@ export class NoteModel {
     self.person = parseInt(props.person);
     self.comment = props.comment;
     self.rate = parseInt(props.rate);
-    self.amount = parseFloat(props.amount);
+    self.amount = parseFloat(props.amount) * Settings.fGToLBS;
     self.proper = parseInt(props.proper);
     self.date = moment(props.date);
     if (props.picture && props.picture != "") {

@@ -76,7 +76,7 @@ let NoteSource = {
         dataType: "json",
         success: function(response) {
           if (response.code == 200) {
-            resolve(response.notes[0]);
+            resolve(response.note);
           } else {
             console.log(response.message);
             reject(response.code);

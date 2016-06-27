@@ -41,7 +41,7 @@ let LocationSource = {
         dataType: "json",
         success: function(response) {
           if (response.code == 200) {
-            resolve(response.locations[0]);
+            resolve(response.location);
           } else {
             console.log(response.message);
             reject(response.code);

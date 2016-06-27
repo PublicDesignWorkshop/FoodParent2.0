@@ -130,7 +130,7 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
         <FontAwesome className='' name='shopping-basket' /> {localization(998)}
       </div>;
       value = <div className={styles.value}>
-        {(self.state.amount * Settings.fGToLBS).toLocaleString() + "lbs."}
+        {(self.state.amount).toLocaleString() + "lbs."}
       </div>
     }
     if (self.props.editable || self.props.note.getId() == 0) {
