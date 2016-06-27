@@ -78,7 +78,11 @@ export default class PopupTreesComponent extends React.Component<IPopupTreesProp
             <div className={styles.message}>
               <span dangerouslySetInnerHTML={{__html: localization(641)}} />
               <span className={styles.button} onClick={()=> {
-                treeActions.createTree(treeStore.getState().temp);
+                if (treeStore.getState().temp.getFoodId() == 0) {
+                  displayErrorMessage(localization(643));
+                } else {
+                  treeActions.createTree(treeStore.getState().temp);
+                }
               }}>
                 {localization(930)}
               </span>

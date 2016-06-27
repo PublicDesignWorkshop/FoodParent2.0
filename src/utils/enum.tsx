@@ -19,6 +19,7 @@ export enum AmountType {
 export interface ISelectOption {
   value: any;
   label: string;
+  disabled?: boolean;
 }
 export enum NavSearchMode {
   NONE, TREES, DONATIONS

@@ -47,6 +47,7 @@ export default class TreeFoodComponent extends React.Component<ITreeFoodProps, I
       if (self.props.tree.getId()) {
         treeName = self.props.tree.getName();
       }
+      options.push({value: 0, label: localization(642), disabled: true });
       self.props.foods.forEach(food => {
         options.push({value: food.getId(), label: food.getName() + treeName });
         if (self.props.tree.getFoodId() == food.getId()) {
@@ -127,11 +128,17 @@ export default class TreeFoodComponent extends React.Component<ITreeFoodProps, I
 
   render() {
     let self: TreeFoodComponent = this;
-    var food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
+    let food: FoodModel = foodStore.getFood(self.props.tree.getFoodId());
+    let icon: string;
+    if (food) {
+      icon = food.getIcon();
+    } else {
+      icon = Settings.uTemporaryMarkerIcon;
+    }
     if (self.props.editable) {
       return (
         <div className={styles.wrapper}>
-          <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
+          <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + icon} />
           <div className={styles.name}>
             <Select name="food-select" multi={false} searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder={localization(971)} />
           </div>
@@ -140,7 +147,7 @@ export default class TreeFoodComponent extends React.Component<ITreeFoodProps, I
     } else {
       return (
         <div className={styles.wrapper}>
-        <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + food.getIcon()} />
+        <img className={styles.icon} src={Settings.uBaseName + Settings.uStaticImage + icon} />
           <div className={styles.name}>
             <Select name="food-select" multi={false} disabled searchable={false} scrollMenuIntoView={false} options={self.state.options} value={self.state.selected} onChange={self.updateAttribute} placeholder={localization(971)} />
           </div>
