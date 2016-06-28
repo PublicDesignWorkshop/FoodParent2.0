@@ -25826,8 +25826,8 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-		"uBaseName": "/FoodParent2.0",
-		"uBaseNameForWebPack": "/FoodParent2.0/",
+		"uBaseName": "",
+		"uBaseNameForWebPack": "/",
 		"uStaticImage": "/static/images/",
 		"uContentImage": "/content/images/",
 		"uRelativeImageUpload": "./../content/images/",
@@ -25838,9 +25838,9 @@
 			"y": -84.3806
 		},
 		"uGrayTileMap": "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
-		"uSatTileMap": "//api.mapbox.com/styles/v1/jkim848/cipy54dx6000fbjnf70ublypr/tiles/256/{z}/{x}/{y}?access_token=",
+		"uSatTileMap": "//api.mapbox.com/v4/mapbox.streets-satellite/{z}/{x}/{y}.png256?access_token=",
 		"uMapboxAttribution": "Imagery © <a href=\"http://mapbox.com\">Mapbox</a>",
-		"sMapboxAccessToken": "pk.eyJ1IjoiamtpbTg0OCIsImEiOiJjaXB5NHJsMHcweGZ6ZnRtMmE4cGJiaTZlIn0.bWtmOU1OJZ10SE2hd8ksvQ",
+		"sMapboxAccessToken": "pk.eyJ1IjoiY29uY3JldGUtanVuZ2xlIiwiYSI6InViLW5INU0ifQ.radc95S2bnienvUpDkl49A",
 		"sGoogleMapTileType": "HYBRID",
 		"iPopupDelay": 150,
 		"iGraphDelay": 500,
@@ -27994,7 +27994,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
+	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.eot";
 
 /***/ },
 /* 248 */
@@ -28003,7 +28003,7 @@
   \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
+	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.eot";
 
 /***/ },
 /* 249 */
@@ -28012,7 +28012,7 @@
   \****************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff2";
+	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.woff2";
 
 /***/ },
 /* 250 */
@@ -28021,7 +28021,7 @@
   \***************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff";
+	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.woff";
 
 /***/ },
 /* 251 */
@@ -28030,7 +28030,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.ttf";
+	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.ttf";
 
 /***/ },
 /* 252 */
@@ -28039,7 +28039,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.svg";
+	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.svg";
 
 /***/ },
 /* 253 */
@@ -91496,42 +91496,88 @@
 	var $ = __webpack_require__(/*! jquery */ 281);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	function uploadImage(file, prefix, _success, _error) {
-	    loadImage(file, function (canvas) {
-	        var dataUrl = canvas.toDataURL(file.type);
-	        // Create a formdata object and add the files
-	        var data = new FormData();
-	        data.append('image', dataUrl);
-	        data.append('prefix', prefix);
-	        data.append('type', file.type);
-	        $.ajax({
-	            url: Settings.uBaseName + Settings.uServer + "imageupload2.php",
-	            type: "POST",
-	            data: data,
-	            cache: false,
-	            processData: false,
-	            contentType: false,
-	            dataType: "json",
-	            success: function success(response, textStatus, jqXHR) {
-	                if (typeof response.error === "undefined") {
-	                    if (_success) {
-	                        _success(response.files[0].replace(Settings.uRelativeImageUpload, ""));
-	                    }
-	                } else {
-	                    if (_error) {
-	                        _error(response);
-	                    }
-	                }
-	            },
-	            error: function error(jqXHR, textStatus, errorThrown) {
-	                if (_error) {
-	                    _error(jqXHR);
-	                }
+	    loadImage.parseMetaData(file, function (data) {
+	        if (!data.imageHead) {
+	            return;
+	        }
+	        // Combine data.imageHead with the image body of a resized file
+	        // to create scaled images with the original image meta data, e.g.:
+	        var orientation = data.exif[0x0112];
+	        loadImage(file, function (canvas) {
+	            if (canvas.toBlob) {
+	                canvas.toBlob(function (blob) {
+	                    var url = window.URL.createObjectURL(blob);
+	                    var data = new FormData();
+	                    data.append('file', blob);
+	                    data.append('prefix', prefix);
+	                    $.ajax({
+	                        url: Settings.uBaseName + Settings.uServer + "imageupload3.php",
+	                        type: "POST",
+	                        data: data,
+	                        cache: false,
+	                        processData: false,
+	                        contentType: false,
+	                        dataType: "json",
+	                        success: function success(response, textStatus, jqXHR) {
+	                            if (typeof response.error === "undefined") {
+	                                if (_success) {
+	                                    _success(response.files[0].replace(Settings.uRelativeImageUpload, ""));
+	                                }
+	                            } else {
+	                                if (_error) {
+	                                    _error(response);
+	                                }
+	                            }
+	                        },
+	                        error: function error(jqXHR, textStatus, errorThrown) {
+	                            if (_error) {
+	                                _error(jqXHR);
+	                            }
+	                        }
+	                    });
+	                }, 'image/jpeg');
 	            }
+	            //
+	            // let dataUrl = canvas.toDataURL(file.type);
+	            // // Create a formdata object and add the files
+	            // var data = new FormData();
+	            // data.append('image', dataUrl);
+	            // data.append('prefix', prefix);
+	            // data.append('type', file.type);
+	            // $.ajax({
+	            //   url: Settings.uBaseName + Settings.uServer + "imageupload2.php",
+	            //   type: "POST",
+	            //   data: data,
+	            //   cache: false,
+	            //   processData: false, // Don't process the files
+	            //   contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+	            //   dataType: "json",
+	            //   success: function (response, textStatus, jqXHR) {
+	            //     if (typeof response.error === "undefined") {
+	            //       if (success) {
+	            //         success(response.files[0].replace(Settings.uRelativeImageUpload, ""));
+	            //       }
+	            //     } else {
+	            //       if (error) {
+	            //         error(response);
+	            //       }
+	            //     }
+	            //   },
+	            //   error: function (jqXHR, textStatus, errorThrown) {
+	            //     if (error) {
+	            //       error(jqXHR);
+	            //     }
+	            //   }
+	            // });
+	        }, {
+	            maxWidth: 1600,
+	            maxHeight: 900,
+	            canvas: true,
+	            orientation: orientation
 	        });
 	    }, {
-	        maxWidth: 1920,
-	        maxHeight: 1920,
-	        canvas: true
+	        maxMetaDataSize: 262144,
+	        disableImageHead: false
 	    });
 	}
 	exports.uploadImage = uploadImage;

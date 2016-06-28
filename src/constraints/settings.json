@@ -1,6 +1,6 @@
 {
-  "uBaseName": "/FoodParent2.0",
-  "uBaseNameForWebPack": "/FoodParent2.0/",
+  "uBaseName": "",
+  "uBaseNameForWebPack": "/",
   "uStaticImage": "/static/images/",
   "uContentImage": "/content/images/",
   "uRelativeImageUpload": "./../content/images/",
@@ -11,9 +11,9 @@
     "y": -84.3806
   },
   "uGrayTileMap" : "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
-  "uSatTileMap" : "//api.mapbox.com/styles/v1/jkim848/cipy54dx6000fbjnf70ublypr/tiles/256/{z}/{x}/{y}?access_token=",
+  "uSatTileMap" : "//api.mapbox.com/v4/mapbox.streets-satellite/{z}/{x}/{y}.png256?access_token=",
   "uMapboxAttribution": "Imagery © <a href=\"http://mapbox.com\">Mapbox</a>",
-  "sMapboxAccessToken": "pk.eyJ1IjoiamtpbTg0OCIsImEiOiJjaXB5NHJsMHcweGZ6ZnRtMmE4cGJiaTZlIn0.bWtmOU1OJZ10SE2hd8ksvQ",
+  "sMapboxAccessToken": "pk.eyJ1IjoiY29uY3JldGUtanVuZ2xlIiwiYSI6InViLW5INU0ifQ.radc95S2bnienvUpDkl49A",
   "sGoogleMapTileType": "HYBRID",
   "iPopupDelay": 150,
   "iGraphDelay": 500,
