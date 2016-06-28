@@ -25826,8 +25826,8 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-		"uBaseName": "",
-		"uBaseNameForWebPack": "/",
+		"uBaseName": "/FoodParent2.0",
+		"uBaseNameForWebPack": "/FoodParent2.0/",
 		"uStaticImage": "/static/images/",
 		"uContentImage": "/content/images/",
 		"uRelativeImageUpload": "./../content/images/",
@@ -27994,7 +27994,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.eot";
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
 
 /***/ },
 /* 248 */
@@ -28003,7 +28003,7 @@
   \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.eot";
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
 
 /***/ },
 /* 249 */
@@ -28012,7 +28012,7 @@
   \****************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.woff2";
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff2";
 
 /***/ },
 /* 250 */
@@ -28021,7 +28021,7 @@
   \***************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.woff";
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff";
 
 /***/ },
 /* 251 */
@@ -28030,7 +28030,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.ttf";
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.ttf";
 
 /***/ },
 /* 252 */
@@ -28039,7 +28039,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.svg";
+	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.svg";
 
 /***/ },
 /* 253 */
