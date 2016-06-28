@@ -124,9 +124,15 @@ export default class DonateAddComponent extends React.Component<IDonateAddProps,
       };
       var location: LocationModel = locationStore.getLocation(self.props.locationId);
       let food: FoodModel = foodStore.getFood(self.props.donate.getFoodId());
+      let title: string;
+      if (food) {
+        title = food.getName() + " to " + location.getName() + " - " + self.props.donate.getFormattedDate();
+      } else {
+        title = "Donation to " + location.getName() + " - " + self.props.donate.getFormattedDate();
+      }
       let image: JSX.Element;
       if (self.state.image) {
-        image = <ImageZoomComponent image={self.state.image} onClose={self.onImageClose} title={food.getName() + " at " + location.getName() + " - " + self.props.donate.getFormattedDate()} />;
+        image = <ImageZoomComponent image={self.state.image} onClose={self.onImageClose} title={title} />;
       }
       let images: Array<JSX.Element> = self.props.donate.getImages().map(function(image: string, i: number) {
         if (i == 0) {

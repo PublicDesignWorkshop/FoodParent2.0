@@ -75703,7 +75703,7 @@
 	                        height: Math.floor(self.state.width * 9 / 16)
 	                    };
 	                    var tree = tree_store_1.treeStore.getTree(self.props.treeId);
-	                    var food = food_store_1.foodStore.getFood(tree.getId());
+	                    var food = food_store_1.foodStore.getFood(tree.getFoodId());
 	                    var image = void 0;
 	                    if (self.state.image) {
 	                        image = React.createElement(image_zoom_component_1.default, { image: self.state.image, onClose: self.onImageClose, title: food.getName() + tree.getName() + " - " + self.props.note.getFormattedDate() });
@@ -98080,9 +98080,15 @@
 	                    location = location_store_1.locationStore.getLocation(self.props.locationId);
 	
 	                    var food = food_store_1.foodStore.getFood(self.props.donate.getFoodId());
+	                    var title = void 0;
+	                    if (food) {
+	                        title = food.getName() + " to " + location.getName() + " - " + self.props.donate.getFormattedDate();
+	                    } else {
+	                        title = "Donation to " + location.getName() + " - " + self.props.donate.getFormattedDate();
+	                    }
 	                    var image = void 0;
 	                    if (self.state.image) {
-	                        image = React.createElement(image_zoom_component_1.default, { image: self.state.image, onClose: self.onImageClose, title: food.getName() + " at " + location.getName() + " - " + self.props.donate.getFormattedDate() });
+	                        image = React.createElement(image_zoom_component_1.default, { image: self.state.image, onClose: self.onImageClose, title: title });
 	                    }
 	                    var images = self.props.donate.getImages().map(function (image, i) {
 	                        if (i == 0) {

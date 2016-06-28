@@ -124,7 +124,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
         height: Math.floor(self.state.width * 9 / 16),
       };
       let tree: TreeModel = treeStore.getTree(self.props.treeId);
-      let food: FoodModel = foodStore.getFood(tree.getId());
+      let food: FoodModel = foodStore.getFood(tree.getFoodId());
       let image: JSX.Element;
       if (self.state.image) {
         image = <ImageZoomComponent image={self.state.image} onClose={self.onImageClose} title={food.getName() + tree.getName() + " - " + self.props.note.getFormattedDate()} />;
