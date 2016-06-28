@@ -55,8 +55,8 @@
 	var routes_1 = __webpack_require__(/*! ./routes */ 218);
 	var localization_1 = __webpack_require__(/*! ./constraints/localization */ 225);
 	//import { sendMailFromParent } from './utils/mail';
-	__webpack_require__(/*! ./client.css */ 685);
-	__webpack_require__(/*! ./bootstrap-datetimepicker.css */ 687);
+	__webpack_require__(/*! ./client.css */ 681);
+	__webpack_require__(/*! ./bootstrap-datetimepicker.css */ 683);
 	var language = window.navigator.userLanguage || window.navigator.language;
 	localization_1.setCurrentLocalization(language);
 	ReactDOM.render(React.createElement(react_router_1.Router, { history: react_router_1.browserHistory }, routes_1.default), document.getElementById('app'));
@@ -25812,7 +25812,7 @@
 	var nomatch_component_1 = __webpack_require__(/*! ./components/nomatch.component */ 220);
 	var app_component_1 = __webpack_require__(/*! ./components/app.component */ 228);
 	var trees_component_1 = __webpack_require__(/*! ./components/trees/trees.component */ 441);
-	var donations_component_1 = __webpack_require__(/*! ./components/donations/donations.component */ 625);
+	var donations_component_1 = __webpack_require__(/*! ./components/donations/donations.component */ 621);
 	var RouteMap = React.createElement(react_router_1.Route, { path: Settings.uBaseNameForWebPack, component: app_component_1.default }, React.createElement(react_router_1.IndexRoute, { component: trees_component_1.default }), React.createElement(react_router_1.Route, { path: "tree/:treeId", component: trees_component_1.default }), React.createElement(react_router_1.Route, { path: "donations", component: donations_component_1.default }), React.createElement(react_router_1.Route, { path: "donation/:locationId", component: donations_component_1.default }), React.createElement(react_router_1.Route, { path: "*", component: nomatch_component_1.default }));
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = RouteMap;
@@ -25826,8 +25826,8 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-		"uBaseName": "/FoodParent2.0",
-		"uBaseNameForWebPack": "/FoodParent2.0/",
+		"uBaseName": "",
+		"uBaseNameForWebPack": "/",
 		"uStaticImage": "/static/images/",
 		"uContentImage": "/content/images/",
 		"uRelativeImageUpload": "./../content/images/",
@@ -27994,7 +27994,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
+	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.eot";
 
 /***/ },
 /* 248 */
@@ -28003,7 +28003,7 @@
   \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.eot";
+	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.eot";
 
 /***/ },
 /* 249 */
@@ -28012,7 +28012,7 @@
   \****************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff2";
+	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.woff2";
 
 /***/ },
 /* 250 */
@@ -28021,7 +28021,7 @@
   \***************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.woff";
+	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.woff";
 
 /***/ },
 /* 251 */
@@ -28030,7 +28030,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.ttf";
+	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.ttf";
 
 /***/ },
 /* 252 */
@@ -28039,7 +28039,7 @@
   \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/FoodParent2.0/dist/fontawesome-webfont.svg";
+	module.exports = __webpack_require__.p + "/dist/fontawesome-webfont.svg";
 
 /***/ },
 /* 253 */
@@ -50038,7 +50038,7 @@
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -69555,9 +69555,9 @@
 	var styles = __webpack_require__(/*! ./trees.component.css */ 446);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var trees_panel_component_1 = __webpack_require__(/*! ./trees-panel.component */ 448);
-	var trees_map_component_1 = __webpack_require__(/*! ./trees-map.component */ 608);
-	var popup_trees_component_1 = __webpack_require__(/*! ./../message/popup-trees.component */ 618);
-	var message_component_1 = __webpack_require__(/*! ./../message/message.component */ 621);
+	var trees_map_component_1 = __webpack_require__(/*! ./trees-map.component */ 604);
+	var popup_trees_component_1 = __webpack_require__(/*! ./../message/popup-trees.component */ 614);
+	var message_component_1 = __webpack_require__(/*! ./../message/message.component */ 617);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 485);
 	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 457);
@@ -69567,7 +69567,7 @@
 	var flag_actions_1 = __webpack_require__(/*! ./../../actions/flag.actions */ 488);
 	var map_store_1 = __webpack_require__(/*! ./../../stores/map.store */ 259);
 	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
-	var rating_1 = __webpack_require__(/*! ./../../utils/rating */ 624);
+	var rating_1 = __webpack_require__(/*! ./../../utils/rating */ 620);
 	var filter_1 = __webpack_require__(/*! ./../../utils/filter */ 460);
 	
 	var TreesComponent = function (_React$Component) {
@@ -69877,9 +69877,9 @@
 	;
 	var trees_controls_component_1 = __webpack_require__(/*! ./trees-controls.component */ 496);
 	var note_add_component_1 = __webpack_require__(/*! ./../note/note-add.component */ 499);
-	var note_edit_component_1 = __webpack_require__(/*! ./../note/note-edit.component */ 582);
-	var trees_filter_component_1 = __webpack_require__(/*! ./../filter/trees-filter.component */ 585);
-	var tree_graph_component_1 = __webpack_require__(/*! ./../tree/tree-graph.component */ 603);
+	var note_edit_component_1 = __webpack_require__(/*! ./../note/note-edit.component */ 578);
+	var trees_filter_component_1 = __webpack_require__(/*! ./../filter/trees-filter.component */ 581);
+	var tree_graph_component_1 = __webpack_require__(/*! ./../tree/tree-graph.component */ 599);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 485);
 	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 487);
 	var note_store_1 = __webpack_require__(/*! ./../../stores/note.store */ 490);
@@ -91533,63 +91533,43 @@
 	        maxHeight: 1920,
 	        canvas: true
 	    });
-	    //
-	    //
-	    // var reader = new FileReader();
-	    // reader.onloadend = function () {
-	    //   var maxWidth = 1920;
-	    // 	var maxHeight = 1920;
-	    //
-	    // 	var image = new Image();
-	    // 	image.src = reader.result;
-	    //   image.onload = function () {
-	    // 		var width = image.width;
-	    // 		var height = image.height;
-	    // 		var newWidth;
-	    // 		var newHeight;
-	    //
-	    // 		if (width > height) {
-	    // 			newHeight = height * (maxWidth / width);
-	    // 			newWidth = maxWidth;
-	    // 		} else {
-	    // 			newWidth = width * (maxHeight / height);
-	    // 			newHeight = maxHeight;
-	    // 		}
-	    // 		var canvas = document.createElement('canvas');
-	    //
-	    // 		canvas.width = newWidth;
-	    // 		canvas.height = newHeight;
-	    //
-	    // 		var context = canvas.getContext('2d');
-	    //
-	    //     context.drawImage(this, 0, 0, newWidth, newHeight);
-	    //
-	    //
-	    //
-	    //
-	    // 	};
-	    //
-	    // 	image.onerror = function () {
-	    // 		console.log('There was an error processing your file!');
-	    // 	};
-	    // }
-	    // reader.onerror = function () {
-	    // 	console.log('There was an error reading the file!');
-	    // }
-	    // reader.readAsDataURL(file);
-	    //
-	    //
-	    //
 	}
 	exports.uploadImage = uploadImage;
+	function uploadImage2(file, prefix, _success2, _error2) {
+	    // Create a formdata object and add the files
+	    var data = new FormData();
+	    data.append("filename", file);
+	    $.ajax({
+	        url: Settings.uBaseName + Settings.uServer + "imageupload.php" + "?prefix=" + prefix + "&files",
+	        type: "POST",
+	        data: data,
+	        cache: false,
+	        dataType: "json",
+	        processData: false,
+	        contentType: false,
+	        success: function success(response, textStatus, jqXHR) {
+	            if (typeof response.error === "undefined") {
+	                if (_success2) {
+	                    _success2(response.files[0].replace(Settings.uRelativeImageUpload, ""));
+	                }
+	            } else {
+	                if (_error2) {
+	                    _error2(response);
+	                }
+	            }
+	        },
+	        error: function error(jqXHR, textStatus, errorThrown) {
+	            if (_error2) {
+	                _error2(jqXHR);
+	            }
+	        }
+	    });
+	}
+	exports.uploadImage2 = uploadImage2;
 	//# sourceMappingURL=upload.js.map
 
 /***/ },
-/* 578 */,
-/* 579 */,
-/* 580 */,
-/* 581 */,
-/* 582 */
+/* 578 */
 /*!****************************************************!*\
   !*** ./src/components/note/note-edit.component.js ***!
   \****************************************************/
@@ -91608,7 +91588,7 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./note-edit.component.css */ 583);
+	var styles = __webpack_require__(/*! ./note-edit.component.css */ 579);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var note_comment_component_1 = __webpack_require__(/*! ./note-comment.component */ 502);
 	var note_date_component_1 = __webpack_require__(/*! ./note-date.component */ 507);
@@ -91790,7 +91770,7 @@
 	//# sourceMappingURL=note-edit.component.js.map
 
 /***/ },
-/* 583 */
+/* 579 */
 /*!*****************************************************!*\
   !*** ./src/components/note/note-edit.component.css ***!
   \*****************************************************/
@@ -91799,7 +91779,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./note-edit.component.css */ 584);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./note-edit.component.css */ 580);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -91819,7 +91799,7 @@
 	}
 
 /***/ },
-/* 584 */
+/* 580 */
 /*!********************************************************************!*\
   !*** ./~/css-loader!./src/components/note/note-edit.component.css ***!
   \********************************************************************/
@@ -91854,7 +91834,7 @@
 	};
 
 /***/ },
-/* 585 */
+/* 581 */
 /*!*********************************************************!*\
   !*** ./src/components/filter/trees-filter.component.js ***!
   \*********************************************************/
@@ -91873,13 +91853,13 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./trees-filter.component.css */ 586);
+	var styles = __webpack_require__(/*! ./trees-filter.component.css */ 582);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var filter_food_component_1 = __webpack_require__(/*! ./filter-food.component */ 588);
-	var filter_flag_component_1 = __webpack_require__(/*! ./filter-flag.component */ 591);
-	var filter_ownership_component_1 = __webpack_require__(/*! ./filter-ownership.component */ 594);
-	var filter_adopt_component_1 = __webpack_require__(/*! ./filter-adopt.component */ 597);
-	var filter_rate_component_1 = __webpack_require__(/*! ./filter-rate.component */ 600);
+	var filter_food_component_1 = __webpack_require__(/*! ./filter-food.component */ 584);
+	var filter_flag_component_1 = __webpack_require__(/*! ./filter-flag.component */ 587);
+	var filter_ownership_component_1 = __webpack_require__(/*! ./filter-ownership.component */ 590);
+	var filter_adopt_component_1 = __webpack_require__(/*! ./filter-adopt.component */ 593);
+	var filter_rate_component_1 = __webpack_require__(/*! ./filter-rate.component */ 596);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 330);
 	
 	var TreesFilterComponent = function (_React$Component) {
@@ -91948,7 +91928,7 @@
 	//# sourceMappingURL=trees-filter.component.js.map
 
 /***/ },
-/* 586 */
+/* 582 */
 /*!**********************************************************!*\
   !*** ./src/components/filter/trees-filter.component.css ***!
   \**********************************************************/
@@ -91957,7 +91937,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./trees-filter.component.css */ 587);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./trees-filter.component.css */ 583);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -91977,7 +91957,7 @@
 	}
 
 /***/ },
-/* 587 */
+/* 583 */
 /*!*************************************************************************!*\
   !*** ./~/css-loader!./src/components/filter/trees-filter.component.css ***!
   \*************************************************************************/
@@ -92006,7 +91986,7 @@
 	};
 
 /***/ },
-/* 588 */
+/* 584 */
 /*!********************************************************!*\
   !*** ./src/components/filter/filter-food.component.js ***!
   \********************************************************/
@@ -92027,7 +92007,7 @@
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 298);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./filter-food.component.css */ 589);
+	var styles = __webpack_require__(/*! ./filter-food.component.css */ 585);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 457);
 	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
@@ -92161,7 +92141,7 @@
 	//# sourceMappingURL=filter-food.component.js.map
 
 /***/ },
-/* 589 */
+/* 585 */
 /*!*********************************************************!*\
   !*** ./src/components/filter/filter-food.component.css ***!
   \*********************************************************/
@@ -92170,7 +92150,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./filter-food.component.css */ 590);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./filter-food.component.css */ 586);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -92190,7 +92170,7 @@
 	}
 
 /***/ },
-/* 590 */
+/* 586 */
 /*!************************************************************************!*\
   !*** ./~/css-loader!./src/components/filter/filter-food.component.css ***!
   \************************************************************************/
@@ -92213,7 +92193,7 @@
 	};
 
 /***/ },
-/* 591 */
+/* 587 */
 /*!********************************************************!*\
   !*** ./src/components/filter/filter-flag.component.js ***!
   \********************************************************/
@@ -92234,7 +92214,7 @@
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 298);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./filter-flag.component.css */ 592);
+	var styles = __webpack_require__(/*! ./filter-flag.component.css */ 588);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 487);
 	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
@@ -92361,7 +92341,7 @@
 	//# sourceMappingURL=filter-flag.component.js.map
 
 /***/ },
-/* 592 */
+/* 588 */
 /*!*********************************************************!*\
   !*** ./src/components/filter/filter-flag.component.css ***!
   \*********************************************************/
@@ -92370,7 +92350,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./filter-flag.component.css */ 593);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./filter-flag.component.css */ 589);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -92390,7 +92370,7 @@
 	}
 
 /***/ },
-/* 593 */
+/* 589 */
 /*!************************************************************************!*\
   !*** ./~/css-loader!./src/components/filter/filter-flag.component.css ***!
   \************************************************************************/
@@ -92412,7 +92392,7 @@
 	};
 
 /***/ },
-/* 594 */
+/* 590 */
 /*!*************************************************************!*\
   !*** ./src/components/filter/filter-ownership.component.js ***!
   \*************************************************************/
@@ -92433,7 +92413,7 @@
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 298);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./filter-ownership.component.css */ 595);
+	var styles = __webpack_require__(/*! ./filter-ownership.component.css */ 591);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
 	var filter_1 = __webpack_require__(/*! ./../../utils/filter */ 460);
@@ -92551,7 +92531,7 @@
 	//# sourceMappingURL=filter-ownership.component.js.map
 
 /***/ },
-/* 595 */
+/* 591 */
 /*!**************************************************************!*\
   !*** ./src/components/filter/filter-ownership.component.css ***!
   \**************************************************************/
@@ -92560,7 +92540,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./filter-ownership.component.css */ 596);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./filter-ownership.component.css */ 592);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -92580,7 +92560,7 @@
 	}
 
 /***/ },
-/* 596 */
+/* 592 */
 /*!*****************************************************************************!*\
   !*** ./~/css-loader!./src/components/filter/filter-ownership.component.css ***!
   \*****************************************************************************/
@@ -92602,7 +92582,7 @@
 	};
 
 /***/ },
-/* 597 */
+/* 593 */
 /*!*********************************************************!*\
   !*** ./src/components/filter/filter-adopt.component.js ***!
   \*********************************************************/
@@ -92623,7 +92603,7 @@
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 298);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./filter-adopt.component.css */ 598);
+	var styles = __webpack_require__(/*! ./filter-adopt.component.css */ 594);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 330);
 	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
@@ -92736,7 +92716,7 @@
 	//# sourceMappingURL=filter-adopt.component.js.map
 
 /***/ },
-/* 598 */
+/* 594 */
 /*!**********************************************************!*\
   !*** ./src/components/filter/filter-adopt.component.css ***!
   \**********************************************************/
@@ -92745,7 +92725,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./filter-adopt.component.css */ 599);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./filter-adopt.component.css */ 595);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -92765,7 +92745,7 @@
 	}
 
 /***/ },
-/* 599 */
+/* 595 */
 /*!*************************************************************************!*\
   !*** ./~/css-loader!./src/components/filter/filter-adopt.component.css ***!
   \*************************************************************************/
@@ -92787,7 +92767,7 @@
 	};
 
 /***/ },
-/* 600 */
+/* 596 */
 /*!********************************************************!*\
   !*** ./src/components/filter/filter-rate.component.js ***!
   \********************************************************/
@@ -92808,7 +92788,7 @@
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 298);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./filter-rate.component.css */ 601);
+	var styles = __webpack_require__(/*! ./filter-rate.component.css */ 597);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
 	var filter_1 = __webpack_require__(/*! ./../../utils/filter */ 460);
@@ -92959,7 +92939,7 @@
 	//# sourceMappingURL=filter-rate.component.js.map
 
 /***/ },
-/* 601 */
+/* 597 */
 /*!*********************************************************!*\
   !*** ./src/components/filter/filter-rate.component.css ***!
   \*********************************************************/
@@ -92968,7 +92948,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./filter-rate.component.css */ 602);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./filter-rate.component.css */ 598);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -92988,7 +92968,7 @@
 	}
 
 /***/ },
-/* 602 */
+/* 598 */
 /*!************************************************************************!*\
   !*** ./~/css-loader!./src/components/filter/filter-rate.component.css ***!
   \************************************************************************/
@@ -93010,7 +92990,7 @@
 	};
 
 /***/ },
-/* 603 */
+/* 599 */
 /*!*****************************************************!*\
   !*** ./src/components/tree/tree-graph.component.js ***!
   \*****************************************************/
@@ -93032,12 +93012,12 @@
 	var moment = __webpack_require__(/*! moment */ 331);
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 298);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./tree-graph.component.css */ 604);
+	var styles = __webpack_require__(/*! ./tree-graph.component.css */ 600);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var note_store_1 = __webpack_require__(/*! ./../../stores/note.store */ 490);
 	var sort_1 = __webpack_require__(/*! ./../../utils/sort */ 289);
-	var color_1 = __webpack_require__(/*! ./../../utils/color */ 606);
-	var device_1 = __webpack_require__(/*! ./../../utils/device */ 607);
+	var color_1 = __webpack_require__(/*! ./../../utils/color */ 602);
+	var device_1 = __webpack_require__(/*! ./../../utils/device */ 603);
 	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -93229,7 +93209,7 @@
 	//# sourceMappingURL=tree-graph.component.js.map
 
 /***/ },
-/* 604 */
+/* 600 */
 /*!******************************************************!*\
   !*** ./src/components/tree/tree-graph.component.css ***!
   \******************************************************/
@@ -93238,7 +93218,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./tree-graph.component.css */ 605);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./tree-graph.component.css */ 601);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -93258,7 +93238,7 @@
 	}
 
 /***/ },
-/* 605 */
+/* 601 */
 /*!*********************************************************************!*\
   !*** ./~/css-loader!./src/components/tree/tree-graph.component.css ***!
   \*********************************************************************/
@@ -93285,7 +93265,7 @@
 	};
 
 /***/ },
-/* 606 */
+/* 602 */
 /*!****************************!*\
   !*** ./src/utils/color.js ***!
   \****************************/
@@ -93301,7 +93281,7 @@
 	//# sourceMappingURL=color.js.map
 
 /***/ },
-/* 607 */
+/* 603 */
 /*!*****************************!*\
   !*** ./src/utils/device.js ***!
   \*****************************/
@@ -93325,7 +93305,7 @@
 	//# sourceMappingURL=device.js.map
 
 /***/ },
-/* 608 */
+/* 604 */
 /*!*****************************************************!*\
   !*** ./src/components/trees/trees-map.component.js ***!
   \*****************************************************/
@@ -93344,13 +93324,13 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var L = __webpack_require__(/*! leaflet */ 274);
-	__webpack_require__(/*! leaflet.markercluster */ 609);
-	__webpack_require__(/*! googletile */ 610);
+	__webpack_require__(/*! leaflet.markercluster */ 605);
+	__webpack_require__(/*! googletile */ 606);
 	var _ = __webpack_require__(/*! underscore */ 486);
 	__webpack_require__(/*! ./../../../~/leaflet/dist/leaflet.css */ 442);
 	var styles = __webpack_require__(/*! ./trees.component.css */ 446);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var marker_factory_1 = __webpack_require__(/*! ./../../utils/marker.factory */ 611);
+	var marker_factory_1 = __webpack_require__(/*! ./../../utils/marker.factory */ 607);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 457);
 	var map_store_1 = __webpack_require__(/*! ./../../stores/map.store */ 259);
 	var map_actions_1 = __webpack_require__(/*! ./../../actions/map.actions */ 275);
@@ -93671,7 +93651,7 @@
 	//# sourceMappingURL=trees-map.component.js.map
 
 /***/ },
-/* 609 */
+/* 605 */
 /*!***************************************************************!*\
   !*** ./~/leaflet.markercluster/dist/leaflet.markercluster.js ***!
   \***************************************************************/
@@ -93685,7 +93665,7 @@
 	!function(t,e){L.MarkerClusterGroup=L.FeatureGroup.extend({options:{maxClusterRadius:80,iconCreateFunction:null,spiderfyOnMaxZoom:!0,showCoverageOnHover:!0,zoomToBoundsOnClick:!0,singleMarkerMode:!1,disableClusteringAtZoom:null,removeOutsideVisibleBounds:!0,animateAddingMarkers:!1,spiderfyDistanceMultiplier:1,polygonOptions:{}},initialize:function(t){L.Util.setOptions(this,t),this.options.iconCreateFunction||(this.options.iconCreateFunction=this._defaultIconCreateFunction),this._featureGroup=L.featureGroup(),this._featureGroup.on(L.FeatureGroup.EVENTS,this._propagateEvent,this),this._nonPointGroup=L.featureGroup(),this._nonPointGroup.on(L.FeatureGroup.EVENTS,this._propagateEvent,this),this._inZoomAnimation=0,this._needsClustering=[],this._needsRemoving=[],this._currentShownBounds=null,this._queue=[]},addLayer:function(t){if(t instanceof L.LayerGroup){var e=[];for(var i in t._layers)e.push(t._layers[i]);return this.addLayers(e)}if(!t.getLatLng)return this._nonPointGroup.addLayer(t),this;if(!this._map)return this._needsClustering.push(t),this;if(this.hasLayer(t))return this;this._unspiderfy&&this._unspiderfy(),this._addLayer(t,this._maxZoom);var n=t,s=this._map.getZoom();if(t.__parent)for(;n.__parent._zoom>=s;)n=n.__parent;return this._currentShownBounds.contains(n.getLatLng())&&(this.options.animateAddingMarkers?this._animationAddLayer(t,n):this._animationAddLayerNonAnimated(t,n)),this},removeLayer:function(t){if(t instanceof L.LayerGroup){var e=[];for(var i in t._layers)e.push(t._layers[i]);return this.removeLayers(e)}return t.getLatLng?this._map?t.__parent?(this._unspiderfy&&(this._unspiderfy(),this._unspiderfyLayer(t)),this._removeLayer(t,!0),this._featureGroup.hasLayer(t)&&(this._featureGroup.removeLayer(t),t.setOpacity&&t.setOpacity(1)),this):this:(!this._arraySplice(this._needsClustering,t)&&this.hasLayer(t)&&this._needsRemoving.push(t),this):(this._nonPointGroup.removeLayer(t),this)},addLayers:function(t){var e,i,n,s=this._map,r=this._featureGroup,o=this._nonPointGroup;for(e=0,i=t.length;i>e;e++)if(n=t[e],n.getLatLng){if(!this.hasLayer(n))if(s){if(this._addLayer(n,this._maxZoom),n.__parent&&2===n.__parent.getChildCount()){var a=n.__parent.getAllChildMarkers(),h=a[0]===n?a[1]:a[0];r.removeLayer(h)}}else this._needsClustering.push(n)}else o.addLayer(n);return s&&(r.eachLayer(function(t){t instanceof L.MarkerCluster&&t._iconNeedsUpdate&&t._updateIcon()}),this._topClusterLevel._recursivelyAddChildrenToMap(null,this._zoom,this._currentShownBounds)),this},removeLayers:function(t){var e,i,n,s=this._featureGroup,r=this._nonPointGroup;if(!this._map){for(e=0,i=t.length;i>e;e++)n=t[e],this._arraySplice(this._needsClustering,n),r.removeLayer(n);return this}for(e=0,i=t.length;i>e;e++)n=t[e],n.__parent?(this._removeLayer(n,!0,!0),s.hasLayer(n)&&(s.removeLayer(n),n.setOpacity&&n.setOpacity(1))):r.removeLayer(n);return this._topClusterLevel._recursivelyAddChildrenToMap(null,this._zoom,this._currentShownBounds),s.eachLayer(function(t){t instanceof L.MarkerCluster&&t._updateIcon()}),this},clearLayers:function(){return this._map||(this._needsClustering=[],delete this._gridClusters,delete this._gridUnclustered),this._noanimationUnspiderfy&&this._noanimationUnspiderfy(),this._featureGroup.clearLayers(),this._nonPointGroup.clearLayers(),this.eachLayer(function(t){delete t.__parent}),this._map&&this._generateInitialClusters(),this},getBounds:function(){var t=new L.LatLngBounds;if(this._topClusterLevel)t.extend(this._topClusterLevel._bounds);else for(var e=this._needsClustering.length-1;e>=0;e--)t.extend(this._needsClustering[e].getLatLng());return t.extend(this._nonPointGroup.getBounds()),t},eachLayer:function(t,e){var i,n=this._needsClustering.slice();for(this._topClusterLevel&&this._topClusterLevel.getAllChildMarkers(n),i=n.length-1;i>=0;i--)t.call(e,n[i]);this._nonPointGroup.eachLayer(t,e)},getLayers:function(){var t=[];return this.eachLayer(function(e){t.push(e)}),t},getLayer:function(t){var e=null;return this.eachLayer(function(i){L.stamp(i)===t&&(e=i)}),e},hasLayer:function(t){if(!t)return!1;var e,i=this._needsClustering;for(e=i.length-1;e>=0;e--)if(i[e]===t)return!0;for(i=this._needsRemoving,e=i.length-1;e>=0;e--)if(i[e]===t)return!1;return!(!t.__parent||t.__parent._group!==this)||this._nonPointGroup.hasLayer(t)},zoomToShowLayer:function(t,e){var i=function(){if((t._icon||t.__parent._icon)&&!this._inZoomAnimation)if(this._map.off("moveend",i,this),this.off("animationend",i,this),t._icon)e();else if(t.__parent._icon){var n=function(){this.off("spiderfied",n,this),e()};this.on("spiderfied",n,this),t.__parent.spiderfy()}};t._icon&&this._map.getBounds().contains(t.getLatLng())?e():t.__parent._zoom<this._map.getZoom()?(this._map.on("moveend",i,this),this._map.panTo(t.getLatLng())):(this._map.on("moveend",i,this),this.on("animationend",i,this),this._map.setView(t.getLatLng(),t.__parent._zoom+1),t.__parent.zoomToBounds())},onAdd:function(t){this._map=t;var e,i,n;if(!isFinite(this._map.getMaxZoom()))throw"Map has no maxZoom specified";for(this._featureGroup.onAdd(t),this._nonPointGroup.onAdd(t),this._gridClusters||this._generateInitialClusters(),e=0,i=this._needsRemoving.length;i>e;e++)n=this._needsRemoving[e],this._removeLayer(n,!0);for(this._needsRemoving=[],e=0,i=this._needsClustering.length;i>e;e++)n=this._needsClustering[e],n.getLatLng?n.__parent||this._addLayer(n,this._maxZoom):this._featureGroup.addLayer(n);this._needsClustering=[],this._map.on("zoomend",this._zoomEnd,this),this._map.on("moveend",this._moveEnd,this),this._spiderfierOnAdd&&this._spiderfierOnAdd(),this._bindEvents(),this._zoom=this._map.getZoom(),this._currentShownBounds=this._getExpandedVisibleBounds(),this._topClusterLevel._recursivelyAddChildrenToMap(null,this._zoom,this._currentShownBounds)},onRemove:function(t){t.off("zoomend",this._zoomEnd,this),t.off("moveend",this._moveEnd,this),this._unbindEvents(),this._map._mapPane.className=this._map._mapPane.className.replace(" leaflet-cluster-anim",""),this._spiderfierOnRemove&&this._spiderfierOnRemove(),this._hideCoverage(),this._featureGroup.onRemove(t),this._nonPointGroup.onRemove(t),this._featureGroup.clearLayers(),this._map=null},getVisibleParent:function(t){for(var e=t;e&&!e._icon;)e=e.__parent;return e||null},_arraySplice:function(t,e){for(var i=t.length-1;i>=0;i--)if(t[i]===e)return t.splice(i,1),!0},_removeLayer:function(t,e,i){var n=this._gridClusters,s=this._gridUnclustered,r=this._featureGroup,o=this._map;if(e)for(var a=this._maxZoom;a>=0&&s[a].removeObject(t,o.project(t.getLatLng(),a));a--);var h,_=t.__parent,u=_._markers;for(this._arraySplice(u,t);_&&(_._childCount--,!(_._zoom<0));)e&&_._childCount<=1?(h=_._markers[0]===t?_._markers[1]:_._markers[0],n[_._zoom].removeObject(_,o.project(_._cLatLng,_._zoom)),s[_._zoom].addObject(h,o.project(h.getLatLng(),_._zoom)),this._arraySplice(_.__parent._childClusters,_),_.__parent._markers.push(h),h.__parent=_.__parent,_._icon&&(r.removeLayer(_),i||r.addLayer(h))):(_._recalculateBounds(),i&&_._icon||_._updateIcon()),_=_.__parent;delete t.__parent},_isOrIsParent:function(t,e){for(;e;){if(t===e)return!0;e=e.parentNode}return!1},_propagateEvent:function(t){if(t.layer instanceof L.MarkerCluster){if(t.originalEvent&&this._isOrIsParent(t.layer._icon,t.originalEvent.relatedTarget))return;t.type="cluster"+t.type}this.fire(t.type,t)},_defaultIconCreateFunction:function(t){var e=t.getChildCount(),i=" marker-cluster-";return i+=10>e?"small":100>e?"medium":"large",new L.DivIcon({html:"<div><span>"+e+"</span></div>",className:"marker-cluster"+i,iconSize:new L.Point(40,40)})},_bindEvents:function(){var t=this._map,e=this.options.spiderfyOnMaxZoom,i=this.options.showCoverageOnHover,n=this.options.zoomToBoundsOnClick;(e||n)&&this.on("clusterclick",this._zoomOrSpiderfy,this),i&&(this.on("clustermouseover",this._showCoverage,this),this.on("clustermouseout",this._hideCoverage,this),t.on("zoomend",this._hideCoverage,this))},_zoomOrSpiderfy:function(t){var e=this._map;e.getMaxZoom()===e.getZoom()?this.options.spiderfyOnMaxZoom&&t.layer.spiderfy():this.options.zoomToBoundsOnClick&&t.layer.zoomToBounds(),t.originalEvent&&13===t.originalEvent.keyCode&&e._container.focus()},_showCoverage:function(t){var e=this._map;this._inZoomAnimation||(this._shownPolygon&&e.removeLayer(this._shownPolygon),t.layer.getChildCount()>2&&t.layer!==this._spiderfied&&(this._shownPolygon=new L.Polygon(t.layer.getConvexHull(),this.options.polygonOptions),e.addLayer(this._shownPolygon)))},_hideCoverage:function(){this._shownPolygon&&(this._map.removeLayer(this._shownPolygon),this._shownPolygon=null)},_unbindEvents:function(){var t=this.options.spiderfyOnMaxZoom,e=this.options.showCoverageOnHover,i=this.options.zoomToBoundsOnClick,n=this._map;(t||i)&&this.off("clusterclick",this._zoomOrSpiderfy,this),e&&(this.off("clustermouseover",this._showCoverage,this),this.off("clustermouseout",this._hideCoverage,this),n.off("zoomend",this._hideCoverage,this))},_zoomEnd:function(){this._map&&(this._mergeSplitClusters(),this._zoom=this._map._zoom,this._currentShownBounds=this._getExpandedVisibleBounds())},_moveEnd:function(){if(!this._inZoomAnimation){var t=this._getExpandedVisibleBounds();this._topClusterLevel._recursivelyRemoveChildrenFromMap(this._currentShownBounds,this._zoom,t),this._topClusterLevel._recursivelyAddChildrenToMap(null,this._map._zoom,t),this._currentShownBounds=t}},_generateInitialClusters:function(){var t=this._map.getMaxZoom(),e=this.options.maxClusterRadius;this.options.disableClusteringAtZoom&&(t=this.options.disableClusteringAtZoom-1),this._maxZoom=t,this._gridClusters={},this._gridUnclustered={};for(var i=t;i>=0;i--)this._gridClusters[i]=new L.DistanceGrid(e),this._gridUnclustered[i]=new L.DistanceGrid(e);this._topClusterLevel=new L.MarkerCluster(this,-1)},_addLayer:function(t,e){var i,n,s=this._gridClusters,r=this._gridUnclustered;for(this.options.singleMarkerMode&&(t.options.icon=this.options.iconCreateFunction({getChildCount:function(){return 1},getAllChildMarkers:function(){return[t]}}));e>=0;e--){i=this._map.project(t.getLatLng(),e);var o=s[e].getNearObject(i);if(o)return o._addChild(t),t.__parent=o,void 0;if(o=r[e].getNearObject(i)){var a=o.__parent;a&&this._removeLayer(o,!1);var h=new L.MarkerCluster(this,e,o,t);s[e].addObject(h,this._map.project(h._cLatLng,e)),o.__parent=h,t.__parent=h;var _=h;for(n=e-1;n>a._zoom;n--)_=new L.MarkerCluster(this,n,_),s[n].addObject(_,this._map.project(o.getLatLng(),n));for(a._addChild(_),n=e;n>=0&&r[n].removeObject(o,this._map.project(o.getLatLng(),n));n--);return}r[e].addObject(t,i)}this._topClusterLevel._addChild(t),t.__parent=this._topClusterLevel},_enqueue:function(t){this._queue.push(t),this._queueTimeout||(this._queueTimeout=setTimeout(L.bind(this._processQueue,this),300))},_processQueue:function(){for(var t=0;t<this._queue.length;t++)this._queue[t].call(this);this._queue.length=0,clearTimeout(this._queueTimeout),this._queueTimeout=null},_mergeSplitClusters:function(){this._processQueue(),this._zoom<this._map._zoom&&this._currentShownBounds.contains(this._getExpandedVisibleBounds())?(this._animationStart(),this._topClusterLevel._recursivelyRemoveChildrenFromMap(this._currentShownBounds,this._zoom,this._getExpandedVisibleBounds()),this._animationZoomIn(this._zoom,this._map._zoom)):this._zoom>this._map._zoom?(this._animationStart(),this._animationZoomOut(this._zoom,this._map._zoom)):this._moveEnd()},_getExpandedVisibleBounds:function(){if(!this.options.removeOutsideVisibleBounds)return this.getBounds();var t=this._map,e=t.getBounds(),i=e._southWest,n=e._northEast,s=L.Browser.mobile?0:Math.abs(i.lat-n.lat),r=L.Browser.mobile?0:Math.abs(i.lng-n.lng);return new L.LatLngBounds(new L.LatLng(i.lat-s,i.lng-r,!0),new L.LatLng(n.lat+s,n.lng+r,!0))},_animationAddLayerNonAnimated:function(t,e){if(e===t)this._featureGroup.addLayer(t);else if(2===e._childCount){e._addToMap();var i=e.getAllChildMarkers();this._featureGroup.removeLayer(i[0]),this._featureGroup.removeLayer(i[1])}else e._updateIcon()}}),L.MarkerClusterGroup.include(L.DomUtil.TRANSITION?{_animationStart:function(){this._map._mapPane.className+=" leaflet-cluster-anim",this._inZoomAnimation++},_animationEnd:function(){this._map&&(this._map._mapPane.className=this._map._mapPane.className.replace(" leaflet-cluster-anim","")),this._inZoomAnimation--,this.fire("animationend")},_animationZoomIn:function(t,e){var i,n=this._getExpandedVisibleBounds(),s=this._featureGroup;this._topClusterLevel._recursively(n,t,0,function(r){var o,a=r._latlng,h=r._markers;for(n.contains(a)||(a=null),r._isSingleParent()&&t+1===e?(s.removeLayer(r),r._recursivelyAddChildrenToMap(null,e,n)):(r.setOpacity(0),r._recursivelyAddChildrenToMap(a,e,n)),i=h.length-1;i>=0;i--)o=h[i],n.contains(o._latlng)||s.removeLayer(o)}),this._forceLayout(),this._topClusterLevel._recursivelyBecomeVisible(n,e),s.eachLayer(function(t){t instanceof L.MarkerCluster||!t._icon||t.setOpacity(1)}),this._topClusterLevel._recursively(n,t,e,function(t){t._recursivelyRestoreChildPositions(e)}),this._enqueue(function(){this._topClusterLevel._recursively(n,t,0,function(t){s.removeLayer(t),t.setOpacity(1)}),this._animationEnd()})},_animationZoomOut:function(t,e){this._animationZoomOutSingle(this._topClusterLevel,t-1,e),this._topClusterLevel._recursivelyAddChildrenToMap(null,e,this._getExpandedVisibleBounds()),this._topClusterLevel._recursivelyRemoveChildrenFromMap(this._currentShownBounds,t,this._getExpandedVisibleBounds())},_animationZoomOutSingle:function(t,e,i){var n=this._getExpandedVisibleBounds();t._recursivelyAnimateChildrenInAndAddSelfToMap(n,e+1,i);var s=this;this._forceLayout(),t._recursivelyBecomeVisible(n,i),this._enqueue(function(){if(1===t._childCount){var r=t._markers[0];r.setLatLng(r.getLatLng()),r.setOpacity(1)}else t._recursively(n,i,0,function(t){t._recursivelyRemoveChildrenFromMap(n,e+1)});s._animationEnd()})},_animationAddLayer:function(t,e){var i=this,n=this._featureGroup;n.addLayer(t),e!==t&&(e._childCount>2?(e._updateIcon(),this._forceLayout(),this._animationStart(),t._setPos(this._map.latLngToLayerPoint(e.getLatLng())),t.setOpacity(0),this._enqueue(function(){n.removeLayer(t),t.setOpacity(1),i._animationEnd()})):(this._forceLayout(),i._animationStart(),i._animationZoomOutSingle(e,this._map.getMaxZoom(),this._map.getZoom())))},_forceLayout:function(){L.Util.falseFn(e.body.offsetWidth)}}:{_animationStart:function(){},_animationZoomIn:function(t,e){this._topClusterLevel._recursivelyRemoveChildrenFromMap(this._currentShownBounds,t),this._topClusterLevel._recursivelyAddChildrenToMap(null,e,this._getExpandedVisibleBounds())},_animationZoomOut:function(t,e){this._topClusterLevel._recursivelyRemoveChildrenFromMap(this._currentShownBounds,t),this._topClusterLevel._recursivelyAddChildrenToMap(null,e,this._getExpandedVisibleBounds())},_animationAddLayer:function(t,e){this._animationAddLayerNonAnimated(t,e)}}),L.markerClusterGroup=function(t){return new L.MarkerClusterGroup(t)},L.MarkerCluster=L.Marker.extend({initialize:function(t,e,i,n){L.Marker.prototype.initialize.call(this,i?i._cLatLng||i.getLatLng():new L.LatLng(0,0),{icon:this}),this._group=t,this._zoom=e,this._markers=[],this._childClusters=[],this._childCount=0,this._iconNeedsUpdate=!0,this._bounds=new L.LatLngBounds,i&&this._addChild(i),n&&this._addChild(n)},getAllChildMarkers:function(t){t=t||[];for(var e=this._childClusters.length-1;e>=0;e--)this._childClusters[e].getAllChildMarkers(t);for(var i=this._markers.length-1;i>=0;i--)t.push(this._markers[i]);return t},getChildCount:function(){return this._childCount},zoomToBounds:function(){for(var t,e=this._childClusters.slice(),i=this._group._map,n=i.getBoundsZoom(this._bounds),s=this._zoom+1,r=i.getZoom();e.length>0&&n>s;){s++;var o=[];for(t=0;t<e.length;t++)o=o.concat(e[t]._childClusters);e=o}n>s?this._group._map.setView(this._latlng,s):r>=n?this._group._map.setView(this._latlng,r+1):this._group._map.fitBounds(this._bounds)},getBounds:function(){var t=new L.LatLngBounds;return t.extend(this._bounds),t},_updateIcon:function(){this._iconNeedsUpdate=!0,this._icon&&this.setIcon(this)},createIcon:function(){return this._iconNeedsUpdate&&(this._iconObj=this._group.options.iconCreateFunction(this),this._iconNeedsUpdate=!1),this._iconObj.createIcon()},createShadow:function(){return this._iconObj.createShadow()},_addChild:function(t,e){this._iconNeedsUpdate=!0,this._expandBounds(t),t instanceof L.MarkerCluster?(e||(this._childClusters.push(t),t.__parent=this),this._childCount+=t._childCount):(e||this._markers.push(t),this._childCount++),this.__parent&&this.__parent._addChild(t,!0)},_expandBounds:function(t){var e,i=t._wLatLng||t._latlng;t instanceof L.MarkerCluster?(this._bounds.extend(t._bounds),e=t._childCount):(this._bounds.extend(i),e=1),this._cLatLng||(this._cLatLng=t._cLatLng||i);var n=this._childCount+e;this._wLatLng?(this._wLatLng.lat=(i.lat*e+this._wLatLng.lat*this._childCount)/n,this._wLatLng.lng=(i.lng*e+this._wLatLng.lng*this._childCount)/n):this._latlng=this._wLatLng=new L.LatLng(i.lat,i.lng)},_addToMap:function(t){t&&(this._backupLatlng=this._latlng,this.setLatLng(t)),this._group._featureGroup.addLayer(this)},_recursivelyAnimateChildrenIn:function(t,e,i){this._recursively(t,0,i-1,function(t){var i,n,s=t._markers;for(i=s.length-1;i>=0;i--)n=s[i],n._icon&&(n._setPos(e),n.setOpacity(0))},function(t){var i,n,s=t._childClusters;for(i=s.length-1;i>=0;i--)n=s[i],n._icon&&(n._setPos(e),n.setOpacity(0))})},_recursivelyAnimateChildrenInAndAddSelfToMap:function(t,e,i){this._recursively(t,i,0,function(n){n._recursivelyAnimateChildrenIn(t,n._group._map.latLngToLayerPoint(n.getLatLng()).round(),e),n._isSingleParent()&&e-1===i?(n.setOpacity(1),n._recursivelyRemoveChildrenFromMap(t,e)):n.setOpacity(0),n._addToMap()})},_recursivelyBecomeVisible:function(t,e){this._recursively(t,0,e,null,function(t){t.setOpacity(1)})},_recursivelyAddChildrenToMap:function(t,e,i){this._recursively(i,-1,e,function(n){if(e!==n._zoom)for(var s=n._markers.length-1;s>=0;s--){var r=n._markers[s];i.contains(r._latlng)&&(t&&(r._backupLatlng=r.getLatLng(),r.setLatLng(t),r.setOpacity&&r.setOpacity(0)),n._group._featureGroup.addLayer(r))}},function(e){e._addToMap(t)})},_recursivelyRestoreChildPositions:function(t){for(var e=this._markers.length-1;e>=0;e--){var i=this._markers[e];i._backupLatlng&&(i.setLatLng(i._backupLatlng),delete i._backupLatlng)}if(t-1===this._zoom)for(var n=this._childClusters.length-1;n>=0;n--)this._childClusters[n]._restorePosition();else for(var s=this._childClusters.length-1;s>=0;s--)this._childClusters[s]._recursivelyRestoreChildPositions(t)},_restorePosition:function(){this._backupLatlng&&(this.setLatLng(this._backupLatlng),delete this._backupLatlng)},_recursivelyRemoveChildrenFromMap:function(t,e,i){var n,s;this._recursively(t,-1,e-1,function(t){for(s=t._markers.length-1;s>=0;s--)n=t._markers[s],i&&i.contains(n._latlng)||(t._group._featureGroup.removeLayer(n),n.setOpacity&&n.setOpacity(1))},function(t){for(s=t._childClusters.length-1;s>=0;s--)n=t._childClusters[s],i&&i.contains(n._latlng)||(t._group._featureGroup.removeLayer(n),n.setOpacity&&n.setOpacity(1))})},_recursively:function(t,e,i,n,s){var r,o,a=this._childClusters,h=this._zoom;if(e>h)for(r=a.length-1;r>=0;r--)o=a[r],t.intersects(o._bounds)&&o._recursively(t,e,i,n,s);else if(n&&n(this),s&&this._zoom===i&&s(this),i>h)for(r=a.length-1;r>=0;r--)o=a[r],t.intersects(o._bounds)&&o._recursively(t,e,i,n,s)},_recalculateBounds:function(){var t,e=this._markers,i=this._childClusters;for(this._bounds=new L.LatLngBounds,delete this._wLatLng,t=e.length-1;t>=0;t--)this._expandBounds(e[t]);for(t=i.length-1;t>=0;t--)this._expandBounds(i[t])},_isSingleParent:function(){return this._childClusters.length>0&&this._childClusters[0]._childCount===this._childCount}}),L.DistanceGrid=function(t){this._cellSize=t,this._sqCellSize=t*t,this._grid={},this._objectPoint={}},L.DistanceGrid.prototype={addObject:function(t,e){var i=this._getCoord(e.x),n=this._getCoord(e.y),s=this._grid,r=s[n]=s[n]||{},o=r[i]=r[i]||[],a=L.Util.stamp(t);this._objectPoint[a]=e,o.push(t)},updateObject:function(t,e){this.removeObject(t),this.addObject(t,e)},removeObject:function(t,e){var i,n,s=this._getCoord(e.x),r=this._getCoord(e.y),o=this._grid,a=o[r]=o[r]||{},h=a[s]=a[s]||[];for(delete this._objectPoint[L.Util.stamp(t)],i=0,n=h.length;n>i;i++)if(h[i]===t)return h.splice(i,1),1===n&&delete a[s],!0},eachObject:function(t,e){var i,n,s,r,o,a,h,_=this._grid;for(i in _){o=_[i];for(n in o)for(a=o[n],s=0,r=a.length;r>s;s++)h=t.call(e,a[s]),h&&(s--,r--)}},getNearObject:function(t){var e,i,n,s,r,o,a,h,_=this._getCoord(t.x),u=this._getCoord(t.y),l=this._objectPoint,d=this._sqCellSize,p=null;for(e=u-1;u+1>=e;e++)if(s=this._grid[e])for(i=_-1;_+1>=i;i++)if(r=s[i])for(n=0,o=r.length;o>n;n++)a=r[n],h=this._sqDist(l[L.Util.stamp(a)],t),d>h&&(d=h,p=a);return p},_getCoord:function(t){return Math.floor(t/this._cellSize)},_sqDist:function(t,e){var i=e.x-t.x,n=e.y-t.y;return i*i+n*n}},function(){L.QuickHull={getDistant:function(t,e){var i=e[1].lat-e[0].lat,n=e[0].lng-e[1].lng;return n*(t.lat-e[0].lat)+i*(t.lng-e[0].lng)},findMostDistantPointFromBaseLine:function(t,e){var i,n,s,r=0,o=null,a=[];for(i=e.length-1;i>=0;i--)n=e[i],s=this.getDistant(n,t),s>0&&(a.push(n),s>r&&(r=s,o=n));return{maxPoint:o,newPoints:a}},buildConvexHull:function(t,e){var i=[],n=this.findMostDistantPointFromBaseLine(t,e);return n.maxPoint?(i=i.concat(this.buildConvexHull([t[0],n.maxPoint],n.newPoints)),i=i.concat(this.buildConvexHull([n.maxPoint,t[1]],n.newPoints))):[t[0]]},getConvexHull:function(t){var e,i=!1,n=!1,s=null,r=null;for(e=t.length-1;e>=0;e--){var o=t[e];(i===!1||o.lat>i)&&(s=o,i=o.lat),(n===!1||o.lat<n)&&(r=o,n=o.lat)}var a=[].concat(this.buildConvexHull([r,s],t),this.buildConvexHull([s,r],t));return a}}}(),L.MarkerCluster.include({getConvexHull:function(){var t,e,i=this.getAllChildMarkers(),n=[];for(e=i.length-1;e>=0;e--)t=i[e].getLatLng(),n.push(t);return L.QuickHull.getConvexHull(n)}}),L.MarkerCluster.include({_2PI:2*Math.PI,_circleFootSeparation:25,_circleStartAngle:Math.PI/6,_spiralFootSeparation:28,_spiralLengthStart:11,_spiralLengthFactor:5,_circleSpiralSwitchover:9,spiderfy:function(){if(this._group._spiderfied!==this&&!this._group._inZoomAnimation){var t,e=this.getAllChildMarkers(),i=this._group,n=i._map,s=n.latLngToLayerPoint(this._latlng);this._group._unspiderfy(),this._group._spiderfied=this,e.length>=this._circleSpiralSwitchover?t=this._generatePointsSpiral(e.length,s):(s.y+=10,t=this._generatePointsCircle(e.length,s)),this._animationSpiderfy(e,t)}},unspiderfy:function(t){this._group._inZoomAnimation||(this._animationUnspiderfy(t),this._group._spiderfied=null)},_generatePointsCircle:function(t,e){var i,n,s=this._group.options.spiderfyDistanceMultiplier*this._circleFootSeparation*(2+t),r=s/this._2PI,o=this._2PI/t,a=[];for(a.length=t,i=t-1;i>=0;i--)n=this._circleStartAngle+i*o,a[i]=new L.Point(e.x+r*Math.cos(n),e.y+r*Math.sin(n))._round();return a},_generatePointsSpiral:function(t,e){var i,n=this._group.options.spiderfyDistanceMultiplier*this._spiralLengthStart,s=this._group.options.spiderfyDistanceMultiplier*this._spiralFootSeparation,r=this._group.options.spiderfyDistanceMultiplier*this._spiralLengthFactor,o=0,a=[];for(a.length=t,i=t-1;i>=0;i--)o+=s/n+5e-4*i,a[i]=new L.Point(e.x+n*Math.cos(o),e.y+n*Math.sin(o))._round(),n+=this._2PI*r/o;return a},_noanimationUnspiderfy:function(){var t,e,i=this._group,n=i._map,s=i._featureGroup,r=this.getAllChildMarkers();for(this.setOpacity(1),e=r.length-1;e>=0;e--)t=r[e],s.removeLayer(t),t._preSpiderfyLatlng&&(t.setLatLng(t._preSpiderfyLatlng),delete t._preSpiderfyLatlng),t.setZIndexOffset&&t.setZIndexOffset(0),t._spiderLeg&&(n.removeLayer(t._spiderLeg),delete t._spiderLeg);i._spiderfied=null}}),L.MarkerCluster.include(L.DomUtil.TRANSITION?{SVG_ANIMATION:function(){return e.createElementNS("http://www.w3.org/2000/svg","animate").toString().indexOf("SVGAnimate")>-1}(),_animationSpiderfy:function(t,i){var n,s,r,o,a=this,h=this._group,_=h._map,u=h._featureGroup,l=_.latLngToLayerPoint(this._latlng);for(n=t.length-1;n>=0;n--)s=t[n],s.setOpacity?(s.setZIndexOffset(1e6),s.setOpacity(0),u.addLayer(s),s._setPos(l)):u.addLayer(s);h._forceLayout(),h._animationStart();var d=L.Path.SVG?0:.3,p=L.Path.SVG_NS;for(n=t.length-1;n>=0;n--)if(o=_.layerPointToLatLng(i[n]),s=t[n],s._preSpiderfyLatlng=s._latlng,s.setLatLng(o),s.setOpacity&&s.setOpacity(1),r=new L.Polyline([a._latlng,o],{weight:1.5,color:"#222",opacity:d}),_.addLayer(r),s._spiderLeg=r,L.Path.SVG&&this.SVG_ANIMATION){var c=r._path.getTotalLength();r._path.setAttribute("stroke-dasharray",c+","+c);var m=e.createElementNS(p,"animate");m.setAttribute("attributeName","stroke-dashoffset"),m.setAttribute("begin","indefinite"),m.setAttribute("from",c),m.setAttribute("to",0),m.setAttribute("dur",.25),r._path.appendChild(m),m.beginElement(),m=e.createElementNS(p,"animate"),m.setAttribute("attributeName","stroke-opacity"),m.setAttribute("attributeName","stroke-opacity"),m.setAttribute("begin","indefinite"),m.setAttribute("from",0),m.setAttribute("to",.5),m.setAttribute("dur",.25),r._path.appendChild(m),m.beginElement()}if(a.setOpacity(.3),L.Path.SVG)for(this._group._forceLayout(),n=t.length-1;n>=0;n--)s=t[n]._spiderLeg,s.options.opacity=.5,s._path.setAttribute("stroke-opacity",.5);setTimeout(function(){h._animationEnd(),h.fire("spiderfied")},200)},_animationUnspiderfy:function(t){var e,i,n,s=this._group,r=s._map,o=s._featureGroup,a=t?r._latLngToNewLayerPoint(this._latlng,t.zoom,t.center):r.latLngToLayerPoint(this._latlng),h=this.getAllChildMarkers(),_=L.Path.SVG&&this.SVG_ANIMATION;for(s._animationStart(),this.setOpacity(1),i=h.length-1;i>=0;i--)e=h[i],e._preSpiderfyLatlng&&(e.setLatLng(e._preSpiderfyLatlng),delete e._preSpiderfyLatlng,e.setOpacity?(e._setPos(a),e.setOpacity(0)):o.removeLayer(e),_&&(n=e._spiderLeg._path.childNodes[0],n.setAttribute("to",n.getAttribute("from")),n.setAttribute("from",0),n.beginElement(),n=e._spiderLeg._path.childNodes[1],n.setAttribute("from",.5),n.setAttribute("to",0),n.setAttribute("stroke-opacity",0),n.beginElement(),e._spiderLeg._path.setAttribute("stroke-opacity",0)));setTimeout(function(){var t=0;for(i=h.length-1;i>=0;i--)e=h[i],e._spiderLeg&&t++;for(i=h.length-1;i>=0;i--)e=h[i],e._spiderLeg&&(e.setOpacity&&(e.setOpacity(1),e.setZIndexOffset(0)),t>1&&o.removeLayer(e),r.removeLayer(e._spiderLeg),delete e._spiderLeg);s._animationEnd()},200)}}:{_animationSpiderfy:function(t,e){var i,n,s,r,o=this._group,a=o._map,h=o._featureGroup;for(i=t.length-1;i>=0;i--)r=a.layerPointToLatLng(e[i]),n=t[i],n._preSpiderfyLatlng=n._latlng,n.setLatLng(r),n.setZIndexOffset&&n.setZIndexOffset(1e6),h.addLayer(n),s=new L.Polyline([this._latlng,r],{weight:1.5,color:"#222"}),a.addLayer(s),n._spiderLeg=s;this.setOpacity(.3),o.fire("spiderfied")},_animationUnspiderfy:function(){this._noanimationUnspiderfy()}}),L.MarkerClusterGroup.include({_spiderfied:null,_spiderfierOnAdd:function(){this._map.on("click",this._unspiderfyWrapper,this),this._map.options.zoomAnimation&&this._map.on("zoomstart",this._unspiderfyZoomStart,this),this._map.on("zoomend",this._noanimationUnspiderfy,this),L.Path.SVG&&!L.Browser.touch&&this._map._initPathRoot()},_spiderfierOnRemove:function(){this._map.off("click",this._unspiderfyWrapper,this),this._map.off("zoomstart",this._unspiderfyZoomStart,this),this._map.off("zoomanim",this._unspiderfyZoomAnim,this),this._unspiderfy()},_unspiderfyZoomStart:function(){this._map&&this._map.on("zoomanim",this._unspiderfyZoomAnim,this)},_unspiderfyZoomAnim:function(t){L.DomUtil.hasClass(this._map._mapPane,"leaflet-touching")||(this._map.off("zoomanim",this._unspiderfyZoomAnim,this),this._unspiderfy(t))},_unspiderfyWrapper:function(){this._unspiderfy()},_unspiderfy:function(t){this._spiderfied&&this._spiderfied.unspiderfy(t)},_noanimationUnspiderfy:function(){this._spiderfied&&this._spiderfied._noanimationUnspiderfy()},_unspiderfyLayer:function(t){t._spiderLeg&&(this._featureGroup.removeLayer(t),t.setOpacity(1),t.setZIndexOffset(0),this._map.removeLayer(t._spiderLeg),delete t._spiderLeg)}})}(window,document);
 
 /***/ },
-/* 610 */
+/* 606 */
 /*!************************************************!*\
   !*** ./~/leaflet-plugins/layer/tile/Google.js ***!
   \************************************************/
@@ -93892,7 +93872,7 @@
 
 
 /***/ },
-/* 611 */
+/* 607 */
 /*!*************************************!*\
   !*** ./src/utils/marker.factory.js ***!
   \*************************************/
@@ -93902,12 +93882,12 @@
 	
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	var L = __webpack_require__(/*! leaflet */ 274);
-	__webpack_require__(/*! ./marker.factory.css */ 612);
+	__webpack_require__(/*! ./marker.factory.css */ 608);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var tree_actions_1 = __webpack_require__(/*! ./../actions/tree.actions */ 279);
 	var flag_store_1 = __webpack_require__(/*! ./../stores/flag.store */ 487);
-	var location_actions_1 = __webpack_require__(/*! ./../actions/location.actions */ 614);
-	var donate_actions_1 = __webpack_require__(/*! ./../actions/donate.actions */ 616);
+	var location_actions_1 = __webpack_require__(/*! ./../actions/location.actions */ 610);
+	var donate_actions_1 = __webpack_require__(/*! ./../actions/donate.actions */ 612);
 	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
 	var MarkerFactory;
 	(function (MarkerFactory) {
@@ -94080,7 +94060,7 @@
 	//# sourceMappingURL=marker.factory.js.map
 
 /***/ },
-/* 612 */
+/* 608 */
 /*!**************************************!*\
   !*** ./src/utils/marker.factory.css ***!
   \**************************************/
@@ -94089,7 +94069,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./marker.factory.css */ 613);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./marker.factory.css */ 609);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -94109,7 +94089,7 @@
 	}
 
 /***/ },
-/* 613 */
+/* 609 */
 /*!*****************************************************!*\
   !*** ./~/css-loader!./src/utils/marker.factory.css ***!
   \*****************************************************/
@@ -94128,7 +94108,7 @@
 	};
 
 /***/ },
-/* 614 */
+/* 610 */
 /*!*****************************************!*\
   !*** ./src/actions/location.actions.js ***!
   \*****************************************/
@@ -94149,7 +94129,7 @@
 	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 280);
-	var location_source_1 = __webpack_require__(/*! ./../sources/location.source */ 615);
+	var location_source_1 = __webpack_require__(/*! ./../sources/location.source */ 611);
 	var message_1 = __webpack_require__(/*! ./../utils/message */ 287);
 	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
 	
@@ -94303,7 +94283,7 @@
 	//# sourceMappingURL=location.actions.js.map
 
 /***/ },
-/* 615 */
+/* 611 */
 /*!****************************************!*\
   !*** ./src/sources/location.source.js ***!
   \****************************************/
@@ -94413,7 +94393,7 @@
 	//# sourceMappingURL=location.source.js.map
 
 /***/ },
-/* 616 */
+/* 612 */
 /*!***************************************!*\
   !*** ./src/actions/donate.actions.js ***!
   \***************************************/
@@ -94434,7 +94414,7 @@
 	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 280);
-	var donate_source_1 = __webpack_require__(/*! ./../sources/donate.source */ 617);
+	var donate_source_1 = __webpack_require__(/*! ./../sources/donate.source */ 613);
 	var message_1 = __webpack_require__(/*! ./../utils/message */ 287);
 	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
 	
@@ -94607,7 +94587,7 @@
 	//# sourceMappingURL=donate.actions.js.map
 
 /***/ },
-/* 617 */
+/* 613 */
 /*!**************************************!*\
   !*** ./src/sources/donate.source.js ***!
   \**************************************/
@@ -94736,7 +94716,7 @@
 	//# sourceMappingURL=donate.source.js.map
 
 /***/ },
-/* 618 */
+/* 614 */
 /*!*********************************************************!*\
   !*** ./src/components/message/popup-trees.component.js ***!
   \*********************************************************/
@@ -94756,7 +94736,7 @@
 	
 	var React = __webpack_require__(/*! react */ 1);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./popup-trees.component.css */ 619);
+	var styles = __webpack_require__(/*! ./popup-trees.component.css */ 615);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 485);
 	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
@@ -94867,7 +94847,7 @@
 	//# sourceMappingURL=popup-trees.component.js.map
 
 /***/ },
-/* 619 */
+/* 615 */
 /*!**********************************************************!*\
   !*** ./src/components/message/popup-trees.component.css ***!
   \**********************************************************/
@@ -94876,7 +94856,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./popup-trees.component.css */ 620);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./popup-trees.component.css */ 616);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -94896,7 +94876,7 @@
 	}
 
 /***/ },
-/* 620 */
+/* 616 */
 /*!*************************************************************************!*\
   !*** ./~/css-loader!./src/components/message/popup-trees.component.css ***!
   \*************************************************************************/
@@ -94920,7 +94900,7 @@
 	};
 
 /***/ },
-/* 621 */
+/* 617 */
 /*!*****************************************************!*\
   !*** ./src/components/message/message.component.js ***!
   \*****************************************************/
@@ -94938,7 +94918,7 @@
 	
 	var React = __webpack_require__(/*! react */ 1);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./message.component.css */ 622);
+	var styles = __webpack_require__(/*! ./message.component.css */ 618);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	
 	var MessageComponent = function (_React$Component) {
@@ -94990,7 +94970,7 @@
 	//# sourceMappingURL=message.component.js.map
 
 /***/ },
-/* 622 */
+/* 618 */
 /*!******************************************************!*\
   !*** ./src/components/message/message.component.css ***!
   \******************************************************/
@@ -94999,7 +94979,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./message.component.css */ 623);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./message.component.css */ 619);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -95019,7 +94999,7 @@
 	}
 
 /***/ },
-/* 623 */
+/* 619 */
 /*!*********************************************************************!*\
   !*** ./~/css-loader!./src/components/message/message.component.css ***!
   \*********************************************************************/
@@ -95040,7 +95020,7 @@
 	};
 
 /***/ },
-/* 624 */
+/* 620 */
 /*!*****************************!*\
   !*** ./src/utils/rating.js ***!
   \*****************************/
@@ -95079,7 +95059,7 @@
 	//# sourceMappingURL=rating.js.map
 
 /***/ },
-/* 625 */
+/* 621 */
 /*!*********************************************************!*\
   !*** ./src/components/donations/donations.component.js ***!
   \*********************************************************/
@@ -95099,21 +95079,21 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var AltContainer = __webpack_require__(/*! alt-container */ 229);
 	__webpack_require__(/*! ./../../../~/leaflet/dist/leaflet.css */ 442);
-	var styles = __webpack_require__(/*! ./donations.component.css */ 626);
+	var styles = __webpack_require__(/*! ./donations.component.css */ 622);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var donations_map_component_1 = __webpack_require__(/*! ./donations-map.component */ 628);
-	var donations_panel_component_1 = __webpack_require__(/*! ./donations-panel.component */ 629);
-	var message_component_1 = __webpack_require__(/*! ./../message/message.component */ 621);
-	var popup_donations_component_1 = __webpack_require__(/*! ./../message/popup-donations.component */ 682);
-	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 650);
-	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 614);
+	var donations_map_component_1 = __webpack_require__(/*! ./donations-map.component */ 624);
+	var donations_panel_component_1 = __webpack_require__(/*! ./donations-panel.component */ 625);
+	var message_component_1 = __webpack_require__(/*! ./../message/message.component */ 617);
+	var popup_donations_component_1 = __webpack_require__(/*! ./../message/popup-donations.component */ 678);
+	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 646);
+	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 610);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 457);
 	var food_actions_1 = __webpack_require__(/*! ./../../actions/food.actions */ 458);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 330);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 485);
 	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
 	var map_store_1 = __webpack_require__(/*! ./../../stores/map.store */ 259);
-	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 651);
+	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 647);
 	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
 	
 	var DonationsComponent = function (_React$Component) {
@@ -95276,7 +95256,7 @@
 	//# sourceMappingURL=donations.component.js.map
 
 /***/ },
-/* 626 */
+/* 622 */
 /*!**********************************************************!*\
   !*** ./src/components/donations/donations.component.css ***!
   \**********************************************************/
@@ -95285,7 +95265,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./donations.component.css */ 627);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./donations.component.css */ 623);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -95305,7 +95285,7 @@
 	}
 
 /***/ },
-/* 627 */
+/* 623 */
 /*!*************************************************************************!*\
   !*** ./~/css-loader!./src/components/donations/donations.component.css ***!
   \*************************************************************************/
@@ -95325,7 +95305,7 @@
 	};
 
 /***/ },
-/* 628 */
+/* 624 */
 /*!*************************************************************!*\
   !*** ./src/components/donations/donations-map.component.js ***!
   \*************************************************************/
@@ -95345,15 +95325,15 @@
 	var L = __webpack_require__(/*! leaflet */ 274);
 	var React = __webpack_require__(/*! react */ 1);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
-	__webpack_require__(/*! leaflet.markercluster */ 609);
-	__webpack_require__(/*! googletile */ 610);
+	__webpack_require__(/*! leaflet.markercluster */ 605);
+	__webpack_require__(/*! googletile */ 606);
 	__webpack_require__(/*! ./../../../~/leaflet/dist/leaflet.css */ 442);
-	var styles = __webpack_require__(/*! ./donations.component.css */ 626);
+	var styles = __webpack_require__(/*! ./donations.component.css */ 622);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 457);
 	var map_store_1 = __webpack_require__(/*! ./../../stores/map.store */ 259);
 	var map_actions_1 = __webpack_require__(/*! ./../../actions/map.actions */ 275);
-	var marker_factory_1 = __webpack_require__(/*! ./../../utils/marker.factory */ 611);
+	var marker_factory_1 = __webpack_require__(/*! ./../../utils/marker.factory */ 607);
 	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
 	
 	var MapComponent = function (_React$Component) {
@@ -95743,7 +95723,7 @@
 	//# sourceMappingURL=donations-map.component.js.map
 
 /***/ },
-/* 629 */
+/* 625 */
 /*!***************************************************************!*\
   !*** ./src/components/donations/donations-panel.component.js ***!
   \***************************************************************/
@@ -95762,16 +95742,16 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var AltContainer = __webpack_require__(/*! alt-container */ 229);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./donations-panel.component.css */ 630);
+	var styles = __webpack_require__(/*! ./donations-panel.component.css */ 626);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var location_component_1 = __webpack_require__(/*! ./../location/location.component */ 632);
-	var donations_control_component_1 = __webpack_require__(/*! ./donations-control.component */ 652);
-	var donate_add_component_1 = __webpack_require__(/*! ./../donate/donate-add.component */ 655);
-	var donate_edit_component_1 = __webpack_require__(/*! ./../donate/donate-edit.component */ 673);
-	var location_add_component_1 = __webpack_require__(/*! ./../location/location-add.component */ 676);
-	var donate_graph_component_1 = __webpack_require__(/*! ./../donate/donate-graph.component */ 679);
-	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 650);
-	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 651);
+	var location_component_1 = __webpack_require__(/*! ./../location/location.component */ 628);
+	var donations_control_component_1 = __webpack_require__(/*! ./donations-control.component */ 648);
+	var donate_add_component_1 = __webpack_require__(/*! ./../donate/donate-add.component */ 651);
+	var donate_edit_component_1 = __webpack_require__(/*! ./../donate/donate-edit.component */ 669);
+	var location_add_component_1 = __webpack_require__(/*! ./../location/location-add.component */ 672);
+	var donate_graph_component_1 = __webpack_require__(/*! ./../donate/donate-graph.component */ 675);
+	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 646);
+	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 647);
 	var map_actions_1 = __webpack_require__(/*! ./../../actions/map.actions */ 275);
 	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
@@ -95928,7 +95908,7 @@
 	//# sourceMappingURL=donations-panel.component.js.map
 
 /***/ },
-/* 630 */
+/* 626 */
 /*!****************************************************************!*\
   !*** ./src/components/donations/donations-panel.component.css ***!
   \****************************************************************/
@@ -95937,7 +95917,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./donations-panel.component.css */ 631);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./donations-panel.component.css */ 627);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -95957,7 +95937,7 @@
 	}
 
 /***/ },
-/* 631 */
+/* 627 */
 /*!*******************************************************************************!*\
   !*** ./~/css-loader!./src/components/donations/donations-panel.component.css ***!
   \*******************************************************************************/
@@ -95984,7 +95964,7 @@
 	};
 
 /***/ },
-/* 632 */
+/* 628 */
 /*!*******************************************************!*\
   !*** ./src/components/location/location.component.js ***!
   \*******************************************************/
@@ -96004,17 +95984,17 @@
 	var AltContainer = __webpack_require__(/*! alt-container */ 229);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./location.component.css */ 633);
+	var styles = __webpack_require__(/*! ./location.component.css */ 629);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var location_name_component_1 = __webpack_require__(/*! ./location-name.component */ 635);
-	var location_location_component_1 = __webpack_require__(/*! ./location-location.component */ 638);
-	var location_address_component_1 = __webpack_require__(/*! ./location-address.component */ 641);
-	var location_description_component_1 = __webpack_require__(/*! ./location-description.component */ 644);
-	var donate_list_component_1 = __webpack_require__(/*! ./../donate/donate-list.component */ 647);
-	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 650);
+	var location_name_component_1 = __webpack_require__(/*! ./location-name.component */ 631);
+	var location_location_component_1 = __webpack_require__(/*! ./location-location.component */ 634);
+	var location_address_component_1 = __webpack_require__(/*! ./location-address.component */ 637);
+	var location_description_component_1 = __webpack_require__(/*! ./location-description.component */ 640);
+	var donate_list_component_1 = __webpack_require__(/*! ./../donate/donate-list.component */ 643);
+	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 646);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 330);
-	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 651);
-	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 616);
+	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 647);
+	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 612);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var LocationComponent = function (_React$Component) {
@@ -96114,7 +96094,7 @@
 	//# sourceMappingURL=location.component.js.map
 
 /***/ },
-/* 633 */
+/* 629 */
 /*!********************************************************!*\
   !*** ./src/components/location/location.component.css ***!
   \********************************************************/
@@ -96123,7 +96103,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./location.component.css */ 634);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./location.component.css */ 630);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -96143,7 +96123,7 @@
 	}
 
 /***/ },
-/* 634 */
+/* 630 */
 /*!***********************************************************************!*\
   !*** ./~/css-loader!./src/components/location/location.component.css ***!
   \***********************************************************************/
@@ -96169,7 +96149,7 @@
 	};
 
 /***/ },
-/* 635 */
+/* 631 */
 /*!************************************************************!*\
   !*** ./src/components/location/location-name.component.js ***!
   \************************************************************/
@@ -96188,9 +96168,9 @@
 	var React = __webpack_require__(/*! react */ 1);
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 298);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./location-name.component.css */ 636);
+	var styles = __webpack_require__(/*! ./location-name.component.css */ 632);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 614);
+	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 610);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var LocationNameComponent = function (_React$Component) {
@@ -96281,7 +96261,7 @@
 	//# sourceMappingURL=location-name.component.js.map
 
 /***/ },
-/* 636 */
+/* 632 */
 /*!*************************************************************!*\
   !*** ./src/components/location/location-name.component.css ***!
   \*************************************************************/
@@ -96290,7 +96270,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./location-name.component.css */ 637);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./location-name.component.css */ 633);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -96310,7 +96290,7 @@
 	}
 
 /***/ },
-/* 637 */
+/* 633 */
 /*!****************************************************************************!*\
   !*** ./~/css-loader!./src/components/location/location-name.component.css ***!
   \****************************************************************************/
@@ -96331,7 +96311,7 @@
 	};
 
 /***/ },
-/* 638 */
+/* 634 */
 /*!****************************************************************!*\
   !*** ./src/components/location/location-location.component.js ***!
   \****************************************************************/
@@ -96350,9 +96330,9 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./location-location.component.css */ 639);
+	var styles = __webpack_require__(/*! ./location-location.component.css */ 635);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 614);
+	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 610);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var LocationLocationComponent = function (_React$Component) {
@@ -96461,7 +96441,7 @@
 	//# sourceMappingURL=location-location.component.js.map
 
 /***/ },
-/* 639 */
+/* 635 */
 /*!*****************************************************************!*\
   !*** ./src/components/location/location-location.component.css ***!
   \*****************************************************************/
@@ -96470,7 +96450,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./location-location.component.css */ 640);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./location-location.component.css */ 636);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -96490,7 +96470,7 @@
 	}
 
 /***/ },
-/* 640 */
+/* 636 */
 /*!********************************************************************************!*\
   !*** ./~/css-loader!./src/components/location/location-location.component.css ***!
   \********************************************************************************/
@@ -96514,7 +96494,7 @@
 	};
 
 /***/ },
-/* 641 */
+/* 637 */
 /*!***************************************************************!*\
   !*** ./src/components/location/location-address.component.js ***!
   \***************************************************************/
@@ -96533,9 +96513,9 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./location-address.component.css */ 642);
+	var styles = __webpack_require__(/*! ./location-address.component.css */ 638);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 614);
+	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 610);
 	var geolocation_1 = __webpack_require__(/*! ./../../utils/geolocation */ 288);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -96658,7 +96638,7 @@
 	//# sourceMappingURL=location-address.component.js.map
 
 /***/ },
-/* 642 */
+/* 638 */
 /*!****************************************************************!*\
   !*** ./src/components/location/location-address.component.css ***!
   \****************************************************************/
@@ -96667,7 +96647,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./location-address.component.css */ 643);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./location-address.component.css */ 639);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -96687,7 +96667,7 @@
 	}
 
 /***/ },
-/* 643 */
+/* 639 */
 /*!*******************************************************************************!*\
   !*** ./~/css-loader!./src/components/location/location-address.component.css ***!
   \*******************************************************************************/
@@ -96710,7 +96690,7 @@
 	};
 
 /***/ },
-/* 644 */
+/* 640 */
 /*!*******************************************************************!*\
   !*** ./src/components/location/location-description.component.js ***!
   \*******************************************************************/
@@ -96729,9 +96709,9 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./location-description.component.css */ 645);
+	var styles = __webpack_require__(/*! ./location-description.component.css */ 641);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 614);
+	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 610);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var LocationDescriptionComponent = function (_React$Component) {
@@ -96826,7 +96806,7 @@
 	//# sourceMappingURL=location-description.component.js.map
 
 /***/ },
-/* 645 */
+/* 641 */
 /*!********************************************************************!*\
   !*** ./src/components/location/location-description.component.css ***!
   \********************************************************************/
@@ -96835,7 +96815,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./location-description.component.css */ 646);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./location-description.component.css */ 642);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -96855,7 +96835,7 @@
 	}
 
 /***/ },
-/* 646 */
+/* 642 */
 /*!***********************************************************************************!*\
   !*** ./~/css-loader!./src/components/location/location-description.component.css ***!
   \***********************************************************************************/
@@ -96878,7 +96858,7 @@
 	};
 
 /***/ },
-/* 647 */
+/* 643 */
 /*!********************************************************!*\
   !*** ./src/components/donate/donate-list.component.js ***!
   \********************************************************/
@@ -96899,7 +96879,7 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./donate-list.component.css */ 648);
+	var styles = __webpack_require__(/*! ./donate-list.component.css */ 644);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 457);
 	var sort_1 = __webpack_require__(/*! ./../../utils/sort */ 289);
@@ -97004,7 +96984,7 @@
 	//# sourceMappingURL=donate-list.component.js.map
 
 /***/ },
-/* 648 */
+/* 644 */
 /*!*********************************************************!*\
   !*** ./src/components/donate/donate-list.component.css ***!
   \*********************************************************/
@@ -97013,7 +96993,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-list.component.css */ 649);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-list.component.css */ 645);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -97033,7 +97013,7 @@
 	}
 
 /***/ },
-/* 649 */
+/* 645 */
 /*!************************************************************************!*\
   !*** ./~/css-loader!./src/components/donate/donate-list.component.css ***!
   \************************************************************************/
@@ -97061,7 +97041,7 @@
 	};
 
 /***/ },
-/* 650 */
+/* 646 */
 /*!**************************************!*\
   !*** ./src/stores/location.store.js ***!
   \**************************************/
@@ -97081,7 +97061,7 @@
 	var moment = __webpack_require__(/*! moment */ 331);
 	var L = __webpack_require__(/*! leaflet */ 274);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var location_actions_1 = __webpack_require__(/*! ./../actions/location.actions */ 614);
+	var location_actions_1 = __webpack_require__(/*! ./../actions/location.actions */ 610);
 	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 277);
 	
 	var LocationModel = function () {
@@ -97309,7 +97289,7 @@
 	//# sourceMappingURL=location.store.js.map
 
 /***/ },
-/* 651 */
+/* 647 */
 /*!************************************!*\
   !*** ./src/stores/donate.store.js ***!
   \************************************/
@@ -97329,7 +97309,7 @@
 	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
 	var moment = __webpack_require__(/*! moment */ 331);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var donate_actions_1 = __webpack_require__(/*! ./../actions/donate.actions */ 616);
+	var donate_actions_1 = __webpack_require__(/*! ./../actions/donate.actions */ 612);
 	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 277);
 	var enum_1 = __webpack_require__(/*! ./../utils/enum */ 278);
 	var sort_1 = __webpack_require__(/*! ./../utils/sort */ 289);
@@ -97727,7 +97707,7 @@
 	//# sourceMappingURL=donate.store.js.map
 
 /***/ },
-/* 652 */
+/* 648 */
 /*!*****************************************************************!*\
   !*** ./src/components/donations/donations-control.component.js ***!
   \*****************************************************************/
@@ -97746,7 +97726,7 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./donations-control.component.css */ 653);
+	var styles = __webpack_require__(/*! ./donations-control.component.css */ 649);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var map_store_1 = __webpack_require__(/*! ./../../stores/map.store */ 259);
 	var map_actions_1 = __webpack_require__(/*! ./../../actions/map.actions */ 275);
@@ -97839,7 +97819,7 @@
 	//# sourceMappingURL=donations-control.component.js.map
 
 /***/ },
-/* 653 */
+/* 649 */
 /*!******************************************************************!*\
   !*** ./src/components/donations/donations-control.component.css ***!
   \******************************************************************/
@@ -97848,7 +97828,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./donations-control.component.css */ 654);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./donations-control.component.css */ 650);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -97868,7 +97848,7 @@
 	}
 
 /***/ },
-/* 654 */
+/* 650 */
 /*!*********************************************************************************!*\
   !*** ./~/css-loader!./src/components/donations/donations-control.component.css ***!
   \*********************************************************************************/
@@ -97892,7 +97872,7 @@
 	};
 
 /***/ },
-/* 655 */
+/* 651 */
 /*!*******************************************************!*\
   !*** ./src/components/donate/donate-add.component.js ***!
   \*******************************************************/
@@ -97912,19 +97892,19 @@
 	var AltContainer = __webpack_require__(/*! alt-container */ 229);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./donate-add.component.css */ 656);
+	var styles = __webpack_require__(/*! ./donate-add.component.css */ 652);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var donate_comment_component_1 = __webpack_require__(/*! ./donate-comment.component */ 658);
-	var donate_date_component_1 = __webpack_require__(/*! ./donate-date.component */ 661);
-	var donate_amount_component_1 = __webpack_require__(/*! ./donate-amount.component */ 664);
-	var donate_food_component_1 = __webpack_require__(/*! ./donate-food.component */ 667);
+	var donate_comment_component_1 = __webpack_require__(/*! ./donate-comment.component */ 654);
+	var donate_date_component_1 = __webpack_require__(/*! ./donate-date.component */ 657);
+	var donate_amount_component_1 = __webpack_require__(/*! ./donate-amount.component */ 660);
+	var donate_food_component_1 = __webpack_require__(/*! ./donate-food.component */ 663);
 	var image_zoom_component_1 = __webpack_require__(/*! ./../image/image-zoom.component */ 566);
 	var message_line_component_1 = __webpack_require__(/*! ./../message/message-line.component */ 318);
-	var donate_source_component_1 = __webpack_require__(/*! ./donate-source.component */ 670);
-	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 650);
+	var donate_source_component_1 = __webpack_require__(/*! ./donate-source.component */ 666);
+	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 646);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 457);
-	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 651);
-	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 616);
+	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 647);
+	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 612);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 330);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 485);
 	var message_1 = __webpack_require__(/*! ./../../utils/message */ 287);
@@ -98079,7 +98059,7 @@
 	//# sourceMappingURL=donate-add.component.js.map
 
 /***/ },
-/* 656 */
+/* 652 */
 /*!********************************************************!*\
   !*** ./src/components/donate/donate-add.component.css ***!
   \********************************************************/
@@ -98088,7 +98068,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-add.component.css */ 657);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-add.component.css */ 653);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -98108,7 +98088,7 @@
 	}
 
 /***/ },
-/* 657 */
+/* 653 */
 /*!***********************************************************************!*\
   !*** ./~/css-loader!./src/components/donate/donate-add.component.css ***!
   \***********************************************************************/
@@ -98140,7 +98120,7 @@
 	};
 
 /***/ },
-/* 658 */
+/* 654 */
 /*!***********************************************************!*\
   !*** ./src/components/donate/donate-comment.component.js ***!
   \***********************************************************/
@@ -98160,7 +98140,7 @@
 	var react_textarea_autosize_1 = __webpack_require__(/*! react-textarea-autosize */ 503);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./donate-comment.component.css */ 659);
+	var styles = __webpack_require__(/*! ./donate-comment.component.css */ 655);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -98239,7 +98219,7 @@
 	//# sourceMappingURL=donate-comment.component.js.map
 
 /***/ },
-/* 659 */
+/* 655 */
 /*!************************************************************!*\
   !*** ./src/components/donate/donate-comment.component.css ***!
   \************************************************************/
@@ -98248,7 +98228,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-comment.component.css */ 660);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-comment.component.css */ 656);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -98268,7 +98248,7 @@
 	}
 
 /***/ },
-/* 660 */
+/* 656 */
 /*!***************************************************************************!*\
   !*** ./~/css-loader!./src/components/donate/donate-comment.component.css ***!
   \***************************************************************************/
@@ -98292,7 +98272,7 @@
 	};
 
 /***/ },
-/* 661 */
+/* 657 */
 /*!********************************************************!*\
   !*** ./src/components/donate/donate-date.component.js ***!
   \********************************************************/
@@ -98313,7 +98293,7 @@
 	var DateTimeField = __webpack_require__(/*! react-bootstrap-datetimepicker */ 508);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./donate-date.component.css */ 662);
+	var styles = __webpack_require__(/*! ./donate-date.component.css */ 658);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -98386,7 +98366,7 @@
 	//# sourceMappingURL=donate-date.component.js.map
 
 /***/ },
-/* 662 */
+/* 658 */
 /*!*********************************************************!*\
   !*** ./src/components/donate/donate-date.component.css ***!
   \*********************************************************/
@@ -98395,7 +98375,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-date.component.css */ 663);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-date.component.css */ 659);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -98415,7 +98395,7 @@
 	}
 
 /***/ },
-/* 663 */
+/* 659 */
 /*!************************************************************************!*\
   !*** ./~/css-loader!./src/components/donate/donate-date.component.css ***!
   \************************************************************************/
@@ -98439,7 +98419,7 @@
 	};
 
 /***/ },
-/* 664 */
+/* 660 */
 /*!**********************************************************!*\
   !*** ./src/components/donate/donate-amount.component.js ***!
   \**********************************************************/
@@ -98460,7 +98440,7 @@
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 298);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./donate-amount.component.css */ 665);
+	var styles = __webpack_require__(/*! ./donate-amount.component.css */ 661);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var message_line_component_1 = __webpack_require__(/*! ./../message/message-line.component */ 318);
 	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
@@ -98563,7 +98543,7 @@
 	//# sourceMappingURL=donate-amount.component.js.map
 
 /***/ },
-/* 665 */
+/* 661 */
 /*!***********************************************************!*\
   !*** ./src/components/donate/donate-amount.component.css ***!
   \***********************************************************/
@@ -98572,7 +98552,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-amount.component.css */ 666);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-amount.component.css */ 662);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -98592,7 +98572,7 @@
 	}
 
 /***/ },
-/* 666 */
+/* 662 */
 /*!**************************************************************************!*\
   !*** ./~/css-loader!./src/components/donate/donate-amount.component.css ***!
   \**************************************************************************/
@@ -98619,7 +98599,7 @@
 	};
 
 /***/ },
-/* 667 */
+/* 663 */
 /*!********************************************************!*\
   !*** ./src/components/donate/donate-food.component.js ***!
   \********************************************************/
@@ -98640,10 +98620,10 @@
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var Select = __webpack_require__(/*! react-select */ 291);
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 298);
-	var styles = __webpack_require__(/*! ./donate-food.component.css */ 668);
+	var styles = __webpack_require__(/*! ./donate-food.component.css */ 664);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 457);
-	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 616);
+	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 612);
 	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
 	var filter_1 = __webpack_require__(/*! ./../../utils/filter */ 460);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
@@ -98773,7 +98753,7 @@
 	//# sourceMappingURL=donate-food.component.js.map
 
 /***/ },
-/* 668 */
+/* 664 */
 /*!*********************************************************!*\
   !*** ./src/components/donate/donate-food.component.css ***!
   \*********************************************************/
@@ -98782,7 +98762,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-food.component.css */ 669);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-food.component.css */ 665);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -98802,7 +98782,7 @@
 	}
 
 /***/ },
-/* 669 */
+/* 665 */
 /*!************************************************************************!*\
   !*** ./~/css-loader!./src/components/donate/donate-food.component.css ***!
   \************************************************************************/
@@ -98830,7 +98810,7 @@
 	};
 
 /***/ },
-/* 670 */
+/* 666 */
 /*!**********************************************************!*\
   !*** ./src/components/donate/donate-source.component.js ***!
   \**********************************************************/
@@ -98852,9 +98832,9 @@
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var Select = __webpack_require__(/*! react-select */ 291);
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 298);
-	var styles = __webpack_require__(/*! ./donate-source.component.css */ 671);
+	var styles = __webpack_require__(/*! ./donate-source.component.css */ 667);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 616);
+	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 612);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var DonateSourceComponent = function (_React$Component) {
@@ -98946,7 +98926,7 @@
 	//# sourceMappingURL=donate-source.component.js.map
 
 /***/ },
-/* 671 */
+/* 667 */
 /*!***********************************************************!*\
   !*** ./src/components/donate/donate-source.component.css ***!
   \***********************************************************/
@@ -98955,7 +98935,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-source.component.css */ 672);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-source.component.css */ 668);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -98975,7 +98955,7 @@
 	}
 
 /***/ },
-/* 672 */
+/* 668 */
 /*!**************************************************************************!*\
   !*** ./~/css-loader!./src/components/donate/donate-source.component.css ***!
   \**************************************************************************/
@@ -99003,7 +98983,7 @@
 	};
 
 /***/ },
-/* 673 */
+/* 669 */
 /*!********************************************************!*\
   !*** ./src/components/donate/donate-edit.component.js ***!
   \********************************************************/
@@ -99023,18 +99003,18 @@
 	var AltContainer = __webpack_require__(/*! alt-container */ 229);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./donate-edit.component.css */ 674);
+	var styles = __webpack_require__(/*! ./donate-edit.component.css */ 670);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var donate_comment_component_1 = __webpack_require__(/*! ./donate-comment.component */ 658);
-	var donate_date_component_1 = __webpack_require__(/*! ./donate-date.component */ 661);
-	var donate_amount_component_1 = __webpack_require__(/*! ./donate-amount.component */ 664);
-	var donate_food_component_1 = __webpack_require__(/*! ./donate-food.component */ 667);
+	var donate_comment_component_1 = __webpack_require__(/*! ./donate-comment.component */ 654);
+	var donate_date_component_1 = __webpack_require__(/*! ./donate-date.component */ 657);
+	var donate_amount_component_1 = __webpack_require__(/*! ./donate-amount.component */ 660);
+	var donate_food_component_1 = __webpack_require__(/*! ./donate-food.component */ 663);
 	var image_zoom_component_1 = __webpack_require__(/*! ./../image/image-zoom.component */ 566);
 	var message_line_component_1 = __webpack_require__(/*! ./../message/message-line.component */ 318);
-	var donate_source_component_1 = __webpack_require__(/*! ./donate-source.component */ 670);
-	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 650);
+	var donate_source_component_1 = __webpack_require__(/*! ./donate-source.component */ 666);
+	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 646);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 457);
-	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 616);
+	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 612);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 330);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 485);
 	var message_1 = __webpack_require__(/*! ./../../utils/message */ 287);
@@ -99200,7 +99180,7 @@
 	//# sourceMappingURL=donate-edit.component.js.map
 
 /***/ },
-/* 674 */
+/* 670 */
 /*!*********************************************************!*\
   !*** ./src/components/donate/donate-edit.component.css ***!
   \*********************************************************/
@@ -99209,7 +99189,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-edit.component.css */ 675);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-edit.component.css */ 671);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -99229,7 +99209,7 @@
 	}
 
 /***/ },
-/* 675 */
+/* 671 */
 /*!************************************************************************!*\
   !*** ./~/css-loader!./src/components/donate/donate-edit.component.css ***!
   \************************************************************************/
@@ -99264,7 +99244,7 @@
 	};
 
 /***/ },
-/* 676 */
+/* 672 */
 /*!***********************************************************!*\
   !*** ./src/components/location/location-add.component.js ***!
   \***********************************************************/
@@ -99283,12 +99263,12 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./location-add.component.css */ 677);
+	var styles = __webpack_require__(/*! ./location-add.component.css */ 673);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var location_name_component_1 = __webpack_require__(/*! ./location-name.component */ 635);
-	var location_location_component_1 = __webpack_require__(/*! ./location-location.component */ 638);
-	var location_address_component_1 = __webpack_require__(/*! ./location-address.component */ 641);
-	var location_description_component_1 = __webpack_require__(/*! ./location-description.component */ 644);
+	var location_name_component_1 = __webpack_require__(/*! ./location-name.component */ 631);
+	var location_location_component_1 = __webpack_require__(/*! ./location-location.component */ 634);
+	var location_address_component_1 = __webpack_require__(/*! ./location-address.component */ 637);
+	var location_description_component_1 = __webpack_require__(/*! ./location-description.component */ 640);
 	
 	var LocationAddComponent = function (_React$Component) {
 	    _inherits(LocationAddComponent, _React$Component);
@@ -99350,7 +99330,7 @@
 	//# sourceMappingURL=location-add.component.js.map
 
 /***/ },
-/* 677 */
+/* 673 */
 /*!************************************************************!*\
   !*** ./src/components/location/location-add.component.css ***!
   \************************************************************/
@@ -99359,7 +99339,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./location-add.component.css */ 678);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./location-add.component.css */ 674);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -99379,7 +99359,7 @@
 	}
 
 /***/ },
-/* 678 */
+/* 674 */
 /*!***************************************************************************!*\
   !*** ./~/css-loader!./src/components/location/location-add.component.css ***!
   \***************************************************************************/
@@ -99405,7 +99385,7 @@
 	};
 
 /***/ },
-/* 679 */
+/* 675 */
 /*!*********************************************************!*\
   !*** ./src/components/donate/donate-graph.component.js ***!
   \*********************************************************/
@@ -99427,13 +99407,13 @@
 	var moment = __webpack_require__(/*! moment */ 331);
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 298);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./donate-graph.component.css */ 680);
+	var styles = __webpack_require__(/*! ./donate-graph.component.css */ 676);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 651);
+	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 647);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 457);
 	var sort_1 = __webpack_require__(/*! ./../../utils/sort */ 289);
-	var color_1 = __webpack_require__(/*! ./../../utils/color */ 606);
-	var device_1 = __webpack_require__(/*! ./../../utils/device */ 607);
+	var color_1 = __webpack_require__(/*! ./../../utils/color */ 602);
+	var device_1 = __webpack_require__(/*! ./../../utils/device */ 603);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var DonateGraphComponent = function (_React$Component) {
@@ -99637,7 +99617,7 @@
 	//# sourceMappingURL=donate-graph.component.js.map
 
 /***/ },
-/* 680 */
+/* 676 */
 /*!**********************************************************!*\
   !*** ./src/components/donate/donate-graph.component.css ***!
   \**********************************************************/
@@ -99646,7 +99626,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-graph.component.css */ 681);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./donate-graph.component.css */ 677);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -99666,7 +99646,7 @@
 	}
 
 /***/ },
-/* 681 */
+/* 677 */
 /*!*************************************************************************!*\
   !*** ./~/css-loader!./src/components/donate/donate-graph.component.css ***!
   \*************************************************************************/
@@ -99694,7 +99674,7 @@
 	};
 
 /***/ },
-/* 682 */
+/* 678 */
 /*!*************************************************************!*\
   !*** ./src/components/message/popup-donations.component.js ***!
   \*************************************************************/
@@ -99714,12 +99694,12 @@
 	
 	var React = __webpack_require__(/*! react */ 1);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
-	var styles = __webpack_require__(/*! ./popup-donations.component.css */ 683);
+	var styles = __webpack_require__(/*! ./popup-donations.component.css */ 679);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 651);
-	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 616);
-	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 650);
-	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 614);
+	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 647);
+	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 612);
+	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 646);
+	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 610);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 330);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
@@ -99820,7 +99800,7 @@
 	//# sourceMappingURL=popup-donations.component.js.map
 
 /***/ },
-/* 683 */
+/* 679 */
 /*!**************************************************************!*\
   !*** ./src/components/message/popup-donations.component.css ***!
   \**************************************************************/
@@ -99829,7 +99809,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../~/css-loader!./popup-donations.component.css */ 684);
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./popup-donations.component.css */ 680);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
@@ -99849,7 +99829,7 @@
 	}
 
 /***/ },
-/* 684 */
+/* 680 */
 /*!*****************************************************************************!*\
   !*** ./~/css-loader!./src/components/message/popup-donations.component.css ***!
   \*****************************************************************************/
@@ -99873,7 +99853,7 @@
 	};
 
 /***/ },
-/* 685 */
+/* 681 */
 /*!************************!*\
   !*** ./src/client.css ***!
   \************************/
@@ -99882,7 +99862,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 686);
+	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 682);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 224)(content, {});
@@ -99902,7 +99882,7 @@
 	}
 
 /***/ },
-/* 686 */
+/* 682 */
 /*!***************************************!*\
   !*** ./~/css-loader!./src/client.css ***!
   \***************************************/
@@ -99922,7 +99902,7 @@
 	};
 
 /***/ },
-/* 687 */
+/* 683 */
 /*!******************************************!*\
   !*** ./src/bootstrap-datetimepicker.css ***!
   \******************************************/
@@ -99931,7 +99911,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./bootstrap-datetimepicker.css */ 688);
+	var content = __webpack_require__(/*! !./../~/css-loader!./bootstrap-datetimepicker.css */ 684);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 224)(content, {});
@@ -99951,7 +99931,7 @@
 	}
 
 /***/ },
-/* 688 */
+/* 684 */
 /*!*********************************************************!*\
   !*** ./~/css-loader!./src/bootstrap-datetimepicker.css ***!
   \*********************************************************/

@@ -1,6 +1,6 @@
 {
-  "uBaseName": "/FoodParent2.0",
-  "uBaseNameForWebPack": "/FoodParent2.0/",
+  "uBaseName": "",
+  "uBaseNameForWebPack": "/",
   "uStaticImage": "/static/images/",
   "uContentImage": "/content/images/",
   "uRelativeImageUpload": "./../content/images/",
