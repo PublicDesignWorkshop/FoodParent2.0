@@ -25837,7 +25837,7 @@
 			"x": 33.7704,
 			"y": -84.3806
 		},
-		"uGrayTileMap": "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+		"uGrayTileMap": "//api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png256?access_token=",
 		"uSatTileMap": "//api.mapbox.com/v4/mapbox.streets-satellite/{z}/{x}/{y}.png256?access_token=",
 		"uMapboxAttribution": "Imagery © <a href=\"http://mapbox.com\">Mapbox</a>",
 		"sMapboxAccessToken": "pk.eyJ1IjoiY29uY3JldGUtanVuZ2xlIiwiYSI6InViLW5INU0ifQ.radc95S2bnienvUpDkl49A",
@@ -50038,7 +50038,7 @@
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -93582,7 +93582,7 @@
 	                zoomAnimation: true,
 	                markerZoomAnimation: true
 	            }).setView(new L.LatLng(Settings.vPosition.x, Settings.vPosition.y), Settings.iDefaultZoom);
-	            self.grayTileLayer = L.tileLayer(Settings.uGrayTileMap, {
+	            self.grayTileLayer = L.tileLayer(Settings.uGrayTileMap + Settings.sMapboxAccessToken, {
 	                minZoom: Settings.iMinZoom,
 	                maxZoom: Settings.iMaxZoom
 	            });
@@ -95636,7 +95636,7 @@
 	                zoomAnimation: true,
 	                markerZoomAnimation: true
 	            }).setView(new L.LatLng(Settings.vPosition.x, Settings.vPosition.y), Settings.iDefaultZoom);
-	            self.grayTileLayer = L.tileLayer(Settings.uGrayTileMap, {
+	            self.grayTileLayer = L.tileLayer(Settings.uGrayTileMap + Settings.sMapboxAccessToken, {
 	                minZoom: Settings.iMinZoom,
 	                maxZoom: Settings.iMaxZoom
 	            });

@@ -10,7 +10,7 @@
     "x": 33.7704,
     "y": -84.3806
   },
-  "uGrayTileMap" : "//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+  "uGrayTileMap" : "//api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png256?access_token=",
   "uSatTileMap" : "//api.mapbox.com/v4/mapbox.streets-satellite/{z}/{x}/{y}.png256?access_token=",
   "uMapboxAttribution": "Imagery © <a href=\"http://mapbox.com\">Mapbox</a>",
   "sMapboxAccessToken": "pk.eyJ1IjoiY29uY3JldGUtanVuZ2xlIiwiYSI6InViLW5INU0ifQ.radc95S2bnienvUpDkl49A",

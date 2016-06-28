@@ -71,7 +71,7 @@ export default class MapComponent extends React.Component<IMapProps, IMapStatus>
         zoomAnimation: true,
         markerZoomAnimation: true,
     }).setView(new L.LatLng(Settings.vPosition.x, Settings.vPosition.y), Settings.iDefaultZoom);
-    self.grayTileLayer = L.tileLayer(Settings.uGrayTileMap, {
+    self.grayTileLayer = L.tileLayer(Settings.uGrayTileMap + Settings.sMapboxAccessToken, {
         minZoom: Settings.iMinZoom,
         maxZoom: Settings.iMaxZoom,
     });
