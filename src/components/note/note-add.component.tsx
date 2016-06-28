@@ -38,9 +38,11 @@ export interface INoteAddStatus {
   image?: string;
   error?: any;
   uploading?: boolean;
+  width?: number;
 }
 export default class NoteAddComponent extends React.Component<INoteAddProps, INoteAddStatus> {
   static contextTypes: any;
+  refs: any;
   constructor(props : INoteAddProps) {
     super(props);
     let self: NoteAddComponent = this;
@@ -49,6 +51,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
       image: null,
       error: null,
       uploading: false,
+      width: 0,
     };
   }
 
@@ -75,6 +78,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
       props.note.setTreeId(props.treeId);
       props.note.setPersonId(authStore.getAuth().getId());
     }
+    self.setState({width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5});
   }
 
   private onImageClick = (image: string) => {
@@ -115,7 +119,11 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
   render() {
     let self: NoteAddComponent = this;
     if (self.props.treeId && self.props.note != null) {
-      var tree: TreeModel = treeStore.getTree(self.props.treeId);
+      let imgStyle = {
+        width: Math.floor(self.state.width),
+        height: Math.floor(self.state.width * 9 / 16),
+      };
+      let tree: TreeModel = treeStore.getTree(self.props.treeId);
       let food: FoodModel = foodStore.getFood(tree.getId());
       let image: JSX.Element;
       if (self.state.image) {
@@ -124,7 +132,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
       let images: Array<JSX.Element> = self.props.note.getImages().map(function(image: string, i: number) {
         if (i == 0) {
           return (
-            <div className={styles.image + " " + styles.selected} key={"noteimage" + i}>
+            <div style={imgStyle} className={styles.image + " " + styles.selected} key={"noteimage" + i}>
               <div className={styles.cover}>
                 {localization(995)}
               </div>
@@ -143,7 +151,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
           );
         } else {
           return (
-            <div className={styles.image} key={"noteimage" + i}>
+            <div style={imgStyle} className={styles.image} key={"noteimage" + i}>
               <div className={styles.cover2} onClick={()=> {
                 self.onImageClick(image);
               }}>
@@ -181,9 +189,9 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
         imageUpload = <div className={styles.uploading} type="file" accept="image/*" capture="camera" />
       }
       return (
-        <div className={styles.wrapper}>
+        <div ref="wrapper" className={styles.wrapper}>
           {images}
-          <div className={styles.image}>
+          <div style={imgStyle} className={styles.image}>
             {imageUpload}
           </div>
           <div className={styles.inner}>
@@ -205,7 +213,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
       );
     } else {
       return (
-        <div className={styles.wrapper}>
+        <div ref="wrapper" className={styles.wrapper}>
         </div>
       );
     }

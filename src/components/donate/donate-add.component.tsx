@@ -41,10 +41,12 @@ export interface IDonateAddStatus {
   image?: string;
   error?: any;
   uploading?: boolean;
+  width?: number;
 }
 
 export default class DonateAddComponent extends React.Component<IDonateAddProps, IDonateAddStatus> {
   static contextTypes: any;
+  refs: any;
   constructor(props : IDonateAddProps) {
     super(props);
     let self: DonateAddComponent = this;
@@ -53,6 +55,7 @@ export default class DonateAddComponent extends React.Component<IDonateAddProps,
       image: null,
       error: null,
       uploading: false,
+      width: 0,
     };
   }
 
@@ -79,6 +82,7 @@ export default class DonateAddComponent extends React.Component<IDonateAddProps,
       props.donate.setLocationId(props.locationId);
       props.donate.setPersonId(authStore.getAuth().getId());
     }
+    self.setState({width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5});
   }
 
   private onImageClick = (image: string) => {
@@ -114,6 +118,10 @@ export default class DonateAddComponent extends React.Component<IDonateAddProps,
   render() {
     let self: DonateAddComponent = this;
     if (self.props.locationId && self.props.donate != null) {
+      let imgStyle = {
+        width: Math.floor(self.state.width),
+        height: Math.floor(self.state.width * 9 / 16),
+      };
       var location: LocationModel = locationStore.getLocation(self.props.locationId);
       let food: FoodModel = foodStore.getFood(self.props.donate.getFoodId());
       let image: JSX.Element;
@@ -123,7 +131,7 @@ export default class DonateAddComponent extends React.Component<IDonateAddProps,
       let images: Array<JSX.Element> = self.props.donate.getImages().map(function(image: string, i: number) {
         if (i == 0) {
           return (
-            <div className={styles.image + " " + styles.selected} key={"donateimage" + i}>
+            <div style={imgStyle} className={styles.image + " " + styles.selected} key={"donateimage" + i}>
               <div className={styles.cover}>
                 cover
               </div>
@@ -142,7 +150,7 @@ export default class DonateAddComponent extends React.Component<IDonateAddProps,
           );
         } else {
           return (
-            <div className={styles.image} key={"donateimage" + i}>
+            <div style={imgStyle} className={styles.image} key={"donateimage" + i}>
               <div className={styles.cover2} onClick={()=> {
                 self.onImageClick(image);
               }}>
@@ -180,9 +188,9 @@ export default class DonateAddComponent extends React.Component<IDonateAddProps,
         imageUpload = <div className={styles.uploading} type="file" accept="image/*" capture="camera" />
       }
       return (
-        <div className={styles.wrapper}>
+        <div ref="wrapper" className={styles.wrapper}>
           {images}
-          <div className={styles.image}>
+          <div style={imgStyle} className={styles.image}>
             {imageUpload}
           </div>
           <div className={styles.inner}>
@@ -227,7 +235,7 @@ export default class DonateAddComponent extends React.Component<IDonateAddProps,
       );
     } else {
       return (
-        <div className={styles.wrapper}>
+        <div ref="wrapper" className={styles.wrapper}>
         </div>
       );
     }

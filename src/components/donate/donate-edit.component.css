@@ -14,7 +14,7 @@
   :local(.uploading) {
     width: 100%;
     outline: none;
-    height: 100px;
+    height: 100%;
     border: 1px dashed rgba(107, 170, 119, 1);
     overflow: hidden;
     border-radius: 2px;
@@ -34,7 +34,7 @@
     font-weight: 700;
     color: rgba(244, 244, 244, 1);
     background-color: rgba(107, 170, 119, 1);
-    padding: 40px 0;
+    padding: 20% 0;
     cursor: pointer;
     font-size: medium;
   }
@@ -42,7 +42,7 @@
   :local(.upload) {
     width: 100%;
     outline: none;
-    height: 100px;
+    height: 100%;
     border: 1px dashed rgba(107, 170, 119, 1);
     overflow: hidden;
     border-radius: 2px;
@@ -62,7 +62,7 @@
     background-color: rgba(244, 244, 244, 1);
     font-weight: 700;
     color: rgba(107, 170, 119, 1);
-    padding: 40px 0;
+    padding: 20% 0;
     cursor: pointer;
     font-size: medium;
   }

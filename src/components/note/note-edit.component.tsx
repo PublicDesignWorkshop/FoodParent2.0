@@ -40,10 +40,12 @@ export interface INoteEditStatus {
   image?: string;
   error?: any;
   uploading?: boolean;
+  width?: number;
 }
 
 export default class NoteEditComponent extends React.Component<INoteEditProps, INoteEditStatus> {
   static contextTypes: any;
+  refs: any;
   constructor(props : INoteEditProps) {
     super(props);
     let self: NoteEditComponent = this;
@@ -52,6 +54,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
       editable: false,
       error: null,
       uploading: false,
+      width: 0,
     };
   }
 
@@ -80,7 +83,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
           editable = true;
         }
       }
-      self.setState({editable: editable});
+      self.setState({editable: editable, width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5});
     }
   }
 
@@ -124,7 +127,11 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
   render() {
     let self: NoteEditComponent = this;
     if (self.props.treeId && self.props.note != null) {
-      var tree: TreeModel = treeStore.getTree(self.props.treeId);
+      let imgStyle = {
+        width: Math.floor(self.state.width),
+        height: Math.floor(self.state.width * 9 / 16),
+      };
+      let tree: TreeModel = treeStore.getTree(self.props.treeId);
       let food: FoodModel = foodStore.getFood(tree.getFoodId());
       let image: JSX.Element;
       if (self.state.image) {
@@ -134,7 +141,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
         if (i == 0) {
           if (self.state.editable) {
             return (
-              <div className={styles.image + " " + styles.selected} key={"noteimage" + i}>
+              <div style={imgStyle} className={styles.image + " " + styles.selected} key={"noteimage" + i}>
                 <div className={styles.cover}>
                   {localization(995)}
                 </div>
@@ -153,7 +160,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
             );
           } else {
             return (
-              <div className={styles.image + " " + styles.selected} key={"noteimage" + i}>
+              <div style={imgStyle} className={styles.image + " " + styles.selected} key={"noteimage" + i}>
                 <div className={styles.cover}>
                   cover
                 </div>
@@ -169,7 +176,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
         } else {
           if (self.state.editable) {
             return (
-              <div className={styles.image} key={"noteimage" + i}>
+              <div style={imgStyle} className={styles.image} key={"noteimage" + i}>
                 <div className={styles.cover2} onClick={()=> {
                   self.onImageClick(image);
                 }}>
@@ -190,7 +197,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
             );
           } else {
             return (
-              <div className={styles.image} key={"noteimage" + i}>
+              <div style={imgStyle} className={styles.image} key={"noteimage" + i}>
                 <div className={styles.zoom} onClick={()=> {
                   self.onImageZoom(image);
                 }}>
@@ -220,9 +227,9 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
           imageUpload = <div className={styles.uploading} type="file" accept="image/*" capture="camera" />
         }
         return (
-          <div className={styles.wrapper}>
+          <div ref="wrapper" className={styles.wrapper}>
             {images}
-            <div className={styles.image}>
+            <div style={imgStyle} className={styles.image}>
               {imageUpload}
             </div>
             <div className={styles.inner}>
@@ -257,7 +264,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
         );
       } else {
         return (
-          <div className={styles.wrapper}>
+          <div ref="wrapper" className={styles.wrapper}>
             {images}
             <div className={styles.inner}>
               <NoteRateComponent note={self.props.note} editable={self.state.editable} async={false} />
@@ -271,7 +278,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
       }
     } else {
       return (
-        <div className={styles.wrapper}>
+        <div ref="wrapper" className={styles.wrapper}>
         </div>
       );
     }

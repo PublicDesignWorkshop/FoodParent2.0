@@ -50038,7 +50038,7 @@
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -75581,6 +75581,8 @@
 
 	"use strict";
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -75590,6 +75592,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(/*! react */ 1);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./note-add.component.css */ 500);
@@ -75625,6 +75628,7 @@
 	                props.note.setTreeId(props.treeId);
 	                props.note.setPersonId(auth_store_1.authStore.getAuth().getId());
 	            }
+	            self.setState({ width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5 });
 	        };
 	        _this.onImageClick = function (image) {
 	            var self = _this;
@@ -75662,7 +75666,8 @@
 	            editable: false,
 	            image: null,
 	            error: null,
-	            uploading: false
+	            uploading: false,
+	            width: 0
 	        };
 	        return _this;
 	    }
@@ -75692,46 +75697,56 @@
 	        value: function render() {
 	            var self = this;
 	            if (self.props.treeId && self.props.note != null) {
-	                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
-	                var food = food_store_1.foodStore.getFood(tree.getId());
-	                var image = void 0;
-	                if (self.state.image) {
-	                    image = React.createElement(image_zoom_component_1.default, { image: self.state.image, onClose: self.onImageClose, title: food.getName() + tree.getName() + " - " + self.props.note.getFormattedDate() });
-	                }
-	                var images = self.props.note.getImages().map(function (image, i) {
-	                    if (i == 0) {
-	                        return React.createElement("div", { className: styles.image + " " + styles.selected, key: "noteimage" + i }, React.createElement("div", { className: styles.cover }, localization_1.localization(995)), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
-	                                self.onImageZoom(image);
-	                            } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
-	                    } else {
-	                        return React.createElement("div", { className: styles.image, key: "noteimage" + i }, React.createElement("div", { className: styles.cover2, onClick: function onClick() {
-	                                self.onImageClick(image);
-	                            } }, localization_1.localization(996)), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
-	                                self.onImageZoom(image);
-	                            } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
+	                var _ret = function () {
+	                    var imgStyle = {
+	                        width: Math.floor(self.state.width),
+	                        height: Math.floor(self.state.width * 9 / 16)
+	                    };
+	                    var tree = tree_store_1.treeStore.getTree(self.props.treeId);
+	                    var food = food_store_1.foodStore.getFood(tree.getId());
+	                    var image = void 0;
+	                    if (self.state.image) {
+	                        image = React.createElement(image_zoom_component_1.default, { image: self.state.image, onClose: self.onImageClose, title: food.getName() + tree.getName() + " - " + self.props.note.getFormattedDate() });
 	                    }
-	                });
-	                var imageUpload = React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
-	                        if (event.target.files[0] != null) {
-	                            self.setState({ uploading: true });
-	                            upload_1.uploadImage(event.target.files[0], tree.getId().toString(), function (filename) {
-	                                self.setState({ uploading: false });
-	                                console.log("Image file uploaded: " + filename);
-	                                self.props.note.addImage(filename);
-	                                self.forceUpdate();
-	                            }, function () {});
+	                    var images = self.props.note.getImages().map(function (image, i) {
+	                        if (i == 0) {
+	                            return React.createElement("div", { style: imgStyle, className: styles.image + " " + styles.selected, key: "noteimage" + i }, React.createElement("div", { className: styles.cover }, localization_1.localization(995)), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                    self.onImageZoom(image);
+	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
+	                        } else {
+	                            return React.createElement("div", { style: imgStyle, className: styles.image, key: "noteimage" + i }, React.createElement("div", { className: styles.cover2, onClick: function onClick() {
+	                                    self.onImageClick(image);
+	                                } }, localization_1.localization(996)), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                    self.onImageZoom(image);
+	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
 	                        }
-	                    } });
-	                if (self.state.uploading) {
-	                    imageUpload = React.createElement("div", { className: styles.uploading, type: "file", accept: "image/*", capture: "camera" });
-	                }
-	                return React.createElement("div", { className: styles.wrapper }, images, React.createElement("div", { className: styles.image }, imageUpload), React.createElement("div", { className: styles.inner }, React.createElement(note_rate_component_1.default, { note: self.props.note, editable: true, async: false }), React.createElement(note_comment_component_1.default, { note: self.props.note, editable: true, async: false }), React.createElement(note_date_component_1.default, { note: self.props.note, editable: true, async: false }), React.createElement(note_amount_component_1.default, { note: self.props.note, editable: true, async: false, error: self.state.error })), React.createElement(message_line_component_1.default, { code: self.props.code, match: [90, 91, 92, 93] }), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                        if (self.props.code == 200) {
-	                            self.submitCreate();
-	                        }
-	                    } }, localization_1.localization(997)), image);
+	                    });
+	                    var imageUpload = React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
+	                            if (event.target.files[0] != null) {
+	                                self.setState({ uploading: true });
+	                                upload_1.uploadImage(event.target.files[0], tree.getId().toString(), function (filename) {
+	                                    self.setState({ uploading: false });
+	                                    console.log("Image file uploaded: " + filename);
+	                                    self.props.note.addImage(filename);
+	                                    self.forceUpdate();
+	                                }, function () {});
+	                            }
+	                        } });
+	                    if (self.state.uploading) {
+	                        imageUpload = React.createElement("div", { className: styles.uploading, type: "file", accept: "image/*", capture: "camera" });
+	                    }
+	                    return {
+	                        v: React.createElement("div", { ref: "wrapper", className: styles.wrapper }, images, React.createElement("div", { style: imgStyle, className: styles.image }, imageUpload), React.createElement("div", { className: styles.inner }, React.createElement(note_rate_component_1.default, { note: self.props.note, editable: true, async: false }), React.createElement(note_comment_component_1.default, { note: self.props.note, editable: true, async: false }), React.createElement(note_date_component_1.default, { note: self.props.note, editable: true, async: false }), React.createElement(note_amount_component_1.default, { note: self.props.note, editable: true, async: false, error: self.state.error })), React.createElement(message_line_component_1.default, { code: self.props.code, match: [90, 91, 92, 93] }), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                                if (self.props.code == 200) {
+	                                    self.submitCreate();
+	                                }
+	                            } }, localization_1.localization(997)), image)
+	                    };
+	                }();
+	
+	                if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	            } else {
-	                return React.createElement("div", { className: styles.wrapper });
+	                return React.createElement("div", { ref: "wrapper", className: styles.wrapper });
 	            }
 	        }
 	    }]);
@@ -75789,7 +75804,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._3mylhS5f_8MkZ5YM-qJZfc {\r\n    width: 100%;\r\n    padding: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .FrnCTO3bPgNobD9nrsEPC {\r\n    border-radius: 2px;\r\n    padding: 4px 8px;\r\n  }\r\n\r\n  .aewI0cvKC8plDvPLQxTwB {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100px;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  .aewI0cvKC8plDvPLQxTwB::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  .aewI0cvKC8plDvPLQxTwB::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'UPLOADING...';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    font-weight: 700;\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n    padding: 40px 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n\r\n  ._3kY6oVVc6eS6fW6KZV-knN {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100px;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'ADD PHOTO';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    font-weight: 700;\r\n    color: rgba(107, 170, 119, 1);\r\n    padding: 40px 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN:hover::before {\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n  }\r\n  .W_0S_A6oJIJWc7ODuPSRv {\r\n    width: 100%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  .W_0S_A6oJIJWc7ODuPSRv:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .PqCmYENWWc_1QnJxc0oUj {\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    width: 50%;\r\n    border: 4px solid rgba(107, 170, 119, 0);\r\n    border-radius: 2px;\r\n    position: relative;\r\n    overflow: hidden;\r\n  }\r\n  ._3_yJEUo2Tc7Km37cc8xCNx {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._1FULkMZo7NS6wC7z4_HdkK {\r\n    width: 100%;\r\n    height: 20px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.5);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 0 4px;\r\n    font-size: small;\r\n    font-weight: 700;\r\n  }\r\n  ._22i3KQbFkm4perpJq11ywI {\r\n    display: none;\r\n  }\r\n  .PqCmYENWWc_1QnJxc0oUj:hover ._22i3KQbFkm4perpJq11ywI {\r\n    display: block;\r\n    width: 100%;\r\n    height: 24px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.75);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 2px 4px;\r\n    font-size: small;\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n  }\r\n  .b5BUsrwrOkr2h2OcfzdzH {\r\n    display: none;\r\n  }\r\n  .ZacatHNOLPQi2d_FysiWp {\r\n    display: none;\r\n  }\r\n  .PqCmYENWWc_1QnJxc0oUj:hover .b5BUsrwrOkr2h2OcfzdzH {\r\n    display: block;\r\n    width: 72px;\r\n    height: 72px;\r\n    position: absolute;\r\n    bottom: -36px;\r\n    right: -36px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 26px 8px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: large;\r\n  }\r\n  .b5BUsrwrOkr2h2OcfzdzH .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n  .PqCmYENWWc_1QnJxc0oUj:hover ._22i3KQbFkm4perpJq11ywI:hover,\r\n  .PqCmYENWWc_1QnJxc0oUj:hover .b5BUsrwrOkr2h2OcfzdzH:hover,\r\n  .PqCmYENWWc_1QnJxc0oUj:hover .ZacatHNOLPQi2d_FysiWp:hover  {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  .PqCmYENWWc_1QnJxc0oUj:hover .ZacatHNOLPQi2d_FysiWp {\r\n    display: block;\r\n    width: 48px;\r\n    height: 48px;\r\n    position: absolute;\r\n    bottom: -24px;\r\n    left: -24px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 1px 16px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  .ZacatHNOLPQi2d_FysiWp .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n  .PqCmYENWWc_1QnJxc0oUj img {\r\n    width: 100%;\r\n  }\r\n\r\n  ._25YFy53y4ExhKiwwBSIonm {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._2ncA8N442m6oyBdxW4PaQk {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._3QtIx42JUJy9P5sSOV5ih9 {\r\n    color: rgba(35, 79, 30, 1);\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._3mylhS5f_8MkZ5YM-qJZfc {\r\n    width: 100%;\r\n    padding: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .FrnCTO3bPgNobD9nrsEPC {\r\n    border-radius: 2px;\r\n    padding: 4px 8px;\r\n  }\r\n\r\n  .aewI0cvKC8plDvPLQxTwB {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100%;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  .aewI0cvKC8plDvPLQxTwB::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  .aewI0cvKC8plDvPLQxTwB::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'UPLOADING...';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    font-weight: 700;\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n    padding: 20% 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n\r\n  ._3kY6oVVc6eS6fW6KZV-knN {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100%;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'ADD PHOTO';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    font-weight: 700;\r\n    color: rgba(107, 170, 119, 1);\r\n    padding: 20% 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._3kY6oVVc6eS6fW6KZV-knN:hover::before {\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n  }\r\n  .W_0S_A6oJIJWc7ODuPSRv {\r\n    width: 100%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  .W_0S_A6oJIJWc7ODuPSRv:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .PqCmYENWWc_1QnJxc0oUj {\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    width: 50%;\r\n    border: 4px solid rgba(107, 170, 119, 0);\r\n    border-radius: 2px;\r\n    position: relative;\r\n    overflow: hidden;\r\n  }\r\n  .PqCmYENWWc_1QnJxc0oUj img {\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n    object-position: 50% 50%;\r\n  }\r\n  ._3_yJEUo2Tc7Km37cc8xCNx {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._1FULkMZo7NS6wC7z4_HdkK {\r\n    width: 100%;\r\n    height: 20px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.5);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 0 4px;\r\n    font-size: small;\r\n    font-weight: 700;\r\n  }\r\n  ._22i3KQbFkm4perpJq11ywI {\r\n    display: none;\r\n  }\r\n  .PqCmYENWWc_1QnJxc0oUj:hover ._22i3KQbFkm4perpJq11ywI {\r\n    display: block;\r\n    width: 100%;\r\n    height: 24px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.75);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 2px 4px;\r\n    font-size: small;\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n  }\r\n  .b5BUsrwrOkr2h2OcfzdzH {\r\n    display: none;\r\n  }\r\n  .ZacatHNOLPQi2d_FysiWp {\r\n    display: none;\r\n  }\r\n  .PqCmYENWWc_1QnJxc0oUj:hover .b5BUsrwrOkr2h2OcfzdzH {\r\n    display: block;\r\n    width: 72px;\r\n    height: 72px;\r\n    position: absolute;\r\n    bottom: -36px;\r\n    right: -36px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 26px 8px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: large;\r\n  }\r\n  .b5BUsrwrOkr2h2OcfzdzH .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n  .PqCmYENWWc_1QnJxc0oUj:hover ._22i3KQbFkm4perpJq11ywI:hover,\r\n  .PqCmYENWWc_1QnJxc0oUj:hover .b5BUsrwrOkr2h2OcfzdzH:hover,\r\n  .PqCmYENWWc_1QnJxc0oUj:hover .ZacatHNOLPQi2d_FysiWp:hover  {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  .PqCmYENWWc_1QnJxc0oUj:hover .ZacatHNOLPQi2d_FysiWp {\r\n    display: block;\r\n    width: 48px;\r\n    height: 48px;\r\n    position: absolute;\r\n    bottom: -24px;\r\n    left: -24px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 1px 16px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  .ZacatHNOLPQi2d_FysiWp .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n\r\n  ._25YFy53y4ExhKiwwBSIonm {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._2ncA8N442m6oyBdxW4PaQk {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._3QtIx42JUJy9P5sSOV5ih9 {\r\n    color: rgba(35, 79, 30, 1);\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -91623,6 +91638,8 @@
 
 	"use strict";
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -91632,6 +91649,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(/*! react */ 1);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./note-edit.component.css */ 579);
@@ -91671,7 +91689,7 @@
 	                        editable = true;
 	                    }
 	                }
-	                self.setState({ editable: editable });
+	                self.setState({ editable: editable, width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5 });
 	            }
 	        };
 	        _this.onImageClick = function (image) {
@@ -91712,7 +91730,8 @@
 	            image: null,
 	            editable: false,
 	            error: null,
-	            uploading: false
+	            uploading: false,
+	            width: 0
 	        };
 	        return _this;
 	    }
@@ -91739,66 +91758,78 @@
 	        value: function render() {
 	            var self = this;
 	            if (self.props.treeId && self.props.note != null) {
-	                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
-	                var food = food_store_1.foodStore.getFood(tree.getFoodId());
-	                var image = void 0;
-	                if (self.state.image) {
-	                    image = React.createElement(image_zoom_component_1.default, { image: self.state.image, onClose: self.onImageClose, title: food.getName() + tree.getName() + " - " + self.props.note.getFormattedDate() });
-	                }
-	                var images = self.props.note.getImages().map(function (image, i) {
-	                    if (i == 0) {
-	                        if (self.state.editable) {
-	                            return React.createElement("div", { className: styles.image + " " + styles.selected, key: "noteimage" + i }, React.createElement("div", { className: styles.cover }, localization_1.localization(995)), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
-	                                    self.onImageZoom(image);
-	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
+	                var _ret = function () {
+	                    var imgStyle = {
+	                        width: Math.floor(self.state.width),
+	                        height: Math.floor(self.state.width * 9 / 16)
+	                    };
+	                    var tree = tree_store_1.treeStore.getTree(self.props.treeId);
+	                    var food = food_store_1.foodStore.getFood(tree.getFoodId());
+	                    var image = void 0;
+	                    if (self.state.image) {
+	                        image = React.createElement(image_zoom_component_1.default, { image: self.state.image, onClose: self.onImageClose, title: food.getName() + tree.getName() + " - " + self.props.note.getFormattedDate() });
+	                    }
+	                    var images = self.props.note.getImages().map(function (image, i) {
+	                        if (i == 0) {
+	                            if (self.state.editable) {
+	                                return React.createElement("div", { style: imgStyle, className: styles.image + " " + styles.selected, key: "noteimage" + i }, React.createElement("div", { className: styles.cover }, localization_1.localization(995)), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                        self.onImageZoom(image);
+	                                    } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
+	                            } else {
+	                                return React.createElement("div", { style: imgStyle, className: styles.image + " " + styles.selected, key: "noteimage" + i }, React.createElement("div", { className: styles.cover }, "cover"), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                        self.onImageZoom(image);
+	                                    } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
+	                            }
 	                        } else {
-	                            return React.createElement("div", { className: styles.image + " " + styles.selected, key: "noteimage" + i }, React.createElement("div", { className: styles.cover }, "cover"), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
-	                                    self.onImageZoom(image);
-	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
+	                            if (self.state.editable) {
+	                                return React.createElement("div", { style: imgStyle, className: styles.image, key: "noteimage" + i }, React.createElement("div", { className: styles.cover2, onClick: function onClick() {
+	                                        self.onImageClick(image);
+	                                    } }, localization_1.localization(996)), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                        self.onImageZoom(image);
+	                                    } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
+	                            } else {
+	                                return React.createElement("div", { style: imgStyle, className: styles.image, key: "noteimage" + i }, React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                        self.onImageZoom(image);
+	                                    } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
+	                            }
 	                        }
+	                    });
+	                    if (self.state.editable) {
+	                        var imageUpload = React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
+	                                if (event.target.files[0] != null) {
+	                                    self.setState({ uploading: true });
+	                                    upload_1.uploadImage(event.target.files[0], tree.getId().toString(), function (filename) {
+	                                        self.setState({ uploading: false });
+	                                        console.log("Image file uploaded: " + filename);
+	                                        self.props.note.addImage(filename);
+	                                        self.forceUpdate();
+	                                    }, function () {});
+	                                }
+	                            } });
+	                        if (self.state.uploading) {
+	                            imageUpload = React.createElement("div", { className: styles.uploading, type: "file", accept: "image/*", capture: "camera" });
+	                        }
+	                        return {
+	                            v: React.createElement("div", { ref: "wrapper", className: styles.wrapper }, images, React.createElement("div", { style: imgStyle, className: styles.image }, imageUpload), React.createElement("div", { className: styles.inner }, React.createElement(note_rate_component_1.default, { note: self.props.note, editable: self.state.editable, async: false }), React.createElement(note_comment_component_1.default, { note: self.props.note, editable: self.state.editable, async: false }), React.createElement(note_date_component_1.default, { note: self.props.note, editable: self.state.editable, async: false }), React.createElement(note_amount_component_1.default, { note: self.props.note, editable: self.state.editable, async: false, error: self.state.error })), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                                    if (self.props.code == 200) {
+	                                        self.submitUpdate();
+	                                    }
+	                                } }, localization_1.localization(934)), React.createElement(message_line_component_1.default, { code: self.props.code, match: [90, 91, 92, 93] }), React.createElement("div", { className: styles.button2, onClick: function onClick() {
+	                                    self.context.router.push({ pathname: Settings.uBaseName + '/tree/' + self.props.treeId });
+	                                } }, localization_1.localization(933)), React.createElement("div", { className: styles.or }, localization_1.localization(932)), React.createElement("div", { className: styles.button3, onClick: function onClick() {
+	                                    self.context.router.push({ pathname: window.location.pathname, query: { note: self.props.note.getId(), mode: "delete" } });
+	                                } }, localization_1.localization(931)), image)
+	                        };
 	                    } else {
-	                        if (self.state.editable) {
-	                            return React.createElement("div", { className: styles.image, key: "noteimage" + i }, React.createElement("div", { className: styles.cover2, onClick: function onClick() {
-	                                    self.onImageClick(image);
-	                                } }, localization_1.localization(996)), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
-	                                    self.onImageZoom(image);
-	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
-	                        } else {
-	                            return React.createElement("div", { className: styles.image, key: "noteimage" + i }, React.createElement("div", { className: styles.zoom, onClick: function onClick() {
-	                                    self.onImageZoom(image);
-	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
-	                        }
+	                        return {
+	                            v: React.createElement("div", { ref: "wrapper", className: styles.wrapper }, images, React.createElement("div", { className: styles.inner }, React.createElement(note_rate_component_1.default, { note: self.props.note, editable: self.state.editable, async: false }), React.createElement(note_comment_component_1.default, { note: self.props.note, editable: self.state.editable, async: false }), React.createElement(note_date_component_1.default, { note: self.props.note, editable: self.state.editable, async: false }), React.createElement(note_amount_component_1.default, { note: self.props.note, editable: self.state.editable, async: false, error: self.state.error })), image)
+	                        };
 	                    }
-	                });
-	                if (self.state.editable) {
-	                    var imageUpload = React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
-	                            if (event.target.files[0] != null) {
-	                                self.setState({ uploading: true });
-	                                upload_1.uploadImage(event.target.files[0], tree.getId().toString(), function (filename) {
-	                                    self.setState({ uploading: false });
-	                                    console.log("Image file uploaded: " + filename);
-	                                    self.props.note.addImage(filename);
-	                                    self.forceUpdate();
-	                                }, function () {});
-	                            }
-	                        } });
-	                    if (self.state.uploading) {
-	                        imageUpload = React.createElement("div", { className: styles.uploading, type: "file", accept: "image/*", capture: "camera" });
-	                    }
-	                    return React.createElement("div", { className: styles.wrapper }, images, React.createElement("div", { className: styles.image }, imageUpload), React.createElement("div", { className: styles.inner }, React.createElement(note_rate_component_1.default, { note: self.props.note, editable: self.state.editable, async: false }), React.createElement(note_comment_component_1.default, { note: self.props.note, editable: self.state.editable, async: false }), React.createElement(note_date_component_1.default, { note: self.props.note, editable: self.state.editable, async: false }), React.createElement(note_amount_component_1.default, { note: self.props.note, editable: self.state.editable, async: false, error: self.state.error })), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                            if (self.props.code == 200) {
-	                                self.submitUpdate();
-	                            }
-	                        } }, localization_1.localization(934)), React.createElement(message_line_component_1.default, { code: self.props.code, match: [90, 91, 92, 93] }), React.createElement("div", { className: styles.button2, onClick: function onClick() {
-	                            self.context.router.push({ pathname: Settings.uBaseName + '/tree/' + self.props.treeId });
-	                        } }, localization_1.localization(933)), React.createElement("div", { className: styles.or }, localization_1.localization(932)), React.createElement("div", { className: styles.button3, onClick: function onClick() {
-	                            self.context.router.push({ pathname: window.location.pathname, query: { note: self.props.note.getId(), mode: "delete" } });
-	                        } }, localization_1.localization(931)), image);
-	                } else {
-	                    return React.createElement("div", { className: styles.wrapper }, images, React.createElement("div", { className: styles.inner }, React.createElement(note_rate_component_1.default, { note: self.props.note, editable: self.state.editable, async: false }), React.createElement(note_comment_component_1.default, { note: self.props.note, editable: self.state.editable, async: false }), React.createElement(note_date_component_1.default, { note: self.props.note, editable: self.state.editable, async: false }), React.createElement(note_amount_component_1.default, { note: self.props.note, editable: self.state.editable, async: false, error: self.state.error })), image);
-	                }
+	                }();
+	
+	                if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	            } else {
-	                return React.createElement("div", { className: styles.wrapper });
+	                return React.createElement("div", { ref: "wrapper", className: styles.wrapper });
 	            }
 	        }
 	    }]);
@@ -91856,7 +91887,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  .X_DsA3bPEJ0MoRUqN9zqb {\r\n    width: 100%;\r\n    padding: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .UbjgyA7dwIBJf0UExu6S6 {\r\n    border-radius: 2px;\r\n    padding: 4px 8px;\r\n  }\r\n  ._1vnMrOWhlAgUkP4DMEByjq {\r\n    font-size: small;\r\n    padding: 12px 0;\r\n    text-align: center;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n\r\n  ._1BXlb1E04p2q9DEmWJDPgR {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100px;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  ._1BXlb1E04p2q9DEmWJDPgR::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._1BXlb1E04p2q9DEmWJDPgR::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'UPLOADING...';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    font-weight: 700;\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n    padding: 40px 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  \r\n  ._2n6d8U0P1t06ujBLpQedf8 {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100px;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  ._2n6d8U0P1t06ujBLpQedf8::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._2n6d8U0P1t06ujBLpQedf8::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'ADD PHOTO';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    font-weight: 700;\r\n    color: rgba(107, 170, 119, 1);\r\n    padding: 40px 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._2n6d8U0P1t06ujBLpQedf8:hover::before {\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n  }\r\n  .RAr_bKD0TvfBA7ytTPS4l {\r\n    width: 100%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  .RAr_bKD0TvfBA7ytTPS4l:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._3n4tYq6NiP-_fZ1_coR6To {\r\n    width: 100%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    font-weight: 700;\r\n    color: rgba(107, 170, 119, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n    border: 1px solid rgba(107, 170, 119, 1);\r\n  }\r\n  ._3n4tYq6NiP-_fZ1_coR6To:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._2KtEaLLYWHtJ0sLMJmr9Q5 {\r\n    width: 100%;\r\n    font-family: 'Open Sans', sans-serif;\r\n    text-align: center;\r\n    display: inline-block;\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(93, 40, 49, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  ._2KtEaLLYWHtJ0sLMJmr9Q5:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  .RRWpYYqgzyNuHltf2qIAx {\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    width: 50%;\r\n    border: 4px solid rgba(107, 170, 119, 0);\r\n    border-radius: 2px;\r\n    position: relative;\r\n    overflow: hidden;\r\n  }\r\n  .uDJhmYx4gCGoSUbloBxkf {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._2ghSepXL7JJc_H_hzxq_zZ {\r\n    width: 100%;\r\n    height: 20px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.5);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 0 4px;\r\n    font-size: small;\r\n    font-weight: 700;\r\n  }\r\n  ._3foElrHrbH8n2lAsalUbXr {\r\n    display: none;\r\n  }\r\n  .RRWpYYqgzyNuHltf2qIAx:hover ._3foElrHrbH8n2lAsalUbXr {\r\n    display: block;\r\n    width: 100%;\r\n    height: 24px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.75);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 2px 4px;\r\n    font-size: small;\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n  }\r\n  ._1zW_L6F45G_4_81SnPNcR4 {\r\n    display: none;\r\n  }\r\n  ._32SdQ17Ku0oUFlOrZpqkpk {\r\n    display: none;\r\n  }\r\n  .RRWpYYqgzyNuHltf2qIAx:hover ._1zW_L6F45G_4_81SnPNcR4 {\r\n    display: block;\r\n    width: 72px;\r\n    height: 72px;\r\n    position: absolute;\r\n    bottom: -36px;\r\n    right: -36px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 26px 8px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: large;\r\n  }\r\n  ._1zW_L6F45G_4_81SnPNcR4 .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n  .RRWpYYqgzyNuHltf2qIAx:hover ._3foElrHrbH8n2lAsalUbXr:hover,\r\n  .RRWpYYqgzyNuHltf2qIAx:hover ._1zW_L6F45G_4_81SnPNcR4:hover,\r\n  .RRWpYYqgzyNuHltf2qIAx:hover ._32SdQ17Ku0oUFlOrZpqkpk:hover  {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  .RRWpYYqgzyNuHltf2qIAx:hover ._32SdQ17Ku0oUFlOrZpqkpk {\r\n    display: block;\r\n    width: 48px;\r\n    height: 48px;\r\n    position: absolute;\r\n    bottom: -24px;\r\n    left: -24px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 1px 16px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._32SdQ17Ku0oUFlOrZpqkpk .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n  .RRWpYYqgzyNuHltf2qIAx img {\r\n    width: 100%;\r\n  }\r\n\r\n  ._1NplrNNlASkcdizTR5Esm {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  .RjU-PSvgkZCJTELocuuU1 {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._368GxQsN6PO696_0akJtar {\r\n    color: rgba(35, 79, 30, 1);\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  .X_DsA3bPEJ0MoRUqN9zqb {\r\n    width: 100%;\r\n    padding: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .UbjgyA7dwIBJf0UExu6S6 {\r\n    border-radius: 2px;\r\n    padding: 4px 8px;\r\n  }\r\n  ._1vnMrOWhlAgUkP4DMEByjq {\r\n    font-size: small;\r\n    padding: 12px 0;\r\n    text-align: center;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n\r\n  ._1BXlb1E04p2q9DEmWJDPgR {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100%;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  ._1BXlb1E04p2q9DEmWJDPgR::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._1BXlb1E04p2q9DEmWJDPgR::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'UPLOADING...';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    font-weight: 700;\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n    padding: 20% 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n\r\n  ._2n6d8U0P1t06ujBLpQedf8 {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100%;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  ._2n6d8U0P1t06ujBLpQedf8::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._2n6d8U0P1t06ujBLpQedf8::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'ADD PHOTO';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    font-weight: 700;\r\n    color: rgba(107, 170, 119, 1);\r\n    padding: 20% 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._2n6d8U0P1t06ujBLpQedf8:hover::before {\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n  }\r\n  .RAr_bKD0TvfBA7ytTPS4l {\r\n    width: 100%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  .RAr_bKD0TvfBA7ytTPS4l:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._3n4tYq6NiP-_fZ1_coR6To {\r\n    width: 100%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    font-weight: 700;\r\n    color: rgba(107, 170, 119, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n    border: 1px solid rgba(107, 170, 119, 1);\r\n  }\r\n  ._3n4tYq6NiP-_fZ1_coR6To:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._2KtEaLLYWHtJ0sLMJmr9Q5 {\r\n    width: 100%;\r\n    font-family: 'Open Sans', sans-serif;\r\n    text-align: center;\r\n    display: inline-block;\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(93, 40, 49, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  ._2KtEaLLYWHtJ0sLMJmr9Q5:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  .RRWpYYqgzyNuHltf2qIAx {\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    width: 50%;\r\n    border: 4px solid rgba(107, 170, 119, 0);\r\n    border-radius: 2px;\r\n    position: relative;\r\n    overflow: hidden;\r\n  }\r\n  .RRWpYYqgzyNuHltf2qIAx img {\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n    object-position: 50% 50%;\r\n  }\r\n  .uDJhmYx4gCGoSUbloBxkf {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._2ghSepXL7JJc_H_hzxq_zZ {\r\n    width: 100%;\r\n    height: 20px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.5);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 0 4px;\r\n    font-size: small;\r\n    font-weight: 700;\r\n  }\r\n  ._3foElrHrbH8n2lAsalUbXr {\r\n    display: none;\r\n  }\r\n  .RRWpYYqgzyNuHltf2qIAx:hover ._3foElrHrbH8n2lAsalUbXr {\r\n    display: block;\r\n    width: 100%;\r\n    height: 24px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.75);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 2px 4px;\r\n    font-size: small;\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n  }\r\n  ._1zW_L6F45G_4_81SnPNcR4 {\r\n    display: none;\r\n  }\r\n  ._32SdQ17Ku0oUFlOrZpqkpk {\r\n    display: none;\r\n  }\r\n  .RRWpYYqgzyNuHltf2qIAx:hover ._1zW_L6F45G_4_81SnPNcR4 {\r\n    display: block;\r\n    width: 72px;\r\n    height: 72px;\r\n    position: absolute;\r\n    bottom: -36px;\r\n    right: -36px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 26px 8px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: large;\r\n  }\r\n  ._1zW_L6F45G_4_81SnPNcR4 .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n  .RRWpYYqgzyNuHltf2qIAx:hover ._3foElrHrbH8n2lAsalUbXr:hover,\r\n  .RRWpYYqgzyNuHltf2qIAx:hover ._1zW_L6F45G_4_81SnPNcR4:hover,\r\n  .RRWpYYqgzyNuHltf2qIAx:hover ._32SdQ17Ku0oUFlOrZpqkpk:hover  {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  .RRWpYYqgzyNuHltf2qIAx:hover ._32SdQ17Ku0oUFlOrZpqkpk {\r\n    display: block;\r\n    width: 48px;\r\n    height: 48px;\r\n    position: absolute;\r\n    bottom: -24px;\r\n    left: -24px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 1px 16px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._32SdQ17Ku0oUFlOrZpqkpk .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n\r\n  ._1NplrNNlASkcdizTR5Esm {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  .RjU-PSvgkZCJTELocuuU1 {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._368GxQsN6PO696_0akJtar {\r\n    color: rgba(35, 79, 30, 1);\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -97926,6 +97957,8 @@
 
 	"use strict";
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -97935,6 +97968,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(/*! react */ 1);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var AltContainer = __webpack_require__(/*! alt-container */ 229);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
@@ -97972,6 +98006,7 @@
 	                props.donate.setLocationId(props.locationId);
 	                props.donate.setPersonId(auth_store_1.authStore.getAuth().getId());
 	            }
+	            self.setState({ width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5 });
 	        };
 	        _this.onImageClick = function (image) {
 	            var self = _this;
@@ -98004,7 +98039,8 @@
 	            editable: false,
 	            image: null,
 	            error: null,
-	            uploading: false
+	            uploading: false,
+	            width: 0
 	        };
 	        return _this;
 	    }
@@ -98034,60 +98070,73 @@
 	        value: function render() {
 	            var self = this;
 	            if (self.props.locationId && self.props.donate != null) {
-	                var location = location_store_1.locationStore.getLocation(self.props.locationId);
-	                var food = food_store_1.foodStore.getFood(self.props.donate.getFoodId());
-	                var image = void 0;
-	                if (self.state.image) {
-	                    image = React.createElement(image_zoom_component_1.default, { image: self.state.image, onClose: self.onImageClose, title: food.getName() + " at " + location.getName() + " - " + self.props.donate.getFormattedDate() });
-	                }
-	                var images = self.props.donate.getImages().map(function (image, i) {
-	                    if (i == 0) {
-	                        return React.createElement("div", { className: styles.image + " " + styles.selected, key: "donateimage" + i }, React.createElement("div", { className: styles.cover }, "cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
-	                                self.onImageZoom(image);
-	                            } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
-	                    } else {
-	                        return React.createElement("div", { className: styles.image, key: "donateimage" + i }, React.createElement("div", { className: styles.cover2, onClick: function onClick() {
-	                                self.onImageClick(image);
-	                            } }, "set as a cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
-	                                self.onImageZoom(image);
-	                            } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
+	                var location;
+	
+	                var _ret = function () {
+	                    var imgStyle = {
+	                        width: Math.floor(self.state.width),
+	                        height: Math.floor(self.state.width * 9 / 16)
+	                    };
+	                    location = location_store_1.locationStore.getLocation(self.props.locationId);
+	
+	                    var food = food_store_1.foodStore.getFood(self.props.donate.getFoodId());
+	                    var image = void 0;
+	                    if (self.state.image) {
+	                        image = React.createElement(image_zoom_component_1.default, { image: self.state.image, onClose: self.onImageClose, title: food.getName() + " at " + location.getName() + " - " + self.props.donate.getFormattedDate() });
 	                    }
-	                });
-	                var imageUpload = React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
-	                        if (event.target.files[0] != null) {
-	                            self.setState({ uploading: true });
-	                            upload_1.uploadImage(event.target.files[0], "d" + location.getId().toString(), function (filename) {
-	                                self.setState({ uploading: false });
-	                                console.log("Image file uploaded: " + filename);
-	                                self.props.donate.addImage(filename);
-	                                self.forceUpdate();
-	                            }, function () {});
+	                    var images = self.props.donate.getImages().map(function (image, i) {
+	                        if (i == 0) {
+	                            return React.createElement("div", { style: imgStyle, className: styles.image + " " + styles.selected, key: "donateimage" + i }, React.createElement("div", { className: styles.cover }, "cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                    self.onImageZoom(image);
+	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
+	                        } else {
+	                            return React.createElement("div", { style: imgStyle, className: styles.image, key: "donateimage" + i }, React.createElement("div", { className: styles.cover2, onClick: function onClick() {
+	                                    self.onImageClick(image);
+	                                } }, "set as a cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                    self.onImageZoom(image);
+	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
 	                        }
-	                    } });
-	                if (self.state.uploading) {
-	                    imageUpload = React.createElement("div", { className: styles.uploading, type: "file", accept: "image/*", capture: "camera" });
-	                }
-	                return React.createElement("div", { className: styles.wrapper }, images, React.createElement("div", { className: styles.image }, imageUpload), React.createElement("div", { className: styles.inner }, React.createElement(AltContainer, { stores: {
-	                        foods: function foods(props) {
-	                            return {
-	                                store: food_store_1.foodStore,
-	                                value: food_store_1.foodStore.getState().foods
-	                            };
-	                        }
-	                    } }, React.createElement(donate_food_component_1.default, { donate: self.props.donate, editable: true, async: false })), React.createElement(AltContainer, { stores: {
-	                        trees: function trees(props) {
-	                            return {
-	                                store: tree_store_1.treeStore,
-	                                value: tree_store_1.treeStore.getState().trees
-	                            };
-	                        }
-	                    } }, React.createElement(donate_source_component_1.default, { donate: self.props.donate, editable: true, async: false })), React.createElement(donate_comment_component_1.default, { donate: self.props.donate, editable: true, async: false }), React.createElement(donate_date_component_1.default, { donate: self.props.donate, editable: true, async: false }), React.createElement(donate_amount_component_1.default, { donate: self.props.donate, editable: true, async: false, error: self.state.error })), React.createElement(message_line_component_1.default, { code: self.props.code, match: [90, 91, 92, 93] }), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                        if (self.props.code == 200) {
-	                            self.submitCreate();
-	                        }
-	                    } }, localization_1.localization(608)), image);
+	                    });
+	                    var imageUpload = React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
+	                            if (event.target.files[0] != null) {
+	                                self.setState({ uploading: true });
+	                                upload_1.uploadImage(event.target.files[0], "d" + location.getId().toString(), function (filename) {
+	                                    self.setState({ uploading: false });
+	                                    console.log("Image file uploaded: " + filename);
+	                                    self.props.donate.addImage(filename);
+	                                    self.forceUpdate();
+	                                }, function () {});
+	                            }
+	                        } });
+	                    if (self.state.uploading) {
+	                        imageUpload = React.createElement("div", { className: styles.uploading, type: "file", accept: "image/*", capture: "camera" });
+	                    }
+	                    return {
+	                        v: React.createElement("div", { ref: "wrapper", className: styles.wrapper }, images, React.createElement("div", { style: imgStyle, className: styles.image }, imageUpload), React.createElement("div", { className: styles.inner }, React.createElement(AltContainer, { stores: {
+	                                foods: function foods(props) {
+	                                    return {
+	                                        store: food_store_1.foodStore,
+	                                        value: food_store_1.foodStore.getState().foods
+	                                    };
+	                                }
+	                            } }, React.createElement(donate_food_component_1.default, { donate: self.props.donate, editable: true, async: false })), React.createElement(AltContainer, { stores: {
+	                                trees: function trees(props) {
+	                                    return {
+	                                        store: tree_store_1.treeStore,
+	                                        value: tree_store_1.treeStore.getState().trees
+	                                    };
+	                                }
+	                            } }, React.createElement(donate_source_component_1.default, { donate: self.props.donate, editable: true, async: false })), React.createElement(donate_comment_component_1.default, { donate: self.props.donate, editable: true, async: false }), React.createElement(donate_date_component_1.default, { donate: self.props.donate, editable: true, async: false }), React.createElement(donate_amount_component_1.default, { donate: self.props.donate, editable: true, async: false, error: self.state.error })), React.createElement(message_line_component_1.default, { code: self.props.code, match: [90, 91, 92, 93] }), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                                if (self.props.code == 200) {
+	                                    self.submitCreate();
+	                                }
+	                            } }, localization_1.localization(608)), image)
+	                    };
+	                }();
+	
+	                if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	            } else {
-	                return React.createElement("div", { className: styles.wrapper });
+	                return React.createElement("div", { ref: "wrapper", className: styles.wrapper });
 	            }
 	        }
 	    }]);
@@ -98145,7 +98194,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1dyMkBcgmhqRCVq1zlV7ga {\r\n    width: 100%;\r\n    padding: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .DyHgk_gFMR8tPHG3suJtK {\r\n    border-radius: 2px;\r\n    padding: 4px 8px;\r\n  }\r\n\r\n  ._2HzC0G7Sv4aDUc3SeJHLI3 {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100px;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  ._2HzC0G7Sv4aDUc3SeJHLI3::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._2HzC0G7Sv4aDUc3SeJHLI3::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'UPLOADING...';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    font-weight: 700;\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n    padding: 40px 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n\r\n  .M6MGIw9FUbymRtbb_u_EB {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100px;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  .M6MGIw9FUbymRtbb_u_EB::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  .M6MGIw9FUbymRtbb_u_EB::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'ADD PHOTO';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    font-weight: 700;\r\n    color: rgba(107, 170, 119, 1);\r\n    padding: 40px 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  .M6MGIw9FUbymRtbb_u_EB:hover::before {\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._2RWXddepl6ewI9sMkaS1Df {\r\n    width: 100%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  ._2RWXddepl6ewI9sMkaS1Df:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._36hJb0BaQST_0ov5AHqL8Q {\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    width: 50%;\r\n    border: 4px solid rgba(107, 170, 119, 0);\r\n    border-radius: 2px;\r\n    position: relative;\r\n    overflow: hidden;\r\n  }\r\n  .ye60UCFaY4TQvZvWTkaiK {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._397c9GcFm3957JWhziXx3e {\r\n    width: 100%;\r\n    height: 20px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.5);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 0 4px;\r\n    font-size: small;\r\n    font-weight: 700;\r\n  }\r\n  ._3qC8ev22idnVXz6C-y9HiP {\r\n    display: none;\r\n  }\r\n  ._36hJb0BaQST_0ov5AHqL8Q:hover ._3qC8ev22idnVXz6C-y9HiP {\r\n    display: block;\r\n    width: 100%;\r\n    height: 24px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.75);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 2px 4px;\r\n    font-size: small;\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n  }\r\n  ._2NQSijrmEsa66uDM_loZf5 {\r\n    display: none;\r\n  }\r\n  ._3OzgPQUqKL4MyjFXlttawj {\r\n    display: none;\r\n  }\r\n  ._36hJb0BaQST_0ov5AHqL8Q:hover ._2NQSijrmEsa66uDM_loZf5 {\r\n    display: block;\r\n    width: 72px;\r\n    height: 72px;\r\n    position: absolute;\r\n    bottom: -36px;\r\n    right: -36px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 26px 8px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: large;\r\n  }\r\n  ._2NQSijrmEsa66uDM_loZf5 .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n  ._36hJb0BaQST_0ov5AHqL8Q:hover ._3qC8ev22idnVXz6C-y9HiP:hover,\r\n  ._36hJb0BaQST_0ov5AHqL8Q:hover ._2NQSijrmEsa66uDM_loZf5:hover,\r\n  ._36hJb0BaQST_0ov5AHqL8Q:hover ._3OzgPQUqKL4MyjFXlttawj:hover  {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._36hJb0BaQST_0ov5AHqL8Q:hover ._3OzgPQUqKL4MyjFXlttawj {\r\n    display: block;\r\n    width: 48px;\r\n    height: 48px;\r\n    position: absolute;\r\n    bottom: -24px;\r\n    left: -24px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 1px 16px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._3OzgPQUqKL4MyjFXlttawj .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n  ._36hJb0BaQST_0ov5AHqL8Q img {\r\n    width: 100%;\r\n  }\r\n\r\n  ._2r22CdZ3xNyxGb1-wd0S4x {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._1hvUm29vw3DbXniZkuHlwl {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._3lcsAG67XosX-_1XhbpQNu {\r\n    color: rgba(35, 79, 30, 1);\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1dyMkBcgmhqRCVq1zlV7ga {\r\n    width: 100%;\r\n    padding: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  .DyHgk_gFMR8tPHG3suJtK {\r\n    border-radius: 2px;\r\n    padding: 4px 8px;\r\n  }\r\n\r\n  ._2HzC0G7Sv4aDUc3SeJHLI3 {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100%;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  ._2HzC0G7Sv4aDUc3SeJHLI3::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._2HzC0G7Sv4aDUc3SeJHLI3::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'UPLOADING...';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    font-weight: 700;\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n    padding: 20% 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n\r\n  .M6MGIw9FUbymRtbb_u_EB {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100%;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  .M6MGIw9FUbymRtbb_u_EB::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  .M6MGIw9FUbymRtbb_u_EB::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'ADD PHOTO';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    font-weight: 700;\r\n    color: rgba(107, 170, 119, 1);\r\n    padding: 20% 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  .M6MGIw9FUbymRtbb_u_EB:hover::before {\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._2RWXddepl6ewI9sMkaS1Df {\r\n    width: 100%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  ._2RWXddepl6ewI9sMkaS1Df:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._36hJb0BaQST_0ov5AHqL8Q {\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    width: 50%;\r\n    border: 4px solid rgba(107, 170, 119, 0);\r\n    border-radius: 2px;\r\n    position: relative;\r\n    overflow: hidden;\r\n  }\r\n  ._36hJb0BaQST_0ov5AHqL8Q img {\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n    object-position: 50% 50%;\r\n  }\r\n  .ye60UCFaY4TQvZvWTkaiK {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._397c9GcFm3957JWhziXx3e {\r\n    width: 100%;\r\n    height: 20px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.5);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 0 4px;\r\n    font-size: small;\r\n    font-weight: 700;\r\n  }\r\n  ._3qC8ev22idnVXz6C-y9HiP {\r\n    display: none;\r\n  }\r\n  ._36hJb0BaQST_0ov5AHqL8Q:hover ._3qC8ev22idnVXz6C-y9HiP {\r\n    display: block;\r\n    width: 100%;\r\n    height: 24px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.75);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 2px 4px;\r\n    font-size: small;\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n  }\r\n  ._2NQSijrmEsa66uDM_loZf5 {\r\n    display: none;\r\n  }\r\n  ._3OzgPQUqKL4MyjFXlttawj {\r\n    display: none;\r\n  }\r\n  ._36hJb0BaQST_0ov5AHqL8Q:hover ._2NQSijrmEsa66uDM_loZf5 {\r\n    display: block;\r\n    width: 72px;\r\n    height: 72px;\r\n    position: absolute;\r\n    bottom: -36px;\r\n    right: -36px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 26px 8px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: large;\r\n  }\r\n  ._2NQSijrmEsa66uDM_loZf5 .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n  ._36hJb0BaQST_0ov5AHqL8Q:hover ._3qC8ev22idnVXz6C-y9HiP:hover,\r\n  ._36hJb0BaQST_0ov5AHqL8Q:hover ._2NQSijrmEsa66uDM_loZf5:hover,\r\n  ._36hJb0BaQST_0ov5AHqL8Q:hover ._3OzgPQUqKL4MyjFXlttawj:hover  {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._36hJb0BaQST_0ov5AHqL8Q:hover ._3OzgPQUqKL4MyjFXlttawj {\r\n    display: block;\r\n    width: 48px;\r\n    height: 48px;\r\n    position: absolute;\r\n    bottom: -24px;\r\n    left: -24px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 1px 16px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._3OzgPQUqKL4MyjFXlttawj .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n\r\n  ._2r22CdZ3xNyxGb1-wd0S4x {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._1hvUm29vw3DbXniZkuHlwl {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._3lcsAG67XosX-_1XhbpQNu {\r\n    color: rgba(35, 79, 30, 1);\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -99037,6 +99086,8 @@
 
 	"use strict";
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -99046,6 +99097,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(/*! react */ 1);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var AltContainer = __webpack_require__(/*! alt-container */ 229);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
@@ -99087,7 +99139,7 @@
 	                        editable = true;
 	                    }
 	                }
-	                self.setState({ editable: editable });
+	                self.setState({ editable: editable, width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5 });
 	            }
 	        };
 	        _this.onImageClick = function (image) {
@@ -99121,7 +99173,8 @@
 	            editable: false,
 	            image: null,
 	            error: null,
-	            uploading: false
+	            uploading: false,
+	            width: 0
 	        };
 	        return _this;
 	    }
@@ -99151,64 +99204,74 @@
 	        value: function render() {
 	            var self = this;
 	            if (self.props.locationId && self.props.donate != null) {
-	                var location = location_store_1.locationStore.getLocation(self.props.locationId);
-	                var food = food_store_1.foodStore.getFood(self.props.donate.getFoodId());
-	                var image = void 0;
-	                if (self.state.image) {
-	                    image = React.createElement(image_zoom_component_1.default, { image: self.state.image, onClose: self.onImageClose, title: food.getName() + " at " + location.getName() + " - " + self.props.donate.getFormattedDate() });
-	                }
-	                var images = self.props.donate.getImages().map(function (image, i) {
-	                    if (i == 0) {
-	                        return React.createElement("div", { className: styles.image + " " + styles.selected, key: "donateimage" + i }, React.createElement("div", { className: styles.cover }, "cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
-	                                self.onImageZoom(image);
-	                            } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
-	                    } else {
-	                        return React.createElement("div", { className: styles.image, key: "donateimage" + i }, React.createElement("div", { className: styles.cover2, onClick: function onClick() {
-	                                self.onImageClick(image);
-	                            } }, "set as a cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
-	                                self.onImageZoom(image);
-	                            } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
+	                var _ret = function () {
+	                    var imgStyle = {
+	                        width: Math.floor(self.state.width),
+	                        height: Math.floor(self.state.width * 9 / 16)
+	                    };
+	                    var location = location_store_1.locationStore.getLocation(self.props.locationId);
+	                    var food = food_store_1.foodStore.getFood(self.props.donate.getFoodId());
+	                    var image = void 0;
+	                    if (self.state.image) {
+	                        image = React.createElement(image_zoom_component_1.default, { image: self.state.image, onClose: self.onImageClose, title: food.getName() + " at " + location.getName() + " - " + self.props.donate.getFormattedDate() });
 	                    }
-	                });
-	                var imageUpload = React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
-	                        if (event.target.files[0] != null) {
-	                            self.setState({ uploading: true });
-	                            upload_1.uploadImage(event.target.files[0], "d" + location.getId().toString(), function (filename) {
-	                                self.setState({ uploading: false });
-	                                console.log("Image file uploaded: " + filename);
-	                                self.props.donate.addImage(filename);
-	                                self.forceUpdate();
-	                            }, function () {});
+	                    var images = self.props.donate.getImages().map(function (image, i) {
+	                        if (i == 0) {
+	                            return React.createElement("div", { style: imgStyle, className: styles.image + " " + styles.selected, key: "donateimage" + i }, React.createElement("div", { className: styles.cover }, "cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                    self.onImageZoom(image);
+	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
+	                        } else {
+	                            return React.createElement("div", { style: imgStyle, className: styles.image, key: "donateimage" + i }, React.createElement("div", { className: styles.cover2, onClick: function onClick() {
+	                                    self.onImageClick(image);
+	                                } }, "set as a cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                    self.onImageZoom(image);
+	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
 	                        }
-	                    } });
-	                if (self.state.uploading) {
-	                    imageUpload = React.createElement("div", { className: styles.uploading, type: "file", accept: "image/*", capture: "camera" });
-	                }
-	                return React.createElement("div", { className: styles.wrapper }, images, React.createElement("div", { className: styles.image }, imageUpload), React.createElement("div", { className: styles.inner }, React.createElement(AltContainer, { stores: {
-	                        foods: function foods(props) {
-	                            return {
-	                                store: food_store_1.foodStore,
-	                                value: food_store_1.foodStore.getState().foods
-	                            };
-	                        }
-	                    } }, React.createElement(donate_food_component_1.default, { donate: self.props.donate, editable: self.state.editable, async: false })), React.createElement(AltContainer, { stores: {
-	                        trees: function trees(props) {
-	                            return {
-	                                store: tree_store_1.treeStore,
-	                                value: tree_store_1.treeStore.getState().trees
-	                            };
-	                        }
-	                    } }, React.createElement(donate_source_component_1.default, { donate: self.props.donate, editable: self.state.editable, async: false })), React.createElement(donate_comment_component_1.default, { donate: self.props.donate, editable: self.state.editable, async: false }), React.createElement(donate_date_component_1.default, { donate: self.props.donate, editable: self.state.editable, async: false }), React.createElement(donate_amount_component_1.default, { donate: self.props.donate, editable: self.state.editable, async: false, error: self.state.error })), React.createElement(message_line_component_1.default, { code: self.props.code, match: [90, 91, 92, 93] }), React.createElement("div", { className: styles.button, onClick: function onClick() {
-	                        if (self.props.code == 200) {
-	                            self.submitUpdate();
-	                        }
-	                    } }, localization_1.localization(934)), React.createElement("div", { className: styles.button2, onClick: function onClick() {
-	                        self.context.router.push({ pathname: Settings.uBaseName + '/donation/' + self.props.locationId });
-	                    } }, localization_1.localization(933)), React.createElement("div", { className: styles.or }, localization_1.localization(932)), React.createElement("div", { className: styles.button3, onClick: function onClick() {
-	                        self.context.router.push({ pathname: window.location.pathname, query: { donate: self.props.donate.getId(), mode: "delete" } });
-	                    } }, localization_1.localization(931)), image);
+	                    });
+	                    var imageUpload = React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
+	                            if (event.target.files[0] != null) {
+	                                self.setState({ uploading: true });
+	                                upload_1.uploadImage(event.target.files[0], "d" + location.getId().toString(), function (filename) {
+	                                    self.setState({ uploading: false });
+	                                    console.log("Image file uploaded: " + filename);
+	                                    self.props.donate.addImage(filename);
+	                                    self.forceUpdate();
+	                                }, function () {});
+	                            }
+	                        } });
+	                    if (self.state.uploading) {
+	                        imageUpload = React.createElement("div", { className: styles.uploading, type: "file", accept: "image/*", capture: "camera" });
+	                    }
+	                    return {
+	                        v: React.createElement("div", { ref: "wrapper", className: styles.wrapper }, images, React.createElement("div", { style: imgStyle, className: styles.image }, imageUpload), React.createElement("div", { className: styles.inner }, React.createElement(AltContainer, { stores: {
+	                                foods: function foods(props) {
+	                                    return {
+	                                        store: food_store_1.foodStore,
+	                                        value: food_store_1.foodStore.getState().foods
+	                                    };
+	                                }
+	                            } }, React.createElement(donate_food_component_1.default, { donate: self.props.donate, editable: self.state.editable, async: false })), React.createElement(AltContainer, { stores: {
+	                                trees: function trees(props) {
+	                                    return {
+	                                        store: tree_store_1.treeStore,
+	                                        value: tree_store_1.treeStore.getState().trees
+	                                    };
+	                                }
+	                            } }, React.createElement(donate_source_component_1.default, { donate: self.props.donate, editable: self.state.editable, async: false })), React.createElement(donate_comment_component_1.default, { donate: self.props.donate, editable: self.state.editable, async: false }), React.createElement(donate_date_component_1.default, { donate: self.props.donate, editable: self.state.editable, async: false }), React.createElement(donate_amount_component_1.default, { donate: self.props.donate, editable: self.state.editable, async: false, error: self.state.error })), React.createElement(message_line_component_1.default, { code: self.props.code, match: [90, 91, 92, 93] }), React.createElement("div", { className: styles.button, onClick: function onClick() {
+	                                if (self.props.code == 200) {
+	                                    self.submitUpdate();
+	                                }
+	                            } }, localization_1.localization(934)), React.createElement("div", { className: styles.button2, onClick: function onClick() {
+	                                self.context.router.push({ pathname: Settings.uBaseName + '/donation/' + self.props.locationId });
+	                            } }, localization_1.localization(933)), React.createElement("div", { className: styles.or }, localization_1.localization(932)), React.createElement("div", { className: styles.button3, onClick: function onClick() {
+	                                self.context.router.push({ pathname: window.location.pathname, query: { donate: self.props.donate.getId(), mode: "delete" } });
+	                            } }, localization_1.localization(931)), image)
+	                    };
+	                }();
+	
+	                if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	            } else {
-	                return React.createElement("div", { className: styles.wrapper });
+	                return React.createElement("div", { ref: "wrapper", className: styles.wrapper });
 	            }
 	        }
 	    }]);
@@ -99266,7 +99329,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1AHFe62bScpior2mj6g6Ix {\r\n    width: 100%;\r\n    padding: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._128XQJ6a3AjjFFrKNcgtE8 {\r\n    border-radius: 2px;\r\n    padding: 4px 8px;\r\n  }\r\n\r\n  ._1FUp8xe4TJ79Z7mNuefxLA {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100px;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  ._1FUp8xe4TJ79Z7mNuefxLA::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._1FUp8xe4TJ79Z7mNuefxLA::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'UPLOADING...';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    font-weight: 700;\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n    padding: 40px 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n\r\n  ._1sIuH-azLGrBb6mFsEUTNt {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100px;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  ._1sIuH-azLGrBb6mFsEUTNt::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._1sIuH-azLGrBb6mFsEUTNt::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'ADD PHOTO';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    font-weight: 700;\r\n    color: rgba(107, 170, 119, 1);\r\n    padding: 40px 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._1sIuH-azLGrBb6mFsEUTNt:hover::before {\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._49ssea_WIAnJd6zWRMjUa {\r\n    width: 100%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  ._49ssea_WIAnJd6zWRMjUa:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._2TKjnTBz2729RS4k5OWUmj {\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    width: 50%;\r\n    border: 4px solid rgba(107, 170, 119, 0);\r\n    border-radius: 2px;\r\n    position: relative;\r\n    overflow: hidden;\r\n  }\r\n  ._35b-1w09RxWa-K1FewyY6j {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._3qg7TMTMcVagXGLo8vyboc {\r\n    width: 100%;\r\n    height: 20px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.5);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 0 4px;\r\n    font-size: small;\r\n    font-weight: 700;\r\n  }\r\n  ._2Dz1qyUdT3kWmoP6Z9SABO {\r\n    display: none;\r\n  }\r\n  ._2TKjnTBz2729RS4k5OWUmj:hover ._2Dz1qyUdT3kWmoP6Z9SABO {\r\n    display: block;\r\n    width: 100%;\r\n    height: 24px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.75);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 2px 4px;\r\n    font-size: small;\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n  }\r\n  ._3COeYTZsYtzPkTVpmOXNNo {\r\n    display: none;\r\n  }\r\n  ._3COuJa1d6YJFcsZTxASSu5 {\r\n    display: none;\r\n  }\r\n  ._2TKjnTBz2729RS4k5OWUmj:hover ._3COeYTZsYtzPkTVpmOXNNo {\r\n    display: block;\r\n    width: 72px;\r\n    height: 72px;\r\n    position: absolute;\r\n    bottom: -36px;\r\n    right: -36px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 26px 8px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: large;\r\n  }\r\n  ._3COeYTZsYtzPkTVpmOXNNo .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n  ._2TKjnTBz2729RS4k5OWUmj:hover ._2Dz1qyUdT3kWmoP6Z9SABO:hover,\r\n  ._2TKjnTBz2729RS4k5OWUmj:hover ._3COeYTZsYtzPkTVpmOXNNo:hover,\r\n  ._2TKjnTBz2729RS4k5OWUmj:hover ._3COuJa1d6YJFcsZTxASSu5:hover  {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._2TKjnTBz2729RS4k5OWUmj:hover ._3COuJa1d6YJFcsZTxASSu5 {\r\n    display: block;\r\n    width: 48px;\r\n    height: 48px;\r\n    position: absolute;\r\n    bottom: -24px;\r\n    left: -24px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 1px 16px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._3COuJa1d6YJFcsZTxASSu5 .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n  ._2TKjnTBz2729RS4k5OWUmj img {\r\n    width: 100%;\r\n  }\r\n\r\n  ._1mOkK1IGx2tV3_RE1x7HUO {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._3Tmpg2oLp7SzSTsdt6wjho {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._3wl69QN__sK-XlOC7HMEsa {\r\n    color: rgba(35, 79, 30, 1);\r\n  }\r\n  .lyjsOCAhooLQsnLzxkQyl {\r\n    width: 100%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    font-weight: 700;\r\n    color: rgba(107, 170, 119, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n    border: 1px solid rgba(107, 170, 119, 1);\r\n  }\r\n  .lyjsOCAhooLQsnLzxkQyl:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._1FZ9nqSoGCwvYztLA4q6hp {\r\n    width: 100%;\r\n    font-family: 'Open Sans', sans-serif;\r\n    text-align: center;\r\n    display: inline-block;\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(93, 40, 49, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  ._1FZ9nqSoGCwvYztLA4q6hp:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._1Ubo3_UnDB1_NP8fJSwVef {\r\n    font-size: small;\r\n    padding: 12px 0;\r\n    text-align: center;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1AHFe62bScpior2mj6g6Ix {\r\n    width: 100%;\r\n    padding: 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-size: small;\r\n  }\r\n  ._128XQJ6a3AjjFFrKNcgtE8 {\r\n    border-radius: 2px;\r\n    padding: 4px 8px;\r\n  }\r\n\r\n  ._1FUp8xe4TJ79Z7mNuefxLA {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100%;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  ._1FUp8xe4TJ79Z7mNuefxLA::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._1FUp8xe4TJ79Z7mNuefxLA::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'UPLOADING...';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    font-weight: 700;\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n    padding: 20% 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n\r\n  ._1sIuH-azLGrBb6mFsEUTNt {\r\n    width: 100%;\r\n    outline: none;\r\n    height: 100%;\r\n    border: 1px dashed rgba(107, 170, 119, 1);\r\n    overflow: hidden;\r\n    border-radius: 2px;\r\n  }\r\n  ._1sIuH-azLGrBb6mFsEUTNt::-webkit-file-upload-button {\r\n    visibility: hidden;\r\n    outline: none;\r\n  }\r\n  ._1sIuH-azLGrBb6mFsEUTNt::before {\r\n    width: 100%;\r\n    height: 100%;\r\n    text-align: center;\r\n    content: 'ADD PHOTO';\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    border-radius: 2px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    font-weight: 700;\r\n    color: rgba(107, 170, 119, 1);\r\n    padding: 20% 0;\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._1sIuH-azLGrBb6mFsEUTNt:hover::before {\r\n    color: rgba(244, 244, 244, 1);\r\n    background-color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._49ssea_WIAnJd6zWRMjUa {\r\n    width: 100%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  ._49ssea_WIAnJd6zWRMjUa:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._2TKjnTBz2729RS4k5OWUmj {\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    width: 50%;\r\n    border: 4px solid rgba(107, 170, 119, 0);\r\n    border-radius: 2px;\r\n    position: relative;\r\n    overflow: hidden;\r\n  }\r\n  ._35b-1w09RxWa-K1FewyY6j {\r\n    border: 2px solid rgba(107, 170, 119, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._3qg7TMTMcVagXGLo8vyboc {\r\n    width: 100%;\r\n    height: 20px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.5);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 0 4px;\r\n    font-size: small;\r\n    font-weight: 700;\r\n  }\r\n  ._2Dz1qyUdT3kWmoP6Z9SABO {\r\n    display: none;\r\n  }\r\n  ._2TKjnTBz2729RS4k5OWUmj:hover ._2Dz1qyUdT3kWmoP6Z9SABO {\r\n    display: block;\r\n    width: 100%;\r\n    height: 24px;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    background-color: rgba(107, 170, 119, 0.75);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 2px 4px;\r\n    font-size: small;\r\n    text-align: center;\r\n    font-weight: 700;\r\n    cursor: pointer;\r\n  }\r\n  ._3COeYTZsYtzPkTVpmOXNNo {\r\n    display: none;\r\n  }\r\n  ._3COuJa1d6YJFcsZTxASSu5 {\r\n    display: none;\r\n  }\r\n  ._2TKjnTBz2729RS4k5OWUmj:hover ._3COeYTZsYtzPkTVpmOXNNo {\r\n    display: block;\r\n    width: 72px;\r\n    height: 72px;\r\n    position: absolute;\r\n    bottom: -36px;\r\n    right: -36px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 26px 8px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: large;\r\n  }\r\n  ._3COeYTZsYtzPkTVpmOXNNo .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n  ._2TKjnTBz2729RS4k5OWUmj:hover ._2Dz1qyUdT3kWmoP6Z9SABO:hover,\r\n  ._2TKjnTBz2729RS4k5OWUmj:hover ._3COeYTZsYtzPkTVpmOXNNo:hover,\r\n  ._2TKjnTBz2729RS4k5OWUmj:hover ._3COuJa1d6YJFcsZTxASSu5:hover  {\r\n    background-color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._2TKjnTBz2729RS4k5OWUmj:hover ._3COuJa1d6YJFcsZTxASSu5 {\r\n    display: block;\r\n    width: 48px;\r\n    height: 48px;\r\n    position: absolute;\r\n    bottom: -24px;\r\n    left: -24px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    color: rgba(255, 255, 255,1);\r\n    padding: 1px 16px;\r\n    -ms-transform: rotate(45deg); /* IE 9 */\r\n    -webkit-transform: rotate(45deg); /* Safari */\r\n    transform: rotate(45deg);\r\n    cursor: pointer;\r\n    font-size: medium;\r\n  }\r\n  ._3COuJa1d6YJFcsZTxASSu5 .fa {\r\n    font-weight: 400;\r\n    -ms-transform: rotate(-45deg); /* IE 9 */\r\n    -webkit-transform: rotate(-45deg); /* Safari */\r\n    transform: rotate(-45deg);\r\n  }\r\n  ._2TKjnTBz2729RS4k5OWUmj img {\r\n    width: 100%;\r\n  }\r\n\r\n  ._1mOkK1IGx2tV3_RE1x7HUO {\r\n    font-weight: 700;\r\n    padding-top: 8px;\r\n    padding-bottom: 4px;\r\n  }\r\n  ._3Tmpg2oLp7SzSTsdt6wjho {\r\n    display: inline-block;\r\n    padding: 0 0 0 16px;\r\n    min-height: 22px;\r\n    min-width: 80px;\r\n  }\r\n  ._3wl69QN__sK-XlOC7HMEsa {\r\n    color: rgba(35, 79, 30, 1);\r\n  }\r\n  .lyjsOCAhooLQsnLzxkQyl {\r\n    width: 100%;\r\n    text-align: center;\r\n    display: inline-block;\r\n    background-color: rgba(244, 244, 244, 1);\r\n    font-weight: 700;\r\n    color: rgba(107, 170, 119, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n    border: 1px solid rgba(107, 170, 119, 1);\r\n  }\r\n  .lyjsOCAhooLQsnLzxkQyl:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n    border: 1px solid rgba(94, 78, 81, 1);\r\n  }\r\n  ._1FZ9nqSoGCwvYztLA4q6hp {\r\n    width: 100%;\r\n    font-family: 'Open Sans', sans-serif;\r\n    text-align: center;\r\n    display: inline-block;\r\n    font-weight: 700;\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(93, 40, 49, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  ._1FZ9nqSoGCwvYztLA4q6hp:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._1Ubo3_UnDB1_NP8fJSwVef {\r\n    font-size: small;\r\n    padding: 12px 0;\r\n    text-align: center;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -99940,7 +100003,7 @@
 	exports.push([module.id, "@import url(//fonts.googleapis.com/css?family=Open+Sans:300,700,300italic);", ""]);
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  * {\r\n    margin: 0;\r\n    padding: 0;\r\n    -moz-box-sizing: border-box;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n    -webkit-tap-highlight-color: rgba(0,0,0,0);\r\n  }\r\n  html {\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow: hidden;\r\n  }\r\n  body {\r\n    width: 100%;\r\n    height: 100%;\r\n    color: rgba(255, 255, 255, 1);\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: medium;\r\n    overflow: hidden;\r\n  }\r\n  a {\r\n    text-decoration: none;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n  }\r\n  .hidden {\r\n    display: none;\r\n  }\r\n  .hide {\r\n    opacity : 0;\r\n    transition: opacity 1.3s;\r\n  }\r\n  #BG6p6R6pCMzH6rLXugbI3, #app {\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow: hidden;\r\n  }\r\n  \r\n  /* Leafet global style */\r\n  .leaflet-container {\r\n    height: 100%;\r\n  }\r\n  .leaflet-control,\r\n  .leaflet-top, .leaflet-bottom {\r\n    z-index: 0 !important;\r\n  }\r\n\r\n  /* Leaflet markers styles */\r\n  .leaflet-icon-hidden {\r\n    -webkit-filter: blur(2px) !important; /* Chrome, Safari, Opera */\r\n    filter: blur(2px) !important;\r\n  }\r\n  .leaflet-icon-dead {\r\n    -webkit-filter: opacity(30%) drop-shadow(1px 1px 1px black) !important; /* Chrome, Safari, Opera */\r\n    filter: opacity(30%) drop-shadow(1px 1px 1px black) !important;\r\n  }\r\n\r\n  /* Scroll bar style */\r\n  ::-webkit-scrollbar {\r\n    width: 4px;\r\n  }\r\n  /* Track */\r\n  ::-webkit-scrollbar-track {\r\n\r\n  }\r\n  /* Handle */\r\n  ::-webkit-scrollbar-thumb {\r\n    background: rgba(187,168,164,0.3);\r\n  }\r\n  ::-webkit-scrollbar-thumb:window-inactive {\r\n    background: rgba(187,168,164,0.1);\r\n  }\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  * {\r\n    margin: 0;\r\n    padding: 0;\r\n    -moz-box-sizing: border-box;\r\n    -webkit-box-sizing: border-box;\r\n    box-sizing: border-box;\r\n    -webkit-tap-highlight-color: rgba(0,0,0,0);\r\n  }\r\n  html {\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow: hidden;\r\n  }\r\n  body {\r\n    width: 100%;\r\n    height: 100%;\r\n    color: rgba(255, 255, 255, 1);\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: medium;\r\n    overflow: hidden;\r\n  }\r\n  a {\r\n    text-decoration: none;\r\n    color: rgba(255, 255, 255, 1);\r\n    cursor: pointer;\r\n  }\r\n  .hidden {\r\n    display: none;\r\n  }\r\n  .hide {\r\n    opacity : 0;\r\n    transition: opacity 1.3s;\r\n  }\r\n  #BG6p6R6pCMzH6rLXugbI3, #app {\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow: hidden;\r\n  }\r\n\r\n  /* Leafet global style */\r\n  .leaflet-container {\r\n    height: 100%;\r\n  }\r\n  .leaflet-control,\r\n  .leaflet-top, .leaflet-bottom {\r\n    z-index: 0 !important;\r\n  }\r\n\r\n  /* Leaflet markers styles */\r\n  .leaflet-icon-hidden {\r\n    -webkit-filter: blur(2px) !important; /* Chrome, Safari, Opera */\r\n    filter: blur(2px) !important;\r\n  }\r\n  .leaflet-icon-dead {\r\n    -webkit-filter: opacity(30%) drop-shadow(1px 1px 1px black) !important; /* Chrome, Safari, Opera */\r\n    filter: opacity(30%) drop-shadow(1px 1px 1px black) !important;\r\n  }\r\n\r\n  /* Scroll bar style */\r\n  ::-webkit-scrollbar {\r\n    width: 4px;\r\n  }\r\n  /* Track */\r\n  ::-webkit-scrollbar-track {\r\n\r\n  }\r\n  /* Handle */\r\n  ::-webkit-scrollbar-thumb {\r\n    background: rgba(187,168,164,0.3);\r\n  }\r\n  ::-webkit-scrollbar-thumb:window-inactive {\r\n    background: rgba(187,168,164,0.1);\r\n  }\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
