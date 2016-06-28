@@ -44,6 +44,8 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
     this.state = {
       visible: false,
       clicked: false,
+      width: 0,
+      height: 0,
     };
   }
   public componentDidMount() {
@@ -158,13 +160,18 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
     var divStyle = {
       left: self.state.x,
       top: self.state.y,
+      width: Math.floor(self.state.width * 0.3),
+    };
+    var imgStyle = {
+      width: Math.floor(self.state.width * 0.3) - 24,
+      height: Math.floor((self.state.width * 0.3 - 24) * 9 / 16),
     };
     let note: NoteModel = noteStore.getNote(self.state.noteId);
     let tooltip: JSX.Element = <div id="tooltip" style={divStyle} className={styles.tooltip + " " + styles.hidden}></div>;
     if (note && self.state.visible) {
       let image: JSX.Element;
       if (note.getImage(0)) {
-         image = <img className={styles.image} src={Settings.uBaseName + Settings.uContentImage + note.getImage(0)} />;
+         image = <img style={imgStyle} className={styles.image} src={Settings.uBaseName + Settings.uContentImage + note.getImage(0)} />;
       }
       let comment: JSX.Element;
       if (note.getNoteType() == NoteType.POST) {

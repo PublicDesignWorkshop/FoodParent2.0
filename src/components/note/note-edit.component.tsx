@@ -45,7 +45,6 @@ export interface INoteEditStatus {
 
 export default class NoteEditComponent extends React.Component<INoteEditProps, INoteEditStatus> {
   static contextTypes: any;
-  refs: any;
   constructor(props : INoteEditProps) {
     super(props);
     let self: NoteEditComponent = this;
@@ -83,7 +82,7 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
           editable = true;
         }
       }
-      self.setState({editable: editable, width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5});
+      self.setState({editable: editable, width: (ReactDOM.findDOMNode(self.refs['wrapper']).clientWidth - 16) * 0.5});
     }
   }
 

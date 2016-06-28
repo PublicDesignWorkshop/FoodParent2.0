@@ -46,7 +46,6 @@ export interface IDonateAddStatus {
 
 export default class DonateAddComponent extends React.Component<IDonateAddProps, IDonateAddStatus> {
   static contextTypes: any;
-  refs: any;
   constructor(props : IDonateAddProps) {
     super(props);
     let self: DonateAddComponent = this;
@@ -82,7 +81,7 @@ export default class DonateAddComponent extends React.Component<IDonateAddProps,
       props.donate.setLocationId(props.locationId);
       props.donate.setPersonId(authStore.getAuth().getId());
     }
-    self.setState({width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5});
+    self.setState({width: (ReactDOM.findDOMNode(self.refs['wrapper']).clientWidth - 16) * 0.5});
   }
 
   private onImageClick = (image: string) => {

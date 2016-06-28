@@ -46,7 +46,6 @@ export interface IDonateEditStatus {
 
 export default class DonateEditComponent extends React.Component<IDonateEditProps, IDonateEditStatus> {
   static contextTypes: any;
-  refs: any;
   constructor(props : IDonateEditProps) {
     super(props);
     let self: DonateEditComponent = this;
@@ -87,7 +86,7 @@ export default class DonateEditComponent extends React.Component<IDonateEditProp
           editable = true;
         }
       }
-      self.setState({editable: editable, width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5});
+      self.setState({editable: editable, width: (ReactDOM.findDOMNode(self.refs['wrapper']).clientWidth - 16) * 0.5});
     }
   }
 

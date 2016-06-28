@@ -42,7 +42,6 @@ export interface INoteAddStatus {
 }
 export default class NoteAddComponent extends React.Component<INoteAddProps, INoteAddStatus> {
   static contextTypes: any;
-  refs: any;
   constructor(props : INoteAddProps) {
     super(props);
     let self: NoteAddComponent = this;
@@ -78,7 +77,7 @@ export default class NoteAddComponent extends React.Component<INoteAddProps, INo
       props.note.setTreeId(props.treeId);
       props.note.setPersonId(authStore.getAuth().getId());
     }
-    self.setState({width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5});
+    self.setState({width: (ReactDOM.findDOMNode(self.refs['wrapper']).clientWidth - 16) * 0.5});
   }
 
   private onImageClick = (image: string) => {

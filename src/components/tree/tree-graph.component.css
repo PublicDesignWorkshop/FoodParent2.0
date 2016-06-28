@@ -10,7 +10,6 @@
   }
   :local(.tooltip) {
     position: absolute;
-    width: 120px;
     margin: 8px;
     border: 2px solid rgba(64, 54, 56, 1);
     background-color: rgba(94, 78, 81, 1);
@@ -38,15 +37,17 @@
     display: none;
   }
   :local(.image) {
-    width: 100px;
-    height: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
     margin: 4px 0;
   }
   :local(.highlight) {
     font-weight: 700;
   }
   :local(.comment) {
-    width: 100px;
+    width: 100%;
     font-weight: 700;
     overflow:hidden;
     display:inline-block;

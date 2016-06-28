@@ -50038,7 +50038,7 @@
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -75628,7 +75628,7 @@
 	                props.note.setTreeId(props.treeId);
 	                props.note.setPersonId(auth_store_1.authStore.getAuth().getId());
 	            }
-	            self.setState({ width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5 });
+	            self.setState({ width: (ReactDOM.findDOMNode(self.refs['wrapper']).clientWidth - 16) * 0.5 });
 	        };
 	        _this.onImageClick = function (image) {
 	            var self = _this;
@@ -91689,7 +91689,7 @@
 	                        editable = true;
 	                    }
 	                }
-	                self.setState({ editable: editable, width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5 });
+	                self.setState({ editable: editable, width: (ReactDOM.findDOMNode(self.refs['wrapper']).clientWidth - 16) * 0.5 });
 	            }
 	        };
 	        _this.onImageClick = function (image) {
@@ -93109,7 +93109,9 @@
 	        var self = _this;
 	        _this.state = {
 	            visible: false,
-	            clicked: false
+	            clicked: false,
+	            width: 0,
+	            height: 0
 	        };
 	        return _this;
 	    }
@@ -93234,14 +93236,19 @@
 	            var self = this;
 	            var divStyle = {
 	                left: self.state.x,
-	                top: self.state.y
+	                top: self.state.y,
+	                width: Math.floor(self.state.width * 0.3)
+	            };
+	            var imgStyle = {
+	                width: Math.floor(self.state.width * 0.3) - 24,
+	                height: Math.floor((self.state.width * 0.3 - 24) * 9 / 16)
 	            };
 	            var note = note_store_1.noteStore.getNote(self.state.noteId);
 	            var tooltip = React.createElement("div", { id: "tooltip", style: divStyle, className: styles.tooltip + " " + styles.hidden });
 	            if (note && self.state.visible) {
 	                var image = void 0;
 	                if (note.getImage(0)) {
-	                    image = React.createElement("img", { className: styles.image, src: Settings.uBaseName + Settings.uContentImage + note.getImage(0) });
+	                    image = React.createElement("img", { style: imgStyle, className: styles.image, src: Settings.uBaseName + Settings.uContentImage + note.getImage(0) });
 	                }
 	                var comment = void 0;
 	                if (note.getNoteType() == enum_1.NoteType.POST) {
@@ -93326,7 +93333,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI {\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: small;\r\n    padding: 8px 8px 8px 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._2uSKatikBUlr69Jrd4Wb9_ {\r\n\r\n  }\r\n  ._2mh5HW3u4yCjpGMaCHDP4n {\r\n    position: absolute;\r\n    width: 120px;\r\n    margin: 8px;\r\n    border: 2px solid rgba(64, 54, 56, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 2px 4px 4px 10px;\r\n    text-align: left;\r\n    color: rgba(255, 255, 255, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub {\r\n    cursor: pointer;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._1Ny1Q33qPeDb8MtmpwvsJ3 {\r\n    pointer-events: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n    border: 2px solid rgba(64, 54, 56, 0.75);\r\n    background-color: rgba(94, 78, 81, 0.75);\r\n  }\r\n  ._1B-SgTUak8jn9g0TXZPHyW {\r\n    display: none;\r\n  }\r\n  ._3vjAZ3NkzoEdvJPF64ZDiI {\r\n    width: 100px;\r\n    height: auto;\r\n    margin: 4px 0;\r\n  }\r\n  ._11C3zNqzosXyc1xAlyXJCo {\r\n    font-weight: 700;\r\n  }\r\n  ._2WPAJ0xj_RszU01b1p7Oqg {\r\n    width: 100px;\r\n    font-weight: 700;\r\n    overflow:hidden;\r\n    display:inline-block;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-justify-content: space-around; /* Safari 6.1+ */\r\n    justify-content: space-around;\r\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend span {\r\n    margin: 4px;\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-weight: 700;\r\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend .scatter-legend-marker {\r\n    display: inline-block;\r\n    width: 8px;\r\n    height: 8px;\r\n    border-radius: 50%;\r\n    margin: 0px;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI {\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: small;\r\n    padding: 8px 8px 8px 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._2uSKatikBUlr69Jrd4Wb9_ {\r\n\r\n  }\r\n  ._2mh5HW3u4yCjpGMaCHDP4n {\r\n    position: absolute;\r\n    margin: 8px;\r\n    border: 2px solid rgba(64, 54, 56, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 2px 4px 4px 10px;\r\n    text-align: left;\r\n    color: rgba(255, 255, 255, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub {\r\n    cursor: pointer;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._1Ny1Q33qPeDb8MtmpwvsJ3 {\r\n    pointer-events: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n    border: 2px solid rgba(64, 54, 56, 0.75);\r\n    background-color: rgba(94, 78, 81, 0.75);\r\n  }\r\n  ._1B-SgTUak8jn9g0TXZPHyW {\r\n    display: none;\r\n  }\r\n  ._3vjAZ3NkzoEdvJPF64ZDiI {\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n    object-position: 50% 50%;\r\n    margin: 4px 0;\r\n  }\r\n  ._11C3zNqzosXyc1xAlyXJCo {\r\n    font-weight: 700;\r\n  }\r\n  ._2WPAJ0xj_RszU01b1p7Oqg {\r\n    width: 100%;\r\n    font-weight: 700;\r\n    overflow:hidden;\r\n    display:inline-block;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-justify-content: space-around; /* Safari 6.1+ */\r\n    justify-content: space-around;\r\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend span {\r\n    margin: 4px;\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-weight: 700;\r\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend .scatter-legend-marker {\r\n    display: inline-block;\r\n    width: 8px;\r\n    height: 8px;\r\n    border-radius: 50%;\r\n    margin: 0px;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -98006,7 +98013,7 @@
 	                props.donate.setLocationId(props.locationId);
 	                props.donate.setPersonId(auth_store_1.authStore.getAuth().getId());
 	            }
-	            self.setState({ width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5 });
+	            self.setState({ width: (ReactDOM.findDOMNode(self.refs['wrapper']).clientWidth - 16) * 0.5 });
 	        };
 	        _this.onImageClick = function (image) {
 	            var self = _this;
@@ -99145,7 +99152,7 @@
 	                        editable = true;
 	                    }
 	                }
-	                self.setState({ editable: editable, width: (ReactDOM.findDOMNode(self.refs.wrapper).clientWidth - 16) * 0.5 });
+	                self.setState({ editable: editable, width: (ReactDOM.findDOMNode(self.refs['wrapper']).clientWidth - 16) * 0.5 });
 	            }
 	        };
 	        _this.onImageClick = function (image) {
@@ -99542,7 +99549,9 @@
 	        var self = _this;
 	        _this.state = {
 	            visible: false,
-	            clicked: false
+	            clicked: false,
+	            width: 0,
+	            height: 0
 	        };
 	        return _this;
 	    }
@@ -99678,7 +99687,12 @@
 	            var self = this;
 	            var divStyle = {
 	                left: self.state.x,
-	                top: self.state.y
+	                top: self.state.y,
+	                width: Math.floor(self.state.width * 0.3)
+	            };
+	            var imgStyle = {
+	                width: Math.floor(self.state.width * 0.3) - 24,
+	                height: Math.floor((self.state.width * 0.3 - 24) * 9 / 16)
 	            };
 	            var donate = donate_store_1.donateStore.getDonate(self.state.donateId);
 	            var tooltip = React.createElement("div", { id: "tooltip", style: divStyle, className: styles.tooltip + " " + styles.hidden });
@@ -99686,7 +99700,7 @@
 	                (function () {
 	                    var image = void 0;
 	                    if (donate.getImage(0)) {
-	                        image = React.createElement("img", { className: styles.image, src: Settings.uBaseName + Settings.uContentImage + donate.getImage(0) });
+	                        image = React.createElement("img", { style: imgStyle, className: styles.image, src: Settings.uBaseName + Settings.uContentImage + donate.getImage(0) });
 	                    }
 	                    var food = food_store_1.foodStore.getFood(donate.getFoodId());
 	                    var comment = void 0;
@@ -99772,7 +99786,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._225YIAp4mGuqL_sNSgEsBp {\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: small;\r\n    padding: 8px 8px 8px 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._25LQR54xSJWNkvINBerQ8w {\r\n\r\n  }\r\n  ._3IMtv4yIb_J3Nx8Tu6dxDA {\r\n    position: absolute;\r\n    width: 120px;\r\n    margin: 8px;\r\n    border: 2px solid rgba(64, 54, 56, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 2px 4px 4px 10px;\r\n    text-align: left;\r\n    color: rgba(255, 255, 255, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._2V3KQOIcdqldYdfz9MmCTv {\r\n    cursor: pointer;\r\n  }\r\n  ._2V3KQOIcdqldYdfz9MmCTv:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._2HlkmUlUqGKKnLZPhbrNhZ {\r\n    pointer-events: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n    border: 2px solid rgba(64, 54, 56, 0.75);\r\n    background-color: rgba(94, 78, 81, 0.75);\r\n  }\r\n  ._3vHLtsGipfNVSByp2YMr4t {\r\n    display: none;\r\n  }\r\n  ._4u2XulFVXqM8cBreDU_eA {\r\n    width: 100px;\r\n    height: auto;\r\n    margin: 4px 0;\r\n  }\r\n  ._6xexzVry2JqlIN_-wVByy {\r\n    font-weight: 700;\r\n  }\r\n  ._21BlGb8rrKlrrTctBfNNg1 {\r\n    width: 100px;\r\n    font-weight: 700;\r\n  }\r\n  ._14FXU0Ub9ENr7LNCbhTTkO {\r\n    display: inline-block;\r\n    margin: 0 2px 0 0;\r\n    font-weight: 700;\r\n  }\r\n\r\n  ._225YIAp4mGuqL_sNSgEsBp .scatter-legend {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-justify-content: space-around; /* Safari 6.1+ */\r\n    justify-content: space-around;\r\n  }\r\n  ._225YIAp4mGuqL_sNSgEsBp .scatter-legend span {\r\n    margin: 4px;\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-weight: 700;\r\n  }\r\n  ._225YIAp4mGuqL_sNSgEsBp .scatter-legend .scatter-legend-marker {\r\n    display: inline-block;\r\n    width: 8px;\r\n    height: 8px;\r\n    border-radius: 50%;\r\n    margin: 0px;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._225YIAp4mGuqL_sNSgEsBp {\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: small;\r\n    padding: 8px 8px 8px 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._25LQR54xSJWNkvINBerQ8w {\r\n\r\n  }\r\n  ._3IMtv4yIb_J3Nx8Tu6dxDA {\r\n    position: absolute;\r\n    margin: 8px;\r\n    border: 2px solid rgba(64, 54, 56, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 2px 4px 4px 10px;\r\n    text-align: left;\r\n    color: rgba(255, 255, 255, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._2V3KQOIcdqldYdfz9MmCTv {\r\n    cursor: pointer;\r\n  }\r\n  ._2V3KQOIcdqldYdfz9MmCTv:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._2HlkmUlUqGKKnLZPhbrNhZ {\r\n    pointer-events: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n    border: 2px solid rgba(64, 54, 56, 0.75);\r\n    background-color: rgba(94, 78, 81, 0.75);\r\n  }\r\n  ._3vHLtsGipfNVSByp2YMr4t {\r\n    display: none;\r\n  }\r\n  ._4u2XulFVXqM8cBreDU_eA {\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n    object-position: 50% 50%;\r\n    margin: 4px 0;\r\n  }\r\n  ._6xexzVry2JqlIN_-wVByy {\r\n    font-weight: 700;\r\n  }\r\n  ._21BlGb8rrKlrrTctBfNNg1 {\r\n    width: 100%;\r\n    font-weight: 700;\r\n  }\r\n  ._14FXU0Ub9ENr7LNCbhTTkO {\r\n    display: inline-block;\r\n    margin: 0 2px 0 0;\r\n    font-weight: 700;\r\n  }\r\n\r\n  ._225YIAp4mGuqL_sNSgEsBp .scatter-legend {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-justify-content: space-around; /* Safari 6.1+ */\r\n    justify-content: space-around;\r\n  }\r\n  ._225YIAp4mGuqL_sNSgEsBp .scatter-legend span {\r\n    margin: 4px;\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-weight: 700;\r\n  }\r\n  ._225YIAp4mGuqL_sNSgEsBp .scatter-legend .scatter-legend-marker {\r\n    display: inline-block;\r\n    width: 8px;\r\n    height: 8px;\r\n    border-radius: 50%;\r\n    margin: 0px;\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
