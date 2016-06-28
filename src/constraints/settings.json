@@ -32,6 +32,7 @@
   "iDisableClusteringAtZoom": 16,
   "iMessageDuration": 2000,
   "iMapRenderDelay": 1000,
+  "sEXIFDateFormat": "YYYY-MM-DD HH-mm-ss",
 
 
   "iMessageLineDuration": 5000,

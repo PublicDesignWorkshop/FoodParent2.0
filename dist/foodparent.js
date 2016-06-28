@@ -25859,6 +25859,7 @@
 		"iDisableClusteringAtZoom": 16,
 		"iMessageDuration": 2000,
 		"iMapRenderDelay": 1000,
+		"sEXIFDateFormat": "YYYY-MM-DD HH-mm-ss",
 		"iMessageLineDuration": 5000,
 		"fKGToG": 1000,
 		"fLBSTOG": 453.592,
@@ -26371,6 +26372,7 @@
 	    if (value.toString() == "671") return cl.e671;
 	    if (value.toString() == "672") return cl.e672;
 	    if (value.toString() == "673") return cl.e673;
+	    if (value.toString() == "674") return cl.e674;
 	    if (value.toString() == "676") return cl.e676;
 	    if (value.toString() == "677") return cl.e677;
 	    if (value.toString() == "678") return cl.e678;
@@ -26514,6 +26516,7 @@
 		"e671": "Select ratings...",
 		"e672": "Select a rating...",
 		"e673": "Enter weight...",
+		"e674": "Date has been set as",
 		"e676": "PARENT INFO",
 		"e677": "SIGN OUT",
 		"e678": "Role",
@@ -26656,6 +26659,7 @@
 		"e671": "별점을 선택해주세요.",
 		"e672": "별점을 선택해주세요.",
 		"e673": "무게를 입력해주세요.",
+		"e674": "날짜가 다음과 같이 변경되었습니다.",
 		"e676": "부모 정보",
 		"e677": "로그 아웃",
 		"e678": "역할",
@@ -75591,6 +75595,7 @@
 	
 	var React = __webpack_require__(/*! react */ 1);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
+	var moment = __webpack_require__(/*! moment */ 331);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./note-add.component.css */ 500);
@@ -75722,9 +75727,16 @@
 	                    var imageUpload = React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
 	                            if (event.target.files[0] != null) {
 	                                self.setState({ uploading: true });
-	                                upload_1.uploadImage(event.target.files[0], tree.getId().toString(), function (filename) {
+	                                upload_1.uploadImage(event.target.files[0], tree.getId().toString(), function (filename, datetime) {
 	                                    self.setState({ uploading: false });
-	                                    console.log("Image file uploaded: " + filename);
+	                                    if (datetime != null && datetime != "") {
+	                                        var date = moment(datetime, Settings.sEXIFDateFormat);
+	                                        console.log("Image file uploaded: " + filename + " - " + date.format(Settings.sUIDateFormat));
+	                                        message_1.displaySuccessMessage(localization_1.localization(674) + " <strong>" + date.format(Settings.sUIDateFormat) + "</stong>");
+	                                        self.props.note.setDate(date);
+	                                    } else {
+	                                        console.log("Image file uploaded: " + filename);
+	                                    }
 	                                    self.props.note.addImage(filename);
 	                                    self.forceUpdate();
 	                                }, function () {});
@@ -91511,83 +91523,90 @@
 	function uploadImage(file, prefix, _success, _error) {
 	    loadImage.parseMetaData(file, function (data) {
 	        if (!data.imageHead) {
-	            return;
-	        }
-	        // Combine data.imageHead with the image body of a resized file
-	        // to create scaled images with the original image meta data, e.g.:
-	        var orientation = data.exif[0x0112];
-	        loadImage(file, function (canvas) {
-	            if (canvas.toBlob) {
-	                canvas.toBlob(function (blob) {
-	                    var url = window.URL.createObjectURL(blob);
-	                    var data = new FormData();
-	                    data.append('file', blob);
-	                    data.append('prefix', prefix);
-	                    $.ajax({
-	                        url: Settings.uBaseName + Settings.uServer + "imageupload3.php",
-	                        type: "POST",
-	                        data: data,
-	                        cache: false,
-	                        processData: false,
-	                        contentType: false,
-	                        dataType: "json",
-	                        success: function success(response, textStatus, jqXHR) {
-	                            if (typeof response.error === "undefined") {
-	                                if (_success) {
-	                                    _success(response.files[0].replace(Settings.uRelativeImageUpload, ""));
+	            loadImage(file, function (canvas) {
+	                if (canvas.toBlob) {
+	                    canvas.toBlob(function (blob) {
+	                        var data = new FormData();
+	                        data.append('file', blob);
+	                        data.append('prefix', prefix);
+	                        $.ajax({
+	                            url: Settings.uBaseName + Settings.uServer + "imageupload3.php",
+	                            type: "POST",
+	                            data: data,
+	                            cache: false,
+	                            processData: false,
+	                            contentType: false,
+	                            dataType: "json",
+	                            success: function success(response, textStatus, jqXHR) {
+	                                if (typeof response.error === "undefined") {
+	                                    if (_success) {
+	                                        _success(response.files[0].replace(Settings.uRelativeImageUpload, ""), null);
+	                                    }
+	                                } else {
+	                                    if (_error) {
+	                                        _error(response);
+	                                    }
 	                                }
-	                            } else {
+	                            },
+	                            error: function error(jqXHR, textStatus, errorThrown) {
 	                                if (_error) {
-	                                    _error(response);
+	                                    _error(jqXHR);
 	                                }
 	                            }
-	                        },
-	                        error: function error(jqXHR, textStatus, errorThrown) {
-	                            if (_error) {
-	                                _error(jqXHR);
-	                            }
-	                        }
-	                    });
-	                }, 'image/jpeg');
-	            }
-	            //
-	            // let dataUrl = canvas.toDataURL(file.type);
-	            // // Create a formdata object and add the files
-	            // var data = new FormData();
-	            // data.append('image', dataUrl);
-	            // data.append('prefix', prefix);
-	            // data.append('type', file.type);
-	            // $.ajax({
-	            //   url: Settings.uBaseName + Settings.uServer + "imageupload2.php",
-	            //   type: "POST",
-	            //   data: data,
-	            //   cache: false,
-	            //   processData: false, // Don't process the files
-	            //   contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-	            //   dataType: "json",
-	            //   success: function (response, textStatus, jqXHR) {
-	            //     if (typeof response.error === "undefined") {
-	            //       if (success) {
-	            //         success(response.files[0].replace(Settings.uRelativeImageUpload, ""));
-	            //       }
-	            //     } else {
-	            //       if (error) {
-	            //         error(response);
-	            //       }
-	            //     }
-	            //   },
-	            //   error: function (jqXHR, textStatus, errorThrown) {
-	            //     if (error) {
-	            //       error(jqXHR);
-	            //     }
-	            //   }
-	            // });
-	        }, {
-	            maxWidth: 1600,
-	            maxHeight: 900,
-	            canvas: true,
-	            orientation: orientation
-	        });
+	                        });
+	                    }, 'image/jpeg');
+	                }
+	            }, {
+	                maxWidth: 1600,
+	                maxHeight: 900,
+	                canvas: true
+	            });
+	        } else {
+	            (function () {
+	                var orientation = data.exif[0x0112];
+	                var datetime = data.exif.getText('DateTimeOriginal');
+	                loadImage(file, function (canvas) {
+	                    if (canvas.toBlob) {
+	                        canvas.toBlob(function (blob) {
+	                            // let url = window.URL.createObjectURL(blob);
+	                            var data = new FormData();
+	                            data.append('file', blob);
+	                            data.append('prefix', prefix);
+	                            $.ajax({
+	                                url: Settings.uBaseName + Settings.uServer + "imageupload3.php",
+	                                type: "POST",
+	                                data: data,
+	                                cache: false,
+	                                processData: false,
+	                                contentType: false,
+	                                dataType: "json",
+	                                success: function success(response, textStatus, jqXHR) {
+	                                    if (typeof response.error === "undefined") {
+	                                        if (_success) {
+	                                            _success(response.files[0].replace(Settings.uRelativeImageUpload, ""), datetime);
+	                                        }
+	                                    } else {
+	                                        if (_error) {
+	                                            _error(response);
+	                                        }
+	                                    }
+	                                },
+	                                error: function error(jqXHR, textStatus, errorThrown) {
+	                                    if (_error) {
+	                                        _error(jqXHR);
+	                                    }
+	                                }
+	                            });
+	                        }, 'image/jpeg');
+	                    }
+	                }, {
+	                    maxWidth: 1600,
+	                    maxHeight: 900,
+	                    canvas: true,
+	                    orientation: orientation
+	                });
+	            })();
+	        }
 	    }, {
 	        maxMetaDataSize: 262144,
 	        disableImageHead: false
@@ -91648,6 +91667,7 @@
 	
 	var React = __webpack_require__(/*! react */ 1);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
+	var moment = __webpack_require__(/*! moment */ 331);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./note-edit.component.css */ 579);
@@ -91796,9 +91816,16 @@
 	                        var imageUpload = React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
 	                                if (event.target.files[0] != null) {
 	                                    self.setState({ uploading: true });
-	                                    upload_1.uploadImage(event.target.files[0], tree.getId().toString(), function (filename) {
+	                                    upload_1.uploadImage(event.target.files[0], tree.getId().toString(), function (filename, datetime) {
 	                                        self.setState({ uploading: false });
-	                                        console.log("Image file uploaded: " + filename);
+	                                        if (datetime != null && datetime != "") {
+	                                            var date = moment(datetime, Settings.sEXIFDateFormat);
+	                                            console.log("Image file uploaded: " + filename + " - " + date.format(Settings.sUIDateFormat));
+	                                            message_1.displaySuccessMessage(localization_1.localization(674) + " <strong>" + date.format(Settings.sUIDateFormat) + "</stong>");
+	                                            self.props.note.setDate(date);
+	                                        } else {
+	                                            console.log("Image file uploaded: " + filename);
+	                                        }
 	                                        self.props.note.addImage(filename);
 	                                        self.forceUpdate();
 	                                    }, function () {});
@@ -97975,6 +98002,7 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var AltContainer = __webpack_require__(/*! alt-container */ 229);
+	var moment = __webpack_require__(/*! moment */ 331);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./donate-add.component.css */ 652);
@@ -98111,9 +98139,16 @@
 	                    var imageUpload = React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
 	                            if (event.target.files[0] != null) {
 	                                self.setState({ uploading: true });
-	                                upload_1.uploadImage(event.target.files[0], "d" + location.getId().toString(), function (filename) {
+	                                upload_1.uploadImage(event.target.files[0], "d" + location.getId().toString(), function (filename, datetime) {
 	                                    self.setState({ uploading: false });
-	                                    console.log("Image file uploaded: " + filename);
+	                                    if (datetime != null && datetime != "") {
+	                                        var date = moment(datetime, Settings.sEXIFDateFormat);
+	                                        console.log("Image file uploaded: " + filename + " - " + date.format(Settings.sUIDateFormat));
+	                                        message_1.displaySuccessMessage(localization_1.localization(674) + " <strong>" + date.format(Settings.sUIDateFormat) + "</stong>");
+	                                        self.props.donate.setDate(date);
+	                                    } else {
+	                                        console.log("Image file uploaded: " + filename);
+	                                    }
 	                                    self.props.donate.addImage(filename);
 	                                    self.forceUpdate();
 	                                }, function () {});
@@ -99110,6 +99145,7 @@
 	var React = __webpack_require__(/*! react */ 1);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var AltContainer = __webpack_require__(/*! alt-container */ 229);
+	var moment = __webpack_require__(/*! moment */ 331);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./donate-edit.component.css */ 670);
@@ -99242,9 +99278,16 @@
 	                    var imageUpload = React.createElement("input", { className: styles.upload, type: "file", accept: "image/*", capture: "camera", onChange: function onChange(event) {
 	                            if (event.target.files[0] != null) {
 	                                self.setState({ uploading: true });
-	                                upload_1.uploadImage(event.target.files[0], "d" + location.getId().toString(), function (filename) {
+	                                upload_1.uploadImage(event.target.files[0], "d" + location.getId().toString(), function (filename, datetime) {
 	                                    self.setState({ uploading: false });
-	                                    console.log("Image file uploaded: " + filename);
+	                                    if (datetime != null && datetime != "") {
+	                                        var date = moment(datetime, Settings.sEXIFDateFormat);
+	                                        console.log("Image file uploaded: " + filename + " - " + date.format(Settings.sUIDateFormat));
+	                                        message_1.displaySuccessMessage(localization_1.localization(674) + " <strong>" + date.format(Settings.sUIDateFormat) + "</stong>");
+	                                        self.props.donate.setDate(date);
+	                                    } else {
+	                                        console.log("Image file uploaded: " + filename);
+	                                    }
 	                                    self.props.donate.addImage(filename);
 	                                    self.forceUpdate();
 	                                }, function () {});

@@ -212,9 +212,16 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
         let imageUpload: JSX.Element = <input className={styles.upload} type="file" accept="image/*" capture="camera" onChange={(event: any)=> {
           if (event.target.files[0] != null) {
             self.setState({uploading: true});
-            uploadImage(event.target.files[0], tree.getId().toString(), function(filename: string) {  // success
+            uploadImage(event.target.files[0], tree.getId().toString(), function(filename: string, datetime: string) {  // success
               self.setState({uploading: false});
-              console.log("Image file uploaded: " + filename);
+              if (datetime != null && datetime != "") {
+                let date: moment.Moment = moment(datetime, Settings.sEXIFDateFormat);
+                console.log("Image file uploaded: " + filename + " - " + date.format(Settings.sUIDateFormat));
+                displaySuccessMessage(localization(674) + " <strong>" + date.format(Settings.sUIDateFormat) + "</stong>");
+                self.props.note.setDate(date);
+              } else {
+                console.log("Image file uploaded: " + filename);
+              }
               self.props.note.addImage(filename);
               self.forceUpdate();
             }, function() { // fail

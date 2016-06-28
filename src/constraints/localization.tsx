@@ -70,6 +70,7 @@ export function localization(value: any) {
   if (value.toString() == "671") return cl.e671;
   if (value.toString() == "672") return cl.e672;
   if (value.toString() == "673") return cl.e673;
+  if (value.toString() == "674") return cl.e674;
 
   if (value.toString() == "676") return cl.e676;
   if (value.toString() == "677") return cl.e677;
