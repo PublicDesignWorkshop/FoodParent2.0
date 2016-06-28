@@ -49968,7 +49968,6 @@
 	                dataType: "json",
 	                success: function success(response) {
 	                    if (response.code == 200) {
-	                        console.log(response.tree);
 	                        resolve(response.tree);
 	                    } else {
 	                        console.log(response.message);
@@ -50039,7 +50038,7 @@
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -72026,6 +72025,8 @@
 	                            };
 	                        }
 	                    } }, React.createElement(tree_parent_list_component_1.default, { tree: self.props.tree }))));
+	            } else if (food != null && !food.getAdaptability()) {
+	                return React.createElement("div", { className: styles.wrapper });
 	            } else {
 	                var status = localization_1.localization(981);
 	                var parents = self.props.tree.getParents();
@@ -72035,9 +72036,7 @@
 	                    status = parents.length + " " + localization_1.localization(983);
 	                }
 	                var adopt = void 0;
-	                if (food != null && !food.getAdaptability()) {
-	                    adopt = React.createElement("span", { className: styles.unableadopt }, localization_1.localization(626));
-	                } else if (!auth_store_1.authStore.getAuth().getIsGuest()) {
+	                if (!auth_store_1.authStore.getAuth().getIsGuest()) {
 	                    adopt = React.createElement("span", { className: styles.adopt, onClick: function onClick() {
 	                            self.props.tree.addParent(auth_store_1.authStore.getAuth().getId());
 	                            tree_actions_1.treeActions.adoptTree(self.props.tree);

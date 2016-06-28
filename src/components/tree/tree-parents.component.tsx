@@ -84,6 +84,11 @@ export default class TreeParentsComponent extends React.Component<ITreeParentsPr
           </div>
         </div>
       );
+    } else if (food != null && !food.getAdaptability()) {
+      return (
+        <div className={styles.wrapper}>
+        </div>
+      );
     } else {
       let status: string = localization(981);
       let parents: Array<number> = self.props.tree.getParents();
@@ -93,9 +98,7 @@ export default class TreeParentsComponent extends React.Component<ITreeParentsPr
         status = parents.length + " " + localization(983);
       }
       let adopt: JSX.Element;
-      if (food != null && !food.getAdaptability()) {
-        adopt = <span className={styles.unableadopt}>{localization(626)}</span>;
-      } else if (!authStore.getAuth().getIsGuest()) {
+      if (!authStore.getAuth().getIsGuest()) {
         adopt = <span className={styles.adopt} onClick={()=> {
           self.props.tree.addParent(authStore.getAuth().getId());
           treeActions.adoptTree(self.props.tree);
