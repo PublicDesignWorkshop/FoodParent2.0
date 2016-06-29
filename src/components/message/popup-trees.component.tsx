@@ -113,7 +113,7 @@ export default class PopupTreesComponent extends React.Component<IPopupTreesProp
               <span dangerouslySetInnerHTML={{__html: localization(636)}} />
               <span className={styles.button2} onClick={()=> {
                 if (tree && self.props.noteCode == 200) {
-                  if (authStore.getAuth().getIsAdmin()) {
+                  if (authStore.getAuth().getIsAdmin() || authStore.getAuth().getIsAccessibleTempTree(tree.getId())) {
                     treeActions.deleteTree(tree);
                   }
                 }

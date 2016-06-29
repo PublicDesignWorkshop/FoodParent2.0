@@ -112,10 +112,13 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
       pType = parseInt(selected2.value);
       if (pType == 1) {
         self.props.note.setPicupTime(PickupTime.EARLY);
+        self.props.note.setRate(4);
       } else if (pType == 2) {
         self.props.note.setPicupTime(PickupTime.PROPER);
+        self.props.note.setRate(5);
       } else if (pType == 3) {
         self.props.note.setPicupTime(PickupTime.LATE);
+        self.props.note.setRate(4);
       }
       self.setState({selected2: selected2});
     }

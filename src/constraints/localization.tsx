@@ -72,6 +72,8 @@ export function localization(value: any) {
   if (value.toString() == "673") return cl.e673;
   if (value.toString() == "674") return cl.e674;
 
+  if (value.toString() == "675") return cl.e675;
+
   if (value.toString() == "676") return cl.e676;
   if (value.toString() == "677") return cl.e677;
   if (value.toString() == "678") return cl.e678;

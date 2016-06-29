@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router';
 import { AbstractActions } from "./abstract.actions";
 
 var Settings = require('./../constraints/settings.json');
+import { authActions } from "./auth.actions";
 import { TreeModel, ITreeProps } from './../stores/tree.store';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { treeSource } from './../sources/tree.source';
@@ -144,7 +145,10 @@ class TreeActions extends AbstractActions implements ITreeActions {
   }
   createdTree(props: ITreeProps) {
     return (dispatch) => {
-      browserHistory.push({pathname: Settings.uBaseName + '/tree/' + props.id});
+      authActions.fetchAuth();
+      setTimeout(function() {
+        browserHistory.push({pathname: Settings.uBaseName + '/tree/' + props.id});
+      }, 500);
       dispatch(props);
     }
   }

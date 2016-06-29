@@ -27,6 +27,7 @@ import { personStore } from './../../stores/person.store';
 import { personActions } from './../../actions/person.actions';
 
 import { localization } from './../../constraints/localization';
+import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
 
 export interface ITreeProps {
   foods?: Array<FoodModel>;
@@ -82,8 +83,12 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
         if (authStore.getAuth().getIsManager()) {
           editable = true;
         }
-        if (tree.getOwner() == authStore.getAuth().getId() && authStore.getAuth().getId() != 0) {
+        // if (tree.getOwner() == authStore.getAuth().getId() && authStore.getAuth().getId() != 0) {
+        //   editable = true;
+        // }
+        if (authStore.getAuth().getIsAccessibleTempTree(tree.getId())) {
           editable = true;
+          displaySuccessMessage(localization(675));
         }
       }
       self.setState({editable: editable, treeId: props.treeId});
@@ -96,7 +101,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
       let tree: TreeModel = treeStore.getTree(self.props.treeId);
       let food: FoodModel = foodStore.getFood(tree.getFoodId());
       let deleteTree: JSX.Element;
-      if (authStore.getAuth().getIsAdmin()) {
+      if (authStore.getAuth().getIsAdmin() || authStore.getAuth().getIsAccessibleTempTree(tree.getId())) {
         deleteTree = <div className={styles.button} onClick={()=> {
           self.context.router.push({pathname: window.location.pathname, query: { mode: "delete" }});
         }}>
@@ -195,6 +200,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
                 <NoteListComponent noteId={self.props.noteId} />
               </AltContainer>
             </div>
+            {deleteTree}
           </div>
         );
       }

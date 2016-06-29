@@ -26373,6 +26373,7 @@
 	    if (value.toString() == "672") return cl.e672;
 	    if (value.toString() == "673") return cl.e673;
 	    if (value.toString() == "674") return cl.e674;
+	    if (value.toString() == "675") return cl.e675;
 	    if (value.toString() == "676") return cl.e676;
 	    if (value.toString() == "677") return cl.e677;
 	    if (value.toString() == "678") return cl.e678;
@@ -26517,6 +26518,7 @@
 		"e672": "Select a rating...",
 		"e673": "Enter weight...",
 		"e674": "Date has been set as",
+		"e675": "<strong>Temporarily</strong> allowed to edit this tree. (about <strong>15 min</strong>)",
 		"e676": "PARENT INFO",
 		"e677": "SIGN OUT",
 		"e678": "Role",
@@ -26660,6 +26662,7 @@
 		"e672": "별점을 선택해주세요.",
 		"e673": "무게를 입력해주세요.",
 		"e674": "날짜가 다음과 같이 변경되었습니다.",
+		"e675": "임시적으로 나무 정보를 변경할 수 있습니다.",
 		"e676": "부모 정보",
 		"e677": "로그 아웃",
 		"e678": "역할",
@@ -39838,6 +39841,7 @@
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
+	var auth_actions_1 = __webpack_require__(/*! ./auth.actions */ 305);
 	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 280);
 	var tree_source_1 = __webpack_require__(/*! ./../sources/tree.source */ 282);
 	var message_1 = __webpack_require__(/*! ./../utils/message */ 287);
@@ -39986,7 +39990,10 @@
 	        key: 'createdTree',
 	        value: function createdTree(props) {
 	            return function (dispatch) {
-	                react_router_1.browserHistory.push({ pathname: Settings.uBaseName + '/tree/' + props.id });
+	                auth_actions_1.authActions.fetchAuth();
+	                setTimeout(function () {
+	                    react_router_1.browserHistory.push({ pathname: Settings.uBaseName + '/tree/' + props.id });
+	                }, 500);
 	                dispatch(props);
 	            };
 	        }
@@ -53174,7 +53181,7 @@
 	                dispatch();
 	                self.setCode(90);
 	                auth_source_1.authSource.fetchAuth().then(function (response) {
-	                    self.fetchedAuth({ id: response.id, contact: response.contact, auth: response.auth });
+	                    self.fetchedAuth({ id: response.id, contact: response.contact, auth: response.auth, trees: response.trees });
 	                    loadingtracker_1.removeLoading();
 	                }).catch(function (code) {
 	                    message_1.displayErrorMessage(localization_1.localization(code));
@@ -53259,7 +53266,7 @@
 	                dispatch();
 	                self.setCode(90);
 	                auth_source_1.authSource.processLogin(contact, password).then(function (response) {
-	                    self.processedLogin({ id: response.id, auth: response.auth, contact: response.contact });
+	                    self.processedLogin({ id: response.id, auth: response.auth, contact: response.contact, trees: response.trees });
 	                    loadingtracker_1.removeLoading();
 	                }).catch(function (code) {
 	                    message_1.displayErrorMessage(localization_1.localization(code));
@@ -54599,6 +54606,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
+	var $ = __webpack_require__(/*! jquery */ 281);
 	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
 	var moment = __webpack_require__(/*! moment */ 331);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
@@ -54622,6 +54630,15 @@
 	        self.id = parseInt(props.id);
 	        self.contact = props.contact;
 	        self.auth = parseInt(props.auth);
+	        console.log(props);
+	        if (props.trees && props.trees != "") {
+	            self.trees = props.trees.split(',').map(function (treeId) {
+	                return parseInt(treeId);
+	            });
+	        } else {
+	            self.trees = new Array();
+	        }
+	        console.log(self.trees);
 	    }
 	
 	    _createClass(AuthModel, [{
@@ -54643,6 +54660,20 @@
 	        key: 'getIsAdmin',
 	        value: function getIsAdmin() {
 	            if (this.auth == AuthStatus.ADMIN) {
+	                return true;
+	            }
+	            return false;
+	        }
+	    }, {
+	        key: 'getTempTrees',
+	        value: function getTempTrees() {
+	            return this.trees;
+	        }
+	    }, {
+	        key: 'getIsAccessibleTempTree',
+	        value: function getIsAccessibleTempTree(treeId) {
+	            var self = this;
+	            if ($.inArray(treeId, self.trees) > -1) {
 	                return true;
 	            }
 	            return false;
@@ -54687,7 +54718,7 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AuthStore).call(this));
 	
 	        var self = _this;
-	        self.auth = new AuthModel({ id: "0", contact: "", auth: AuthStatus.GUEST.toString() });
+	        self.auth = new AuthModel({ id: "0", contact: "", auth: AuthStatus.GUEST.toString(), trees: null });
 	        self.code = 200;
 	        // TODO: pass state generics to make sure methods/actions expect the same type
 	        self.bindListeners({
@@ -54734,7 +54765,7 @@
 	        key: 'handleProcessedLogout',
 	        value: function handleProcessedLogout() {
 	            var self = this;
-	            self.auth = new AuthModel({ id: "0", contact: "", auth: AuthStatus.GUEST.toString() });
+	            self.auth = new AuthModel({ id: "0", contact: "", auth: AuthStatus.GUEST.toString(), trees: null });
 	            self.person = new person_store_1.PersonModel({
 	                id: "0",
 	                auth: AuthStatus.GUEST.toString(),
@@ -70145,6 +70176,7 @@
 	var person_store_1 = __webpack_require__(/*! ./../../stores/person.store */ 433);
 	var person_actions_1 = __webpack_require__(/*! ./../../actions/person.actions */ 434);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
+	var message_1 = __webpack_require__(/*! ./../../utils/message */ 287);
 	
 	var TreeComponent = function (_React$Component) {
 	    _inherits(TreeComponent, _React$Component);
@@ -70175,8 +70207,12 @@
 	                        if (auth_store_1.authStore.getAuth().getIsManager()) {
 	                            editable = true;
 	                        }
-	                        if (tree.getOwner() == auth_store_1.authStore.getAuth().getId() && auth_store_1.authStore.getAuth().getId() != 0) {
+	                        // if (tree.getOwner() == authStore.getAuth().getId() && authStore.getAuth().getId() != 0) {
+	                        //   editable = true;
+	                        // }
+	                        if (auth_store_1.authStore.getAuth().getIsAccessibleTempTree(tree.getId())) {
 	                            editable = true;
+	                            message_1.displaySuccessMessage(localization_1.localization(675));
 	                        }
 	                    }
 	                    self.setState({ editable: editable, treeId: props.treeId });
@@ -70215,7 +70251,7 @@
 	                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
 	                var food = food_store_1.foodStore.getFood(tree.getFoodId());
 	                var deleteTree = void 0;
-	                if (auth_store_1.authStore.getAuth().getIsAdmin()) {
+	                if (auth_store_1.authStore.getAuth().getIsAdmin() || auth_store_1.authStore.getAuth().getIsAccessibleTempTree(tree.getId())) {
 	                    deleteTree = React.createElement("div", { className: styles.button, onClick: function onClick() {
 	                            self.context.router.push({ pathname: window.location.pathname, query: { mode: "delete" } });
 	                        } }, localization_1.localization(965));
@@ -70262,7 +70298,7 @@
 	                                    value: note_store_1.noteStore.getState().notes
 	                                };
 	                            }
-	                        } }, React.createElement(note_list_component_1.default, { noteId: self.props.noteId }))));
+	                        } }, React.createElement(note_list_component_1.default, { noteId: self.props.noteId }))), deleteTree);
 	                }
 	            }
 	        }
@@ -70360,7 +70396,6 @@
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 457);
-	var filter_1 = __webpack_require__(/*! ./../../utils/filter */ 460);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var TreeFoodComponent = function (_React$Component) {
@@ -70383,16 +70418,20 @@
 	            } else {
 	                self.setState({ selected: selected });
 	            }
-	            if (self.props.tree.getId() == 0) {
-	                filter_1.applyFilter(filter_1.FilterMode.FOOD, [foodId], function (response) {
-	                    filter_1.deleteFilter(function () {
-	                        tree_actions_1.treeActions.fetchTrees();
-	                    });
-	                }, function (response) {}, function (response) {});
-	            } else {
-	                // Apply filter for a new tree food type to help users to figure out the location
-	                tree_actions_1.treeActions.fetchTrees(self.props.tree.getId());
-	            }
+	            // if (self.props.tree.getId() == 0) {
+	            //   applyFilter(FilterMode.FOOD, [foodId], function(response) {
+	            //     deleteFilter(function () {
+	            //       treeActions.fetchTrees();
+	            //     });
+	            //   }, function(response) {
+	            //
+	            //   }, function(response) {
+	            //
+	            //   });
+	            // } else {
+	            //   // Apply filter for a new tree food type to help users to figure out the location
+	            //   treeActions.fetchTrees(self.props.tree.getId());
+	            // }
 	        };
 	        var self = _this;
 	        _this.state = {
@@ -70430,14 +70469,6 @@
 	
 	                    if (selected) {
 	                        foodId = parseInt(selected.value);
-	                    }
-	                    // Apply filter for a new tree food type to help users to figure out the location
-	                    if (self.props.tree.getId() == 0) {
-	                        filter_1.applyFilter(filter_1.FilterMode.FOOD, [foodId], function (response) {
-	                            filter_1.deleteFilter(function () {
-	                                tree_actions_1.treeActions.fetchTrees();
-	                            });
-	                        }, function (response) {}, function (response) {});
 	                    }
 	                })();
 	            }
@@ -79301,10 +79332,13 @@
 	                pType = parseInt(selected2.value);
 	                if (pType == 1) {
 	                    self.props.note.setPicupTime(enum_1.PickupTime.EARLY);
+	                    self.props.note.setRate(4);
 	                } else if (pType == 2) {
 	                    self.props.note.setPicupTime(enum_1.PickupTime.PROPER);
+	                    self.props.note.setRate(5);
 	                } else if (pType == 3) {
 	                    self.props.note.setPicupTime(enum_1.PickupTime.LATE);
+	                    self.props.note.setRate(4);
 	                }
 	                self.setState({ selected2: selected2 });
 	            }
@@ -94947,7 +94981,7 @@
 	                        return {
 	                            v: React.createElement("div", { className: styles.wrapper + " " + styles.slidein + " " + styles.error }, React.createElement("div", { className: styles.message }, React.createElement("span", { dangerouslySetInnerHTML: { __html: localization_1.localization(636) } }), React.createElement("span", { className: styles.button2, onClick: function onClick() {
 	                                    if (tree && self.props.noteCode == 200) {
-	                                        if (auth_store_1.authStore.getAuth().getIsAdmin()) {
+	                                        if (auth_store_1.authStore.getAuth().getIsAdmin() || auth_store_1.authStore.getAuth().getIsAccessibleTempTree(tree.getId())) {
 	                                            tree_actions_1.treeActions.deleteTree(tree);
 	                                        }
 	                                    }
@@ -95140,7 +95174,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1eshbOg8X11KS3QDEouuOh {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    position: absolute;\r\n    bottom: -56px;\r\n    left: 0;\r\n    width: 100%;\r\n    min-height: 56px;\r\n    transition: 0.25s;\r\n    padding: 48px 0 0 0;\r\n    border-bottom-left-radius: 2px;\r\n    border-bottom-right-radius: 2px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    padding: 8px 8px 8px 8px;\r\n    text-align: center;\r\n    border-top: 2px solid rgba(255, 255, 255, 1);\r\n    z-index: 8000;\r\n  }\r\n  .error {\r\n    background-color: rgba(93, 40, 49, 1);\r\n  }\r\n  .slidein {\r\n    bottom: 0;\r\n    transition: 0.25s;\r\n  }\r\n  ._1AQrq1E-PW6c8tA_adOdCY {\r\n    margin: auto;\r\n  }\r\n  .IIL9cB_cfJ5QOwSfDES59 {\r\n    font-weight: 700;\r\n    border-radius: 2px;\r\n    border: 2px solid rgba(255, 255, 255, 0.85);\r\n    padding: 2px 6px;\r\n    margin: 2px 2px 2px 6px;\r\n    cursor: pointer;\r\n  }\r\n  .IIL9cB_cfJ5QOwSfDES59:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n    border: 2px solid rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1eshbOg8X11KS3QDEouuOh {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    position: absolute;\r\n    bottom: -56px;\r\n    left: 0;\r\n    width: 100%;\r\n    min-height: 56px;\r\n    transition: 0.25s;\r\n    padding: 48px 0 0 0;\r\n    border-bottom-left-radius: 2px;\r\n    border-bottom-right-radius: 2px;\r\n    background-color: rgba(107, 170, 119, 1);\r\n    padding: 8px 8px 8px 8px;\r\n    text-align: center;\r\n    border-top: 2px solid rgba(255, 255, 255, 1);\r\n    z-index: 4000;\r\n  }\r\n  .error {\r\n    background-color: rgba(93, 40, 49, 1);\r\n  }\r\n  .slidein {\r\n    bottom: 0;\r\n    transition: 0.25s;\r\n  }\r\n  ._1AQrq1E-PW6c8tA_adOdCY {\r\n    margin: auto;\r\n  }\r\n  .IIL9cB_cfJ5QOwSfDES59 {\r\n    font-weight: 700;\r\n    border-radius: 2px;\r\n    border: 2px solid rgba(255, 255, 255, 0.85);\r\n    padding: 2px 6px;\r\n    margin: 2px 2px 2px 6px;\r\n    cursor: pointer;\r\n  }\r\n  .IIL9cB_cfJ5QOwSfDES59:hover {\r\n    color: rgba(94, 78, 81, 1);\r\n    border: 2px solid rgba(94, 78, 81, 1);\r\n  }\r\n}\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {

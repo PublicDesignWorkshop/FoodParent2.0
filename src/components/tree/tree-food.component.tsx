@@ -59,18 +59,18 @@ export default class TreeFoodComponent extends React.Component<ITreeFoodProps, I
       if (selected) {
         foodId = parseInt(selected.value);
       }
-      // Apply filter for a new tree food type to help users to figure out the location
-      if (self.props.tree.getId() == 0) {
-        applyFilter(FilterMode.FOOD, [foodId], function(response) {
-          deleteFilter(function () {
-            treeActions.fetchTrees();
-          });
-        }, function(response) {
-
-        }, function(response) {
-
-        });
-      }
+      // // Apply filter for a new tree food type to help users to figure out the location
+      // if (self.props.tree.getId() == 0) {
+      //   applyFilter(FilterMode.FOOD, [foodId], function(response) {
+      //     deleteFilter(function () {
+      //       treeActions.fetchTrees();
+      //     });
+      //   }, function(response) {
+      //
+      //   }, function(response) {
+      //
+      //   });
+      // }
     }
   }
 
@@ -110,20 +110,20 @@ export default class TreeFoodComponent extends React.Component<ITreeFoodProps, I
     } else {
       self.setState({selected: selected});
     }
-    if (self.props.tree.getId() == 0) {
-      applyFilter(FilterMode.FOOD, [foodId], function(response) {
-        deleteFilter(function () {
-          treeActions.fetchTrees();
-        });
-      }, function(response) {
-
-      }, function(response) {
-
-      });
-    } else {
-      // Apply filter for a new tree food type to help users to figure out the location
-      treeActions.fetchTrees(self.props.tree.getId());
-    }
+    // if (self.props.tree.getId() == 0) {
+    //   applyFilter(FilterMode.FOOD, [foodId], function(response) {
+    //     deleteFilter(function () {
+    //       treeActions.fetchTrees();
+    //     });
+    //   }, function(response) {
+    //
+    //   }, function(response) {
+    //
+    //   });
+    // } else {
+    //   // Apply filter for a new tree food type to help users to figure out the location
+    //   treeActions.fetchTrees(self.props.tree.getId());
+    // }
   }
 
   render() {

@@ -33,7 +33,7 @@ class AuthActions extends AbstractActions implements IAuthActions {
       dispatch();
       self.setCode(90);
       authSource.fetchAuth().then((response) => {
-        self.fetchedAuth({id: response.id, contact: response.contact, auth: response.auth})
+        self.fetchedAuth({id: response.id, contact: response.contact, auth: response.auth, trees: response.trees})
         removeLoading();
       }).catch((code) => {
         displayErrorMessage(localization(code));
@@ -106,7 +106,7 @@ class AuthActions extends AbstractActions implements IAuthActions {
       dispatch();
       self.setCode(90);
       authSource.processLogin(contact, password).then((response) => {
-        self.processedLogin({id: response.id, auth: response.auth, contact: response.contact});
+        self.processedLogin({id: response.id, auth: response.auth, contact: response.contact, trees: response.trees});
         removeLoading();
       }).catch((code) => {
         displayErrorMessage(localization(code));

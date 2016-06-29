@@ -71,7 +71,7 @@
     }
 
     // $sql = "SELECT DISTINCT tree.food from note join tree on note.tree = tree.id WHERE note.rate > 3 and datediff(note.date,CURRENT_DATE) < 30";
-    $sql = "SELECT DISTINCT tree.food from note join tree on note.tree = tree.id WHERE note.rate > 3 and 365 - ABS(MOD(datediff(note.date,CURRENT_DATE),365)) < 20";
+    $sql = "SELECT DISTINCT tree.food from note join tree on note.tree = tree.id WHERE note.rate > 3 and  ABS(MOD(datediff(note.date,CURRENT_DATE),365)) < 20";
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);

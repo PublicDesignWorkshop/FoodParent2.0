@@ -139,6 +139,18 @@
       $params = array(
         "id" => $pdo->lastInsertId(),
       );
+
+      // Store newly added tree into a cookie so that users can edit before cookie being expired.
+      if (isset($_SESSION['temp_trees']) && $_SESSION['temp_trees'] != null) {
+        $temp_trees = explode(",", $_SESSION['temp_trees']);
+        array_push($temp_trees, $params['id']);
+        $_SESSION['temp_trees'] = implode(',', $temp_trees);
+      } else {
+        $_SESSION['temp_trees'] = $params['id'];
+      }
+      $_SESSION['LAST_CREATE'] = $_SERVER['REQUEST_TIME'];
+
+
       try {
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
@@ -167,12 +179,17 @@
 
   function delete() {
     $data = json_decode(file_get_contents('php://input'));
+    $params = array(
+        "id" => $data->{'id'},
+    );
     $check = admin_check();
+    if (isset($_SESSION['temp_trees']) && $_SESSION['temp_trees'] != null) {
+      $temp_trees = explode(",", $_SESSION['temp_trees']);
+      $check = in_array($params['id'], $temp_trees);
+    }
 
     if ($check) {
-      $params = array(
-          "id" => $data->{'id'},
-      );
+
       $sql = "DELETE FROM `tree` WHERE (`id` = :id)";
       try {
         $pdo = getConnection();

@@ -1,3 +1,4 @@
+import * as $ from 'jquery';
 import * as ReactDOM from 'react-dom';
 import { alt } from './../alt';
 import * as Alt from 'alt';
@@ -18,17 +19,28 @@ export interface IAuthProps {
   id: string;
   contact: string;
   auth: string;
+  trees: string;
 }
 
 export class AuthModel {
   private id: number;
   private contact: string;
   private auth: AuthStatus;
+  private trees: Array<number>;
   constructor(props: IAuthProps) {
     let self: AuthModel = this;
     self.id = parseInt(props.id);
     self.contact = props.contact;
     self.auth = parseInt(props.auth);
+    console.log(props);
+    if (props.trees && props.trees != "") {
+      self.trees = props.trees.split(',').map((treeId: string) => {
+        return parseInt(treeId);
+      });
+    } else {
+      self.trees = new Array<number>();
+    }
+    console.log(self.trees);
   }
   public getId(): number {
     return this.id;
@@ -41,6 +53,16 @@ export class AuthModel {
   }
   public getIsAdmin(): boolean {
     if (this.auth == AuthStatus.ADMIN) {
+      return true;
+    }
+    return false;
+  }
+  public getTempTrees(): Array<number> {
+    return this.trees;
+  }
+  public getIsAccessibleTempTree(treeId: number): boolean {
+    let self: AuthModel = this;
+    if ($.inArray(treeId, self.trees) > -1) {
       return true;
     }
     return false;
@@ -82,7 +104,7 @@ class AuthStore extends AbstractStore<AuthState> {
   constructor() {
     super();
     let self: AuthStore = this;
-    self.auth = new AuthModel({id: "0", contact: "", auth: AuthStatus.GUEST.toString()});
+    self.auth = new AuthModel({id: "0", contact: "", auth: AuthStatus.GUEST.toString(), trees: null});
     self.code = 200;
     // TODO: pass state generics to make sure methods/actions expect the same type
     self.bindListeners({
@@ -117,7 +139,7 @@ class AuthStore extends AbstractStore<AuthState> {
   }
   handleProcessedLogout() {
     let self: AuthStore = this;
-    self.auth = new AuthModel({id: "0", contact: "", auth: AuthStatus.GUEST.toString()});
+    self.auth = new AuthModel({id: "0", contact: "", auth: AuthStatus.GUEST.toString(), trees: null});
     self.person = new PersonModel({
       id: "0",
       auth: AuthStatus.GUEST.toString(),
