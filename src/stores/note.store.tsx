@@ -1,3 +1,4 @@
+import * as $ from 'jquery';
 import { alt } from './../alt';
 import * as Alt from 'alt';
 import * as moment from 'moment';
@@ -52,6 +53,7 @@ export class NoteModel {
     self.comment = props.comment;
     self.rate = parseInt(props.rate);
     self.amount = parseFloat(props.amount) * Settings.fGToLBS;
+    self.atype = AmountType.LBS;
     self.proper = parseInt(props.proper);
     self.date = moment(props.date);
     if (props.picture && props.picture != "") {
@@ -116,6 +118,11 @@ export class NoteModel {
   }
   public addImage(filename: string): void {
     this.images.push(filename);
+  }
+  public removeImage(filename: string): void {
+    this.images = $.grep(this.images, function(value) {
+      return value != filename;
+    });
   }
   public getRate(): number {
     return this.rate;

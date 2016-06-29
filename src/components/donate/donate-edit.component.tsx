@@ -141,7 +141,8 @@ export default class DonateEditComponent extends React.Component<IDonateEditProp
                 cover
               </div>
               <div className={styles.remove} onClick={()=> {
-
+                self.props.donate.removeImage(image);
+                self.forceUpdate();
               }}>
                 <FontAwesome className='' name='remove' />
               </div>
@@ -162,7 +163,8 @@ export default class DonateEditComponent extends React.Component<IDonateEditProp
                 set as a cover
               </div>
               <div className={styles.remove} onClick={()=> {
-
+                self.props.donate.removeImage(image);
+                self.forceUpdate();
               }}>
                 <FontAwesome className='' name='remove' />
               </div>

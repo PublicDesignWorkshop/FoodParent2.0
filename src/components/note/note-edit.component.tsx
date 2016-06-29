@@ -145,7 +145,8 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
                   {localization(995)}
                 </div>
                 <div className={styles.remove} onClick={()=> {
-
+                  self.props.note.removeImage(image);
+                  self.forceUpdate();
                 }}>
                   <FontAwesome className='' name='remove' />
                 </div>
@@ -182,7 +183,8 @@ export default class NoteEditComponent extends React.Component<INoteEditProps, I
                   {localization(996)}
                 </div>
                 <div className={styles.remove} onClick={()=> {
-
+                  self.props.note.removeImage(image);
+                  self.forceUpdate();
                 }}>
                   <FontAwesome className='' name='remove' />
                 </div>

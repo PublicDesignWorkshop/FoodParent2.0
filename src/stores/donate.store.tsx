@@ -69,6 +69,7 @@ export class DonateModel {
     self.person = parseInt(props.person);
     self.comment = props.comment;
     self.amount = parseFloat(props.amount) * Settings.fGToLBS;
+    self.atype = AmountType.LBS;
     self.date = moment(props.date);
     if (props.picture && props.picture != "") {
       self.images = props.picture.split(',').map((image: string) => {
@@ -131,6 +132,11 @@ export class DonateModel {
   }
   public addImage(filename: string): void {
     this.images.push(filename);
+  }
+  public removeImage(filename: string): void {
+    this.images = $.grep(this.images, function(value) {
+      return value != filename;
+    });
   }
   public getTrees(): Array<number> {
     return this.trees;

@@ -50040,7 +50040,7 @@
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -74616,6 +74616,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
+	var $ = __webpack_require__(/*! jquery */ 281);
 	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
 	var moment = __webpack_require__(/*! moment */ 331);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
@@ -74644,6 +74645,7 @@
 	            self.comment = props.comment;
 	            self.rate = parseInt(props.rate);
 	            self.amount = parseFloat(props.amount) * Settings.fGToLBS;
+	            self.atype = enum_1.AmountType.LBS;
 	            self.proper = parseInt(props.proper);
 	            self.date = moment(props.date);
 	            if (props.picture && props.picture != "") {
@@ -74736,6 +74738,13 @@
 	        key: 'addImage',
 	        value: function addImage(filename) {
 	            this.images.push(filename);
+	        }
+	    }, {
+	        key: 'removeImage',
+	        value: function removeImage(filename) {
+	            this.images = $.grep(this.images, function (value) {
+	                return value != filename;
+	            });
 	        }
 	    }, {
 	        key: 'getRate',
@@ -75713,13 +75722,19 @@
 	                    }
 	                    var images = self.props.note.getImages().map(function (image, i) {
 	                        if (i == 0) {
-	                            return React.createElement("div", { style: imgStyle, className: styles.image + " " + styles.selected, key: "noteimage" + i }, React.createElement("div", { className: styles.cover }, localization_1.localization(995)), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                            return React.createElement("div", { style: imgStyle, className: styles.image + " " + styles.selected, key: "noteimage" + i }, React.createElement("div", { className: styles.cover }, localization_1.localization(995)), React.createElement("div", { className: styles.remove, onClick: function onClick() {
+	                                    self.props.note.removeImage(image);
+	                                    self.forceUpdate();
+	                                } }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
 	                                    self.onImageZoom(image);
 	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
 	                        } else {
 	                            return React.createElement("div", { style: imgStyle, className: styles.image, key: "noteimage" + i }, React.createElement("div", { className: styles.cover2, onClick: function onClick() {
 	                                    self.onImageClick(image);
-	                                } }, localization_1.localization(996)), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                } }, localization_1.localization(996)), React.createElement("div", { className: styles.remove, onClick: function onClick() {
+	                                    self.props.note.removeImage(image);
+	                                    self.forceUpdate();
+	                                } }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
 	                                    self.onImageZoom(image);
 	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
 	                        }
@@ -91790,7 +91805,10 @@
 	                    var images = self.props.note.getImages().map(function (image, i) {
 	                        if (i == 0) {
 	                            if (self.state.editable) {
-	                                return React.createElement("div", { style: imgStyle, className: styles.image + " " + styles.selected, key: "noteimage" + i }, React.createElement("div", { className: styles.cover }, localization_1.localization(995)), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                return React.createElement("div", { style: imgStyle, className: styles.image + " " + styles.selected, key: "noteimage" + i }, React.createElement("div", { className: styles.cover }, localization_1.localization(995)), React.createElement("div", { className: styles.remove, onClick: function onClick() {
+	                                        self.props.note.removeImage(image);
+	                                        self.forceUpdate();
+	                                    } }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
 	                                        self.onImageZoom(image);
 	                                    } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
 	                            } else {
@@ -91802,7 +91820,10 @@
 	                            if (self.state.editable) {
 	                                return React.createElement("div", { style: imgStyle, className: styles.image, key: "noteimage" + i }, React.createElement("div", { className: styles.cover2, onClick: function onClick() {
 	                                        self.onImageClick(image);
-	                                    } }, localization_1.localization(996)), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                    } }, localization_1.localization(996)), React.createElement("div", { className: styles.remove, onClick: function onClick() {
+	                                        self.props.note.removeImage(image);
+	                                        self.forceUpdate();
+	                                    } }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
 	                                        self.onImageZoom(image);
 	                                    } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
 	                            } else {
@@ -97449,6 +97470,7 @@
 	            self.person = parseInt(props.person);
 	            self.comment = props.comment;
 	            self.amount = parseFloat(props.amount) * Settings.fGToLBS;
+	            self.atype = enum_1.AmountType.LBS;
 	            self.date = moment(props.date);
 	            if (props.picture && props.picture != "") {
 	                self.images = props.picture.split(',').map(function (image) {
@@ -97539,6 +97561,13 @@
 	        key: 'addImage',
 	        value: function addImage(filename) {
 	            this.images.push(filename);
+	        }
+	    }, {
+	        key: 'removeImage',
+	        value: function removeImage(filename) {
+	            this.images = $.grep(this.images, function (value) {
+	                return value != filename;
+	            });
 	        }
 	    }, {
 	        key: 'getTrees',
@@ -98125,13 +98154,19 @@
 	                    }
 	                    var images = self.props.donate.getImages().map(function (image, i) {
 	                        if (i == 0) {
-	                            return React.createElement("div", { style: imgStyle, className: styles.image + " " + styles.selected, key: "donateimage" + i }, React.createElement("div", { className: styles.cover }, "cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                            return React.createElement("div", { style: imgStyle, className: styles.image + " " + styles.selected, key: "donateimage" + i }, React.createElement("div", { className: styles.cover }, "cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {
+	                                    self.props.donate.removeImage(image);
+	                                    self.forceUpdate();
+	                                } }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
 	                                    self.onImageZoom(image);
 	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
 	                        } else {
 	                            return React.createElement("div", { style: imgStyle, className: styles.image, key: "donateimage" + i }, React.createElement("div", { className: styles.cover2, onClick: function onClick() {
 	                                    self.onImageClick(image);
-	                                } }, "set as a cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                } }, "set as a cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {
+	                                    self.props.donate.removeImage(image);
+	                                    self.forceUpdate();
+	                                } }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
 	                                    self.onImageZoom(image);
 	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
 	                        }
@@ -99264,13 +99299,19 @@
 	                    }
 	                    var images = self.props.donate.getImages().map(function (image, i) {
 	                        if (i == 0) {
-	                            return React.createElement("div", { style: imgStyle, className: styles.image + " " + styles.selected, key: "donateimage" + i }, React.createElement("div", { className: styles.cover }, "cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                            return React.createElement("div", { style: imgStyle, className: styles.image + " " + styles.selected, key: "donateimage" + i }, React.createElement("div", { className: styles.cover }, "cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {
+	                                    self.props.donate.removeImage(image);
+	                                    self.forceUpdate();
+	                                } }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
 	                                    self.onImageZoom(image);
 	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
 	                        } else {
 	                            return React.createElement("div", { style: imgStyle, className: styles.image, key: "donateimage" + i }, React.createElement("div", { className: styles.cover2, onClick: function onClick() {
 	                                    self.onImageClick(image);
-	                                } }, "set as a cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {} }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
+	                                } }, "set as a cover"), React.createElement("div", { className: styles.remove, onClick: function onClick() {
+	                                    self.props.donate.removeImage(image);
+	                                    self.forceUpdate();
+	                                } }, React.createElement(FontAwesome, { className: '', name: 'remove' })), React.createElement("div", { className: styles.zoom, onClick: function onClick() {
 	                                    self.onImageZoom(image);
 	                                } }, React.createElement(FontAwesome, { className: '', name: 'search-plus' })), React.createElement("img", { src: Settings.uBaseName + Settings.uContentImage + image }));
 	                        }
