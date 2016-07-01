@@ -41,6 +41,8 @@
 
   "e640": "<strong>Move</strong> the <strong>New Tree</strong> to a designated location.",
   "e641": "<strong>Fill out</strong> information for the <strong>New Tree</strong>.",
+  "e642": "Select type of tree.",
+  "e643": "You haven't selected <strong>type</strong> of tree.",
 
   "e662": "<strong>Move</strong> the <strong>New Place</strong> to a designated location.",
   "e663": "<strong>Fill out</strong> information for the <strong>New Place</strong>.",
@@ -56,7 +58,7 @@
   "e673": "Enter weight...",
   "e674": "Date has been set as",
 
-  "e675": "<strong>Temporarily</strong> allowed to edit this tree. (about <strong>15 min</strong>)",
+  "e675": "You have added this tree recently. You have <strong>15 minutes</strong> to <strong>edit</strong> information of the tree.",
 
   "e676": "PARENT INFO",
   "e677": "SIGN OUT",

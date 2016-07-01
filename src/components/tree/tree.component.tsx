@@ -26,6 +26,7 @@ import { authStore } from './../../stores/auth.store';
 import { personStore } from './../../stores/person.store';
 import { personActions } from './../../actions/person.actions';
 
+import MessageLineComponent from './../message/message-line.component';
 import { localization } from './../../constraints/localization';
 import { displaySuccessMessage, displayErrorMessage } from './../../utils/message';
 
@@ -88,7 +89,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
         // }
         if (authStore.getAuth().getIsAccessibleTempTree(tree.getId())) {
           editable = true;
-          displaySuccessMessage(localization(675));
+          // displaySuccessMessage(localization(675));
         }
       }
       self.setState({editable: editable, treeId: props.treeId});
@@ -101,12 +102,23 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
       let tree: TreeModel = treeStore.getTree(self.props.treeId);
       let food: FoodModel = foodStore.getFood(tree.getFoodId());
       let deleteTree: JSX.Element;
-      if (authStore.getAuth().getIsAdmin() || authStore.getAuth().getIsAccessibleTempTree(tree.getId())) {
+      let tempTreeMessage: JSX.Element;
+      let treeOwnership: JSX.Element;
+      if (authStore.getAuth().getIsAdmin()) {
         deleteTree = <div className={styles.button} onClick={()=> {
           self.context.router.push({pathname: window.location.pathname, query: { mode: "delete" }});
         }}>
           {localization(965)}
         </div>;
+        treeOwnership = <TreeOwnershipComponent tree={tree} editable={self.state.editable} async={self.state.editable} />;
+      } else if (authStore.getAuth().getIsAccessibleTempTree(tree.getId())) {
+        deleteTree = <div className={styles.button} onClick={()=> {
+          self.context.router.push({pathname: window.location.pathname, query: { mode: "delete" }});
+        }}>
+          {localization(965)}
+        </div>;
+        tempTreeMessage = <MessageLineComponent code={675} match={[675]} />;
+        treeOwnership = <TreeOwnershipComponent tree={tree} editable={self.state.editable} async={self.state.editable} />;
       }
       if (authStore.getAuth().getIsManager()) {
         return (
@@ -133,7 +145,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
               }>
                 <TreeFlagComponent tree={tree} flags={flagStore.getState().flags} editable={self.state.editable} async={self.state.editable} />
               </AltContainer>
-              <TreeOwnershipComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              {treeOwnership}
               <AltContainer stores={
                 {
                   persons: function (props) {
@@ -160,6 +172,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
               </AltContainer>
             </div>
             {deleteTree}
+            {tempTreeMessage}
           </div>
         );
       } else {
@@ -175,6 +188,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
               <TreeLocationComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
               <TreeAddressComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
               <TreeDescriptionComponent tree={tree} editable={self.state.editable} async={self.state.editable} />
+              {treeOwnership}
               <AltContainer stores={
                 {
                   persons: function (props) {
@@ -201,6 +215,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
               </AltContainer>
             </div>
             {deleteTree}
+            {tempTreeMessage}
           </div>
         );
       }

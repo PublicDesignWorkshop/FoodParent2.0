@@ -99,6 +99,13 @@ export default class PopupDonationsComponent extends React.Component<IPopupDonat
               }}>
                 {localization(931)}
               </span>
+              <span className={styles.button2} onClick={()=> {
+                if (self.props.donateCode == 200) {
+                  self.context.router.goBack();
+                }
+              }}>
+                {localization(933)}
+              </span>
             </div>
           </div>
         );
@@ -116,6 +123,13 @@ export default class PopupDonationsComponent extends React.Component<IPopupDonat
                 }
               }} >
                 {localization(931)}
+              </span>
+              <span className={styles.button2} onClick={()=> {
+                if (location && self.props.donateCode == 200) {
+                  self.context.router.goBack();
+                }
+              }}>
+                {localization(933)}
               </span>
             </div>
           </div>

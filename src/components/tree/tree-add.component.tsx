@@ -87,6 +87,7 @@ export default class TreeAddComponent extends React.Component<ITreeAddProps, ITr
               <TreeLocationComponent tree={self.props.tree} editable={true} async={false} />
               <TreeAddressComponent tree={self.props.tree} editable={true} async={false} />
               <TreeDescriptionComponent tree={self.props.tree} editable={true} async={false} />
+              <TreeOwnershipComponent tree={self.props.tree} editable={true} async={false} />
             </AltContainer>
           </div>
         </div>

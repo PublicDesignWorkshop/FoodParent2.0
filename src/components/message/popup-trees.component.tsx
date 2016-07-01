@@ -23,6 +23,7 @@ export interface IPopupTreesProps {
   treeId: number;
   noteId: number;
   noteCode?: any;
+  treeCode?: any;
 }
 export interface IPopupTreesStatus {
 
@@ -102,6 +103,13 @@ export default class PopupTreesComponent extends React.Component<IPopupTreesProp
               }}>
                 {localization(931)}
               </span>
+              <span className={styles.button2} onClick={()=> {
+                if (self.props.noteCode == 200) {
+                  self.context.router.goBack();
+                }
+              }}>
+                {localization(933)}
+              </span>
             </div>
           </div>
         );
@@ -112,13 +120,20 @@ export default class PopupTreesComponent extends React.Component<IPopupTreesProp
             <div className={styles.message}>
               <span dangerouslySetInnerHTML={{__html: localization(636)}} />
               <span className={styles.button2} onClick={()=> {
-                if (tree && self.props.noteCode == 200) {
+                if (tree && self.props.treeCode == 200) {
                   if (authStore.getAuth().getIsAdmin() || authStore.getAuth().getIsAccessibleTempTree(tree.getId())) {
                     treeActions.deleteTree(tree);
                   }
                 }
               }}>
                 {localization(931)}
+              </span>
+              <span className={styles.button2} onClick={()=> {
+                if (tree && self.props.treeCode == 200) {
+                  self.context.router.goBack();
+                }
+              }}>
+                {localization(933)}
               </span>
             </div>
           </div>

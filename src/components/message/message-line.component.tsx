@@ -45,7 +45,7 @@ export default class MessageLineComponent extends React.Component<IMessageLinePr
   private updateProps(props: IMessageLineProps) {
     let self: MessageLineComponent = this;
     let type: MessageLineType = MessageLineType.NONE;
-    if ($.inArray(props.code, props.match)) {
+    if ($.inArray(props.code, props.match) > -1) {
       if (props.code == 90) self.setState({type: MessageLineType.WAITING, comment: localization(props.code)});
       else if (props.code == 91) self.setState({type: MessageLineType.WAITING, comment: localization(props.code)});
       else if (props.code == 92) self.setState({type: MessageLineType.WAITING, comment: localization(props.code)});
@@ -54,7 +54,10 @@ export default class MessageLineComponent extends React.Component<IMessageLinePr
       else if (props.code == 602) self.setState({type: MessageLineType.ERROR, comment: localization(props.code)});
       else if (props.code == 603) self.setState({type: MessageLineType.ERROR, comment: localization(props.code)});
 
+      else if (props.code == 675) self.setState({type: MessageLineType.ERROR, comment: localization(props.code)});
+
       else self.setState({type: MessageLineType.NONE, comment: ""});
+
     } else {
       self.setState({type: MessageLineType.NONE, comment: ""});
     }
@@ -74,19 +77,19 @@ export default class MessageLineComponent extends React.Component<IMessageLinePr
     if (self.state.type == MessageLineType.ERROR) {
       return (
         <div className={styles.error}>
-          {self.state.comment}
+          <span dangerouslySetInnerHTML={{__html: self.state.comment}} />
         </div>
       );
     } else if (self.state.type == MessageLineType.WAITING) {
       return (
         <div className={styles.waiting}>
-          {self.state.comment}
+          <span dangerouslySetInnerHTML={{__html: self.state.comment}} />
         </div>
       );
     } else if (self.state.type == MessageLineType.SUCCESS) {
       return (
         <div className={styles.success}>
-          {self.state.comment}
+          <span dangerouslySetInnerHTML={{__html: self.state.comment}} />
         </div>
       );
     } else {

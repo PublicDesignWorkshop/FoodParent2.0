@@ -185,6 +185,12 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
                   store: noteStore,
                   value: noteStore.getState().code,
                 };
+              },
+              treeCode: function (props) {
+                return {
+                  store: treeStore,
+                  value: treeStore.getState().code,
+                };
               }
             }
           }>
