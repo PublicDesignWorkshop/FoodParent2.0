@@ -60,6 +60,9 @@ export class AuthModel {
   public getTempTrees(): Array<number> {
     return this.trees;
   }
+  public addTempTree(treeId) {
+    this.trees.push(treeId);
+  }
   public getIsAccessibleTempTree(treeId: number): boolean {
     let self: AuthModel = this;
     if ($.inArray(treeId, self.trees) > -1) {
@@ -113,6 +116,7 @@ class AuthStore extends AbstractStore<AuthState> {
       handleProcessedLogout: authActions.processedLogout,
       handleProcessedLogin: authActions.processedLogin,
       handleSetCode: authActions.setCode,
+      handleAddTempTree: authActions.addTempTree,
     });
     self.exportPublicMethods({
       getAuth: self.getAuth,
@@ -158,6 +162,10 @@ class AuthStore extends AbstractStore<AuthState> {
   handleSetCode(code: any) {
     let self: AuthStore = this;
     self.code = code;
+  }
+  handleAddTempTree(treeId: number) {
+    let self: AuthStore = this;
+    self.auth.addTempTree(treeId);
   }
 }
 

@@ -22,6 +22,7 @@ interface IAuthActions {
   processedLogout();
   processLogin(contact: string, password: string);
   processedLogin(props: IAuthProps);
+  addTempTree(treeId: number);
   setCode(code: number);
 }
 
@@ -121,6 +122,12 @@ class AuthActions extends AbstractActions implements IAuthActions {
       dispatch(props);
       browserHistory.push({pathname: Settings.uBaseName + '/'});
       treeActions.fetchTrees();
+    }
+  }
+  addTempTree(treeId: number) {
+    let self: AuthActions = this;
+    return (dispatch) => {
+      dispatch(treeId);
     }
   }
   setCode(code: number) {

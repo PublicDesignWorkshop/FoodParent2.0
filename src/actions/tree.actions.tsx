@@ -145,10 +145,9 @@ class TreeActions extends AbstractActions implements ITreeActions {
   }
   createdTree(props: ITreeProps) {
     return (dispatch) => {
+      authActions.addTempTree(parseInt(props.id));
+      browserHistory.push({pathname: Settings.uBaseName + '/tree/' + props.id});
       authActions.fetchAuth();
-      setTimeout(function() {
-        browserHistory.push({pathname: Settings.uBaseName + '/tree/' + props.id});
-      }, 500);
       dispatch(props);
     }
   }

@@ -39992,10 +39992,9 @@
 	        key: 'createdTree',
 	        value: function createdTree(props) {
 	            return function (dispatch) {
+	                auth_actions_1.authActions.addTempTree(parseInt(props.id));
+	                react_router_1.browserHistory.push({ pathname: Settings.uBaseName + '/tree/' + props.id });
 	                auth_actions_1.authActions.fetchAuth();
-	                setTimeout(function () {
-	                    react_router_1.browserHistory.push({ pathname: Settings.uBaseName + '/tree/' + props.id });
-	                }, 500);
 	                dispatch(props);
 	            };
 	        }
@@ -40197,6 +40196,14 @@
 	                dispatch(props);
 	                react_router_1.browserHistory.push({ pathname: Settings.uBaseName + '/' });
 	                tree_actions_1.treeActions.fetchTrees();
+	            };
+	        }
+	    }, {
+	        key: 'addTempTree',
+	        value: function addTempTree(treeId) {
+	            var self = this;
+	            return function (dispatch) {
+	                dispatch(treeId);
 	            };
 	        }
 	    }, {
@@ -54672,6 +54679,11 @@
 	            return this.trees;
 	        }
 	    }, {
+	        key: 'addTempTree',
+	        value: function addTempTree(treeId) {
+	            this.trees.push(treeId);
+	        }
+	    }, {
 	        key: 'getIsAccessibleTempTree',
 	        value: function getIsAccessibleTempTree(treeId) {
 	            var self = this;
@@ -54728,7 +54740,8 @@
 	            handleFechedPerson: auth_actions_1.authActions.fetchedPerson,
 	            handleProcessedLogout: auth_actions_1.authActions.processedLogout,
 	            handleProcessedLogin: auth_actions_1.authActions.processedLogin,
-	            handleSetCode: auth_actions_1.authActions.setCode
+	            handleSetCode: auth_actions_1.authActions.setCode,
+	            handleAddTempTree: auth_actions_1.authActions.addTempTree
 	        });
 	        self.exportPublicMethods({
 	            getAuth: self.getAuth,
@@ -54790,6 +54803,12 @@
 	        value: function handleSetCode(code) {
 	            var self = this;
 	            self.code = code;
+	        }
+	    }, {
+	        key: 'handleAddTempTree',
+	        value: function handleAddTempTree(treeId) {
+	            var self = this;
+	            self.auth.addTempTree(treeId);
 	        }
 	    }]);
 	
@@ -72652,6 +72671,7 @@
 	            if (trees.length == 1) {
 	                trees[0].update(treeProps);
 	            }
+	            self.code = 200;
 	        }
 	    }, {
 	        key: 'handleResetTempTree',

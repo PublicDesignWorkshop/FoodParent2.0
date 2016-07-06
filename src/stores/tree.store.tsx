@@ -214,6 +214,7 @@ class TreeStore extends AbstractStore<TreeState> {
     if (trees.length == 1) {
       trees[0].update(treeProps);
     }
+    self.code = 200;
   }
   handleResetTempTree() {
     let self: TreeStore = this;
