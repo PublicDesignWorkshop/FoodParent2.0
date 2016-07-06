@@ -93229,7 +93229,8 @@
 	            visible: false,
 	            clicked: false,
 	            width: 0,
-	            height: 0
+	            height: 0,
+	            zoom: false
 	        };
 	        return _this;
 	    }
@@ -93238,7 +93239,6 @@
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var self = this;
-	            self.updateProps(self.props);
 	            var rWrapper = ReactDOM.findDOMNode(self.refs['wrapper']);
 	            self.setState({ width: rWrapper.clientWidth - 16, height: Math.floor((rWrapper.clientWidth - 16) * 9 / 16) });
 	            self.updateProps(self.props);
@@ -93418,13 +93418,41 @@
 	                    tooltip = React.createElement("div", { id: "tooltip", style: divStyle, className: styles.tooltip + " " + styles.unclicked }, React.createElement("div", { className: styles.button }, React.createElement("div", null, React.createElement("span", null, "Posted on "), React.createElement("span", { className: styles.highlight }, note.getFormattedDate())), image, comment));
 	                }
 	            }
-	            return React.createElement("div", { id: "wrapper", ref: "wrapper", className: styles.wrapper }, React.createElement("canvas", { id: "chart", ref: "chart", className: styles.canvas, width: self.state.width, height: self.state.height, onClick: function onClick() {
+	            var wrapperStyle = {};
+	            var zoom = void 0;
+	            if (!self.state.zoom) {
+	                zoom = React.createElement("div", { className: styles.graphzoom }, React.createElement("span", { onClick: function onClick() {
+	                        self.setState({ width: $(window).innerWidth() - 16, height: Math.floor(($(window).innerWidth() - 16) * 9 / 16), zoom: true });
+	                        self.updateProps(self.props);
+	                    } }, "Zoom Graph"));
+	            } else {
+	                wrapperStyle = {
+	                    position: 'fixed',
+	                    left: '0',
+	                    top: '48px',
+	                    width: '100%',
+	                    height: '100%'
+	                };
+	                zoom = React.createElement("div", { className: styles.graphzoom }, React.createElement("span", { onClick: function onClick() {
+	                        self.setState({ zoom: false });
+	                        setTimeout(function () {
+	                            var rWrapper = ReactDOM.findDOMNode(self.refs['wrapper']);
+	                            self.setState({ width: rWrapper.clientWidth - 16, height: Math.floor((rWrapper.clientWidth - 16) * 9 / 16) });
+	                            self.updateProps(self.props);
+	                        }, 1000);
+	                    } }, "Back"));
+	            }
+	            var canvasStyle = {
+	                width: self.state.width,
+	                height: self.state.height
+	            };
+	            return React.createElement("div", { id: "wrapper", ref: "wrapper", className: styles.wrapper, style: wrapperStyle }, zoom, React.createElement("div", { dangerouslySetInnerHTML: { __html: self.state.legend } }), React.createElement("canvas", { id: "chart", ref: "chart", className: styles.canvas, style: canvasStyle, onClick: function onClick() {
 	                    if (self.state.visible) {
 	                        self.setState({ clicked: true });
 	                    } else {
 	                        self.setState({ clicked: false });
 	                    }
-	                } }), React.createElement("div", { dangerouslySetInnerHTML: { __html: self.state.legend } }), tooltip);
+	                } }), tooltip);
 	        }
 	    }]);
 	
@@ -93481,7 +93509,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI {\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: small;\r\n    padding: 8px 8px 8px 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  ._2uSKatikBUlr69Jrd4Wb9_ {\r\n\r\n  }\r\n  ._2mh5HW3u4yCjpGMaCHDP4n {\r\n    position: absolute;\r\n    margin: 8px;\r\n    border: 2px solid rgba(64, 54, 56, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 2px 4px 4px 10px;\r\n    text-align: left;\r\n    color: rgba(255, 255, 255, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub {\r\n    cursor: pointer;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._1Ny1Q33qPeDb8MtmpwvsJ3 {\r\n    pointer-events: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n    border: 2px solid rgba(64, 54, 56, 0.75);\r\n    background-color: rgba(94, 78, 81, 0.75);\r\n  }\r\n  ._1B-SgTUak8jn9g0TXZPHyW {\r\n    display: none;\r\n  }\r\n  ._3vjAZ3NkzoEdvJPF64ZDiI {\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n    object-position: 50% 50%;\r\n    margin: 4px 0;\r\n  }\r\n  ._11C3zNqzosXyc1xAlyXJCo {\r\n    font-weight: 700;\r\n  }\r\n  ._2WPAJ0xj_RszU01b1p7Oqg {\r\n    width: 100%;\r\n    font-weight: 700;\r\n    overflow:hidden;\r\n    display:inline-block;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-justify-content: space-around; /* Safari 6.1+ */\r\n    justify-content: space-around;\r\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend span {\r\n    margin: 4px;\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-weight: 700;\r\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend .scatter-legend-marker {\r\n    display: inline-block;\r\n    width: 8px;\r\n    height: 8px;\r\n    border-radius: 50%;\r\n    margin: 0px;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI {\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: small;\r\n    padding: 8px 8px 8px 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    background-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._2uSKatikBUlr69Jrd4Wb9_ {\r\n\r\n  }\r\n  ._2mh5HW3u4yCjpGMaCHDP4n {\r\n    position: absolute;\r\n    margin: 8px;\r\n    border: 2px solid rgba(64, 54, 56, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 2px 4px 4px 10px;\r\n    text-align: left;\r\n    color: rgba(255, 255, 255, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub {\r\n    cursor: pointer;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._1Ny1Q33qPeDb8MtmpwvsJ3 {\r\n    pointer-events: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n    border: 2px solid rgba(64, 54, 56, 0.75);\r\n    background-color: rgba(94, 78, 81, 0.75);\r\n  }\r\n  ._1B-SgTUak8jn9g0TXZPHyW {\r\n    display: none;\r\n  }\r\n  ._3vjAZ3NkzoEdvJPF64ZDiI {\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n    object-position: 50% 50%;\r\n    margin: 4px 0;\r\n  }\r\n  ._11C3zNqzosXyc1xAlyXJCo {\r\n    font-weight: 700;\r\n  }\r\n  ._2WPAJ0xj_RszU01b1p7Oqg {\r\n    width: 100%;\r\n    font-weight: 700;\r\n    overflow:hidden;\r\n    display:inline-block;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend {\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-justify-content: space-around; /* Safari 6.1+ */\r\n    justify-content: space-around;\r\n  }\n  ._1ju7zZfAqV-HuvOz6ZVjNI ._2UqH9By2sL41bwfiVPmAC3  {\n    text-align: right;\n    font-weight: 700;\n    padding: 4px 8px;\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend span {\r\n    margin: 4px;\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-weight: 700;\r\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend .scatter-legend-marker {\r\n    display: inline-block;\r\n    width: 8px;\r\n    height: 8px;\r\n    border-radius: 50%;\r\n    margin: 0px;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -93493,7 +93521,8 @@
 		"hidden": "_1B-SgTUak8jn9g0TXZPHyW",
 		"image": "_3vjAZ3NkzoEdvJPF64ZDiI",
 		"highlight": "_11C3zNqzosXyc1xAlyXJCo",
-		"comment": "_2WPAJ0xj_RszU01b1p7Oqg"
+		"comment": "_2WPAJ0xj_RszU01b1p7Oqg",
+		"graphzoom": "_2UqH9By2sL41bwfiVPmAC3"
 	};
 
 /***/ },

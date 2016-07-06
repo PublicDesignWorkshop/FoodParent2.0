@@ -4,6 +4,7 @@
     font-size: small;
     padding: 8px 8px 8px 8px;
     color: rgba(94, 78, 81, 1);
+    background-color: rgba(255, 255, 255, 1);
   }
   :local(.canvas) {
 
@@ -64,6 +65,11 @@
 
     -webkit-justify-content: space-around; /* Safari 6.1+ */
     justify-content: space-around;
+  }
+  :local(.wrapper .graphzoom)  {
+    text-align: right;
+    font-weight: 700;
+    padding: 4px 8px;
   }
   :local(.wrapper) .scatter-legend span {
     margin: 4px;

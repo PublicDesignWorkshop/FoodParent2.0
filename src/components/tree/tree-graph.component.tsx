@@ -33,6 +33,7 @@ export interface ITreeGraphStatus {
   visible?: boolean;
   clicked?: boolean;
   legend?: string;
+  zoom?: boolean;
 }
 
 export default class TreeGraphComponent extends React.Component<ITreeGraphProps, ITreeGraphStatus> {
@@ -46,11 +47,11 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
       clicked: false,
       width: 0,
       height: 0,
+      zoom: false,
     };
   }
   public componentDidMount() {
     let self: TreeGraphComponent = this;
-    self.updateProps(self.props);
     let rWrapper = ReactDOM.findDOMNode(self.refs['wrapper']);
     self.setState({width: rWrapper.clientWidth - 16, height: Math.floor((rWrapper.clientWidth - 16) * 9 / 16)});
     self.updateProps(self.props);
@@ -236,16 +237,50 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
         </div>;
       }
     }
+
+    let wrapperStyle = { };
+    let zoom: JSX.Element;
+    if (!self.state.zoom) {
+      zoom = <div className={styles.graphzoom}>
+        <span onClick={()=> {
+          self.setState({width: $(window).innerWidth() - 16, height: Math.floor(($(window).innerWidth() - 16) * 9 / 16), zoom: true});
+          self.updateProps(self.props);
+        }}>Zoom Graph</span>
+      </div>;
+    } else {
+      wrapperStyle = {
+        position: 'fixed',
+        left: '0',
+        top: '48px',
+        width: '100%',
+        height: '100%',
+      };
+      zoom = <div className={styles.graphzoom}>
+        <span onClick={()=> {
+          self.setState({zoom: false});
+          setTimeout(function() {
+            let rWrapper = ReactDOM.findDOMNode(self.refs['wrapper']);
+            self.setState({width: rWrapper.clientWidth - 16, height: Math.floor((rWrapper.clientWidth - 16) * 9 / 16)});
+            self.updateProps(self.props);
+          }, 100);
+        }}>Back</span>
+      </div>;
+    }
+    let canvasStyle = {
+      width: self.state.width,
+      height: self.state.height,
+    }
     return (
-      <div id="wrapper" ref="wrapper" className={styles.wrapper}>
-        <canvas id="chart" ref="chart" className={styles.canvas} width={self.state.width} height={self.state.height} onClick={()=> {
+      <div id="wrapper" ref="wrapper" className={styles.wrapper} style={wrapperStyle}>
+        {zoom}
+        <div dangerouslySetInnerHTML={{__html: self.state.legend}} />
+        <canvas id="chart" ref="chart" className={styles.canvas} style={canvasStyle} onClick={()=> {
           if (self.state.visible) {
             self.setState({clicked: true});
           } else {
             self.setState({clicked: false});
           }
         }} />
-        <div dangerouslySetInnerHTML={{__html: self.state.legend}} />
         {tooltip}
       </div>
     )
