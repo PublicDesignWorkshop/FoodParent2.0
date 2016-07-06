@@ -55,7 +55,7 @@ export default class NoteAmountComponent extends React.Component<INoteAmountProp
       let options = new Array<ISelectOption>();
       options.push({value: 1, label: "g"});
       options.push({value: 2, label: "kg"});
-      options.push({value: 3, label: "libs."});
+      options.push({value: 3, label: "lbs."});
       let selected: ISelectOption;
       if (self.props.note.getAmountType() == AmountType.G) {
         selected = options[0];

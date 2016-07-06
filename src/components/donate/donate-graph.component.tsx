@@ -105,12 +105,12 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
             }
           }
         });
-        let isKilogram: boolean = false;
-        accumulated.forEach((accum: number) => {
-          if (accum > 100000) {
-            isKilogram = true;
-          }
-        });
+        // let isKilogram: boolean = false;
+        // accumulated.forEach((accum: number) => {
+        //   if (accum > 100000) {
+        //     isKilogram = true;
+        //   }
+        // });
 
         let data = [];
         for (let i = 0; i < lists.length; i++) {
@@ -120,10 +120,10 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
     				data: lists[i],
           })
         }
-        let scaleLabel: string = "<%=parseFloat(value).toLocaleString()%>g";
-        if (isKilogram) {
-          scaleLabel = "<%=(parseFloat(value) * 0.001).toLocaleString()%>kg";
-        }
+        let scaleLabel: string = "<%=parseFloat(value).toLocaleString()%> lbs.";
+        // if (isKilogram) {
+        //   scaleLabel = "<%=(parseFloat(value) * 0.001).toLocaleString()%>kg";
+        // }
         let chart = new Chart(ctx).Scatter(data, {
   				bezierCurve: true,
   				showTooltips: true,
@@ -193,9 +193,9 @@ export default class DonateGraphComponent extends React.Component<IDonateGraphPr
       let food: FoodModel = foodStore.getFood(donate.getFoodId());
       let comment: JSX.Element;
       if (food) {
-        comment = <div className={styles.comment}>{food.getName() + ": " + Math.floor(donate.getAmount()).toLocaleString() + "g"}</div>;
+        comment = <div className={styles.comment}>{food.getName() + ": " + Math.floor(donate.getAmount()).toLocaleString() + " lbs."}</div>;
       } else {
-        comment = <div className={styles.comment}>{localization(613) + ": " + Math.floor(donate.getAmount()).toLocaleString() + "g"}</div>;
+        comment = <div className={styles.comment}>{localization(613) + ": " + Math.floor(donate.getAmount()).toLocaleString() + " lbs."}</div>;
       }
       let list: Array<JSX.Element> = new Array<JSX.Element>();
       list.push(<span key={"tree"}>From </span>)

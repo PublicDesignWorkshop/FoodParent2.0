@@ -79260,7 +79260,7 @@
 	                var options = new Array();
 	                options.push({ value: 1, label: "g" });
 	                options.push({ value: 2, label: "kg" });
-	                options.push({ value: 3, label: "libs." });
+	                options.push({ value: 3, label: "lbs." });
 	                var selected = void 0;
 	                if (self.props.note.getAmountType() == enum_1.AmountType.G) {
 	                    selected = options[0];
@@ -93250,23 +93250,43 @@
 	                        var currentYear = moment(new Date()).year();
 	                        var earlestYear = void 0;
 	                        var latestYear = void 0;
+	                        var max = void 0;
+	                        var min = void 0;
 	                        if (notes.length == 0) {
 	                            earlestYear = currentYear;
 	                            latestYear = currentYear;
 	                        } else {
 	                            earlestYear = moment(notes[0].getDate()).year();
 	                            latestYear = moment(notes[notes.length - 1].getDate()).year();
+	                            max = 0;
+	                            min = Number.MAX_VALUE;
+	                            notes.forEach(function (note) {
+	                                if (note.getNoteType() == enum_1.NoteType.PICKUP && note.getAmount() > max) {
+	                                    max = note.getAmount();
+	                                }
+	                                if (note.getNoteType() == enum_1.NoteType.PICKUP && note.getAmount() < min) {
+	                                    min = note.getAmount();
+	                                }
+	                            });
 	                        }
 	                        notes.forEach(function (note) {
 	                            for (var i = earlestYear; i <= latestYear; i++) {
 	                                if (note.getDate().year() == i) {
-	                                    if (lists[i - earlestYear] == null) {
-	                                        lists[i - earlestYear] = Array();
+	                                    if (lists[2 * (i - earlestYear)] == null) {
+	                                        lists[2 * (i - earlestYear)] = Array();
+	                                    }
+	                                    if (lists[2 * (i - earlestYear) + 1] == null) {
+	                                        lists[2 * (i - earlestYear) + 1] = Array();
 	                                    }
 	                                    if (note.getNoteType() == enum_1.NoteType.POST) {
-	                                        lists[i - earlestYear].push({ x: moment(note.getDate()).year(currentYear).toDate(), y: note.getRate(), r: 1, tooltip: note.getId() });
+	                                        lists[2 * (i - earlestYear)].push({ x: moment(note.getDate()).year(currentYear).toDate(), y: note.getRate(), r: 1.25, tooltip: note.getId() });
 	                                    } else if (note.getNoteType() == enum_1.NoteType.PICKUP) {
-	                                        lists[i - earlestYear].push({ x: moment(note.getDate()).year(currentYear).toDate(), y: note.getRate(), r: 1.5, tooltip: note.getId() });
+	                                        lists[2 * (i - earlestYear) + 1].push({
+	                                            x: moment(note.getDate()).year(currentYear).toDate(),
+	                                            y: Math.floor(5 * (note.getAmount() - min) / (max - min)) + 0.5,
+	                                            r: 2,
+	                                            tooltip: note.getId()
+	                                        });
 	                                    }
 	                                }
 	                            }
@@ -93274,8 +93294,8 @@
 	                        var data = [];
 	                        for (var i = 0; i < lists.length; i++) {
 	                            data.push({
-	                                label: i + earlestYear,
-	                                strokeColor: color_1.google10Color(i + earlestYear),
+	                                label: Math.floor(i / 2) + earlestYear,
+	                                strokeColor: color_1.google10Color(Math.floor(i / 2) + earlestYear),
 	                                data: lists[i]
 	                            });
 	                        }
@@ -93285,7 +93305,8 @@
 	                            scaleShowHorizontalLines: true,
 	                            scaleShowLabels: true,
 	                            scaleType: "date",
-	                            scaleLabel: "★x<%=value%>",
+	                            // scaleLabel: "<% if (value <= 5) { %>★x<%=value%><% } %>",
+	                            scaleLabel: "<%  %>",
 	                            customTooltips: function customTooltips(tooltip) {
 	                                if (self.state.clicked) {
 	                                    if (tooltip.text && self.state.noteId != parseInt(tooltip.text)) {
@@ -93319,8 +93340,17 @@
 	                                    }
 	                                }
 	                            },
+	                            // Boolean - If we want to override with a hard coded y scale
+	                            scaleOverride: true,
+	                            // ** Required if scaleOverride is true **
+	                            // Number - The number of steps in a hard coded y scale
+	                            scaleSteps: 6,
+	                            // Number - The value jump in the hard coded y scale
+	                            scaleStepWidth: 1,
+	                            // Number - The y scale starting value
+	                            scaleStartValue: 0,
 	                            tooltipTemplate: "<%=tooltip%>",
-	                            legendTemplate: "<div class=\"<%=name.toLowerCase()%>-legend\"><%for(var i=0;i<datasets.length;i++){%><div><span class=\"<%=name.toLowerCase()%>-legend-marker\" style=\"background-color:<%=datasets[i].strokeColor%>\"></span><span><%=datasets[i].label%></span></div><%}%></div>"
+	                            legendTemplate: "<div class=\"<%=name.toLowerCase()%>-legend\"><%for(var i=0;i<datasets.length;i+=2){%><div><span class=\"<%=name.toLowerCase()%>-legend-marker\" style=\"background-color:<%=datasets[i].strokeColor%>\"></span><span><%=datasets[i].label%></span></div><%}%></div>"
 	                        });
 	                        self.setState({ legend: chart.generateLegend() });
 	                    })();
@@ -93352,11 +93382,11 @@
 	                    comment = React.createElement("div", { className: styles.comment }, note.getComment());
 	                } else if (note.getNoteType() == enum_1.NoteType.PICKUP) {
 	                    if (note.getPicupTime() == enum_1.PickupTime.EARLY) {
-	                        comment = React.createElement("div", { className: styles.comment }, Math.floor(note.getAmount()).toLocaleString() + "g (" + localization_1.localization(988) + ")");
+	                        comment = React.createElement("div", { className: styles.comment }, Math.floor(note.getAmount()).toLocaleString() + "lbs. (" + localization_1.localization(988) + ")");
 	                    } else if (note.getPicupTime() == enum_1.PickupTime.PROPER) {
-	                        comment = React.createElement("div", { className: styles.comment }, Math.floor(note.getAmount()).toLocaleString() + "g (" + localization_1.localization(989) + ")");
+	                        comment = React.createElement("div", { className: styles.comment }, Math.floor(note.getAmount()).toLocaleString() + "lbs. (" + localization_1.localization(989) + ")");
 	                    } else if (note.getPicupTime() == enum_1.PickupTime.LATE) {
-	                        comment = React.createElement("div", { className: styles.comment }, Math.floor(note.getAmount()).toLocaleString() + "g (" + localization_1.localization(990) + ")");
+	                        comment = React.createElement("div", { className: styles.comment }, Math.floor(note.getAmount()).toLocaleString() + "lbs. (" + localization_1.localization(990) + ")");
 	                    }
 	                }
 	                if (self.state.clicked) {
@@ -98738,7 +98768,7 @@
 	                var options = new Array();
 	                options.push({ value: 1, label: "g" });
 	                options.push({ value: 2, label: "kg" });
-	                options.push({ value: 3, label: "libs." });
+	                options.push({ value: 3, label: "lbs." });
 	                var selected = void 0;
 	                if (self.props.donate.getAmountType() == enum_1.AmountType.G) {
 	                    selected = options[0];
@@ -99756,12 +99786,12 @@
 	                                }
 	                            }
 	                        });
-	                        var isKilogram = false;
-	                        accumulated.forEach(function (accum) {
-	                            if (accum > 100000) {
-	                                isKilogram = true;
-	                            }
-	                        });
+	                        // let isKilogram: boolean = false;
+	                        // accumulated.forEach((accum: number) => {
+	                        //   if (accum > 100000) {
+	                        //     isKilogram = true;
+	                        //   }
+	                        // });
 	                        var data = [];
 	                        for (var i = 0; i < lists.length; i++) {
 	                            data.push({
@@ -99770,10 +99800,10 @@
 	                                data: lists[i]
 	                            });
 	                        }
-	                        var scaleLabel = "<%=parseFloat(value).toLocaleString()%>g";
-	                        if (isKilogram) {
-	                            scaleLabel = "<%=(parseFloat(value) * 0.001).toLocaleString()%>kg";
-	                        }
+	                        var scaleLabel = "<%=parseFloat(value).toLocaleString()%> lbs.";
+	                        // if (isKilogram) {
+	                        //   scaleLabel = "<%=(parseFloat(value) * 0.001).toLocaleString()%>kg";
+	                        // }
 	                        var chart = new Chart(ctx).Scatter(data, {
 	                            bezierCurve: true,
 	                            showTooltips: true,
@@ -99846,9 +99876,9 @@
 	                    var food = food_store_1.foodStore.getFood(donate.getFoodId());
 	                    var comment = void 0;
 	                    if (food) {
-	                        comment = React.createElement("div", { className: styles.comment }, food.getName() + ": " + Math.floor(donate.getAmount()).toLocaleString() + "g");
+	                        comment = React.createElement("div", { className: styles.comment }, food.getName() + ": " + Math.floor(donate.getAmount()).toLocaleString() + " lbs.");
 	                    } else {
-	                        comment = React.createElement("div", { className: styles.comment }, localization_1.localization(613) + ": " + Math.floor(donate.getAmount()).toLocaleString() + "g");
+	                        comment = React.createElement("div", { className: styles.comment }, localization_1.localization(613) + ": " + Math.floor(donate.getAmount()).toLocaleString() + " lbs.");
 	                    }
 	                    var list = new Array();
 	                    list.push(React.createElement("span", { key: "tree" }, "From "));

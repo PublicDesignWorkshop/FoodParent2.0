@@ -77,23 +77,44 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
         let currentYear: number = moment(new Date()).year();
         let earlestYear: number;
         let latestYear: number;
+        let max: number;
+        let min: number;
         if (notes.length == 0) {
           earlestYear = currentYear;
           latestYear = currentYear;
         } else {
           earlestYear = moment(notes[0].getDate()).year();
           latestYear = moment(notes[notes.length - 1].getDate()).year();
+          max = 0;
+          min = Number.MAX_VALUE;
+          notes.forEach((note: NoteModel) => {
+            if (note.getNoteType() == NoteType.PICKUP && note.getAmount() > max) {
+              max = note.getAmount();
+            }
+            if (note.getNoteType() == NoteType.PICKUP && note.getAmount() < min) {
+              min = note.getAmount();
+            }
+          });
         }
+
         notes.forEach((note: NoteModel) => {
           for (let i = earlestYear; i <= latestYear; i++) {
             if (note.getDate().year() == i) {
-              if (lists[i - earlestYear] == null) {
-                lists[i - earlestYear] = Array<IGraphOption>();
+              if (lists[2 * (i - earlestYear)] == null) {
+                lists[2 * (i - earlestYear)] = Array<IGraphOption>();
+              }
+              if (lists[2 * (i - earlestYear) + 1] == null) {
+                lists[2 * (i - earlestYear) + 1] = Array<IGraphOption>();
               }
               if (note.getNoteType() == NoteType.POST) {
-                lists[i - earlestYear].push({x: moment(note.getDate()).year(currentYear).toDate(), y: note.getRate(), r: 1, tooltip: note.getId()});
+                lists[2 * (i - earlestYear)].push({x: moment(note.getDate()).year(currentYear).toDate(), y: note.getRate(), r: 1.25, tooltip: note.getId()});
               } else if (note.getNoteType() == NoteType.PICKUP) {
-                lists[i - earlestYear].push({x: moment(note.getDate()).year(currentYear).toDate(), y: note.getRate(), r: 1.5, tooltip: note.getId()});
+                lists[2 * (i - earlestYear) + 1].push({
+                  x: moment(note.getDate()).year(currentYear).toDate(),
+                  y: Math.floor(5 * (note.getAmount() - min) / (max - min)) + 0.5,
+                  r: 2,
+                  tooltip: note.getId()
+                });
               }
             }
           }
@@ -101,8 +122,8 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
         let data = [];
         for (let i = 0; i < lists.length; i++) {
           data.push({
-            label: i + earlestYear,
-    				strokeColor: google10Color(i + earlestYear),
+            label: Math.floor(i / 2) + earlestYear,
+    				strokeColor: google10Color(Math.floor(i / 2) + earlestYear),
     				data: lists[i],
           })
         }
@@ -113,7 +134,8 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
   				scaleShowHorizontalLines: true,
   				scaleShowLabels: true,
   				scaleType: "date",
-  				scaleLabel: "★x<%=value%>",
+  				// scaleLabel: "<% if (value <= 5) { %>★x<%=value%><% } %>",
+          scaleLabel: "<%  %>",
           customTooltips: function(tooltip) {
             if (self.state.clicked) {
               if (tooltip.text && self.state.noteId != parseInt(tooltip.text)) {
@@ -147,8 +169,17 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
               }
             }
           },
+          // Boolean - If we want to override with a hard coded y scale
+          scaleOverride: true,
+          // ** Required if scaleOverride is true **
+          // Number - The number of steps in a hard coded y scale
+          scaleSteps: 6,
+          // Number - The value jump in the hard coded y scale
+          scaleStepWidth: 1,
+          // Number - The y scale starting value
+          scaleStartValue: 0,
           tooltipTemplate: "<%=tooltip%>",
-          legendTemplate: "<div class=\"<%=name.toLowerCase()%>-legend\"><%for(var i=0;i<datasets.length;i++){%><div><span class=\"<%=name.toLowerCase()%>-legend-marker\" style=\"background-color:<%=datasets[i].strokeColor%>\"></span><span><%=datasets[i].label%></span></div><%}%></div>"
+          legendTemplate: "<div class=\"<%=name.toLowerCase()%>-legend\"><%for(var i=0;i<datasets.length;i+=2){%><div><span class=\"<%=name.toLowerCase()%>-legend-marker\" style=\"background-color:<%=datasets[i].strokeColor%>\"></span><span><%=datasets[i].label%></span></div><%}%></div>"
   			});
         self.setState({legend: chart.generateLegend()});
       }
@@ -178,11 +209,11 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
         comment = <div className={styles.comment}>{note.getComment()}</div>;
       } else if (note.getNoteType() == NoteType.PICKUP) {
         if (note.getPicupTime() == PickupTime.EARLY) {
-          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "g (" + localization(988) + ")"}</div>;
+          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "lbs. (" + localization(988) + ")"}</div>;
         } else if (note.getPicupTime() == PickupTime.PROPER) {
-          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "g (" + localization(989) + ")"}</div>;
+          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "lbs. (" + localization(989) + ")"}</div>;
         } else if (note.getPicupTime() == PickupTime.LATE) {
-          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "g (" + localization(990) + ")"}</div>;
+          comment = <div className={styles.comment}>{Math.floor(note.getAmount()).toLocaleString() + "lbs. (" + localization(990) + ")"}</div>;
         }
       }
       if (self.state.clicked) {

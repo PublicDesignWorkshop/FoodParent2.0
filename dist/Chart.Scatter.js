@@ -449,6 +449,7 @@
 				var xpos1 = this.calculateX(this.xScaleRange.min);
 				var xpos2 = this.chart.width;
 				var ypos1 = this.calculateY(this.yScaleRange.min);
+				// var ypos2 = this.calculateY(this.yScaleRange.max - 0.75);
 				var ypos2 = 0;
 
 				// y axis
