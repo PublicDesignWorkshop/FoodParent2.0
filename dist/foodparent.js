@@ -93683,15 +93683,15 @@
 	                minZoom: Settings.iMinZoom,
 	                maxZoom: Settings.iMaxZoom
 	            });
-	            self.satTileLayer = L.tileLayer(Settings.uSatTileMap + Settings.sMapboxAccessToken, {
+	            // Optional tile map address (Mapbox).
+	            // self.satTileLayer = L.tileLayer(Settings.uSatTileMap + Settings.sMapboxAccessToken, {
+	            //     minZoom: Settings.iMinZoom,
+	            //     maxZoom: Settings.iMaxZoom,
+	            // });
+	            self.satTileLayer = new L.Google(Settings.sGoogleMapTileType, {
 	                minZoom: Settings.iMinZoom,
 	                maxZoom: Settings.iMaxZoom
 	            });
-	            // Optional tile map address (Google).
-	            // self.satTileLayer = new L.Google(Settings.sGoogleMapTileType, {
-	            //   minZoom: Settings.iMinZoom,
-	            //   maxZoom: Settings.iMaxZoom,
-	            // });
 	            self.grayTileLayer.addTo(self.map);
 	            self.map.invalidateSize(false);
 	            self.map.whenReady(self.afterRenderMap);
@@ -95745,15 +95745,15 @@
 	                minZoom: Settings.iMinZoom,
 	                maxZoom: Settings.iMaxZoom
 	            });
-	            self.satTileLayer = L.tileLayer(Settings.uSatTileMap + Settings.sMapboxAccessToken, {
+	            // Optional tile map address (Mapbox).
+	            // self.satTileLayer = L.tileLayer(Settings.uSatTileMap + Settings.sMapboxAccessToken, {
+	            //     minZoom: Settings.iMinZoom,
+	            //     maxZoom: Settings.iMaxZoom,
+	            // });
+	            self.satTileLayer = new L.Google(Settings.sGoogleMapTileType, {
 	                minZoom: Settings.iMinZoom,
 	                maxZoom: Settings.iMaxZoom
 	            });
-	            // Optional tile map address.
-	            // self.satTileLayer = new L.Google(Settings.sGoogleMapTileType, {
-	            //   minZoom: Settings.iMinZoom,
-	            //   maxZoom: Settings.iMaxZoom,
-	            // });
 	            self.grayTileLayer.addTo(self.map);
 	            self.map.invalidateSize(false);
 	            self.map.whenReady(self.afterRenderMap);
