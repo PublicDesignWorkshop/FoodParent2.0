@@ -7,6 +7,7 @@ module.exports = {
   output: {
     filename: "foodparent.js",
     path: __dirname + "/dist",
+    publicPath: Settings.uBaseNameForWebPack + "dist/",
   },
   plugins: [
     new webpack.ProvidePlugin({
@@ -38,11 +39,11 @@ module.exports = {
       { test: /\.css$/, loader: "style-loader!css-loader" },
       { test: /\.png$/, loader: "url-loader?limit=100000" },
       { test: /\.jpg$/, loader: "file-loader" },
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff&name=" + Settings.uBaseNameForWebPack + "dist/[name].[ext]" },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff&name=" + Settings.uBaseNameForWebPack + "dist/[name].[ext]" },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream&name=" + Settings.uBaseNameForWebPack + "dist/[name].[ext]" },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file?name=" + Settings.uBaseNameForWebPack + "dist/[name].[ext]" },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml&name=" + Settings.uBaseNameForWebPack + "dist/[name].[ext]" }
+      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
+      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" }
     ],
   },
 }
