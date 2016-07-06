@@ -50159,7 +50159,7 @@
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -79967,15 +79967,17 @@
 	  event.preventDefault();
 	}
 	
-	function isTouch() {
-	  return 'ontouchstart' in window || navigator.MaxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+	function isTouch () {
+	  return (('ontouchstart' in window) ||
+	    (navigator.MaxTouchPoints > 0) ||
+	    (navigator.msMaxTouchPoints > 0))
 	}
 	
-	function hasTwoTouchPoints(event) {
+	function hasTwoTouchPoints (event) {
 	  if (isTouch()) {
-	    return event.touches && event.touches.length === 2;
+	    return event.touches && event.touches.length === 2
 	  } else {
-	    return event.altKey;
+	    return event.altKey
 	  }
 	}
 	
@@ -80078,9 +80080,9 @@
 	          if (hasTwoTouchPoints(mm)) {
 	            var scaleFactor = void 0;
 	            // if (isTouch()) {
-	            //   scaleFactor = mm.scale;
+	            //   scaleFactor = mm.scale
 	            // } else {
-	              scaleFactor = movePoint.x < size.width / 2 ? scale + (translatePos(startPoint, size).x - translatePos(movePoint, size).x) / size.width : scale + (translatePos(movePoint, size).x - translatePos(startPoint, size).x) / size.width;
+	              scaleFactor = (movePoint.x < (size.width / 2)) ? scale + ((translatePos(startPoint, size).x - translatePos(movePoint, size).x) / size.width) : scale + ((translatePos(movePoint, size).x - translatePos(startPoint, size).x) / size.width)
 	            // }
 	            scaleFactor = between(1, maxScale, scaleFactor);
 	            return {
@@ -80092,9 +80094,8 @@
 	            var scaleFactorX = (size.width * scale - size.width) / (maxScale * 2);
 	            var scaleFactorY = (size.height * scale - size.height) / (maxScale * 2);
 	            return {
-	              x: between(-size.width/4, size.width/4, Math.floor(movePoint.x - startPoint.x) * 2 / scaleFactorX + x),
-	              y: between(-size.height/4, size.height/4, Math.floor(movePoint.y - startPoint.y) * 2 / scaleFactorY + y),
-	              // y: between(inverse(scaleFactorY), scaleFactorY, (movePoint.y - startPoint.y) * 1/scaleFactorX + y),
+	              x: between(inverse(scaleFactorX), scaleFactorX, movePoint.x - startPoint.x),
+	              y: between(inverse(scaleFactorY), scaleFactorY, movePoint.y - startPoint.y)
 	            };
 	          }
 	        }).takeUntil(touchEnd);
