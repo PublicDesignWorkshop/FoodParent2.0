@@ -223,7 +223,11 @@
   }
 
   function calcSeasonFoods($extra) {
+    $check = admin_check();
     $sql = "SELECT id FROM `food` WHERE `season` = 1";
+    if (!$check) {
+      $sql = "SELECT id FROM `food` WHERE `season` = 1 AND `farm` = 0";
+    }
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);
