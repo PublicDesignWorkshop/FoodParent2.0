@@ -65,11 +65,16 @@
 
     -webkit-justify-content: space-around; /* Safari 6.1+ */
     justify-content: space-around;
+
+    -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+    flex-wrap: wrap;
   }
   :local(.wrapper .graphzoom)  {
     text-align: right;
     font-weight: 700;
     padding: 4px 8px;
+  }
+  :local(.wrapper .graphzoom) span {
     cursor: pointer;
   }
   :local(.wrapper) .scatter-legend span {
