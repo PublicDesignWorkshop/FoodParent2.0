@@ -70,6 +70,7 @@
     text-align: right;
     font-weight: 700;
     padding: 4px 8px;
+    cursor: pointer;
   }
   :local(.wrapper) .scatter-legend span {
     margin: 4px;

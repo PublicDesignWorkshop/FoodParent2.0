@@ -11,6 +11,7 @@ export interface IFoodProps {
   icon: string;
   description: string;
   adopt: string;
+  farm: string;
   updated: string;
 }
 
@@ -20,6 +21,7 @@ export class FoodModel {
   icon: string;
   description: string;
   adopt: boolean;
+  farm: boolean;
   updated: moment.Moment;
 
   constructor(props: IFoodProps) {
@@ -34,21 +36,33 @@ export class FoodModel {
     } else {
       self.adopt = false;
     }
+    if (props.farm == "1") {
+      self.farm = true;
+    } else {
+      self.farm = false;
+    }
   }
   public toJSON(): any {
     let self: FoodModel = this;
     let adopt: string;
+    let farm: string;
     if (self.adopt) {
       adopt = "1";
     } else {
       adopt = "0";
+    }
+    if (self.farm) {
+      farm = "1";
+    } else {
+      farm = "0";
     }
     return {
       id: self.id,
       name: self.name,
       icon: self.icon,
       description: self.description,
-      adopt: adopt
+      adopt: adopt,
+      farm: farm
     }
   }
   public update(props: IFoodProps) {
@@ -62,6 +76,11 @@ export class FoodModel {
       self.adopt = true;
     } else {
       self.adopt = false;
+    }
+    if (props.farm == "1") {
+      self.farm = true;
+    } else {
+      self.farm = false;
     }
   }
   public getId(): number {
@@ -81,6 +100,9 @@ export class FoodModel {
   }
   public setAdaptability(adopt: boolean) {
     this.adopt = adopt;
+  }
+  public getIsFarm(): boolean {
+    return this.farm;
   }
 }
 

@@ -9,6 +9,7 @@ import { IPersonProps } from './../stores/person.store';
 import { authSource } from './../sources/auth.source';
 import { personSource } from './../sources/person.source';
 import { treeActions } from './tree.actions';
+import { foodActions } from './food.actions';
 import { addLoading, removeLoading } from './../utils/loadingtracker';
 import { displaySuccessMessage, displayErrorMessage } from './../utils/message';
 import { localization } from './../constraints/localization';
@@ -97,6 +98,7 @@ class AuthActions extends AbstractActions implements IAuthActions {
       dispatch();
       browserHistory.push({pathname: Settings.uBaseName + '/'});
       treeActions.fetchTrees();
+      foodActions.fetchFoods();
     }
   }
   processLogin(contact: string, password: string) {
@@ -122,6 +124,7 @@ class AuthActions extends AbstractActions implements IAuthActions {
       dispatch(props);
       browserHistory.push({pathname: Settings.uBaseName + '/'});
       treeActions.fetchTrees();
+      foodActions.fetchFoods();
     }
   }
   addTempTree(treeId: number) {

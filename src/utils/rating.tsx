@@ -18,6 +18,7 @@ export function calcRating(success?: any, fail?: any, error?: any) {
         }
       } else {   // Not logged in
         if (fail) {
+          console.log(response.code);
           fail(response.code);
         }
       }

@@ -21,7 +21,13 @@
   }
 
   function read() {
+    sec_session_continue(); // Our custom secure way of starting a PHP session.
+    $check = admin_check();
     $sql = "SELECT * FROM `food` ORDER BY `name` ASC";
+    if (!$check) {
+      $sql = "SELECT * FROM `food` WHERE `farm` = 0 ORDER BY `name` ASC";
+    }
+
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);

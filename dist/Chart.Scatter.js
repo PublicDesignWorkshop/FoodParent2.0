@@ -574,8 +574,10 @@
 			// fix https://github.com/dima117/Chart.Scatter/issues/31
 			valueMax === valueMin && (valueMax++);
 
+
 			var valueRange = +valueMax - valueMin,
-				offset = this.useUtc ? 0 : new Date().getTimezoneOffset() * 60000,
+				// offset = this.useUtc ? 0 : new Date().getTimezoneOffset() * 60000,
+				offset = 0,
 				min = +valueMin - offset,
 				max = +valueMax - offset;
 
@@ -597,10 +599,9 @@
 					}
 				}
 			}
-
 			var stepValue = units[xp].t,
 				start = Math.floor(min / stepValue) * stepValue,
-				stepCount = Math.ceil((max - start) / stepValue),
+				stepCount = Math.ceil((max - start) / stepValue) - 1,
 				end = start + stepValue * stepCount;
 
 			return {
@@ -679,7 +680,7 @@
 		datasetCtr.prototype.addPoint = function (x, y, r, tooltip) {
 
 			// default size
-			r = arguments.length < 3 ? 1 : r;
+			// r = arguments.length < 3 ? 1 : r;
 
 			var point = this._createNewPoint();
 			this._setPointData(point, x, y, r, tooltip);
@@ -689,7 +690,7 @@
 		datasetCtr.prototype.setPointData = function (index, x, y, r, tooltip) {
 
 			// default size
-			r = arguments.length < 4 ? 1 : r;
+			// r = arguments.length < 4 ? 1 : r;
 
 			var point = hlp.getElementOrDefault(this.points, index);
 
@@ -769,8 +770,8 @@
 				this.datasets.push(datasetObject);
 
 				helpers.each(dataset.data, function (dataPoint) {
-
-					datasetObject.addPoint(dataPoint.x, dataPoint.y, dataPoint.r || 1, dataPoint.tooltip);
+					datasetObject.addPoint(dataPoint.x, dataPoint.y, dataPoint.r, dataPoint.tooltip);
+					// datasetObject.addPoint(dataPoint.x, dataPoint.y, dataPoint.r || 1, dataPoint.tooltip);
 				});
 
 			}, this);
@@ -872,7 +873,7 @@
 				var firstElement = elements[0];
 				var tooltipPosition = firstElement.tooltipPosition();
 
-				if (elements.length == 1) {
+				if (elements.length >= 1) {
 
 					new chartjs.Tooltip({
 						x: Math.round(tooltipPosition.x),
@@ -1005,7 +1006,18 @@
 					ymax = point.value;
 				}
 			});
-
+			if (xmin) {
+				var tempMin = new Date(xmin);
+				tempMin.setMonth(0);
+				tempMin.setDate(15);
+				xmin = tempMin.valueOf();
+			}
+			if (xmax) {
+				var tempMax = new Date(xmax);
+				tempMax.setMonth(11);
+				tempMax.setDate(31);
+				xmax = tempMax.valueOf();
+			}
 			return {
 				xmin: xmin,
 				xmax: xmax,
@@ -1037,7 +1049,6 @@
 		},
 
 		_drawLine: function (dataset) {
-
 			var ctx = this.chart.ctx,
 				prev = undefined;
 
@@ -1046,15 +1057,15 @@
 			ctx.strokeStyle = dataset.strokeColor || this.options.datasetStrokeColor;
 
 			ctx.beginPath();
-
 			helpers.each(dataset.points, function (point, index) {
-
 				if (index === 0) {
-
+					if (point.size == 0) {
+						ctx.setLineDash([2, 2]);
+					} else {
+						ctx.setLineDash([]);
+					}
 					ctx.moveTo(point.x, point.y);
-				}
-				else {
-
+				}	else {
 					if (this.options.bezierCurve) {
 
 						ctx.bezierCurveTo(
@@ -1101,7 +1112,7 @@
 		},
 
 		draw: function (ease) {
-
+			var ctx = this.chart.ctx;
 			if (this._hasData()) {
 
 				// update view params
@@ -1123,14 +1134,20 @@
 
 				// draw lines
 				if (this.options.datasetStroke) {
-
 					helpers.each(this.datasets, this._drawLine, this);
 				}
 
 				// draw points
 				if (this.options.pointDot) {
 
-					this._forEachPoint(function (point) { point.draw(); });
+					this._forEachPoint(function (point) {
+						if (point.size == 1.5) {
+							ctx.setLineDash([2, 2]);
+						} else {
+							ctx.setLineDash([]);
+						}
+						point.draw();
+					});
 				}
 			} else {
 

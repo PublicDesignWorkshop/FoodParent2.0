@@ -96,30 +96,47 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
               min = note.getAmount();
             }
           });
-        }
 
-        notes.forEach((note: NoteModel) => {
-          for (let i = earlestYear; i <= latestYear; i++) {
-            if (note.getDate().year() == i) {
-              if (lists[2 * (i - earlestYear)] == null) {
-                lists[2 * (i - earlestYear)] = Array<IGraphOption>();
-              }
-              if (lists[2 * (i - earlestYear) + 1] == null) {
-                lists[2 * (i - earlestYear) + 1] = Array<IGraphOption>();
-              }
-              if (note.getNoteType() == NoteType.POST) {
-                lists[2 * (i - earlestYear)].push({x: moment(note.getDate()).year(currentYear).toDate(), y: note.getRate(), r: 1.25, tooltip: note.getId()});
-              } else if (note.getNoteType() == NoteType.PICKUP) {
-                lists[2 * (i - earlestYear) + 1].push({
-                  x: moment(note.getDate()).year(currentYear).toDate(),
-                  y: Math.floor(5 * (note.getAmount() - min) / (max - min)) + 0.5,
-                  r: 2,
-                  tooltip: note.getId()
-                });
+          for (let j = 0; j < notes.length; j++) {
+            for (let i = earlestYear; i <= latestYear; i++) {
+              if (notes[j].getDate().year() == i) {
+                if (lists[2 * (i - earlestYear)] == null) {
+                  lists[2 * (i - earlestYear)] = Array<IGraphOption>();
+                }
+                if (lists[2 * (i - earlestYear) + 1] == null) {
+                  lists[2 * (i - earlestYear) + 1] = Array<IGraphOption>();
+                }
+                if (notes[j].getNoteType() == NoteType.POST) {
+                  lists[2 * (i - earlestYear)].push({x: moment(notes[j].getDate()).year(currentYear).toDate(), y: notes[j].getRate(), r: 1, tooltip: notes[j].getId()});
+                } else if (notes[j].getNoteType() == NoteType.PICKUP) {
+                  if (notes[j - 1] != null && notes[j - 1].getDate().year() == i) {
+                    lists[2 * (i - earlestYear) + 1].push({
+                      x: moment(notes[j - 1].getDate()).year(currentYear).toDate(),
+                      y: notes[j - 1].getRate(),
+                      r: 0,
+                      tooltip: notes[j - 1].getId()
+                    });
+                    lists[2 * (i - earlestYear) + 1].push({
+                      x: moment(notes[j].getDate()).year(currentYear).toDate(),
+                      y: notes[j - 1].getRate(),
+                      r: 1.5,
+                      tooltip: notes[j].getId()
+                    });
+                  } else {
+                    lists[2 * (i - earlestYear) + 1].push({
+                      x: moment(notes[j].getDate()).year(currentYear).toDate(),
+                      y: notes[j].getRate(),
+                      r: 1.5,
+                      tooltip: notes[j].getId()
+                    });
+                  }
+                }
               }
             }
           }
-        });
+
+        }
+
         let data = [];
         for (let i = 0; i < lists.length; i++) {
           data.push({
@@ -179,6 +196,7 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
           scaleStepWidth: 1,
           // Number - The y scale starting value
           scaleStartValue: 0,
+
           tooltipTemplate: "<%=tooltip%>",
           legendTemplate: "<div class=\"<%=name.toLowerCase()%>-legend\"><%for(var i=0;i<datasets.length;i+=2){%><div><span class=\"<%=name.toLowerCase()%>-legend-marker\" style=\"background-color:<%=datasets[i].strokeColor%>\"></span><span><%=datasets[i].label%></span></div><%}%></div>"
   			});
@@ -243,7 +261,7 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
     if (!self.state.zoom) {
       zoom = <div className={styles.graphzoom}>
         <span onClick={()=> {
-          self.setState({width: $(window).innerWidth() - 16, height: Math.floor(($(window).innerWidth() - 16) * 9 / 16), zoom: true});
+          self.setState({width: $(window).innerWidth() - 16, height: $(window).innerHeight() - 48 - 52, zoom: true});
           self.updateProps(self.props);
         }}>Zoom Graph</span>
       </div>;

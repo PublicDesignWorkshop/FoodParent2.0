@@ -40072,6 +40072,7 @@
 	var auth_source_1 = __webpack_require__(/*! ./../sources/auth.source */ 281);
 	var person_source_1 = __webpack_require__(/*! ./../sources/person.source */ 287);
 	var tree_actions_1 = __webpack_require__(/*! ./tree.actions */ 279);
+	var food_actions_1 = __webpack_require__(/*! ./food.actions */ 458);
 	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 288);
 	var message_1 = __webpack_require__(/*! ./../utils/message */ 289);
 	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
@@ -40167,6 +40168,7 @@
 	                dispatch();
 	                react_router_1.browserHistory.push({ pathname: Settings.uBaseName + '/' });
 	                tree_actions_1.treeActions.fetchTrees();
+	                food_actions_1.foodActions.fetchFoods();
 	            };
 	        }
 	    }, {
@@ -40196,6 +40198,7 @@
 	                dispatch(props);
 	                react_router_1.browserHistory.push({ pathname: Settings.uBaseName + '/' });
 	                tree_actions_1.treeActions.fetchTrees();
+	                food_actions_1.foodActions.fetchFoods();
 	            };
 	        }
 	    }, {
@@ -70648,6 +70651,11 @@
 	        } else {
 	            self.adopt = false;
 	        }
+	        if (props.farm == "1") {
+	            self.farm = true;
+	        } else {
+	            self.farm = false;
+	        }
 	    }
 	
 	    _createClass(FoodModel, [{
@@ -70655,17 +70663,24 @@
 	        value: function toJSON() {
 	            var self = this;
 	            var adopt = void 0;
+	            var farm = void 0;
 	            if (self.adopt) {
 	                adopt = "1";
 	            } else {
 	                adopt = "0";
+	            }
+	            if (self.farm) {
+	                farm = "1";
+	            } else {
+	                farm = "0";
 	            }
 	            return {
 	                id: self.id,
 	                name: self.name,
 	                icon: self.icon,
 	                description: self.description,
-	                adopt: adopt
+	                adopt: adopt,
+	                farm: farm
 	            };
 	        }
 	    }, {
@@ -70681,6 +70696,11 @@
 	                self.adopt = true;
 	            } else {
 	                self.adopt = false;
+	            }
+	            if (props.farm == "1") {
+	                self.farm = true;
+	            } else {
+	                self.farm = false;
 	            }
 	        }
 	    }, {
@@ -70712,6 +70732,11 @@
 	        key: 'setAdaptability',
 	        value: function setAdaptability(adopt) {
 	            this.adopt = adopt;
+	        }
+	    }, {
+	        key: 'getIsFarm',
+	        value: function getIsFarm() {
+	            return this.farm;
 	        }
 	    }]);
 	
@@ -93289,35 +93314,50 @@
 	                                    min = note.getAmount();
 	                                }
 	                            });
-	                        }
-	                        notes.forEach(function (note) {
-	                            for (var i = earlestYear; i <= latestYear; i++) {
-	                                if (note.getDate().year() == i) {
-	                                    if (lists[2 * (i - earlestYear)] == null) {
-	                                        lists[2 * (i - earlestYear)] = Array();
-	                                    }
-	                                    if (lists[2 * (i - earlestYear) + 1] == null) {
-	                                        lists[2 * (i - earlestYear) + 1] = Array();
-	                                    }
-	                                    if (note.getNoteType() == enum_1.NoteType.POST) {
-	                                        lists[2 * (i - earlestYear)].push({ x: moment(note.getDate()).year(currentYear).toDate(), y: note.getRate(), r: 1.25, tooltip: note.getId() });
-	                                    } else if (note.getNoteType() == enum_1.NoteType.PICKUP) {
-	                                        lists[2 * (i - earlestYear) + 1].push({
-	                                            x: moment(note.getDate()).year(currentYear).toDate(),
-	                                            y: Math.floor(5 * (note.getAmount() - min) / (max - min)) + 0.5,
-	                                            r: 2,
-	                                            tooltip: note.getId()
-	                                        });
+	                            for (var j = 0; j < notes.length; j++) {
+	                                for (var i = earlestYear; i <= latestYear; i++) {
+	                                    if (notes[j].getDate().year() == i) {
+	                                        if (lists[2 * (i - earlestYear)] == null) {
+	                                            lists[2 * (i - earlestYear)] = Array();
+	                                        }
+	                                        if (lists[2 * (i - earlestYear) + 1] == null) {
+	                                            lists[2 * (i - earlestYear) + 1] = Array();
+	                                        }
+	                                        if (notes[j].getNoteType() == enum_1.NoteType.POST) {
+	                                            lists[2 * (i - earlestYear)].push({ x: moment(notes[j].getDate()).year(currentYear).toDate(), y: notes[j].getRate(), r: 1, tooltip: notes[j].getId() });
+	                                        } else if (notes[j].getNoteType() == enum_1.NoteType.PICKUP) {
+	                                            if (notes[j - 1] != null && notes[j - 1].getDate().year() == i) {
+	                                                lists[2 * (i - earlestYear) + 1].push({
+	                                                    x: moment(notes[j - 1].getDate()).year(currentYear).toDate(),
+	                                                    y: notes[j - 1].getRate(),
+	                                                    r: 0,
+	                                                    tooltip: notes[j - 1].getId()
+	                                                });
+	                                                lists[2 * (i - earlestYear) + 1].push({
+	                                                    x: moment(notes[j].getDate()).year(currentYear).toDate(),
+	                                                    y: notes[j - 1].getRate(),
+	                                                    r: 1.5,
+	                                                    tooltip: notes[j].getId()
+	                                                });
+	                                            } else {
+	                                                lists[2 * (i - earlestYear) + 1].push({
+	                                                    x: moment(notes[j].getDate()).year(currentYear).toDate(),
+	                                                    y: notes[j].getRate(),
+	                                                    r: 1.5,
+	                                                    tooltip: notes[j].getId()
+	                                                });
+	                                            }
+	                                        }
 	                                    }
 	                                }
 	                            }
-	                        });
+	                        }
 	                        var data = [];
-	                        for (var i = 0; i < lists.length; i++) {
+	                        for (var _i = 0; _i < lists.length; _i++) {
 	                            data.push({
-	                                label: Math.floor(i / 2) + earlestYear,
-	                                strokeColor: color_1.google10Color(Math.floor(i / 2) + earlestYear),
-	                                data: lists[i]
+	                                label: Math.floor(_i / 2) + earlestYear,
+	                                strokeColor: color_1.google10Color(Math.floor(_i / 2) + earlestYear),
+	                                data: lists[_i]
 	                            });
 	                        }
 	                        var chart = new Chart(ctx).Scatter(data, {
@@ -93422,7 +93462,7 @@
 	            var zoom = void 0;
 	            if (!self.state.zoom) {
 	                zoom = React.createElement("div", { className: styles.graphzoom }, React.createElement("span", { onClick: function onClick() {
-	                        self.setState({ width: $(window).innerWidth() - 16, height: Math.floor(($(window).innerWidth() - 16) * 9 / 16), zoom: true });
+	                        self.setState({ width: $(window).innerWidth() - 16, height: $(window).innerHeight() - 48 - 52, zoom: true });
 	                        self.updateProps(self.props);
 	                    } }, "Zoom Graph"));
 	            } else {
@@ -93439,7 +93479,7 @@
 	                            var rWrapper = ReactDOM.findDOMNode(self.refs['wrapper']);
 	                            self.setState({ width: rWrapper.clientWidth - 16, height: Math.floor((rWrapper.clientWidth - 16) * 9 / 16) });
 	                            self.updateProps(self.props);
-	                        }, 1000);
+	                        }, 100);
 	                    } }, "Back"));
 	            }
 	            var canvasStyle = {
@@ -93509,7 +93549,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI {\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: small;\r\n    padding: 8px 8px 8px 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    background-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._2uSKatikBUlr69Jrd4Wb9_ {\r\n\r\n  }\r\n  ._2mh5HW3u4yCjpGMaCHDP4n {\r\n    position: absolute;\r\n    margin: 8px;\r\n    border: 2px solid rgba(64, 54, 56, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 2px 4px 4px 10px;\r\n    text-align: left;\r\n    color: rgba(255, 255, 255, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub {\r\n    cursor: pointer;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._1Ny1Q33qPeDb8MtmpwvsJ3 {\r\n    pointer-events: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n    border: 2px solid rgba(64, 54, 56, 0.75);\r\n    background-color: rgba(94, 78, 81, 0.75);\r\n  }\r\n  ._1B-SgTUak8jn9g0TXZPHyW {\r\n    display: none;\r\n  }\r\n  ._3vjAZ3NkzoEdvJPF64ZDiI {\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n    object-position: 50% 50%;\r\n    margin: 4px 0;\r\n  }\r\n  ._11C3zNqzosXyc1xAlyXJCo {\r\n    font-weight: 700;\r\n  }\r\n  ._2WPAJ0xj_RszU01b1p7Oqg {\r\n    width: 100%;\r\n    font-weight: 700;\r\n    overflow:hidden;\r\n    display:inline-block;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend {\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-justify-content: space-around; /* Safari 6.1+ */\r\n    justify-content: space-around;\r\n  }\n  ._1ju7zZfAqV-HuvOz6ZVjNI ._2UqH9By2sL41bwfiVPmAC3  {\n    text-align: right;\n    font-weight: 700;\n    padding: 4px 8px;\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend span {\r\n    margin: 4px;\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-weight: 700;\r\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend .scatter-legend-marker {\r\n    display: inline-block;\r\n    width: 8px;\r\n    height: 8px;\r\n    border-radius: 50%;\r\n    margin: 0px;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI {\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: small;\r\n    padding: 8px 8px 8px 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    background-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._2uSKatikBUlr69Jrd4Wb9_ {\r\n\r\n  }\r\n  ._2mh5HW3u4yCjpGMaCHDP4n {\r\n    position: absolute;\r\n    margin: 8px;\r\n    border: 2px solid rgba(64, 54, 56, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 2px 4px 4px 10px;\r\n    text-align: left;\r\n    color: rgba(255, 255, 255, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub {\r\n    cursor: pointer;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._1Ny1Q33qPeDb8MtmpwvsJ3 {\r\n    pointer-events: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n    border: 2px solid rgba(64, 54, 56, 0.75);\r\n    background-color: rgba(94, 78, 81, 0.75);\r\n  }\r\n  ._1B-SgTUak8jn9g0TXZPHyW {\r\n    display: none;\r\n  }\r\n  ._3vjAZ3NkzoEdvJPF64ZDiI {\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n    object-position: 50% 50%;\r\n    margin: 4px 0;\r\n  }\r\n  ._11C3zNqzosXyc1xAlyXJCo {\r\n    font-weight: 700;\r\n  }\r\n  ._2WPAJ0xj_RszU01b1p7Oqg {\r\n    width: 100%;\r\n    font-weight: 700;\r\n    overflow:hidden;\r\n    display:inline-block;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend {\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-justify-content: space-around; /* Safari 6.1+ */\r\n    justify-content: space-around;\r\n  }\n  ._1ju7zZfAqV-HuvOz6ZVjNI ._2UqH9By2sL41bwfiVPmAC3  {\n    text-align: right;\n    font-weight: 700;\n    padding: 4px 8px;\n    cursor: pointer;\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend span {\r\n    margin: 4px;\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-weight: 700;\r\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend .scatter-legend-marker {\r\n    display: inline-block;\r\n    width: 8px;\r\n    height: 8px;\r\n    border-radius: 50%;\r\n    margin: 0px;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -95313,6 +95353,7 @@
 	                }
 	            } else {
 	                if (fail) {
+	                    console.log(response.code);
 	                    fail(response.code);
 	                }
 	            }

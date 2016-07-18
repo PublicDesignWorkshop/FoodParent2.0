@@ -73,15 +73,27 @@
     $rates = null;
     if (isset($_SESSION['public'])) {
       $public = $_SESSION['public'];
+    } else {
+      $public = "0,1";
+      $_SESSION['public'] = $public;
     }
     if (isset($_SESSION['flag_ids'])) {
       $flags = $_SESSION['flag_ids'];
+    } else {
+      $flags = getDefaultFlags();
+      $_SESSION['flag_ids'] = $flags;
     }
     if (isset($_SESSION['adopt'])) {
       $adopt = $_SESSION['adopt'];
+    } else {
+      $adopt = "0";
+      $_SESSION['adopt'] = $adopt;
     }
     if (isset($_SESSION['rates'])) {
       $rates = $_SESSION['rates'];
+    } else {
+      $rates = "-1,0,1,2,3,4,5";
+      $_SESSION['rates'] = $rates;
     }
     if (isset($_SESSION['food_ids'])) {
       $foods = $_SESSION['food_ids'];

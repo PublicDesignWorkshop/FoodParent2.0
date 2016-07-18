@@ -81,27 +81,43 @@
       foreach ($result as $tree) {
         array_push($trees, $tree['food']);
       }
-      $sql = "UPDATE `food` SET `season` = 1 WHERE `id` IN (" . implode(",", $trees) . ")";
-      try {
-        $pdo = getConnection();
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-      } catch(PDOException $e) {
-        return '{"error":{"text":'. $e->getMessage() .'}}';
+      if (sizeof($trees) > 0) {
+        $sql = "UPDATE `food` SET `season` = 1 WHERE `id` IN (" . implode(",", $trees) . ")";
+        try {
+          $pdo = getConnection();
+          $stmt = $pdo->prepare($sql);
+          $stmt->execute();
+        } catch(PDOException $e) {
+          return '{"error":{"text":'. $e->getMessage() .'}}';
+        }
+
+        $sql = "UPDATE `food` SET `season` = 0 WHERE `id` NOT IN (" . implode(",", $trees) . ")";
+        try {
+          $pdo = getConnection();
+          $stmt = $pdo->prepare($sql);
+          $stmt->execute();
+          $params = array(
+            "code" => 200,
+          );
+          echo json_encode($params);
+        } catch(PDOException $e) {
+          return '{"error":{"text":'. $e->getMessage() .'}}';
+        }
+      } else {
+        $sql = "UPDATE `food` SET `season` = 0";
+        try {
+          $pdo = getConnection();
+          $stmt = $pdo->prepare($sql);
+          $stmt->execute();
+          $params = array(
+            "code" => 200,
+          );
+          echo json_encode($params);
+        } catch(PDOException $e) {
+          return '{"error":{"text":'. $e->getMessage() .'}}';
+        }
       }
 
-      $sql = "UPDATE `food` SET `season` = 0 WHERE `id` NOT IN (" . implode(",", $trees) . ")";
-      try {
-        $pdo = getConnection();
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        $params = array(
-          "code" => 200,
-        );
-        echo json_encode($params);
-      } catch(PDOException $e) {
-        return '{"error":{"text":'. $e->getMessage() .'}}';
-      }
     } catch(PDOException $e) {
       return '{"error":{"text":'. $e->getMessage() .'}}';
     }
