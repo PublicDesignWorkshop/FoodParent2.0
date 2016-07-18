@@ -23,8 +23,8 @@
   "iFocusZoom": 17,
   "sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
   "sUIDateFormat": "MM/DD/YY",
-  "uReverseGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCVpuJwOhwgzCmv78WRCybpJ6azSd6lMis",
-  "uGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCVpuJwOhwgzCmv78WRCybpJ6azSd6lMis",
+  "uReverseGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA",
+  "uGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA",
   "iMarkerPrecision": 5,
   "uTemporaryMarkerIcon": "Marker_Other.svg",
   "uTemporaryLocationMarkerIcon": "foodbox.svg",
@@ -38,5 +38,5 @@
   "iMessageLineDuration": 5000,
   "fKGToG": 1000,
   "fLBSTOG": 453.592,
-  "fGToLBS": 0.00220462
+  "fGToLBS": 0.00220463
 }
