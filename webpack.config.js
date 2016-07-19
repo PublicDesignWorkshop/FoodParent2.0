@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var Settings = require('./src/constraints/settings.json');
 
 module.exports = {
@@ -12,7 +13,10 @@ module.exports = {
   plugins: [
     new webpack.ProvidePlugin({
       'googletile': 'imports?this=>global!exports?googletile!googletile',
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: './src/constraints/settings.json', to: __dirname + "/dist" },
+    ])
   ],
   resolve: {
     // Absolute path that contains modules

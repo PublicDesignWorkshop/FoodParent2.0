@@ -1,0 +1,43 @@
+{
+  "ssltype": "http://",
+  "uBaseName": "/FoodParent2.0",
+  "uBaseNameForWebPack": "/FoodParent2.0/",
+  "uStaticImage": "/static/images/",
+  "uContentImage": "/content/images/",
+  "uRelativeImageUpload": "./../content/images/",
+  "uServer": "/server/",
+  "sMailserversuffix": "smtp",
+  "vPosition": {
+    "x": 33.7704,
+    "y": -84.3806
+  },
+  "uGrayTileMap" : "//api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png256?access_token=",
+  "uSatTileMap" : "//api.mapbox.com/v4/mapbox.streets-satellite/{z}/{x}/{y}.png256?access_token=",
+  "uMapboxAttribution": "Imagery © <a href=\"http://mapbox.com\">Mapbox</a>",
+  "sMapboxAccessToken": "pk.eyJ1IjoiY29uY3JldGUtanVuZ2xlIiwiYSI6InViLW5INU0ifQ.radc95S2bnienvUpDkl49A",
+  "sGoogleMapTileType": "HYBRID",
+  "iPopupDelay": 150,
+  "iGraphDelay": 500,
+  "iDefaultZoom": 14,
+  "iMaxZoom": 20,
+  "iMinZoom": 5,
+  "iFocusZoom": 17,
+  "sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
+  "sUIDateFormat": "MM/DD/YY",
+  "uReverseGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA",
+  "uGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA",
+  "iMarkerPrecision": 5,
+  "uTemporaryMarkerIcon": "Marker_Other.svg",
+  "uTemporaryLocationMarkerIcon": "foodbox.svg",
+  "iMaxClusterRadius": 30,
+  "iDisableClusteringAtZoom": 16,
+  "iMessageDuration": 2000,
+  "iMapRenderDelay": 1000,
+  "sEXIFDateFormat": "YYYY-MM-DD HH-mm-ss",
+
+
+  "iMessageLineDuration": 5000,
+  "fKGToG": 1000,
+  "fLBSTOG": 453.592,
+  "fGToLBS": 0.00220463
+}

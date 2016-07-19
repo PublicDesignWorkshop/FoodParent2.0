@@ -25826,6 +25826,7 @@
 /***/ function(module, exports) {
 
 	module.exports = {
+		"ssltype": "http://",
 		"uBaseName": "/FoodParent2.0",
 		"uBaseNameForWebPack": "/FoodParent2.0/",
 		"uStaticImage": "/static/images/",
