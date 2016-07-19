@@ -13,6 +13,7 @@ npm-debug.log.*
 server/database.php
 server/dbpass.php
 server/config.php
+server/mailconfig.php
 content/images/*
 !content/images/blank.jpg
 serverconfig/~$errorlist.xlsx
