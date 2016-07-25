@@ -2,6 +2,8 @@ var path = require('path');
 var webpack = require('webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var Settings = require('./src/constraints/settings.json');
+var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+var HistoryApiFallback = require('connect-history-api-fallback');
 
 module.exports = {
   entry: "./src/client.js",
@@ -11,6 +13,16 @@ module.exports = {
     publicPath: Settings.uBaseNameForWebPack + "dist/",
   },
   plugins: [
+    // In case you want to use browsersync as a virtual dev server.
+    // new BrowserSyncPlugin({
+    //   host: process.env.IP + Settings.uBaseNameForWebPack || 'localhost' + Settings.uBaseNameForWebPack,
+    //   port: process.env.PORT || 3000,
+    //   open: true,
+    //   server: {
+    //     baseDir: "./",
+    //     middleware: [ HistoryApiFallback() ]
+    //   }
+    // }),
     new webpack.ProvidePlugin({
       'googletile': 'imports?this=>global!exports?googletile!googletile',
     }),

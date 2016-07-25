@@ -64,11 +64,17 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
       </div>;
     }
     let donation: JSX.Element;
+    let notify: JSX.Element;
     if (authStore.getAuth().getIsManager()) {
       donation = <div className={styles.button + " " + styles.buttonbottom} onClick={()=> {
         self.context.router.push({pathname: Settings.uBaseName + '/donations'});
       }}>
         <FontAwesome className={styles.icon} name='sitemap'/>
+      </div>
+      notify = <div className={styles.button + " " + styles.buttonbottom} onClick={()=> {
+        self.context.router.push({pathname: Settings.uBaseName + '/tree/notify'});
+      }}>
+        <FontAwesome className={styles.icon} name='paper-plane-o'/>
       </div>
     }
     return (
@@ -105,6 +111,7 @@ export default class TreesControlsComponent extends React.Component<ITreesContro
           <FontAwesome className={styles.icon} name='filter'/>
         </div>
         {add}
+        {notify}
         {donation}
       </div>
     );

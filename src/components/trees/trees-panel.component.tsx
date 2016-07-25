@@ -15,6 +15,7 @@ import TreesControlsComponent from './trees-controls.component';
 import NoteAddComponent from './../note/note-add.component';
 import NoteEditComponent from './../note/note-edit.component';
 import TrresFilterComponent from './../filter/trees-filter.component';
+import NotifyComponent from './../notify/notify.component';
 import TreeGraphComponent from './../tree/tree-graph.component';
 
 import { TreeModel, treeStore } from './../../stores/tree.store';
@@ -67,7 +68,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
     let self: TreesPanelComponent = this;
     let tree: TreeModel = treeStore.getTree(props.treeId);
     let open: boolean = false;
-    if (tree || props.mode == TreesMode.TREESFILTER ||  props.mode == TreesMode.TREEADDINFO) {
+    if (tree || props.mode == TreesMode.TREESFILTER ||  props.mode == TreesMode.TREEADDINFO || props.mode == TreesMode.NOTIFY) {
       open = true;
     }
     self.setState({open: open});
@@ -261,6 +262,17 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
                 }>
                   <TreeAddComponent trees={self.props.trees} foods={self.props.foods} />
                 </AltContainer>
+              </div>
+            </div>
+          );
+        case TreesMode.NOTIFY:
+          return (
+            <div className={styles.wrapper + " " + styles.slidein}>
+              <div className={styles.left}>
+                <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
+              </div>
+              <div className={styles.right}>
+                <NotifyComponent />
               </div>
             </div>
           );

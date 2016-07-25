@@ -84,6 +84,8 @@ export default class TreesComponent extends React.Component<ITreesProps, ITreesS
     let mode: TreesMode = TreesMode.TREES;
     if (props.params.treeId == "filter") {
       mode = TreesMode.TREESFILTER;
+    } else if (props.params.treeId == "notify") {
+      mode = TreesMode.NOTIFY;
     } else if (props.params.treeId == "add") {
       if (props.location.query.mode == "marker") {
         mode = TreesMode.TREEADDMARKER;

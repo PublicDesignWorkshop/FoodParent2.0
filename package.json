@@ -41,8 +41,11 @@
     "underscore": "1.8.3"
   },
   "devDependencies": {
+    "browser-sync": "2.13.0",
+    "browser-sync-webpack-plugin": "1.1.0",
     "classnames": "2.2.3",
     "concurrently": "2.0.0",
+    "connect-history-api-fallback": "1.2.0",
     "copy-webpack-plugin": "3.0.1",
     "css-loader": "0.23.1",
     "exports-loader": "0.6.3",
