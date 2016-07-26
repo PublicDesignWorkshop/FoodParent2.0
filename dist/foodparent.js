@@ -25826,7 +25826,7 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-		"ssltype": "http://",
+		"ssltype": "https://",
 		"uBaseName": "/FoodParent2.0",
 		"uBaseNameForWebPack": "/FoodParent2.0/",
 		"uStaticImage": "/static/images/",
@@ -50186,7 +50186,7 @@
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
