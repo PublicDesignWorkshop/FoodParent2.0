@@ -5,6 +5,10 @@
   "e92": "Updating...",
   "e93": "Creating...",
 
+  "e330": "No valid recipient.",
+  "e331": "No matched tree.",
+  "e332": "Geolocation permission is denied.",
+
   "e404": "Page Not Found...",
 
   "e601": "Enter a comment...",

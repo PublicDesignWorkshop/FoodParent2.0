@@ -26328,6 +26328,9 @@
 	    if (value.toString() == "92") return cl.e92;
 	    if (value.toString() == "93") return cl.e93;
 	    if (value.toString() == "404") return cl.e404;
+	    if (value.toString() == "330") return cl.e330;
+	    if (value.toString() == "331") return cl.e331;
+	    if (value.toString() == "332") return cl.e332;
 	    if (value.toString() == "601") return cl.e601;
 	    if (value.toString() == "602") return cl.e602;
 	    if (value.toString() == "603") return cl.e603;
@@ -26474,6 +26477,9 @@
 		"e91": "Deleting...",
 		"e92": "Updating...",
 		"e93": "Creating...",
+		"e330": "No valid recipient.",
+		"e331": "No matched tree.",
+		"e332": "Geolocation permission is denied.",
 		"e404": "Page Not Found...",
 		"e601": "Enter a comment...",
 		"e602": "Please use a positive number.",
@@ -26618,6 +26624,9 @@
 		"e91": "삭제중...",
 		"e92": "저장중...",
 		"e93": "생성중...",
+		"e330": "수신인이 존재하지 않습니다.",
+		"e331": "매치되는 나무가 없습니다.",
+		"e332": "위치추적이 허용되지 않았습니다.",
 		"e404": "페이지를 찾을 수 없습니다.",
 		"e601": "평을 적어주세요.",
 		"e602": "양수를 넣어주세요.",
@@ -39622,6 +39631,8 @@
 	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
 	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
+	var message_1 = __webpack_require__(/*! ./../utils/message */ 291);
+	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
 	
 	var MapActions = function (_abstract_actions_1$A) {
 	    _inherits(MapActions, _abstract_actions_1$A);
@@ -39687,7 +39698,11 @@
 	                    navigator.geolocation.getCurrentPosition(function (position) {
 	                        var location = new L.LatLng(position.coords.latitude, position.coords.longitude);
 	                        self.movedToUserLocation(id, location, Settings.iFocusZoom);
-	                    }, null);
+	                    }, function (error) {
+	                        if (error.code == error.PERMISSION_DENIED) {
+	                            message_1.displayErrorMessage(localization_1.localization(332));
+	                        }
+	                    });
 	                }
 	            };
 	        }

@@ -5,6 +5,9 @@ import { AbstractActions } from "./abstract.actions";
 var Settings = require('./../constraints/settings.json');
 import { MapModel, IMapProps, IMapLocationProps, IMapTileProps, IMapZoomProps, IMapFirstProps, IMapActiveProps } from './../stores/map.store';
 import { TileMode } from './../utils/enum';
+import { displayErrorMessage } from './../utils/message';
+import { localization } from './../constraints/localization';
+
 
 interface IMapActions {
   addMap(id: string, map: L.Map): IMapProps;
@@ -58,7 +61,11 @@ class MapActions extends AbstractActions implements IMapActions {
         navigator.geolocation.getCurrentPosition(function(position: Position) {
           let location = new L.LatLng(position.coords.latitude, position.coords.longitude);
           self.movedToUserLocation(id, location, Settings.iFocusZoom);
-        }, null);
+        }, function(error) {
+          if (error.code == error.PERMISSION_DENIED) {
+            displayErrorMessage(localization(332));
+          }
+        });
       }
     }
   }
