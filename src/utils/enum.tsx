@@ -28,6 +28,8 @@ export interface IGraphOption {
   x: Date;
   y: number;
   r: number;
+  amount?: number;
+  year?: number;
   tooltip: any;
 }
 export enum MessageLineType {

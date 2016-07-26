@@ -35,7 +35,6 @@
       $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 
       #find forward items
-
       $sql = "SELECT DISTINCT tree.id, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 335 ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
 
       try {

@@ -48,6 +48,7 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
       width: 0,
       height: 0,
       zoom: false,
+      legend: "<div></div>"
     };
   }
   public componentDidMount() {
@@ -55,13 +56,20 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
     let rWrapper = ReactDOM.findDOMNode(self.refs['wrapper']);
     self.setState({width: rWrapper.clientWidth - 16, height: Math.floor((rWrapper.clientWidth - 16) * 9 / 16)});
     self.updateProps(self.props);
+    $("#treepanel").bind("scroll", self.handleScroll.bind(self));
   }
   public componentWillUnmount() {
     let self: TreeGraphComponent = this;
+    $("#treepanel").unbind("scroll");
   }
   public componentWillReceiveProps (nextProps: ITreeGraphProps) {
     let self: TreeGraphComponent = this;
     self.updateProps(nextProps);
+  }
+
+  private handleScroll (event) {
+    let self: TreeGraphComponent = this;
+    self.setState({visible: false});
   }
 
   private updateProps(props: ITreeGraphProps) {
@@ -120,6 +128,8 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
                       x: moment(notes[j].getDate()).year(currentYear).toDate(),
                       y: notes[j - 1].getRate(),
                       r: 1.5,
+                      amount: notes[j].getAmount(),
+                      year: notes[j].getDate().year(),
                       tooltip: notes[j].getId()
                     });
                   } else {
@@ -127,6 +137,8 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
                       x: moment(notes[j].getDate()).year(currentYear).toDate(),
                       y: notes[j].getRate(),
                       r: 1.5,
+                      amount: notes[j].getAmount(),
+                      year: notes[j].getDate().year(),
                       tooltip: notes[j].getId()
                     });
                   }
@@ -162,10 +174,10 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
                   x -= $("#tooltip").outerWidth();
                 }
                 let y = tooltip.y;
-                if (tooltip.y > self.state.height / 2) {
-                  y -= $("#tooltip").outerHeight();
+                if (self.state.zoom) {
+                  y -= 48;
                 }
-                self.setState({x: x, y: ($("#wrapper").offset().top + y), noteId: parseInt(tooltip.text), visible: true, clicked: false});
+                self.setState({x: x, y: ($("#chart").offset().top + y), noteId: parseInt(tooltip.text), visible: true, clicked: false});
               } else if (isTouchDevice() && isMobile() && !tooltip.text) {
                 setTimeout(function () {
                   self.setState({visible: false, clicked: false});
@@ -180,10 +192,10 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
                   x -= $("#tooltip").outerWidth();
                 }
                 let y = tooltip.y;
-                if (tooltip.y > self.state.height / 2) {
-                  y -= $("#tooltip").outerHeight();
+                if (self.state.zoom) {
+                  y -= 48;
                 }
-                self.setState({x: x, y: ($("#wrapper").offset().top + y), noteId: parseInt(tooltip.text), visible: true});
+                self.setState({x: x, y: ($("#chart").offset().top + y), noteId: parseInt(tooltip.text), visible: true});
               }
             }
           },
@@ -210,11 +222,14 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
     var divStyle = {
       left: self.state.x,
       top: self.state.y,
-      width: Math.floor(self.state.width * 0.3),
+      width: 120,
+      // maxWidth: Math.floor(self.state.width * 0.3),
     };
     var imgStyle = {
-      width: Math.floor(self.state.width * 0.3) - 24,
-      height: Math.floor((self.state.width * 0.3 - 24) * 9 / 16),
+      width: 120 - 24,
+      // maxWidth: Math.floor(self.state.width * 0.3) - 24,
+      height: Math.floor((120 - 24) * 9 / 16),
+      // maxHeight: Math.floor((self.state.width * 0.3 - 24) * 9 / 16),
     };
     let note: NoteModel = noteStore.getNote(self.state.noteId);
     let tooltip: JSX.Element = <div id="tooltip" style={divStyle} className={styles.tooltip + " " + styles.hidden}></div>;
@@ -292,6 +307,7 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
       <div id="wrapper" ref="wrapper" className={styles.wrapper} style={wrapperStyle}>
         {zoom}
         <div dangerouslySetInnerHTML={{__html: self.state.legend}} />
+        {tooltip}
         <canvas id="chart" ref="chart" className={styles.canvas} style={canvasStyle} onClick={()=> {
           if (self.state.visible) {
             self.setState({clicked: true});
@@ -299,7 +315,7 @@ export default class TreeGraphComponent extends React.Component<ITreeGraphProps,
             self.setState({clicked: false});
           }
         }} />
-        {tooltip}
+
       </div>
     )
   }

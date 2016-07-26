@@ -13,16 +13,11 @@ module.exports = {
     publicPath: Settings.uBaseNameForWebPack + "dist/",
   },
   plugins: [
-    // In case you want to use browsersync as a virtual dev server.
-    // new BrowserSyncPlugin({
-    //   host: process.env.IP + Settings.uBaseNameForWebPack || 'localhost' + Settings.uBaseNameForWebPack,
-    //   port: process.env.PORT || 3000,
-    //   open: true,
-    //   server: {
-    //     baseDir: "./",
-    //     middleware: [ HistoryApiFallback() ]
-    //   }
-    // }),
+    // In case you want to use browsersync to refresh page whenever you change files.
+    new BrowserSyncPlugin({
+      proxy: process.env.IP || 'localhost',
+      open:  true,
+    }),
     new webpack.ProvidePlugin({
       'googletile': 'imports?this=>global!exports?googletile!googletile',
     }),

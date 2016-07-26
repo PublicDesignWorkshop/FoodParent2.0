@@ -15,6 +15,8 @@
 
 	"use strict";
 
+	var labelsX = [];
+
 	var helpers = chartjs.helpers,
 		hlp = {
 			formatDateValue: function (date, tFormat, dFormat, useUtc) {
@@ -75,9 +77,10 @@
 
 					if (this.display && this.size > 0) {
 
+
+
 						var ctx = this.ctx;
 						ctx.beginPath();
-
 						ctx.arc(this.x, this.y, this.size * this.radius, 0, Math.PI * 2);
 						ctx.closePath();
 
@@ -88,6 +91,38 @@
 
 						ctx.fill();
 						ctx.stroke();
+
+						if (this.size == 1.5) {
+							ctx.textAlign="center";
+							ctx.strokeStyle = this.mainStrokeColor;
+							ctx.fillStyle = this.mainFillStyle;
+							var x = this.x;
+							var y = this.y + 16;
+							for (var i = 0; i < labelsX.length; i++) {
+								if (labelsX[i].y == y) {
+									if (Math.abs(labelsX[i].x - x) < 25) {
+										if (labelsX[i].x > x) {
+											x -= 25;
+										} else {
+											x += 25;
+										}
+									}
+								}
+							}
+							for (var i = 0; i < labelsX.length; i++) {
+								if (labelsX[i].y == y) {
+									if (Math.abs(labelsX[i].x - x) < 25) {
+										y += 16;
+									}
+								}
+							}
+							if (this.chart.height > 480) {
+								ctx.fillText("(" + this.year + ")", x, y+ 16);
+							}
+							ctx.fillText(Math.floor(this.amount).toLocaleString() + " lbs.", x, y);
+							labelsX.push({x: x, y: y});
+						}
+
 					}
 				}
 			})
@@ -428,6 +463,7 @@
 
 				current.x = this.calculateX(current.arg);
 				current.y = this.calculateY(current.value, ease);
+				current.chart = this.chart;
 			}
 		},
 
@@ -677,13 +713,13 @@
 			this.points = [];
 		};
 
-		datasetCtr.prototype.addPoint = function (x, y, r, tooltip) {
+		datasetCtr.prototype.addPoint = function (x, y, r, tooltip, amount, year) {
 
 			// default size
 			// r = arguments.length < 3 ? 1 : r;
 
 			var point = this._createNewPoint();
-			this._setPointData(point, x, y, r, tooltip);
+			this._setPointData(point, x, y, r, tooltip, amount, year);
 			this.points.push(point);
 		};
 
@@ -725,11 +761,13 @@
 				strokeColor: this.pointStrokeColor,
 				highlightStroke: this.pointColor,
 				fillColor: this.pointColor,
-				highlightFill: this.pointStrokeColor
+				highlightFill: this.pointStrokeColor,
+				mainStrokeColor: this.pointColor,
+				mainFillStyle: this.pointColor
 			});
 		};
 
-		datasetCtr.prototype._setPointData = function (point, x, y, r, tooltip) {
+		datasetCtr.prototype._setPointData = function (point, x, y, r, tooltip, amount, year) {
 
 			var formattedArg = this.scale.argToString(+x),
 				formattedValue = +y + "",
@@ -739,6 +777,8 @@
 			point.value = +y || 0;
 			point.size = +r || 0;  // for use in templates
 			point.tooltip = tooltip;
+			point.amount = +amount || 0;
+			point.year = +year || 0;
 			point.argLabel = helpers.template(this.scaleArgLabel, { value: formattedArg }),
 			point.valueLabel = helpers.template(this.scaleLabel, { value: formattedValue });
 			point.sizeLabel = helpers.template(this.scaleSizeLabel, { value: formattedSize });
@@ -770,7 +810,7 @@
 				this.datasets.push(datasetObject);
 
 				helpers.each(dataset.data, function (dataPoint) {
-					datasetObject.addPoint(dataPoint.x, dataPoint.y, dataPoint.r, dataPoint.tooltip);
+					datasetObject.addPoint(dataPoint.x, dataPoint.y, dataPoint.r, dataPoint.tooltip, dataPoint.amount, dataPoint.year);
 					// datasetObject.addPoint(dataPoint.x, dataPoint.y, dataPoint.r || 1, dataPoint.tooltip);
 				});
 
@@ -784,14 +824,13 @@
 					var activePoints = (evt.type !== 'mouseout') ? this.getPointsAtEvent(evt) : [];
 
 					this._forEachPoint(function (point) {
-
 						point.restore(['fillColor', 'strokeColor']);
 					});
 
 					helpers.each(activePoints, function (activePoint) {
-
 						activePoint.fillColor = activePoint.highlightFill;
 						activePoint.strokeColor = activePoint.highlightStroke;
+
 					});
 
 					this.showTooltip(activePoints);
@@ -1113,6 +1152,7 @@
 
 		draw: function (ease) {
 			var ctx = this.chart.ctx;
+			labelsX = [];
 			if (this._hasData()) {
 
 				// update view params

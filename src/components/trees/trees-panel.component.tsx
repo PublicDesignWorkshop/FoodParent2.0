@@ -82,7 +82,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
           <div className={styles.left}>
             <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
           </div>
-          <div className={styles.right}>
+          <div id="treepanel" className={styles.right}>
           </div>
         </div>
       );
@@ -95,7 +95,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
               <div className={styles.left}>
                 <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
               </div>
-              <div className={styles.right}>
+              <div id="treepanel" className={styles.right}>
                 <TreeComponent trees={self.props.trees} foods={self.props.foods} treeId={self.props.treeId} noteId={self.props.noteId} />
                 <div className={styles.buttongroup}>
                   <div className={styles.button2 + " " + styles.locate} onClick={()=> {
@@ -136,7 +136,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
               <div className={styles.left}>
                 <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
               </div>
-              <div className={styles.right}>
+              <div id="treepanel" className={styles.right}>
                 <TreeComponent trees={self.props.trees} foods={self.props.foods} treeId={self.props.treeId} noteId={self.props.noteId} />
                 <div className={styles.buttongroup}>
                   <div className={styles.button2 + " " + styles.locate} onClick={()=> {
@@ -178,7 +178,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
               <div className={styles.left}>
                 <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
               </div>
-              <div className={styles.right}>
+              <div id="treepanel" className={styles.right}>
                 <TreeComponent trees={self.props.trees} foods={self.props.foods} treeId={self.props.treeId} noteId={self.props.noteId} />
                 <div className={styles.buttongroup}>
                   <div className={styles.button2 + " " + styles.locate} onClick={()=> {
@@ -221,7 +221,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
               <div className={styles.left}>
                 <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
               </div>
-              <div className={styles.right}>
+              <div id="treepanel" className={styles.right}>
                 <AltContainer stores={
                   {
                     flags: function (props) {
@@ -243,7 +243,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
               <div className={styles.left}>
                 <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
               </div>
-              <div className={styles.right}>
+              <div id="treepanel" className={styles.right}>
                 <AltContainer stores={
                   {
                     tree: function (props) {
@@ -271,7 +271,7 @@ export default class TreesPanelComponent extends React.Component<ITreesPanelProp
               <div className={styles.left}>
                 <TreesControlsComponent tile={self.props.tile} mode={self.props.mode} />
               </div>
-              <div className={styles.right}>
+              <div id="treepanel" className={styles.right}>
                 <NotifyComponent />
               </div>
             </div>

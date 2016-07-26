@@ -46,6 +46,7 @@
     background-color: rgba(94, 78, 81, 1);
     padding: 4px 12px 12px 12px;
     max-height: 400px;
+    overflow-x: hidden;
     overflow-y: auto;
   }
   :local(.basicinfo2) {

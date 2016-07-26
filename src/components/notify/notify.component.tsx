@@ -67,7 +67,7 @@ export default class NotifyComponent extends React.Component<INotifyProps, INoti
     let pastpickups: Array<JSX.Element> = Array<JSX.Element>();
     self.state.pastpickups.forEach(item => {
       pastpickups.push(<div className={styles.item} key={"pastpickups" + item.id}><FontAwesome className='' name='angle-right' />{" " + (parseFloat(item.amount) * Settings.fGToLBS).toFixed(2) + " lbs. of " + item.name + " was picked from "}<span className={styles.inlinebutton}  onClick={()=> {
-        self.context.router.push({pathname: Settings.uBaseName + '/tree/' + item.id});
+        self.context.router.push({pathname: Settings.uBaseName + '/tree/' + item.id, query:{mode: "graph"}});
         //self.setState({editable: self.state.editable});
       }}>{"#" + item.id}</span>{"  on "}<span className={styles.highlight}>{ moment(item.date).format(Settings.sUIDateFormat)}</span></div>);
     });
@@ -75,7 +75,7 @@ export default class NotifyComponent extends React.Component<INotifyProps, INoti
     let upcomings: Array<JSX.Element> = Array<JSX.Element>();
     self.state.upcomings.forEach(item => {
       upcomings.push(<div className={styles.item} key={"upcomings" + item.id}><FontAwesome className='' name='angle-right' />{" " + item.name + " "}<span className={styles.inlinebutton} onClick={()=> {
-        self.context.router.push({pathname: Settings.uBaseName + '/tree/' + item.id});
+        self.context.router.push({pathname: Settings.uBaseName + '/tree/' + item.id, query:{mode: "graph"}});
         //self.setState({editable: self.state.editable});
       }}>{"#" + item.id}</span>{" will ripe and ready around "}<span className={styles.highlight}>{moment(item.date).year(currentYear).format(Settings.sUIDateFormat)}</span></div>);
     });

@@ -22,9 +22,9 @@
   :local(.button) {
     cursor: pointer;
   }
-  :local(.button:hover) {
+  /*:local(.button:hover) {
     color: rgba(107, 170, 119, 1);
-  }
+  }*/
   :local(.unclicked) {
     pointer-events: none;
     -moz-user-select: none;

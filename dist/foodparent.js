@@ -25826,7 +25826,7 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-		"ssltype": "https://",
+		"ssltype": "http://",
 		"uBaseName": "/FoodParent2.0",
 		"uBaseNameForWebPack": "/FoodParent2.0/",
 		"uStaticImage": "/static/images/",
@@ -50171,7 +50171,7 @@
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -70220,12 +70220,12 @@
 	        value: function render() {
 	            var self = this;
 	            if (!self.state.open) {
-	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { className: styles.right }));
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { id: "treepanel", className: styles.right }));
 	            } else {
 	                switch (self.props.mode) {
 	                    case enum_1.TreesMode.TREEDETAIL:
 	                    case enum_1.TreesMode.TREEDELETE:
-	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { className: styles.right }, React.createElement(tree_component_1.default, { trees: self.props.trees, foods: self.props.foods, treeId: self.props.treeId, noteId: self.props.noteId }), React.createElement("div", { className: styles.buttongroup }, React.createElement("div", { className: styles.button2 + " " + styles.locate, onClick: function onClick() {
+	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { id: "treepanel", className: styles.right }, React.createElement(tree_component_1.default, { trees: self.props.trees, foods: self.props.foods, treeId: self.props.treeId, noteId: self.props.noteId }), React.createElement("div", { className: styles.buttongroup }, React.createElement("div", { className: styles.button2 + " " + styles.locate, onClick: function onClick() {
 	                                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
 	                                if (tree) {
 	                                    map_actions_1.mapActions.moveToWithMarker('map', tree.getLocation(), Settings.iFocusZoom);
@@ -70247,7 +70247,7 @@
 	                                }
 	                            } }, React.createElement(note_add_component_1.default, { treeId: self.props.treeId }))));
 	                    case enum_1.TreesMode.TREEGRAPH:
-	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { className: styles.right }, React.createElement(tree_component_1.default, { trees: self.props.trees, foods: self.props.foods, treeId: self.props.treeId, noteId: self.props.noteId }), React.createElement("div", { className: styles.buttongroup }, React.createElement("div", { className: styles.button2 + " " + styles.locate, onClick: function onClick() {
+	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { id: "treepanel", className: styles.right }, React.createElement(tree_component_1.default, { trees: self.props.trees, foods: self.props.foods, treeId: self.props.treeId, noteId: self.props.noteId }), React.createElement("div", { className: styles.buttongroup }, React.createElement("div", { className: styles.button2 + " " + styles.locate, onClick: function onClick() {
 	                                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
 	                                if (tree) {
 	                                    map_actions_1.mapActions.moveToWithMarker('map', tree.getLocation(), Settings.iFocusZoom);
@@ -70270,7 +70270,7 @@
 	                            } }, React.createElement(tree_graph_component_1.default, null))));
 	                    case enum_1.TreesMode.TREENOTEEDIT:
 	                    case enum_1.TreesMode.TREENOTEDELETE:
-	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { className: styles.right }, React.createElement(tree_component_1.default, { trees: self.props.trees, foods: self.props.foods, treeId: self.props.treeId, noteId: self.props.noteId }), React.createElement("div", { className: styles.buttongroup }, React.createElement("div", { className: styles.button2 + " " + styles.locate, onClick: function onClick() {
+	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { id: "treepanel", className: styles.right }, React.createElement(tree_component_1.default, { trees: self.props.trees, foods: self.props.foods, treeId: self.props.treeId, noteId: self.props.noteId }), React.createElement("div", { className: styles.buttongroup }, React.createElement("div", { className: styles.button2 + " " + styles.locate, onClick: function onClick() {
 	                                var tree = tree_store_1.treeStore.getTree(self.props.treeId);
 	                                if (tree) {
 	                                    map_actions_1.mapActions.moveToWithMarker('map', tree.getLocation(), Settings.iFocusZoom);
@@ -70294,7 +70294,7 @@
 	                                }
 	                            } }, React.createElement(note_edit_component_1.default, { trees: self.props.trees, foods: self.props.foods, treeId: self.props.treeId, note: note_store_1.noteStore.getNote(self.props.noteId) }))));
 	                    case enum_1.TreesMode.TREESFILTER:
-	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { className: styles.right }, React.createElement(AltContainer, { stores: {
+	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { id: "treepanel", className: styles.right }, React.createElement(AltContainer, { stores: {
 	                                flags: function flags(props) {
 	                                    return {
 	                                        store: flag_store_1.flagStore,
@@ -70303,7 +70303,7 @@
 	                                }
 	                            } }, React.createElement(trees_filter_component_1.default, { foods: self.props.foods, trees: self.props.trees }))));
 	                    case enum_1.TreesMode.TREEADDINFO:
-	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { className: styles.right }, React.createElement(AltContainer, { stores: {
+	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { id: "treepanel", className: styles.right }, React.createElement(AltContainer, { stores: {
 	                                tree: function tree(props) {
 	                                    return {
 	                                        store: tree_store_1.treeStore,
@@ -70318,7 +70318,7 @@
 	                                }
 	                            } }, React.createElement(tree_add_component_1.default, { trees: self.props.trees, foods: self.props.foods }))));
 	                    case enum_1.TreesMode.NOTIFY:
-	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { className: styles.right }, React.createElement(notify_component_1.default, null)));
+	                        return React.createElement("div", { className: styles.wrapper + " " + styles.slidein }, React.createElement("div", { className: styles.left }, React.createElement(trees_controls_component_1.default, { tile: self.props.tile, mode: self.props.mode })), React.createElement("div", { id: "treepanel", className: styles.right }, React.createElement(notify_component_1.default, null)));
 	                }
 	            }
 	        }
@@ -70621,7 +70621,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._16D5PuHDIQwQPEk5BEK7Jq {\r\n    width: 100%;\r\n    padding: 8px 8px 4px 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2r9tcLGEMAdI0cC1RgsoJc {\r\n    /*\r\n    -webkit-filter: drop-shadow(0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    filter: drop-shadow( 0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    */\r\n    width: 36px;\r\n    height: 36px;\r\n    margin: 8px;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt .Wo2Ui_tE12dY0WMgg_3NP {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2u50jFKXz0ZDetyuZQLK9h {\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2u50jFKXz0ZDetyuZQLK9h span {\r\n    cursor: pointer;\r\n  }\r\n  ._2btuClksWCZJkWjoKbAUSl {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n    max-height: 400px;\r\n    overflow-y: auto;\r\n  }\r\n  .J2aJCSwF7UiyQFemOe5en {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n    max-height: 280px;\r\n    overflow-y: auto;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n\r\n  ._1iGmFUslSv7bZWQpoW7O1J {\r\n    width: 100%;\r\n    font-family: 'Open Sans', sans-serif;\r\n    text-align: center;\r\n    display: inline-block;\r\n    font-weight: 700;\r\n    border: 1px solid rgba(93, 40, 49, 1);\r\n    color: rgba(93, 40, 49, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  ._1iGmFUslSv7bZWQpoW7O1J:hover {\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(93, 40, 49, 1);\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._16D5PuHDIQwQPEk5BEK7Jq {\r\n    width: 100%;\r\n    padding: 8px 8px 4px 8px;\r\n    background-color: rgba(244, 244, 244, 1);\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt {\r\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    border-radius: 2px;\r\n    padding: 0 0 8px 0;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2r9tcLGEMAdI0cC1RgsoJc {\r\n    /*\r\n    -webkit-filter: drop-shadow(0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    filter: drop-shadow( 0px 0px 1px rgba(94, 78, 81, 0.75));\r\n    */\r\n    width: 36px;\r\n    height: 36px;\r\n    margin: 8px;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt .Wo2Ui_tE12dY0WMgg_3NP {\r\n    -webkit-flex-grow: 1;           /* NEW - Chrome */\r\n    flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    font-size: x-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n    margin: auto;\r\n    margin-right: 8px;\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2u50jFKXz0ZDetyuZQLK9h {\r\n    font-size: xx-large;\r\n    font-weight: 700;\r\n    color: rgba(94, 78, 81, 1);\r\n  }\r\n  .xJtBa_wFfdaNtBD5XLQUt ._2u50jFKXz0ZDetyuZQLK9h span {\r\n    cursor: pointer;\r\n  }\r\n  ._2btuClksWCZJkWjoKbAUSl {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n    max-height: 400px;\r\n    overflow-x: hidden;\r\n    overflow-y: auto;\r\n  }\r\n  .J2aJCSwF7UiyQFemOe5en {\r\n    border-radius: 2px;\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 4px 12px 12px 12px;\r\n    max-height: 280px;\r\n    overflow-y: auto;\r\n  }\r\n  .span[name=\"close\"] {\r\n  }\r\n\r\n  ._1iGmFUslSv7bZWQpoW7O1J {\r\n    width: 100%;\r\n    font-family: 'Open Sans', sans-serif;\r\n    text-align: center;\r\n    display: inline-block;\r\n    font-weight: 700;\r\n    border: 1px solid rgba(93, 40, 49, 1);\r\n    color: rgba(93, 40, 49, 1);\r\n    padding: 6px 0;\r\n    margin: 4px 0;\r\n    cursor: pointer;\r\n    font-size: small;\r\n  }\r\n  ._1iGmFUslSv7bZWQpoW7O1J:hover {\r\n    color: rgba(255, 255, 255, 1);\r\n    background-color: rgba(93, 40, 49, 1);\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 736px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
@@ -93297,7 +93297,7 @@
 	            var pastpickups = Array();
 	            self.state.pastpickups.forEach(function (item) {
 	                pastpickups.push(React.createElement("div", { className: styles.item, key: "pastpickups" + item.id }, React.createElement(FontAwesome, { className: '', name: 'angle-right' }), " " + (parseFloat(item.amount) * Settings.fGToLBS).toFixed(2) + " lbs. of " + item.name + " was picked from ", React.createElement("span", { className: styles.inlinebutton, onClick: function onClick() {
-	                        self.context.router.push({ pathname: Settings.uBaseName + '/tree/' + item.id });
+	                        self.context.router.push({ pathname: Settings.uBaseName + '/tree/' + item.id, query: { mode: "graph" } });
 	                        //self.setState({editable: self.state.editable});
 	                    } }, "#" + item.id), "  on ", React.createElement("span", { className: styles.highlight }, moment(item.date).format(Settings.sUIDateFormat))));
 	            });
@@ -93305,7 +93305,7 @@
 	            var upcomings = Array();
 	            self.state.upcomings.forEach(function (item) {
 	                upcomings.push(React.createElement("div", { className: styles.item, key: "upcomings" + item.id }, React.createElement(FontAwesome, { className: '', name: 'angle-right' }), " " + item.name + " ", React.createElement("span", { className: styles.inlinebutton, onClick: function onClick() {
-	                        self.context.router.push({ pathname: Settings.uBaseName + '/tree/' + item.id });
+	                        self.context.router.push({ pathname: Settings.uBaseName + '/tree/' + item.id, query: { mode: "graph" } });
 	                        //self.setState({editable: self.state.editable});
 	                    } }, "#" + item.id), " will ripe and ready around ", React.createElement("span", { className: styles.highlight }, moment(item.date).year(currentYear).format(Settings.sUIDateFormat))));
 	            });
@@ -93572,7 +93572,8 @@
 	            clicked: false,
 	            width: 0,
 	            height: 0,
-	            zoom: false
+	            zoom: false,
+	            legend: "<div></div>"
 	        };
 	        return _this;
 	    }
@@ -93584,17 +93585,25 @@
 	            var rWrapper = ReactDOM.findDOMNode(self.refs['wrapper']);
 	            self.setState({ width: rWrapper.clientWidth - 16, height: Math.floor((rWrapper.clientWidth - 16) * 9 / 16) });
 	            self.updateProps(self.props);
+	            $("#treepanel").bind("scroll", self.handleScroll.bind(self));
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
 	            var self = this;
+	            $("#treepanel").unbind("scroll");
 	        }
 	    }, {
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
 	            var self = this;
 	            self.updateProps(nextProps);
+	        }
+	    }, {
+	        key: 'handleScroll',
+	        value: function handleScroll(event) {
+	            var self = this;
+	            self.setState({ visible: false });
 	        }
 	    }, {
 	        key: 'updateProps',
@@ -93654,6 +93663,8 @@
 	                                                    x: moment(notes[j].getDate()).year(currentYear).toDate(),
 	                                                    y: notes[j - 1].getRate(),
 	                                                    r: 1.5,
+	                                                    amount: notes[j].getAmount(),
+	                                                    year: notes[j].getDate().year(),
 	                                                    tooltip: notes[j].getId()
 	                                                });
 	                                            } else {
@@ -93661,6 +93672,8 @@
 	                                                    x: moment(notes[j].getDate()).year(currentYear).toDate(),
 	                                                    y: notes[j].getRate(),
 	                                                    r: 1.5,
+	                                                    amount: notes[j].getAmount(),
+	                                                    year: notes[j].getDate().year(),
 	                                                    tooltip: notes[j].getId()
 	                                                });
 	                                            }
@@ -93693,10 +93706,10 @@
 	                                            x -= $("#tooltip").outerWidth();
 	                                        }
 	                                        var y = tooltip.y;
-	                                        if (tooltip.y > self.state.height / 2) {
-	                                            y -= $("#tooltip").outerHeight();
+	                                        if (self.state.zoom) {
+	                                            y -= 48;
 	                                        }
-	                                        self.setState({ x: x, y: $("#wrapper").offset().top + y, noteId: parseInt(tooltip.text), visible: true, clicked: false });
+	                                        self.setState({ x: x, y: $("#chart").offset().top + y, noteId: parseInt(tooltip.text), visible: true, clicked: false });
 	                                    } else if (device_1.isTouchDevice() && device_1.isMobile() && !tooltip.text) {
 	                                        setTimeout(function () {
 	                                            self.setState({ visible: false, clicked: false });
@@ -93711,10 +93724,10 @@
 	                                            _x -= $("#tooltip").outerWidth();
 	                                        }
 	                                        var _y = tooltip.y;
-	                                        if (tooltip.y > self.state.height / 2) {
-	                                            _y -= $("#tooltip").outerHeight();
+	                                        if (self.state.zoom) {
+	                                            _y -= 48;
 	                                        }
-	                                        self.setState({ x: _x, y: $("#wrapper").offset().top + _y, noteId: parseInt(tooltip.text), visible: true });
+	                                        self.setState({ x: _x, y: $("#chart").offset().top + _y, noteId: parseInt(tooltip.text), visible: true });
 	                                    }
 	                                }
 	                            },
@@ -93742,11 +93755,12 @@
 	            var divStyle = {
 	                left: self.state.x,
 	                top: self.state.y,
-	                width: Math.floor(self.state.width * 0.3)
+	                width: 120
 	            };
 	            var imgStyle = {
-	                width: Math.floor(self.state.width * 0.3) - 24,
-	                height: Math.floor((self.state.width * 0.3 - 24) * 9 / 16)
+	                width: 120 - 24,
+	                // maxWidth: Math.floor(self.state.width * 0.3) - 24,
+	                height: Math.floor((120 - 24) * 9 / 16)
 	            };
 	            var note = note_store_1.noteStore.getNote(self.state.noteId);
 	            var tooltip = React.createElement("div", { id: "tooltip", style: divStyle, className: styles.tooltip + " " + styles.hidden });
@@ -93803,13 +93817,13 @@
 	                width: self.state.width,
 	                height: self.state.height
 	            };
-	            return React.createElement("div", { id: "wrapper", ref: "wrapper", className: styles.wrapper, style: wrapperStyle }, zoom, React.createElement("div", { dangerouslySetInnerHTML: { __html: self.state.legend } }), React.createElement("canvas", { id: "chart", ref: "chart", className: styles.canvas, style: canvasStyle, onClick: function onClick() {
+	            return React.createElement("div", { id: "wrapper", ref: "wrapper", className: styles.wrapper, style: wrapperStyle }, zoom, React.createElement("div", { dangerouslySetInnerHTML: { __html: self.state.legend } }), tooltip, React.createElement("canvas", { id: "chart", ref: "chart", className: styles.canvas, style: canvasStyle, onClick: function onClick() {
 	                    if (self.state.visible) {
 	                        self.setState({ clicked: true });
 	                    } else {
 	                        self.setState({ clicked: false });
 	                    }
-	                } }), tooltip);
+	                } }));
 	        }
 	    }]);
 	
@@ -93866,7 +93880,7 @@
 	
 	
 	// module
-	exports.push([module.id, "@media all {\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI {\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: small;\r\n    padding: 8px 8px 8px 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    background-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._2uSKatikBUlr69Jrd4Wb9_ {\r\n\r\n  }\r\n  ._2mh5HW3u4yCjpGMaCHDP4n {\r\n    position: absolute;\r\n    margin: 8px;\r\n    border: 2px solid rgba(64, 54, 56, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 2px 4px 4px 10px;\r\n    text-align: left;\r\n    color: rgba(255, 255, 255, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub {\r\n    cursor: pointer;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub:hover {\r\n    color: rgba(107, 170, 119, 1);\r\n  }\r\n  ._1Ny1Q33qPeDb8MtmpwvsJ3 {\r\n    pointer-events: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n    border: 2px solid rgba(64, 54, 56, 0.75);\r\n    background-color: rgba(94, 78, 81, 0.75);\r\n  }\r\n  ._1B-SgTUak8jn9g0TXZPHyW {\r\n    display: none;\r\n  }\r\n  ._3vjAZ3NkzoEdvJPF64ZDiI {\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n    object-position: 50% 50%;\r\n    margin: 4px 0;\r\n  }\r\n  ._11C3zNqzosXyc1xAlyXJCo {\r\n    font-weight: 700;\r\n  }\r\n  ._2WPAJ0xj_RszU01b1p7Oqg {\r\n    width: 100%;\r\n    font-weight: 700;\r\n    overflow:hidden;\r\n    display:inline-block;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend {\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-justify-content: space-around; /* Safari 6.1+ */\r\n    justify-content: space-around;\r\n\r\n    -webkit-flex-wrap: wrap; /* Safari 6.1+ */\r\n    flex-wrap: wrap;\r\n  }\n  ._1ju7zZfAqV-HuvOz6ZVjNI ._2UqH9By2sL41bwfiVPmAC3  {\n    text-align: right;\n    font-weight: 700;\n    padding: 4px 8px;\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI ._2UqH9By2sL41bwfiVPmAC3 span {\r\n    cursor: pointer;\r\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend span {\r\n    margin: 4px;\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-weight: 700;\r\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend .scatter-legend-marker {\r\n    display: inline-block;\r\n    width: 8px;\r\n    height: 8px;\r\n    border-radius: 50%;\r\n    margin: 0px;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
+	exports.push([module.id, "@media all {\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI {\r\n    font-family: 'Open Sans Condensed', sans-serif;\r\n    font-size: small;\r\n    padding: 8px 8px 8px 8px;\r\n    color: rgba(94, 78, 81, 1);\r\n    background-color: rgba(255, 255, 255, 1);\r\n  }\r\n  ._2uSKatikBUlr69Jrd4Wb9_ {\r\n\r\n  }\r\n  ._2mh5HW3u4yCjpGMaCHDP4n {\r\n    position: absolute;\r\n    margin: 8px;\r\n    border: 2px solid rgba(64, 54, 56, 1);\r\n    background-color: rgba(94, 78, 81, 1);\r\n    padding: 2px 4px 4px 10px;\r\n    text-align: left;\r\n    color: rgba(255, 255, 255, 1);\r\n    border-radius: 2px;\r\n  }\r\n  ._1Gc7089vmrnomLybcIqyub {\r\n    cursor: pointer;\r\n  }\r\n  /*:local(.button:hover) {\r\n    color: rgba(107, 170, 119, 1);\r\n  }*/\r\n  ._1Ny1Q33qPeDb8MtmpwvsJ3 {\r\n    pointer-events: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    -webkit-user-select: none;\r\n    user-select: none;\r\n    border: 2px solid rgba(64, 54, 56, 0.75);\r\n    background-color: rgba(94, 78, 81, 0.75);\r\n  }\r\n  ._1B-SgTUak8jn9g0TXZPHyW {\r\n    display: none;\r\n  }\r\n  ._3vjAZ3NkzoEdvJPF64ZDiI {\r\n    width: 100%;\r\n    height: 100%;\r\n    object-fit: cover;\r\n    object-position: 50% 50%;\r\n    margin: 4px 0;\r\n  }\r\n  ._11C3zNqzosXyc1xAlyXJCo {\r\n    font-weight: 700;\r\n  }\r\n  ._2WPAJ0xj_RszU01b1p7Oqg {\r\n    width: 100%;\r\n    font-weight: 700;\r\n    overflow:hidden;\r\n    display:inline-block;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n  }\r\n\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend {\n    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */\r\n    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */\r\n    display: -ms-flexbox;           /* TWEENER - IE 10 */\r\n    display: -webkit-flex;          /* NEW - Chrome */\r\n    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */\r\n\r\n    -webkit-justify-content: space-around; /* Safari 6.1+ */\r\n    justify-content: space-around;\r\n\r\n    -webkit-flex-wrap: wrap; /* Safari 6.1+ */\r\n    flex-wrap: wrap;\r\n  }\n  ._1ju7zZfAqV-HuvOz6ZVjNI ._2UqH9By2sL41bwfiVPmAC3  {\n    text-align: right;\n    font-weight: 700;\n    padding: 4px 8px;\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI ._2UqH9By2sL41bwfiVPmAC3 span {\r\n    cursor: pointer;\r\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend span {\r\n    margin: 4px;\r\n    font-family: 'Open Sans', sans-serif;\r\n    font-weight: 700;\r\n  }\r\n  ._1ju7zZfAqV-HuvOz6ZVjNI .scatter-legend .scatter-legend-marker {\r\n    display: inline-block;\r\n    width: 8px;\r\n    height: 8px;\r\n    border-radius: 50%;\r\n    margin: 0px;\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-device-width: 667px) {\r\n\r\n}\r\n\r\n@media screen and (max-device-aspect-ratio: 1/1) {\r\n\r\n}\r\n", ""]);
 	
 	// exports
 	exports.locals = {
