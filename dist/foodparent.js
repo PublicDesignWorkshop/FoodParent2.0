@@ -55,8 +55,8 @@
 	var routes_1 = __webpack_require__(/*! ./routes */ 218);
 	var localization_1 = __webpack_require__(/*! ./constraints/localization */ 225);
 	//import { sendMailFromParent } from './utils/mail';
-	__webpack_require__(/*! ./client.css */ 684);
-	__webpack_require__(/*! ./bootstrap-datetimepicker.css */ 686);
+	__webpack_require__(/*! ./client.css */ 688);
+	__webpack_require__(/*! ./bootstrap-datetimepicker.css */ 690);
 	var language = window.navigator.userLanguage || window.navigator.language;
 	localization_1.setCurrentLocalization(language);
 	ReactDOM.render(React.createElement(react_router_1.Router, { history: react_router_1.browserHistory }, routes_1.default), document.getElementById('app'));
@@ -25813,7 +25813,8 @@
 	var app_component_1 = __webpack_require__(/*! ./components/app.component */ 228);
 	var trees_component_1 = __webpack_require__(/*! ./components/trees/trees.component */ 443);
 	var donations_component_1 = __webpack_require__(/*! ./components/donations/donations.component */ 624);
-	var RouteMap = React.createElement(react_router_1.Route, { path: Settings.uBaseNameForWebPack, component: app_component_1.default }, React.createElement(react_router_1.IndexRoute, { component: trees_component_1.default }), React.createElement(react_router_1.Route, { path: "tree/:treeId", component: trees_component_1.default }), React.createElement(react_router_1.Route, { path: "donations", component: donations_component_1.default }), React.createElement(react_router_1.Route, { path: "donation/:locationId", component: donations_component_1.default }), React.createElement(react_router_1.Route, { path: "*", component: nomatch_component_1.default }));
+	var screenshot_component_1 = __webpack_require__(/*! ./components/screenshot/screenshot.component */ 684);
+	var RouteMap = React.createElement(react_router_1.Route, { path: Settings.uBaseNameForWebPack, component: app_component_1.default }, React.createElement(react_router_1.IndexRoute, { component: trees_component_1.default }), React.createElement(react_router_1.Route, { path: "tree/:treeId", component: trees_component_1.default }), React.createElement(react_router_1.Route, { path: "donations", component: donations_component_1.default }), React.createElement(react_router_1.Route, { path: "donation/:locationId", component: donations_component_1.default }), React.createElement(react_router_1.Route, { path: "screenshot/:treeId", component: screenshot_component_1.default }), React.createElement(react_router_1.Route, { path: "*", component: nomatch_component_1.default }));
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = RouteMap;
 	//# sourceMappingURL=routes.js.map
@@ -25827,6 +25828,7 @@
 
 	module.exports = {
 		"ssltype": "http://",
+		"host": "localhost",
 		"uBaseName": "/FoodParent2.0",
 		"uBaseNameForWebPack": "/FoodParent2.0/",
 		"bTestMail": true,
@@ -25850,6 +25852,7 @@
 		"iMaxZoom": 20,
 		"iMinZoom": 5,
 		"iFocusZoom": 17,
+		"iScreenshotZoom": 18,
 		"sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
 		"sUIDateFormat": "MM/DD/YY",
 		"uReverseGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA",
@@ -27763,14 +27766,19 @@
 	
 	        _this.updateProps = function (props) {
 	            var self = _this;
+	            var mapId = "map";
+	            var visible = true;
 	            if (props.location.pathname.indexOf(Settings.uBaseName + "/donation") > -1) {
-	                self.setState({ mapId: "map-donation" });
-	            } else {
-	                self.setState({ mapId: "map" });
+	                mapId = "map-donation";
 	            }
+	            if (props.location.pathname.indexOf(Settings.uBaseName + "/screenshot") > -1) {
+	                visible = false;
+	            }
+	            self.setState({ visible: visible, mapId: mapId });
 	        };
 	        var self = _this;
 	        _this.state = {
+	            visible: true,
 	            mapId: "map"
 	        };
 	        return _this;
@@ -27797,45 +27805,51 @@
 	        key: 'render',
 	        value: function render() {
 	            var self = this;
-	            switch (self.props.auth.getAuth()) {
-	                case auth_store_1.AuthStatus.NONE:
-	                case auth_store_1.AuthStatus.GUEST:
-	                    var login = void 0;
-	                    if (self.props.query && self.props.query.user == "login") {
-	                        login = React.createElement(login_component_1.default, { open: true });
-	                    } else if (self.props.query && self.props.query.user == "signup") {
-	                        login = React.createElement(signup_component_1.default, { open: true });
-	                    }
-	                    return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left, onClick: function onClick() {
-	                            self.context.router.push({ pathname: Settings.uBaseName + '/' });
-	                        } }, React.createElement("div", { className: styles.title }, localization_1.localization(994)), React.createElement("div", { className: styles.logo })), React.createElement("div", { className: styles.center }, React.createElement(AltContainer, { stores: {
-	                            maps: map_store_1.mapStore
-	                        } }, React.createElement(nav_search_component_1.default, { mapId: self.state.mapId }))), React.createElement("div", { className: styles.right, onClick: function onClick() {
-	                            if (self.props.query && self.props.query.user == "login") {
-	                                self.context.router.push({ pathname: window.location.pathname });
-	                            } else {
-	                                self.context.router.push({ pathname: window.location.pathname, query: { user: "login" } });
-	                            }
-	                        } }, React.createElement(FontAwesome, { className: styles.icon, name: 'user' }), React.createElement("div", { className: styles.login }, localization_1.localization(993))), login);
-	                case auth_store_1.AuthStatus.PARENT:
-	                case auth_store_1.AuthStatus.MANAGER:
-	                case auth_store_1.AuthStatus.ADMIN:
-	                    var user = void 0;
-	                    if (self.props.query && self.props.query.user && parseInt(self.props.query.user) == self.props.auth.getId()) {
-	                        user = React.createElement(user_component_1.default, { open: true, userId: self.props.auth.getId() });
-	                    }
-	                    return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left, onClick: function onClick() {
-	                            self.context.router.push({ pathname: Settings.uBaseName + '/' });
-	                        } }, React.createElement("div", { className: styles.title }, localization_1.localization(994)), React.createElement("div", { className: styles.logo })), React.createElement("div", { className: styles.center }, React.createElement(AltContainer, { stores: {
-	                            maps: map_store_1.mapStore
-	                        } }, React.createElement(nav_search_component_1.default, { mapId: self.state.mapId }))), React.createElement("div", { className: styles.right, onClick: function onClick() {
-	                            if (self.props.query && self.props.query.user && parseInt(self.props.query.user) == self.props.auth.getId()) {
-	                                self.context.router.push({ pathname: window.location.pathname });
-	                            } else {
-	                                auth_actions_1.authActions.fetchPerson(self.props.auth.getId());
-	                                self.context.router.push({ pathname: window.location.pathname, query: { user: self.props.auth.getId() } });
-	                            }
-	                        } }, React.createElement(FontAwesome, { className: styles.icon, name: 'user' }), React.createElement("div", { className: styles.login }, self.props.auth.getContact())), user);
+	            if (self.state.visible) {
+	                switch (self.props.auth.getAuth()) {
+	                    case auth_store_1.AuthStatus.NONE:
+	                    case auth_store_1.AuthStatus.GUEST:
+	                        var login = void 0;
+	                        if (self.props.query && self.props.query.user == "login") {
+	                            login = React.createElement(login_component_1.default, { open: true });
+	                        } else if (self.props.query && self.props.query.user == "signup") {
+	                            login = React.createElement(signup_component_1.default, { open: true });
+	                        }
+	                        return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left, onClick: function onClick() {
+	                                self.context.router.push({ pathname: Settings.uBaseName + '/' });
+	                            } }, React.createElement("div", { className: styles.title }, localization_1.localization(994)), React.createElement("div", { className: styles.logo })), React.createElement("div", { className: styles.center }, React.createElement(AltContainer, { stores: {
+	                                maps: map_store_1.mapStore
+	                            } }, React.createElement(nav_search_component_1.default, { mapId: self.state.mapId }))), React.createElement("div", { className: styles.right, onClick: function onClick() {
+	                                if (self.props.query && self.props.query.user == "login") {
+	                                    self.context.router.push({ pathname: window.location.pathname });
+	                                } else {
+	                                    self.context.router.push({ pathname: window.location.pathname, query: { user: "login" } });
+	                                }
+	                            } }, React.createElement(FontAwesome, { className: styles.icon, name: 'user' }), React.createElement("div", { className: styles.login }, localization_1.localization(993))), login);
+	                    case auth_store_1.AuthStatus.PARENT:
+	                    case auth_store_1.AuthStatus.MANAGER:
+	                    case auth_store_1.AuthStatus.ADMIN:
+	                        var user = void 0;
+	                        if (self.props.query && self.props.query.user && parseInt(self.props.query.user) == self.props.auth.getId()) {
+	                            user = React.createElement(user_component_1.default, { open: true, userId: self.props.auth.getId() });
+	                        }
+	                        return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left, onClick: function onClick() {
+	                                self.context.router.push({ pathname: Settings.uBaseName + '/' });
+	                            } }, React.createElement("div", { className: styles.title }, localization_1.localization(994)), React.createElement("div", { className: styles.logo })), React.createElement("div", { className: styles.center }, React.createElement(AltContainer, { stores: {
+	                                maps: map_store_1.mapStore
+	                            } }, React.createElement(nav_search_component_1.default, { mapId: self.state.mapId }))), React.createElement("div", { className: styles.right, onClick: function onClick() {
+	                                if (self.props.query && self.props.query.user && parseInt(self.props.query.user) == self.props.auth.getId()) {
+	                                    self.context.router.push({ pathname: window.location.pathname });
+	                                } else {
+	                                    auth_actions_1.authActions.fetchPerson(self.props.auth.getId());
+	                                    self.context.router.push({ pathname: window.location.pathname, query: { user: self.props.auth.getId() } });
+	                                }
+	                            } }, React.createElement(FontAwesome, { className: styles.icon, name: 'user' }), React.createElement("div", { className: styles.login }, self.props.auth.getContact())), user);
+	                }
+	            } else {
+	                return React.createElement("div", { className: styles.wrapper }, React.createElement("div", { className: styles.left, onClick: function onClick() {
+	                        self.context.router.push({ pathname: Settings.uBaseName + '/' });
+	                    } }, React.createElement("div", { className: styles.title }, localization_1.localization(994)), React.createElement("div", { className: styles.logo })));
 	            }
 	        }
 	    }]);
@@ -94251,27 +94265,6 @@
 	        value: function renderUserLocation(position) {
 	            var self = this;
 	            if (position) {
-	                /// TEST code
-	                // html2canvas(document.querySelector('#map')).then(function(canvas) {
-	                //   document.querySelector('#png-container').appendChild(canvas);
-	                // });
-	                html2canvas(document.querySelector('.leaflet-zoom-animated')).then(function (canvas) {
-	                    document.body.appendChild(canvas);
-	                });
-	                // var svgString = new XMLSerializer().serializeToString(document.querySelector('#map'));
-	                // var canvas = document.getElementById("canvas");
-	                // var ctx = canvas.getContext("2d");
-	                // var DOMURL = self.URL || self.webkitURL || self;
-	                // var img = new Image();
-	                // var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
-	                // var url = DOMURL.createObjectURL(svg);
-	                // img.onload = function() {
-	                //     ctx.drawImage(img, 0, 0);
-	                //     var png = canvas.toDataURL("image/png");
-	                //     document.querySelector('#png-container').innerHTML = '<img src="'+png+'"/>';
-	                //     DOMURL.revokeObjectURL(png);
-	                // };
-	                // img.src = url;
 	                if (self.userMarker) {
 	                    self.userMarker.setLatLng(position);
 	                } else {
@@ -100581,6 +100574,448 @@
 
 /***/ },
 /* 684 */
+/*!***********************************************************!*\
+  !*** ./src/components/screenshot/screenshot.component.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 1);
+	var AltContainer = __webpack_require__(/*! alt-container */ 229);
+	__webpack_require__(/*! ./../../../~/leaflet/dist/leaflet.css */ 444);
+	var styles = __webpack_require__(/*! ./screenshot.component.css */ 685);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
+	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 484);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
+	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 459);
+	var food_actions_1 = __webpack_require__(/*! ./../../actions/food.actions */ 289);
+	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 486);
+	var flag_actions_1 = __webpack_require__(/*! ./../../actions/flag.actions */ 487);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
+	var screenshot_map_component_1 = __webpack_require__(/*! ./screenshot-map.component */ 687);
+	
+	var ScreenshotComponent = function (_React$Component) {
+	    _inherits(ScreenshotComponent, _React$Component);
+	
+	    function ScreenshotComponent(props) {
+	        _classCallCheck(this, ScreenshotComponent);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ScreenshotComponent).call(this, props));
+	
+	        _this.updateProps = function (props) {
+	            var self = _this;
+	            var treeId = parseInt(props.params.treeId);
+	            self.setState({ treeId: treeId });
+	        };
+	        _this.onMapRender = function () {
+	            var self = _this;
+	            setTimeout(function () {
+	                flag_actions_1.flagActions.fetchFlags();
+	                food_actions_1.foodActions.fetchFoods();
+	                tree_actions_1.treeActions.fetchTrees(self.state.treeId);
+	            }, Settings.iMapRenderDelay);
+	        };
+	        var self = _this;
+	        _this.state = {
+	            treeId: null,
+	            trees: null,
+	            zoom: Settings.iScreenshotZoom,
+	            tile: enum_1.TileMode.SATELLITE
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(ScreenshotComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var self = this;
+	            tree_actions_1.treeActions.resetTrees();
+	            self.updateProps(self.props);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var self = this;
+	            self.updateProps(nextProps);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            return React.createElement("div", { className: styles.wrapper }, React.createElement(AltContainer, { stores: {
+	                    foods: function foods(props) {
+	                        return {
+	                            store: food_store_1.foodStore,
+	                            value: food_store_1.foodStore.getState().foods
+	                        };
+	                    },
+	                    trees: function trees(props) {
+	                        return {
+	                            store: tree_store_1.treeStore,
+	                            value: tree_store_1.treeStore.getState().trees
+	                        };
+	                    },
+	                    flags: function flags(props) {
+	                        return {
+	                            store: flag_store_1.flagStore,
+	                            value: flag_store_1.flagStore.getState().flags
+	                        };
+	                    }
+	                } }, React.createElement(screenshot_map_component_1.default, { treeId: self.state.treeId, tile: enum_1.TileMode.SATELLITE, onRender: self.onMapRender })));
+	        }
+	    }]);
+	
+	    return ScreenshotComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = ScreenshotComponent;
+	ScreenshotComponent.contextTypes = {
+	    router: function router() {
+	        return React.PropTypes.func.isRequired;
+	    }
+	};
+	//# sourceMappingURL=screenshot.component.js.map
+
+/***/ },
+/* 685 */
+/*!************************************************************!*\
+  !*** ./src/components/screenshot/screenshot.component.css ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../../~/css-loader!./screenshot.component.css */ 686);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../../~/style-loader/addStyles.js */ 224)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./screenshot.component.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./screenshot.component.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 686 */
+/*!***************************************************************************!*\
+  !*** ./~/css-loader!./src/components/screenshot/screenshot.component.css ***!
+  \***************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../../~/css-loader/lib/css-base.js */ 223)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "@media all {\r\n  ._2bm_ou7zkdDEL9m2i5_0Dj {\r\n    width: 100%;\r\n    height: 100%;\r\n  }\r\n  ._1tL6yHX9_MTlCiK7Xn6ygp {\r\n    width: 100%;\r\n    height: 100%;\r\n  }\r\n}\r\n", ""]);
+	
+	// exports
+	exports.locals = {
+		"wrapper": "_2bm_ou7zkdDEL9m2i5_0Dj",
+		"map": "_1tL6yHX9_MTlCiK7Xn6ygp"
+	};
+
+/***/ },
+/* 687 */
+/*!***************************************************************!*\
+  !*** ./src/components/screenshot/screenshot-map.component.js ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(/*! react */ 1);
+	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
+	var L = __webpack_require__(/*! leaflet */ 274);
+	__webpack_require__(/*! leaflet.markercluster */ 609);
+	__webpack_require__(/*! googletile */ 610);
+	var _ = __webpack_require__(/*! underscore */ 485);
+	__webpack_require__(/*! ./../../../~/leaflet/dist/leaflet.css */ 444);
+	var styles = __webpack_require__(/*! ./screenshot.component.css */ 685);
+	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
+	var marker_factory_1 = __webpack_require__(/*! ./../../utils/marker.factory */ 611);
+	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 459);
+	var map_store_1 = __webpack_require__(/*! ./../../stores/map.store */ 259);
+	var map_actions_1 = __webpack_require__(/*! ./../../actions/map.actions */ 275);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
+	
+	var ScreenshotMapComponent = function (_React$Component) {
+	    _inherits(ScreenshotMapComponent, _React$Component);
+	
+	    function ScreenshotMapComponent(props) {
+	        _classCallCheck(this, ScreenshotMapComponent);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ScreenshotMapComponent).call(this, props));
+	
+	        _this.renderMarkers = function (trees, props) {
+	            var self = _this;
+	            // Remove unnecessary markers
+	
+	            var _loop = function _loop(_i) {
+	                var bFound = false;
+	                trees.forEach(function (tree) {
+	                    if (tree.getId() == self.markers[_i].options.id && tree.getFoodId() == self.markers[_i].options.food && self.markers[_i].getLatLng().lat == tree.getLat() && self.markers[_i].getLatLng().lng == tree.getLng()) {
+	                        bFound = true;
+	                    }
+	                });
+	                if (!bFound) {
+	                    self.removeMarker(self.markers[_i]);
+	                    self.markers = _.without(self.markers, self.markers[_i]);
+	                    _i--;
+	                }
+	                _i++;
+	                i = _i;
+	            };
+	
+	            for (var i = 0; i < self.markers.length;) {
+	                _loop(i);
+	            }
+	            trees.forEach(function (tree) {
+	                var bFound = false;
+	                for (var _i2 = 0; _i2 < self.markers.length && !bFound; _i2++) {
+	                    if (tree.getId() == self.markers[_i2].options.id) {
+	                        bFound = true;
+	                    }
+	                }
+	                if (tree.getId() != 0 && !bFound) {
+	                    self.addMarker(tree, false);
+	                }
+	            });
+	            // Open tree info popup if the hash address has an existing tree id
+	            var bFound = false;
+	            if (props.treeId) {
+	                if (self.selected != null && self.selected.options.id != props.treeId) {
+	                    setTimeout(function () {
+	                        map_actions_1.mapActions.setFirst('map', true);
+	                    }, 0);
+	                }
+	
+	                var _loop2 = function _loop2(_i3) {
+	                    if (self.markers[_i3].options.id == props.treeId) {
+	                        bFound = true;
+	                        if (self.markers[_i3].getPopup()._isOpen === true && self.selected && self.selected.options.id == props.treeId) {} else {
+	                            setTimeout(function () {
+	                                self.markers[_i3].openPopup();
+	                            }, Settings.iPopupDelay);
+	                            if (map_store_1.mapStore.getFirst('map')) {
+	                                // popup is not open
+	                                setTimeout(function () {
+	                                    map_actions_1.mapActions.setFirst('map', false);
+	                                }, 0);
+	                                marker = self.markers[_i3];
+	
+	                                self.selected = marker;
+	                                // Move the map slight off from the center using CRS projection
+	                                point = L.CRS.EPSG3857.latLngToPoint(self.selected.getLatLng(), Settings.iFocusZoom);
+	                                rMap = ReactDOM.findDOMNode(self.refs['map']);
+	
+	                                if (rMap.clientWidth > rMap.clientHeight) {} else {}
+	                                var location = L.CRS.EPSG3857.pointToLatLng(point, Settings.iFocusZoom);
+	                                self.map.setView(location, Settings.iFocusZoom, { animate: false });
+	                            }
+	                        }
+	                        return 'break';
+	                    }
+	                };
+	
+	                for (var _i3 = 0; _i3 < self.markers.length; _i3++) {
+	                    var marker;
+	                    var point;
+	                    var rMap;
+	
+	                    var _ret2 = _loop2(_i3);
+	
+	                    if (_ret2 === 'break') break;
+	                }
+	            } else {
+	                self.selected = null;
+	            }
+	            if (!bFound) {
+	                self.map.closePopup();
+	            }
+	        };
+	        _this.afterRenderMap = function () {
+	            var self = _this;
+	            self.layer = new L.MarkerClusterGroup();
+	            self.layer.initialize({
+	                spiderfyOnMaxZoom: false,
+	                showCoverageOnHover: false,
+	                zoomToBoundsOnClick: true,
+	                removeOutsideVisibleBounds: true,
+	                maxClusterRadius: Settings.iMaxClusterRadius,
+	                disableClusteringAtZoom: Settings.iDisableClusteringAtZoom
+	            });
+	            self.layer.addTo(self.map);
+	            self.map.on("moveend", self.afterMoveMap);
+	            self.map.on('popupopen', function (event) {
+	                if (!map_store_1.mapStore.getFirst('map')) {
+	                    var marker = event.popup._source;
+	                    self.selected = marker;
+	                    self.selected._bringToFront();
+	                    // Move the map slight off from the center using CRS projection
+	                    var point = L.CRS.EPSG3857.latLngToPoint(self.selected.getLatLng(), map_store_1.mapStore.getZoom('map'));
+	                    var rMap = ReactDOM.findDOMNode(self.refs['map']);
+	                    if (rMap.clientWidth > rMap.clientHeight) {} else {}
+	                    var location = L.CRS.EPSG3857.pointToLatLng(point, map_store_1.mapStore.getZoom('map'));
+	                    self.map.setView(location, map_store_1.mapStore.getZoom('map'), { animate: true });
+	                }
+	            });
+	            self.map.on('popupclose', function (event) {
+	                self.selected = null;
+	                // self.context.router.push({pathname: Settings.uBaseName + '/'});
+	            });
+	            self.props.onRender();
+	            map_actions_1.mapActions.addMap('map', self.map);
+	        };
+	        _this.afterMoveMap = function () {
+	            var self = _this;
+	        };
+	        _this.state = {};
+	        var self = _this;
+	        self.markers = new Array();
+	        return _this;
+	    }
+	
+	    _createClass(ScreenshotMapComponent, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var self = this;
+	            self.map = this.map = L.map("map", {
+	                zoomControl: false,
+	                closePopupOnClick: false,
+	                doubleClickZoom: true,
+	                touchZoom: true,
+	                zoomAnimation: true,
+	                markerZoomAnimation: true
+	            }).setView(new L.LatLng(Settings.vPosition.x, Settings.vPosition.y), Settings.iDefaultZoom);
+	            self.grayTileLayer = L.tileLayer(Settings.uGrayTileMap + Settings.sMapboxAccessToken, {
+	                minZoom: Settings.iMinZoom,
+	                maxZoom: Settings.iMaxZoom
+	            });
+	            // Optional tile map address (Mapbox).
+	            // self.satTileLayer = L.tileLayer(Settings.uSatTileMap + Settings.sMapboxAccessToken, {
+	            //     minZoom: Settings.iMinZoom,
+	            //     maxZoom: Settings.iMaxZoom,
+	            // });
+	            self.satTileLayer = new L.Google(Settings.sGoogleMapTileType, {
+	                minZoom: Settings.iMinZoom,
+	                maxZoom: Settings.iMaxZoom
+	            });
+	            self.grayTileLayer.addTo(self.map);
+	            self.map.invalidateSize(false);
+	            self.map.whenReady(self.afterRenderMap);
+	            setTimeout(function () {
+	                if (!self.props.treeId) {
+	                    map_actions_1.mapActions.setFirst('map', false);
+	                }
+	            }, Settings.iPopupDelay);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var self = this;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var self = this;
+	            switch (nextProps.tile) {
+	                case enum_1.TileMode.GRAY:
+	                    if (!self.map.hasLayer(self.grayTileLayer)) {
+	                        self.grayTileLayer.addTo(self.map);
+	                        self.map.removeLayer(self.satTileLayer);
+	                    }
+	                    break;
+	                case enum_1.TileMode.SATELLITE:
+	                    if (!self.map.hasLayer(self.satTileLayer)) {
+	                        self.map.addLayer(self.satTileLayer);
+	                        self.map.removeLayer(self.grayTileLayer);
+	                    }
+	                    break;
+	            }
+	            if (nextProps.foods.length && nextProps.flags.length) {
+	                self.renderMarkers(nextProps.trees, nextProps);
+	            }
+	        }
+	    }, {
+	        key: 'addMarker',
+	        value: function addMarker(tree, editable) {
+	            var self = this;
+	            var marker = void 0;
+	            var food = food_store_1.foodStore.getFood(tree.getFoodId());
+	            if (food) {
+	                if (editable) {
+	                    marker = marker_factory_1.default.createEditableMarker(food, tree);
+	                } else {
+	                    marker = marker_factory_1.default.createUneditableMarker(food, tree);
+	                }
+	                if (marker) {
+	                    self.markers.push(marker);
+	                    self.layer.addLayer(marker);
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'removeMarker',
+	        value: function removeMarker(marker) {
+	            var self = this;
+	            self.layer.removeLayer(marker);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var self = this;
+	            return React.createElement("div", { id: "map", ref: "map", className: styles.map });
+	        }
+	    }]);
+	
+	    return ScreenshotMapComponent;
+	}(React.Component);
+	
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = ScreenshotMapComponent;
+	ScreenshotMapComponent.contextTypes = {
+	    router: function router() {
+	        return React.PropTypes.func.isRequired;
+	    }
+	};
+	//# sourceMappingURL=screenshot-map.component.js.map
+
+/***/ },
+/* 688 */
 /*!************************!*\
   !*** ./src/client.css ***!
   \************************/
@@ -100589,7 +101024,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 685);
+	var content = __webpack_require__(/*! !./../~/css-loader!./client.css */ 689);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 224)(content, {});
@@ -100609,7 +101044,7 @@
 	}
 
 /***/ },
-/* 685 */
+/* 689 */
 /*!***************************************!*\
   !*** ./~/css-loader!./src/client.css ***!
   \***************************************/
@@ -100629,7 +101064,7 @@
 	};
 
 /***/ },
-/* 686 */
+/* 690 */
 /*!******************************************!*\
   !*** ./src/bootstrap-datetimepicker.css ***!
   \******************************************/
@@ -100638,7 +101073,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../~/css-loader!./bootstrap-datetimepicker.css */ 687);
+	var content = __webpack_require__(/*! !./../~/css-loader!./bootstrap-datetimepicker.css */ 691);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../~/style-loader/addStyles.js */ 224)(content, {});
@@ -100658,7 +101093,7 @@
 	}
 
 /***/ },
-/* 687 */
+/* 691 */
 /*!*********************************************************!*\
   !*** ./~/css-loader!./src/bootstrap-datetimepicker.css ***!
   \*********************************************************/

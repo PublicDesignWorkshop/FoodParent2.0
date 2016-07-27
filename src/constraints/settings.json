@@ -1,5 +1,6 @@
 {
   "ssltype": "http://",
+  "host": "localhost",
   "uBaseName": "/FoodParent2.0",
   "uBaseNameForWebPack": "/FoodParent2.0/",
   "bTestMail": true,
@@ -23,6 +24,7 @@
   "iMaxZoom": 20,
   "iMinZoom": 5,
   "iFocusZoom": 17,
+  "iScreenshotZoom": 18,
   "sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
   "sUIDateFormat": "MM/DD/YY",
   "uReverseGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA",

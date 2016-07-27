@@ -9,6 +9,7 @@ import AppComponent from './components/app.component';
 import TreesComponent from './components/trees/trees.component';
 import DonationsComponent from './components/donations/donations.component';
 import LoginComponent from './components/parent/login.component';
+import ScreenshotComponent from './components/screenshot/screenshot.component';
 
 
 var RouteMap = (
@@ -17,6 +18,7 @@ var RouteMap = (
         <Route path="tree/:treeId" component={TreesComponent} />
         <Route path="donations" component={DonationsComponent} />
         <Route path="donation/:locationId" component={DonationsComponent} />
+        <Route path="screenshot/:treeId" component={ScreenshotComponent} />
         <Route path="*" component={NoMatchComponent}/>
     </Route>
 );

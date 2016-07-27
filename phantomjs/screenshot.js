@@ -5,8 +5,8 @@ var page = require('webpage').create(),
   address, output, size, pageWidth, pageHeight;
 
 page.viewportSize = { width: 400, height: 300 };
-
-page.open("http://localhost:3000" + Settings.uBaseName + Settings.uServer + "screenshot.php", 'get', {}, function (status) {
+console.log("Connecting to " + Settings.ssltype + Settings.host + Settings.uBaseName + Settings.uServer + "screenshot.php");
+page.open(Settings.ssltype + Settings.host + Settings.uBaseName + Settings.uServer + "screenshot.php", 'get', {}, function (status) {
   if (status !== 'success') {
     console.log('Unable to post!');
   } else {
@@ -17,6 +17,8 @@ page.open("http://localhost:3000" + Settings.uBaseName + Settings.uServer + "scr
     if (json.code != 200) {
       console.log(json.message);
       phantom.exit();
+    } else {
+      console.log(json.trees.length + " trees has been found.");
     }
 
     window.setTimeout(function () {
@@ -25,9 +27,10 @@ page.open("http://localhost:3000" + Settings.uBaseName + Settings.uServer + "scr
     for (var i = 0; i < json.trees.length; i++) {
       var index = i + 1;
       var id = json.trees[i].id;
-      var address = "http://localhost/FoodParent2.0/tree/" + json.trees[i].id;
+      var address = Settings.ssltype + Settings.host + Settings.uBaseName + "/screenshot/" + json.trees[i].id;
       window.setTimeout(function (id, address, index, total) {
         page.open(address, function (status) {
+          console.log("Connecting to " + address);
           if (status !== 'success') {
             console.log('Unable to load the address!');
             phantom.exit(1);
