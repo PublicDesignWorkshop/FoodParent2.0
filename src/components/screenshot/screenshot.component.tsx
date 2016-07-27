@@ -19,6 +19,7 @@ import { mapStore } from './../../stores/map.store';
 
 import { TileMode, TreesMode } from './../../utils/enum';
 import ScreenshotMapComponent from './screenshot-map.component';
+import ScreenshotAddressComponent from './screenshot-address.component';
 
 export interface IScreenshotProps {
   params: any;
@@ -94,6 +95,7 @@ export default class ScreenshotComponent extends React.Component<IScreenshotProp
           }
         }>
           <ScreenshotMapComponent treeId={self.state.treeId} tile={TileMode.SATELLITE} onRender={self.onMapRender} />
+          <ScreenshotAddressComponent treeId={self.state.treeId} />
         </AltContainer>
       </div>
     );

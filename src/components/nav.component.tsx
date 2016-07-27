@@ -158,15 +158,9 @@ export default class NavComponent extends React.Component<INavProps, INavStatus>
       }
     } else {
       return (
-        <div className={styles.wrapper}>
-          <div className={styles.left} onClick={()=> {
-            self.context.router.push({pathname: Settings.uBaseName + '/'});
-          }}>
-            <div className={styles.title}>
-              {localization(994)}
-            </div>
-            <div className={styles.logo}></div>
-          </div>
+        <div className={styles.wrapper2}>
+          <div className={styles.logo}></div>
+          <div className={styles.foodparent}></div>
         </div>
       );
     }

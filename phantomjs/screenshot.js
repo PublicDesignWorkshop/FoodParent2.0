@@ -3,7 +3,7 @@ var page = require('webpage').create(),
   system = require('system'),
   Settings = require('./../src/constraints/settings.json')
 
-var renderTime = 10000;
+var renderTime = Settings.iScreenshotRenderTime;
 
 page.viewportSize = { width: 400, height: 300 };
 console.log("Connecting to " + Settings.ssltype + Settings.host + Settings.uBaseName + Settings.uServer + "screenshot.php");

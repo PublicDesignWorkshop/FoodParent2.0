@@ -1,6 +1,6 @@
 {
   "ssltype": "https://",
-  "host": "concrete-jungle.org",
+  "host": "www.thecaptainwhale.com",
   "uBaseName": "/foodparent",
   "uBaseNameForWebPack": "/foodparent/",
   "bTestMail": true,
@@ -37,6 +37,8 @@
   "iMessageDuration": 2000,
   "iMapRenderDelay": 1000,
   "sEXIFDateFormat": "YYYY-MM-DD HH-mm-ss",
+  "uShadowMarker" : "marker-shadow.png",
+  "iScreenshotRenderTime": 20000,
 
 
   "iMessageLineDuration": 5000,

@@ -21,6 +21,8 @@ module MarkerFactory {
       iconSize: new L.Point(40, 40),
       iconAnchor: new L.Point(20, 40),
       popupAnchor: new L.Point(1, -36),
+      shadowUrl: Settings.uBaseName + Settings.uStaticImage + Settings.uShadowMarker,
+      shadowAnchor: new L.Point(12, 40),
     });
 
     let marker: L.Marker = new L.Marker(new L.LatLng(tree.getLat(), tree.getLng()), {
@@ -51,6 +53,8 @@ module MarkerFactory {
       iconSize: new L.Point(40, 40),
       iconAnchor: new L.Point(20, 40),
       popupAnchor: new L.Point(1, -36),
+      shadowUrl: Settings.uBaseName + Settings.uStaticImage + Settings.uShadowMarker,
+      shadowAnchor: new L.Point(12, 40),
       className: classname,
     });
 
@@ -79,6 +83,8 @@ module MarkerFactory {
       iconSize: new L.Point(40, 40),
       iconAnchor: new L.Point(20, 40),
       popupAnchor: new L.Point(1, -36),
+      shadowUrl: Settings.uBaseName + Settings.uStaticImage + Settings.uShadowMarker,
+      shadowAnchor: new L.Point(12, 40),
     });
 
     let template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">' + localization(692) + '</span></div><div class="marker-right"></div>';

@@ -123,7 +123,7 @@
         foreach ($result as $item) {
           // $text .= round(floatval($item['amount']) * $gtolib, 3) . " lbs. of " . $item['name'] . " was picked up on " . $item['date'] . " from #" . $item['id'] .= " - " . $treesurl . $item['id'] . "?mode=graph\n";
 
-          $html .= "<div style='font-family:sans-serif;margin-bottom:8px;'>" . round(floatval($item['amount']) * $gtolib, 3) . " lbs. of " . $item['name'] . " was picked up on " . $item['date'] . " from #" . $item['id'] .= " - <a href='" . $treesurl . $item['id'] . "?mode=graph'>Check out #" . $item['id'] . "</a></div><img src='" . $baseurl . "dist/map/" . $item['id'] . "_map.png'><br/><hr />";
+          $html .= "<div style='font-family:sans-serif;margin-bottom:8px;'>" . round(floatval($item['amount']) * $gtolib, 3) . " lbs. of " . $item['name'] . " was picked up on " . $item['date'] . " from #" . $item['id'] .= " - <a href='" . $treesurl . $item['id'] . "?mode=graph'>Check out #" . $item['id'] . "</a></div><img style='max-width: 100%; height:auto;' src='" . $baseurl . "dist/map/" . $item['id'] . "_map.png'><br/><hr />";
         }
         // Send message.
         if ($test) {
@@ -197,7 +197,7 @@
           if (in_array($uparent, $parents)) {
             // $text .= "Please update " . $item['name'] . " #" . $item['id'] .= " - " . $treesurl . $item['id'] . "\n";
 
-            $html .= "<div style='font-family:sans-serif;margin-bottom:8px;'>Please update " . $item['name'] . " #" . $item['id'] .= " - <a href='" . $treesurl . $item['id'] . "'>Post a new note for " . $item['name'] . " #" . $item['id'] . "</a></div><img src='" . $baseurl . "dist/map/" . $item['id'] . "_map.png'><br/><hr />";
+            $html .= "<div style='font-family:sans-serif;margin-bottom:8px;'>Please update " . $item['name'] . " #" . $item['id'] .= " - <a href='" . $treesurl . $item['id'] . "'>Post a new note for " . $item['name'] . " #" . $item['id'] . "</a></div><img style='max-width: 100%; height:auto;' src='" . $baseurl . "dist/map/" . $item['id'] . "_map.png'><br/><hr />";
           }
         }
 
