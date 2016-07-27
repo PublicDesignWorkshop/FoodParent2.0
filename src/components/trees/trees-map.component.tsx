@@ -5,6 +5,7 @@ import { Router, Link } from 'react-router';
 import Routes from './../../routes';
 
 import * as L from 'leaflet';
+import * as leafletImage from 'leaflet-image';
 import 'leaflet.markercluster';
 import 'googletile';
 import * as _ from 'underscore';
@@ -251,6 +252,28 @@ export default class TreesMapComponent extends React.Component<ITreesMapProps, I
   private renderUserLocation(position: L.LatLng): void {
     let self: TreesMapComponent = this;
     if (position) {
+      /// TEST code
+      // html2canvas(document.querySelector('#map')).then(function(canvas) {
+      //   document.querySelector('#png-container').appendChild(canvas);
+      // });
+      html2canvas(document.querySelector('.leaflet-zoom-animated')).then(function(canvas) {
+        document.body.appendChild(canvas);
+      });
+      // var svgString = new XMLSerializer().serializeToString(document.querySelector('#map'));
+      // var canvas = document.getElementById("canvas");
+      // var ctx = canvas.getContext("2d");
+      // var DOMURL = self.URL || self.webkitURL || self;
+      // var img = new Image();
+      // var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+      // var url = DOMURL.createObjectURL(svg);
+      // img.onload = function() {
+      //     ctx.drawImage(img, 0, 0);
+      //     var png = canvas.toDataURL("image/png");
+      //     document.querySelector('#png-container').innerHTML = '<img src="'+png+'"/>';
+      //     DOMURL.revokeObjectURL(png);
+      // };
+      // img.src = url;
+
       if (self.userMarker) {
         self.userMarker.setLatLng(position);
       } else {

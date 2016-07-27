@@ -25826,9 +25826,10 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-		"ssltype": "https://",
+		"ssltype": "http://",
 		"uBaseName": "/FoodParent2.0",
 		"uBaseNameForWebPack": "/FoodParent2.0/",
+		"bTestMail": true,
 		"uStaticImage": "/static/images/",
 		"uContentImage": "/content/images/",
 		"uRelativeImageUpload": "./../content/images/",
@@ -26781,7 +26782,7 @@
 	var nav_component_1 = __webpack_require__(/*! ./nav.component */ 243);
 	var loader_component_1 = __webpack_require__(/*! ./message/loader.component */ 440);
 	var auth_store_1 = __webpack_require__(/*! ./../stores/auth.store */ 332);
-	var auth_actions_1 = __webpack_require__(/*! ./../actions/auth.actions */ 280);
+	var auth_actions_1 = __webpack_require__(/*! ./../actions/auth.actions */ 282);
 	
 	var AppComponent = function (_React$Component) {
 	    _inherits(AppComponent, _React$Component);
@@ -27749,7 +27750,7 @@
 	var signup_component_1 = __webpack_require__(/*! ./parent/signup.component */ 437);
 	var map_store_1 = __webpack_require__(/*! ./../stores/map.store */ 259);
 	var auth_store_1 = __webpack_require__(/*! ./../stores/auth.store */ 332);
-	var auth_actions_1 = __webpack_require__(/*! ./../actions/auth.actions */ 280);
+	var auth_actions_1 = __webpack_require__(/*! ./../actions/auth.actions */ 282);
 	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
 	
 	var NavComponent = function (_React$Component) {
@@ -28146,9 +28147,9 @@
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var map_store_1 = __webpack_require__(/*! ./../stores/map.store */ 259);
 	var map_actions_1 = __webpack_require__(/*! ./../actions/map.actions */ 275);
-	var tree_actions_1 = __webpack_require__(/*! ./../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../actions/tree.actions */ 281);
 	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
-	var enum_1 = __webpack_require__(/*! ./../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../utils/enum */ 280);
 	var geolocation_1 = __webpack_require__(/*! ./../utils/geolocation */ 293);
 	
 	var NavSearchComponent = function (_React$Component) {
@@ -28351,8 +28352,8 @@
 	var L = __webpack_require__(/*! leaflet */ 274);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var map_actions_1 = __webpack_require__(/*! ./../actions/map.actions */ 275);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 277);
-	var enum_1 = __webpack_require__(/*! ./../utils/enum */ 278);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 279);
+	var enum_1 = __webpack_require__(/*! ./../utils/enum */ 280);
 	
 	var MapModel = function () {
 	    function MapModel(props) {
@@ -39631,7 +39632,7 @@
 	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
 	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var message_1 = __webpack_require__(/*! ./../utils/message */ 291);
+	var message_1 = __webpack_require__(/*! ./../utils/message */ 277);
 	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
 	
 	var MapActions = function (_abstract_actions_1$A) {
@@ -39746,590 +39747,42 @@
 
 /***/ },
 /* 277 */
-/*!**************************************!*\
-  !*** ./src/stores/abstract.store.js ***!
-  \**************************************/
-/***/ function(module, exports) {
+/*!******************************!*\
+  !*** ./src/utils/message.js ***!
+  \******************************/
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var AbstractStore = function AbstractStore() {
-	  _classCallCheck(this, AbstractStore);
-	};
-	
-	exports.AbstractStore = AbstractStore;
-	//# sourceMappingURL=abstract.store.js.map
+	var $ = __webpack_require__(/*! jquery */ 278);
+	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
+	var messageTimer;
+	function displaySuccessMessage(message) {
+	    $('#message div').html(message);
+	    $('#message').addClass('slidein');
+	    clearTimeout(messageTimer);
+	    messageTimer = setTimeout(function () {
+	        $('#message div').html("");
+	        $('#message').removeClass('slidein');
+	    }, Settings.iMessageDuration);
+	}
+	exports.displaySuccessMessage = displaySuccessMessage;
+	function displayErrorMessage(message) {
+	    $('#message div').html(message);
+	    $('#message').addClass('slidein');
+	    $('#message').addClass('error');
+	    clearTimeout(messageTimer);
+	    messageTimer = setTimeout(function () {
+	        $('#message div').html("");
+	        $('#message').removeClass('slidein');
+	        $('#message').removeClass('error');
+	    }, Settings.iMessageDuration);
+	}
+	exports.displayErrorMessage = displayErrorMessage;
+	//# sourceMappingURL=message.js.map
 
 /***/ },
 /* 278 */
-/*!***************************!*\
-  !*** ./src/utils/enum.js ***!
-  \***************************/
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	(function (TileMode) {
-	    TileMode[TileMode["GRAY"] = 0] = "GRAY";
-	    TileMode[TileMode["SATELLITE"] = 1] = "SATELLITE";
-	})(exports.TileMode || (exports.TileMode = {}));
-	var TileMode = exports.TileMode;
-	(function (TreesMode) {
-	    TreesMode[TreesMode["NONE"] = 0] = "NONE";
-	    TreesMode[TreesMode["TREES"] = 1] = "TREES";
-	    TreesMode[TreesMode["TREEDETAIL"] = 2] = "TREEDETAIL";
-	    TreesMode[TreesMode["TREEDELETE"] = 3] = "TREEDELETE";
-	    TreesMode[TreesMode["TREEADDMARKER"] = 4] = "TREEADDMARKER";
-	    TreesMode[TreesMode["TREEADDINFO"] = 5] = "TREEADDINFO";
-	    TreesMode[TreesMode["TREEADDSAVE"] = 6] = "TREEADDSAVE";
-	    TreesMode[TreesMode["TREESFILTER"] = 7] = "TREESFILTER";
-	    TreesMode[TreesMode["TREENOTEEDIT"] = 8] = "TREENOTEEDIT";
-	    TreesMode[TreesMode["TREENOTEDELETE"] = 9] = "TREENOTEDELETE";
-	    TreesMode[TreesMode["TREEGRAPH"] = 10] = "TREEGRAPH";
-	    TreesMode[TreesMode["NOTIFY"] = 11] = "NOTIFY";
-	})(exports.TreesMode || (exports.TreesMode = {}));
-	var TreesMode = exports.TreesMode;
-	(function (DonationsMode) {
-	    DonationsMode[DonationsMode["NONE"] = 0] = "NONE";
-	    DonationsMode[DonationsMode["DONATIONS"] = 1] = "DONATIONS";
-	    DonationsMode[DonationsMode["LOCATIONDETAIL"] = 2] = "LOCATIONDETAIL";
-	    DonationsMode[DonationsMode["LOCATIONADDMARKER"] = 3] = "LOCATIONADDMARKER";
-	    DonationsMode[DonationsMode["LOCATIONADDINFO"] = 4] = "LOCATIONADDINFO";
-	    DonationsMode[DonationsMode["LOCATIONDELETE"] = 5] = "LOCATIONDELETE";
-	    DonationsMode[DonationsMode["DONATIONNOTEEDIT"] = 6] = "DONATIONNOTEEDIT";
-	    DonationsMode[DonationsMode["DONATIONNOTEDELETE"] = 7] = "DONATIONNOTEDELETE";
-	    DonationsMode[DonationsMode["DONATIONGRAPH"] = 8] = "DONATIONGRAPH";
-	})(exports.DonationsMode || (exports.DonationsMode = {}));
-	var DonationsMode = exports.DonationsMode;
-	(function (PickupTime) {
-	    PickupTime[PickupTime["NONE"] = 0] = "NONE";
-	    PickupTime[PickupTime["EARLY"] = 1] = "EARLY";
-	    PickupTime[PickupTime["PROPER"] = 2] = "PROPER";
-	    PickupTime[PickupTime["LATE"] = 3] = "LATE";
-	})(exports.PickupTime || (exports.PickupTime = {}));
-	var PickupTime = exports.PickupTime;
-	(function (NoteType) {
-	    NoteType[NoteType["NONE"] = 0] = "NONE";
-	    NoteType[NoteType["CHANGE"] = 1] = "CHANGE";
-	    NoteType[NoteType["POST"] = 2] = "POST";
-	    NoteType[NoteType["PICKUP"] = 3] = "PICKUP";
-	})(exports.NoteType || (exports.NoteType = {}));
-	var NoteType = exports.NoteType;
-	(function (AmountType) {
-	    AmountType[AmountType["NONE"] = 0] = "NONE";
-	    AmountType[AmountType["G"] = 1] = "G";
-	    AmountType[AmountType["KG"] = 2] = "KG";
-	    AmountType[AmountType["LBS"] = 3] = "LBS";
-	})(exports.AmountType || (exports.AmountType = {}));
-	var AmountType = exports.AmountType;
-	(function (NavSearchMode) {
-	    NavSearchMode[NavSearchMode["NONE"] = 0] = "NONE";
-	    NavSearchMode[NavSearchMode["TREES"] = 1] = "TREES";
-	    NavSearchMode[NavSearchMode["DONATIONS"] = 2] = "DONATIONS";
-	})(exports.NavSearchMode || (exports.NavSearchMode = {}));
-	var NavSearchMode = exports.NavSearchMode;
-	(function (MessageLineType) {
-	    MessageLineType[MessageLineType["NONE"] = 0] = "NONE";
-	    MessageLineType[MessageLineType["ERROR"] = 1] = "ERROR";
-	    MessageLineType[MessageLineType["SUCCESS"] = 2] = "SUCCESS";
-	    MessageLineType[MessageLineType["WAITING"] = 3] = "WAITING";
-	})(exports.MessageLineType || (exports.MessageLineType = {}));
-	var MessageLineType = exports.MessageLineType;
-	//# sourceMappingURL=enum.js.map
-
-/***/ },
-/* 279 */
-/*!*************************************!*\
-  !*** ./src/actions/tree.actions.js ***!
-  \*************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
-	var react_router_1 = __webpack_require__(/*! react-router */ 159);
-	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var auth_actions_1 = __webpack_require__(/*! ./auth.actions */ 280);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 289);
-	var tree_source_1 = __webpack_require__(/*! ./../sources/tree.source */ 292);
-	var message_1 = __webpack_require__(/*! ./../utils/message */ 291);
-	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
-	
-	var TreeActions = function (_abstract_actions_1$A) {
-	    _inherits(TreeActions, _abstract_actions_1$A);
-	
-	    function TreeActions() {
-	        _classCallCheck(this, TreeActions);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(TreeActions).apply(this, arguments));
-	    }
-	
-	    _createClass(TreeActions, [{
-	        key: 'resetTrees',
-	        value: function resetTrees() {
-	            var self = this;
-	            return function (dispatch) {
-	                dispatch();
-	            };
-	        }
-	    }, {
-	        key: 'setCode',
-	        value: function setCode(code) {
-	            var self = this;
-	            return function (dispatch) {
-	                dispatch(code);
-	            };
-	        }
-	    }, {
-	        key: 'fetchTrees',
-	        value: function fetchTrees(id) {
-	            var self = this;
-	            return function (dispatch) {
-	                loadingtracker_1.addLoading();
-	                dispatch();
-	                self.setCode(90);
-	                tree_source_1.treeSource.fetchTrees(id).then(function (response) {
-	                    self.fetchedTrees(response);
-	                    loadingtracker_1.removeLoading();
-	                }).catch(function (code) {
-	                    message_1.displayErrorMessage(localization_1.localization(code));
-	                    self.setCode(code);
-	                    loadingtracker_1.removeLoading();
-	                });
-	            };
-	        }
-	    }, {
-	        key: 'fetchedTrees',
-	        value: function fetchedTrees(treesProps) {
-	            var self = this;
-	            return function (dispatch) {
-	                dispatch(treesProps);
-	            };
-	        }
-	    }, {
-	        key: 'updateTree',
-	        value: function updateTree(tree) {
-	            var self = this;
-	            return function (dispatch) {
-	                // we dispatch an event here so we can have "loading" state.
-	                loadingtracker_1.addLoading();
-	                dispatch();
-	                self.setCode(92);
-	                tree_source_1.treeSource.updateTree(tree).then(function (response) {
-	                    message_1.displaySuccessMessage(localization_1.localization(634));
-	                    self.updatedTree(response);
-	                    loadingtracker_1.removeLoading();
-	                }).catch(function (code) {
-	                    message_1.displayErrorMessage(localization_1.localization(code));
-	                    self.setCode(code);
-	                    loadingtracker_1.removeLoading();
-	                });
-	            };
-	        }
-	    }, {
-	        key: 'adoptTree',
-	        value: function adoptTree(tree) {
-	            var self = this;
-	            return function (dispatch) {
-	                // we dispatch an event here so we can have "loading" state.
-	                loadingtracker_1.addLoading();
-	                dispatch();
-	                self.setCode(92);
-	                tree_source_1.treeSource.updateTree(tree).then(function (response) {
-	                    message_1.displaySuccessMessage(localization_1.localization(638));
-	                    self.updatedTree(response);
-	                    loadingtracker_1.removeLoading();
-	                }).catch(function (code) {
-	                    message_1.displayErrorMessage(localization_1.localization(code));
-	                    self.setCode(code);
-	                    loadingtracker_1.removeLoading();
-	                });
-	            };
-	        }
-	    }, {
-	        key: 'unadoptTree',
-	        value: function unadoptTree(tree) {
-	            var self = this;
-	            return function (dispatch) {
-	                // we dispatch an event here so we can have "loading" state.
-	                loadingtracker_1.addLoading();
-	                dispatch();
-	                self.setCode(92);
-	                tree_source_1.treeSource.updateTree(tree).then(function (response) {
-	                    message_1.displayErrorMessage(localization_1.localization(639));
-	                    self.updatedTree(response);
-	                    loadingtracker_1.removeLoading();
-	                }).catch(function (code) {
-	                    message_1.displayErrorMessage(localization_1.localization(code));
-	                    self.setCode(code);
-	                    loadingtracker_1.removeLoading();
-	                });
-	            };
-	        }
-	    }, {
-	        key: 'updatedTree',
-	        value: function updatedTree(props) {
-	            var self = this;
-	            return function (dispatch) {
-	                dispatch(props);
-	            };
-	        }
-	    }, {
-	        key: 'createTree',
-	        value: function createTree(tree) {
-	            var self = this;
-	            return function (dispatch) {
-	                // we dispatch an event here so we can have "loading" state.
-	                loadingtracker_1.addLoading();
-	                dispatch();
-	                self.setCode(92);
-	                tree_source_1.treeSource.createTree(tree).then(function (response) {
-	                    message_1.displaySuccessMessage(localization_1.localization(635));
-	                    self.createdTree(response);
-	                    loadingtracker_1.removeLoading();
-	                }).catch(function (code) {
-	                    message_1.displayErrorMessage(localization_1.localization(code));
-	                    self.setCode(code);
-	                    loadingtracker_1.removeLoading();
-	                });
-	            };
-	        }
-	    }, {
-	        key: 'createdTree',
-	        value: function createdTree(props) {
-	            return function (dispatch) {
-	                auth_actions_1.authActions.addTempTree(parseInt(props.id));
-	                react_router_1.browserHistory.push({ pathname: Settings.uBaseName + '/tree/' + props.id });
-	                auth_actions_1.authActions.fetchAuth();
-	                dispatch(props);
-	            };
-	        }
-	    }, {
-	        key: 'resetTempTree',
-	        value: function resetTempTree() {
-	            return function (dispatch) {
-	                dispatch();
-	            };
-	        }
-	    }, {
-	        key: 'refresh',
-	        value: function refresh() {
-	            return function (dispatch) {
-	                dispatch();
-	            };
-	        }
-	    }, {
-	        key: 'deleteTree',
-	        value: function deleteTree(tree) {
-	            var self = this;
-	            return function (dispatch) {
-	                loadingtracker_1.addLoading();
-	                dispatch();
-	                self.setCode(91);
-	                tree_source_1.treeSource.deleteTree(tree).then(function (response) {
-	                    message_1.displayErrorMessage(localization_1.localization(637));
-	                    self.deletedTree(tree.toJSON());
-	                    loadingtracker_1.removeLoading();
-	                }).catch(function (code) {
-	                    message_1.displayErrorMessage(localization_1.localization(code));
-	                    self.setCode(code);
-	                    loadingtracker_1.removeLoading();
-	                });
-	            };
-	        }
-	    }, {
-	        key: 'deletedTree',
-	        value: function deletedTree(props) {
-	            var self = this;
-	            return function (dispatch) {
-	                react_router_1.browserHistory.replace({ pathname: Settings.uBaseName + '/' });
-	                dispatch(props);
-	            };
-	        }
-	    }]);
-	
-	    return TreeActions;
-	}(abstract_actions_1.AbstractActions);
-	
-	exports.treeActions = alt_1.alt.createActions(TreeActions);
-	//# sourceMappingURL=tree.actions.js.map
-
-/***/ },
-/* 280 */
-/*!*************************************!*\
-  !*** ./src/actions/auth.actions.js ***!
-  \*************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var react_router_1 = __webpack_require__(/*! react-router */ 159);
-	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
-	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var auth_source_1 = __webpack_require__(/*! ./../sources/auth.source */ 281);
-	var person_source_1 = __webpack_require__(/*! ./../sources/person.source */ 287);
-	var tree_actions_1 = __webpack_require__(/*! ./tree.actions */ 279);
-	var food_actions_1 = __webpack_require__(/*! ./food.actions */ 288);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 289);
-	var message_1 = __webpack_require__(/*! ./../utils/message */ 291);
-	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
-	
-	var AuthActions = function (_abstract_actions_1$A) {
-	    _inherits(AuthActions, _abstract_actions_1$A);
-	
-	    function AuthActions() {
-	        _classCallCheck(this, AuthActions);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(AuthActions).apply(this, arguments));
-	    }
-	
-	    _createClass(AuthActions, [{
-	        key: 'fetchAuth',
-	        value: function fetchAuth() {
-	            var self = this;
-	            return function (dispatch) {
-	                loadingtracker_1.addLoading();
-	                dispatch();
-	                self.setCode(90);
-	                auth_source_1.authSource.fetchAuth().then(function (response) {
-	                    self.fetchedAuth({ id: response.id, contact: response.contact, auth: response.auth, trees: response.trees });
-	                    loadingtracker_1.removeLoading();
-	                }).catch(function (code) {
-	                    message_1.displayErrorMessage(localization_1.localization(code));
-	                    self.setCode(code);
-	                    loadingtracker_1.removeLoading();
-	                });
-	            };
-	        }
-	    }, {
-	        key: 'fetchedAuth',
-	        value: function fetchedAuth(props) {
-	            var self = this;
-	            return function (dispatch) {
-	                dispatch(props);
-	            };
-	        }
-	    }, {
-	        key: 'fetchPerson',
-	        value: function fetchPerson(id) {
-	            var self = this;
-	            return function (dispatch) {
-	                // we dispatch an event here so we can have "loading" state.
-	                loadingtracker_1.addLoading();
-	                dispatch();
-	                self.setCode(90);
-	                person_source_1.personSource.fetchPersons([id]).then(function (response) {
-	                    if (response.length > 0) {
-	                        self.fetchedPerson(response[0]);
-	                    }
-	                    loadingtracker_1.removeLoading();
-	                }).catch(function (code) {
-	                    message_1.displayErrorMessage(localization_1.localization(code));
-	                    self.setCode(code);
-	                    loadingtracker_1.removeLoading();
-	                });
-	            };
-	        }
-	    }, {
-	        key: 'fetchedPerson',
-	        value: function fetchedPerson(props) {
-	            var self = this;
-	            return function (dispatch) {
-	                dispatch(props);
-	            };
-	        }
-	    }, {
-	        key: 'processLogout',
-	        value: function processLogout() {
-	            var self = this;
-	            return function (dispatch) {
-	                // we dispatch an event here so we can have "loading" state.
-	                loadingtracker_1.addLoading();
-	                dispatch();
-	                self.setCode(90);
-	                auth_source_1.authSource.processLogout().then(function () {
-	                    self.processedLogout();
-	                    loadingtracker_1.removeLoading();
-	                }).catch(function (code) {
-	                    message_1.displayErrorMessage(localization_1.localization(code));
-	                    self.setCode(code);
-	                    loadingtracker_1.removeLoading();
-	                });
-	            };
-	        }
-	    }, {
-	        key: 'processedLogout',
-	        value: function processedLogout() {
-	            var self = this;
-	            return function (dispatch) {
-	                dispatch();
-	                react_router_1.browserHistory.push({ pathname: Settings.uBaseName + '/' });
-	                tree_actions_1.treeActions.fetchTrees();
-	                food_actions_1.foodActions.fetchFoods();
-	            };
-	        }
-	    }, {
-	        key: 'processLogin',
-	        value: function processLogin(contact, password) {
-	            var self = this;
-	            return function (dispatch) {
-	                // we dispatch an event here so we can have "loading" state.
-	                loadingtracker_1.addLoading();
-	                dispatch();
-	                self.setCode(90);
-	                auth_source_1.authSource.processLogin(contact, password).then(function (response) {
-	                    self.processedLogin({ id: response.id, auth: response.auth, contact: response.contact, trees: response.trees });
-	                    loadingtracker_1.removeLoading();
-	                }).catch(function (code) {
-	                    message_1.displayErrorMessage(localization_1.localization(code));
-	                    self.setCode(code);
-	                    loadingtracker_1.removeLoading();
-	                });
-	            };
-	        }
-	    }, {
-	        key: 'processedLogin',
-	        value: function processedLogin(props) {
-	            var self = this;
-	            return function (dispatch) {
-	                dispatch(props);
-	                react_router_1.browserHistory.push({ pathname: Settings.uBaseName + '/' });
-	                tree_actions_1.treeActions.fetchTrees();
-	                food_actions_1.foodActions.fetchFoods();
-	            };
-	        }
-	    }, {
-	        key: 'addTempTree',
-	        value: function addTempTree(treeId) {
-	            var self = this;
-	            return function (dispatch) {
-	                dispatch(treeId);
-	            };
-	        }
-	    }, {
-	        key: 'setCode',
-	        value: function setCode(code) {
-	            var self = this;
-	            return function (dispatch) {
-	                dispatch(code);
-	            };
-	        }
-	    }]);
-	
-	    return AuthActions;
-	}(abstract_actions_1.AbstractActions);
-	
-	exports.authActions = alt_1.alt.createActions(AuthActions);
-	//# sourceMappingURL=auth.actions.js.map
-
-/***/ },
-/* 281 */
-/*!************************************!*\
-  !*** ./src/sources/auth.source.js ***!
-  \************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var $ = __webpack_require__(/*! jquery */ 282);
-	__webpack_require__(/*! es6-promise */ 283);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var AuthSource = {
-	    fetchAuth: function fetchAuth() {
-	        return new Promise(function (resolve, reject) {
-	            $.ajax({
-	                url: Settings.uBaseName + Settings.uServer + "logincheck.php",
-	                type: 'GET',
-	                data: {},
-	                dataType: "json",
-	                success: function success(response) {
-	                    if (response.code == 200) {
-	                        resolve(response);
-	                    } else {
-	                        console.log(response.message);
-	                        reject(response.code);
-	                    }
-	                },
-	                error: function error(response) {
-	                    console.log(response.statusText);
-	                    reject(response.status);
-	                }
-	            });
-	        });
-	    },
-	    processLogout: function processLogout() {
-	        return new Promise(function (resolve, reject) {
-	            $.ajax({
-	                url: Settings.uBaseName + Settings.uServer + "logout.php",
-	                type: "GET",
-	                data: {},
-	                dataType: "json",
-	                success: function success(response) {
-	                    if (response.code == 200) {
-	                        resolve(response);
-	                    } else {
-	                        console.log(response.message);
-	                        reject(response.code);
-	                    }
-	                },
-	                error: function error(response) {
-	                    console.log(response.statusText);
-	                    reject(response.status);
-	                }
-	            });
-	        });
-	    },
-	    processLogin: function processLogin(contact, password) {
-	        return new Promise(function (resolve, reject) {
-	            $.ajax({
-	                url: Settings.uBaseName + Settings.uServer + "login.php",
-	                type: "POST",
-	                data: {
-	                    'contact': contact,
-	                    'p': password
-	                },
-	                dataType: "json",
-	                success: function success(response) {
-	                    if (response.code == 200) {
-	                        resolve(response);
-	                    } else {
-	                        console.log(response.message);
-	                        reject(response.code);
-	                    }
-	                },
-	                error: function error(response) {
-	                    console.log(response.statusText);
-	                    reject(response.status);
-	                }
-	            });
-	        });
-	    }
-	};
-	exports.authSource = AuthSource;
-	//# sourceMappingURL=auth.source.js.map
-
-/***/ },
-/* 282 */
 /*!*********************************!*\
   !*** ./~/jquery/dist/jquery.js ***!
   \*********************************/
@@ -50180,13 +49633,597 @@
 
 
 /***/ },
+/* 279 */
+/*!**************************************!*\
+  !*** ./src/stores/abstract.store.js ***!
+  \**************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var AbstractStore = function AbstractStore() {
+	  _classCallCheck(this, AbstractStore);
+	};
+	
+	exports.AbstractStore = AbstractStore;
+	//# sourceMappingURL=abstract.store.js.map
+
+/***/ },
+/* 280 */
+/*!***************************!*\
+  !*** ./src/utils/enum.js ***!
+  \***************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	(function (TileMode) {
+	    TileMode[TileMode["GRAY"] = 0] = "GRAY";
+	    TileMode[TileMode["SATELLITE"] = 1] = "SATELLITE";
+	})(exports.TileMode || (exports.TileMode = {}));
+	var TileMode = exports.TileMode;
+	(function (TreesMode) {
+	    TreesMode[TreesMode["NONE"] = 0] = "NONE";
+	    TreesMode[TreesMode["TREES"] = 1] = "TREES";
+	    TreesMode[TreesMode["TREEDETAIL"] = 2] = "TREEDETAIL";
+	    TreesMode[TreesMode["TREEDELETE"] = 3] = "TREEDELETE";
+	    TreesMode[TreesMode["TREEADDMARKER"] = 4] = "TREEADDMARKER";
+	    TreesMode[TreesMode["TREEADDINFO"] = 5] = "TREEADDINFO";
+	    TreesMode[TreesMode["TREEADDSAVE"] = 6] = "TREEADDSAVE";
+	    TreesMode[TreesMode["TREESFILTER"] = 7] = "TREESFILTER";
+	    TreesMode[TreesMode["TREENOTEEDIT"] = 8] = "TREENOTEEDIT";
+	    TreesMode[TreesMode["TREENOTEDELETE"] = 9] = "TREENOTEDELETE";
+	    TreesMode[TreesMode["TREEGRAPH"] = 10] = "TREEGRAPH";
+	    TreesMode[TreesMode["NOTIFY"] = 11] = "NOTIFY";
+	})(exports.TreesMode || (exports.TreesMode = {}));
+	var TreesMode = exports.TreesMode;
+	(function (DonationsMode) {
+	    DonationsMode[DonationsMode["NONE"] = 0] = "NONE";
+	    DonationsMode[DonationsMode["DONATIONS"] = 1] = "DONATIONS";
+	    DonationsMode[DonationsMode["LOCATIONDETAIL"] = 2] = "LOCATIONDETAIL";
+	    DonationsMode[DonationsMode["LOCATIONADDMARKER"] = 3] = "LOCATIONADDMARKER";
+	    DonationsMode[DonationsMode["LOCATIONADDINFO"] = 4] = "LOCATIONADDINFO";
+	    DonationsMode[DonationsMode["LOCATIONDELETE"] = 5] = "LOCATIONDELETE";
+	    DonationsMode[DonationsMode["DONATIONNOTEEDIT"] = 6] = "DONATIONNOTEEDIT";
+	    DonationsMode[DonationsMode["DONATIONNOTEDELETE"] = 7] = "DONATIONNOTEDELETE";
+	    DonationsMode[DonationsMode["DONATIONGRAPH"] = 8] = "DONATIONGRAPH";
+	})(exports.DonationsMode || (exports.DonationsMode = {}));
+	var DonationsMode = exports.DonationsMode;
+	(function (PickupTime) {
+	    PickupTime[PickupTime["NONE"] = 0] = "NONE";
+	    PickupTime[PickupTime["EARLY"] = 1] = "EARLY";
+	    PickupTime[PickupTime["PROPER"] = 2] = "PROPER";
+	    PickupTime[PickupTime["LATE"] = 3] = "LATE";
+	})(exports.PickupTime || (exports.PickupTime = {}));
+	var PickupTime = exports.PickupTime;
+	(function (NoteType) {
+	    NoteType[NoteType["NONE"] = 0] = "NONE";
+	    NoteType[NoteType["CHANGE"] = 1] = "CHANGE";
+	    NoteType[NoteType["POST"] = 2] = "POST";
+	    NoteType[NoteType["PICKUP"] = 3] = "PICKUP";
+	})(exports.NoteType || (exports.NoteType = {}));
+	var NoteType = exports.NoteType;
+	(function (AmountType) {
+	    AmountType[AmountType["NONE"] = 0] = "NONE";
+	    AmountType[AmountType["G"] = 1] = "G";
+	    AmountType[AmountType["KG"] = 2] = "KG";
+	    AmountType[AmountType["LBS"] = 3] = "LBS";
+	})(exports.AmountType || (exports.AmountType = {}));
+	var AmountType = exports.AmountType;
+	(function (NavSearchMode) {
+	    NavSearchMode[NavSearchMode["NONE"] = 0] = "NONE";
+	    NavSearchMode[NavSearchMode["TREES"] = 1] = "TREES";
+	    NavSearchMode[NavSearchMode["DONATIONS"] = 2] = "DONATIONS";
+	})(exports.NavSearchMode || (exports.NavSearchMode = {}));
+	var NavSearchMode = exports.NavSearchMode;
+	(function (MessageLineType) {
+	    MessageLineType[MessageLineType["NONE"] = 0] = "NONE";
+	    MessageLineType[MessageLineType["ERROR"] = 1] = "ERROR";
+	    MessageLineType[MessageLineType["SUCCESS"] = 2] = "SUCCESS";
+	    MessageLineType[MessageLineType["WAITING"] = 3] = "WAITING";
+	})(exports.MessageLineType || (exports.MessageLineType = {}));
+	var MessageLineType = exports.MessageLineType;
+	//# sourceMappingURL=enum.js.map
+
+/***/ },
+/* 281 */
+/*!*************************************!*\
+  !*** ./src/actions/tree.actions.js ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
+	var react_router_1 = __webpack_require__(/*! react-router */ 159);
+	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
+	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
+	var auth_actions_1 = __webpack_require__(/*! ./auth.actions */ 282);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 290);
+	var tree_source_1 = __webpack_require__(/*! ./../sources/tree.source */ 292);
+	var message_1 = __webpack_require__(/*! ./../utils/message */ 277);
+	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
+	
+	var TreeActions = function (_abstract_actions_1$A) {
+	    _inherits(TreeActions, _abstract_actions_1$A);
+	
+	    function TreeActions() {
+	        _classCallCheck(this, TreeActions);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(TreeActions).apply(this, arguments));
+	    }
+	
+	    _createClass(TreeActions, [{
+	        key: 'resetTrees',
+	        value: function resetTrees() {
+	            var self = this;
+	            return function (dispatch) {
+	                dispatch();
+	            };
+	        }
+	    }, {
+	        key: 'setCode',
+	        value: function setCode(code) {
+	            var self = this;
+	            return function (dispatch) {
+	                dispatch(code);
+	            };
+	        }
+	    }, {
+	        key: 'fetchTrees',
+	        value: function fetchTrees(id) {
+	            var self = this;
+	            return function (dispatch) {
+	                loadingtracker_1.addLoading();
+	                dispatch();
+	                self.setCode(90);
+	                tree_source_1.treeSource.fetchTrees(id).then(function (response) {
+	                    self.fetchedTrees(response);
+	                    loadingtracker_1.removeLoading();
+	                }).catch(function (code) {
+	                    message_1.displayErrorMessage(localization_1.localization(code));
+	                    self.setCode(code);
+	                    loadingtracker_1.removeLoading();
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'fetchedTrees',
+	        value: function fetchedTrees(treesProps) {
+	            var self = this;
+	            return function (dispatch) {
+	                dispatch(treesProps);
+	            };
+	        }
+	    }, {
+	        key: 'updateTree',
+	        value: function updateTree(tree) {
+	            var self = this;
+	            return function (dispatch) {
+	                // we dispatch an event here so we can have "loading" state.
+	                loadingtracker_1.addLoading();
+	                dispatch();
+	                self.setCode(92);
+	                tree_source_1.treeSource.updateTree(tree).then(function (response) {
+	                    message_1.displaySuccessMessage(localization_1.localization(634));
+	                    self.updatedTree(response);
+	                    loadingtracker_1.removeLoading();
+	                }).catch(function (code) {
+	                    message_1.displayErrorMessage(localization_1.localization(code));
+	                    self.setCode(code);
+	                    loadingtracker_1.removeLoading();
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'adoptTree',
+	        value: function adoptTree(tree) {
+	            var self = this;
+	            return function (dispatch) {
+	                // we dispatch an event here so we can have "loading" state.
+	                loadingtracker_1.addLoading();
+	                dispatch();
+	                self.setCode(92);
+	                tree_source_1.treeSource.updateTree(tree).then(function (response) {
+	                    message_1.displaySuccessMessage(localization_1.localization(638));
+	                    self.updatedTree(response);
+	                    loadingtracker_1.removeLoading();
+	                }).catch(function (code) {
+	                    message_1.displayErrorMessage(localization_1.localization(code));
+	                    self.setCode(code);
+	                    loadingtracker_1.removeLoading();
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'unadoptTree',
+	        value: function unadoptTree(tree) {
+	            var self = this;
+	            return function (dispatch) {
+	                // we dispatch an event here so we can have "loading" state.
+	                loadingtracker_1.addLoading();
+	                dispatch();
+	                self.setCode(92);
+	                tree_source_1.treeSource.updateTree(tree).then(function (response) {
+	                    message_1.displayErrorMessage(localization_1.localization(639));
+	                    self.updatedTree(response);
+	                    loadingtracker_1.removeLoading();
+	                }).catch(function (code) {
+	                    message_1.displayErrorMessage(localization_1.localization(code));
+	                    self.setCode(code);
+	                    loadingtracker_1.removeLoading();
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'updatedTree',
+	        value: function updatedTree(props) {
+	            var self = this;
+	            return function (dispatch) {
+	                dispatch(props);
+	            };
+	        }
+	    }, {
+	        key: 'createTree',
+	        value: function createTree(tree) {
+	            var self = this;
+	            return function (dispatch) {
+	                // we dispatch an event here so we can have "loading" state.
+	                loadingtracker_1.addLoading();
+	                dispatch();
+	                self.setCode(92);
+	                tree_source_1.treeSource.createTree(tree).then(function (response) {
+	                    message_1.displaySuccessMessage(localization_1.localization(635));
+	                    self.createdTree(response);
+	                    loadingtracker_1.removeLoading();
+	                }).catch(function (code) {
+	                    message_1.displayErrorMessage(localization_1.localization(code));
+	                    self.setCode(code);
+	                    loadingtracker_1.removeLoading();
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'createdTree',
+	        value: function createdTree(props) {
+	            return function (dispatch) {
+	                auth_actions_1.authActions.addTempTree(parseInt(props.id));
+	                react_router_1.browserHistory.push({ pathname: Settings.uBaseName + '/tree/' + props.id });
+	                auth_actions_1.authActions.fetchAuth();
+	                dispatch(props);
+	            };
+	        }
+	    }, {
+	        key: 'resetTempTree',
+	        value: function resetTempTree() {
+	            return function (dispatch) {
+	                dispatch();
+	            };
+	        }
+	    }, {
+	        key: 'refresh',
+	        value: function refresh() {
+	            return function (dispatch) {
+	                dispatch();
+	            };
+	        }
+	    }, {
+	        key: 'deleteTree',
+	        value: function deleteTree(tree) {
+	            var self = this;
+	            return function (dispatch) {
+	                loadingtracker_1.addLoading();
+	                dispatch();
+	                self.setCode(91);
+	                tree_source_1.treeSource.deleteTree(tree).then(function (response) {
+	                    message_1.displayErrorMessage(localization_1.localization(637));
+	                    self.deletedTree(tree.toJSON());
+	                    loadingtracker_1.removeLoading();
+	                }).catch(function (code) {
+	                    message_1.displayErrorMessage(localization_1.localization(code));
+	                    self.setCode(code);
+	                    loadingtracker_1.removeLoading();
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'deletedTree',
+	        value: function deletedTree(props) {
+	            var self = this;
+	            return function (dispatch) {
+	                react_router_1.browserHistory.replace({ pathname: Settings.uBaseName + '/' });
+	                dispatch(props);
+	            };
+	        }
+	    }]);
+	
+	    return TreeActions;
+	}(abstract_actions_1.AbstractActions);
+	
+	exports.treeActions = alt_1.alt.createActions(TreeActions);
+	//# sourceMappingURL=tree.actions.js.map
+
+/***/ },
+/* 282 */
+/*!*************************************!*\
+  !*** ./src/actions/auth.actions.js ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var react_router_1 = __webpack_require__(/*! react-router */ 159);
+	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
+	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
+	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
+	var auth_source_1 = __webpack_require__(/*! ./../sources/auth.source */ 283);
+	var person_source_1 = __webpack_require__(/*! ./../sources/person.source */ 288);
+	var tree_actions_1 = __webpack_require__(/*! ./tree.actions */ 281);
+	var food_actions_1 = __webpack_require__(/*! ./food.actions */ 289);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 290);
+	var message_1 = __webpack_require__(/*! ./../utils/message */ 277);
+	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
+	
+	var AuthActions = function (_abstract_actions_1$A) {
+	    _inherits(AuthActions, _abstract_actions_1$A);
+	
+	    function AuthActions() {
+	        _classCallCheck(this, AuthActions);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(AuthActions).apply(this, arguments));
+	    }
+	
+	    _createClass(AuthActions, [{
+	        key: 'fetchAuth',
+	        value: function fetchAuth() {
+	            var self = this;
+	            return function (dispatch) {
+	                loadingtracker_1.addLoading();
+	                dispatch();
+	                self.setCode(90);
+	                auth_source_1.authSource.fetchAuth().then(function (response) {
+	                    self.fetchedAuth({ id: response.id, contact: response.contact, auth: response.auth, trees: response.trees });
+	                    loadingtracker_1.removeLoading();
+	                }).catch(function (code) {
+	                    message_1.displayErrorMessage(localization_1.localization(code));
+	                    self.setCode(code);
+	                    loadingtracker_1.removeLoading();
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'fetchedAuth',
+	        value: function fetchedAuth(props) {
+	            var self = this;
+	            return function (dispatch) {
+	                dispatch(props);
+	            };
+	        }
+	    }, {
+	        key: 'fetchPerson',
+	        value: function fetchPerson(id) {
+	            var self = this;
+	            return function (dispatch) {
+	                // we dispatch an event here so we can have "loading" state.
+	                loadingtracker_1.addLoading();
+	                dispatch();
+	                self.setCode(90);
+	                person_source_1.personSource.fetchPersons([id]).then(function (response) {
+	                    if (response.length > 0) {
+	                        self.fetchedPerson(response[0]);
+	                    }
+	                    loadingtracker_1.removeLoading();
+	                }).catch(function (code) {
+	                    message_1.displayErrorMessage(localization_1.localization(code));
+	                    self.setCode(code);
+	                    loadingtracker_1.removeLoading();
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'fetchedPerson',
+	        value: function fetchedPerson(props) {
+	            var self = this;
+	            return function (dispatch) {
+	                dispatch(props);
+	            };
+	        }
+	    }, {
+	        key: 'processLogout',
+	        value: function processLogout() {
+	            var self = this;
+	            return function (dispatch) {
+	                // we dispatch an event here so we can have "loading" state.
+	                loadingtracker_1.addLoading();
+	                dispatch();
+	                self.setCode(90);
+	                auth_source_1.authSource.processLogout().then(function () {
+	                    self.processedLogout();
+	                    loadingtracker_1.removeLoading();
+	                }).catch(function (code) {
+	                    message_1.displayErrorMessage(localization_1.localization(code));
+	                    self.setCode(code);
+	                    loadingtracker_1.removeLoading();
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'processedLogout',
+	        value: function processedLogout() {
+	            var self = this;
+	            return function (dispatch) {
+	                dispatch();
+	                react_router_1.browserHistory.push({ pathname: Settings.uBaseName + '/' });
+	                tree_actions_1.treeActions.fetchTrees();
+	                food_actions_1.foodActions.fetchFoods();
+	            };
+	        }
+	    }, {
+	        key: 'processLogin',
+	        value: function processLogin(contact, password) {
+	            var self = this;
+	            return function (dispatch) {
+	                // we dispatch an event here so we can have "loading" state.
+	                loadingtracker_1.addLoading();
+	                dispatch();
+	                self.setCode(90);
+	                auth_source_1.authSource.processLogin(contact, password).then(function (response) {
+	                    self.processedLogin({ id: response.id, auth: response.auth, contact: response.contact, trees: response.trees });
+	                    loadingtracker_1.removeLoading();
+	                }).catch(function (code) {
+	                    message_1.displayErrorMessage(localization_1.localization(code));
+	                    self.setCode(code);
+	                    loadingtracker_1.removeLoading();
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'processedLogin',
+	        value: function processedLogin(props) {
+	            var self = this;
+	            return function (dispatch) {
+	                dispatch(props);
+	                react_router_1.browserHistory.push({ pathname: Settings.uBaseName + '/' });
+	                tree_actions_1.treeActions.fetchTrees();
+	                food_actions_1.foodActions.fetchFoods();
+	            };
+	        }
+	    }, {
+	        key: 'addTempTree',
+	        value: function addTempTree(treeId) {
+	            var self = this;
+	            return function (dispatch) {
+	                dispatch(treeId);
+	            };
+	        }
+	    }, {
+	        key: 'setCode',
+	        value: function setCode(code) {
+	            var self = this;
+	            return function (dispatch) {
+	                dispatch(code);
+	            };
+	        }
+	    }]);
+	
+	    return AuthActions;
+	}(abstract_actions_1.AbstractActions);
+	
+	exports.authActions = alt_1.alt.createActions(AuthActions);
+	//# sourceMappingURL=auth.actions.js.map
+
+/***/ },
 /* 283 */
+/*!************************************!*\
+  !*** ./src/sources/auth.source.js ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var $ = __webpack_require__(/*! jquery */ 278);
+	__webpack_require__(/*! es6-promise */ 284);
+	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
+	var AuthSource = {
+	    fetchAuth: function fetchAuth() {
+	        return new Promise(function (resolve, reject) {
+	            $.ajax({
+	                url: Settings.uBaseName + Settings.uServer + "logincheck.php",
+	                type: 'GET',
+	                data: {},
+	                dataType: "json",
+	                success: function success(response) {
+	                    if (response.code == 200) {
+	                        resolve(response);
+	                    } else {
+	                        console.log(response.message);
+	                        reject(response.code);
+	                    }
+	                },
+	                error: function error(response) {
+	                    console.log(response.statusText);
+	                    reject(response.status);
+	                }
+	            });
+	        });
+	    },
+	    processLogout: function processLogout() {
+	        return new Promise(function (resolve, reject) {
+	            $.ajax({
+	                url: Settings.uBaseName + Settings.uServer + "logout.php",
+	                type: "GET",
+	                data: {},
+	                dataType: "json",
+	                success: function success(response) {
+	                    if (response.code == 200) {
+	                        resolve(response);
+	                    } else {
+	                        console.log(response.message);
+	                        reject(response.code);
+	                    }
+	                },
+	                error: function error(response) {
+	                    console.log(response.statusText);
+	                    reject(response.status);
+	                }
+	            });
+	        });
+	    },
+	    processLogin: function processLogin(contact, password) {
+	        return new Promise(function (resolve, reject) {
+	            $.ajax({
+	                url: Settings.uBaseName + Settings.uServer + "login.php",
+	                type: "POST",
+	                data: {
+	                    'contact': contact,
+	                    'p': password
+	                },
+	                dataType: "json",
+	                success: function success(response) {
+	                    if (response.code == 200) {
+	                        resolve(response);
+	                    } else {
+	                        console.log(response.message);
+	                        reject(response.code);
+	                    }
+	                },
+	                error: function error(response) {
+	                    console.log(response.statusText);
+	                    reject(response.status);
+	                }
+	            });
+	        });
+	    }
+	};
+	exports.authSource = AuthSource;
+	//# sourceMappingURL=auth.source.js.map
+
+/***/ },
+/* 284 */
 /*!*******************************************!*\
   !*** ./~/es6-promise/dist/es6-promise.js ***!
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -50316,7 +50353,7 @@
 	    function lib$es6$promise$asap$$attemptVertx() {
 	      try {
 	        var r = require;
-	        var vertx = __webpack_require__(/*! vertx */ 285);
+	        var vertx = __webpack_require__(/*! vertx */ 286);
 	        lib$es6$promise$asap$$vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	        return lib$es6$promise$asap$$useVertxTimer();
 	      } catch(e) {
@@ -51134,7 +51171,7 @@
 	    };
 	
 	    /* global define:true module:true window: true */
-	    if ("function" === 'function' && __webpack_require__(/*! !webpack amd define */ 286)['amd']) {
+	    if ("function" === 'function' && __webpack_require__(/*! !webpack amd define */ 287)['amd']) {
 	      !(__WEBPACK_AMD_DEFINE_RESULT__ = function() { return lib$es6$promise$umd$$ES6Promise; }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof module !== 'undefined' && module['exports']) {
 	      module['exports'] = lib$es6$promise$umd$$ES6Promise;
@@ -51146,10 +51183,10 @@
 	}).call(this);
 	
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/process/browser.js */ 4), (function() { return this; }()), __webpack_require__(/*! ./../../webpack/buildin/module.js */ 284)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/process/browser.js */ 4), (function() { return this; }()), __webpack_require__(/*! ./../../webpack/buildin/module.js */ 285)(module)))
 
 /***/ },
-/* 284 */
+/* 285 */
 /*!***********************************!*\
   !*** (webpack)/buildin/module.js ***!
   \***********************************/
@@ -51168,7 +51205,7 @@
 
 
 /***/ },
-/* 285 */
+/* 286 */
 /*!***********************!*\
   !*** vertx (ignored) ***!
   \***********************/
@@ -51177,7 +51214,7 @@
 	/* (ignored) */
 
 /***/ },
-/* 286 */
+/* 287 */
 /*!***************************************!*\
   !*** (webpack)/buildin/amd-define.js ***!
   \***************************************/
@@ -51187,7 +51224,7 @@
 
 
 /***/ },
-/* 287 */
+/* 288 */
 /*!**************************************!*\
   !*** ./src/sources/person.source.js ***!
   \**************************************/
@@ -51195,8 +51232,8 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
-	__webpack_require__(/*! es6-promise */ 283);
+	var $ = __webpack_require__(/*! jquery */ 278);
+	__webpack_require__(/*! es6-promise */ 284);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var PersonSource = {
 	    fetchPersons: function fetchPersons(ids) {
@@ -51251,7 +51288,7 @@
 	//# sourceMappingURL=person.source.js.map
 
 /***/ },
-/* 288 */
+/* 289 */
 /*!*************************************!*\
   !*** ./src/actions/food.actions.js ***!
   \*************************************/
@@ -51269,9 +51306,9 @@
 	
 	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
 	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 289);
-	var food_source_1 = __webpack_require__(/*! ./../sources/food.source */ 290);
-	var message_1 = __webpack_require__(/*! ./../utils/message */ 291);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 290);
+	var food_source_1 = __webpack_require__(/*! ./../sources/food.source */ 291);
+	var message_1 = __webpack_require__(/*! ./../utils/message */ 277);
 	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
 	
 	var FoodActions = function (_abstract_actions_1$A) {
@@ -51362,7 +51399,7 @@
 	//# sourceMappingURL=food.actions.js.map
 
 /***/ },
-/* 289 */
+/* 290 */
 /*!*************************************!*\
   !*** ./src/utils/loadingtracker.js ***!
   \*************************************/
@@ -51370,7 +51407,7 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var loadings = new Array();
 	function addLoading() {
@@ -51394,7 +51431,7 @@
 	//# sourceMappingURL=loadingtracker.js.map
 
 /***/ },
-/* 290 */
+/* 291 */
 /*!************************************!*\
   !*** ./src/sources/food.source.js ***!
   \************************************/
@@ -51402,8 +51439,8 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
-	__webpack_require__(/*! es6-promise */ 283);
+	var $ = __webpack_require__(/*! jquery */ 278);
+	__webpack_require__(/*! es6-promise */ 284);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var FoodSource = {
 	    fetchFoods: function fetchFoods(id) {
@@ -51502,42 +51539,6 @@
 	//# sourceMappingURL=food.source.js.map
 
 /***/ },
-/* 291 */
-/*!******************************!*\
-  !*** ./src/utils/message.js ***!
-  \******************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var $ = __webpack_require__(/*! jquery */ 282);
-	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var messageTimer;
-	function displaySuccessMessage(message) {
-	    $('#message div').html(message);
-	    $('#message').addClass('slidein');
-	    clearTimeout(messageTimer);
-	    messageTimer = setTimeout(function () {
-	        $('#message div').html("");
-	        $('#message').removeClass('slidein');
-	    }, Settings.iMessageDuration);
-	}
-	exports.displaySuccessMessage = displaySuccessMessage;
-	function displayErrorMessage(message) {
-	    $('#message div').html(message);
-	    $('#message').addClass('slidein');
-	    $('#message').addClass('error');
-	    clearTimeout(messageTimer);
-	    messageTimer = setTimeout(function () {
-	        $('#message div').html("");
-	        $('#message').removeClass('slidein');
-	        $('#message').removeClass('error');
-	    }, Settings.iMessageDuration);
-	}
-	exports.displayErrorMessage = displayErrorMessage;
-	//# sourceMappingURL=message.js.map
-
-/***/ },
 /* 292 */
 /*!************************************!*\
   !*** ./src/sources/tree.source.js ***!
@@ -51546,8 +51547,8 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
-	__webpack_require__(/*! es6-promise */ 283);
+	var $ = __webpack_require__(/*! jquery */ 278);
+	__webpack_require__(/*! es6-promise */ 284);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var TreeSource = {
 	    fetchTrees: function fetchTrees(id) {
@@ -51656,7 +51657,7 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var sort_1 = __webpack_require__(/*! ./../utils/sort */ 294);
 	function reverseGeocoding(coordinate, success, error) {
@@ -53562,9 +53563,9 @@
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./login-parent.component.css */ 308);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var auth_actions_1 = __webpack_require__(/*! ./../../actions/auth.actions */ 280);
+	var auth_actions_1 = __webpack_require__(/*! ./../../actions/auth.actions */ 282);
 	var errorhandler_1 = __webpack_require__(/*! ./../../utils/errorhandler */ 310);
-	var message_1 = __webpack_require__(/*! ./../../utils/message */ 291);
+	var message_1 = __webpack_require__(/*! ./../../utils/message */ 277);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var LoginParentComponent = function (_React$Component) {
@@ -53759,9 +53760,9 @@
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./login-manager.component.css */ 312);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var auth_actions_1 = __webpack_require__(/*! ./../../actions/auth.actions */ 280);
+	var auth_actions_1 = __webpack_require__(/*! ./../../actions/auth.actions */ 282);
 	var errorhandler_1 = __webpack_require__(/*! ./../../utils/errorhandler */ 310);
-	var message_1 = __webpack_require__(/*! ./../../utils/message */ 291);
+	var message_1 = __webpack_require__(/*! ./../../utils/message */ 277);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var LoginManagerComponent = function (_React$Component) {
@@ -53937,7 +53938,7 @@
 	var user_role_component_1 = __webpack_require__(/*! ./user-role.component */ 326);
 	var user_neighborhood_component_1 = __webpack_require__(/*! ./user-neighborhood.component */ 329);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
-	var auth_actions_1 = __webpack_require__(/*! ./../../actions/auth.actions */ 280);
+	var auth_actions_1 = __webpack_require__(/*! ./../../actions/auth.actions */ 282);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var UserComponent = function (_React$Component) {
@@ -54253,12 +54254,12 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var React = __webpack_require__(/*! react */ 1);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./message-line.component.css */ 321);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var MessageLineComponent = function (_React$Component) {
@@ -54854,12 +54855,12 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
 	var moment = __webpack_require__(/*! moment */ 333);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var auth_actions_1 = __webpack_require__(/*! ./../actions/auth.actions */ 280);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 277);
+	var auth_actions_1 = __webpack_require__(/*! ./../actions/auth.actions */ 282);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 279);
 	var person_store_1 = __webpack_require__(/*! ./../stores/person.store */ 435);
 	(function (AuthStatus) {
 	    AuthStatus[AuthStatus["NONE"] = 0] = "NONE";
@@ -59104,7 +59105,7 @@
 	    return _moment;
 	
 	}));
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/module.js */ 284)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/module.js */ 285)(module)))
 
 /***/ },
 /* 334 */
@@ -69161,7 +69162,7 @@
 	var moment = __webpack_require__(/*! moment */ 333);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var person_actions_1 = __webpack_require__(/*! ./../actions/person.actions */ 436);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 277);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 279);
 	var auth_store_1 = __webpack_require__(/*! ./../stores/auth.store */ 332);
 	
 	var PersonModel = function () {
@@ -69449,10 +69450,10 @@
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
 	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
-	var person_source_1 = __webpack_require__(/*! ./../sources/person.source */ 287);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 289);
-	var message_1 = __webpack_require__(/*! ./../utils/message */ 291);
-	var auth_actions_1 = __webpack_require__(/*! ./auth.actions */ 280);
+	var person_source_1 = __webpack_require__(/*! ./../sources/person.source */ 288);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 290);
+	var message_1 = __webpack_require__(/*! ./../utils/message */ 277);
+	var auth_actions_1 = __webpack_require__(/*! ./auth.actions */ 282);
 	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	
@@ -69566,7 +69567,7 @@
 	var person_store_1 = __webpack_require__(/*! ./../../stores/person.store */ 435);
 	var person_actions_1 = __webpack_require__(/*! ./../../actions/person.actions */ 436);
 	var errorhandler_1 = __webpack_require__(/*! ./../../utils/errorhandler */ 310);
-	var message_1 = __webpack_require__(/*! ./../../utils/message */ 291);
+	var message_1 = __webpack_require__(/*! ./../../utils/message */ 277);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var SignUpComponent = function (_React$Component) {
@@ -69841,7 +69842,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var React = __webpack_require__(/*! react */ 1);
 	var AltContainer = __webpack_require__(/*! alt-container */ 229);
 	__webpack_require__(/*! ./../../../~/leaflet/dist/leaflet.css */ 444);
@@ -69852,14 +69853,14 @@
 	var popup_trees_component_1 = __webpack_require__(/*! ./../message/popup-trees.component */ 618);
 	var message_component_1 = __webpack_require__(/*! ./../message/message.component */ 621);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 484);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 459);
-	var food_actions_1 = __webpack_require__(/*! ./../../actions/food.actions */ 288);
+	var food_actions_1 = __webpack_require__(/*! ./../../actions/food.actions */ 289);
 	var note_store_1 = __webpack_require__(/*! ./../../stores/note.store */ 489);
 	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 486);
 	var flag_actions_1 = __webpack_require__(/*! ./../../actions/flag.actions */ 487);
 	var map_store_1 = __webpack_require__(/*! ./../../stores/map.store */ 259);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	var rating_1 = __webpack_require__(/*! ./../../utils/rating */ 602);
 	var filter_1 = __webpack_require__(/*! ./../../utils/filter */ 586);
 	
@@ -70185,7 +70186,7 @@
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 484);
 	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 486);
 	var note_store_1 = __webpack_require__(/*! ./../../stores/note.store */ 489);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	var map_actions_1 = __webpack_require__(/*! ./../../actions/map.actions */ 275);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -70523,7 +70524,7 @@
 	                var deleteTree = void 0;
 	                var tempTreeMessage = void 0;
 	                var treeOwnership = void 0;
-	                if (auth_store_1.authStore.getAuth().getIsAdmin()) {
+	                if (auth_store_1.authStore.getAuth().getIsManager()) {
 	                    deleteTree = React.createElement("div", { className: styles.button, onClick: function onClick() {
 	                            self.context.router.push({ pathname: window.location.pathname, query: { mode: "delete" } });
 	                        } }, localization_1.localization(965));
@@ -70673,7 +70674,7 @@
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./tree-food.component.css */ 457);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 459);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -70874,8 +70875,8 @@
 	
 	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
 	var moment = __webpack_require__(/*! moment */ 333);
-	var food_actions_1 = __webpack_require__(/*! ./../actions/food.actions */ 288);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 277);
+	var food_actions_1 = __webpack_require__(/*! ./../actions/food.actions */ 289);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 279);
 	
 	var FoodModel = function () {
 	    function FoodModel(props) {
@@ -71077,7 +71078,7 @@
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./tree-address.component.css */ 461);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var geolocation_1 = __webpack_require__(/*! ./../../utils/geolocation */ 293);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -71274,7 +71275,7 @@
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./tree-description.component.css */ 464);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var TreeDescriptionComponent = function (_React$Component) {
@@ -71437,7 +71438,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
@@ -71445,7 +71446,7 @@
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 303);
 	var styles = __webpack_require__(/*! ./tree-flag.component.css */ 467);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var TreeFlagComponent = function (_React$Component) {
@@ -71606,7 +71607,7 @@
 	__webpack_require__(/*! ./../../../~/react-select/dist/react-select.css */ 303);
 	var styles = __webpack_require__(/*! ./tree-ownership.component.css */ 470);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var TreeOwnershipComponent = function (_React$Component) {
@@ -71764,7 +71765,7 @@
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./tree-location.component.css */ 473);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var TreeLocationComponent = function (_React$Component) {
@@ -71950,7 +71951,7 @@
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var tree_parent_list_component_1 = __webpack_require__(/*! ./tree-parent-list.component */ 478);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 459);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var person_store_1 = __webpack_require__(/*! ./../../stores/person.store */ 435);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
 	var person_actions_1 = __webpack_require__(/*! ./../../actions/person.actions */ 436);
@@ -72124,14 +72125,14 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var React = __webpack_require__(/*! react */ 1);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./tree-parent-list.component.css */ 479);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 459);
-	var food_actions_1 = __webpack_require__(/*! ./../../actions/food.actions */ 288);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var food_actions_1 = __webpack_require__(/*! ./../../actions/food.actions */ 289);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -72297,7 +72298,7 @@
 	var styles = __webpack_require__(/*! ./note-list.component.css */ 482);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var sort_1 = __webpack_require__(/*! ./../../utils/sort */ 294);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var NoteListComponent = function (_React$Component) {
@@ -72478,8 +72479,8 @@
 	var L = __webpack_require__(/*! leaflet */ 274);
 	var _ = __webpack_require__(/*! underscore */ 485);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var tree_actions_1 = __webpack_require__(/*! ./../actions/tree.actions */ 279);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 277);
+	var tree_actions_1 = __webpack_require__(/*! ./../actions/tree.actions */ 281);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 279);
 	
 	var TreeModel = function () {
 	    function TreeModel(props) {
@@ -74379,7 +74380,7 @@
 	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var flag_actions_1 = __webpack_require__(/*! ./../actions/flag.actions */ 487);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 277);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 279);
 	
 	var FlagModel = function () {
 	    function FlagModel(props) {
@@ -74554,8 +74555,8 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
-	__webpack_require__(/*! es6-promise */ 283);
+	var $ = __webpack_require__(/*! jquery */ 278);
+	__webpack_require__(/*! es6-promise */ 284);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var FlagSource = {
 	    fetchFlags: function fetchFlags() {
@@ -74598,14 +74599,14 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
 	var moment = __webpack_require__(/*! moment */ 333);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var note_actions_1 = __webpack_require__(/*! ./../actions/note.actions */ 490);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 277);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 279);
 	var sort_1 = __webpack_require__(/*! ./../utils/sort */ 294);
-	var enum_1 = __webpack_require__(/*! ./../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../utils/enum */ 280);
 	
 	var NoteModel = function () {
 	    function NoteModel(props) {
@@ -74978,9 +74979,9 @@
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 289);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 290);
 	var note_source_1 = __webpack_require__(/*! ./../sources/note.source */ 491);
-	var message_1 = __webpack_require__(/*! ./../utils/message */ 291);
+	var message_1 = __webpack_require__(/*! ./../utils/message */ 277);
 	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
 	
 	var NoteActions = function (_abstract_actions_1$A) {
@@ -75134,10 +75135,10 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
-	__webpack_require__(/*! es6-promise */ 283);
+	var $ = __webpack_require__(/*! jquery */ 278);
+	__webpack_require__(/*! es6-promise */ 284);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var enum_1 = __webpack_require__(/*! ./../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../utils/enum */ 280);
 	var NoteSource = {
 	    fetchNotesFromTreeIds: function fetchNotesFromTreeIds(treeIds) {
 	        return new Promise(function (resolve, reject) {
@@ -75429,7 +75430,7 @@
 	var map_store_1 = __webpack_require__(/*! ./../../stores/map.store */ 259);
 	var map_actions_1 = __webpack_require__(/*! ./../../actions/map.actions */ 275);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	
 	var TreesControlsComponent = function (_React$Component) {
 	    _inherits(TreesControlsComponent, _React$Component);
@@ -75608,8 +75609,8 @@
 	var note_actions_1 = __webpack_require__(/*! ./../../actions/note.actions */ 490);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
 	var upload_1 = __webpack_require__(/*! ./../../utils/upload */ 576);
-	var message_1 = __webpack_require__(/*! ./../../utils/message */ 291);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var message_1 = __webpack_require__(/*! ./../../utils/message */ 277);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	var errorhandler_1 = __webpack_require__(/*! ./../../utils/errorhandler */ 310);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -79253,7 +79254,7 @@
 	var styles = __webpack_require__(/*! ./note-amount.component.css */ 560);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var message_line_component_1 = __webpack_require__(/*! ./../message/message-line.component */ 320);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var NoteAmountComponent = function (_React$Component) {
@@ -90948,7 +90949,7 @@
 	
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../webpack/buildin/module.js */ 284)(module), (function() { return this; }()), __webpack_require__(/*! ./~/process/browser.js */ 4)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../../webpack/buildin/module.js */ 285)(module), (function() { return this; }()), __webpack_require__(/*! ./~/process/browser.js */ 4)))
 
 /***/ },
 /* 572 */
@@ -91524,7 +91525,7 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	function uploadImage(file, prefix, _success, _error) {
 	    loadImage.parseMetaData(file, function (data) {
@@ -91688,10 +91689,10 @@
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 459);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
 	var note_actions_1 = __webpack_require__(/*! ./../../actions/note.actions */ 490);
-	var message_1 = __webpack_require__(/*! ./../../utils/message */ 291);
+	var message_1 = __webpack_require__(/*! ./../../utils/message */ 277);
 	var errorhandler_1 = __webpack_require__(/*! ./../../utils/errorhandler */ 310);
 	var upload_1 = __webpack_require__(/*! ./../../utils/upload */ 576);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var NoteEditComponent = function (_React$Component) {
@@ -92124,7 +92125,7 @@
 	var styles = __webpack_require__(/*! ./filter-food.component.css */ 584);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 459);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var filter_1 = __webpack_require__(/*! ./../../utils/filter */ 586);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -92315,7 +92316,7 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	(function (FilterMode) {
 	    FilterMode[FilterMode["NONE"] = 0] = "NONE";
@@ -92463,7 +92464,7 @@
 	var styles = __webpack_require__(/*! ./filter-flag.component.css */ 588);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var flag_store_1 = __webpack_require__(/*! ./../../stores/flag.store */ 486);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var filter_1 = __webpack_require__(/*! ./../../utils/filter */ 586);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -92661,7 +92662,7 @@
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./filter-ownership.component.css */ 591);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var filter_1 = __webpack_require__(/*! ./../../utils/filter */ 586);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -92852,7 +92853,7 @@
 	var styles = __webpack_require__(/*! ./filter-adopt.component.css */ 594);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var filter_1 = __webpack_require__(/*! ./../../utils/filter */ 586);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -93036,7 +93037,7 @@
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
 	var styles = __webpack_require__(/*! ./filter-rate.component.css */ 597);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var filter_1 = __webpack_require__(/*! ./../../utils/filter */ 586);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -93260,7 +93261,7 @@
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
 	var rating_1 = __webpack_require__(/*! ./../../utils/rating */ 602);
-	var message_1 = __webpack_require__(/*! ./../../utils/message */ 291);
+	var message_1 = __webpack_require__(/*! ./../../utils/message */ 277);
 	
 	var NotifyComponent = function (_React$Component) {
 	    _inherits(NotifyComponent, _React$Component);
@@ -93429,7 +93430,7 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	function calcRating(_success, fail, _error) {
 	    $.ajax({
@@ -93558,7 +93559,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var React = __webpack_require__(/*! react */ 1);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var moment = __webpack_require__(/*! moment */ 333);
@@ -93570,7 +93571,7 @@
 	var sort_1 = __webpack_require__(/*! ./../../utils/sort */ 294);
 	var color_1 = __webpack_require__(/*! ./../../utils/color */ 606);
 	var device_1 = __webpack_require__(/*! ./../../utils/device */ 607);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var TreeGraphComponent = function (_React$Component) {
@@ -93981,7 +93982,7 @@
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 459);
 	var map_store_1 = __webpack_require__(/*! ./../../stores/map.store */ 259);
 	var map_actions_1 = __webpack_require__(/*! ./../../actions/map.actions */ 275);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	
 	var TreesMapComponent = function (_React$Component) {
 	    _inherits(TreesMapComponent, _React$Component);
@@ -94250,6 +94251,27 @@
 	        value: function renderUserLocation(position) {
 	            var self = this;
 	            if (position) {
+	                /// TEST code
+	                // html2canvas(document.querySelector('#map')).then(function(canvas) {
+	                //   document.querySelector('#png-container').appendChild(canvas);
+	                // });
+	                html2canvas(document.querySelector('.leaflet-zoom-animated')).then(function (canvas) {
+	                    document.body.appendChild(canvas);
+	                });
+	                // var svgString = new XMLSerializer().serializeToString(document.querySelector('#map'));
+	                // var canvas = document.getElementById("canvas");
+	                // var ctx = canvas.getContext("2d");
+	                // var DOMURL = self.URL || self.webkitURL || self;
+	                // var img = new Image();
+	                // var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+	                // var url = DOMURL.createObjectURL(svg);
+	                // img.onload = function() {
+	                //     ctx.drawImage(img, 0, 0);
+	                //     var png = canvas.toDataURL("image/png");
+	                //     document.querySelector('#png-container').innerHTML = '<img src="'+png+'"/>';
+	                //     DOMURL.revokeObjectURL(png);
+	                // };
+	                // img.src = url;
 	                if (self.userMarker) {
 	                    self.userMarker.setLatLng(position);
 	                } else {
@@ -94531,7 +94553,7 @@
 	var L = __webpack_require__(/*! leaflet */ 274);
 	__webpack_require__(/*! ./marker.factory.css */ 612);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var tree_actions_1 = __webpack_require__(/*! ./../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../actions/tree.actions */ 281);
 	var flag_store_1 = __webpack_require__(/*! ./../stores/flag.store */ 486);
 	var location_actions_1 = __webpack_require__(/*! ./../actions/location.actions */ 614);
 	var donate_actions_1 = __webpack_require__(/*! ./../actions/donate.actions */ 616);
@@ -94775,9 +94797,9 @@
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 289);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 290);
 	var location_source_1 = __webpack_require__(/*! ./../sources/location.source */ 615);
-	var message_1 = __webpack_require__(/*! ./../utils/message */ 291);
+	var message_1 = __webpack_require__(/*! ./../utils/message */ 277);
 	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
 	
 	var LocationActions = function (_abstract_actions_1$A) {
@@ -94938,8 +94960,8 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
-	__webpack_require__(/*! es6-promise */ 283);
+	var $ = __webpack_require__(/*! jquery */ 278);
+	__webpack_require__(/*! es6-promise */ 284);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var LocationSource = {
 	    fetchLocations: function fetchLocations(id) {
@@ -95060,9 +95082,9 @@
 	var react_router_1 = __webpack_require__(/*! react-router */ 159);
 	var abstract_actions_1 = __webpack_require__(/*! ./abstract.actions */ 276);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 289);
+	var loadingtracker_1 = __webpack_require__(/*! ./../utils/loadingtracker */ 290);
 	var donate_source_1 = __webpack_require__(/*! ./../sources/donate.source */ 617);
-	var message_1 = __webpack_require__(/*! ./../utils/message */ 291);
+	var message_1 = __webpack_require__(/*! ./../utils/message */ 277);
 	var localization_1 = __webpack_require__(/*! ./../constraints/localization */ 225);
 	
 	var DonateActions = function (_abstract_actions_1$A) {
@@ -95242,10 +95264,10 @@
 
 	"use strict";
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
-	__webpack_require__(/*! es6-promise */ 283);
+	var $ = __webpack_require__(/*! jquery */ 278);
+	__webpack_require__(/*! es6-promise */ 284);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
-	var enum_1 = __webpack_require__(/*! ./../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../utils/enum */ 280);
 	var DonateSource = {
 	    fetchDonatesFromLocationIds: function fetchDonatesFromLocationIds(locationIds) {
 	        return new Promise(function (resolve, reject) {
@@ -95386,12 +95408,12 @@
 	var styles = __webpack_require__(/*! ./popup-trees.component.css */ 619);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 484);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var note_store_1 = __webpack_require__(/*! ./../../stores/note.store */ 489);
 	var note_actions_1 = __webpack_require__(/*! ./../../actions/note.actions */ 490);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
-	var message_1 = __webpack_require__(/*! ./../../utils/message */ 291);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var message_1 = __webpack_require__(/*! ./../../utils/message */ 277);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var PopupTreesComponent = function (_React$Component) {
@@ -95691,7 +95713,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var React = __webpack_require__(/*! react */ 1);
 	var AltContainer = __webpack_require__(/*! alt-container */ 229);
 	__webpack_require__(/*! ./../../../~/leaflet/dist/leaflet.css */ 444);
@@ -95704,13 +95726,13 @@
 	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 649);
 	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 614);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 459);
-	var food_actions_1 = __webpack_require__(/*! ./../../actions/food.actions */ 288);
+	var food_actions_1 = __webpack_require__(/*! ./../../actions/food.actions */ 289);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 484);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var map_store_1 = __webpack_require__(/*! ./../../stores/map.store */ 259);
 	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 650);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	
 	var DonationsComponent = function (_React$Component) {
 	    _inherits(DonationsComponent, _React$Component);
@@ -95950,7 +95972,7 @@
 	var map_store_1 = __webpack_require__(/*! ./../../stores/map.store */ 259);
 	var map_actions_1 = __webpack_require__(/*! ./../../actions/map.actions */ 275);
 	var marker_factory_1 = __webpack_require__(/*! ./../../utils/marker.factory */ 611);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	
 	var MapComponent = function (_React$Component) {
 	    _inherits(MapComponent, _React$Component);
@@ -96369,7 +96391,7 @@
 	var location_store_1 = __webpack_require__(/*! ./../../stores/location.store */ 649);
 	var donate_store_1 = __webpack_require__(/*! ./../../stores/donate.store */ 650);
 	var map_actions_1 = __webpack_require__(/*! ./../../actions/map.actions */ 275);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var DonationsPanelComponent = function (_React$Component) {
@@ -97678,7 +97700,7 @@
 	var L = __webpack_require__(/*! leaflet */ 274);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var location_actions_1 = __webpack_require__(/*! ./../actions/location.actions */ 614);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 277);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 279);
 	
 	var LocationModel = function () {
 	    function LocationModel(props) {
@@ -97921,13 +97943,13 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var alt_1 = __webpack_require__(/*! ./../alt */ 260);
 	var moment = __webpack_require__(/*! moment */ 333);
 	var Settings = __webpack_require__(/*! ./../constraints/settings.json */ 219);
 	var donate_actions_1 = __webpack_require__(/*! ./../actions/donate.actions */ 616);
-	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 277);
-	var enum_1 = __webpack_require__(/*! ./../utils/enum */ 278);
+	var abstract_store_1 = __webpack_require__(/*! ./../stores/abstract.store */ 279);
+	var enum_1 = __webpack_require__(/*! ./../utils/enum */ 280);
 	var sort_1 = __webpack_require__(/*! ./../utils/sort */ 294);
 	
 	var DonateModel = function () {
@@ -98355,7 +98377,7 @@
 	var map_store_1 = __webpack_require__(/*! ./../../stores/map.store */ 259);
 	var map_actions_1 = __webpack_require__(/*! ./../../actions/map.actions */ 275);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	
 	var DonationsControlsComponent = function (_React$Component) {
 	    _inherits(DonationsControlsComponent, _React$Component);
@@ -98535,7 +98557,7 @@
 	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 616);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 484);
-	var message_1 = __webpack_require__(/*! ./../../utils/message */ 291);
+	var message_1 = __webpack_require__(/*! ./../../utils/message */ 277);
 	var errorhandler_1 = __webpack_require__(/*! ./../../utils/errorhandler */ 310);
 	var upload_1 = __webpack_require__(/*! ./../../utils/upload */ 576);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
@@ -99105,7 +99127,7 @@
 	var styles = __webpack_require__(/*! ./donate-amount.component.css */ 664);
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var message_line_component_1 = __webpack_require__(/*! ./../message/message-line.component */ 320);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
 	var DonateAmountComponent = function (_React$Component) {
@@ -99286,7 +99308,7 @@
 	var Settings = __webpack_require__(/*! ./../../constraints/settings.json */ 219);
 	var food_store_1 = __webpack_require__(/*! ./../../stores/food.store */ 459);
 	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 616);
-	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 279);
+	var tree_actions_1 = __webpack_require__(/*! ./../../actions/tree.actions */ 281);
 	var filter_1 = __webpack_require__(/*! ./../../utils/filter */ 586);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
 	
@@ -99488,7 +99510,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var React = __webpack_require__(/*! react */ 1);
 	var FontAwesome = __webpack_require__(/*! react-fontawesome */ 244);
 	__webpack_require__(/*! ./../../../~/font-awesome/css/font-awesome.css */ 245);
@@ -99683,7 +99705,7 @@
 	var donate_actions_1 = __webpack_require__(/*! ./../../actions/donate.actions */ 616);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
 	var tree_store_1 = __webpack_require__(/*! ./../../stores/tree.store */ 484);
-	var message_1 = __webpack_require__(/*! ./../../utils/message */ 291);
+	var message_1 = __webpack_require__(/*! ./../../utils/message */ 277);
 	var errorhandler_1 = __webpack_require__(/*! ./../../utils/errorhandler */ 310);
 	var upload_1 = __webpack_require__(/*! ./../../utils/upload */ 576);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
@@ -100091,7 +100113,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var $ = __webpack_require__(/*! jquery */ 282);
+	var $ = __webpack_require__(/*! jquery */ 278);
 	var React = __webpack_require__(/*! react */ 1);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 158);
 	var moment = __webpack_require__(/*! moment */ 333);
@@ -100399,7 +100421,7 @@
 	var location_actions_1 = __webpack_require__(/*! ./../../actions/location.actions */ 614);
 	var auth_store_1 = __webpack_require__(/*! ./../../stores/auth.store */ 332);
 	var localization_1 = __webpack_require__(/*! ./../../constraints/localization */ 225);
-	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 278);
+	var enum_1 = __webpack_require__(/*! ./../../utils/enum */ 280);
 	
 	var PopupDonationsComponent = function (_React$Component) {
 	    _inherits(PopupDonationsComponent, _React$Component);

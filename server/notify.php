@@ -35,7 +35,7 @@
       $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 
       #find forward items
-      $sql = "SELECT DISTINCT tree.id, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 335 ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
+      $sql = "SELECT DISTINCT tree.id, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE tree.public = 1 AND note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 335 ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
 
       try {
         $pdo = getConnection();
@@ -93,6 +93,7 @@
 
     # Detect base url.
     $settings = json_decode(file_get_contents("../dist/settings.json"), true);
+    $test = filter_var($settings['bTestMail'], FILTER_VALIDATE_BOOLEAN);
     $baseurl = $settings['ssltype'] . $_SERVER['SERVER_NAME'] . $settings['uBaseNameForWebPack'];
     $treesurl = $baseurl . "tree/";
     $gtolib = floatval($settings['fGToLBS']);
@@ -100,6 +101,7 @@
     # find items
     $sql = "SELECT DISTINCT tree.id, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 351 ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
     $text = "";
+    $html = "";
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);
@@ -119,14 +121,27 @@
       	echo json_encode($params);
       } else {
         foreach ($result as $item) {
-          $text .= round(floatval($item['amount']) * $gtolib, 3) . " lbs. of " . $item['name'] . " was picked up on " . $item['date'] . " from #" . $item['id'] .= " - " . $treesurl . $item['id'] . "?mode=graph\n";
+          // $text .= round(floatval($item['amount']) * $gtolib, 3) . " lbs. of " . $item['name'] . " was picked up on " . $item['date'] . " from #" . $item['id'] .= " - " . $treesurl . $item['id'] . "?mode=graph\n";
+
+          $html .= "<div style='font-family:sans-serif;margin-bottom:8px;'>" . round(floatval($item['amount']) * $gtolib, 3) . " lbs. of " . $item['name'] . " was picked up on " . $item['date'] . " from #" . $item['id'] .= " - <a href='" . $treesurl . $item['id'] . "?mode=graph'>Check out #" . $item['id'] . "</a></div><img src='" . $baseurl . "dist/map/" . $item['id'] . "_map.png'><br/><hr />";
         }
         // Send message.
-        $mg->sendMessage($config->domain, array('from'    => $config->from,
-                                                'to'      => $recipients,
-                                                'subject' => "FoodParent " . date("F j, Y") . " Report",
-                                                'text'    => "FoodParent " . date("F j, Y") . " Report\n\n" . $text,
-                                              ));
+        if ($test) {
+          $mg->sendMessage($config->domain, array('from'    => $config->from,
+                                                  'to'      => $recipients,
+                                                  'subject' => "[TEST] FoodParent " . date("F j, Y") . " Report",
+                                                  'html'    => "<html><head></head><body><h3 style='font-family:sans-serif;margin-bottom:16px;'>[TEST] FoodParent " . date("F j, Y") . " Report</h3>" . $html . "</body></html>",
+                                                  // 'text'    => "[TEST] FoodParent " . date("F j, Y") . " Report\n\n" . $text,
+                                                ));
+        } else {
+          $mg->sendMessage($config->domain, array('from'    => $config->from,
+                                                  'to'      => $recipients,
+                                                  'subject' => "FoodParent " . date("F j, Y") . " Report",
+                                                  'html'    => "<html><head></head><body><h3 style='font-family:sans-serif;margin-bottom:16px;'>FoodParent " . date("F j, Y") . " Report</h3>" . $html . "</body></html>",
+                                                  // 'text'    => "FoodParent " . date("F j, Y") . " Report\n\n" . $text,
+                                                ));
+        }
+
         $params = array(
           "code" => 200,
         );
@@ -151,12 +166,14 @@
 
     # Detect base url.
     $settings = json_decode(file_get_contents("../dist/settings.json"), true);
+    $test = filter_var($settings['bTestMail'], FILTER_VALIDATE_BOOLEAN);
     $baseurl = $settings['ssltype'] . $_SERVER['SERVER_NAME'] . $settings['uBaseNameForWebPack'];
     $treesurl = $baseurl . "tree/";
     $gtolib = floatval($settings['fGToLBS']);
 
     # find items
-    $sql = "SELECT DISTINCT tree.id, tree.parent, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 335 ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
+    $sql = "SELECT DISTINCT tree.id, tree.parent, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE tree.public = 1 AND note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 335 ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
+
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);
@@ -174,10 +191,13 @@
       # send email to each parent
       foreach ($uparents as $uparent) {
         $text = "";
+        $html = "";
         foreach ($result as $item) {
           $parents = explode(",", $item['parent']);
           if (in_array($uparent, $parents)) {
-            $text .= "Please update " . $item['name'] . " #" . $item['id'] .= " - " . $treesurl . $item['id'] . "\n";
+            // $text .= "Please update " . $item['name'] . " #" . $item['id'] .= " - " . $treesurl . $item['id'] . "\n";
+
+            $html .= "<div style='font-family:sans-serif;margin-bottom:8px;'>Please update " . $item['name'] . " #" . $item['id'] .= " - <a href='" . $treesurl . $item['id'] . "'>Post a new note for " . $item['name'] . " #" . $item['id'] . "</a></div><img src='" . $baseurl . "dist/map/" . $item['id'] . "_map.png'><br/><hr />";
           }
         }
 
@@ -189,11 +209,24 @@
           $result3 = $stmt->fetchAll();
 
           // Send message.
-          $mg->sendMessage($config->domain, array('from'    => $config->from,
-                                                  'to'      => $result3[0]['contact'],
-                                                  'subject' => "FoodParent " . date("F j, Y") . " Update Request",
-                                                  'text'    => "FoodParent " . date("F j, Y") . " Update Request\n\n" . $text,
-                                                ));
+          if ($test) {
+            $mg->sendMessage($config->domain, array('from'    => $config->from,
+                                                    'to'      => $result3[0]['contact'],
+                                                    'subject' => "[TEST] FoodParent " . date("F j, Y") . " Update Request",
+                                                    // 'text'    => "FoodParent " . date("F j, Y") . " Update Request\n\n" . $text,
+                                                    'html'    => "<html><head></head><body><h3 style='font-family:sans-serif;margin-bottom:16px;'>[TEST] FoodParent " . date("F j, Y") . " Update Request</h3>" . $html . "</body></html>",
+                                                  ));
+          } else {
+            $mg->sendMessage($config->domain, array('from'    => $config->from,
+                                                    'to'      => $result3[0]['contact'],
+                                                    'subject' => "FoodParent " . date("F j, Y") . " Update Request",
+                                                    // 'text'    => "FoodParent " . date("F j, Y") . " Update Request\n\n" . $text,
+                                                    'html'    => "<html><head></head><body><h3 style='font-family:sans-serif;margin-bottom:16px;'>FoodParent " . date("F j, Y") . " Update Request</h3>" . $html . "</body></html>",
+                                                  ));
+          }
+
+
+
         } catch(PDOException $e) {
           $params = array(
             "code" => 400,

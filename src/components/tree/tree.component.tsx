@@ -104,7 +104,7 @@ export default class TreeComponent extends React.Component<ITreeProps, ITreeStat
       let deleteTree: JSX.Element;
       let tempTreeMessage: JSX.Element;
       let treeOwnership: JSX.Element;
-      if (authStore.getAuth().getIsAdmin()) {
+      if (authStore.getAuth().getIsManager()) {
         deleteTree = <div className={styles.button} onClick={()=> {
           self.context.router.push({pathname: window.location.pathname, query: { mode: "delete" }});
         }}>

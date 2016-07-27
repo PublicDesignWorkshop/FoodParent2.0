@@ -1,7 +1,8 @@
 {
-  "ssltype": "https://",
+  "ssltype": "http://",
   "uBaseName": "/FoodParent2.0",
   "uBaseNameForWebPack": "/FoodParent2.0/",
+  "bTestMail": true,
   "uStaticImage": "/static/images/",
   "uContentImage": "/content/images/",
   "uRelativeImageUpload": "./../content/images/",

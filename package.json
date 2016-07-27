@@ -26,6 +26,7 @@
     "font-awesome": "4.6.1",
     "jquery": "2.2.2",
     "json-loader": "0.5.4",
+    "leaflet-image": "0.2.1",
     "leaflet-plugins": "1.6.1",
     "leaflet.markercluster": "0.4.0",
     "moment": "2.13.0",
