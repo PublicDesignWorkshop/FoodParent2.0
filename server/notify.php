@@ -26,7 +26,7 @@
 
   function read() {
     # find items
-    $sql = "SELECT DISTINCT tree.id, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 351 ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
+    $sql = "SELECT tree.id, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 351 GROUP BY tree.id ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
     $text = "";
     try {
       $pdo = getConnection();
@@ -35,7 +35,7 @@
       $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 
       #find forward items
-      $sql = "SELECT DISTINCT tree.id, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE tree.public = 1 AND note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 335 ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
+      $sql = "SELECT tree.id, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE tree.public = 1 AND note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 335 GROUP BY tree.id ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
 
       try {
         $pdo = getConnection();
@@ -99,7 +99,7 @@
     $gtolib = floatval($settings['fGToLBS']);
 
     # find items
-    $sql = "SELECT DISTINCT tree.id, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 351 ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
+    $sql = "SELECT tree.id, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 351 GROUP BY tree.id ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
     $text = "";
     $html = "";
     try {
@@ -172,7 +172,7 @@
     $gtolib = floatval($settings['fGToLBS']);
 
     # find items
-    $sql = "SELECT DISTINCT tree.id, tree.parent, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE tree.public = 1 AND note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 335 ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
+    $sql = "SELECT tree.id, tree.parent, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id WHERE tree.public = 1 AND note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 335 GROUP BY tree.id ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
 
     try {
       $pdo = getConnection();

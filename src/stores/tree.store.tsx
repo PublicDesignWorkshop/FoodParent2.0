@@ -179,6 +179,7 @@ class TreeStore extends AbstractStore<TreeState> {
     self.bindListeners({
       handleResetTempTree: treeActions.resetTempTree,
       handleFetchedTrees: treeActions.fetchedTrees,
+      handleFetchedTree: treeActions.fetchedTree,
       handleUpdatedTree: treeActions.updatedTree,
       handleCreatedTree: treeActions.createdTree,
       handleRefresh: treeActions.refresh,
@@ -206,6 +207,12 @@ class TreeStore extends AbstractStore<TreeState> {
     treesProps.forEach((props: ITreeProps) => {
       self.trees.push(new TreeModel(props));
     });
+    self.code = 200;
+  }
+  handleFetchedTree(props: ITreeProps) {
+    let self: TreeStore = this;
+    self.trees = new Array<TreeModel>();
+    self.trees.push(new TreeModel(props));
     self.code = 200;
   }
   handleUpdatedTree(treeProps: ITreeProps) {

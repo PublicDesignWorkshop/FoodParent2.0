@@ -1,8 +1,9 @@
 "use strict";
 var page = require('webpage').create(),
   system = require('system'),
-  Settings = require('./../src/constraints/settings.json'),
-  address, output, size, pageWidth, pageHeight;
+  Settings = require('./../src/constraints/settings.json')
+
+var renderTime = 10000;
 
 page.viewportSize = { width: 400, height: 300 };
 console.log("Connecting to " + Settings.ssltype + Settings.host + Settings.uBaseName + Settings.uServer + "screenshot.php");
@@ -18,12 +19,12 @@ page.open(Settings.ssltype + Settings.host + Settings.uBaseName + Settings.uServ
       console.log(json.message);
       phantom.exit();
     } else {
-      console.log(json.trees.length + " trees has been found.");
+      console.log(json.trees.length + " trees have/has been found.");
     }
 
     window.setTimeout(function () {
       phantom.exit();
-    }, 10000 * json.trees.length);
+    }, renderTime * json.trees.length);
     for (var i = 0; i < json.trees.length; i++) {
       var index = i + 1;
       var id = json.trees[i].id;
@@ -38,10 +39,10 @@ page.open(Settings.ssltype + Settings.host + Settings.uBaseName + Settings.uServ
             window.setTimeout(function () {
               console.log("Rendering " + id + "_map.png (" + index + " out of " + total + ")");
               page.render("../dist/map/" + id + "_map.png");
-            }, 7500);
+            },Math.floor(renderTime * 0.75));
           }
         });
-      }, 10000 * i, id, address, index, json.trees.length);
+      }, renderTime * i, id, address, index, json.trees.length);
     }
   }
 });

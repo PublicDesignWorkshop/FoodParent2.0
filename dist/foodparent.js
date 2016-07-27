@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/FoodParent2.0/dist/";
+/******/ 	__webpack_require__.p = "/foodparent/dist/";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -25827,10 +25827,10 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-		"ssltype": "http://",
-		"host": "localhost",
-		"uBaseName": "/FoodParent2.0",
-		"uBaseNameForWebPack": "/FoodParent2.0/",
+		"ssltype": "https://",
+		"host": "concrete-jungle.org",
+		"uBaseName": "/foodparent",
+		"uBaseNameForWebPack": "/foodparent/",
 		"bTestMail": true,
 		"uStaticImage": "/static/images/",
 		"uContentImage": "/content/images/",
@@ -49820,6 +49820,32 @@
 	            };
 	        }
 	    }, {
+	        key: 'fetchTree',
+	        value: function fetchTree(id) {
+	            var self = this;
+	            return function (dispatch) {
+	                loadingtracker_1.addLoading();
+	                dispatch();
+	                self.setCode(90);
+	                tree_source_1.treeSource.fetchTree(id).then(function (response) {
+	                    self.fetchedTree(response);
+	                    loadingtracker_1.removeLoading();
+	                }).catch(function (code) {
+	                    message_1.displayErrorMessage(localization_1.localization(code));
+	                    self.setCode(code);
+	                    loadingtracker_1.removeLoading();
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'fetchedTree',
+	        value: function fetchedTree(props) {
+	            var self = this;
+	            return function (dispatch) {
+	                dispatch(props);
+	            };
+	        }
+	    }, {
 	        key: 'updateTree',
 	        value: function updateTree(tree) {
 	            var self = this;
@@ -50237,7 +50263,7 @@
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -51577,6 +51603,30 @@
 	                success: function success(response) {
 	                    if (response.code == 200) {
 	                        resolve(response.trees);
+	                    } else {
+	                        console.log(response.message);
+	                        reject(response.code);
+	                    }
+	                },
+	                error: function error(response) {
+	                    console.log(response.statusText);
+	                    reject(response.status);
+	                }
+	            });
+	        });
+	    },
+	    fetchTree: function fetchTree(id) {
+	        return new Promise(function (resolve, reject) {
+	            $.ajax({
+	                url: Settings.uBaseName + Settings.uServer + "tree.php",
+	                type: 'GET',
+	                data: {
+	                    id: id
+	                },
+	                dataType: "json",
+	                success: function success(response) {
+	                    if (response.code == 200) {
+	                        resolve(response.tree);
 	                    } else {
 	                        console.log(response.message);
 	                        reject(response.code);
@@ -72686,6 +72736,7 @@
 	        self.bindListeners({
 	            handleResetTempTree: tree_actions_1.treeActions.resetTempTree,
 	            handleFetchedTrees: tree_actions_1.treeActions.fetchedTrees,
+	            handleFetchedTree: tree_actions_1.treeActions.fetchedTree,
 	            handleUpdatedTree: tree_actions_1.treeActions.updatedTree,
 	            handleCreatedTree: tree_actions_1.treeActions.createdTree,
 	            handleRefresh: tree_actions_1.treeActions.refresh,
@@ -72721,6 +72772,14 @@
 	            treesProps.forEach(function (props) {
 	                self.trees.push(new TreeModel(props));
 	            });
+	            self.code = 200;
+	        }
+	    }, {
+	        key: 'handleFetchedTree',
+	        value: function handleFetchedTree(props) {
+	            var self = this;
+	            self.trees = new Array();
+	            self.trees.push(new TreeModel(props));
 	            self.code = 200;
 	        }
 	    }, {
@@ -100621,7 +100680,7 @@
 	            setTimeout(function () {
 	                flag_actions_1.flagActions.fetchFlags();
 	                food_actions_1.foodActions.fetchFoods();
-	                tree_actions_1.treeActions.fetchTrees(self.state.treeId);
+	                tree_actions_1.treeActions.fetchTree(self.state.treeId);
 	            }, Settings.iMapRenderDelay);
 	        };
 	        var self = _this;

@@ -31,6 +31,30 @@ let TreeSource = {
       });
     })
   },
+  fetchTree(id: number): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      $.ajax({
+        url: Settings.uBaseName + Settings.uServer + "tree.php",
+        type: 'GET',
+        data: {
+          id: id,
+        },
+        dataType: "json",
+        success: function(response) {
+          if (response.code == 200) {
+            resolve(response.tree);
+          } else {
+            console.log(response.message);
+            reject(response.code);
+          }
+        },
+        error: function(response) {
+          console.log(response.statusText);
+          reject(response.status);
+        }
+      });
+    })
+  },
   updateTree(tree: TreeModel): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       $.ajax({

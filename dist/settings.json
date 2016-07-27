@@ -1,8 +1,8 @@
 {
-  "ssltype": "http://",
-  "host": "localhost",
-  "uBaseName": "/FoodParent2.0",
-  "uBaseNameForWebPack": "/FoodParent2.0/",
+  "ssltype": "https://",
+  "host": "concrete-jungle.org",
+  "uBaseName": "/foodparent",
+  "uBaseNameForWebPack": "/foodparent/",
   "bTestMail": true,
   "uStaticImage": "/static/images/",
   "uContentImage": "/content/images/",

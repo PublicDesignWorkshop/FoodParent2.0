@@ -15,6 +15,8 @@ interface ITreeActions {
   resetTrees();
   fetchTrees(id?: number);
   fetchedTrees(treesProps: Array<ITreeProps>);
+  fetchTree(id: number);
+  fetchedTree(treesProps: ITreeProps);
   updateTree(tree: TreeModel);
   updatedTree(props: ITreeProps);
   adoptTree(tree: TreeModel);
@@ -63,6 +65,28 @@ class TreeActions extends AbstractActions implements ITreeActions {
     let self: TreeActions = this;
     return (dispatch) => {
       dispatch(treesProps);
+    }
+  }
+  fetchTree(id: number) {
+    let self: TreeActions = this;
+    return (dispatch) => {
+      addLoading();
+      dispatch();
+      self.setCode(90);
+      treeSource.fetchTree(id).then((response) => {
+        self.fetchedTree(response);
+        removeLoading();
+      }).catch((code) => {
+        displayErrorMessage(localization(code));
+        self.setCode(code);
+        removeLoading();
+      });
+    }
+  }
+  fetchedTree(props: ITreeProps) {
+    let self: TreeActions = this;
+    return (dispatch) => {
+      dispatch(props);
     }
   }
   updateTree(tree: TreeModel) {

@@ -64,7 +64,7 @@ export default class ScreenshotComponent extends React.Component<IScreenshotProp
     setTimeout(function() {
       flagActions.fetchFlags();
       foodActions.fetchFoods();
-      treeActions.fetchTrees(self.state.treeId);
+      treeActions.fetchTree(self.state.treeId);
     }, Settings.iMapRenderDelay);
   }
   render() {
