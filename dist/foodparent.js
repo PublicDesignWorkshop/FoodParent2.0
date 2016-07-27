@@ -25828,7 +25828,7 @@
 
 	module.exports = {
 		"ssltype": "https://",
-		"host": "localhost",
+		"host": "www.concrete-jungle.org",
 		"uBaseName": "/FoodParent2.0",
 		"uBaseNameForWebPack": "/FoodParent2.0/",
 		"bTestMail": true,
