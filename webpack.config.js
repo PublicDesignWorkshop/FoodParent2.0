@@ -14,10 +14,10 @@ module.exports = {
   },
   plugins: [
     // In case you want to use browsersync to refresh page whenever you change files.
-    new BrowserSyncPlugin({
-      proxy: process.env.IP || 'localhost',
-      open:  true,
-    }),
+    // new BrowserSyncPlugin({
+    //   proxy: process.env.IP || 'localhost',
+    //   open:  true,
+    // }),
     new webpack.ProvidePlugin({
       'googletile': 'imports?this=>global!exports?googletile!googletile',
     }),

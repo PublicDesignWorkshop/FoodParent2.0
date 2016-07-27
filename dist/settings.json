@@ -1,8 +1,8 @@
 {
   "ssltype": "https://",
-  "host": "www.thecaptainwhale.com",
-  "uBaseName": "/foodparent",
-  "uBaseNameForWebPack": "/foodparent/",
+  "host": "localhost",
+  "uBaseName": "/FoodParent2.0",
+  "uBaseNameForWebPack": "/FoodParent2.0/",
   "bTestMail": true,
   "uStaticImage": "/static/images/",
   "uContentImage": "/content/images/",

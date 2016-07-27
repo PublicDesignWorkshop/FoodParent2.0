@@ -83,7 +83,7 @@
   }
 }
 
-@media screen and (max-device-width: 1024px) {
+/*@media screen and (max-device-width: 1024px) {
   :local(.wrapper) {
     right: -100%;
     width: 100%;
@@ -96,7 +96,7 @@
   :local(.locate) {
     display: none;
   }
-}
+}*/
 
 @media screen and (max-device-aspect-ratio: 1/1) {
   :local(.wrapper) {
