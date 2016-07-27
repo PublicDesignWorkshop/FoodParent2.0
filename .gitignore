@@ -18,3 +18,4 @@ content/images/*
 !content/images/blank.jpg
 serverconfig/~$errorlist.xlsx
 dist/map/**
+!dist/map/blank.jpg
