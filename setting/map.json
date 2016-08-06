@@ -27,6 +27,6 @@
   "iMaxClusterRadius": 30,
   "iDisableClusteringAtZoom": 16,
 
-  "sTreeMapId": "map-tree",
+  "sTreeMapId": "map",
   "uPinIcon": "pin.svg"
 }

@@ -8,8 +8,9 @@ require('./maps.component.scss');
 let MapSetting = require('./../../setting/map.json');
 let MapActions = require('./../actions/map.actions');
 let MapStore = require('./../stores/map.store');
-import { MAPTILE } from './../utils/enum';
+import { MAPTILE, MAPTYPE } from './../utils/enum';
 import { createFocusMarker } from './../utils/marker.factory';
+import { updateSeason } from './../utils/season';
 
 
 export default class MapTree extends React.Component {
@@ -47,7 +48,7 @@ export default class MapTree extends React.Component {
 
   afterRenderMap() {
     // Register map to Flux structure to synchronize React and Leaflet together.
-    MapActions.addMap(MapSetting.sTreeMapId, this.map);
+    MapActions.addMap(MapSetting.sTreeMapId, this.map, MAPTYPE.TREE);
     // Define tile maps and store into the MapModel.
     if (!MapStore.getMapModel(MapSetting.sTreeMapId).flatTileLayer) {
       MapStore.getMapModel(MapSetting.sTreeMapId).flatTileLayer = this.flatTileLayer = L.tileLayer(MapSetting.uGrayTileMap + MapSetting.sMapboxAccessToken, {
@@ -84,6 +85,12 @@ export default class MapTree extends React.Component {
       });
       this.markersLayer.addTo(this.map);
     }
+    // Update season trees
+    updateSeason(function(success) {
+
+    }, function(fail) {
+
+    })
   }
   renderMapTile() {
     // Choose the right map tile
@@ -111,7 +118,9 @@ export default class MapTree extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     this.renderMapTile();
-    this.renderFocusMarker(nextProps.location);
+    if (this.props.location && nextProps.location != null && this.props.location.lat != nextProps.location.lat && this.props.location.lng != nextProps.location.lng) {
+      this.renderFocusMarker(nextProps.location);
+    }
   }
   componentWillUnmount() {
 

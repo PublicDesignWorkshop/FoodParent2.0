@@ -3,34 +3,36 @@ let MapActions = require('./../actions/map.actions');
 import * as L from 'leaflet';
 
 let MapSetting = require('./../../setting/map.json');
-import { MAPTILE } from './../utils/enum';
+import { MAPTILE, MAPTYPE } from './../utils/enum';
 
 class MapModel {
   constructor(props) {
     this.id = props.id;
     this.map = props.map;
+    this.type = props.type;
     this.tile = MAPTILE.FLAT;
     this.first = true;
     this.active = true;
   }
-  // public getCenter() {
-  //   let point: L.Point = L.CRS.EPSG3857.latLngToPoint(this.map.getCenter(), this.map.getZoom());
-  //   let rMap = document.getElementById(this.id);
-  //   if (rMap.clientWidth > rMap.clientHeight) {
-  //     point.x -= this.map.getSize().x * 0.15;
-  //   } else {
-  //     //point.y += this.map.getSize().y * 0.15;
-  //   }
-  //   let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, this.map.getZoom());
-  //   return location;
-  // }
+  // This doesn't generate actual center of the map, rather slightly left side of the center on the landscape view. This is because the 30% of the right area will be covered by a info panel.
+  getCenter() {
+    let point = L.CRS.EPSG3857.latLngToPoint(this.map.getCenter(), this.map.getZoom());
+    let rMap = document.getElementById(this.id);
+    if (rMap.clientWidth > rMap.clientHeight) {
+      point.x -= this.map.getSize().x * 0.15;
+    } else {
+      //point.y += this.map.getSize().y * 0.15;
+    }
+    let location = L.CRS.EPSG3857.pointToLatLng(point, this.map.getZoom());
+    return location;
+  }
 }
 
 class MapStore {
   constructor() {
     this.maps = [];
     this.location = new L.LatLng(MapSetting.vPosition.x, MapSetting.vPosition.y);
-
+    // Bind action methods to store.
     this.bindListeners({
       handleAddMap: MapActions.ADD_MAP,
       handleUpdate: MapActions.UPDATE,
@@ -42,7 +44,7 @@ class MapStore {
       handleSetActive: MapActions.SET_ACTIVE,
       handleMoveToLocationWithMarker: MapActions.MOVE_TO_LOCATION_WITH_MARKER,
     });
-
+    // Expose public methods.
     this.exportPublicMethods({
       getMapModel: this.getMapModel,
       isMapExist: this.isMapExist,

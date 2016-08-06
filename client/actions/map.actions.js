@@ -3,10 +3,10 @@ let alt = require('../alt');
 let MapSetting = require('./../../setting/map.json');
 
 class MapActions {
-  addMap(id, map) {
+  addMap(id, map, type) {
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
-      dispatch({id, map});
+      dispatch({id, map, type});
     }
   }
   update(id) {

@@ -6,17 +6,8 @@
   include_once 'functions.php';
 
   switch($_SERVER['REQUEST_METHOD']){
-    case 'POST':
-      //update();
-      break;
     case 'GET':
       read();
-      break;
-    case 'PUT':
-      //update();
-      break;
-    case 'DELETE':
-      //delete();
       break;
   }
 
@@ -121,7 +112,5 @@
     } catch(PDOException $e) {
       return '{"error":{"text":'. $e->getMessage() .'}}';
     }
-
-
   }
 ?>

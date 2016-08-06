@@ -50,7 +50,11 @@ export default class Header extends React.Component {
           </AltContainer>
         </div>
         <div className={"right" + active } onClick={() => {
-          this.context.router.push({pathname: ServerSetting.uBase + "/login"});
+          if (active != "") {
+            this.context.router.push({pathname: ServerSetting.uBase + "/login"});
+          } else {
+            this.context.router.push({pathname: ServerSetting.uBase + "/login"});
+          }
         }}>
           <div className="login-portrait">
             <FontAwesome className="icon" name='user' />
