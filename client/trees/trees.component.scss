@@ -1,0 +1,9 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.trees-map-wrapper {
+  width: 100%;
+  height: 100%;
+  padding-top: $header-height;
+  overflow: hidden;
+}

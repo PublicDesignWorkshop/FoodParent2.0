@@ -1,0 +1,59 @@
+$white: rgba(255, 255, 255, 1);
+$light: rgba(244, 244, 244, 1);
+$black: rgba(0, 0, 0, 1);
+$brown: rgba(94, 78, 81, 1);
+$green: rgba(107, 170, 119, 1);
+$black-quarter: rgba(0, 0, 0, 0.25);
+
+$font-main: 'Open Sans', sans-serif;
+$font-narrow: 'Open Sans Condensed', sans-serif;
+
+$font-size-x-large: 2em;
+$font-size-large: 1.5em;
+$font-size-medium: 1em;
+$font-size-small: 0.7em;
+
+$header-height: 48px;
+$panel-control-width: 48px;
+
+@-webkit-keyframes anim-fade-in { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes    anim-fade-in { from { opacity:0; } to { opacity:1; } }
+@keyframes         anim-fade-in { from { opacity:0; } to { opacity:1; } }
+
+@-webkit-keyframes icon-rotate {
+  50% {
+    -webkit-transform: rotate(-12deg);
+    transform: rotate(-12deg);
+  }
+}
+@-moz-keyframes icon-rotate {
+  50% {
+    -webkit-transform: rotate(-12deg);
+    transform: rotate(-12deg);
+  }
+}
+@keyframes icon-rotate {
+  50% {
+    -webkit-transform: rotate(-12deg);
+    transform: rotate(-12deg);
+  }
+}
+
+.fade-in {
+  opacity:0;  /* make things invisible upon start */
+  -webkit-animation:anim-fade-in ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+     -moz-animation:anim-fade-in ease-in 1;
+          animation:anim-fade-in ease-in 1;
+
+  -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+     -moz-animation-fill-mode:forwards;
+          animation-fill-mode:forwards;
+
+  -webkit-animation-duration: 0.25s;
+     -moz-animation-duration: 0.25s;
+          animation-duration: 0.25s;
+
+  -webkit-animation-delay: 0.5s;
+     -moz-animation-delay: 0.5s;
+          animation-delay: 0.5s;
+}

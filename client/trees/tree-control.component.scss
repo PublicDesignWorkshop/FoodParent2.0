@@ -1,0 +1,65 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+@import "./trees.component.scss";
+
+.tree-control-wrapper {
+  height: 100%;
+
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+
+  color: $white;
+
+  .control-button:first-child {
+    border-top-left-radius: 4px;
+  }
+
+  .control-button:last-child {
+    border-bottom-left-radius: 4px;
+  }
+
+  .control-button {
+    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;           /* TWEENER - IE 10 */
+    display: -webkit-flex;          /* NEW - Chrome */
+    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    width: $panel-control-width;
+    height: $panel-control-width;
+    background-color: $brown;
+    border-left: 1px solid $black-quarter;
+    font-size: $font-size-large;
+    cursor: pointer;
+
+    &:hover .fa {
+      -webkit-animation-name: icon-rotate;
+              animation-name: icon-rotate;
+      -webkit-animation-duration: 0.3s;
+              animation-duration: 0.3s;
+      -webkit-animation-timing-function: linear;
+              animation-timing-function: linear;
+      -webkit-animation-iteration-count: 1;
+              animation-iteration-count: 1;
+    }
+
+    &:active .fa {
+      color: $green;
+    }
+  }
+
+  .control-button .fa {
+    margin: auto;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+
+    -webkit-transition: transform 0.15s ease-out, color 0.15s;
+       -moz-transition: transform 0.15s ease-out, color 0.15s;
+        -ms-transition: transform 0.15s ease-out, color 0.15s;
+         -o-transition: transform 0.15s ease-out, color 0.15s;
+            transition: transform 0.15s ease-out, color 0.15s;
+  }
+}

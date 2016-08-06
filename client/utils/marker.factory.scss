@@ -1,0 +1,115 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.marker-cluster-small {
+  background-color: rgba(181, 226, 140, 0.75);
+}
+.marker-cluster-small div {
+  background-color: rgba(110, 204, 57, 0.75);
+}
+
+.marker-cluster-medium {
+  background-color: rgba(241, 211, 87, 0.75);
+}
+.marker-cluster-medium div {
+  background-color: rgba(240, 194, 12, 0.75);
+}
+
+.marker-cluster-large {
+  background-color: rgba(253, 156, 115, 0.75);
+}
+.marker-cluster-large div {
+  background-color: rgba(241, 128, 23, 0.75);
+}
+
+/* IE 6-8 fallback colors */
+.leaflet-oldie .marker-cluster-small {
+  background-color: rgb(181, 226, 140);
+}
+.leaflet-oldie .marker-cluster-small div {
+  background-color: rgb(110, 204, 57);
+}
+
+.leaflet-oldie .marker-cluster-medium {
+  background-color: rgb(241, 211, 87);
+}
+.leaflet-oldie .marker-cluster-medium div {
+  background-color: rgb(240, 194, 12);
+}
+
+.leaflet-oldie .marker-cluster-large {
+  background-color: rgb(253, 156, 115);
+}
+.leaflet-oldie .marker-cluster-large div {
+  background-color: rgb(241, 128, 23);
+}
+
+.marker-cluster {
+  background-clip: padding-box;
+  border-radius: 20px;
+}
+.marker-cluster div {
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
+  margin-top: 5px;
+
+  text-align: center;
+  border-radius: 15px;
+  font: $font-size-small $font-main;
+}
+.marker-cluster span {
+  line-height: 30px;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 3px;
+  background-color: rgba(94, 78, 81, 1);
+  cursor: pointer;
+}
+
+.leaflet-popup-content {
+  display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;           /* TWEENER - IE 10 */
+  display: -webkit-flex;          /* NEW - Chrome */
+  display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+  margin: 0;
+  text-align: center;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 1);
+  font-family: $font-main;
+}
+.leaflet-popup-tip {
+  background-color: rgba(94, 78, 81, 1);
+}
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  box-shadow: 0 0px 1px rgba(0,0,0,0.2);
+  padding: 0;
+}
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  box-shadow: 0 0px 1px rgba(0,0,0,0.2);
+}
+
+.marker-name {
+  padding: 8px 8px 8px 8px;
+}
+.marker-left {
+  padding: 8px 4px 8px 4px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.marker-right {
+  padding: 8px 4px 6px 4px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.leaflet-popup-content-wrapper:hover .marker-left, .leaflet-popup-content-wrapper:hover .marker-right {
+  background-color: rgba(107, 170, 119, 1);
+}
+.leaflet-container {
+  font-family: $font-main;
+}
+.marker-food {
+  margin-right: 4px;
+}

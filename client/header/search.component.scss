@@ -1,0 +1,30 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.search-input {
+  font-family: $font-narrow;
+  width: 100%;
+  padding: 6px;
+  border-radius: 2px;
+  border: 1px solid $brown;
+  color: $black;
+  outline: none;
+  margin: auto;
+}
+
+.search-text {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+          
+  font-family: $font-narrow;
+  width: 100%;
+  padding: 1px 6px;
+  border-radius: 2px;
+  color: $white;
+  cursor: text;
+  overflow: hidden;
+  min-height: 24px;
+  margin: auto;
+}

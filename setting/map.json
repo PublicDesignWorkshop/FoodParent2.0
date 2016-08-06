@@ -1,0 +1,32 @@
+{
+  "vPosition": {
+    "x": 33.7704,
+    "y": -84.3806
+  },
+  "uGrayTileMap" : "//api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png256?access_token=",
+  "uSatTileMap" : "//api.mapbox.com/v4/mapbox.streets-satellite/{z}/{x}/{y}.png256?access_token=",
+  "sMapboxAccessToken": "pk.eyJ1IjoiY29uY3JldGUtanVuZ2xlIiwiYSI6InViLW5INU0ifQ.radc95S2bnienvUpDkl49A",
+  "sGoogleMapTileType": "HYBRID",
+  "iDefaultZoom": 14,
+  "iMaxZoom": 20,
+  "iMinZoom": 5,
+  "iFocusZoom": 17,
+  "iScreenshotZoom": 18,
+
+  "bZoomControl": false,
+  "bClosePopupOnClick": false,
+  "bDoubleClickZoom": true,
+  "bTouchZoom": true,
+  "bZoomAnimation": true,
+  "bMarkerZoomAnimation": true,
+
+  "bSpiderfyOnMaxZoom": false,
+  "bShowCoverageOnHover": false,
+  "bZoomToBoundsOnClick": true,
+  "bRemoveOutsideVisibleBounds": true,
+  "iMaxClusterRadius": 30,
+  "iDisableClusteringAtZoom": 16,
+
+  "sTreeMapId": "map-tree",
+  "uPinIcon": "pin.svg"
+}

@@ -1,0 +1,10 @@
+{
+  "uBase": "/FoodParent2.0",
+  "uBaseForRouter": "/FoodParent2.0/",
+  "uServer": "/server/",
+  "uDist": "/dist/",
+  "uSetting": "/dist/setting/",
+  "uStaticImage": "/static/images/",
+  "uContentImage": "/content/images/",
+  "uRelativeImageUpload": "./../content/images/"
+}
