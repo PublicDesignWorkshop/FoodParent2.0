@@ -3,6 +3,7 @@ node_modules/*
 !node_modules/react-pinch-zoom-pan
 !node_modules/font-awesome
 !node_modules/leaflet
+!node_modules/image-preloader-promise
 
 server/database.php
 server/dbpass.php

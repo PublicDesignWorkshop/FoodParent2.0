@@ -10,6 +10,7 @@
       //update();
       break;
     case 'GET':
+      // readAll();
       read();
       break;
     case 'PUT':
@@ -18,6 +19,29 @@
     case 'DELETE':
       //delete();
       break;
+  }
+
+  function readAll() {
+    sec_session_continue(); // Our custom secure way of starting a PHP session.
+    $sql = "SELECT * FROM `tree` ";
+    try {
+      $pdo = getConnection();
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute();
+      $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+      $pdo = null;
+      $params = array(
+        "code" => 200,
+        "trees" => $result,
+      );
+      echo json_encode($params);
+    } catch(PDOException $e) {
+      $json = array(
+        "code" => $e->getCode(),
+        "message" => $e->getMessage(),
+      );
+      echo json_encode($json);
+    }
   }
 
   function read() {

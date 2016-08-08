@@ -6,5 +6,10 @@
   "uSetting": "/dist/setting/",
   "uStaticImage": "/static/images/",
   "uContentImage": "/content/images/",
-  "uRelativeImageUpload": "./../content/images/"
+  "uRelativeImageUpload": "./../content/images/",
+
+  "sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
+  "sEXIFDateFormat": "YYYY-MM-DD HH-mm-ss",
+  "sUIDateFormat": "MM/DD/YY"
+
 }

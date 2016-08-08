@@ -113,3 +113,20 @@
 .marker-food {
   margin-right: 4px;
 }
+
+/* Leaflet div icon properties */
+.leaflet-marker-tree {
+  position: relative;
+  > .shadow {
+    position: absolute;
+    background-image: url(~static/images/marker-shadow.png);
+    pointer-events: none;
+  }
+  > .icon {
+    position: absolute;
+    width: 20px;
+    height: 32px;
+  }
+}
+
+/* Please define flag class properties here */

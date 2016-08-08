@@ -9,7 +9,6 @@ class MapModel {
   constructor(props) {
     this.id = props.id;
     this.map = props.map;
-    this.type = props.type;
     this.tile = MAPTILE.FLAT;
     this.first = true;
     this.active = true;
@@ -32,6 +31,8 @@ class MapStore {
   constructor() {
     this.maps = [];
     this.location = new L.LatLng(MapSetting.vPosition.x, MapSetting.vPosition.y);
+    this.latestMapType = MAPTYPE.TREE;
+    this.code = 200;
     // Bind action methods to store.
     this.bindListeners({
       handleAddMap: MapActions.ADD_MAP,
@@ -98,14 +99,16 @@ class MapStore {
   }
 
   handleAddMap(props) {
-    let temp = new MapModel(props);
-    let maps = this.maps.filter(map => map.id == temp.id);
+    let model = new MapModel(props);
+    let maps = this.maps.filter(map => map.id == model.id);
     if (maps.length == 0) {
-      this.maps.push(temp);
+      this.maps.push(model);
     } else {
-      maps[0] = temp;
+      maps[0] = model;
     }
-    this.code = null;
+    this.code = 200;
+    // Store the latest map type so that user can come back to right map when he or she presses a back button.
+    this.latestMapType = props.type;
   }
   handleUpdate(id) {
 

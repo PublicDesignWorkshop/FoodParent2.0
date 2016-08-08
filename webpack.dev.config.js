@@ -34,6 +34,7 @@ var config = {
     extensions: ['', '.js', '.jsx'],
     alias: {
       'googletile' : path.join(__dirname, './node_modules/leaflet-plugins/layer/tile/Google.js'),
+      'leaflet-canvas-marker' : path.join(__dirname, './libraries/leaflet-canvas-marker.js'),
       // 'createjs' : path.join(__dirname, './libraries/createjs.js')
     }
   },

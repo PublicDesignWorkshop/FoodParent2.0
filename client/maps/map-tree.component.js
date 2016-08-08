@@ -1,22 +1,34 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 
 import * as L from 'leaflet';
+import * as _ from 'underscore';
 import 'leaflet.markercluster';
+import 'leaflet-canvas-marker';
 import 'googletile';
 
 require('./maps.component.scss');
 let MapSetting = require('./../../setting/map.json');
+let ServerSetting = require('./../../setting/server.json');
+
 let MapActions = require('./../actions/map.actions');
 let MapStore = require('./../stores/map.store');
+let FoodActions = require('./../actions/food.actions');
+let FoodStore = require('./../stores/food.store');
+let FlagActions = require('./../actions/flag.actions');
+let FlagStore = require('./../stores/flag.store');
+let TreeActions = require('./../actions/tree.actions');
+let TreeStore = require('./../stores/tree.store');
+
 import { MAPTILE, MAPTYPE } from './../utils/enum';
-import { createFocusMarker } from './../utils/marker.factory';
-import { updateSeason } from './../utils/season';
+import { createFocusMarker, createCanvasTreeMarker, createSVGTreeMarker } from './../utils/marker.factory';
 
 
 export default class MapTree extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.afterRenderMap = this.afterRenderMap.bind(this);
+    this.afterZoomEnd = this.afterZoomEnd.bind(this);
   }
   componentWillMount() {
 
@@ -44,6 +56,11 @@ export default class MapTree extends React.Component {
       this.markersLayer = MapStore.getMapModel(MapSetting.sTreeMapId).markersLayer;
     }
     this.renderMapTile();
+    this.updateProps(this.props);
+  }
+
+  renderMap() {
+
   }
 
   afterRenderMap() {
@@ -74,23 +91,27 @@ export default class MapTree extends React.Component {
     }
     // Add a layer for rendering actual markers.
     if (!MapStore.getMapModel(MapSetting.sTreeMapId).markersLayer) {
-      MapStore.getMapModel(MapSetting.sTreeMapId).markersLayer = this.markersLayer = new L.MarkerClusterGroup();
-      this.markersLayer.initialize({
-        spiderfyOnMaxZoom: MapSetting.bSpiderfyOnMaxZoom,
-        showCoverageOnHover: MapSetting.bShowCoverageOnHover,
-        zoomToBoundsOnClick: MapSetting.bZoomToBoundsOnClick,
-        removeOutsideVisibleBounds: MapSetting.bRemoveOutsideVisibleBounds,
-        maxClusterRadius: MapSetting.iMaxClusterRadius,
-        disableClusteringAtZoom: MapSetting.iDisableClusteringAtZoom
-      });
+      // Code Snipet for MarkerClusterGroup
+      // MapStore.getMapModel(MapSetting.sTreeMapId).markersLayer = this.markersLayer = new L.MarkerClusterGroup();
+      // this.markersLayer.initialize({
+      //   spiderfyOnMaxZoom: MapSetting.bSpiderfyOnMaxZoom,
+      //   showCoverageOnHover: MapSetting.bShowCoverageOnHover,
+      //   zoomToBoundsOnClick: MapSetting.bZoomToBoundsOnClick,
+      //   removeOutsideVisibleBounds: MapSetting.bRemoveOutsideVisibleBounds,
+      //   maxClusterRadius: MapSetting.iMaxClusterRadius,
+      //   disableClusteringAtZoom: MapSetting.iDisableClusteringAtZoom
+      // });
+      MapStore.getMapModel(MapSetting.sTreeMapId).markersLayer = this.markersLayer = new L.layerGroup();
       this.markersLayer.addTo(this.map);
     }
-    // Update season trees
-    updateSeason(function(success) {
-
-    }, function(fail) {
-
-    })
+    // Add leaflet map event listeners.
+    this.map.on("zoomend", this.afterZoomEnd);
+  }
+  afterZoomEnd () {
+    // setTimeout(function() {
+    //
+    // }.bind(this), 100);
+    this.renderPopup(TreeStore.getTree(this.props.selected));
   }
   renderMapTile() {
     // Choose the right map tile
@@ -117,13 +138,98 @@ export default class MapTree extends React.Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    this.renderMapTile();
-    if (this.props.location && nextProps.location != null && this.props.location.lat != nextProps.location.lat && this.props.location.lng != nextProps.location.lng) {
-      this.renderFocusMarker(nextProps.location);
-    }
+    this.updateProps(nextProps);
   }
   componentWillUnmount() {
 
+  }
+  updateProps(props) {
+    this.renderMapTile();
+    if (this.props.location && props.location != null && this.props.location.lat != props.location.lat && this.props.location.lng != props.location.lng) {
+      this.renderFocusMarker(props.location);
+    }
+    this.renderMarkers(props.trees, props.selected);
+    this.renderPopup(TreeStore.getTree(props.selected));
+  }
+  renderPopup(tree) {
+    if (tree != null) {
+      let markers = this.markersLayer.getLayers();
+      let bFound = false;
+      for (let i = 0; i < markers.length && !bFound; i++) {
+        if (markers[i].options.id == tree.id) {
+          bFound = true;
+          markers[i].openPopup();
+        }
+      }
+    }
+
+  }
+  renderMarkers(trees, selected) {
+    var markers = this.markersLayer.getLayers();
+    //this.markersLayer._featureGroup._layers
+    //this.focusLayer._layers
+
+
+    // Remove unnecessary markers.
+    for (let i = 0; i < markers.length;) {
+      let bFound = false;
+      trees.forEach((tree) => {
+        if (tree.id == markers[i].options.id && tree.food == markers[i].options.food && markers[i].getLatLng().lat == tree.lat && markers[i].getLatLng().lng == tree.lng) {
+          bFound = true;
+        }
+      });
+      if (markers[i].options.id != selected) {
+        bFound = false;
+      }
+      if (markers[i].options.id == selected && markers[i].options.type == "canvas") {
+        bFound = false;
+      }
+      if (!bFound) {
+        // console.log(`removing markers[i].options.id: ${markers[i].options.id}`);
+        this.removeMarker(markers[i], this.markersLayer);
+        markers = _.without(markers, markers[i]);
+        i--;
+      } else {
+        // console.log(`add event listner for markers[i].options.id: ${markers[i].options.id}`);
+        // markers[i].on('click', function() {
+        //   browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + tree.id});
+        // });
+      }
+      i++;
+    }
+
+    // Add new markers.
+    trees.forEach((tree) => {
+      let bFound = false;
+      for (let i = 0; i < markers.length && !bFound; i++) {
+        if (tree.id == markers[i].options.id) {
+          bFound = true;
+        }
+      }
+      if (tree.id != 0 && !bFound) {
+        this.addMarker(tree, selected, false);
+      }
+    });
+  }
+  addMarker(tree, selected, editable) {
+    // console.log(`tree.id: ${tree.id} marker has added.`);
+    let marker;
+    if (editable) {
+      marker = createSVGTreeMarker(tree, true);
+    } else {
+      if (selected == tree.id) {
+        marker = createSVGTreeMarker(tree, false);
+      } else {
+        marker = createCanvasTreeMarker(tree);
+      }
+
+    }
+    if (marker) {
+      this.markersLayer.addLayer(marker);
+    }
+  }
+  removeMarker(marker, layer) {
+    layer.removeLayer(marker);
   }
   render () {
     return (

@@ -14,21 +14,28 @@ var SETTING_DIR = path.resolve(__dirname, './setting');
 var MODULES_DIR = path.resolve(__dirname, './node_modules');
 
 var devDefinePlugin = new webpack.DefinePlugin({
-  __DEV__: true
+  __DEV__: true,
+  L_PREFER_CANVAS: true,
 });
 
 var productionDefinePlugin = new webpack.DefinePlugin({
   __DEV__: false,
   "process.env": {
      NODE_ENV: JSON.stringify("production")
-   }
+   },
+   L_PREFER_CANVAS: true,
 });
 
 var vendorList = [
   "jquery",
   "leaflet",
   "leaflet.markercluster",
-  "googletile"
+  "leaflet-canvas-marker",
+  "googletile",
+  "image-preloader-promise",
+  "underscore",
+  "moment",
+  "react-fontawesome",
 ];
 
 var corePluginList = [
@@ -38,6 +45,7 @@ var corePluginList = [
   }),
   new webpack.ProvidePlugin({
     'googletile': 'imports?this=>global!exports?googletile!googletile',
+    'leaflet-canvas-marker': 'imports?this=>global!exports?leaflet-canvas-marker!leaflet-canvas-marker',
     // 'createjs': 'imports?this=>global!exports?createjs!createjs',
   }),
   new CopyWebpackPlugin([

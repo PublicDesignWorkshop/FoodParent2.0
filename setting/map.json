@@ -9,7 +9,7 @@
   "sGoogleMapTileType": "HYBRID",
   "iDefaultZoom": 14,
   "iMaxZoom": 20,
-  "iMinZoom": 5,
+  "iMinZoom": 1,
   "iFocusZoom": 17,
   "iScreenshotZoom": 18,
 
@@ -27,6 +27,9 @@
   "iMaxClusterRadius": 30,
   "iDisableClusteringAtZoom": 16,
 
-  "sTreeMapId": "map",
-  "uPinIcon": "pin.svg"
+  "iMarkerPrecision": 5,
+
+  "sTreeMapId": "map-tree",
+  "uPinIcon": "pin.svg",
+  "uShadowMarker" : "marker-shadow.png"
 }

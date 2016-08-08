@@ -8,6 +8,7 @@
   width: 100%;
   height: $header-height;
   z-index: 1000;
+  overflow: hidden;
 
   display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
   display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
@@ -41,6 +42,7 @@
 
     background-color: $brown;
     > .logo {
+      width: 88px;
       &:after {
         content: url(~static/images/logo-green-background-88x48.png);
         cursor: pointer;

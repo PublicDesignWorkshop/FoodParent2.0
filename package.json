@@ -51,6 +51,7 @@
     "leaflet-plugins": "1.8.0",
     "leaflet.markercluster": "0.5.0",
     "moment": "2.14.1",
-    "react-fontawesome": "1.1.0"
+    "react-fontawesome": "1.1.0",
+    "underscore": "1.8.3"
   }
 }

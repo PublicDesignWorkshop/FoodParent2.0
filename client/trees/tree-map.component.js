@@ -4,6 +4,7 @@ import AltContainer from 'alt-container';
 require('./tree-map.component.scss');
 
 let MapStore = require('./../stores/map.store');
+let TreeStore = require('./../stores/tree.store');
 
 
 import MapTree from './../maps/map-tree.component';
@@ -25,15 +26,27 @@ export default class TreeMap extends React.Component {
   }
   render () {
     return (
-      <div className="trees-map-wrapper">
+      <div className="tree-map-wrapper">
         <AltContainer stores={
           {
-            location: function (props) {
+            location: function(props) {
               return {
                 store: MapStore,
                 value: MapStore.getState().location
               };
             },
+            trees: function(props) {
+              return {
+                store: TreeStore,
+                value: TreeStore.getState().trees
+              }
+            },
+            selected: function(props) {
+              return {
+                store: TreeStore,
+                value: TreeStore.getState().selected
+              }
+            }
           }
         }>
           <MapTree />

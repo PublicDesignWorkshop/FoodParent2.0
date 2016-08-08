@@ -9,6 +9,8 @@ let MapStore = require('./../stores/map.store');
 
 var FontAwesome = require('react-fontawesome');
 import { localization } from './../utils/localization';
+import { MAPTYPE } from './../utils/enum';
+
 
 
 export default class Header extends React.Component {
@@ -50,10 +52,14 @@ export default class Header extends React.Component {
           </AltContainer>
         </div>
         <div className={"right" + active } onClick={() => {
-          if (active != "") {
+          if (active == "") {
             this.context.router.push({pathname: ServerSetting.uBase + "/login"});
           } else {
-            this.context.router.push({pathname: ServerSetting.uBase + "/login"});
+            if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
+              this.context.router.push({pathname: ServerSetting.uBase + "/"});
+            } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
+              this.context.router.push({pathname: ServerSetting.uBase + "/donations"});
+            }
           }
         }}>
           <div className="login-portrait">
@@ -67,7 +73,6 @@ export default class Header extends React.Component {
     );
   }
 }
-
 
 Header.contextTypes = {
     router: React.PropTypes.object.isRequired

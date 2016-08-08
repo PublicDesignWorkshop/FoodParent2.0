@@ -1,0 +1,152 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.splash-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: $light;
+
+  display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;           /* TWEENER - IE 10 */
+  display: -webkit-flex;          /* NEW - Chrome */
+  display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+  -webkit-flex-direction: column;    /* Safari 6.1+ */
+          flex-direction: column;    /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+  > .top {
+    width: 100%;
+    height: 8px;
+    background-color: $brown;
+  }
+
+  > .bottom {
+    width: 100%;
+    height: 8px;
+    background-color: $green;
+  }
+
+  > .center {
+    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;           /* TWEENER - IE 10 */
+    display: -webkit-flex;          /* NEW - Chrome */
+    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    -webkit-flex-direction: column;    /* Safari 6.1+ */
+            flex-direction: column;    /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    -webkit-flex-grow: 1;           /* NEW - Chrome */
+            flex-grow: 1;           /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    > div {
+      width: 80%;
+      height: auto;
+      margin: auto;
+
+      > img {
+        width: 100%;
+        height: auto;
+      }
+
+      > div {
+        font-family: $font-narrow;
+        font-weight: 700;
+        font-size: $font-size-large;
+        text-align: center;
+        padding: 4% 0 12% 0;
+
+        @include respond-to(handhelds) {
+          font-size: $font-size-medium;
+        }
+        @include respond-to(wide-screens) {
+          font-size: $font-size-large;
+        }
+      }
+    }
+  }
+  // > div {
+  //   width: 80%;
+  //   height: auto;
+  //   margin: auto;
+  //
+  //   > img {
+  //     width: 100%;
+  //     height: auto;
+  //   }
+  // }
+}
+
+// .splash {
+//   color: $brown;
+//   font-size: 18px;
+//   text-indent: -9999em;
+//   overflow: hidden;
+//   width: 1.1em;
+//   height: 1.1em;
+//   border-radius: 50%;
+//   margin: 20px 14px;
+//   position: relative;
+//   -webkit-transform: translateZ(0);
+//   -ms-transform: translateZ(0);
+//   transform: translateZ(0);
+//   -webkit-animation: anim-spin 1.7s infinite ease;
+//   animation: anim-spin 1.7s infinite ease;
+// }
+
+@-webkit-keyframes anim-spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+      box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+    5%,
+    95% {
+      box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+    10%,
+    59% {
+      box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+    }
+    20% {
+      box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+    }
+    38% {
+      box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+      box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+  }
+  @keyframes anim-spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+      box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+    5%,
+    95% {
+      box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+    10%,
+    59% {
+      box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+    }
+    20% {
+      box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+    }
+    38% {
+      box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+      box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+  }
