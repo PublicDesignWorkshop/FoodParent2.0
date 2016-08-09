@@ -88,6 +88,8 @@
         -ms-user-select: none;
             user-select: none;
 
+    // text-transform: uppercase;
+
     @include respond-to(handhelds) {
       width: auto;
     }
@@ -115,12 +117,12 @@
       color: $brown;
       border-bottom-left-radius: 0;
     }
-    // 
-    // -webkit-transition: all 0.15s;
-    //    -moz-transition: all 0.15s;
-    //     -ms-transition: all 0.15s;
-    //      -o-transition: all 0.15s;
-    //         transition: all 0.15s;
+
+    // -webkit-transition: color 0.15s;
+    //    -moz-transition: color 0.15s;
+    //     -ms-transition: color 0.15s;
+    //      -o-transition: color 0.15s;
+    //         transition: color 0.15s;
 
     // &:hover {
     //   color: $brown;

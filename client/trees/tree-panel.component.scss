@@ -7,10 +7,10 @@
   position: absolute;
   top: 0;
   height: 100%;
-  transition: 0.25s;
   padding: $header-height 0 0 0;
-
   pointer-events: all;
+
+  transition: 0.25s;
 
   @include respond-to(handhelds) {
     right: -100%;
@@ -37,10 +37,102 @@
     box-shadow: 0px 0px 1px 1px $black-quarter;
     overflow-y: scroll;
 
-  }
-}
 
-.slidein {
-  right: 0;
-  transition: 0.25s;
+    > .menu {
+      display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+      display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+      display: -ms-flexbox;           /* TWEENER - IE 10 */
+      display: -webkit-flex;          /* NEW - Chrome */
+      display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+      -webkit-flex-direction: row;    /* Safari 6.1+ */
+              flex-direction: row;    /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+      -webkit-justify-content: space-between; /* Safari 6.1+ */
+              justify-content: space-between;
+      font-size: $font-size-x-large;
+      color: $brown;
+      padding: 8px;
+
+      > .icon-group {
+        &:not(.close) {
+          -webkit-flex-grow: 1;
+                  flex-grow: 1;
+        }
+        cursor: pointer;
+        width: 32px;
+        height: 32px;
+        overflow: hidden;
+        -webkit-transition: all 0.1s ease-out;
+           -moz-transition: all 0.1s ease-out;
+             -o-transition: all 0.1s ease-out;
+                transition: all 0.1s ease-out;
+
+        &:hover:not(.close), &.active:not(.close) {
+          width: auto;
+          -webkit-flex-grow: 2;
+                  flex-grow: 2;
+          > .icon-text {
+            width: auto;
+          }
+        }
+
+        .icon-info-circle {
+          font-size: 94%;
+        }
+        .icon-group {
+          padding-top: 3px;
+          font-size: 80%;
+        }
+        .icon-line-chart {
+          padding-top: 2px;
+          font-size: 90%;
+        }
+
+        > .icon-text {
+          width: 0;
+          font-size: 90%;
+          display: inline-block;
+          font-family: $font-narrow;
+          font-size: $font-size-small;
+          margin: 0 8px;
+          font-weight: 700;
+          vertical-align: top;
+          text-transform: uppercase;
+          overflow:hidden;
+
+          &.visible {
+            width: auto;
+          }
+        }
+        // &:hover .icon-text {
+        //   display: inline-block;
+        //   width: auto;
+        // }
+      }
+
+      > .wide-landscape {
+        @include respond-to(handhelds) {
+          display: none;
+        }
+        // > .text {
+        //   font-family: $font-narrow;
+        //   font-size: $font-size-small;
+        //   padding: 0 4px;
+        //   font-weight: 700;
+        //   vertical-align: top;
+        //   text-transform: uppercase;
+        // }
+      }
+    }
+  }
+  &.open {
+    right: 0;
+  }
+
+  &.wide {
+    right: 0;
+    width: 100% !important;
+    transition: 0.25s;
+  }
 }
