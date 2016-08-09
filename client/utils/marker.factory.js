@@ -47,7 +47,6 @@ export function createCanvasTreeMarker(tree) {
       closeOnClick: false,
     });
     marker.on('click', function() {
-      console.log(ServerSetting.uBase + '/tree/' + tree.id);
       browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + tree.id});
     });
 

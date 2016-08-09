@@ -72,7 +72,7 @@ class App extends React.Component {
       return (
         <div>
           <Header location={this.props.location}/>
-          <div id={MapSetting.sTreeMapId} ref={MapSetting.sTreeMapId} className="map"></div>
+          <div className="map"><div id={MapSetting.sTreeMapId} ref={MapSetting.sTreeMapId}></div></div>
           {this.props.children}
           {splash}
         </div>

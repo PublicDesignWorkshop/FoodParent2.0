@@ -28,7 +28,6 @@ export default class MapTree extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.afterRenderMap = this.afterRenderMap.bind(this);
-    this.afterZoomEnd = this.afterZoomEnd.bind(this);
   }
   componentWillMount() {
 
@@ -57,6 +56,8 @@ export default class MapTree extends React.Component {
     }
     this.renderMapTile();
     this.updateProps(this.props);
+    this.map.closePopup();
+    this.renderPopup(TreeStore.getTree(this.props.selected), false);
   }
 
   renderMap() {
@@ -105,13 +106,6 @@ export default class MapTree extends React.Component {
       this.markersLayer.addTo(this.map);
     }
     // Add leaflet map event listeners.
-    this.map.on("zoomend", this.afterZoomEnd);
-  }
-  afterZoomEnd () {
-    // setTimeout(function() {
-    //
-    // }.bind(this), 100);
-    this.renderPopup(TreeStore.getTree(this.props.selected));
   }
   renderMapTile() {
     // Choose the right map tile
@@ -139,6 +133,9 @@ export default class MapTree extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);
+    if (nextProps.selected != this.props.selected) {
+      this.renderPopup(TreeStore.getTree(nextProps.selected), true);
+    }
   }
   componentWillUnmount() {
 
@@ -149,20 +146,30 @@ export default class MapTree extends React.Component {
       this.renderFocusMarker(props.location);
     }
     this.renderMarkers(props.trees, props.selected);
-    this.renderPopup(TreeStore.getTree(props.selected));
   }
-  renderPopup(tree) {
+  renderPopup(tree, animate) {
     if (tree != null) {
       let markers = this.markersLayer.getLayers();
       let bFound = false;
-      for (let i = 0; i < markers.length && !bFound; i++) {
+      let i = 0;
+      for (; i < markers.length && !bFound; i++) {
         if (markers[i].options.id == tree.id) {
           bFound = true;
           markers[i].openPopup();
+
+          // Move the map slight off from the center using CRS projection
+          let point: L.Point = L.CRS.EPSG3857.latLngToPoint(new L.LatLng(tree.lat, tree.lng), MapSetting.iFocusZoom);
+          let rMap = document.getElementById(MapSetting.sTreeMapId);
+          if (rMap.clientWidth > rMap.clientHeight) {
+            point.x += this.map.getSize().x * 0.15;
+          } else {
+            //point.y += this.map.getSize().y * 0.15;
+          }
+          let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, MapSetting.iFocusZoom);
+          this.map.setView(location, MapSetting.iFocusZoom, {animate: animate});
         }
       }
     }
-
   }
   renderMarkers(trees, selected) {
     var markers = this.markersLayer.getLayers();

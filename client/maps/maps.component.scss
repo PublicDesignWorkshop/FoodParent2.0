@@ -1,2 +1,6 @@
 @import "./../scss/variables.scss";
 @import "./../scss/mixin.scss";
+
+.leaflet-bottom.leaflet-right {
+  z-index: 0;
+}

@@ -5,6 +5,7 @@ require('./tree-map.component.scss');
 
 let MapStore = require('./../stores/map.store');
 let TreeStore = require('./../stores/tree.store');
+let TreeActions = require('./../actions/tree.actions');
 
 
 import MapTree from './../maps/map-tree.component';
@@ -16,13 +17,16 @@ export default class TreeMap extends React.Component {
     super();
   }
   componentWillMount() {
-
+    this.updateProps(this.props);
   }
   componentDidMount () {
 
   }
-  componentWillReceiveProps() {
-
+  componentWillReceiveProps(nextProps) {
+    this.updateProps(nextProps);
+  }
+  updateProps(props) {
+    TreeActions.setSelected(parseInt(props.params.treeId));
   }
   render () {
     return (

@@ -10,6 +10,8 @@
   transition: 0.25s;
   padding: $header-height 0 0 0;
 
+  pointer-events: all;
+
   @include respond-to(handhelds) {
     right: -100%;
     width: 100%;

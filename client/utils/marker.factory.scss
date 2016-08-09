@@ -65,6 +65,9 @@
   border-radius: 3px;
   background-color: rgba(94, 78, 81, 1);
   cursor: pointer;
+  -webkit-box-shadow: 1px 2px 2px 0px rgba(0,0,0,0.25);
+     -moz-box-shadow: 1px 2px 2px 0px rgba(0,0,0,0.25);
+          box-shadow: 1px 2px 2px 0px rgba(0,0,0,0.25);
 }
 
 .leaflet-popup-content {
@@ -83,13 +86,13 @@
 .leaflet-popup-tip {
   background-color: rgba(94, 78, 81, 1);
 }
-.leaflet-popup-content-wrapper, .leaflet-popup-tip {
-  box-shadow: 0 0px 1px rgba(0,0,0,0.2);
-  padding: 0;
-}
-.leaflet-popup-content-wrapper, .leaflet-popup-tip {
-  box-shadow: 0 0px 1px rgba(0,0,0,0.2);
-}
+// .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+//   box-shadow: 0 0px 1px rgba(0,0,0,0.2);
+//   padding: 0;
+// }
+// .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+//   box-shadow: 0 0px 1px rgba(0,0,0,0.2);
+// }
 
 .marker-name {
   padding: 8px 8px 8px 8px;
@@ -104,7 +107,7 @@
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
-.leaflet-popup-content-wrapper:hover .marker-left, .leaflet-popup-content-wrapper:hover .marker-right {
+.leaflet-popup-content-wrapper .marker-left, .leaflet-popup-content-wrapper .marker-right {
   background-color: rgba(107, 170, 119, 1);
 }
 .leaflet-container {
