@@ -34,17 +34,18 @@
       );
     }
     $sql = "SELECT * FROM `tree` WHERE (`id` = :id)";
+
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);
       $stmt->execute($params);
-      $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+      $result = $stmt->fetch(PDO::FETCH_OBJ);
       $pdo = null;
-      $params = array(
+      $json = array(
         "code" => 200,
-        "tree" => $result[0],
+        "tree" => $result,
       );
-      echo json_encode($params);
+      echo json_encode($json);
     } catch(PDOException $e) {
       $json = array(
         "code" => $e->getCode(),

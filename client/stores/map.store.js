@@ -10,8 +10,8 @@ class MapModel {
     this.id = props.id;
     this.map = props.map;
     this.tile = MAPTILE.FLAT;
-    this.first = true;
-    this.active = true;
+    this.loaded = false;
+    // this.active = true;
   }
   // This doesn't generate actual center of the map, rather slightly left side of the center on the landscape view. This is because the 30% of the right area will be covered by a info panel.
   getCenter() {
@@ -31,6 +31,7 @@ class MapStore {
   constructor() {
     this.maps = [];
     this.location = new L.LatLng(MapSetting.vPosition.x, MapSetting.vPosition.y);
+    // Define the latest map type so that the program can decide which map (tree or donation) goes back to.
     this.latestMapType = MAPTYPE.TREE;
     this.code = 200;
     // Bind action methods to store.
@@ -41,8 +42,8 @@ class MapStore {
       handleMoveTo: MapActions.MOVE_TO,
       handleSetTile: MapActions.SET_TILE,
       handleSetZoom: MapActions.SET_ZOOM,
-      handleSetJustMounted: MapActions.SET_JUST_MOUNTED,
-      handleSetActive: MapActions.SET_ACTIVE,
+      handleSetLoaded: MapActions.SET_LOADED,
+      // handleSetActive: MapActions.SET_ACTIVE,
       handleMoveToLocationWithMarker: MapActions.MOVE_TO_LOCATION_WITH_MARKER,
     });
     // Expose public methods.
@@ -51,6 +52,7 @@ class MapStore {
       isMapExist: this.isMapExist,
       getMapTile: this.getMapTile,
       getZoom: this.getZoom,
+      getLoaded: this.getLoaded,
     });
   }
 
@@ -92,6 +94,17 @@ class MapStore {
       let maps = this.getState().maps.filter(map => map.id == id);
       if (maps.length == 1) {
         return maps[0].map.getZoom();
+      }
+      return null;
+    }
+    return null;
+  }
+
+  getLoaded(id) {
+    if (this.getState().maps) {
+      let maps = this.getState().maps.filter(map => map.id == id);
+      if (maps.length == 1) {
+        return maps[0].loaded;
       }
       return null;
     }
@@ -156,18 +169,22 @@ class MapStore {
       maps[0].map.setZoom(props.zoom);
     }
   }
-  handleSetJustMounted(props) {
+  handleSetLoaded(props) {
+    let maps = this.maps.filter(map => map.id == props.id);
+    if (maps.length == 1) {
+      maps[0].loaded = props.loaded;
+    }
     // let maps = self.maps.filter(map => map.id == props.id);
     // if (maps.length == 1) {
     //   maps[0].setFirst(props.first);
     // }
   }
-  handleSetActive(props) {
-    // let maps = self.maps.filter(map => map.id == props.id);
-    // if (maps.length == 1) {
-    //   maps[0].setActive(props.active);
-    // }
-  }
+  // handleSetActive(props) {
+  //   // let maps = self.maps.filter(map => map.id == props.id);
+  //   // if (maps.length == 1) {
+  //   //   maps[0].setActive(props.active);
+  //   // }
+  // }
   handleMoveToLocationWithMarker(props) {
     let maps = this.maps.filter(map => map.id == props.id);
     if (maps.length == 1) {

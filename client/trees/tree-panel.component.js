@@ -12,14 +12,21 @@ export default class TreePanel extends React.Component {
     this.setState({open: false});
   }
   componentDidMount () {
-
+    this.updateProps(this.props);
   }
-  componentWillReceiveProps() {
-
+  componentWillReceiveProps(nextProps) {
+    this.updateProps(nextProps);
+  }
+  updateProps(props) {
+    this.setState({open: props.open});
   }
   render () {
+    let open = "";
+    if (this.state.open) {
+      open = " slidein";
+    }
     return (
-      <div className="tree-panel-wrapper">
+      <div className={"tree-panel-wrapper" + open}>
         <div className="left">
           <TreeControl />
         </div>

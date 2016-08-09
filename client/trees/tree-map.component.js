@@ -26,7 +26,7 @@ export default class TreeMap extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
-    TreeActions.setSelected(parseInt(props.params.treeId));
+    TreeActions.setSelected.defer(parseInt(props.params.treeId));
   }
   render () {
     return (
@@ -44,19 +44,12 @@ export default class TreeMap extends React.Component {
                 store: TreeStore,
                 value: TreeStore.getState().trees
               }
-            },
-            selected: function(props) {
-              return {
-                store: TreeStore,
-                value: TreeStore.getState().selected
-              }
             }
           }
         }>
           <MapTree />
         </AltContainer>
-
-        <TreePanel />
+        <TreePanel open={false}/>
       </div>
     );
   }

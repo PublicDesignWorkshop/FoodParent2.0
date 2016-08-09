@@ -16,8 +16,8 @@ class InitStore {
       handleSetCode: InitActions.SET_CODE,
     });
   }
-  handleSetMessage(message) {
-    this.message = message;
+  handleSetMessage(props) {
+    this.message = props;
   }
   handleLoaded() {
     this.loaded = true;

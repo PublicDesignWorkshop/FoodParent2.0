@@ -24,11 +24,8 @@ class MapActions {
   setZoom(id, zoom) {
     return {id, zoom};
   }
-  setJustMounted(id, first) {
-    return {id, first};
-  }
-  setActive(id, active) {
-    return {id, active};
+  setLoaded(id, loaded) {
+    return {id, loaded};
   }
   moveToUserLocation(id) {
     return (dispatch) => {

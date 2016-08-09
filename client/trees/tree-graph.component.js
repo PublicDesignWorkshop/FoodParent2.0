@@ -24,8 +24,8 @@ export default class TreeGraph extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
-    // TreeActions.fetchTrees(parseInt(props.params.treeId));
-    TreeActions.setSelected(parseInt(props.params.treeId));
+    TreeActions.fetchTree.defer(parseInt(props.params.treeId));
+    // TreeActions.setSelected(parseInt(props.params.treeId));
   }
   render () {
     return (
@@ -54,7 +54,7 @@ export default class TreeGraph extends React.Component {
         }>
           <MapTree />
         </AltContainer>
-        <TreePanel />
+        <TreePanel open={true}/>
       </div>
     );
   }

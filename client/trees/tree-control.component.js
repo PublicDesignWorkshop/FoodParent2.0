@@ -29,24 +29,24 @@ export default class TreeControl extends React.Component {
     }
   }
   handleMoveToUserLocation() {
-    MapActions.moveToUserLocation(MapSetting.sTreeMapId);
+    MapActions.moveToUserLocation.defer(MapSetting.sTreeMapId);
   }
   handleToggleMapTile() {
     if (MapStore.getMapTile(MapSetting.sTreeMapId) == MAPTILE.FLAT) {
-      MapActions.setTile(MapSetting.sTreeMapId, MAPTILE.SATELLITE);
+      MapActions.setTile.defer(MapSetting.sTreeMapId, MAPTILE.SATELLITE);
       this.setState({tile: "map"});
     } else {
-      MapActions.setTile(MapSetting.sTreeMapId, MAPTILE.FLAT);
+      MapActions.setTile.defer(MapSetting.sTreeMapId, MAPTILE.FLAT);
       this.setState({tile: "map-o"});
     }
   }
   handleZoomIn() {
     let zoom = Math.min(MapSetting.iMaxZoom, MapStore.getZoom(MapSetting.sTreeMapId) + 1);
-    MapActions.setZoom(MapSetting.sTreeMapId, zoom);
+    MapActions.setZoom.defer(MapSetting.sTreeMapId, zoom);
   }
   handleZoomOut() {
     let zoom = Math.min(MapSetting.iMaxZoom, MapStore.getZoom(MapSetting.sTreeMapId) - 1);
-    MapActions.setZoom(MapSetting.sTreeMapId, zoom);
+    MapActions.setZoom.defer(MapSetting.sTreeMapId, zoom);
   }
   render () {
     let add = <div className="control-button" onClick={()=> {

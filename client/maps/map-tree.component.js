@@ -57,7 +57,6 @@ export default class MapTree extends React.Component {
     this.renderMapTile();
     this.updateProps(this.props);
     this.map.closePopup();
-    this.renderPopup(TreeStore.getTree(this.props.selected), false);
   }
 
   renderMap() {
@@ -134,7 +133,7 @@ export default class MapTree extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);
     if (nextProps.selected != this.props.selected) {
-      this.renderPopup(TreeStore.getTree(nextProps.selected), true);
+      this.renderPopup(TreeStore.getTree(nextProps.selected));
     }
   }
   componentWillUnmount() {
@@ -147,7 +146,7 @@ export default class MapTree extends React.Component {
     }
     this.renderMarkers(props.trees, props.selected);
   }
-  renderPopup(tree, animate) {
+  renderPopup(tree) {
     if (tree != null) {
       let markers = this.markersLayer.getLayers();
       let bFound = false;
@@ -166,7 +165,8 @@ export default class MapTree extends React.Component {
             //point.y += this.map.getSize().y * 0.15;
           }
           let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, MapSetting.iFocusZoom);
-          this.map.setView(location, MapSetting.iFocusZoom, {animate: animate});
+          this.map.setView(location, MapSetting.iFocusZoom, {animate: MapStore.getLoaded(MapSetting.sTreeMapId)});
+          MapActions.setLoaded.defer(MapSetting.sTreeMapId, true);
         }
       }
     }

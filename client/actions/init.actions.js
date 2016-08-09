@@ -11,6 +11,8 @@ let FlagActions = require('./../actions/flag.actions');
 let TreeSource = require('./../sources/tree.source');
 let TreeActions = require('./../actions/tree.actions');
 
+import { MESSAGETYPE } from './../utils/enum';
+
 class InitActions {
   setCode(code) {
     return (dispatch) => {
@@ -21,81 +23,98 @@ class InitActions {
   // Fetch all necessary data in the beginning using chain callbacks.
   initialize(id = 0) {
     let self = this;
-    self.setMessage("Initializing Application...");
+    self.setMessage(MESSAGETYPE.SUCCESS, "Initializing Application...");
     return (dispatch) => {
       dispatch();
       this.setCode(90);
       // Fetch foods.
-      self.setMessage("Importing Food Data...");
+      self.setMessage(MESSAGETYPE.SUCCESS, "Importing Food Data...");
       FoodSource.fetchFoods()
       .then((response) => {
         FoodActions.fetchedFoods(response);
       })
       .then(() => {
         // Fetch flags.
-        self.setMessage("Importing Flag Data...");
+        self.setMessage(MESSAGETYPE.SUCCESS, "Importing Flag Data...");
         FlagSource.fetchFlags().then((response) => {
           FlagActions.fetchedFlags(response);
         })
         .then(() => {
-          self.setMessage("Updating Season Data...");
+          self.setMessage(MESSAGETYPE.SUCCESS, "Updating Season Data...");
           updateSeason()
           .then(function(response) {
             // Fetch trees.
-            self.setMessage("Importing Tree Data...");
+            self.setMessage(MESSAGETYPE.SUCCESS, "Importing Tree Data...");
             TreeSource.fetchTrees(id)
             .then((response) => {
               TreeActions.fetchedTrees(response);
             })
             .then((response) => {
-              self.setMessage("Importing Image Assets...");
+              self.setMessage(MESSAGETYPE.SUCCESS, "Importing Image Assets...");
               let icons = FoodStore.getFoodIcons();
               ImagePreloader.preloadImages(icons)
               .then(function (data) {
                 if (icons.length != data.length) {
                   if (__DEV__) {
-                    console.warn("One or more of food icons are missing. Please check the image files.");
+                    console.error("One or more of food icons are missing. Please check the image files.");
                   }
                 }
                 FoodActions.registerIcons(data);
               })
               .then((response) => {
                 // Start the app.
-                self.setMessage("Rendering Markers...");
+                self.setMessage(MESSAGETYPE.SUCCESS, "Rendering Markers...");
                 self.loaded();
                 setTimeout(function() {
-                  self.setMessage("Let's Do Parenting!");
+                  self.setMessage(MESSAGETYPE.SUCCESS, "Let's Do Parenting!");
                 }, 1000);
                 setTimeout(function() {
                   self.hideSplashPage();
                 }, 2500);
               })
-              .catch(function (err) { // Error catch for preloadImages().
+              .catch(function (code) { // Error catch for preloadImages().
+                self.setMessage(MESSAGETYPE.FAIL, code);
                 if (__DEV__) {
-                  console.log(err);
+                  console.error(code);
                   console.error('None of the images were able to be loaded! Please check the internet connection.');
                 }
               });
             })
             .catch((code) => {  // Error catch for fetchTrees().
+              self.setMessage(MESSAGETYPE.FAIL, code);
+              if (__DEV__) {
+                console.error(code);
+              }
               // this.setCode(code);
             });
           })
           .catch(function(response) { // Error catch for calcSeason().
-            if (__DEV__) {
-               if (response.status == 200) {
+            if (response.status == 200) {
+              self.setMessage(MESSAGETYPE.FAIL, `Failed to update season data.`);
+              if (__DEV__) {
                  console.error(`Failed to update season data. This could happen either because the file doesn't exist, or the internet is disconnected.`);
-               } else {
-                 console.error(`Failed to update season data. Error code: ${response.status}`);
-               }
+              }
+            } else {
+              self.setMessage(MESSAGETYPE.FAIL, `Failed to update season data. Error code: ${response.status}`);
+              if (__DEV__) {
+                console.error(`Failed to update season data. Error code: ${response.status}`);
+              }
             }
           });
         })
         .catch((code) => {  // Error catch for fetchFlags().
+          self.setMessage(MESSAGETYPE.FAIL, code);
+          if (__DEV__) {
+            console.error(code);
+          }
           // this.setCode(code);
         });
       })
       .catch((code) => {  // Error catch for fetchFoods().
+        self.setMessage(MESSAGETYPE.FAIL, code);
+        if (__DEV__) {
+          console.error(code);
+        }
         // this.setCode(code);
       });
     }
@@ -106,9 +125,9 @@ class InitActions {
       dispatch(code);
     }
   }
-  setMessage(message) {
+  setMessage(type, value) {
     return (dispatch) => {
-      dispatch(message);
+      dispatch({type: type, value: value});
     }
   }
   loaded() {

@@ -88,6 +88,7 @@ class TreeStore {
     // Bind action methods to store.
     this.bindListeners({
       handleRefresh: TreeActions.REFRESH,
+      handleFetchedTree: TreeActions.FETCHED_TREE,
       handleFetchedTrees: TreeActions.FETCHED_TREES,
       handleSetCode: TreeActions.SET_CODE,
       handleSetSelected: TreeActions.SET_SELECTED,
@@ -105,6 +106,16 @@ class TreeStore {
     return null;
   }
   handleRefresh() {
+    this.code = 200;
+  }
+  handleFetchedTree(props) {
+    let trees = this.trees.filter(tree => tree.id == parseInt(props.id));
+    if (trees.length > 0) {
+      trees[0] = new TreeModel(props);
+    } else {
+      this.trees.push(new TreeModel(props));
+    }
+    this.selected = parseInt(props.id);
     this.code = 200;
   }
   handleFetchedTrees(props) {

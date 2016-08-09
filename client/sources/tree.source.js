@@ -2,6 +2,34 @@ import $ from 'jquery';
 let ServerSetting = require('./../../setting/server.json');
 
 const TreeSource = {
+  fetchTree(id) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        url: ServerSetting.uBase + ServerSetting.uServer + "tree.php",
+        type: 'GET',
+        data: {
+          id: id,
+        },
+        dataType: "json",
+        success: function(response) {
+          if (response.code == 200) {
+            resolve(response.tree);
+          } else {
+            if (__DEV__) {
+              console.error(response.message);
+            }
+            reject(response.code);
+          }
+        },
+        error: function(response) {
+          if (__DEV__) {
+            console.error(response.statusText);
+          }
+          reject(response.status);
+        }
+      });
+    });
+  },
   fetchTrees(id = -1) {
     return new Promise(function (resolve, reject) {
       $.ajax({

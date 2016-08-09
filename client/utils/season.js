@@ -11,7 +11,8 @@ export function updateSeason() {
     return response;
   })
 }
-//
+
+/* Code snipet of promise callback handler. */
 // export function updateSeason(success, fail) {
 //   calcSeason().then(function(response) {
 //     if (success) {

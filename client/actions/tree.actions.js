@@ -14,6 +14,23 @@ class TreeActions {
       dispatch();
     }
   }
+  fetchTree(id) {
+    return (dispatch) => {
+      dispatch();
+      this.setCode(90); // check the 'errorlist.xlsx' to find the code list.
+      TreeSource.fetchTree(id).then((response) => {
+        this.fetchedTree(response);
+      }).catch((code) => {
+        // displayErrorMessage(localization(code));
+        this.setCode(code);
+      });
+    }
+  }
+  fetchedTree(props) {
+    return (dispatch) => {
+      dispatch(props);
+    }
+  }
   fetchTrees(id = -1) {
     return (dispatch) => {
       dispatch();

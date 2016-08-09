@@ -31,5 +31,8 @@
 
   "sTreeMapId": "map-tree",
   "uPinIcon": "pin.svg",
-  "uShadowMarker" : "marker-shadow.png"
+  "uShadowMarker" : "marker-shadow.png",
+
+  "uReverseGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA",
+  "uGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA"
 }
