@@ -1,5 +1,15 @@
 {
   "0": "Please check your internet connection.",
+
+  "80": "Move the map to your device location.",
+  "81": "Toggle tile map between flat & satellite.",
+  "82": "Zoom in.",
+  "83": "Zoom out.",
+  "84": "Open the food filter setting.",
+  "85": "Add a new tree.",
+  "86": "Login / sign-up as a parent to adopt trees.",
+  "87": "Search item using tree id / lat & lng / street address.",
+
   "90": "Loading...",
   "91": "Deleting...",
   "92": "Updating...",

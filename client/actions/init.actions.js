@@ -3,6 +3,7 @@ let alt = require('../alt');
 import ImagePreloader from 'image-preloader-promise';
 
 import { updateSeason } from './../utils/season';
+import { getLocalization, setLocalization } from './../utils/localization';
 let FoodSource = require('./../sources/food.source');
 let FoodStore = require('./../stores/food.store');
 let FoodActions = require('./../actions/food.actions');
@@ -61,16 +62,36 @@ class InitActions {
                 }
                 FoodActions.registerIcons(data);
               })
-              .then((response) => {
-                // Start the app.
-                self.setMessage(MESSAGETYPE.SUCCESS, "Rendering Markers...");
-                self.loaded();
-                setTimeout(function() {
-                  self.setMessage(MESSAGETYPE.SUCCESS, "Let's Do Parenting!");
-                }, 1000);
-                setTimeout(function() {
-                  self.hideSplashPage();
-                }, 2500);
+              .then(() => {
+                self.setMessage(MESSAGETYPE.SUCCESS, "Importing Localization Data...");
+                getLocalization(window.navigator.userLanguage || window.navigator.language)
+                .then(function(response) {
+                  setLocalization(response);
+                })
+                .then(() => {
+                  // Start the app.
+                  self.setMessage(MESSAGETYPE.SUCCESS, "Rendering Markers...");
+                  self.loaded();
+                  setTimeout(function() {
+                    self.setMessage(MESSAGETYPE.SUCCESS, "Let's Do Parenting!");
+                  }, 1000);
+                  setTimeout(function() {
+                    self.hideSplashPage();
+                  }, 2500);
+                })
+                .catch(function (response) { // Error catch for getLocalization().
+                  if (response.status == 200) {
+                    self.setMessage(MESSAGETYPE.FAIL, `Failed to import localization data.`);
+                    if (__DEV__) {
+                      console.error(`Failed to import localization data. This could happen either because the file doesn't exist, or the internet is disconnected.`);
+                    }
+                  } else {
+                    self.setMessage(MESSAGETYPE.FAIL, response.status);
+                    if (__DEV__) {
+                      console.error(`Failed to import localization data. Error code: ${response.status}`);
+                    }
+                  }
+                });
               })
               .catch(function (code) { // Error catch for preloadImages().
                 self.setMessage(MESSAGETYPE.FAIL, code);

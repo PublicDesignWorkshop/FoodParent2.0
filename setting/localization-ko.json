@@ -1,5 +1,15 @@
 {
   "e0": "인터넷 연결을 확인해주세요.",
+
+  "80": "Move the map to your device location.",
+  "81": "Toggle tile map between flat & satellite.",
+  "82": "Zoom in.",
+  "83": "Zoom out.",
+  "84": "Open the food filter setting.",
+  "85": "Add a new tree.",
+  "86": "Login / sign-up as a parent to adopt trees.",
+  "87": "Search item using tree id / lat & lng / street address.",
+
   "e90": "로딩중...",
   "e91": "삭제중...",
   "e92": "저장중...",

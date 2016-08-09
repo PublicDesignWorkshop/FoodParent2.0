@@ -15,14 +15,6 @@ import { MAPTYPE } from './../utils/enum';
 import { geocoding } from './../utils/geocoding';
 
 
-
-// localization(994, window.navigator.userLanguage || window.navigator.language, function(success) {
-//
-// }, function(fail) {
-//
-// });
-
-
 export default class Search extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -30,11 +22,7 @@ export default class Search extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentWillMount() {
-    this.setState({editing: false, searchPlaceHolder: ""});
-    localization(730, window.navigator.userLanguage || window.navigator.language, function(response) {
-      this.setState({searchText: response, searchPlaceHolder: response});
-    }.bind(this));
-
+    this.setState({editing: false, searchText: localization(730)});
   }
   componentDidMount () {
 
@@ -46,18 +34,18 @@ export default class Search extends React.Component {
     this.setState({searchText: event.target.value});
   }
   handleSubmit () {
-    if (this.state.searchText.trim() != "") {
-      let value = this.state.searchText.trim();
-      if (!isNaN(value)) {
+    let searchText = this.state.searchText.trim();
+    if (searchText != "") {
+      if (!isNaN(searchText)) {
         // If searchText value is a number -> tree id or donation id.
         if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
-          this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(value)});
+          this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
         } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
-          this.context.router.push({pathname: ServerSetting.uBase + '/recipient/' + parseInt(value)});
+          this.context.router.push({pathname: ServerSetting.uBase + '/recipient/' + parseInt(searchText)});
         }
       } else {
         // Check the searchText value is a Lat & Lng value.
-        let latlng = value.split(',');
+        let latlng = searchText.split(',');
         let lat = parseFloat(latlng[0]);
         let lng = parseFloat(latlng[1]);
         if (isLatLng(lat, lng)) {
@@ -70,22 +58,23 @@ export default class Search extends React.Component {
           if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
             location = MapStore.getMapModel(MapSetting.sTreeMapId).getCenter();
           }
-          geocoding(this.state.searchText, new L.LatLng(location.lat, location.lng), function(response) {
+          geocoding(searchText, new L.LatLng(location.lat, location.lng), function(response) {
             MapActions.moveToLocationWithMarker(MapSetting.sTreeMapId, new L.LatLng(response.lat.toFixed(MapSetting.iMarkerPrecision), response.lng.toFixed(MapSetting.iMarkerPrecision)), MapSetting.iFocusZoom);
           }, function() {
 
           });
         }
       }
+    } else {
+      searchText = localization(730);
     }
-
-    this.setState({editing: false});
+    this.setState({editing: false, searchText: searchText});
   }
   render () {
     if (this.state.editing) {
       return (
         <input autoFocus autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" type="text" className="search-input"
-          placeholder={this.state.searchPlaceHolder}
+          placeholder={localization(730)}
           value={this.state.searchText}
           onChange={this.handleChangeSearch}
           onKeyPress={(event)=> {
@@ -100,7 +89,7 @@ export default class Search extends React.Component {
     } else {
       return (
         <div className="search-text" onClick={()=> {
-          if (this.state.searchText == this.state.searchPlaceHolder) {
+          if (this.state.searchText == localization(730)) {
             this.setState({searchText: "", editing: true});
           } else {
             this.setState({editing: true});

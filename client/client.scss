@@ -55,7 +55,7 @@ html, body, #app {
   > div {
     width: 100%;
     height: 100%;
-  
+
     overflow: hidden;
   }
 }
@@ -72,4 +72,14 @@ html, body, #app {
   left : -100%;
   transition: left 0.15s;
   pointer-events: none;
+}
+
+.__react_component_tooltip {
+  @include respond-to(handhelds) {
+    display: none !important;
+  }
+  @include respond-to(wide-screens) {
+    font-weight: 700;
+    font-family: $font-narrow;
+  }
 }

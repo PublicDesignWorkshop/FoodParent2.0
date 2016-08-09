@@ -36,6 +36,7 @@ var vendorList = [
   "underscore",
   "moment",
   "react-fontawesome",
+  "react-tooltip"
 ];
 
 var corePluginList = [

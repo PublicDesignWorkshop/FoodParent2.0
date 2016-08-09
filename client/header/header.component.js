@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import AltContainer from 'alt-container';
 
 require('./header.component.scss');
@@ -18,10 +19,7 @@ export default class Header extends React.Component {
     super(props, context);
   }
   componentWillMount() {
-    this.setState({loginText: ""});
-    localization(993, window.navigator.userLanguage || window.navigator.language, function(response) {
-      this.setState({loginText: response});
-    }.bind(this));
+    this.setState({loginText: localization(993)});
   }
   componentDidMount () {
 
@@ -42,7 +40,7 @@ export default class Header extends React.Component {
         }}>
           <div className="logo"></div>
         </div>
-        <div className={"center" + active}>
+        <div className={"center" + active} data-tip={localization(87)}>
           <AltContainer stores={
             {
               maps: MapStore
@@ -61,13 +59,14 @@ export default class Header extends React.Component {
               this.context.router.push({pathname: ServerSetting.uBase + "/donations"});
             }
           }
-        }}>
+        }} data-tip={localization(86)}>
           <div className="login-portrait">
             <FontAwesome className="icon" name='user' />
           </div>
           <div className="login-landscape">
             {this.state.loginText}
           </div>
+          <ReactTooltip effect="solid" place="bottom" />
         </div>
       </div>
     );
