@@ -27,6 +27,7 @@ export default class TreeDetail extends React.Component {
   updateProps(props) {
     let mode;
     TreeActions.fetchTree.defer(parseInt(props.params.treeId));
+    // Instead of changing url, change # hashtag to remove extra rendering process.
     switch(props.location.hash.replace('#', '')) {
       case "":
         mode = TREEDETAILMODE.INFO;

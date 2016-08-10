@@ -22,7 +22,7 @@ export default class TreeLocation extends React.Component {
     this.updateAttribute = this.updateAttribute.bind(this);
   }
   componentWillMount() {
-    this.setState({latitude: MapSetting.vPosition.x, longitude: MapSetting.vPosition.y, editing: false});
+    this.setState({latitude: MapSetting.vPosition.x, longitude: MapSetting.vPosition.y});
   }
   componentDidMount () {
 
@@ -40,15 +40,22 @@ export default class TreeLocation extends React.Component {
     }
   }
   updateAttribute() {
-    this.props.tree.lat = parseFloat(this.state.latitude);
-    this.props.tree.lng = parseFloat(this.state.longitude);
-    // if (parseInt(this.state.selected.value) != parseInt(selected.value)) {
-    //   TreeActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
-    // }
-    this.setState({latitude: this.props.tree.lat, longitude: this.props.tree.lng});
+    let prevLat = this.props.tree.lat;
+    let prevLng = this.props.tree.lng;
+    if (isLatLng(parseFloat(this.state.latitude), parseFloat(this.state.longitude))) {
+      this.props.tree.lat = parseFloat(this.state.latitude);
+      this.props.tree.lng = parseFloat(this.state.longitude);
+      this.setState({latitude: this.props.tree.lat, longitude: this.props.tree.lng});
+      if (prevLat != parseFloat(this.state.latitude) || prevLng != parseFloat(this.state.longitude)) {
+        TreeActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
+      }
+    } else {
+      this.setState({latitude: this.props.tree.lat, longitude: this.props.tree.lng});
+      TreeActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
+    }
   }
   render () {
-    if (this.state.editing) {
+    if (this.props.editing) {
       return (
         <div className="tree-location-wrapper fade-in">
           <div className="tree-location-label">
@@ -58,9 +65,6 @@ export default class TreeLocation extends React.Component {
             <input type="text" className="tree-location-input" placeholder={localization(979)}
               value={this.state.latitude}
               onChange={(event: any)=> {
-                if (parseFloat(event.target.value) != this.state.latitude) {
-                  TreeActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
-                }
                 this.setState({latitude: event.target.value});
               }}
               onKeyPress={(event)=> {
@@ -75,9 +79,6 @@ export default class TreeLocation extends React.Component {
             <input type="text" className="tree-location-input" placeholder={localization(979)}
               value={this.state.longitude}
               onChange={(event: any)=> {
-                if (parseFloat(event.target.value) != this.state.latitude) {
-                  TreeActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
-                }
                 this.setState({longitude: event.target.value});
               }}
               onKeyPress={(event)=> {

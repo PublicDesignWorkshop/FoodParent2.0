@@ -1,22 +1,22 @@
 @import "./../scss/variables.scss";
 @import "./../scss/mixin.scss";
 
-.tree-address-wrapper {
+.tree-description-wrapper {
   padding: 4px 8px;
   font-family: $font-main;
   color: $brown;
   font-size: $font-size-medium;
 
-  > .tree-address-label {
+  > .tree-description-label {
     font-weight: 700;
     margin: 4px 0;
-    .fa.fa-map-signs {
+    .fa.fa-sticky-note {
       margin-left: 1px;
-      margin-right: 3px;
+      margin-right: 4px;
     }
   }
 
-  > .tree-address-data {
+  > .tree-description-data {
     width: 100%;
     display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
     display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
@@ -26,13 +26,13 @@
 
     margin: 4px 0;
 
-    > .tree-address-text {
+    > .tree-description-text {
       &:first-child {
         margin: 0 0 0 20px;
       }
     }
 
-    > .tree-address-input {
+    > .tree-description-input {
       -webkit-flex-grow: 1;           /* NEW - Chrome */
               flex-grow: 1;           /* NEW, Spec - Opera 12.1, Firefox 20+ */
       padding: 3px 6px;

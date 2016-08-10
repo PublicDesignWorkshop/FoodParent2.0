@@ -132,6 +132,10 @@ class TreeStore {
   }
   handleSetSelected(id) {
     this.selected = id;
+    let trees = this.trees.filter(tree => tree.id == parseInt(id));
+    if (trees.length > 0) {
+      this.temp = new TreeModel(trees[0].toJSON());
+    }
     this.code = 200;
   }
 }

@@ -23,7 +23,7 @@ export default class TreeAddress extends React.Component {
     this.updateAttribute = this.updateAttribute.bind(this);
   }
   componentWillMount() {
-    this.setState({latitude: MapSetting.vPosition.x, longitude: MapSetting.vPosition.y, address: "", editing: false});
+    this.setState({latitude: MapSetting.vPosition.x, longitude: MapSetting.vPosition.y, address: ""});
   }
   componentDidMount () {
 
@@ -48,18 +48,22 @@ export default class TreeAddress extends React.Component {
     }
   }
   updateAttribute() {
+    let prevAddress = this.state.address;
     if (this.state.address.trim() != "") {
       this.props.tree.address = this.state.address.trim();
       this.setState({address: this.props.tree.address});
     } else {
-      reverseGeocoding(props.tree.getLocation(), function(response) {
+      reverseGeocoding(this.props.tree.getLocation(), function(response) {
         this.props.tree.address = response.formatted;
         this.setState({address: this.props.tree.address});
-      });
+      }.bind(this));
+    }
+    if (prevAddress != this.state.address) {
+      TreeActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
     }
   }
   render () {
-    if (this.state.editing) {
+    if (this.props.editing) {
       return (
         <div className="tree-address-wrapper fade-in">
           <div className="tree-address-label">
@@ -69,9 +73,6 @@ export default class TreeAddress extends React.Component {
             <input type="text" className="tree-address-input" placeholder={localization(972)}
               value={this.state.address}
               onChange={(event: any)=> {
-                if (parseFloat(event.target.value) != this.state.address) {
-                  TreeActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
-                }
                 this.setState({address: event.target.value});
               }}
               onKeyPress={(event)=> {

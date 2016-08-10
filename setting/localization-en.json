@@ -15,6 +15,9 @@
   "92": "Updating...",
   "93": "Creating...",
 
+  "94": "There are unsaved changes.",
+  "95": "No description.",
+
   "330": "No valid recipient.",
   "331": "No matched tree.",
   "332": "Geolocation permission is denied.",
@@ -105,6 +108,8 @@
   "905": "<strong>New parent</strong> has been registered.",
   "906": "Not an admin account.",
 
+  "927": "* Danger Zone *",
+  "928": "EDIT",
   "929": "NEXT",
   "930": "SAVE",
   "931": "DELETE",

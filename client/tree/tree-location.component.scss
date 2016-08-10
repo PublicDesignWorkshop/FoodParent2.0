@@ -2,7 +2,7 @@
 @import "./../scss/mixin.scss";
 
 .tree-location-wrapper {
-  padding: 4px;
+  padding: 4px 8px;
   font-family: $font-main;
   color: $brown;
   font-size: $font-size-medium;
@@ -26,8 +26,6 @@
     margin: 4px 0;
 
     > .tree-location-text {
-      margin: auto 0;
-
       &:first-child {
         margin: 0 0 0 20px;
       }
@@ -36,9 +34,9 @@
     > .tree-location-input {
       -webkit-flex-grow: 1;           /* NEW - Chrome */
               flex-grow: 1;           /* NEW, Spec - Opera 12.1, Firefox 20+ */
-      padding: 2px 6px;
+      padding: 3px 6px;
       width: 0;
-
+      font-size: $font-size-medium-small;
       &:focus {
         outline: 2px solid $brown;
       }

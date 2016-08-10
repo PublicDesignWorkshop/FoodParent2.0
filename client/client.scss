@@ -85,3 +85,66 @@ html, body, #app {
     font-family: $font-narrow;
   }
 }
+.solid-button-group {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  padding: 8px 8px;
+
+  .solid-button {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+
+    -webkit-flex-grow: 1;
+            flex-grow: 1;
+    padding: 4px;
+    text-align: center;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: $font-size-medium-small;
+    font-family: $font-main;
+    text-transform: uppercase;
+
+
+  }
+  .solid-button-green {
+    color: $green;
+    border: 2px solid $green;
+    border-right-width: 0;
+    &:hover {
+      color: $white;
+      border-color: $green;
+      background-color: $green;
+    }
+    &:last-child {
+      border-right-width: 2px;
+    }
+  }
+  .solid-button-red {
+    color: $red;
+    border: 2px solid $red;
+    border-right-width: 0;
+    &:hover {
+      color: $white;
+      border-color: $red;
+      background-color: $red;
+    }
+    &:last-child {
+      border-right-width: 2px;
+    }
+  }
+}
+
+.danger-zone {
+  font-size: $font-size-small;
+  font-family: $font-main;
+  margin: 16px 0 0 0;
+  font-weight: 700;
+  color: $red;
+  text-align: center;
+}

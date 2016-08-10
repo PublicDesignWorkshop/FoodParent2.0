@@ -22,7 +22,7 @@ export default class TreeFood extends React.Component {
     this.renderOptionValue = this.renderOptionValue.bind(this);
   }
   componentWillMount() {
-    this.setState({options: null, selected: null, editing: false});
+    this.setState({options: null, selected: null});
   }
   componentDidMount () {
 
@@ -67,7 +67,7 @@ export default class TreeFood extends React.Component {
     this.setState({selected: selected});
   }
   render () {
-    if (this.state.editing) {
+    if (this.props.editing) {
       return (
         <div className="tree-food-wrapper">
           <Select name="food-select" multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder="" />
