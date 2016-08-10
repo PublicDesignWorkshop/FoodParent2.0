@@ -5,6 +5,7 @@ $brown: rgba(94, 78, 81, 1);
 $green: rgba(107, 170, 119, 1);
 $black-quarter: rgba(0, 0, 0, 0.25);
 $red: rgba(93, 40, 49, 1);
+$grey: rgba(124, 124, 124, 1);
 
 $font-main: 'Open Sans', sans-serif;
 $font-narrow: 'Open Sans Condensed', sans-serif;
@@ -50,11 +51,76 @@ $panel-control-width: 48px;
      -moz-animation-fill-mode:forwards;
           animation-fill-mode:forwards;
 
-  -webkit-animation-duration: 0.25s;
-     -moz-animation-duration: 0.25s;
-          animation-duration: 0.25s;
+  -webkit-animation-duration: 0.1s;
+     -moz-animation-duration: 0.1s;
+          animation-duration: 0.1s;
 
-  -webkit-animation-delay: 0.5s;
-     -moz-animation-delay: 0.5s;
-          animation-delay: 0.5s;
+  -webkit-animation-delay: 0.2s;
+     -moz-animation-delay: 0.2s;
+          animation-delay: 0.2s;
 }
+
+
+// Variables
+// ------------------------------
+
+// control options
+$select-input-bg:                  $light !default;
+$select-input-bg-disabled:         $light !default;
+$select-input-border-color:        transparent !default;
+$select-input-border-radius:       0px !default;
+$select-input-border-focus:        $brown !default; // blue
+$select-input-border-width:        2px !default;
+$select-input-height:              48px !default;
+$select-input-internal-height:     ($select-input-height - ($select-input-border-width * 2)) !default;
+$select-input-placeholder:         $brown !default;
+$select-text-color:                $brown !default;
+$select-link-hover-color:          $select-input-border-focus !default;
+
+$select-padding-vertical:          4px !default;
+$select-padding-horizontal:        0px !default;
+
+// menu options
+$select-menu-zindex:               1000 !default;
+$select-menu-max-height:           204px !default;
+
+$select-option-color:              lighten($select-text-color, 10%) !default;
+$select-option-bg:                 $select-input-bg !default;
+$select-option-focused-color:      $white !default;
+$select-option-focused-bg:         $brown !default; // pale blue
+$select-option-selected-color:     $select-text-color !default;
+$select-option-selected-bg:        #light !default; // lightest blue
+$select-option-disabled-color:     $grey !default;
+
+$select-noresults-color:           $grey !default;
+
+// clear "x" button
+$select-clear-size:                floor(($select-input-height / 2)) !default;
+$select-clear-color:               $red !default;
+$select-clear-hover-color:         $red !default; // red
+$select-clear-width:               ($select-input-internal-height / 2) !default;
+
+// arrow indicator
+$select-arrow-color:               $brown !default;
+$select-arrow-color-hover:         $brown !default;
+$select-arrow-width:               6px !default;
+
+// loading indicator
+$select-loading-size:              16px !default;
+$select-loading-color:             $select-text-color !default;
+$select-loading-color-bg:          $select-input-border-color !default;
+
+// multi-select item
+$select-item-border-radius:        2px !default;
+$select-item-gutter:               5px !default;
+$select-item-padding-vertical:     2px !default;
+$select-item-padding-horizontal:   5px !default;
+$select-item-font-size:            .9em !default;
+$select-item-color:                #08c !default; // pale blue
+$select-item-bg:                   #f2f9fc !default;
+$select-item-border-color:         darken($select-item-bg, 10%) !default;
+$select-item-hover-color:          darken($select-item-color, 5%) !default; // pale blue
+$select-item-hover-bg:             darken($select-item-bg, 5%) !default;
+$select-item-disabled-color:       #333 !default;
+$select-item-disabled-bg:          #fcfcfc !default;
+$select-item-disabled-border-color: darken($select-item-disabled-bg, 10%) !default;

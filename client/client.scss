@@ -6,8 +6,10 @@
 @import "./scss/mixin.scss";
 
 // Import css libraries
+@import "./../node_modules/react-select/scss/components.scss";
 @import "./../node_modules/font-awesome/scss/font-awesome.scss";
 @import "./../node_modules/leaflet/dist/leaflet.css";
+
 
 * {
   margin: 0;

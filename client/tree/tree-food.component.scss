@@ -1,0 +1,83 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.tree-food-wrapper {
+  // display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+  // display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+  // display: -ms-flexbox;           /* TWEENER - IE 10 */
+  // display: -webkit-flex;          /* NEW - Chrome */
+  // display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  //
+  // -webkit-flex-grow: 1;           /* NEW - Chrome */
+  // flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+  &.disabled {
+    .Select-control {
+    	&:hover {
+    		border-color: transparent;
+    	}
+    }
+  }
+
+  border-radius: 2px;
+  .Select-value {
+    .tree-food-icon {
+      width: 32px;
+      height: 32px;
+      padding-bottom: 6px;
+      margin-bottom: 2px;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    .tree-food-name {
+      vertical-align: bottom;
+      font-size: $font-size-large;
+      font-weight: 700;
+      color: $brown;
+      font-family: $font-main;
+    }
+  }
+
+
+  .Select-option {
+    box-sizing: border-box;
+  	background-color: $select-option-bg;
+  	color: $select-option-color;
+  	cursor: pointer;
+  	display: block;
+  	padding: 2px $select-padding-horizontal;
+    height: 40px;
+
+    .tree-food-icon {
+      width: 26px;
+      height: 26px;
+      margin-top: 4px;
+      padding-top: 4px;
+      margin-left: 8px;
+      margin-right: 4px;
+    }
+
+    .tree-food-name {
+      vertical-align: bottom;
+      font-size: $font-size-medium;
+      font-weight: 700;
+      font-family: $font-main;
+    }
+
+  	&.is-selected {
+  		background-color: $select-option-selected-bg;
+  		color: $select-option-selected-color;
+  	}
+
+  	&.is-focused {
+  		background-color: $select-option-focused-bg;
+  		color: $select-option-focused-color;
+  	}
+
+  	&.is-disabled {
+  		color: $select-option-disabled-color;
+  		cursor: default;
+  	}
+  }
+}

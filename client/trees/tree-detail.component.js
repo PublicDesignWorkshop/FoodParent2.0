@@ -1,18 +1,19 @@
 import React from 'react';
 import AltContainer from 'alt-container';
 
-require('./tree-graph.component.scss');
+require('./tree-detail.component.scss');
 
 let MapStore = require('./../stores/map.store');
 let TreeStore = require('./../stores/tree.store');
 let TreeActions = require('./../actions/tree.actions');
+import { TREEDETAILMODE } from './../utils/enum';
 
 import MapTree from './../maps/map-tree.component';
 import TreePanel from './tree-panel.component';
 
-export default class TreeGraph extends React.Component {
-  constructor() {
-    super();
+export default class TreeDetail extends React.Component {
+  constructor(props, context) {
+    super(props, context);
   }
   componentWillMount() {
     this.updateProps(this.props);
@@ -24,7 +25,29 @@ export default class TreeGraph extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
+    let mode;
     TreeActions.fetchTree.defer(parseInt(props.params.treeId));
+    switch(props.location.hash.replace('#', '')) {
+      case "":
+        mode = TREEDETAILMODE.INFO;
+        break;
+      case "post":
+        mode = TREEDETAILMODE.POST;
+        break;
+      case "parent":
+        mode = TREEDETAILMODE.PARENT;
+        break;
+      case "history":
+        mode = TREEDETAILMODE.HISTORY;
+        break;
+      case "all":
+        mode = TREEDETAILMODE.ALL;
+        break;
+      default:
+        mode = TREEDETAILMODE.INFO;
+        break;
+    }
+    this.setState({mode: mode});
     // TreeActions.setSelected(parseInt(props.params.treeId));
   }
   render () {
@@ -54,7 +77,7 @@ export default class TreeGraph extends React.Component {
         }>
           <MapTree />
         </AltContainer>
-        <TreePanel open={true}/>
+        <TreePanel open={true} mode={this.state.mode} />
       </div>
     );
   }

@@ -72,12 +72,16 @@ class InitActions {
                   // Start the app.
                   self.setMessage(MESSAGETYPE.SUCCESS, "Rendering Markers...");
                   self.loaded();
+                  let delay = 1000;
+                  if (__DEV__) {
+                    delay = 100;
+                  }
                   setTimeout(function() {
                     self.setMessage(MESSAGETYPE.SUCCESS, "Let's Do Parenting!");
-                  }, 1000);
+                  }, delay);
                   setTimeout(function() {
                     self.hideSplashPage();
-                  }, 2500);
+                  }, delay * 2.5);
                 })
                 .catch(function (response) { // Error catch for getLocalization().
                   if (response.status == 200) {

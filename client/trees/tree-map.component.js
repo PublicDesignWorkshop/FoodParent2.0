@@ -13,8 +13,8 @@ import TreePanel from './tree-panel.component';
 
 
 export default class TreeMap extends React.Component {
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
   }
   componentWillMount() {
     this.updateProps(this.props);

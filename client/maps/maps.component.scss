@@ -4,3 +4,10 @@
 .leaflet-bottom.leaflet-right {
   z-index: 0;
 }
+
+.marker-name {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}

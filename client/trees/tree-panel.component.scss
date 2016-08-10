@@ -10,7 +10,7 @@
   padding: $header-height 0 0 0;
   pointer-events: all;
 
-  transition: 0.25s;
+  transition: 0.15s;
 
   @include respond-to(handhelds) {
     right: -100%;
@@ -68,7 +68,7 @@
              -o-transition: all 0.1s ease-out;
                 transition: all 0.1s ease-out;
 
-        &:hover:not(.close), &.active:not(.close) {
+        &:hover:not(.close) {
           width: auto;
           -webkit-flex-grow: 2;
                   flex-grow: 2;
@@ -76,6 +76,16 @@
             width: auto;
           }
         }
+
+        &.active:not(.close) {
+         width: auto;
+         cursor: default;
+         -webkit-flex-grow: 2;
+                 flex-grow: 2;
+         > .icon-text {
+           width: auto;
+         }
+       }
 
         .icon-info-circle {
           font-size: 94%;
@@ -133,6 +143,6 @@
   &.wide {
     right: 0;
     width: 100% !important;
-    transition: 0.25s;
+    transition: 0.15s;
   }
 }

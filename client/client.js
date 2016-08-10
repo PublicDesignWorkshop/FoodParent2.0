@@ -13,7 +13,7 @@ let InitStore = require('./stores/init.store');
 
 import Header from './header/header.component';
 import TreeMap from './trees/tree-map.component';
-import TreeGraph from './trees/tree-graph.component';
+import TreeDetail from './trees/tree-detail.component';
 import TreeAdd from './trees/tree-add.component';
 import Login from './account/login.component';
 import Splash from './message/splash.component';
@@ -92,7 +92,7 @@ render((
   <Router history={browserHistory}>
     <Route path={ServerSetting.uBaseForRouter} component={App}>
       <IndexRoute component={TreeMap} />
-      <Route path="tree/:treeId" component={TreeGraph} />
+      <Route path="tree/:treeId" component={TreeDetail} />
       <Route path="addtree" component={TreeAdd} />
       <Route path="login" component={Login} />
     </Route>
