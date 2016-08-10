@@ -69,6 +69,7 @@ export class TreeModel {
 class TreeStore {
   constructor() {
     this.selected = null;
+    this.temp = null;
     // this.selected = new TreeModel({
     //   id: "0",
     //   lat: MapSetting.vPosition.x,
@@ -116,6 +117,7 @@ class TreeStore {
       this.trees.push(new TreeModel(props));
     }
     this.selected = parseInt(props.id);
+    this.temp = new TreeModel(props);
     this.code = 200;
   }
   handleFetchedTrees(props) {

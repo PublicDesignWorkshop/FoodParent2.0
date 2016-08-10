@@ -10,6 +10,7 @@
   //
   // -webkit-flex-grow: 1;           /* NEW - Chrome */
   // flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  padding: 8px 0;
 
   &.disabled {
     .Select-control {
@@ -26,7 +27,6 @@
       height: 32px;
       padding-bottom: 6px;
       margin-bottom: 2px;
-      margin-left: 4px;
       margin-right: 4px;
     }
 
@@ -54,7 +54,7 @@
       height: 26px;
       margin-top: 4px;
       padding-top: 4px;
-      margin-left: 8px;
+      margin-left: 4px;
       margin-right: 4px;
     }
 

@@ -7,6 +7,8 @@ let ServerSetting = require('./../../setting/server.json');
 
 import { localization } from './../utils/localization';
 import TreeFood from './tree-food.component';
+import TreeLocation from './tree-location.component';
+import TreeAddress from './tree-address.component';
 
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
@@ -33,12 +35,14 @@ export default class TreeInfo extends React.Component {
             tree: function(props) {
               return {
                 store: TreeStore,
-                value: TreeStore.getState().selected
+                value: TreeStore.getState().temp
               }
             }
           }
         }>
           <TreeFood />
+          <TreeLocation />
+          <TreeAddress />
         </AltContainer>
       </div>
     );

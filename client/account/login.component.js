@@ -30,10 +30,10 @@ export default class Login extends React.Component {
   render () {
     return (
       <div className="login-wrapper">
-        <div className="right fade-in">
+        <div className="right">
           Login
         </div>
-        <div className="left fade-in">
+        <div className="left">
           <Instruction />
         </div>
       </div>
