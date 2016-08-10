@@ -2,6 +2,7 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import AltContainer from 'alt-container';
 import Select from 'react-select';
+import $ from 'jquery';
 
 
 require('./tree-food.component.scss');
@@ -11,6 +12,8 @@ let MapSetting = require('./../../setting/map.json');
 
 import { localization } from './../utils/localization';
 let FoodStore = require('./../stores/food.store');
+let FlagStore = require('./../stores/flag.store');
+
 let TreeStore = require('./../stores/tree.store');
 let TreeActions = require('./../actions/tree.actions');
 
@@ -47,9 +50,15 @@ export default class TreeFood extends React.Component {
   }
   renderOptionValue(option) {
     let food = FoodStore.getFood(option.value);
+    let image;
+    let flags = FlagStore.getState().flags;
+    let bFound = false;
+    if (food != null && image == null) {
+      image = food.icon['verified'].replace("_verified.png", ".svg");
+    }
     let label;
     if (food) {
-       label = <span className="fade-in"><img className="tree-food-icon" src={ServerSetting.uBase + ServerSetting.uStaticImage + food.icon} /><span className="tree-food-name">{option.label}</span></span>;
+       label = <span className="fade-in"><img className="tree-food-icon" src={image} /><span className="tree-food-name">{option.label}</span></span>;
     } else {
       label = <span className="fade-in"><img className="tree-food-icon" src={ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon} /><span className="tree-food-name">{option.label}</span></span>;
     }

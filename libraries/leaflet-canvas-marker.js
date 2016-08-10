@@ -41,7 +41,7 @@ L.CanvasMarker = L.Circle.extend({
       var width = this._map.getZoom();
       var height = Math.floor(width * 32 / 20);
       this._ctx.save();
-      this._ctx.globalAlpha = this._map.getZoom() / 32;
+      this._ctx.globalAlpha = this._map.getZoom() / 28;
       this._ctx.drawImage(this._shadow, p.x - height * 0.5 + Math.floor(this._ctx.globalAlpha * 10), p.y - height, height, height);
       this._ctx.restore();
       this._ctx.drawImage(this._image, p.x - width * 0.5, p.y - height, width, height);

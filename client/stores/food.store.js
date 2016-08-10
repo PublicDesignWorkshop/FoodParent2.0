@@ -60,8 +60,11 @@ class FoodStore {
   }
   getFoodIcons() {
     let result = [ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker];
+    let flags = FlagStore.getState().flags;
     this.getState().foods.forEach((food) => {
-      result.push(ServerSetting.uBase + ServerSetting.uStaticImage + food.icon);
+      for (let i = 0; i < flags.length; i++) {
+        result.push(ServerSetting.uBase + ServerSetting.uStaticImage + food.icon.replace(".png", "").replace(".svg", "") + "_" + flags[i].name + ".png");
+      }
     });
     return result;
   }
@@ -79,9 +82,15 @@ class FoodStore {
     if (props[0].state == "fulfilled") {
       this.shadowImage = props[0].value;
     }
+    let flags = FlagStore.getState().flags;
     for (let i = 0; i < this.foods.length; i++) {
-      if (props[i + 1].state == "fulfilled") {
-        this.foods[i].image = props[i + 1].value;
+      if (props[flags.length * i + 1].state == "fulfilled") {
+        this.foods[i].image = [];
+        this.foods[i].icon = [];
+        for (let j = 0; j < flags.length; j++) {
+          this.foods[i].icon[flags[j].name] = props[flags.length * i + j + 1].value.src;
+          this.foods[i].image[flags[j].name] = props[flags.length * i + j + 1].value;
+        }
       }
     }
     this.code = 200;

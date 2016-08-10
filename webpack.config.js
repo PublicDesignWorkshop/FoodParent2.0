@@ -42,9 +42,6 @@ var vendorList = [
 
 var corePluginList = [
   new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor-bundle.js"),
-  new ExtractTextPlugin('./../css/client-bundle.css', {
-    allChunks: true
-  }),
   new webpack.ProvidePlugin({
     'googletile': 'imports?this=>global!exports?googletile!googletile',
     'leaflet-canvas-marker': 'imports?this=>global!exports?leaflet-canvas-marker!leaflet-canvas-marker',
@@ -57,6 +54,9 @@ var corePluginList = [
 
 var devPluginList = [
   devDefinePlugin,
+  new ExtractTextPlugin('./../css/client-bundle.css', {
+    allChunks: true
+  }),
   new BrowserSyncPlugin({
     host: process.env.IP + ServerSetting.uBaseForRouter || 'localhost' + ServerSetting.uBaseForRouter,
     port: process.env.PORT || 3000,
@@ -71,6 +71,9 @@ var devPluginList = [
 
 var productionPluginList = [
   productionDefinePlugin,
+  new ExtractTextPlugin('./../css/broken-bundle.css', {
+    allChunks: true
+  }),
   new webpack.optimize.DedupePlugin(),
   new webpack.optimize.UglifyJsPlugin({
     // sourceMap: false,
