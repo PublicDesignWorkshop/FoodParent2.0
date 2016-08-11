@@ -65,7 +65,7 @@ export default class TreeAddress extends React.Component {
   render () {
     if (this.props.editing) {
       return (
-        <div className="tree-address-wrapper fade-in">
+        <div className="tree-address-wrapper">
           <div className="tree-address-label">
             <FontAwesome className='' name='map-signs' />{localization(967)}
           </div>
@@ -88,7 +88,7 @@ export default class TreeAddress extends React.Component {
       );
     } else {
       return (
-        <div className="tree-address-wrapper fade-in">
+        <div className="tree-address-wrapper">
           <div className="tree-address-label">
             <FontAwesome className='' name='map-signs' />{localization(967)}
           </div>

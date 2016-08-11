@@ -61,7 +61,7 @@ export default class TreeDescription extends React.Component {
   render () {
     if (this.props.editing) {
       return (
-        <div className="tree-description-wrapper fade-in">
+        <div className="tree-description-wrapper">
           <div className="tree-description-label">
             <FontAwesome className='' name='sticky-note' />{localization(968)}
           </div>
@@ -84,7 +84,7 @@ export default class TreeDescription extends React.Component {
       );
     } else {
       return (
-        <div className="tree-description-wrapper fade-in">
+        <div className="tree-description-wrapper">
           <div className="tree-description-label">
             <FontAwesome className='' name='sticky-note' />{localization(968)}
           </div>

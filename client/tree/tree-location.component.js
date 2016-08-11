@@ -57,7 +57,7 @@ export default class TreeLocation extends React.Component {
   render () {
     if (this.props.editing) {
       return (
-        <div className="tree-location-wrapper fade-in">
+        <div className="tree-location-wrapper">
           <div className="tree-location-label">
             <FontAwesome className='' name='map-marker' />{localization(980)}
           </div>
@@ -94,7 +94,7 @@ export default class TreeLocation extends React.Component {
       );
     } else {
       return (
-        <div className="tree-location-wrapper fade-in">
+        <div className="tree-location-wrapper">
           <div className="tree-location-label">
             <FontAwesome className='' name='map-marker' />{localization(980)}
           </div>

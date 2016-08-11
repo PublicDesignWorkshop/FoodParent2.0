@@ -58,9 +58,9 @@ export default class TreeFood extends React.Component {
     }
     let label;
     if (food) {
-       label = <span className="fade-in"><img className="tree-food-icon" src={image} /><span className="tree-food-name">{option.label}</span></span>;
+       label = <span><img className="tree-food-icon" src={image} /><span className="tree-food-name">{option.label}</span></span>;
     } else {
-      label = <span className="fade-in"><img className="tree-food-icon" src={ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon} /><span className="tree-food-name">{option.label}</span></span>;
+      label = <span><img className="tree-food-icon" src={ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon} /><span className="tree-food-name">{option.label}</span></span>;
     }
     return label;
   }

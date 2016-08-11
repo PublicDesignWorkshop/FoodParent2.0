@@ -10,8 +10,8 @@
       //update();
       break;
     case 'GET':
-      readAll();
-      // read();
+      // readAll();
+      read();
       break;
     case 'PUT':
       //update();

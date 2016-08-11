@@ -10,7 +10,7 @@
   padding: $header-height 0 0 0;
   pointer-events: all;
 
-  transition: 0.15s;
+  // transition: 0.15s;
 
   @include respond-to(handhelds) {
     right: -100%;
@@ -63,16 +63,16 @@
         width: 32px;
         height: 32px;
         overflow: hidden;
-        
+
         -webkit-user-select: none;
            -moz-user-select: none;
             -ms-user-select: none;
                 user-select: none;
 
-        -webkit-transition: all 0.1s ease-out;
-           -moz-transition: all 0.1s ease-out;
-             -o-transition: all 0.1s ease-out;
-                transition: all 0.1s ease-out;
+        // -webkit-transition: all 0.1s ease-out;
+        //    -moz-transition: all 0.1s ease-out;
+        //      -o-transition: all 0.1s ease-out;
+        //         transition: all 0.1s ease-out;
 
         &:hover:not(.close) {
           width: auto;
@@ -149,6 +149,6 @@
   &.wide {
     right: 0;
     width: 100% !important;
-    transition: 0.15s;
+    // transition: 0.15s;
   }
 }

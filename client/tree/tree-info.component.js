@@ -29,7 +29,7 @@ export default class TreeInfo extends React.Component {
 
   }
   render () {
-    let actions = <div className="fade-in">
+    let actions = <div>
       <div className="solid-button-group">
         <div className="solid-button solid-button-green" onClick={() => {
           this.setState({editing: true});
@@ -39,7 +39,7 @@ export default class TreeInfo extends React.Component {
       </div>
     </div>;
     if (this.state.editing) {
-      actions = <div className="fade-in">
+      actions = <div>
         <div className="solid-button-group">
           <div className="solid-button solid-button-green" onClick={() => {
             this.setState({editing: false});
