@@ -30,9 +30,9 @@
   "iMarkerPrecision": 5,
 
   "sTreeMapId": "map-tree",
-  "uPinIcon": "pin.svg",
-  "uShadowMarker" : "marker-shadow.png",
-  "uTemporaryMarkerIcon": "Marker_Other.svg",
+  "uPinIcon": "Marker_Pin.svg",
+  "uShadowMarker" : "Marker_Shadow.png",
+  "uTemporaryMarkerIcon": "Marker_Unknown_verified.png",
 
   "uReverseGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA",
   "uGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA"

@@ -50,15 +50,21 @@ export default class TreeFood extends React.Component {
   }
   renderOptionValue(option) {
     let food = FoodStore.getFood(option.value);
-    let image;
     let flags = FlagStore.getState().flags;
+    let iconUrl;
     let bFound = false;
-    if (food != null && image == null) {
-      image = food.icon['verified'].replace("_verified.png", ".svg");
-    }
     let label;
     if (food) {
-       label = <span><img className="tree-food-icon" src={image} /><span className="tree-food-name">{option.label}</span></span>;
+      for (let i = 0; i < flags.length && !bFound; i++) {
+        if ($.inArray(flags[i].id, this.props.tree.flags) > -1) {
+          iconUrl = food.icons[flags[i].name];
+          bFound = true;
+        }
+      }
+      if (iconUrl == null) {
+        iconUrl = food.icons['verified'];
+      }
+      label = <span><img className="tree-food-icon" src={iconUrl} /><span className="tree-food-name">{option.label}</span></span>;
     } else {
       label = <span><img className="tree-food-icon" src={ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon} /><span className="tree-food-name">{option.label}</span></span>;
     }

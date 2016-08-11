@@ -4,6 +4,7 @@ let ServerSetting = require('./../../setting/server.json');
 require('./tree-panel.component.scss');
 var FontAwesome = require('react-fontawesome');
 import { TREEDETAILMODE } from './../utils/enum';
+let TreeActions = require('./../actions/tree.actions');
 
 import TreeInfo from './../tree/tree-info.component';
 import TreeControl from './tree-control.component';
@@ -33,6 +34,7 @@ export default class TreePanel extends React.Component {
     let size, info, post, parent, history, close, body;
     // Close
     close = <div className="icon-group close" onClick={() => {
+      TreeActions.setCode(0);
       this.context.router.push({pathname: ServerSetting.uBase + '/'});
     }}>
       <FontAwesome className="icon" name='close' />

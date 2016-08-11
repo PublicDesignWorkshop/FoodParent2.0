@@ -56,11 +56,10 @@
 
       > .icon-group {
         &:not(.close) {
-          -webkit-flex-grow: 1;
-                  flex-grow: 1;
+          // -webkit-flex-grow: 1;
+          //         flex-grow: 1;
         }
         cursor: pointer;
-        width: 32px;
         height: 32px;
         overflow: hidden;
 
@@ -75,19 +74,24 @@
         //         transition: all 0.1s ease-out;
 
         &:hover:not(.close) {
-          width: auto;
-          -webkit-flex-grow: 2;
-                  flex-grow: 2;
-          > .icon-text {
+          @include respond-to(handhelds) {
+
+          }
+          @include respond-to(wide-screens) {
             width: auto;
+            -webkit-flex-grow: 1;
+                    flex-grow: 1;
+            > .icon-text {
+              width: auto;
+            }
           }
         }
 
         &.active:not(.close) {
          width: auto;
          cursor: default;
-         -webkit-flex-grow: 2;
-                 flex-grow: 2;
+         -webkit-flex-grow: 1;
+                 flex-grow: 1;
          > .icon-text {
            width: auto;
          }

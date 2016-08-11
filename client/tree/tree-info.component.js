@@ -20,13 +20,15 @@ export default class TreeInfo extends React.Component {
     super(props, context);
   }
   componentWillMount() {
-    this.setState({editing: false});
+    this.setState({selected: TreeStore.getState().selected, editing: false});
   }
   componentDidMount () {
 
   }
-  componentWillReceiveProps() {
-
+  componentWillReceiveProps(nextProps) {
+    if (TreeStore.getState().selected != this.state.selected) {
+      this.setState({selected: TreeStore.getState().selected, editing: false});
+    }
   }
   render () {
     let actions = <div>

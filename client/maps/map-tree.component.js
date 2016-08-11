@@ -1,11 +1,11 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
 
 import * as L from 'leaflet';
 import * as _ from 'underscore';
 import 'leaflet.markercluster';
 import 'leaflet-canvas-marker';
 import 'googletile';
+import { browserHistory } from 'react-router';
 
 require('./maps.component.scss');
 let MapSetting = require('./../../setting/map.json');
@@ -57,10 +57,6 @@ export default class MapTree extends React.Component {
     this.renderMapTile();
     this.updateProps(this.props);
     this.map.closePopup();
-  }
-
-  renderMap() {
-
   }
 
   afterRenderMap() {
@@ -144,7 +140,9 @@ export default class MapTree extends React.Component {
     if (this.props.location && props.location != null && this.props.location.lat != props.location.lat && this.props.location.lng != props.location.lng) {
       this.renderFocusMarker(props.location);
     }
-    this.renderMarkers(props.trees, props.selected);
+    if (TreeStore.getState().code == 200 && (props.selected == null || props.selected != this.props.selected)) {
+      this.renderMarkers(props.trees, props.selected);
+    }
   }
   renderPopup(tree) {
     if (tree != null) {
@@ -165,13 +163,16 @@ export default class MapTree extends React.Component {
             //point.y += this.map.getSize().y * 0.15;
           }
           let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, MapSetting.iFocusZoom);
-          this.map.setView(location, MapSetting.iFocusZoom, {animate: MapStore.getLoaded(MapSetting.sTreeMapId)});
-          MapActions.setLoaded.defer(MapSetting.sTreeMapId, true);
+          setTimeout(function() {
+            this.map.setView(location, MapSetting.iFocusZoom, {animate: MapStore.getLoaded(MapSetting.sTreeMapId)});
+            MapActions.setLoaded.defer(MapSetting.sTreeMapId, true);
+          }.bind(this), 250);
         }
       }
     }
   }
   renderMarkers(trees, selected) {
+    console.log("renderMarkers");
     var markers = this.markersLayer.getLayers();
     //this.markersLayer._featureGroup._layers
     //this.focusLayer._layers
@@ -180,15 +181,15 @@ export default class MapTree extends React.Component {
     // Remove unnecessary markers.
     for (let i = 0; i < markers.length;) {
       let bFound = false;
-      trees.forEach((tree) => {
-        if (tree.id == markers[i].options.id && tree.food == markers[i].options.food && markers[i].getLatLng().lat == tree.lat && markers[i].getLatLng().lng == tree.lng) {
-          bFound = true;
-        }
-      });
-      if (markers[i].options.id != selected) {
-        bFound = false;
+      // trees.forEach((tree) => {
+      //   if (tree.id == markers[i].options.id && tree.food == markers[i].options.food && markers[i].getLatLng().lat == tree.lat && markers[i].getLatLng().lng == tree.lng) {
+      //     bFound = true;
+      //   }
+      // });
+      if (markers[i].options.type == "svg" && markers[i].options.id == selected) {
+        bFound = true;
       }
-      if (markers[i].options.id == selected && markers[i].options.type == "canvas") {
+      if (markers[i].options.type == "canvas") {
         bFound = false;
       }
       if (!bFound) {
@@ -215,8 +216,19 @@ export default class MapTree extends React.Component {
       }
       if (tree.id != 0 && !bFound) {
         this.addMarker(tree, selected, false);
+        // console.log(`tree.id: ${tree.id}, selected: ${selected}`);
       }
     });
+    //
+    // setTimeout(function() {
+    //   for (let i=0; i <newMarkers.length; i++) {
+    //     if (newMarkers[i].options.type == "canvas") {
+    //       newMarkers[i].on('click', function() {
+    //         browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + newMarkers[i].options.id});
+    //       }.bind(this));
+    //     }
+    //   }
+    // }, 1000);
   }
   addMarker(tree, selected, editable) {
     // console.log(`tree.id: ${tree.id} marker has added.`);
@@ -229,13 +241,13 @@ export default class MapTree extends React.Component {
       } else {
         marker = createCanvasTreeMarker(tree);
       }
-
     }
     if (marker) {
       this.markersLayer.addLayer(marker);
     }
   }
   removeMarker(marker, layer) {
+    marker.off('click');
     layer.removeLayer(marker);
   }
   render () {

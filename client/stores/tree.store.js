@@ -85,7 +85,7 @@ class TreeStore {
     //   updated: moment(new Date()).format(ServerSetting.sServerDateFormat),
     // });
     this.trees = [];
-    this.code = 200;
+    this.code = 0;
     // Bind action methods to store.
     this.bindListeners({
       handleRefresh: TreeActions.REFRESH,
@@ -135,6 +135,8 @@ class TreeStore {
     let trees = this.trees.filter(tree => tree.id == parseInt(id));
     if (trees.length > 0) {
       this.temp = new TreeModel(trees[0].toJSON());
+    } else {
+      this.temp = null;
     }
     this.code = 200;
   }

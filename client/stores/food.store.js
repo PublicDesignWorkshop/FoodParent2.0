@@ -85,11 +85,11 @@ class FoodStore {
     let flags = FlagStore.getState().flags;
     for (let i = 0; i < this.foods.length; i++) {
       if (props[flags.length * i + 1].state == "fulfilled") {
-        this.foods[i].image = [];
-        this.foods[i].icon = [];
+        this.foods[i].images = [];
+        this.foods[i].icons = [];
         for (let j = 0; j < flags.length; j++) {
-          this.foods[i].icon[flags[j].name] = props[flags.length * i + j + 1].value.src;
-          this.foods[i].image[flags[j].name] = props[flags.length * i + j + 1].value;
+          this.foods[i].icons[flags[j].name] = props[flags.length * i + j + 1].value.src;
+          this.foods[i].images[flags[j].name] = props[flags.length * i + j + 1].value;
         }
       }
     }

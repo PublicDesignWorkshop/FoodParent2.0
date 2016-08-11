@@ -33,6 +33,7 @@
     }
 
     > .tree-address-input {
+      border-radius: 0;
       -webkit-flex-grow: 1;           /* NEW - Chrome */
               flex-grow: 1;           /* NEW, Spec - Opera 12.1, Firefox 20+ */
       padding: 3px 6px;

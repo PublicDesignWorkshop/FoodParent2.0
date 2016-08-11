@@ -16,6 +16,11 @@
   display: -webkit-flex;          /* NEW - Chrome */
   display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
 
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+
   -webkit-flex-direction: column;    /* Safari 6.1+ */
           flex-direction: column;    /* NEW, Spec - Opera 12.1, Firefox 20+ */
 
