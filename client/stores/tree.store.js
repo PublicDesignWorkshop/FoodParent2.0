@@ -45,6 +45,7 @@ export class TreeModel {
       return parseInt(flag);
     });
     this.rate = parseInt(props.rate);
+    this.editing = null;
   }
   getLocation() {
     return new L.LatLng(this.lat, this.lng);
@@ -92,7 +93,9 @@ class TreeStore {
       handleFetchedTree: TreeActions.FETCHED_TREE,
       handleFetchedTrees: TreeActions.FETCHED_TREES,
       handleSetCode: TreeActions.SET_CODE,
+      handleSetEditing: TreeActions.SET_EDITING,
       handleSetSelected: TreeActions.SET_SELECTED,
+      handleRefresh: TreeActions.REFRESH,
     });
     // Expose public methods.
     this.exportPublicMethods({
@@ -118,6 +121,7 @@ class TreeStore {
     }
     this.selected = parseInt(props.id);
     this.temp = new TreeModel(props);
+    this.temp.editing = null;
     this.code = 200;
   }
   handleFetchedTrees(props) {
@@ -135,9 +139,24 @@ class TreeStore {
     let trees = this.trees.filter(tree => tree.id == parseInt(id));
     if (trees.length > 0) {
       this.temp = new TreeModel(trees[0].toJSON());
+      this.temp.editing = null;
     } else {
       this.temp = null;
     }
+    this.code = 200;
+  }
+  handleSetEditing(props) {
+    this.selected = props.id;
+    let trees = this.trees.filter(tree => tree.id == parseInt(props.id));
+    if (trees.length > 0) {
+      this.temp = new TreeModel(trees[0].toJSON());
+      this.temp.editing = props.editing;
+    } else {
+      this.temp = null;
+    }
+    this.code = 200;
+  }
+  handleRefresh() {
     this.code = 200;
   }
 }

@@ -35,8 +35,9 @@ export default class TreeInfo extends React.Component {
       <div className="solid-button-group">
         <div className="solid-button solid-button-green" onClick={() => {
           this.setState({editing: true});
+          TreeActions.setEditing(TreeStore.getState().selected, true);
         }}>
-          {localization(928)}
+          {localization(928) /* EDITING */}
         </div>
       </div>
     </div>;
@@ -44,12 +45,13 @@ export default class TreeInfo extends React.Component {
       actions = <div>
         <div className="solid-button-group">
           <div className="solid-button solid-button-green" onClick={() => {
+            TreeActions.setEditing(TreeStore.getState().selected, false);
             this.setState({editing: false});
           }}>
             {localization(930) /* SAVE */}
           </div>
           <div className="solid-button solid-button-green" onClick={() => {
-            TreeActions.setSelected(TreeStore.getState().selected);
+            TreeActions.setSelected(TreeStore.getState().selected, false);
             this.setState({editing: false});
           }}>
             {localization(933) /* CANCEL */}
@@ -58,6 +60,7 @@ export default class TreeInfo extends React.Component {
         <div className="danger-zone">{localization(927) /* DELETE THIS TREE */}</div>
         <div className="solid-button-group">
           <div className="solid-button solid-button-red" onClick={() => {
+            TreeActions.setEditing(TreeStore.getState().selected, false);
             this.setState({editing: false});
           }}>
             {localization(965) /* DELETE THIS TREE */}

@@ -11,7 +11,7 @@ let MapStore = require('./../stores/map.store');
 var FontAwesome = require('react-fontawesome');
 import { localization } from './../utils/localization';
 import { MAPTYPE } from './../utils/enum';
-
+let TreeActions = require('./../actions/tree.actions');
 
 
 export default class Header extends React.Component {
@@ -54,6 +54,7 @@ export default class Header extends React.Component {
             this.context.router.push({pathname: ServerSetting.uBase + "/login"});
           } else {
             if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
+              TreeActions.setCode(0);
               this.context.router.push({pathname: ServerSetting.uBase + "/"});
             } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
               this.context.router.push({pathname: ServerSetting.uBase + "/donations"});

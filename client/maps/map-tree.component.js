@@ -140,8 +140,11 @@ export default class MapTree extends React.Component {
     if (this.props.location && props.location != null && this.props.location.lat != props.location.lat && this.props.location.lng != props.location.lng) {
       this.renderFocusMarker(props.location);
     }
+    let temp = TreeStore.getState().temp;
     if (TreeStore.getState().code == 200 && (props.selected == null || props.selected != this.props.selected)) {
       this.renderMarkers(props.trees, props.selected);
+    } else if (TreeStore.getState().code == 200 && temp && (temp.editing != null || !temp.editing)) {
+      this.renderActiveMarker(temp);
     }
   }
   renderPopup(tree) {
@@ -169,6 +172,31 @@ export default class MapTree extends React.Component {
           }.bind(this), 250);
         }
       }
+    }
+  }
+  renderActiveMarker(tree) {
+    var markers = this.markersLayer.getLayers();
+    let bFound = false;
+    for (let i = 0; i < markers.length && !bFound; i++) {
+      if (tree.editing) {
+        if (tree && markers[i].options.id == tree.id && tree.editing != markers[i].options.draggable) {
+          // console.log(`removing markers[i].options.id: ${markers[i].options.id}`);
+          this.removeMarker(markers[i], this.markersLayer);
+          markers = _.without(markers, markers[i]);
+          bFound = true;
+        }
+      } else {
+        if (tree && markers[i].options.id == tree.id && markers[i].options.draggable == true) {
+          this.removeMarker(markers[i], this.markersLayer);
+          markers = _.without(markers, markers[i]);
+          bFound = true;
+        }
+      }
+
+    }
+    if (bFound) {
+      let marker = this.addMarker(tree, tree.id, tree.editing);
+      marker.openPopup();
     }
   }
   renderMarkers(trees, selected) {
@@ -216,7 +244,6 @@ export default class MapTree extends React.Component {
       }
       if (tree.id != 0 && !bFound) {
         this.addMarker(tree, selected, false);
-        // console.log(`tree.id: ${tree.id}, selected: ${selected}`);
       }
     });
     //
@@ -235,6 +262,7 @@ export default class MapTree extends React.Component {
     let marker;
     if (editable) {
       marker = createSVGTreeMarker(tree, true);
+      marker.openPopup();
     } else {
       if (selected == tree.id) {
         marker = createSVGTreeMarker(tree, false);
@@ -245,6 +273,7 @@ export default class MapTree extends React.Component {
     if (marker) {
       this.markersLayer.addLayer(marker);
     }
+    return marker;
   }
   removeMarker(marker, layer) {
     marker.off('click');

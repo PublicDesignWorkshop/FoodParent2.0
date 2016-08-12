@@ -53,6 +53,16 @@ class TreeActions {
       dispatch(id);
     }
   }
+  setEditing(id, editing){
+    return (dispatch) => {
+      dispatch({id, editing});
+    }
+  }
+  refresh() {
+    return (dispatch) => {
+      dispatch();
+    }
+  }
 }
 
 module.exports = alt.createActions(TreeActions);

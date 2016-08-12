@@ -37,13 +37,10 @@ class MapStore {
     // Bind action methods to store.
     this.bindListeners({
       handleAddMap: MapActions.ADD_MAP,
-      handleUpdate: MapActions.UPDATE,
-      handlePanTo: MapActions.PAN_TO,
-      handleMoveTo: MapActions.MOVE_TO,
       handleSetTile: MapActions.SET_TILE,
       handleSetZoom: MapActions.SET_ZOOM,
       handleSetLoaded: MapActions.SET_LOADED,
-      // handleSetActive: MapActions.SET_ACTIVE,
+      handleMoveToLocation: MapActions.MOVE_TO_LOCATION,
       handleMoveToLocationWithMarker: MapActions.MOVE_TO_LOCATION_WITH_MARKER,
     });
     // Expose public methods.
@@ -123,39 +120,6 @@ class MapStore {
     // Store the latest map type so that user can come back to right map when he or she presses a back button.
     this.latestMapType = props.type;
   }
-  handleUpdate(id) {
-
-  }
-  handlePanTo(props) {
-    // let maps = this.maps.filter(map => map.getId() == props.id);
-    // if (maps.length == 1) {
-    //   let location = new L.LatLng(props.location.lat, props.location.lng);
-    //   let point = L.CRS.EPSG3857.latLngToPoint(location, props.zoom);
-    //   let rMap = document.getElementById(props.id);
-    //   if (rMap.clientWidth > rMap.clientHeight) {
-    //     point.x += maps[0].map.getSize().x * 0.15;
-    //   } else {
-    //     //point.y += maps[0].map.getSize().y * 0.15;
-    //   }
-    //   location = L.CRS.EPSG3857.pointToLatLng(point, props.zoom);
-    //   maps[0].map.panTo(location, props.zoom);
-    // }
-  }
-  handleMoveTo(props) {
-    // let maps = this.maps.filter(map => map.getId() == props.id);
-    // if (maps.length == 1) {
-    //   let location: L.LatLng = new L.LatLng(props.location.lat, props.location.lng);
-    //   let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, props.zoom);
-    //   let rMap = document.getElementById(props.id);
-    //   if (rMap.clientWidth > rMap.clientHeight) {
-    //     point.x += maps[0].map.getSize().x * 0.15;
-    //   } else {
-    //     //point.y += this.map.getSize().y * 0.15;
-    //   }
-    //   location = L.CRS.EPSG3857.pointToLatLng(point, props.zoom);
-    //   maps[0].map.setView(location, props.zoom);
-    // }
-  }
   handleSetTile(props) {
     let maps = this.maps.filter(map => map.id == props.id);
     if (maps.length == 1) {
@@ -174,17 +138,22 @@ class MapStore {
     if (maps.length == 1) {
       maps[0].loaded = props.loaded;
     }
-    // let maps = self.maps.filter(map => map.id == props.id);
-    // if (maps.length == 1) {
-    //   maps[0].setFirst(props.first);
-    // }
   }
-  // handleSetActive(props) {
-  //   // let maps = self.maps.filter(map => map.id == props.id);
-  //   // if (maps.length == 1) {
-  //   //   maps[0].setActive(props.active);
-  //   // }
-  // }
+  handleMoveToLocation(props) {
+    let maps = this.maps.filter(map => map.id == props.id);
+    if (maps.length == 1) {
+      let location: L.LatLng = new L.LatLng(props.location.lat, props.location.lng);
+      let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, props.zoom);
+      let rMap = document.getElementById(props.id);
+      if (rMap.clientWidth > rMap.clientHeight) {
+        point.x += maps[0].map.getSize().x * 0.15;
+      } else {
+        //point.y += this.map.getSize().y * 0.15;
+      }
+      location = L.CRS.EPSG3857.pointToLatLng(point, props.zoom);
+      maps[0].map.setView(location, props.zoom);
+    }
+  }
   handleMoveToLocationWithMarker(props) {
     let maps = this.maps.filter(map => map.id == props.id);
     if (maps.length == 1) {

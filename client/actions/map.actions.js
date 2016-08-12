@@ -9,15 +9,6 @@ class MapActions {
       dispatch({id, map, type});
     }
   }
-  update(id) {
-    return id;
-  }
-  panTo(id, location, zoom) {
-    return {id, location, zoom};
-  }
-  moveTo(id, location, zoom) {
-    return {id, location, zoom};
-  }
   setTile(id, tile) {
     return {id, tile};
   }
@@ -43,6 +34,9 @@ class MapActions {
         });
       }
     }
+  }
+  moveToLocation(id, location, zoom) {
+    return {id, location, zoom};
   }
   moveToLocationWithMarker(id, location, zoom) {
     return {id, location, zoom};

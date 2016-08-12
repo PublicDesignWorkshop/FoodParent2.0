@@ -55,6 +55,8 @@
       padding: 8px;
 
       > .icon-group {
+        display: inline-block;
+        white-space:nowrap;
         &:not(.close) {
           // -webkit-flex-grow: 1;
           //         flex-grow: 1;
@@ -78,9 +80,8 @@
 
           }
           @include respond-to(wide-screens) {
-            width: auto;
-            -webkit-flex-grow: 1;
-                    flex-grow: 1;
+            -webkit-flex-grow: 4;
+                    flex-grow: 4;
             > .icon-text {
               width: auto;
             }
@@ -88,7 +89,6 @@
         }
 
         &.active:not(.close) {
-         width: auto;
          cursor: default;
          -webkit-flex-grow: 1;
                  flex-grow: 1;

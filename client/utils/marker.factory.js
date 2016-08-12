@@ -113,7 +113,6 @@ export function createSVGTreeMarker(tree, movable) {
       id: tree.id,
       food: tree.food,
       type: "svg",
-      selected: false,
       icon: icon,
       draggable: movable,
       riseOnHover: true,
@@ -122,6 +121,19 @@ export function createSVGTreeMarker(tree, movable) {
       closeButton: false,
       closeOnClick: false,
     });
+    // Add zoom-in event listener
+    marker.on('dblclick', function() {
+      MapActions.moveToLocation(MapSetting.sTreeMapId, new L.LatLng(tree.lat, tree.lng), MapSetting.iFocusZoom);
+    });
+
+    if (movable) {
+      marker.on('dragend', function() {
+        tree.lat = parseFloat(parseFloat(marker.getLatLng().lat).toFixed(MapSetting.iMarkerPrecision));
+        tree.lng = parseFloat(parseFloat(marker.getLatLng().lng).toFixed(MapSetting.iMarkerPrecision));
+        TreeActions.refresh();
+        marker.openPopup();
+      });
+    }
     // marker.on('click', function() {
     //   console.log(ServerSetting.uBase + '/tree/' + tree.id);
     //   browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + tree.id});
