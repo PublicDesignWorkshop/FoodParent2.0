@@ -142,31 +142,33 @@ class MapStore {
   handleMoveToLocation(props) {
     let maps = this.maps.filter(map => map.id == props.id);
     if (maps.length == 1) {
+      let zoom = Math.max(maps[0].map.getZoom(), props.zoom);
       let location: L.LatLng = new L.LatLng(props.location.lat, props.location.lng);
-      let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, props.zoom);
+      let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, zoom);
       let rMap = document.getElementById(props.id);
       if (rMap.clientWidth > rMap.clientHeight) {
         point.x += maps[0].map.getSize().x * 0.15;
       } else {
         //point.y += this.map.getSize().y * 0.15;
       }
-      location = L.CRS.EPSG3857.pointToLatLng(point, props.zoom);
-      maps[0].map.setView(location, props.zoom);
+      location = L.CRS.EPSG3857.pointToLatLng(point, zoom);
+      maps[0].map.setView(location, zoom);
     }
   }
   handleMoveToLocationWithMarker(props) {
     let maps = this.maps.filter(map => map.id == props.id);
     if (maps.length == 1) {
+      let zoom = Math.max(maps[0].map.getZoom(), props.zoom);
       let location: L.LatLng = new L.LatLng(props.location.lat, props.location.lng);
-      let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, props.zoom);
+      let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, zoom);
       let rMap = document.getElementById(props.id);
       if (rMap.clientWidth > rMap.clientHeight) {
         point.x += maps[0].map.getSize().x * 0.15;
       } else {
         //point.y += this.map.getSize().y * 0.15;
       }
-      location = L.CRS.EPSG3857.pointToLatLng(point, props.zoom);
-      maps[0].map.setView(location, props.zoom);
+      location = L.CRS.EPSG3857.pointToLatLng(point, zoom);
+      maps[0].map.setView(location, zoom);
       this.location = props.location;
     }
   }

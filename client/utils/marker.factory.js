@@ -10,6 +10,9 @@ let TreeActions = require('./../actions/tree.actions');
 let FoodStore = require('./../stores/food.store');
 let FlagStore = require('./../stores/flag.store');
 
+let isMarkerEventActivated = false;
+let isMarkerEventActivatedResetTimer;
+
 export function createFocusMarker(location) {
   // Create marker icon.
   let icon = new L.Icon({
@@ -63,8 +66,15 @@ export function createCanvasTreeMarker(tree) {
     //   closeOnClick: false,
     // });
     marker.on('click', function() {
-      TreeActions.setCode(0);
-      browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + tree.id});
+      if (!isMarkerEventActivated) {
+        isMarkerEventActivated = true;
+        isMarkerEventActivatedResetTimer = setTimeout(function() {
+          isMarkerEventActivated = false;
+        }, 500);
+        TreeActions.setCode(0);
+        browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + tree.id});
+      }
+
     });
 
     return marker;
@@ -130,7 +140,7 @@ export function createSVGTreeMarker(tree, movable) {
       marker.on('dragend', function() {
         tree.lat = parseFloat(parseFloat(marker.getLatLng().lat).toFixed(MapSetting.iMarkerPrecision));
         tree.lng = parseFloat(parseFloat(marker.getLatLng().lng).toFixed(MapSetting.iMarkerPrecision));
-        TreeActions.refresh();
+        TreeActions.setCode(94);  // 94: Unsaved change.
         marker.openPopup();
       });
     }

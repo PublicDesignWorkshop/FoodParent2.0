@@ -27,6 +27,7 @@ html, body, #app {
   height: 100%;
   overflow: hidden;
   background-color: $light;
+  font-weight: 400;
 }
 #app > div {
   width: 100%;
@@ -50,6 +51,9 @@ html, body, #app {
 .map {
   width: 100%;
   height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 
   padding-top: $header-height;
   overflow: hidden;
@@ -93,6 +97,16 @@ html, body, #app {
   display: flex;
 
   padding: 8px 8px;
+
+  &.no-left-right-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &.double-left-right-padding {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 
   .solid-button {
     -webkit-user-select: none;
@@ -147,4 +161,13 @@ html, body, #app {
   font-weight: 700;
   color: $red;
   text-align: center;
+}
+
+.error-text {
+  font-size: $font-size-small;
+  font-family: $font-main;
+  margin: 8px 0 0 20px;
+  font-weight: 700;
+  color: $red;
+  text-align: left;
 }

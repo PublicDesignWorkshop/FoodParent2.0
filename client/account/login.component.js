@@ -8,6 +8,7 @@ var FontAwesome = require('react-fontawesome');
 import { localization } from './../utils/localization';
 
 import Instruction from './instruction.component';
+import LoginParent from './login-parent.component';
 
 
 
@@ -31,7 +32,26 @@ export default class Login extends React.Component {
     return (
       <div className="login-wrapper">
         <div className="right">
-          Login
+          <LoginParent />
+          <div className="or">
+            OR
+          </div>
+          <div className="solid-button-group">
+            <div className="solid-button solid-button-green" onClick={() => {
+              // TreeActions.setEditing(TreeStore.getState().selected, false);
+              // this.setState({editing: false});
+            }}>
+              {localization(684) /* SAVE */}
+            </div>
+          </div>
+          <div className="solid-button-group">
+            <div className="solid-button solid-button-green" onClick={() => {
+              // TreeActions.setEditing(TreeStore.getState().selected, false);
+              // this.setState({editing: false});
+            }}>
+              {localization(686) /* SAVE */}
+            </div>
+          </div>
         </div>
         <div className="left">
           <Instruction />

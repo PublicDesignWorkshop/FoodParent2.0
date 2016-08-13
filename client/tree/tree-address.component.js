@@ -33,7 +33,7 @@ export default class TreeAddress extends React.Component {
   }
   updateProps(props) {
     if (props.tree != null) {
-      if (props.tree.address != null && props.tree.address.trim() != "") {
+      if (props.tree.address != null && props.tree.address.trim() != "" && TreeStore.getState().code != 94) {
         this.setState({latitude: props.tree.latitude, longitude: props.tree.longitude, address: props.tree.address});
       } else {
         let latitude = parseFloat(props.tree.lat);

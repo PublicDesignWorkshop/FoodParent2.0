@@ -11,6 +11,8 @@ let FlagSource = require('./../sources/flag.source');
 let FlagActions = require('./../actions/flag.actions');
 let TreeSource = require('./../sources/tree.source');
 let TreeActions = require('./../actions/tree.actions');
+let AuthSource = require('./../sources/auth.source');
+let AuthActions = require('./../actions/auth.actions');
 
 import { MESSAGETYPE } from './../utils/enum';
 
@@ -29,105 +31,119 @@ class InitActions {
       dispatch();
       this.setCode(90);
       // Fetch foods.
-      self.setMessage(MESSAGETYPE.SUCCESS, "Importing Food Data...");
-      FoodSource.fetchFoods()
+      self.setMessage(MESSAGETYPE.SUCCESS, "Importing User Data...");
+      AuthSource.fetchAuth()
       .then((response) => {
-        FoodActions.fetchedFoods(response);
+        AuthActions.fetchedAuth(response);
       })
-      .then(() => {
-        // Fetch flags.
-        self.setMessage(MESSAGETYPE.SUCCESS, "Importing Flag Data...");
-        FlagSource.fetchFlags().then((response) => {
-          FlagActions.fetchedFlags(response);
+      .then((response) => {
+        self.setMessage(MESSAGETYPE.SUCCESS, "Importing Food Data...");
+        FoodSource.fetchFoods()
+        .then((response) => {
+          FoodActions.fetchedFoods(response);
         })
         .then(() => {
-          self.setMessage(MESSAGETYPE.SUCCESS, "Updating Season Data...");
-          updateSeason()
-          .then(function(response) {
-            // Fetch trees.
-            self.setMessage(MESSAGETYPE.SUCCESS, "Importing Tree Data...");
-            TreeSource.fetchTrees(id)
-            .then((response) => {
-              TreeActions.fetchedTrees(response);
-            })
-            .then((response) => {
-              self.setMessage(MESSAGETYPE.SUCCESS, "Importing Image Assets...");
-              let icons = FoodStore.getFoodIcons();
-              ImagePreloader.preloadImages(icons)
-              .then(function (data) {
-                if (icons.length != data.length) {
-                  if (__DEV__) {
-                    console.error("One or more of food icons are missing. Please check the image files.");
-                  }
-                }
-                FoodActions.registerIcons(data);
+          // Fetch flags.
+          self.setMessage(MESSAGETYPE.SUCCESS, "Importing Flag Data...");
+          FlagSource.fetchFlags().then((response) => {
+            FlagActions.fetchedFlags(response);
+          })
+          .then(() => {
+            self.setMessage(MESSAGETYPE.SUCCESS, "Updating Season Data...");
+            updateSeason()
+            .then(function(response) {
+              // Fetch trees.
+              self.setMessage(MESSAGETYPE.SUCCESS, "Importing Tree Data...");
+              TreeSource.fetchTrees(id)
+              .then((response) => {
+                TreeActions.fetchedTrees(response);
               })
-              .then(() => {
-                self.setMessage(MESSAGETYPE.SUCCESS, "Importing Localization Data...");
-                getLocalization(window.navigator.userLanguage || window.navigator.language)
-                .then(function(response) {
-                  setLocalization(response);
+              .then((response) => {
+                self.setMessage(MESSAGETYPE.SUCCESS, "Importing Image Assets...");
+                let icons = FoodStore.getFoodIcons();
+                ImagePreloader.preloadImages(icons)
+                .then(function (data) {
+                  if (icons.length != data.length) {
+                    if (__DEV__) {
+                      console.error("One or more of food icons are missing. Please check the image files.");
+                    }
+                  }
+                  FoodActions.registerIcons(data);
                 })
                 .then(() => {
-                  // Start the app.
-                  self.setMessage(MESSAGETYPE.SUCCESS, "Rendering Markers...");
-                  self.loaded();
-                  let delay = 1000;
-                  if (__DEV__) {
-                    delay = 100;
-                  }
-                  setTimeout(function() {
-                    self.setMessage(MESSAGETYPE.SUCCESS, "Let's Do Parenting!");
-                  }, delay);
-                  setTimeout(function() {
-                    self.hideSplashPage();
-                  }, delay * 2.5);
+                  self.setMessage(MESSAGETYPE.SUCCESS, "Importing Localization Data...");
+                  getLocalization(window.navigator.userLanguage || window.navigator.language)
+                  .then(function(response) {
+                    setLocalization(response);
+                  })
+                  .then(() => {
+                    // Start the app.
+                    self.setMessage(MESSAGETYPE.SUCCESS, "Rendering Markers...");
+                    self.loaded();
+                    let delay = 1000;
+                    if (__DEV__) {
+                      delay = 100;
+                    }
+                    setTimeout(function() {
+                      self.setMessage(MESSAGETYPE.SUCCESS, "Let's Do Parenting!");
+                    }, delay);
+                    setTimeout(function() {
+                      self.hideSplashPage();
+                    }, delay * 2.5);
+                  })
+                  .catch(function (response) { // Error catch for getLocalization().
+                    if (response.status == 200) {
+                      self.setMessage(MESSAGETYPE.FAIL, `Failed to import localization data.`);
+                      if (__DEV__) {
+                        console.error(`Failed to import localization data. This could happen either because the file doesn't exist, or the internet is disconnected.`);
+                      }
+                    } else {
+                      self.setMessage(MESSAGETYPE.FAIL, response.status);
+                      if (__DEV__) {
+                        console.error(`Failed to import localization data. Error code: ${response.status}`);
+                      }
+                    }
+                  });
                 })
-                .catch(function (response) { // Error catch for getLocalization().
-                  if (response.status == 200) {
-                    self.setMessage(MESSAGETYPE.FAIL, `Failed to import localization data.`);
-                    if (__DEV__) {
-                      console.error(`Failed to import localization data. This could happen either because the file doesn't exist, or the internet is disconnected.`);
-                    }
-                  } else {
-                    self.setMessage(MESSAGETYPE.FAIL, response.status);
-                    if (__DEV__) {
-                      console.error(`Failed to import localization data. Error code: ${response.status}`);
-                    }
+                .catch(function (code) { // Error catch for preloadImages().
+                  self.setMessage(MESSAGETYPE.FAIL, code);
+                  if (__DEV__) {
+                    console.error(code);
+                    console.error('None of the images were able to be loaded! Please check the internet connection.');
                   }
                 });
               })
-              .catch(function (code) { // Error catch for preloadImages().
+              .catch((code) => {  // Error catch for fetchTrees().
                 self.setMessage(MESSAGETYPE.FAIL, code);
                 if (__DEV__) {
                   console.error(code);
-                  console.error('None of the images were able to be loaded! Please check the internet connection.');
                 }
+                // this.setCode(code);
               });
             })
-            .catch((code) => {  // Error catch for fetchTrees().
-              self.setMessage(MESSAGETYPE.FAIL, code);
-              if (__DEV__) {
-                console.error(code);
+            .catch(function(response) { // Error catch for calcSeason().
+              if (response.status == 200) {
+                self.setMessage(MESSAGETYPE.FAIL, `Failed to update season data.`);
+                if (__DEV__) {
+                   console.error(`Failed to update season data. This could happen either because the file doesn't exist, or the internet is disconnected.`);
+                }
+              } else {
+                self.setMessage(MESSAGETYPE.FAIL, `Failed to update season data. Error code: ${response.status}`);
+                if (__DEV__) {
+                  console.error(`Failed to update season data. Error code: ${response.status}`);
+                }
               }
-              // this.setCode(code);
             });
           })
-          .catch(function(response) { // Error catch for calcSeason().
-            if (response.status == 200) {
-              self.setMessage(MESSAGETYPE.FAIL, `Failed to update season data.`);
-              if (__DEV__) {
-                 console.error(`Failed to update season data. This could happen either because the file doesn't exist, or the internet is disconnected.`);
-              }
-            } else {
-              self.setMessage(MESSAGETYPE.FAIL, `Failed to update season data. Error code: ${response.status}`);
-              if (__DEV__) {
-                console.error(`Failed to update season data. Error code: ${response.status}`);
-              }
+          .catch((code) => {  // Error catch for fetchFlags().
+            self.setMessage(MESSAGETYPE.FAIL, code);
+            if (__DEV__) {
+              console.error(code);
             }
+            // this.setCode(code);
           });
         })
-        .catch((code) => {  // Error catch for fetchFlags().
+        .catch((code) => {  // Error catch for fetchFoods().
           self.setMessage(MESSAGETYPE.FAIL, code);
           if (__DEV__) {
             console.error(code);
@@ -135,7 +151,7 @@ class InitActions {
           // this.setCode(code);
         });
       })
-      .catch((code) => {  // Error catch for fetchFoods().
+      .catch((code) => {  // Error catch for fetchAuth().
         self.setMessage(MESSAGETYPE.FAIL, code);
         if (__DEV__) {
           console.error(code);

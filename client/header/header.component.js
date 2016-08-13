@@ -10,8 +10,11 @@ let MapStore = require('./../stores/map.store');
 
 var FontAwesome = require('react-fontawesome');
 import { localization } from './../utils/localization';
-import { MAPTYPE } from './../utils/enum';
+import { MAPTYPE, AUTHTYPE } from './../utils/enum';
 let TreeActions = require('./../actions/tree.actions');
+let TreeStore = require('./../stores/tree.store');
+let AuthStore = require('./../stores/auth.store');
+
 
 
 export default class Header extends React.Component {
@@ -19,7 +22,11 @@ export default class Header extends React.Component {
     super(props, context);
   }
   componentWillMount() {
-    this.setState({loginText: localization(993)});
+    if (this.props.auth.contact.trim() == "") {
+      this.setState({loginText: localization(993)});
+    } else {
+      this.setState({loginText: this.props.auth.contact.trim()});
+    }
   }
   componentDidMount () {
 
@@ -29,7 +36,7 @@ export default class Header extends React.Component {
   }
   render () {
     let active = "";
-    if (this.props.location.pathname == ServerSetting.uBase + "/login" || this.props.location.pathname == ServerSetting.uBase + "/register") {
+    if (this.props.location.pathname == ServerSetting.uBase + "/login" || this.props.location.pathname == ServerSetting.uBase + "/register" || this.props.location.pathname == ServerSetting.uBase + "/account") {
       active = " active";
     }
 
@@ -51,13 +58,22 @@ export default class Header extends React.Component {
         </div>
         <div className={"right" + active } onClick={() => {
           if (active == "") {
-            this.context.router.push({pathname: ServerSetting.uBase + "/login"});
+            if (AuthStore.getState().auth.auth == AUTHTYPE.GUEST) {
+              this.context.router.push({pathname: ServerSetting.uBase + "/login"});
+            } else if (AuthStore.getState().auth.auth == AUTHTYPE.PARENT) {
+              this.context.router.push({pathname: ServerSetting.uBase + "/account"});
+            }
           } else {
             if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
               TreeActions.setCode(0);
-              this.context.router.push({pathname: ServerSetting.uBase + "/"});
+              if (TreeStore.getState().selected) {
+                this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + TreeStore.getState().selected});
+              } else {
+                this.context.router.push({pathname: ServerSetting.uBase + '/'});
+              }
+              // this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
             } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
-              this.context.router.push({pathname: ServerSetting.uBase + "/donations"});
+              // this.context.router.push({pathname: ServerSetting.uBase + "/donations"});
             }
           }
         }} data-for="tooltip-header" data-tip={localization(86)}>

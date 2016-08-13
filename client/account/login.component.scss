@@ -2,6 +2,9 @@
 @import "./../scss/mixin.scss";
 
 .login-wrapper {
+  color: $brown;
+  font-family: $font-main;
+
   @include respond-to(handhelds) {
     display: block;
   }
@@ -26,6 +29,7 @@
   background-color: $light;
 
   > .right {
+    padding: 8px;
     @include respond-to(handhelds) {
       width: 100%;
     }
@@ -37,5 +41,16 @@
   > .left {
     -webkit-flex-grow: 1;
             flex-grow: 1;
+  }
+
+  .or {
+    padding: 12px 0;
+    font-weight: 700;
+    text-align: center;
+
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
   }
 }

@@ -49,6 +49,9 @@ export default class TreeLocation extends React.Component {
       if (prevLat != parseFloat(this.state.latitude) || prevLng != parseFloat(this.state.longitude)) {
         TreeActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
       }
+      if (this.props.tree.marker) {
+        this.props.tree.marker.setLatLng(new L.LatLng(parseFloat(this.state.latitude), parseFloat(this.state.longitude)));
+      }
     } else {
       this.setState({latitude: this.props.tree.lat, longitude: this.props.tree.lng});
       TreeActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
