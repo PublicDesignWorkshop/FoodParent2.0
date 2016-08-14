@@ -65,6 +65,8 @@ export default class Header extends React.Component {
               this.context.router.push({pathname: ServerSetting.uBase + "/login"});
             } else if (AuthStore.getState().auth.auth == AUTHTYPE.PARENT) {
               this.context.router.push({pathname: ServerSetting.uBase + "/account"});
+            } else if (AuthStore.getState().auth.auth == AUTHTYPE.MANAGER) {
+              this.context.router.push({pathname: ServerSetting.uBase + "/account"});
             }
           } else {
             if (MapStore.getState().latestMapType == MAPTYPE.TREE) {

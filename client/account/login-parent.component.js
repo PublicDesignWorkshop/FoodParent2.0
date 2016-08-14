@@ -48,7 +48,7 @@ export default class LoginParent extends React.Component {
             value={this.state.contact}
             autoComplete
             onChange={(event: any)=> {
-              this.setState({contact: event.target.value.trim(), password: event.target.value.trim()});
+              this.setState({contact: event.target.value.trim()});
             }}
             onKeyPress={(event)=> {
               if (event.key == 'Enter') {

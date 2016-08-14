@@ -1,0 +1,42 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.login-manager-wrapper {
+  padding: 8px;
+  font-family: $font-main;
+  color: $brown;
+  font-size: $font-size-medium;
+
+  > .login-manager-contact-label {
+    font-weight: 700;
+    margin: 8px 0;
+    .fa.fa-user {
+      margin-left: 1px;
+      margin-right: 4px;
+    }
+  }
+
+  > .login-manager-contact-data {
+    width: 100%;
+    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;           /* TWEENER - IE 10 */
+    display: -webkit-flex;          /* NEW - Chrome */
+    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    margin: 4px 0;
+
+    > .login-manager-contact-input {
+      border-radius: 0;
+      -webkit-flex-grow: 1;           /* NEW - Chrome */
+              flex-grow: 1;           /* NEW, Spec - Opera 12.1, Firefox 20+ */
+      padding: 3px 6px;
+      width: 0;
+      font-size: $font-size-medium-small;
+      &:focus {
+        outline: 2px solid $brown;
+      }
+    }
+  }
+
+}

@@ -6,9 +6,11 @@ let ServerSetting = require('./../../setting/server.json');
 
 var FontAwesome = require('react-fontawesome');
 import { localization } from './../utils/localization';
+import { LOGINMODE } from './../utils/enum';
 
 import Instruction from './instruction.component';
 import LoginParent from './login-parent.component';
+import LoginManager from './login-manager.component';
 
 
 
@@ -17,6 +19,7 @@ export default class Login extends React.Component {
     super(props, context);
   }
   componentWillMount() {
+    this.setState({mode: LOGINMODE.PARENT});
     // this.setState({loginText: ""});
     // localization(993, window.navigator.userLanguage || window.navigator.language, function(response) {
     //   this.setState({loginText: response});
@@ -29,10 +32,33 @@ export default class Login extends React.Component {
 
   }
   render () {
+    let login;
+    let action;
+    if (this.state.mode == LOGINMODE.PARENT) {
+       login = <LoginParent />;
+       action = <div className="solid-button solid-button-green" onClick={() => {
+         this.setState({mode: LOGINMODE.MANAGER});
+         // TreeActions.setEditing(TreeStore.getState().selected, false);
+         // this.setState({editing: false});
+       }}>
+         {localization(686) /* Manager Sign-In */}
+       </div>;
+    } else if (this.state.mode == LOGINMODE.MANAGER) {
+       login = <LoginManager />;
+       action = <div className="solid-button solid-button-green" onClick={() => {
+         this.setState({mode: LOGINMODE.PARENT});
+         // TreeActions.setEditing(TreeStore.getState().selected, false);
+         // this.setState({editing: false});
+       }}>
+         {localization(685) /* Manager Sign-In */}
+       </div>;
+    }
+
+
     return (
       <div className="login-wrapper">
         <div className="right">
-          <LoginParent />
+          {login}
           <div className="or">
             OR
           </div>
@@ -45,12 +71,7 @@ export default class Login extends React.Component {
             </div>
           </div>
           <div className="solid-button-group">
-            <div className="solid-button solid-button-green" onClick={() => {
-              // TreeActions.setEditing(TreeStore.getState().selected, false);
-              // this.setState({editing: false});
-            }}>
-              {localization(686) /* SAVE */}
-            </div>
+            {action}
           </div>
         </div>
         <div className="left">
