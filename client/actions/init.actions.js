@@ -108,17 +108,22 @@ class InitActions {
                 .catch(function (code) { // Error catch for preloadImages().
                   self.setMessage(MESSAGETYPE.FAIL, code);
                   if (__DEV__) {
-                    console.error(code);
-                    console.error('None of the images were able to be loaded! Please check the internet connection.');
+                    console.error(`Failed to import image assets. Error code: ${code}`);
                   }
                 });
               })
               .catch((code) => {  // Error catch for fetchTrees().
-                self.setMessage(MESSAGETYPE.FAIL, code);
-                if (__DEV__) {
-                  console.error(code);
+                if (code == 200) {
+                  self.setMessage(MESSAGETYPE.FAIL, `Failed to import tree data.`);
+                  if (__DEV__) {
+                     console.error(`Failed to import tree data. This could happen either because the file doesn't exist, or the internet is disconnected.`);
+                  }
+                } else {
+                  self.setMessage(MESSAGETYPE.FAIL, `Failed to import tree data. Error code: ${code}`);
+                  if (__DEV__) {
+                    console.error(`Failed to import tree data. Error code: ${code}`);
+                  }
                 }
-                // this.setCode(code);
               });
             })
             .catch(function(response) { // Error catch for calcSeason().
@@ -136,27 +141,45 @@ class InitActions {
             });
           })
           .catch((code) => {  // Error catch for fetchFlags().
-            self.setMessage(MESSAGETYPE.FAIL, code);
-            if (__DEV__) {
-              console.error(code);
+            if (code == 200) {
+              self.setMessage(MESSAGETYPE.FAIL, `Failed to import flag data.`);
+              if (__DEV__) {
+                 console.error(`Failed to import flag data. This could happen either because the file doesn't exist, or the internet is disconnected.`);
+              }
+            } else {
+              self.setMessage(MESSAGETYPE.FAIL, `Failed to import flag data. Error code: ${code}`);
+              if (__DEV__) {
+                console.error(`Failed to import flag data. Error code: ${code}`);
+              }
             }
-            // this.setCode(code);
           });
         })
         .catch((code) => {  // Error catch for fetchFoods().
-          self.setMessage(MESSAGETYPE.FAIL, code);
-          if (__DEV__) {
-            console.error(code);
+          if (code == 200) {
+            self.setMessage(MESSAGETYPE.FAIL, `Failed to import food data.`);
+            if (__DEV__) {
+               console.error(`Failed to import food data. This could happen either because the file doesn't exist, or the internet is disconnected.`);
+            }
+          } else {
+            self.setMessage(MESSAGETYPE.FAIL, `Failed to import food data. Error code: ${code}`);
+            if (__DEV__) {
+              console.error(`Failed to import food data. Error code: ${code}`);
+            }
           }
-          // this.setCode(code);
         });
       })
       .catch((code) => {  // Error catch for fetchAuth().
-        self.setMessage(MESSAGETYPE.FAIL, code);
-        if (__DEV__) {
-          console.error(code);
+        if (code == 200) {
+          self.setMessage(MESSAGETYPE.FAIL, `Failed to import user data.`);
+          if (__DEV__) {
+             console.error(`Failed to import user data. This could happen either because the file doesn't exist, or the internet is disconnected.`);
+          }
+        } else {
+          self.setMessage(MESSAGETYPE.FAIL, `Failed to import user data. Error code: ${code}`);
+          if (__DEV__) {
+            console.error(`Failed to import user data. Error code: ${code}`);
+          }
         }
-        // this.setCode(code);
       });
     }
   }

@@ -175,6 +175,7 @@ export default class MapTree extends React.Component {
     }
   }
   renderActiveMarker(tree) {  // tree in this case = TreeStore.getState().temp
+    console.log("renderActiveMarker");
     var markers = this.markersLayer.getLayers();
     let bFound = false;
     for (let i = 0; i < markers.length && !bFound; i++) {
@@ -214,7 +215,8 @@ export default class MapTree extends React.Component {
       let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, zoom);
       setTimeout(function() {
         this.map.setView(location, zoom, {animate: MapStore.getLoaded(MapSetting.sTreeMapId)});
-        MapActions.setLoaded.defer(MapSetting.sTreeMapId, true);
+        // if (!MapStore.getLoaded(MapSetting.sTreeMapId))
+        //   MapActions.setLoaded.defer(MapSetting.sTreeMapId, true);
       }.bind(this), 250);
     }
   }

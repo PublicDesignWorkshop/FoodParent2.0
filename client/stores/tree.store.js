@@ -80,7 +80,6 @@ class TreeStore {
     this.code = 0;
     // Bind action methods to store.
     this.bindListeners({
-      handleRefresh: TreeActions.REFRESH,
       handleFetchedTree: TreeActions.FETCHED_TREE,
       handleFetchedTrees: TreeActions.FETCHED_TREES,
       handleSetCode: TreeActions.SET_CODE,
@@ -104,26 +103,27 @@ class TreeStore {
     }
     return null;
   }
-  handleRefresh() {
-    this.code = 200;
-  }
   handleFetchedTree(props) {
-    let trees = this.trees.filter(tree => tree.id == parseInt(props.id));
-    if (trees.length > 0) {
-      trees[0] = new TreeModel(props);
-    } else {
-      this.trees.push(new TreeModel(props));
+    if (props) {
+      let trees = this.trees.filter(tree => tree.id == parseInt(props.id));
+      if (trees.length > 0) {
+        trees[0] = new TreeModel(props);
+      } else {
+        this.trees.push(new TreeModel(props));
+      }
+      this.selected = parseInt(props.id);
+      this.temp = new TreeModel(props);
+      this.temp.editing = null;
     }
-    this.selected = parseInt(props.id);
-    this.temp = new TreeModel(props);
-    this.temp.editing = null;
     this.code = 200;
   }
   handleFetchedTrees(props) {
-    this.trees = [];
-    props.forEach((props) => {
-      this.trees.push(new TreeModel(props));
-    });
+    if (props) {
+      this.trees = [];
+      props.forEach((props) => {
+        this.trees.push(new TreeModel(props));
+      });
+    }
     this.code = 200;
   }
   handleSetCode(code) {
@@ -159,19 +159,20 @@ class TreeStore {
     if (trees.length > 0) {
       this.trees = _.without(this.trees, ...trees);
     }
-    let map = MapStore.getMapModel(MapSetting.sTreeMapId).map;
-
-    let zoom = map.getZoom();
-    let location: L.LatLng = new L.LatLng(map.getCenter().lat, map.getCenter().lng);
-    let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, zoom);
-    let rMap = document.getElementById(MapSetting.sTreeMapId);
-    if (rMap.clientWidth > rMap.clientHeight) {
-      point.x -= map.getSize().x * 0.15;
-    } else {
-      //point.y += this.map.getSize().y * 0.15;
+    let location = new L.LatLng(MapSetting.vPosition.x, MapSetting.vPosition.y);
+    if (MapStore.getMapModel(MapSetting.sTreeMapId)) {
+      let map = MapStore.getMapModel(MapSetting.sTreeMapId).map;
+      let zoom = map.getZoom();
+      let center = new L.LatLng(map.getCenter().lat, map.getCenter().lng);
+      let point = L.CRS.EPSG3857.latLngToPoint(center, zoom);
+      let rMap = document.getElementById(MapSetting.sTreeMapId);
+      if (rMap.clientWidth > rMap.clientHeight) {
+        point.x -= map.getSize().x * 0.15;
+      } else {
+        //point.y += this.map.getSize().y * 0.15;
+      }
+      location = L.CRS.EPSG3857.pointToLatLng(point, zoom);
     }
-    location = L.CRS.EPSG3857.pointToLatLng(point, zoom);
-
     this.temp = new TreeModel({
       id: "0",
       lat: location.lat,

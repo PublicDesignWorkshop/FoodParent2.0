@@ -53,7 +53,7 @@ export default class Header extends React.Component {
         <div className={"center" + active} data-for="tooltip-header" data-tip={localization(87)}>
           <AltContainer stores={
             {
-              maps: MapStore
+              maps: MapStore,
             }
           }>
             <Search />

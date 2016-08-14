@@ -19,6 +19,7 @@ import TreeAdd from './trees/tree-add.component';
 import Login from './account/login.component';
 import Account from './account/account.component';
 import Splash from './message/splash.component';
+import Popup from './message/popup.component';
 
 let MapSetting = require('./../setting/map.json');
 import { localization } from './utils/localization';
@@ -88,6 +89,7 @@ class App extends React.Component {
           <div className="map"><div id={MapSetting.sTreeMapId} ref={MapSetting.sTreeMapId}></div></div>
           {this.props.children}
           {splash}
+          <Popup />
         </div>
       );
     } else {

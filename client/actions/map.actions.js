@@ -2,6 +2,7 @@ let alt = require('../alt');
 
 let MapSetting = require('./../../setting/map.json');
 
+
 class MapActions {
   addMap(id, map, type) {
     return (dispatch) => {

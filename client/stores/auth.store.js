@@ -1,9 +1,15 @@
 let alt = require('./../alt');
+import { browserHistory } from 'react-router';
 import $ from 'jquery';
 import moment from 'moment';
 
+let ServerSetting = require('./../../setting/server.json');
 let AuthActions = require('./../actions/auth.actions');
-import { AUTHTYPE } from './../utils/enum';
+import { AUTHTYPE, MAPTYPE } from './../utils/enum';
+let TreeStore = require('./../stores/tree.store');
+let TreeActions = require('./../actions/tree.actions');
+let MapActions = require('./../actions/map.actions');
+let MapStore = require('./../stores/map.store');
 
 
 export class AuthModel {
@@ -106,17 +112,38 @@ class AuthStore {
   handleFechedAuth(props) {
     this.auth = new AuthModel(props);
     this.code = 200;
-    console.log(this.auth);
   }
   handleProcessedLogout() {
     this.auth = new AuthModel({id: "0", contact: "", auth: 4, trees: null});
+    setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
+      browserHistory.push({pathname: ServerSetting.uBase + '/'});
+    }, 1)
     this.code = 200;
-    console.log(this.auth);
   }
   handleProcessedLogin(props) {
     this.auth = new AuthModel(props);
+    if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
+      if (TreeStore.getState().selected) {
+        setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
+          browserHistory.replace({pathname: ServerSetting.uBase + '/tree/' + TreeStore.getState().selected});
+        }, 1);
+      } else {
+        setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
+          browserHistory.replace({pathname: ServerSetting.uBase + '/'});
+        }, 1);
+      }
+    } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
+      // this.context.router.push({pathname: ServerSetting.uBase + '/recipient/' + parseInt(searchText)});
+    } else {
+      setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
+        browserHistory.replace({pathname: ServerSetting.uBase + '/'});
+      }, 1);
+    }
+    // setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
+    //
+    // }, 1);
+
     this.code = 200;
-    console.log(this.auth);
   }
 }
 

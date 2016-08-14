@@ -24,12 +24,12 @@
   pointer-events: all;
   font-family: $font-narrow;
 
-  &.popup-green {
-    background-color: $green;
-  }
+  bottom: -56px;
+  transition: 0.25s;
 
-  &.popup-red {
-    background-color: $red;
+  &.open {
+    bottom: 0;
+    transition: 0.25s;
   }
 
   > .popup-message {
@@ -42,10 +42,29 @@
       padding: 2px 6px;
       margin: 2px 2px 2px 6px;
       cursor: pointer;
+    }
+  }
 
-      &:hover {
-        background-color: $white;
-        color: $green;
+  &.popup-green {
+    background-color: $green;
+    > .popup-message {
+      > .popup-button {
+        &:hover {
+          background-color: $white;
+          color: $green;
+        }
+      }
+    }
+  }
+
+  &.popup-red {
+    background-color: $red;
+    > .popup-message {
+      > .popup-button {
+        &:hover {
+          background-color: $white;
+          color: $red;
+        }
       }
     }
   }

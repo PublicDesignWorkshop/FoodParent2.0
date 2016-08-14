@@ -6,10 +6,11 @@ let AuthSource = require('./../sources/auth.source');
 
 let MapActions = require('./../actions/map.actions');
 let MapStore = require('./../stores/map.store');
-let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
-import { MAPTYPE } from './../utils/enum';
+let TreeActions = require('./../actions/tree.actions');
 
+import { localization } from './../utils/localization';
+import { MAPTYPE } from './../utils/enum';
 
 
 class AuthActions {
@@ -51,9 +52,7 @@ class AuthActions {
   processedLogout() {
     return (dispatch) => {
       dispatch();
-      browserHistory.push({pathname: ServerSetting.uBase + '/'});
-      // treeActions.fetchTrees();
-      // foodActions.fetchFoods();
+      TreeActions.fetchTrees();
     }
   }
   processLogin(contact, password) {
@@ -72,18 +71,7 @@ class AuthActions {
   processedLogin(props: IAuthProps) {
     return (dispatch) => {
       dispatch(props);
-      if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
-        if (TreeStore.getState().selected) {
-          browserHistory.replace({pathname: ServerSetting.uBase + '/tree/' + TreeStore.getState().selected});
-          TreeActions.fetchTrees();
-        } else {
-          browserHistory.replace({pathname: ServerSetting.uBase + '/'});
-          TreeActions.fetchTrees();
-        }
-        // this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
-      } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
-        // this.context.router.push({pathname: ServerSetting.uBase + '/recipient/' + parseInt(searchText)});
-      }
+      TreeActions.fetchTrees();
     }
   }
 }

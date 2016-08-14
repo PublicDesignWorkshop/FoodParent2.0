@@ -26,7 +26,7 @@ export default class TreeAddress extends React.Component {
     this.setState({latitude: MapSetting.vPosition.x, longitude: MapSetting.vPosition.y, address: ""});
   }
   componentDidMount () {
-
+    this.updateProps(this.props);
   }
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);

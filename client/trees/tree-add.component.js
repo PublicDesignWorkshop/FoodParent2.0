@@ -18,11 +18,11 @@ export default class TreeAdd extends React.Component {
     super();
   }
   componentWillMount() {
-    TreeActions.createTempTree.defer();
+    TreeActions.createTempTree();
     this.updateProps(this.props);
   }
   componentDidMount () {
-    
+
   }
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);
@@ -30,7 +30,7 @@ export default class TreeAdd extends React.Component {
   updateProps(props) {
     let mode;
     let open;
-    TreeActions.fetchTree.defer(parseInt(props.params.treeId));
+    // TreeActions.fetchTree.defer(0);
     // Instead of changing url, change # hashtag to remove extra rendering process.
     switch(props.location.hash.replace('#', '')) {
       case "":
@@ -93,7 +93,7 @@ export default class TreeAdd extends React.Component {
           <MapTree />
         </AltContainer>
         <TreeAddPanel open={this.state.open} mode={this.state.mode} />
-        <div className="popup-wrapper popup-green">
+        <div className="popup-wrapper popup-green open">
           {action}
         </div>
       </div>

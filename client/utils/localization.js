@@ -46,5 +46,5 @@ export function localization(code) {
   if (localizationData[code]) {
     return localizationData[code];
   }
-  return "N/A";
+  return "Error Code: " + code;
 }

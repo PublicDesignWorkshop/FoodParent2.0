@@ -1,6 +1,8 @@
 let alt = require('../alt');
 
 let TreeSource = require('./../sources/tree.source');
+import { displaySuccessMessage, displayFailMessage } from './../message/popup.component';
+import { localization } from './../utils/localization';
 
 
 class TreeActions {
@@ -26,7 +28,7 @@ class TreeActions {
       TreeSource.fetchTree(id).then((response) => {
         this.fetchedTree(response);
       }).catch((code) => {
-        // displayErrorMessage(localization(code));
+        displayFailMessage(localization(code));
         this.setCode(code);
       });
     }
@@ -43,7 +45,7 @@ class TreeActions {
       TreeSource.fetchTrees(id).then((response) => {
         this.fetchedTrees(response);
       }).catch((code) => {
-        // displayErrorMessage(localization(code));
+        displayFailMessage(localization(code));
         this.setCode(code);
       });
     }
@@ -74,18 +76,16 @@ class TreeActions {
       dispatch();
       this.setCode(92);
       TreeSource.createTree(tree).then((response) => {
-        // displaySuccessMessage(localization(635));
+        displaySuccessMessage(localization(635));
         this.createdTree(response);
       }).catch((code) => {
-        // displayErrorMessage(localization(code));
+        displayFailMessage(localization(code));
         this.setCode(code);
       });
     }
   }
   createdTree(props) {
     return (dispatch) => {
-      // browserHistory.push({pathname: Settings.uBaseName + '/tree/' + props.id});
-      // authActions.fetchAuth();
       dispatch(props);
     }
   }
@@ -95,10 +95,10 @@ class TreeActions {
       dispatch();
       this.setCode(92);
       TreeSource.updateTree(tree).then((response) => {
-        // displaySuccessMessage(localization(634));
+        displaySuccessMessage(localization(634));
         this.updatedTree(response);
       }).catch((code) => {
-        // displayErrorMessage(localization(code));
+        displayFailMessage(localization(code));
         this.setCode(code);
       });
     }
@@ -113,17 +113,16 @@ class TreeActions {
       dispatch();
       this.setCode(91);
       TreeSource.deleteTree(tree).then((response) => {
-        // displayErrorMessage(localization(637));
+        displayFailMessage(localization(637));
         this.deletedTree(tree.toJSON());
       }).catch((code) => {
-        // displayErrorMessage(localization(code));
+        displayFailMessage(localization(code));
         this.setCode(code);
       });
     }
   }
-  deletedTree(props: ITreeProps) {
+  deletedTree(props) {
     return (dispatch) => {
-      // browserHistory.replace({pathname: Settings.uBaseName + '/'});
       dispatch(props);
     }
   }

@@ -28,7 +28,7 @@ export default class TreeFood extends React.Component {
     this.setState({options: null, selected: null});
   }
   componentDidMount () {
-
+    this.updateProps(this.props);
   }
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);

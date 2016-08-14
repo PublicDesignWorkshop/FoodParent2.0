@@ -26,7 +26,7 @@
 
     margin: 4px 0;
 
-    > .login-manager-contact-input {
+    > .login-manager-contact-input, .login-manager-password-input {
       border-radius: 0;
       -webkit-flex-grow: 1;           /* NEW - Chrome */
               flex-grow: 1;           /* NEW, Spec - Opera 12.1, Firefox 20+ */

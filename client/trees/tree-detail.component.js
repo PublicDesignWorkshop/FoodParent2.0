@@ -19,7 +19,7 @@ export default class TreeDetail extends React.Component {
     this.updateProps(this.props);
   }
   componentDidMount () {
-
+    
   }
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);
