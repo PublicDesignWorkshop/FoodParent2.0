@@ -40,7 +40,6 @@ export default class Popup extends React.Component {
 let messageTimer;
 
 export function displaySuccessMessage(message) {
-  console.log(message);
   $('#popup .popup-message').html(message);
   $('#popup').addClass('open popup-green');
   if (messageTimer) {
@@ -48,8 +47,7 @@ export function displaySuccessMessage(message) {
   }
   messageTimer = setTimeout(function () {
     $('#popup .popup-message').html("");
-    $('#popup').removeClass('open');
-    $('#popup').removeClass('popup-green');
+    $('#popup').removeClass('open popup-green');
   }, 1500);
 }
 
@@ -61,7 +59,6 @@ export function displayFailMessage(message) {
   }
   messageTimer = setTimeout(function () {
     $('#popup .popup-message').html("");
-    $('#popup').removeClass('open');
-    $('#popup').removeClass('popup-green');
+    $('#popup').removeClass('open popup-red');
   }, 1500);
 }

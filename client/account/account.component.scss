@@ -25,7 +25,8 @@
   width: 100%;
   height: 100%;
   padding-top: $header-height;
-  overflow: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   background-color: $light;
 
   > .right {
@@ -51,7 +52,6 @@
       font-size: $font-size-x-large;
       color: $brown;
       padding: 8px;
-      overflow-y: scroll;
 
       > .icon-group {
         display: inline-block;

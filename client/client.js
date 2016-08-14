@@ -88,8 +88,8 @@ class App extends React.Component {
           </AltContainer>;
           <div className="map"><div id={MapSetting.sTreeMapId} ref={MapSetting.sTreeMapId}></div></div>
           {this.props.children}
-          {splash}
           <Popup />
+          {splash}
         </div>
       );
     } else {

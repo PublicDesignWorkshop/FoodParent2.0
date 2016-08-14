@@ -71,7 +71,6 @@ class AuthActions {
   processedLogin(props: IAuthProps) {
     return (dispatch) => {
       dispatch(props);
-      TreeActions.fetchTrees();
     }
   }
 }

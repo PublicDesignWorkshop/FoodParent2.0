@@ -77,7 +77,14 @@ export default class Account extends React.Component {
           </div>
         </div>
         <div className="left">
-          STATS
+          STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>
+          STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>
+          STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>
+          STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>
+          STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>
+          STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>
+          STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>
+          STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>STATS<br/>
         </div>
       </div>
     );

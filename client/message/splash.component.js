@@ -38,7 +38,7 @@ export default class Loader extends React.Component {
     }
     if (this.state.hidden) {
       return (
-        <div>
+        <div className="hidden">
         </div>
       );
     } else {

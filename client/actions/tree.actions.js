@@ -71,17 +71,22 @@ class TreeActions {
     }
   }
   createTree(tree) {
-    return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
-      dispatch();
-      this.setCode(92);
-      TreeSource.createTree(tree).then((response) => {
-        displaySuccessMessage(localization(635));
-        this.createdTree(response);
-      }).catch((code) => {
-        displayFailMessage(localization(code));
-        this.setCode(code);
-      });
+    if (tree.food == 0) {
+      displayFailMessage(localization(643));
+      this.setCode(643);
+    } else {
+      return (dispatch) => {
+        // we dispatch an event here so we can have "loading" state.
+        dispatch();
+        this.setCode(92);
+        TreeSource.createTree(tree).then((response) => {
+          displaySuccessMessage(localization(635));
+          this.createdTree(response);
+        }).catch((code) => {
+          displayFailMessage(localization(code));
+          this.setCode(code);
+        });
+      }
     }
   }
   createdTree(props) {

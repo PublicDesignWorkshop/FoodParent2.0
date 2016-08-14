@@ -68,8 +68,7 @@ export default class TreeInfo extends React.Component {
         <div className="danger-zone">{localization(927) /* DELETE THIS TREE */}</div>
         <div className="solid-button-group">
           <div className="solid-button solid-button-red" onClick={() => {
-            TreeActions.deleteTree(TreeStore.getState().temp);
-            this.setState({editing: false});
+            this.context.router.push({pathname: window.location.pathname, hash: "#delete"});
           }}>
             {localization(965) /* DELETE THIS TREE */}
           </div>

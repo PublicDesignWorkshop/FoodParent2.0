@@ -54,7 +54,6 @@ export default class MapTree extends React.Component {
       this.focusLayer = MapStore.getMapModel(MapSetting.sTreeMapId).focusLayer;
       this.markersLayer = MapStore.getMapModel(MapSetting.sTreeMapId).markersLayer;
     }
-    this.renderMapTile();
     this.updateProps(this.props);
     // this.map.closePopup();
   }

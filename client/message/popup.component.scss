@@ -12,29 +12,27 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  min-height: 56px;
-  transition: 0.25s;
-  padding: 48px 0 0 0;
+  transition: 0.15s;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
   color: $white;
-  padding: 8px 8px 8px 8px;
+  padding: 0 8px 0 8px;
   text-align: center;
   border-top: 2px solid $white;
   pointer-events: all;
   font-family: $font-narrow;
 
-  bottom: -56px;
-  transition: 0.25s;
+  height: 0;
 
   &.open {
-    bottom: 0;
-    transition: 0.25s;
+    height: 56px;
+    // padding: 8px 8px 8px 8px;
+    transition: 0.15s;
   }
 
   > .popup-message {
     margin: auto;
-
+    line-height: 1.5;
     > .popup-button {
       font-weight: 700;
       border-radius: 2px;

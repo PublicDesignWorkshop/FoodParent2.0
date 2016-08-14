@@ -45,7 +45,7 @@ export default class TreePanel extends React.Component {
     if (this.state.open) {
       open = " open";
     }
-    let size, info, post, parent, history, close, body;
+    let size, info, post, parent, history, close, body, popup;
     // Close
     close = <div className="icon-group close" onClick={() => {
       TreeActions.setCode(0);
