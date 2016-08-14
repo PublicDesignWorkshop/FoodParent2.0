@@ -14,6 +14,11 @@ class TreeActions {
       dispatch();
     }
   }
+  createTempTree() {
+    return (dispatch) => {
+      dispatch();
+    }
+  }
   fetchTree(id) {
     return (dispatch) => {
       dispatch();
@@ -61,6 +66,65 @@ class TreeActions {
   refresh() {
     return (dispatch) => {
       dispatch();
+    }
+  }
+  createTree(tree) {
+    return (dispatch) => {
+      // we dispatch an event here so we can have "loading" state.
+      dispatch();
+      this.setCode(92);
+      TreeSource.createTree(tree).then((response) => {
+        // displaySuccessMessage(localization(635));
+        this.createdTree(response);
+      }).catch((code) => {
+        // displayErrorMessage(localization(code));
+        this.setCode(code);
+      });
+    }
+  }
+  createdTree(props) {
+    return (dispatch) => {
+      // browserHistory.push({pathname: Settings.uBaseName + '/tree/' + props.id});
+      // authActions.fetchAuth();
+      dispatch(props);
+    }
+  }
+  updateTree(tree) {
+    return (dispatch) => {
+      // we dispatch an event here so we can have "loading" state.
+      dispatch();
+      this.setCode(92);
+      TreeSource.updateTree(tree).then((response) => {
+        // displaySuccessMessage(localization(634));
+        this.updatedTree(response);
+      }).catch((code) => {
+        // displayErrorMessage(localization(code));
+        this.setCode(code);
+      });
+    }
+  }
+  updatedTree(props) {
+    return (dispatch) => {
+      dispatch(props);
+    }
+  }
+  deleteTree(tree) {
+    return (dispatch) => {
+      dispatch();
+      this.setCode(91);
+      TreeSource.deleteTree(tree).then((response) => {
+        // displayErrorMessage(localization(637));
+        this.deletedTree(tree.toJSON());
+      }).catch((code) => {
+        // displayErrorMessage(localization(code));
+        this.setCode(code);
+      });
+    }
+  }
+  deletedTree(props: ITreeProps) {
+    return (dispatch) => {
+      // browserHistory.replace({pathname: Settings.uBaseName + '/'});
+      dispatch(props);
     }
   }
 }

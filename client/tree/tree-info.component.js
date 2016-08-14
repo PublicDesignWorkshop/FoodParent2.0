@@ -13,6 +13,7 @@ import TreeDescription from './tree-description.component';
 
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
+let AuthStore = require('./../stores/auth.store');
 
 
 export default class TreeInfo extends React.Component {
@@ -20,24 +21,31 @@ export default class TreeInfo extends React.Component {
     super(props, context);
   }
   componentWillMount() {
-    this.setState({selected: TreeStore.getState().selected, editing: false});
+    this.setState({selected: TreeStore.getState().selected, editing: false, editable: false});
   }
   componentDidMount () {
 
   }
   componentWillReceiveProps(nextProps) {
     if (TreeStore.getState().selected != this.state.selected) {
-      this.setState({selected: TreeStore.getState().selected, editing: false});
+      this.setState({selected: TreeStore.getState().selected, editing: false, editable: AuthStore.getState().auth.canEditTree(TreeStore.getState().selected)});
     }
   }
   render () {
+    let message;
+    if (AuthStore.getState().auth.isRecentlyAddedByUser(TreeStore.getState().selected)) {
+      message = <div className="error-text padding-8">
+        {localization(77)}
+      </div>
+    }
     let actions = <div>
+      {message}
       <div className="solid-button-group">
         <div className="solid-button solid-button-green" onClick={() => {
           this.setState({editing: true});
           TreeActions.setEditing(TreeStore.getState().selected, true);
         }}>
-          {localization(928) /* EDITING */}
+          {localization(928) /* EDIT */}
         </div>
       </div>
     </div>;
@@ -45,13 +53,13 @@ export default class TreeInfo extends React.Component {
       actions = <div>
         <div className="solid-button-group">
           <div className="solid-button solid-button-green" onClick={() => {
-            TreeActions.setEditing(TreeStore.getState().selected, false);
+            TreeActions.updateTree(TreeStore.getState().temp);
             this.setState({editing: false});
           }}>
             {localization(930) /* SAVE */}
           </div>
           <div className="solid-button solid-button-green" onClick={() => {
-            TreeActions.setSelected(TreeStore.getState().selected, false);
+            TreeActions.setSelected(TreeStore.getState().selected);
             this.setState({editing: false});
           }}>
             {localization(933) /* CANCEL */}
@@ -60,7 +68,7 @@ export default class TreeInfo extends React.Component {
         <div className="danger-zone">{localization(927) /* DELETE THIS TREE */}</div>
         <div className="solid-button-group">
           <div className="solid-button solid-button-red" onClick={() => {
-            TreeActions.setEditing(TreeStore.getState().selected, false);
+            TreeActions.deleteTree(TreeStore.getState().temp);
             this.setState({editing: false});
           }}>
             {localization(965) /* DELETE THIS TREE */}
@@ -68,26 +76,48 @@ export default class TreeInfo extends React.Component {
         </div>
       </div>;
     }
-    return (
-      <div className="tree-info-wrapper">
-        <AltContainer stores={
-          {
-            tree: function(props) {
-              return {
-                store: TreeStore,
-                value: TreeStore.getState().temp
+    if (this.state.editable) {
+      return (
+        <div className="tree-info-wrapper">
+          <AltContainer stores={
+            {
+              tree: function(props) {
+                return {
+                  store: TreeStore,
+                  value: TreeStore.getState().temp
+                }
               }
             }
-          }
-        }>
-          <TreeFood editing={this.state.editing} />
-          <TreeLocation editing={this.state.editing} />
-          <TreeAddress editing={this.state.editing} />
-          <TreeDescription editing={this.state.editing} />
-        </AltContainer>
-        {actions}
-      </div>
-    );
+          }>
+            <TreeFood editing={this.state.editing} />
+            <TreeLocation editing={this.state.editing} />
+            <TreeAddress editing={this.state.editing} />
+            <TreeDescription editing={this.state.editing} />
+          </AltContainer>
+          {actions}
+        </div>
+      );
+    } else {
+      return (
+        <div className="tree-info-wrapper">
+          <AltContainer stores={
+            {
+              tree: function(props) {
+                return {
+                  store: TreeStore,
+                  value: TreeStore.getState().temp
+                }
+              }
+            }
+          }>
+            <TreeFood editing={false} />
+            <TreeLocation editing={false} />
+            <TreeAddress editing={false} />
+            <TreeDescription editing={false} />
+          </AltContainer>
+        </div>
+      );
+    }
   }
 }
 

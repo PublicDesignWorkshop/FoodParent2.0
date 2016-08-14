@@ -1,4 +1,5 @@
 let alt = require('./../alt');
+import $ from 'jquery';
 import moment from 'moment';
 
 let AuthActions = require('./../actions/auth.actions');
@@ -56,6 +57,35 @@ export class AuthModel {
       });
     }
   }
+  isManager() {
+    switch(this.auth) {
+      case AUTHTYPE.ADMIN:
+        return true;
+      case AUTHTYPE.MANAGER:
+        return true;
+      case AUTHTYPE.PARENT:
+        return false;
+      case AUTHTYPE.GUEST:
+        return false;
+      default:
+        return false;
+    }
+  }
+  isRecentlyAddedByUser(treeId) {
+    if ($.inArray(treeId, this.trees) > -1) {
+      return true;
+    }
+    return false;
+  }
+  canEditTree(treeId) {
+    if (this.isManager()) {
+      return true;
+    }
+    if (this.isRecentlyAddedByUser(treeId)) {
+      return true;
+    }
+    return false;
+  }
 }
 
 class AuthStore {
@@ -76,6 +106,7 @@ class AuthStore {
   handleFechedAuth(props) {
     this.auth = new AuthModel(props);
     this.code = 200;
+    console.log(this.auth);
   }
   handleProcessedLogout() {
     this.auth = new AuthModel({id: "0", contact: "", auth: 4, trees: null});

@@ -9,6 +9,8 @@ let TreeActions = require('./../actions/tree.actions');
 
 let FoodStore = require('./../stores/food.store');
 let FlagStore = require('./../stores/flag.store');
+import { localization } from './../utils/localization';
+
 
 let isMarkerEventActivated = false;
 let isMarkerEventActivatedResetTimer;
@@ -83,16 +85,17 @@ export function createCanvasTreeMarker(tree) {
 }
 
 export function createSVGTreeMarker(tree, movable) {
+  let iconUrl;
   let food = FoodStore.getFood(tree.food);
+  let classname = "leaflet-marker-tree ";
   if (food != null) {
-    let classname = "leaflet-marker-tree ";
     tree.flags.forEach((id: number) => {
       let flag = FlagStore.getFlag(id);
       if (flag) {
         classname += flag.classname + " ";
       }
     });
-    let iconUrl;
+
     let flags = FlagStore.getState().flags;
     let bFound = false;
 
@@ -105,50 +108,55 @@ export function createSVGTreeMarker(tree, movable) {
     if (iconUrl == null) {
       iconUrl = food.icons['verified'];
     }
-
-    let icon = new L.divIcon({
-      iconUrl: iconUrl,
-      iconSize: new L.Point(20, 32),
-      iconAnchor: new L.Point(10, 32),
-      popupAnchor: new L.Point(-1, -30),
-      shadowUrl: ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker,
-      shadowAnchor: new L.Point(4, 32),
-      className: classname,
-      html: '<img class="shadow" src="' + ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker + '"/><img class="icon" src="' + iconUrl + '" />'
-    });
-
-    let template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">' + food.name + '</span>#<span class="marker-tree">' + tree.id + '</span></div><div class="marker-right"></div>';
-
-    let marker = new L.Marker(new L.LatLng(tree.lat, tree.lng), {
-      id: tree.id,
-      food: tree.food,
-      type: "svg",
-      icon: icon,
-      draggable: movable,
-      riseOnHover: true,
-    }).bindPopup(template, {
-      autoPan: false,
-      closeButton: false,
-      closeOnClick: false,
-    });
-    // Add zoom-in event listener
-    marker.on('dblclick', function() {
-      MapActions.moveToLocation(MapSetting.sTreeMapId, new L.LatLng(tree.lat, tree.lng), MapSetting.iFocusZoom);
-    });
-
-    if (movable) {
-      marker.on('dragend', function() {
-        tree.lat = parseFloat(parseFloat(marker.getLatLng().lat).toFixed(MapSetting.iMarkerPrecision));
-        tree.lng = parseFloat(parseFloat(marker.getLatLng().lng).toFixed(MapSetting.iMarkerPrecision));
-        TreeActions.setCode(94);  // 94: Unsaved change.
-        marker.openPopup();
-      });
-    }
-    // marker.on('click', function() {
-    //   console.log(ServerSetting.uBase + '/tree/' + tree.id);
-    //   browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + tree.id});
-    // });
-    return marker;
+  } else {  // For new tree item which has food id = 0.
+    iconUrl = ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon;
   }
-  return null;
+  let icon = new L.divIcon({
+    iconUrl: iconUrl,
+    iconSize: new L.Point(20, 32),
+    iconAnchor: new L.Point(10, 32),
+    popupAnchor: new L.Point(-1, -30),
+    shadowUrl: ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker,
+    shadowAnchor: new L.Point(4, 32),
+    className: classname,
+    html: '<img class="shadow" src="' + ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker + '"/><img class="icon" src="' + iconUrl + '" />'
+  });
+  let template;
+  if (food) {
+    template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">' + food.name + '</span>#<span class="marker-tree">' + tree.id + '</span></div><div class="marker-right"></div>';
+  } else {
+    template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">' + localization(692) + '</span></div><div class="marker-right"></div>';
+  }
+
+
+  let marker = new L.Marker(new L.LatLng(tree.lat, tree.lng), {
+    id: tree.id,
+    food: tree.food,
+    type: "svg",
+    icon: icon,
+    draggable: movable,
+    riseOnHover: true,
+  }).bindPopup(template, {
+    autoPan: false,
+    closeButton: false,
+    closeOnClick: false,
+  });
+  // Add zoom-in event listener
+  marker.on('dblclick', function() {
+    MapActions.moveToLocation(MapSetting.sTreeMapId, new L.LatLng(tree.lat, tree.lng), MapSetting.iFocusZoom);
+  });
+
+  if (movable) {
+    marker.on('dragend', function() {
+      tree.lat = parseFloat(parseFloat(marker.getLatLng().lat).toFixed(MapSetting.iMarkerPrecision));
+      tree.lng = parseFloat(parseFloat(marker.getLatLng().lng).toFixed(MapSetting.iMarkerPrecision));
+      TreeActions.setCode(94);  // 94: Unsaved change.
+      marker.openPopup();
+    });
+  }
+  // marker.on('click', function() {
+  //   console.log(ServerSetting.uBase + '/tree/' + tree.id);
+  //   browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + tree.id});
+  // });
+  return marker;
 }

@@ -180,17 +180,22 @@ export default class MapTree extends React.Component {
     for (let i = 0; i < markers.length && !bFound; i++) {
       if (tree.editing) {
         if (tree && markers[i].options.id == tree.id && tree.editing != markers[i].options.draggable) {
+        // if (tree && markers[i].options.id == tree.id) {
           this.removeMarker(markers[i], this.markersLayer);
           markers = _.without(markers, markers[i]);
           bFound = true;
         }
       } else {
         if (tree && markers[i].options.id == tree.id && markers[i].options.draggable == true) {
+        // if (tree && markers[i].options.id == tree.id) {
           this.removeMarker(markers[i], this.markersLayer);
           markers = _.without(markers, markers[i]);
           bFound = true;
         }
       }
+    }
+    if (!bFound && tree.id == 0) {
+      bFound = true;
     }
     if (bFound) {
       let marker = this.addMarker(tree, tree.id, tree.editing);
@@ -214,7 +219,7 @@ export default class MapTree extends React.Component {
     }
   }
   renderMarkers(trees, selected) {
-    console.log("renderMarkers");
+    console.log("renderMarkers", trees.length);
     var markers = this.markersLayer.getLayers();
     //this.markersLayer._featureGroup._layers
     //this.focusLayer._layers

@@ -170,4 +170,8 @@ html, body, #app {
   font-weight: 700;
   color: $red;
   text-align: left;
+
+  &.padding-8 {
+    margin: 8px 8px 0 8px;
+  }
 }

@@ -40,11 +40,23 @@ export default class TreeFood extends React.Component {
       let foods = FoodStore.getState().foods;
       options.push({value: 0, label: localization(642), disabled: true });
       foods.forEach(food => {
-        options.push({value: food.id, label: food.name + props.tree.getName() });
+        if (props.tree.id == 0) {  //  == 0: new tree.
+          options.push({value: food.id, label: food.name});
+        } else {
+          options.push({value: food.id, label: food.name + props.tree.getName() });
+        }
         if (props.tree.food == food.id) {
-          selected = {value: food.id, label: food.name + props.tree.getName()};
+          if (props.tree.id == 0) {  // food.id == 0: new tree.
+            selected = {value: food.id, label: food.name};
+          } else {
+            selected = {value: food.id, label: food.name + props.tree.getName()};
+          }
         }
       });
+
+      if (selected == null) {
+        selected = {value: 0, label: localization(642), disabled: true };
+      }
     }
     this.setState({options: options, selected: selected});
   }

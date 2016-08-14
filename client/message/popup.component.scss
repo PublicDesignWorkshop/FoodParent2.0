@@ -1,0 +1,52 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.popup-wrapper {
+  display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;           /* TWEENER - IE 10 */
+  display: -webkit-flex;          /* NEW - Chrome */
+  display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-height: 56px;
+  transition: 0.25s;
+  padding: 48px 0 0 0;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  color: $white;
+  padding: 8px 8px 8px 8px;
+  text-align: center;
+  border-top: 2px solid $white;
+  pointer-events: all;
+  font-family: $font-narrow;
+
+  &.popup-green {
+    background-color: $green;
+  }
+
+  &.popup-red {
+    background-color: $red;
+  }
+
+  > .popup-message {
+    margin: auto;
+
+    > .popup-button {
+      font-weight: 700;
+      border-radius: 2px;
+      border: 2px solid $white-75;
+      padding: 2px 6px;
+      margin: 2px 2px 2px 6px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $white;
+        color: $green;
+      }
+    }
+  }
+}

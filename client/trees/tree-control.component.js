@@ -6,9 +6,10 @@ let ServerSetting = require('./../../setting/server.json');
 
 var FontAwesome = require('react-fontawesome');
 let MapActions = require('./../actions/map.actions');
+let TreeActions = require('./../actions/tree.actions');
 let MapSetting = require('./../../setting/map.json');
 let MapStore = require('./../stores/map.store');
-import { MAPTILE } from './../utils/enum';
+import { MAPTILE, MAPTYPE } from './../utils/enum';
 import { localization } from './../utils/localization';
 
 
@@ -56,6 +57,19 @@ export default class TreeControl extends React.Component {
     }} data-for="tooltip-tree-control" data-tip={localization(85)}>
       <FontAwesome name="plus-square" />
     </div>;
+    if (this.props.adding) {
+      add = <div className="control-button" onClick={()=> {
+        if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
+          TreeActions.setCode(0); // set TreeAction code as 0 so that map component can wait rendering map after trees are updated.
+          this.context.router.push({pathname: ServerSetting.uBase + '/'});
+          // this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
+        } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
+          // this.context.router.push({pathname: ServerSetting.uBase + "/donations"});
+        }
+      }} data-for="tooltip-tree-control" data-tip={localization(79)}>
+        <FontAwesome name="minus-square" />
+      </div>;
+    }
     return (
       <div className="tree-control-wrapper">
         <div className="control-button" onClick={this.handleMoveToUserLocation} data-for="tooltip-tree-control" data-tip={localization(80)}>

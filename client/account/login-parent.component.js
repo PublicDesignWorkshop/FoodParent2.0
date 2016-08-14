@@ -44,7 +44,7 @@ export default class LoginParent extends React.Component {
           <FontAwesome className='' name='user' /><label htmlFor={"parentin-contact"}> {localization(687)}</label>
         </div>
         <div className="login-parent-contact-data">
-          <input type="email" className="login-parent-contact-input" id={"parentin-contact"} key={"parentin-contact"} placeholder={localization(683)}
+          <input type="email" name="email" className="login-parent-contact-input" id={"parentin-contact"} key={"parentin-contact"} placeholder={localization(683)}
             value={this.state.contact}
             autoComplete
             onChange={(event: any)=> {

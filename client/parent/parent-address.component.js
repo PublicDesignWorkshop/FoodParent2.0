@@ -29,7 +29,7 @@ export default class ParentAddress extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
-    if (props.parent != null) {
+    if (props.parent != null && props.parent.address != null) {
       this.setState({address: props.parent.address});
     } else {
       this.setState({address: " "});
@@ -41,7 +41,7 @@ export default class ParentAddress extends React.Component {
       this.props.parent.address = this.state.address.trim();
       this.setState({address: this.props.parent.address});
     } else {
-      this.setState({address: ""});
+      this.setState({address: " "});
     }
     if (prevAddress != this.state.address) {
       PersonActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).

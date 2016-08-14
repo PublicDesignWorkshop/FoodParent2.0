@@ -22,17 +22,20 @@ export default class Header extends React.Component {
     super(props, context);
   }
   componentWillMount() {
-    if (this.props.auth.contact.trim() == "") {
-      this.setState({loginText: localization(993)});
-    } else {
-      this.setState({loginText: this.props.auth.contact.trim()});
-    }
+    this.updateProps(this.props);
   }
   componentDidMount () {
 
   }
-  componentWillReceiveProps() {
-
+  componentWillReceiveProps(nextProps) {
+    this.updateProps(nextProps);
+  }
+  updateProps(props) {
+    if (props.auth.contact.trim() == "") {
+      this.setState({loginText: localization(993), loginToolTip: localization(86)});
+    } else {
+      this.setState({loginText: props.auth.contact.trim(), loginToolTip: localization(78)});
+    }
   }
   render () {
     let active = "";
@@ -76,7 +79,7 @@ export default class Header extends React.Component {
               // this.context.router.push({pathname: ServerSetting.uBase + "/donations"});
             }
           }
-        }} data-for="tooltip-header" data-tip={localization(86)}>
+        }} data-for="tooltip-header" data-tip={this.state.loginToolTip}>
           <div className="login-portrait">
             <FontAwesome className="icon" name='user' />
           </div>

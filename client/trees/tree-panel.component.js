@@ -1,10 +1,16 @@
 import React from 'react';
+import AltContainer from 'alt-container';
+import $ from 'jquery';
+
 
 let ServerSetting = require('./../../setting/server.json');
 require('./tree-panel.component.scss');
 var FontAwesome = require('react-fontawesome');
 import { TREEDETAILMODE } from './../utils/enum';
 let TreeActions = require('./../actions/tree.actions');
+let AuthStore = require('./../stores/auth.store');
+let TreeStore = require('./../stores/tree.store');
+
 
 import TreeInfo from './../tree/tree-info.component';
 import TreeControl from './tree-control.component';
@@ -18,6 +24,14 @@ export default class TreePanel extends React.Component {
   }
   componentDidMount () {
     this.updateProps(this.props);
+    $(document).on('keyup',function(event) {
+      if (event.keyCode == 27) {
+        this.context.router.push({pathname: ServerSetting.uBase + '/'});
+      }
+    }.bind(this));
+  }
+  componentWillUnmount() {
+    $(document).off('keyup');
   }
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);
@@ -108,7 +122,14 @@ export default class TreePanel extends React.Component {
           Info
         </span>
       </div>;
-      body = <TreeInfo />;
+      //
+      body = <AltContainer stores={
+        {
+          TreeStore: TreeStore,
+        }
+      }>
+        <TreeInfo />
+      </AltContainer>;
     }
     if (this.props.mode == TREEDETAILMODE.POST) {
       // Post

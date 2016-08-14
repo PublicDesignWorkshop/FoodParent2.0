@@ -43,7 +43,7 @@ class AuthActions {
       AuthSource.processLogout().then(() => {
         this.processedLogout();
       }).catch((code) => {
-        displayErrorMessage(localization(code));
+        // displayErrorMessage(localization(code));
         this.setCode(code);
       });
     }

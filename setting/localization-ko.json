@@ -1,6 +1,9 @@
 {
   "e0": "인터넷 연결을 확인해주세요.",
 
+  "77": "* You are allowed to edit information of the tree for 15 minutes.",
+  "78": "See parent info.",
+  "79": "Cancel adding a new tree.",
   "80": "Move the map to your device location.",
   "81": "Toggle tile map between flat & satellite.",
   "82": "Zoom in.",

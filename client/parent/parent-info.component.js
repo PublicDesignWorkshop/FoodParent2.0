@@ -32,16 +32,13 @@ export default class ParentInfo extends React.Component {
 
   }
   componentWillReceiveProps(nextProps) {
-    // if (TreeStore.getState().selected != this.state.selected) {
-    //   this.setState({selected: TreeStore.getState().selected, editing: false});
-    // }
+
   }
   render () {
     let actions = <div>
       <div className="solid-button-group">
         <div className="solid-button solid-button-green" onClick={() => {
           this.setState({editing: true});
-          // TreeActions.setEditing(TreeStore.getState().selected, true);
         }}>
           {localization(928) /* EDITING */}
         </div>
@@ -51,13 +48,12 @@ export default class ParentInfo extends React.Component {
       actions = <div>
         <div className="solid-button-group">
           <div className="solid-button solid-button-green" onClick={() => {
-            // TreeActions.setEditing(TreeStore.getState().selected, false);
             this.setState({editing: false});
           }}>
             {localization(930) /* SAVE */}
           </div>
           <div className="solid-button solid-button-green" onClick={() => {
-            // TreeActions.setSelected(TreeStore.getState().selected, false);
+            PersonActions.fetchUser(AuthStore.getState().auth.id);
             this.setState({editing: false});
           }}>
             {localization(933) /* CANCEL */}
@@ -72,7 +68,7 @@ export default class ParentInfo extends React.Component {
             parent: function(props) {
               return {
                 store: PersonStore,
-                value: PersonStore.getState().user
+                value: PersonStore.getState().temp
               }
             }
           }

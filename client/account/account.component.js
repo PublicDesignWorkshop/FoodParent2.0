@@ -8,6 +8,13 @@ var FontAwesome = require('react-fontawesome');
 import { localization } from './../utils/localization';
 import ParentInfo from './../parent/parent-info.component';
 
+let AuthActions = require('./../actions/auth.actions');
+import { MAPTYPE, AUTHTYPE } from './../utils/enum';
+let MapStore = require('./../stores/map.store');
+let TreeActions = require('./../actions/tree.actions');
+let TreeStore = require('./../stores/tree.store');
+
+
 
 export default class Account extends React.Component {
   constructor(props, context) {
@@ -26,17 +33,44 @@ export default class Account extends React.Component {
 
   }
   render () {
+    let close, info
+    // Close
+    close = <div className="icon-group close" onClick={() => {
+      if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
+        TreeActions.setCode(0);
+        if (TreeStore.getState().selected) {
+          this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + TreeStore.getState().selected});
+        } else {
+          this.context.router.push({pathname: ServerSetting.uBase + '/'});
+        }
+        // this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
+      } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
+        // this.context.router.push({pathname: ServerSetting.uBase + "/donations"});
+      }
+    }}>
+      <FontAwesome className="icon" name='close' />
+    </div>;
+    // Info
+    info = <div className="icon-group active">
+      <FontAwesome className="icon icon-info-circle" name='info-circle' />
+      <span className="icon-text">
+        {localization(676) /* Parent Info */}
+      </span>
+    </div>;
     return (
       <div className="account-wrapper">
         <div className="right">
+          <div className="menu">
+            {info}
+            {close}
+          </div>
           <ParentInfo />
           <div className="or">
             OR
           </div>
           <div className="solid-button-group double-left-right-padding">
             <div className="solid-button solid-button-red" onClick={() => {
-              // TreeActions.setEditing(TreeStore.getState().selected, false);
-              // this.setState({editing: false});
+              AuthActions.processLogout();
             }}>
               {localization(677) /* LOG OUT */}
             </div>
@@ -48,4 +82,9 @@ export default class Account extends React.Component {
       </div>
     );
   }
+}
+
+
+Account.contextTypes = {
+    router: React.PropTypes.object.isRequired
 }

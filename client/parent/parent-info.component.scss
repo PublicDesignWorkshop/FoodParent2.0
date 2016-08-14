@@ -3,6 +3,14 @@
 
 .parent-info-wrapper {
   padding: 8px;
+
+  > .parent-info-title {
+    font-size: $font-size-large;
+    font-family: $font-main;
+    font-weight: 700;
+    color: $brown;
+    padding: 8px;
+  }
 }
 
 .parent-info-content {

@@ -78,6 +78,7 @@ export class PersonModel {
 class PersonStore {
   constructor() {
     this.user = null;
+    this.temp = null;
     this.persons = [];
     this.code = 0;
     // Bind action methods to store.
@@ -98,6 +99,7 @@ class PersonStore {
     if (props.length > 0) {
       this.user = new PersonModel(props[0]);
     }
+    this.temp = new PersonModel(props[0]);
     this.code = 200;
   }
   handleFetchedPersons(props) {

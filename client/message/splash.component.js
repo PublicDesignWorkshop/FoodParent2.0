@@ -13,13 +13,17 @@ export default class Loader extends React.Component {
     super(props, context);
   }
   componentWillMount() {
-
+    this.setState({hidden: false}); // hidden == true will un-render children DOM elements.
   }
   componentDidMount () {
 
   }
-  componentWillReceiveProps() {
-
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.hide) {
+      setTimeout(function() {
+        this.setState({hidden: true});
+      }.bind(this), 500);
+    }
   }
   render () {
     let slideout = "";
@@ -32,20 +36,27 @@ export default class Loader extends React.Component {
       type = " fail";
       icon = <FontAwesome name="remove" />;
     }
-    return (
-      <div id="splash" className={"splash-wrapper" + slideout}>
-        <div className="top"></div>
-        <div className="center">
-          <div>
-            <img src={ServerSetting.uBase + ServerSetting.uStaticImage + "splash.png"} />
-            <div id="loading" className={type}>
-              {icon}
-              {" " + this.props.message.value}
+    if (this.state.hidden) {
+      return (
+        <div>
+        </div>
+      );
+    } else {
+      return (
+        <div id="splash" className={"splash-wrapper" + slideout}>
+          <div className="top"></div>
+          <div className="center">
+            <div>
+              <img src={ServerSetting.uBase + ServerSetting.uStaticImage + "splash.png"} />
+              <div id="loading" className={type}>
+                {icon}
+                {" " + this.props.message.value}
+              </div>
             </div>
           </div>
+          <div className="bottom"></div>
         </div>
-        <div className="bottom"></div>
-      </div>
-    );
+      );
+    }
   }
 }
