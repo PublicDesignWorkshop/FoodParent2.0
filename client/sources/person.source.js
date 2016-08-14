@@ -29,7 +29,34 @@ const PersonSource = {
         }
       });
     });
-  }
+  },
+  createPerson(person) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        url: ServerSetting.uBase + ServerSetting.uServer + "person.php",
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(person.toJSON()),
+        dataType: "json",
+        success: function(response) {
+          if (response.code == 200) {
+            resolve(response.person);
+          } else {
+            if (__DEV__) {
+              console.error(response.message);
+            }
+            reject(response.code);
+          }
+        },
+        error: function(response) {
+          if (__DEV__) {
+            console.error(response.statusText);
+          }
+          reject(response.status);
+        }
+      });
+    })
+  },
 };
 
 module.exports = PersonSource;

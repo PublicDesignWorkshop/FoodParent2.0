@@ -10,6 +10,7 @@ let TreeStore = require('./../stores/tree.store');
 let TreeActions = require('./../actions/tree.actions');
 
 import { localization } from './../utils/localization';
+import { displaySuccessMessage, displayFailMessage } from './../message/popup.component';
 import { MAPTYPE } from './../utils/enum';
 
 
@@ -26,7 +27,10 @@ class AuthActions {
       AuthSource.fetchAuth().then((response) => {
         this.fetchedAuth(response);
       }).catch((code) => {
-        // displayErrorMessage(localization(code));
+        displayFailMessage(localization(code));
+        if (__DEV__) {
+          console.error(localization(code));
+        }
         this.setCode(code);
       });
     }
@@ -44,7 +48,10 @@ class AuthActions {
       AuthSource.processLogout().then(() => {
         this.processedLogout();
       }).catch((code) => {
-        // displayErrorMessage(localization(code));
+        displayFailMessage(localization(code));
+        if (__DEV__) {
+          console.error(localization(code));
+        }
         this.setCode(code);
       });
     }
@@ -63,7 +70,10 @@ class AuthActions {
       AuthSource.processLogin(contact, password).then((response) => {
         this.processedLogin(response);
       }).catch((code) => {
-        // displayErrorMessage(localization(code));
+        displayFailMessage(localization(code));
+        if (__DEV__) {
+          console.error(localization(code));
+        }
         this.setCode(code);
       });
     }

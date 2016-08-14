@@ -29,21 +29,17 @@ export default class ParentAddress extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
-    if (props.parent != null && props.parent.address != null) {
-      this.setState({address: props.parent.address});
+    if (props.parent != null && props.parent.neighborhood != null) {
+      this.setState({neighborhood: props.parent.neighborhood});
     } else {
-      this.setState({address: " "});
+      this.setState({neighborhood: " "});
     }
   }
-  updateAttribute() {
-    let prevAddress = this.props.parent.address;
-    if (this.state.address && this.state.address.trim() != "") {
-      this.props.parent.address = this.state.address.trim();
-      this.setState({address: this.props.parent.address});
-    } else {
-      this.setState({address: " "});
-    }
-    if (prevAddress != this.state.address) {
+  updateAttribute(newNeighborhood) {
+    let prevNeighborhood = this.props.parent.neighborhood;
+    this.props.parent.neighborhood = newNeighborhood;
+    this.setState({neighborhood: this.props.parent.neighborhood});
+    if (prevNeighborhood != newNeighborhood) {
       PersonActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
     }
   }
@@ -56,17 +52,9 @@ export default class ParentAddress extends React.Component {
           </div>
           <div className="parent-info-data">
             <input type="text" className="parent-info-input" placeholder={localization(682)}
-              value={this.state.address}
+              value={this.state.neighborhood}
               onChange={(event: any)=> {
-                this.setState({address: event.target.value});
-              }}
-              onKeyPress={(event)=> {
-                if (event.key == 'Enter') {
-                  this.updateAttribute();
-                }
-              }}
-              onBlur={()=> {
-                this.updateAttribute();
+                this.updateAttribute(event.target.value);
               }} />
           </div>
         </div>
@@ -79,7 +67,7 @@ export default class ParentAddress extends React.Component {
           </div>
           <div className="parent-info-data">
             <div className="parent-info-text">
-              {this.state.address}
+              {this.state.neighborhood}
             </div>
           </div>
         </div>

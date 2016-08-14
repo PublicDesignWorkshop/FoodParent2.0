@@ -7,6 +7,7 @@ let ServerSetting = require('./../../setting/server.json');
 var FontAwesome = require('react-fontawesome');
 import { localization } from './../utils/localization';
 import { isValidEmailAddress } from './../utils/validation';
+import { displaySuccessMessage, displayFailMessage } from './../message/popup.component';
 
 import Instruction from './instruction.component';
 let AuthActions = require('./../actions/auth.actions');
@@ -32,7 +33,10 @@ export default class LoginParent extends React.Component {
       isValidEmailAddress(this.state.contact.trim());
       AuthActions.processLogin(this.state.contact.trim(), this.state.contact.trim());
     } catch(e) {
-      // displayErrorMessage(localization(e.message));
+      displayFailMessage(localization(e.message));
+      if (__DEV__) {
+        console.error(localization(e.message));
+      }
       error = e.message;
     }
     this.setState({error: error});

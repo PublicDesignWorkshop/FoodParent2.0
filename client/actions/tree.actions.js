@@ -29,6 +29,9 @@ class TreeActions {
         this.fetchedTree(response);
       }).catch((code) => {
         displayFailMessage(localization(code));
+        if (__DEV__) {
+          console.error(localization(code));
+        }
         this.setCode(code);
       });
     }
@@ -46,6 +49,9 @@ class TreeActions {
         this.fetchedTrees(response);
       }).catch((code) => {
         displayFailMessage(localization(code));
+        if (__DEV__) {
+          console.error(localization(code));
+        }
         this.setCode(code);
       });
     }
@@ -84,6 +90,9 @@ class TreeActions {
           this.createdTree(response);
         }).catch((code) => {
           displayFailMessage(localization(code));
+          if (__DEV__) {
+            console.error(localization(code));
+          }
           this.setCode(code);
         });
       }
@@ -104,6 +113,9 @@ class TreeActions {
         this.updatedTree(response);
       }).catch((code) => {
         displayFailMessage(localization(code));
+        if (__DEV__) {
+          console.error(localization(code));
+        }
         this.setCode(code);
       });
     }
@@ -122,6 +134,9 @@ class TreeActions {
         this.deletedTree(tree.toJSON());
       }).catch((code) => {
         displayFailMessage(localization(code));
+        if (__DEV__) {
+          console.error(localization(code));
+        }
         this.setCode(code);
       });
     }

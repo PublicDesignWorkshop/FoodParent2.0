@@ -50,7 +50,7 @@ export default class Login extends React.Component {
          // TreeActions.setEditing(TreeStore.getState().selected, false);
          // this.setState({editing: false});
        }}>
-         {localization(685) /* Manager Sign-In */}
+         {localization(685) /* Parent Sign-In */}
        </div>;
     }
 
@@ -64,10 +64,9 @@ export default class Login extends React.Component {
           </div>
           <div className="solid-button-group">
             <div className="solid-button solid-button-green" onClick={() => {
-              // TreeActions.setEditing(TreeStore.getState().selected, false);
-              // this.setState({editing: false});
+              this.context.router.push({pathname: ServerSetting.uBase + "/register"});
             }}>
-              {localization(684) /* SAVE */}
+              {localization(684) /* SIGN UP */}
             </div>
           </div>
           <div className="solid-button-group">
@@ -80,4 +79,7 @@ export default class Login extends React.Component {
       </div>
     );
   }
+}
+Login.contextTypes = {
+    router: React.PropTypes.object.isRequired
 }

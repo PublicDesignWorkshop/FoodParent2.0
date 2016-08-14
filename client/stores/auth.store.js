@@ -144,10 +144,6 @@ class AuthStore {
         browserHistory.replace({pathname: ServerSetting.uBase + '/'});
       }, 1);
     }
-    // setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
-    //
-    // }, 1);
-
     this.code = 200;
   }
 }

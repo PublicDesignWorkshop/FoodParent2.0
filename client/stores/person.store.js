@@ -1,9 +1,15 @@
 let alt = require('./../alt');
 import moment from 'moment';
+import { browserHistory } from 'react-router';
 
 let ServerSetting = require('./../../setting/server.json');
 let PersonActions = require('./../actions/person.actions');
-import { AUTHTYPE } from './../utils/enum';
+let AuthActions = require('./../actions/auth.actions');
+let TreeActions = require('./../actions/tree.actions');
+let MapStore = require('./../stores/map.store');
+let TreeStore = require('./../stores/tree.store');
+
+import { AUTHTYPE, MAPTYPE } from './../utils/enum';
 
 
 export class PersonModel {
@@ -59,13 +65,13 @@ export class PersonModel {
   getFormattedAuth() {
     switch(this.auth) {
       case AUTHTYPE.ADMIN:
-        return "Guest";
-      case AUTHTYPE.MANAGER:
-        return "Parent";
-      case AUTHTYPE.PARENT:
-        return "Manager";
-      case AUTHTYPE.GUEST:
         return "Admin";
+      case AUTHTYPE.MANAGER:
+        return "Manager";
+      case AUTHTYPE.PARENT:
+        return "Parent";
+      case AUTHTYPE.GUEST:
+        return "Guest";
       default:
         return "N/A";
     }
@@ -85,6 +91,8 @@ class PersonStore {
     this.bindListeners({
       handleFetchedUser: PersonActions.FETCHED_USER,
       handleFetchedPersons: PersonActions.FETCHED_PERSONS,
+      handleCreateTempPerson: PersonActions.CREATE_TEMP_PERSON,
+      handleCreatedPerson: PersonActions.CREATED_PERSON,
       handleSetCode: PersonActions.SET_CODE,
     });
     // Expose public methods.
@@ -108,6 +116,48 @@ class PersonStore {
       this.persons.push(new PersonModel(prop));
     });
     self.code = 200;
+  }
+  handleCreateTempPerson() { // id = 0 for new person.
+    this.temp = new PersonModel({
+      id: "0",
+      auth: "3",  // auth = 3 for Parent
+      name: "",
+      contact: "",
+      neighborhood: "",
+      updated: moment(new Date()).format(ServerSetting.sServerDateFormat),
+    });
+    this.code = 200;
+  }
+  handleCreatedPerson(props) {
+    console.log(props);
+    if (props.length > 0) {
+      this.user = new PersonModel(props);
+    }
+    this.temp = new PersonModel(props);
+    setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
+      AuthActions.fetchAuth();
+    }, 1);
+    if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
+      if (TreeStore.getState().selected) {
+        setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
+          if (this.auth.auth == AUTHTYPE.PARENT) {
+            browserHistory.replace({pathname: ServerSetting.uBase + '/tree/' + TreeStore.getState().selected});
+          } else {
+            TreeActions.fetchTrees();
+            browserHistory.replace({pathname: ServerSetting.uBase + '/'});
+          }
+        }.bind(this), 1);
+      } else {
+        setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
+          browserHistory.replace({pathname: ServerSetting.uBase + '/'});
+        }, 1);
+      }
+    } else {
+      setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
+        browserHistory.replace({pathname: ServerSetting.uBase + '/'});
+      }, 1);
+    }
+    this.code = 200;
   }
 }
 

@@ -35,15 +35,11 @@ export default class ParentName extends React.Component {
       this.setState({name: " "});
     }
   }
-  updateAttribute() {
+  updateAttribute(newName) {
     let prevName = this.props.parent.name;
-    if (this.state.name && this.state.name.trim() != "") {
-      this.props.parent.name = this.state.name.trim();
-      this.setState({name: this.props.parent.name});
-    } else {
-      this.setState({name: ""});
-    }
-    if (prevName != this.state.name) {
+    this.props.parent.name = newName;
+    this.setState({name: this.props.parent.name});
+    if (prevName != newName) {
       PersonActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
     }
   }
@@ -55,18 +51,11 @@ export default class ParentName extends React.Component {
             <FontAwesome className='' name='microphone' />{localization(680)}
           </div>
           <div className="parent-info-data">
-            <input type="text" className="parent-info-input" placeholder={localization(682)}
+            <input type="text" name="name" className="parent-info-input" placeholder={localization(682)}
               value={this.state.name}
+              autoComplete
               onChange={(event: any)=> {
-                this.setState({name: event.target.value});
-              }}
-              onKeyPress={(event)=> {
-                if (event.key == 'Enter') {
-                  this.updateAttribute();
-                }
-              }}
-              onBlur={()=> {
-                this.updateAttribute();
+                this.updateAttribute(event.target.value);
               }} />
           </div>
         </div>

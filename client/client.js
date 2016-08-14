@@ -18,6 +18,7 @@ import TreeDetail from './trees/tree-detail.component';
 import TreeAdd from './trees/tree-add.component';
 import Login from './account/login.component';
 import Account from './account/account.component';
+import Register from './account/register.component';
 import Splash from './message/splash.component';
 import Popup from './message/popup.component';
 
@@ -110,6 +111,7 @@ render((
       <Route path="addtree" component={TreeAdd} />
       <Route path="login" component={Login} />
       <Route path="account" component={Account} />
+      <Route path="register" component={Register} />
     </Route>
   </Router>
 ), document.getElementById('app'));
