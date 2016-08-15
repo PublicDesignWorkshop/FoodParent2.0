@@ -134,6 +134,7 @@ class AuthStore {
         }.bind(this), 1);
       } else {
         setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
+          TreeActions.fetchTrees();
           browserHistory.replace({pathname: ServerSetting.uBase + '/'});
         }, 1);
       }
@@ -141,6 +142,7 @@ class AuthStore {
       // this.context.router.push({pathname: ServerSetting.uBase + '/recipient/' + parseInt(searchText)});
     } else {
       setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
+        TreeActions.fetchTrees();
         browserHistory.replace({pathname: ServerSetting.uBase + '/'});
       }, 1);
     }

@@ -1,0 +1,128 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.tree-flag-wrapper {
+  // display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+  // display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+  // display: -ms-flexbox;           /* TWEENER - IE 10 */
+  // display: -webkit-flex;          /* NEW - Chrome */
+  // display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  //
+  // -webkit-flex-grow: 1;           /* NEW - Chrome */
+  // flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  padding: 4px 8px;
+
+  &.disabled {
+    .Select-control {
+    	&:hover {
+    		border-color: transparent;
+    	}
+    }
+  }
+
+  border-radius: 2px;
+
+  > .tree-flag-label {
+    color: $brown;
+    font-weight: 700;
+    margin: 4px 0;
+    .fa.fa-tag {
+      margin-left: 2px;
+      margin-right: 3px;
+    }
+  }
+
+  > .tree-flag-data {
+    margin: 4px 0 4px 12px;
+  }
+}
+
+.brown-medium-select {
+  > .Select {
+    > .Select-control {
+      height: 32px;
+      .Select-placeholder {
+        padding: 4px 6px;
+        font-family: $font-main;
+        font-size: $font-size-medium;
+      }
+    }
+
+    > .Select-control {
+      .Select-multi-value-wrapper {
+        width: 100%;
+        .Select-value {
+          border-radius: 0;
+          margin: 4px;
+          background-color: $white;
+          color: $brown;
+          border-color: $brown;
+          @include respond-to(handhelds) {
+            width: 92%;
+          }
+          @include respond-to(wide-screens) {
+            width: auto;
+          }
+          .Select-value-icon {
+            border-color: $brown;
+
+            &:hover {
+              background-color: $brown-10;
+              color: $brown;
+            }
+          }
+          .Select-value-label {
+            padding: 4px 6px;
+            .tree-flag-name {
+              vertical-align: bottom;
+              font-size: $font-size-medium;
+              font-weight: 400;
+              color: $brown;
+              font-family: $font-main;
+            }
+          }
+        }
+      }
+    }
+
+    &.is-disabled {
+      .Select-value {
+        background-color: $light !important;
+      }
+      .Select-arrow-zone {
+        display: none !important;
+      }
+    }
+
+    .Select-option {
+      box-sizing: border-box;
+      background-color: $select-option-bg;
+      color: $select-option-color;
+      cursor: pointer;
+      display: block;
+      padding: 4px 6px;
+      height: 32px;
+
+      .tree-flag-name {
+        font-size: $font-size-medium;
+        font-weight: 400;
+        font-family: $font-main;
+      }
+
+      &.is-selected {
+        background-color: $select-option-selected-bg;
+        color: $select-option-selected-color;
+      }
+
+      &.is-focused {
+        background-color: $select-option-focused-bg;
+        color: $select-option-focused-color;
+      }
+
+      &.is-disabled {
+        color: $select-option-disabled-color;
+        cursor: default;
+      }
+    }
+  }
+}
