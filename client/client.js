@@ -16,6 +16,7 @@ import Header from './header/header.component';
 import TreeMap from './trees/tree-map.component';
 import TreeDetail from './trees/tree-detail.component';
 import TreeAdd from './trees/tree-add.component';
+import TreeFilter from './trees/tree-filter.component';
 import Login from './account/login.component';
 import Account from './account/account.component';
 import Register from './account/register.component';
@@ -112,6 +113,7 @@ render((
       <Route path="login" component={Login} />
       <Route path="account" component={Account} />
       <Route path="register" component={Register} />
+      <Route path="filter" component={TreeFilter} />
     </Route>
   </Router>
 ), document.getElementById('app'));

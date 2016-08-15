@@ -17,6 +17,7 @@ export default class TreeControl extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.handleToggleMapTile = this.handleToggleMapTile.bind(this);
+    this.handleFilter = this.handleFilter.bind(this);
   }
   componentWillMount() {
     this.setState({tile: "map-o"});
@@ -51,6 +52,13 @@ export default class TreeControl extends React.Component {
     let zoom = Math.min(MapSetting.iMaxZoom, MapStore.getZoom(MapSetting.sTreeMapId) - 1);
     MapActions.setZoom.defer(MapSetting.sTreeMapId, zoom);
   }
+  handleFilter() {
+    if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
+      TreeActions.setCode(0); // set TreeAction code as 0 so that map component can wait rendering map after trees are updated.
+      this.context.router.push({pathname: ServerSetting.uBase + '/filter'});
+      // this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
+    }
+  }
   render () {
     let add = <div className="control-button" onClick={()=> {
       this.context.router.push({pathname: ServerSetting.uBase + '/addtree'});
@@ -84,7 +92,7 @@ export default class TreeControl extends React.Component {
         <div className="control-button" onClick={this.handleZoomOut} data-for="tooltip-tree-control" data-tip={localization(83)}>
           <FontAwesome name='search-minus' />
         </div>
-        <div className="control-button" data-for="tooltip-tree-control" data-tip={localization(84)}>
+        <div className="control-button" onClick={this.handleFilter} data-for="tooltip-tree-control" data-tip={localization(84)}>
           <FontAwesome name='sliders'/>
         </div>
         {add}
