@@ -32,12 +32,11 @@ export default class Header extends React.Component {
   }
   updateProps(props) {
     if (props.auth.contact.trim() == "") {
-      if (this.props.location.pathname == ServerSetting.uBase + "/register") {
+      if (props.location.pathname == ServerSetting.uBase + "/register") {
         this.setState({loginText: localization(987), loginToolTip: localization(86)});
       } else {
         this.setState({loginText: localization(993), loginToolTip: localization(86)});
       }
-
     } else {
       this.setState({loginText: props.auth.contact.trim(), loginToolTip: localization(78)});
     }
