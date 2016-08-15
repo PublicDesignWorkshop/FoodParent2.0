@@ -174,7 +174,9 @@ export default class MapTree extends React.Component {
     }
   }
   renderActiveMarker(tree) {  // tree in this case = TreeStore.getState().temp
-    console.log("renderActiveMarker");
+    if (__DEV__) {
+      console.log("map-tree.component - renderActiveMarker()");
+    }
     var markers = this.markersLayer.getLayers();
     let bFound = false;
     for (let i = 0; i < markers.length && !bFound; i++) {
@@ -220,7 +222,9 @@ export default class MapTree extends React.Component {
     }
   }
   renderMarkers(trees, selected) {
-    console.log("renderMarkers", trees.length);
+    if (__DEV__) {
+      console.log(`map-tree.component - renderMarkers() with ${trees.length} trees`);
+    }
     var markers = this.markersLayer.getLayers();
     //this.markersLayer._featureGroup._layers
     //this.focusLayer._layers

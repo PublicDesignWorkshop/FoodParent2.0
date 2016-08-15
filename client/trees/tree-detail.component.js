@@ -59,7 +59,6 @@ export default class TreeDetail extends React.Component {
   }
   render () {
     let action;
-    console.log(this.state.remove);
     if (this.state.remove) {
       action = <div className="popup-wrapper popup-red open">
         <div className="popup-message">

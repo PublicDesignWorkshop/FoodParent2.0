@@ -1,7 +1,7 @@
 @import "./../scss/variables.scss";
 @import "./../scss/mixin.scss";
 
-.tree-flag-wrapper {
+.tree-ownership-wrapper {
   padding: 4px 8px;
 
   &.disabled {
@@ -14,7 +14,7 @@
 
   border-radius: 2px;
 
-  > .tree-flag-label {
+  > .tree-ownership-label {
     color: $brown;
     font-weight: 700;
     margin: 4px 0;
@@ -24,7 +24,7 @@
     }
   }
 
-  > .tree-flag-data {
-    margin: 4px 0 4px 12px;
+  > .tree-ownership-data {
+    margin: 4px 0 4px 8px;
   }
 }

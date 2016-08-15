@@ -68,8 +68,8 @@ export default class TreeFlag extends React.Component {
           <div className="tree-flag-label">
             <FontAwesome className='' name='tag' />{localization(969)}
           </div>
-          <div className="tree-flag-data brown-medium-select">
-            <Select name="flag-select" multi={true} backspaceToRemoveMessage="" clearable={true} searchable={true} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(970)} />
+          <div className="tree-flag-data brown-medium-multi">
+            <Select name="flag-select" multi={true} backspaceToRemoveMessage="" clearable={true} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(970)} />
           </div>
         </div>
       );
@@ -79,8 +79,8 @@ export default class TreeFlag extends React.Component {
           <div className="tree-flag-label">
             <FontAwesome className='' name='tag' />{localization(969)}
           </div>
-          <div className="tree-flag-data brown-medium-select">
-            <Select name="flag-select" multi={true} backspaceToRemoveMessage="" clearable={true} searchable={true} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(76)} disabled />
+          <div className="tree-flag-data brown-medium-multi">
+            <Select name="flag-select" multi={true} backspaceToRemoveMessage="" clearable={true} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(76)} disabled />
           </div>
         </div>
       );
