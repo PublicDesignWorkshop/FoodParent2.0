@@ -4,7 +4,7 @@
   session_unset();
 
   $params = array(
-    "code" => 400,
+    "code" => 200,
   );
   echo json_encode($params);
 ?>

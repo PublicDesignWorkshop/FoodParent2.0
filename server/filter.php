@@ -53,7 +53,7 @@
     }
 
     $params = array(
-      "code" => 400,
+      "code" => 200,
       "ownerships" => $_SESSION['public'],
       "foods" => $_SESSION['food_ids'],
       "flags" => $_SESSION['flag_ids'],
@@ -102,7 +102,7 @@
       $_SESSION['food_ids'] = $foods;
     }
     $params = array(
-      "code" => 400,
+      "code" => 200,
       "ownerships" => $public,
       "foods" => $foods,
       "flags" => $flags,
@@ -132,7 +132,7 @@
     $rates = "-1,0,1,2,3,4,5";
     $_SESSION['rates'] = $rates;
     $params = array(
-      "code" => 400,
+      "code" => 200,
       "ownerships" => $public,
       "foods" => $foods,
       "flags" => $flags,
@@ -162,7 +162,7 @@
     $rates = "-1,0,1,2,3,4,5";
     $_SESSION['rates'] = $rates;
     $params = array(
-      "code" => 400,
+      "code" => 200,
       "ownerships" => $public,
       "foods" => $_SESSION['food_ids'],
       "flags" => $flags,

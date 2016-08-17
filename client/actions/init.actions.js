@@ -4,6 +4,7 @@ import ImagePreloader from 'image-preloader-promise';
 
 import { updateSeason } from './../utils/season';
 import { getLocalization, setLocalization } from './../utils/localization';
+import { resetFilter } from './../utils/filter';
 let FoodSource = require('./../sources/food.source');
 let FoodStore = require('./../stores/food.store');
 let FoodActions = require('./../actions/food.actions');
@@ -50,6 +51,7 @@ class InitActions {
           })
           .then(() => {
             self.setMessage(MESSAGETYPE.SUCCESS, "Updating Season Data...");
+            resetFilter();
             updateSeason()
             .then(function(response) {
               // Fetch trees.

@@ -9,3 +9,5 @@ export const TREEADDMODE = Enum("MARKER", "INFO");
 
 export const AUTHTYPE = Enum("ADMIN", "MANAGER", "PARENT", "GUEST");
 export const LOGINMODE = Enum("PARENT", "MANAGER");
+
+export const FITERMODE = Enum("FOOD", "FLAG", "OWNERSHIP", "ADOPT", "RATE");

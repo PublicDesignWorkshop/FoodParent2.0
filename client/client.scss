@@ -185,7 +185,8 @@ html, body, #app {
     > .Select-control {
       height: 32px;
       .Select-placeholder {
-        padding: 4px 6px;
+        padding: 6px;
+        line-height: 32px;
         font-family: $font-main;
         font-size: $font-size-medium;
       }
@@ -196,7 +197,7 @@ html, body, #app {
         width: 100%;
         .Select-value {
           border-radius: 0;
-          margin: 4px;
+          margin: 4px 4px;
           background-color: $white;
           color: $brown;
           border-color: $brown;
@@ -224,13 +225,37 @@ html, body, #app {
               font-family: $font-main;
             }
           }
+          // for food icon
+          .tree-food {
+            height: 48px;
+            .tree-food-icon {
+              width: 10px;
+              height: 16px;
+              margin-bottom: 0;
+              margin-right: 8px;
+              margin-left: 4px;
+            }
+            .tree-food-name {
+              vertical-align: top;
+              font-size: $font-size-medium;
+              font-weight: 700;
+              color: $brown;
+              font-family: $font-main;
+            }
+          }
         }
       }
     }
 
     &.is-disabled {
       .Select-value {
+        width: auto !important;
         background-color: $light !important;
+        > .Select-value-label{
+          > .Select-aria-only {
+            display: none;
+          }
+        }
       }
       .Select-arrow-zone {
         display: none !important;
@@ -249,6 +274,22 @@ html, body, #app {
       .tree-flag-name {
         font-size: $font-size-medium;
         font-weight: 400;
+        font-family: $font-main;
+      }
+
+      // For food icon
+      .tree-food-icon {
+        width: 10px;
+        height: 16px;
+        margin-left: 8px;
+        margin-right: 8px;
+        margin-top: 2px;
+        margin-bottom: 0;
+      }
+      .tree-food-name {
+        vertical-align: top;
+        font-size: $font-size-medium;
+        font-weight: 700;
         font-family: $font-main;
       }
 
