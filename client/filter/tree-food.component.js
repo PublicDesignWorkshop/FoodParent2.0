@@ -78,9 +78,12 @@ export default class TreeFood extends React.Component {
   }
   render () {
     return (
-      <div className="tree-food-wrapper">
-        <div className="brown-medium-multi">
-          <Select name="food-select" multi={true} clearable={true} searchable={true} backspaceToRemoveMessage="" scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(642)} />
+      <div className="tree-filter-wrapper">
+        <div className="filter-label">
+          <FontAwesome className='' name='apple' />{localization(633)}
+        </div>
+        <div className="filter-data brown-medium-multi">
+          <Select name="food-select" multi={true} clearable={true} searchable={true} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(642)} backspaceToRemoveMessage="" />
         </div>
       </div>
     );

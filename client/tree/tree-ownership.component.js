@@ -46,7 +46,7 @@ export default class TreeOwnership extends React.Component {
     this.setState({options: options, selected: selected});
   }
   renderOptionValue(option) {
-    return <span className="tree-ownership-name">{option.label}</span>;
+    return <span className="tree-flag-name">{option.label}</span>;
   }
   updateAttribute(selected) {
     let ownership = 0;

@@ -3,4 +3,18 @@
 
 .tree-filter-wrapper {
   padding: 8px;
+
+  > .filter-label {
+    color: $brown;
+    font-weight: 700;
+    margin: 4px 0;
+    .fa {
+      margin-left: 2px;
+      margin-right: 4px;
+    }
+  }
+
+  > .filter-data {
+    margin: 0 0 0 0;
+  }
 }
