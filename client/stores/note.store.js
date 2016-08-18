@@ -188,6 +188,7 @@ class NoteStore {
     } else {
       this.temp = null;
     }
+    console.log(this.temp);
     this.code = 200;
   }
 }

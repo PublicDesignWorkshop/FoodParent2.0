@@ -21,7 +21,7 @@ export default class NoteInfo extends React.Component {
     super(props, context);
   }
   componentWillMount() {
-
+    this.setState({editing: false});
   }
   componentDidMount () {
   }
@@ -33,10 +33,6 @@ export default class NoteInfo extends React.Component {
   }
   render () {
     let style = "";
-    let stars = [];
-    let comment;
-    let amount;
-    let proper;
     switch(this.props.note.type) {
       case NOTETYPE.CHANGE:
         style = " note-info-light";
@@ -49,9 +45,44 @@ export default class NoteInfo extends React.Component {
       break;
     }
 
+    let actions;
+    let buttonStyle;
+    switch(this.props.note.type) {
+      case NOTETYPE.UPDATE:
+        buttonStyle = " static-button-green";
+        break;
+      case NOTETYPE.PICKUP:
+        buttonStyle = " static-button-brown";
+        break;
+    }
+    if (this.state.editing) {
+      actions = <div className="static-button-group">
+        <div className={"static-button" + buttonStyle} onClick={() => {
+          this.setState({editing: false});
+        }}>
+          {localization(930) /* SAVE */}
+        </div>
+        <div className={"static-button" + buttonStyle} onClick={() => {
+          this.setState({editing: false});
+          NoteActions.setSelected(this.props.note.id);
+        }}>
+          {localization(933) /* CANCEL */}
+        </div>
+      </div>;
+    } else {
+      actions = <div className="static-button-group">
+        <div className={"static-button" + buttonStyle} onClick={() => {
+          this.setState({editing: true});
+        }}>
+          {localization(928) /* EDIT */}
+        </div>
+      </div>;
+    }
+
     return (
       <div className={"note-info-wrapper" + style}>
-        <NoteType note={this.props.note} editing={false} />
+        <NoteType note={this.props.note} editing={this.state.editing} />
+        {actions}
       </div>
     );
   }

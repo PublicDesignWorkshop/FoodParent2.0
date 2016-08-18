@@ -160,6 +160,61 @@ html, body, #app {
   }
 }
 
+.static-button-group {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  padding: 8px 8px;
+
+  &.no-left-right-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &.double-left-right-padding {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .static-button {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+
+    -webkit-flex-grow: 1;
+            flex-grow: 1;
+    padding: 4px;
+    text-align: center;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: $font-size-medium-small;
+    font-family: $font-main;
+    text-transform: uppercase;
+  }
+  .static-button-green {
+    background-color: $light;
+    color: $green;
+    border: 2px solid $green;
+    border-right-width: 0;
+  }
+  .static-button-red {
+    background-color: $light;
+    color: $red;
+    border: 2px solid $red;
+    border-right-width: 0;
+  }
+  .static-button-brown {
+    background-color: $light;
+    color: $brown;
+    border: 2px solid $brown;
+    border-right-width: 0;
+  }
+}
+
 .danger-zone {
   font-size: $font-size-small;
   font-family: $font-main;

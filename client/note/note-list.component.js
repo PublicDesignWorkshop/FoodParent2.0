@@ -31,7 +31,7 @@ export default class NoteList extends React.Component {
     let notes = [];
     this.props.notes.forEach((note) => {
       if (this.props.note && note.id == this.props.note.id) {
-        notes.push(<NoteInfo key={"note" + note.id} note={note} />);
+        notes.push(<NoteInfo key={"note" + note.id} note={this.props.note} />);
       } else {
         notes.push(<NoteLine key={"note" + note.id} note={note} />);
       }
