@@ -44,7 +44,7 @@ export class NoteModel {
         break;
     }
     let proper;
-    switch(parseInt(props.proper)) {
+    switch(this.proper) {
       case PICKUPTIME.EARLY:
         proper = 1;
         break;
@@ -138,6 +138,7 @@ class NoteStore {
       handleSetCode: NoteActions.SET_CODE,
       handleFetchedNotes: NoteActions.FETCHED_NOTES,
       handleCreateTempNote: NoteActions.CREATE_TEMP_NOTE,
+      handleSetSelected: NoteActions.SET_SELECTED,
     });
     // Expose public methods.
     this.exportPublicMethods({
@@ -178,6 +179,15 @@ class NoteStore {
       proper: "2",
       date: moment(new Date()).format(ServerSetting.sServerDateFormat),
     });
+    this.code = 200;
+  }
+  handleSetSelected(id) {
+    let notes = this.notes.filter(note => note.id == parseInt(id));
+    if (notes.length > 0) {
+      this.temp = new NoteModel(notes[0].toJSON());
+    } else {
+      this.temp = null;
+    }
     this.code = 200;
   }
 }

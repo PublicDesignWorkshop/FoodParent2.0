@@ -20,11 +20,13 @@ let AuthStore = require('./../stores/auth.store');
 export default class TreeHistory extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.updateNoteStore = this.updateNoteStore.bind(this);
   }
   componentWillMount() {
 
   }
   componentDidMount () {
+    NoteStore.listen(this.updateNoteStore);
   }
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);
@@ -33,7 +35,18 @@ export default class TreeHistory extends React.Component {
     if (props.tree)
       NoteActions.fetchNotesFromTreeIds.defer(props.tree.id);
   }
+  componentWillUnmount() {
+    NoteStore.unlisten(this.updateNoteStore);
+    NoteActions.setSelected(null);
+  }
+  updateNoteStore() {
+    this.forceUpdate();
+  }
   render () {
+    let graph;
+    if (NoteStore.getState().temp == null) {
+      graph = <NoteGraph />;
+    }
     return (
       <div className="tree-history-wrapper">
         <AltContainer stores={
@@ -48,13 +61,19 @@ export default class TreeHistory extends React.Component {
         }>
           <TreeFood editing={false} />
         </AltContainer>
-        <NoteGraph />
+        {graph}
         <AltContainer stores={
           {
             notes: function(props) {
               return {
                 store: NoteStore,
                 value: NoteStore.getState().notes
+              }
+            },
+            note: function(props) {
+              return {
+                store: NoteStore,
+                value: NoteStore.getState().temp
               }
             },
           }

@@ -23,7 +23,7 @@ export default class TreeInfo extends React.Component {
     super(props, context);
   }
   componentWillMount() {
-    this.setState({selected: TreeStore.getState().selected, editing: false, editable: false});
+    this.setState({selected: TreeStore.getState().selected, editing: false, editable: AuthStore.getState().auth.canEditTree(TreeStore.getState().selected)});
   }
   componentDidMount () {
 
@@ -54,6 +54,7 @@ export default class TreeInfo extends React.Component {
         </div>
       </div>;
     }
+    console.log(this.state.editable);
     if (this.state.editing) {
       actions = <div>
         <div className="solid-button-group">

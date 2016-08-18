@@ -1,0 +1,24 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.note-info-wrapper {
+  padding: 4px 8px;
+  font-family: $font-main;
+  font-size: $font-size-medium;
+  cursor: pointer;
+
+  &.note-info-light {
+    background-color: $grey;
+    color: $white;
+  }
+
+  &.note-info-green {
+    background-color: $green;
+    color: $white;
+  }
+
+  &.note-info-brown {
+    background-color: $brown;
+    color: $white;
+  }
+}

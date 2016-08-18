@@ -7,6 +7,21 @@
   font-size: $font-size-medium;
   cursor: pointer;
 
+  .tag {
+    font-size: $font-size-medium-small;
+    border-radius: 2px;
+    padding: 2px 4px;
+    vertical-align: middle;
+    &.tag-brown {
+      background-color: $brown;
+      color: $white;
+    }
+    &.tag-green {
+      background-color: $green;
+      color: $white;
+    }
+  }
+
   &.note-line-light {
     color: $grey;
     font-weight: 400;

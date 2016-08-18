@@ -7,6 +7,7 @@ let ServerSetting = require('./../../setting/server.json');
 
 import { localization } from './../utils/localization';
 import NoteLine from './../note/note-line.component';
+import NoteInfo from './../note/note-info.component';
 
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
@@ -29,7 +30,11 @@ export default class NoteList extends React.Component {
   render () {
     let notes = [];
     this.props.notes.forEach((note) => {
-      notes.push(<NoteLine key={"note" + note.id} note={note} />);
+      if (this.props.note && note.id == this.props.note.id) {
+        notes.push(<NoteInfo key={"note" + note.id} note={note} />);
+      } else {
+        notes.push(<NoteLine key={"note" + note.id} note={note} />);
+      }
     });
     return (
       <div className="note-list-wrapper">

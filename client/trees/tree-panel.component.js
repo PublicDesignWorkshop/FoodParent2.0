@@ -10,6 +10,7 @@ import { TREEDETAILMODE } from './../utils/enum';
 let TreeActions = require('./../actions/tree.actions');
 let AuthStore = require('./../stores/auth.store');
 let TreeStore = require('./../stores/tree.store');
+let NoteStore = require('./../stores/note.store');
 
 import TreeControl from './tree-control.component';
 import TreeInfo from './../tree/tree-info.component';

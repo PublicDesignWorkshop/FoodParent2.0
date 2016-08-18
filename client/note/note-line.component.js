@@ -18,6 +18,7 @@ let AuthStore = require('./../stores/auth.store');
 export default class NoteLine extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.selectNote = this.selectNote.bind(this);
   }
   componentWillMount() {
 
@@ -30,11 +31,15 @@ export default class NoteLine extends React.Component {
   updateProps(props) {
 
   }
+  selectNote() {
+    NoteActions.setSelected(this.props.note.id);
+  }
   render () {
     let style = "";
     let stars = [];
     let comment;
     let amount;
+    let proper;
     switch(this.props.note.type) {
       case NOTETYPE.CHANGE:
         style = " note-line-light";
@@ -50,6 +55,7 @@ export default class NoteLine extends React.Component {
             }
           }
         }
+        stars = <span className="tag tag-green">{stars}</span>;
         comment = this.props.note.comment.trim();
         break;
       case NOTETYPE.PICKUP:
@@ -66,19 +72,27 @@ export default class NoteLine extends React.Component {
             amount = "(" + (this.props.note.amount * ServerSetting.fGToLBS).toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
             break;
         }
+        switch(this.props.note.proper) {
+          case PICKUPTIME.EARLY:
+            proper = <span className="tag tag-brown">{localization(988)}</span>;
+            break;
+          case PICKUPTIME.PROPER:
+            proper = <span className="tag tag-brown">{localization(989)}</span>;
+            break;
+          case PICKUPTIME.LATE:
+            proper = <span className="tag tag-brown">{localization(990)}</span>;
+            break;
+        }
       break;
     }
 
-
     return (
-      <div className={"note-line-wrapper" + style}>
+      <div className={"note-line-wrapper" + style} onClick={this.selectNote}>
         {this.props.note.getFormattedDate()}&nbsp;-&nbsp;
         {comment}&nbsp;
-        {stars}{amount}
+        {stars}{amount}&nbsp;
+        {proper}
       </div>
     );
   }
-}
-NoteLine.contextTypes = {
-    router: React.PropTypes.object.isRequired
 }

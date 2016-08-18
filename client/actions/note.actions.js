@@ -16,6 +16,11 @@ class NoteActions {
       dispatch();
     }
   }
+  setSelected(id) {
+    return (dispatch) => {
+      dispatch(id);
+    }
+  }
   fetchNotesFromTreeIds(ids) {
     if (ids != null) {
       return (dispatch) => {

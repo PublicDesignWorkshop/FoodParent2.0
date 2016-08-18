@@ -74,6 +74,9 @@ html, body, #app {
   transition: opacity 0.15s;
   pointer-events: none;
 }
+.uppercase {
+  text-transform: uppercase;
+}
 .slide-out {
   left : -100%;
   transition: left 0.15s;
@@ -124,6 +127,9 @@ html, body, #app {
     font-family: $font-main;
     text-transform: uppercase;
 
+    &.active {
+      border: 2px solid $white;
+    }
 
   }
   .solid-button-green {
