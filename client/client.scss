@@ -265,6 +265,11 @@ html, body, #app {
     }
 
     > .Select-control {
+      background-color: $white;
+      border-color: transparent;
+      &:hover {
+        border-color: transparent;
+      }
       .Select-multi-value-wrapper {
         width: 100%;
         .Select-value {
@@ -320,9 +325,13 @@ html, body, #app {
     }
 
     &.is-disabled {
+      > .Select-control {
+        background-color: $light;
+      }
+
       .Select-value {
         width: auto !important;
-        background-color: $light !important;
+        background-color: $white !important;
         > .Select-value-label{
           > .Select-aria-only {
             display: none;
@@ -395,13 +404,18 @@ html, body, #app {
     }
 
     > .Select-control {
+      background: $white;
+      border-color: transparent;
+      &:hover {
+        border-color: transparent;
+      }
       .Select-multi-value-wrapper {
         width: 100%;
         .Select-value {
           line-height: 24px;
           border-radius: 0;
           margin: 4px;
-          background-color: $light;
+          background-color: $white;
           color: $brown;
           border-color: $brown;
           .Select-value-icon {
@@ -428,6 +442,7 @@ html, body, #app {
 
     &.is-disabled {
       .Select-control {
+        background-color: $light;
         &:hover {
           border-color: transparent;
         }
@@ -485,9 +500,9 @@ html, body, #app {
     }
 
     > .Select-control {
-      border: 2px solid $light;
+      border: 2px solid $white;
       &:hover {
-        border-color: $light;
+        border-color: $white;
       }
       .Select-multi-value-wrapper {
         width: 100%;
@@ -495,7 +510,7 @@ html, body, #app {
           line-height: 24px;
           border-radius: 0;
           margin: 4px;
-          background-color: $light;
+          background-color: $white;
           color: $green;
           border-color: $green;
           .Select-value-icon {

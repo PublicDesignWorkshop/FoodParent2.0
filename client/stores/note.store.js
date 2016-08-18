@@ -84,6 +84,7 @@ class NoteStore {
     let notes = this.notes.filter(note => note.id == parseInt(props.id));
     if (notes.length == 1) {
       notes[0].update(props);
+      // this.temp = new NoteModel(notes[0].toJSON());
     }
     this.notes = this.notes.sort(sortNoteByDateDESC);
     this.code = 200;

@@ -36,9 +36,9 @@
       border-radius: 0;
       -webkit-flex-grow: 1;           /* NEW - Chrome */
               flex-grow: 1;           /* NEW, Spec - Opera 12.1, Firefox 20+ */
-      padding: 3px 6px;
+      padding: 4px 6px;
       width: 0;
-      font-size: $font-size-medium-small;
+      font-size: $font-size-medium;
       &:focus {
         outline: 2px solid $brown;
       }

@@ -2,8 +2,6 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import AltContainer from 'alt-container';
 import Select from 'react-select';
-import Textarea from 'react-textarea-autosize';
-
 
 require('./note-amount.component.scss');
 
@@ -14,12 +12,14 @@ let MapSetting = require('./../../setting/map.json');
 import { localization } from './../utils/localization';
 let NoteStore = require('./../stores/note.store');
 let NoteActions = require('./../actions/note.actions');
+import { NOTETYPE, AMOUNTTYPE, PICKUPTIME } from './../utils/enum';
 
 
 export default class NoteAmount extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.updateAttribute = this.updateAttribute.bind(this);
+    this.updateAmountType = this.updateAmountType.bind(this);
   }
   componentWillMount() {
     this.updateProps(this.props);
@@ -31,12 +31,28 @@ export default class NoteAmount extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
-    this.setState({amount: parseFloat(parseFloat(props.note.amount).toFixed(ServerSetting.iAmountPrecision))});
+    let options = [];
+    options.push({value: 1, label: "lbs."});
+    options.push({value: 2, label: "kg"});
+    options.push({value: 3, label: "g"});
+    let selected;
+    switch(props.note.amountType) {
+      case AMOUNTTYPE.LBS:
+        selected = options[0];
+        break;
+      case AMOUNTTYPE.KG:
+        selected = options[1];
+        break;
+      case AMOUNTTYPE.G:
+        selected = options[2];
+        break;
+    }
+    this.setState({options: options, selected: selected, amount: parseFloat(parseFloat(props.note.amount).toFixed(ServerSetting.iAmountPrecision))});
   }
   updateAttribute() {
     let prevAmount = this.props.note.amount;
-    if (this.state.amount && this.state.amount.trim() != "") {
-      this.props.note.amount = this.state.amount.trim();
+    if (this.state.amount) {
+      this.props.note.amount = this.state.amount;
       this.setState({amount: this.props.note.amount});
     } else {
       this.setState({amount: 0});
@@ -44,6 +60,24 @@ export default class NoteAmount extends React.Component {
     if (prevAmount != this.state.amount) {
       NoteActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
     }
+  }
+  updateAmountType(selected) {
+    let prevAmountType = this.props.note.amountType;
+    switch(selected.value) {
+      case 1:
+        this.props.note.amountType = AMOUNTTYPE.LBS;
+        break;
+      case 2:
+        this.props.note.amountType = AMOUNTTYPE.KG;
+        break;
+      case 3:
+        this.props.note.amountType = AMOUNTTYPE.G;
+        break;
+    }
+    if (prevAmountType != this.props.note.amountType) {
+      NoteActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
+    }
+    this.setState({selected: selected});
   }
   render () {
     if (this.props.editing) {
@@ -66,10 +100,25 @@ export default class NoteAmount extends React.Component {
               onBlur={()=> {
                 this.updateAttribute();
               }} />
+              <div className="brown-medium-single">
+                <Select className="note-unit-select" name="unit-select" multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} onChange={this.updateAmountType} />
+              </div>
           </div>
         </div>
       );
     } else {
+      let unit = "";
+      switch(this.props.note.amountType) {
+        case AMOUNTTYPE.LBS:
+          unit = " lbs.";
+          break;
+        case AMOUNTTYPE.KG:
+          unit = " kg";
+          break;
+        case AMOUNTTYPE.G:
+          unit = " g";
+          break;
+      }
       return (
         <div className="note-amount-wrapper">
           <div className="note-amount-label">
@@ -77,7 +126,7 @@ export default class NoteAmount extends React.Component {
           </div>
           <div className="note-amount-data">
             <div className="note-amount-text">
-              {this.state.amount}
+              {this.state.amount}{unit}
             </div>
           </div>
         </div>
