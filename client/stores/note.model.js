@@ -3,6 +3,7 @@ import * as _ from 'underscore';
 
 import { AMOUNTTYPE, NOTETYPE, PICKUPTIME } from './../utils/enum';
 
+let AuthStore = require('./../stores/auth.store');
 let ServerSetting = require('./../../setting/server.json');
 
 export class NoteModel {
@@ -116,5 +117,13 @@ export class NoteModel {
       this.images.splice(i, 1);
     }
     this.images.unshift(filename);
+  }
+  isEditable() {
+    if (AuthStore.getState().auth.isManager())
+      return true;
+    if (AuthStore.getState().auth.id == this.person) {
+      return true;
+    }
+    return false;
   }
 }

@@ -12,6 +12,7 @@ import NoteRate from './note-rate.component';
 import NoteComment from './note-comment.component';
 import NoteDate from './note-date.component';
 import NoteAmount from './note-amount.component';
+import NoteProper from './note-proper.component';
 
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
@@ -85,18 +86,28 @@ export default class NoteInfo extends React.Component {
         </div>
       </div>;
     } else {
-      actions = <div className="static-button-group same-border-color-padding">
-        <div className={"static-button" + buttonStyle} onClick={() => {
-          this.setState({editing: true});
-        }}>
-          {localization(928) /* EDIT */}
-        </div>
-        <div className={"static-button" + buttonStyle} onClick={() => {
-          NoteActions.setSelected(null);
-        }}>
-          {localization(72) /* CLOSE */}
-        </div>
-      </div>;
+      if (this.props.note.isEditable()) {
+        actions = <div className="static-button-group same-border-color-padding">
+          <div className={"static-button" + buttonStyle} onClick={() => {
+            this.setState({editing: true});
+          }}>
+            {localization(928) /* EDIT */}
+          </div>
+          <div className={"static-button" + buttonStyle} onClick={() => {
+            NoteActions.setSelected(null);
+          }}>
+            {localization(72) /* CLOSE */}
+          </div>
+        </div>;
+      } else {
+        actions = <div className="static-button-group same-border-color-padding">
+          <div className={"static-button" + buttonStyle} onClick={() => {
+            NoteActions.setSelected(null);
+          }}>
+            {localization(72) /* CLOSE */}
+          </div>
+        </div>;
+      }
     }
 
     if (this.props.note.type == NOTETYPE.UPDATE) {
@@ -114,6 +125,7 @@ export default class NoteInfo extends React.Component {
         <div className={"note-info-wrapper" + style}>
           <NoteType note={this.props.note} editing={this.state.editing} />
           <NoteAmount note={this.props.note} editing={this.state.editing} />
+          <NoteProper note={this.props.note} editing={this.state.editing} />
           <NoteComment note={this.props.note} editing={this.state.editing} />
           <NoteDate note={this.props.note} editing={this.state.editing} />
           {actions}
