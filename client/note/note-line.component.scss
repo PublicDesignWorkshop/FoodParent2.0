@@ -1,0 +1,84 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.note-line-wrapper {
+  padding: 4px 8px;
+  font-family: $font-main;
+  font-size: $font-size-medium;
+  cursor: pointer;
+
+  &.note-line-light {
+    color: $grey;
+    font-weight: 400;
+    &:hover {
+      @include respond-to(handhelds) {
+        background-color: transparent;
+        color: $grey;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $grey;
+        color: $white;
+      }
+    }
+    &:active, &.active {
+      @include respond-to(handhelds) {
+        background-color: $grey;
+        color: $white;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $grey;
+        color: $white;
+      }
+    }
+  }
+
+  &.note-line-green {
+    color: $green;
+    font-weight: 700;
+    &:hover {
+      @include respond-to(handhelds) {
+        background-color: transparent;
+        color: $green;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $green;
+        color: $white;
+      }
+    }
+    &:active, &.active {
+      @include respond-to(handhelds) {
+        background-color: $green;
+        color: $white;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $green;
+        color: $white;
+      }
+    }
+  }
+
+  &.note-line-brown {
+    color: $brown;
+    font-weight: 700;
+    &:hover {
+      @include respond-to(handhelds) {
+        background-color: transparent;
+        color: $brown;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $brown;
+        color: $white;
+      }
+    }
+    &:active, &.active {
+      @include respond-to(handhelds) {
+        background-color: $brown;
+        color: $white;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $brown;
+        color: $white;
+      }
+    }
+  }
+}

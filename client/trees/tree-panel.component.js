@@ -11,9 +11,9 @@ let TreeActions = require('./../actions/tree.actions');
 let AuthStore = require('./../stores/auth.store');
 let TreeStore = require('./../stores/tree.store');
 
-
-import TreeInfo from './../tree/tree-info.component';
 import TreeControl from './tree-control.component';
+import TreeInfo from './../tree/tree-info.component';
+import TreeHistory from './../tree/tree-history.component';
 
 export default class TreePanel extends React.Component {
   constructor() {
@@ -122,7 +122,7 @@ export default class TreePanel extends React.Component {
           Info
         </span>
       </div>;
-      //
+      // Body
       body = <AltContainer stores={
         {
           TreeStore: TreeStore,
@@ -157,6 +157,19 @@ export default class TreePanel extends React.Component {
           History
         </span>
       </div>;
+      // Body
+      body = <AltContainer stores={
+        {
+          tree: function(props) {
+            return {
+              store: TreeStore,
+              value: TreeStore.getState().temp
+            }
+          }
+        }
+      }>
+        <TreeHistory />
+      </AltContainer>;
     }
     return (
       <div className={"tree-panel-wrapper" + open + wide}>
@@ -168,7 +181,6 @@ export default class TreePanel extends React.Component {
             {size}
             {info}
             {post}
-            {parent}
             {history}
             {close}
           </div>

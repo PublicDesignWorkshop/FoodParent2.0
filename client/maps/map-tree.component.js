@@ -174,9 +174,6 @@ export default class MapTree extends React.Component {
     }
   }
   renderActiveMarker(tree) {  // tree in this case = TreeStore.getState().temp
-    if (__DEV__) {
-      console.log("map-tree.component - renderActiveMarker()");
-    }
     var markers = this.markersLayer.getLayers();
     let bFound = false;
     for (let i = 0; i < markers.length && !bFound; i++) {

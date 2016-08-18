@@ -10,6 +10,11 @@
 
   "sServerDateFormat": "YYYY-MM-DD HH:mm:ss",
   "sEXIFDateFormat": "YYYY-MM-DD HH-mm-ss",
-  "sUIDateFormat": "MM/DD/YY"
+  "sUIDateFormat": "MM/DD/YY",
+
+  "fKGToG": 1000,
+  "fLBSTOG": 453.592,
+  "fGToLBS": 0.00220463,
+  "iAmountPrecision": 2
 
 }
