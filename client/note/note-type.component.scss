@@ -1,14 +1,2 @@
 @import "./../scss/variables.scss";
 @import "./../scss/mixin.scss";
-
-.note-info-title {
-  color: $white;
-  font-weight: 700;
-  font-size: $font-size-medium;
-  padding: 4px;
-
-  .fa.fa-sticky-note-o {
-    margin-left: 4px;
-    margin-right: 8px;
-  }
-}

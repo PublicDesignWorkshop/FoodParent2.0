@@ -179,7 +179,6 @@ export default class TreePanel extends React.Component {
         </div>
         <div className="right">
           <div className="menu">
-            {size}
             {info}
             {post}
             {history}

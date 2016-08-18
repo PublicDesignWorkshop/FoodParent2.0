@@ -41,13 +41,17 @@ export default class NoteType extends React.Component {
   }
   render () {
     let actions;
+    let style = "";
+    if (!this.props.editing) {
+      style = " no-pointer";
+    }
     switch(this.props.note.type) {
       case NOTETYPE.UPDATE:
         actions = <div className="solid-button-group">
-          <div className="solid-button active">
+          <div className={"solid-button active" + style}>
             {localization(74)}
           </div>
-          <div className="solid-button" onClick={() => {
+          <div className={"solid-button" + style} onClick={() => {
             this.updateAttribute(NOTETYPE.PICKUP)
           }}>
             {localization(75)}
@@ -56,12 +60,12 @@ export default class NoteType extends React.Component {
         break;
       case NOTETYPE.PICKUP:
         actions = <div className="solid-button-group">
-          <div className="solid-button" onClick={() => {
+          <div className={"solid-button" + style} onClick={() => {
             this.updateAttribute(NOTETYPE.UPDATE)
           }}>
             {localization(74)}
           </div>
-          <div className="solid-button active">
+          <div className={"solid-button active" + style}>
             {localization(75)}
           </div>
         </div>;
@@ -69,11 +73,9 @@ export default class NoteType extends React.Component {
     }
     return (
       <div>
-        <div className="note-info-title">
-          <FontAwesome className="icon" name='sticky-note-o' />
-          {localization(73)}
+        <div className="note-type-data">
+          {actions}
         </div>
-        {actions}
       </div>
     );
   }
