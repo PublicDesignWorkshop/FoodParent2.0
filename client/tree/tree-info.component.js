@@ -54,7 +54,6 @@ export default class TreeInfo extends React.Component {
         </div>
       </div>;
     }
-    console.log(this.state.editable);
     if (this.state.editing) {
       actions = <div>
         <div className="solid-button-group">

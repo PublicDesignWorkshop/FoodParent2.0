@@ -44,6 +44,24 @@ class NoteActions {
       dispatch(props);
     }
   }
+  updateNote(note) {
+    return (dispatch) => {
+      dispatch();
+      this.setCode(92);
+      NoteSource.updateNote(note).then((response) => {
+        displaySuccessMessage(localization(604));
+        this.updatedNote(response);
+      }).catch((code) => {
+        displayFailMessage(localization(code));
+        this.setCode(code);
+      });
+    }
+  }
+  updatedNote(props) {
+    return (dispatch) => {
+      dispatch(props);
+    }
+  }
 }
 
 module.exports = alt.createActions(NoteActions);

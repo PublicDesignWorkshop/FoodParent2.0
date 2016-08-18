@@ -5,7 +5,7 @@ import Select from 'react-select';
 import Textarea from 'react-textarea-autosize';
 
 
-require('./note-comment.component.scss');
+require('./note-amount.component.scss');
 
 var FontAwesome = require('react-fontawesome');
 let ServerSetting = require('./../../setting/server.json');
@@ -16,7 +16,7 @@ let NoteStore = require('./../stores/note.store');
 let NoteActions = require('./../actions/note.actions');
 
 
-export default class NoteComment extends React.Component {
+export default class NoteAmount extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.updateAttribute = this.updateAttribute.bind(this);
@@ -31,44 +31,32 @@ export default class NoteComment extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
-    if (props.note != null) {
-      if (props.note.comment && props.note.comment.trim() != "") {
-        this.setState({comment: props.note.comment});
-      } else {
-        if (props.editing) {
-          this.setState({comment: ""});
-        } else {
-          this.setState({comment: localization(95)});
-        }
-      }
-    } else {
-      this.setState({comment: localization(95)});
-    }
+    this.setState({amount: parseFloat(parseFloat(props.note.amount).toFixed(ServerSetting.iAmountPrecision))});
   }
   updateAttribute() {
-    let prevComment = this.props.note.comment;
-    if (this.state.comment && this.state.comment.trim() != "") {
-      this.props.note.comment = this.state.comment.trim();
-      this.setState({comment: this.props.note.comment});
+    let prevAmount = this.props.note.amount;
+    if (this.state.amount && this.state.amount.trim() != "") {
+      this.props.note.amount = this.state.amount.trim();
+      this.setState({amount: this.props.note.amount});
     } else {
-      this.setState({comment: ""});
+      this.setState({amount: 0});
     }
-    if (prevComment != this.state.comment) {
+    if (prevAmount != this.state.amount) {
       NoteActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
     }
   }
   render () {
     if (this.props.editing) {
       return (
-        <div className="note-comment-wrapper">
-          <div className="note-comment-label">
-            <FontAwesome className='' name='comment-o' />{localization(968)}
+        <div className="note-amount-wrapper">
+          <div className="note-amount-label">
+            <FontAwesome className='' name='shopping-basket' />{localization(998)}
           </div>
-          <div className="note-comment-data">
-            <Textarea type="text" className="note-comment-input" placeholder={localization(973)}
-              value={this.state.comment}
+          <div className="note-amount-data">
+            <input type="text" className="note-amount-input" placeholder={localization(673)}
+              value={this.state.amount}
               onChange={(event: any)=> {
-                this.setState({comment: event.target.value});
+                this.setState({amount: event.target.value});
               }}
               onKeyPress={(event)=> {
                 if (event.key == 'Enter') {
@@ -83,13 +71,13 @@ export default class NoteComment extends React.Component {
       );
     } else {
       return (
-        <div className="note-comment-wrapper">
-          <div className="note-comment-label">
-            <FontAwesome className='' name='comment-o' />{localization(968)}
+        <div className="note-amount-wrapper">
+          <div className="note-amount-label">
+            <FontAwesome className='' name='shopping-basket' />{localization(998)}
           </div>
-          <div className="note-comment-data">
-            <div className="note-comment-text">
-              {this.state.comment}
+          <div className="note-amount-data">
+            <div className="note-amount-text">
+              {this.state.amount}
             </div>
           </div>
         </div>

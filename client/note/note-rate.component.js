@@ -17,8 +17,8 @@ import { updateFilter } from './../utils/filter';
 let FoodStore = require('./../stores/food.store');
 let FlagStore = require('./../stores/flag.store');
 
-let TreeStore = require('./../stores/tree.store');
-let TreeActions = require('./../actions/tree.actions');
+let NoteStore = require('./../stores/tree.store');
+let NoteActions = require('./../actions/tree.actions');
 
 
 export default class NoteRate extends React.Component {
@@ -78,17 +78,13 @@ export default class NoteRate extends React.Component {
     return (<span className="note-rate-name">{stars}<span>{" (" + option.label + ")"}</span></span>);
   }
   updateAttribute(selected) {
-    // var rates = [];
-    // if (selected) {
-    //   selected.forEach(option => {
-    //     rates.push(parseInt(option.value));
-    //   });
-    // }
-    // updateFilter(FITERMODE.RATE, rates, function(response) {  // Resolve
-    //   TreeActions.fetchTrees();
-    // }, function(response) { // Reject
-    //
-    // });
+    let prevRate = this.props.note.rate;
+    if (selected) {
+      this.props.note.rate = parseInt(selected.value);
+    }
+    if (prevRate != parseInt(selected.value)) {
+      NoteActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
+    }
     this.setState({selected: selected});
   }
   render () {

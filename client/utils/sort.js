@@ -5,3 +5,23 @@ export function sortLocationByDistanceASC(location) {
     return dista - distb;
   }
 }
+
+export function sortNoteByDateDESC(a, b) {
+  if (a.date.valueOf() > b.date.valueOf()) {
+    return -1;
+  } else if (a.date.valueOf() < b.date.valueOf()) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+export function sortNoteByDateASC(a, b) {
+  if (a.date.valueOf() > b.date.valueOf()) {
+    return 1;
+  } else if (a.date.valueOf() < b.date.valueOf()) {
+    return -1;
+  } else {
+    return 0;
+  }
+}

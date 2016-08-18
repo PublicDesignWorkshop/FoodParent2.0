@@ -11,6 +11,7 @@ import NoteType from './note-type.component';
 import NoteRate from './note-rate.component';
 import NoteComment from './note-comment.component';
 import NoteDate from './note-date.component';
+import NoteAmount from './note-amount.component';
 
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
@@ -63,6 +64,7 @@ export default class NoteInfo extends React.Component {
         <div className="static-button-group same-border-color-padding">
           <div className={"static-button" + buttonStyle} onClick={() => {
             this.setState({editing: false});
+            NoteActions.updateNote(NoteStore.getState().temp);
           }}>
             {localization(930) /* SAVE */}
           </div>
@@ -111,6 +113,7 @@ export default class NoteInfo extends React.Component {
       return (
         <div className={"note-info-wrapper" + style}>
           <NoteType note={this.props.note} editing={this.state.editing} />
+          <NoteAmount note={this.props.note} editing={this.state.editing} />
           <NoteComment note={this.props.note} editing={this.state.editing} />
           <NoteDate note={this.props.note} editing={this.state.editing} />
           {actions}
