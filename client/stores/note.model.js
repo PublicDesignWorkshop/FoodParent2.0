@@ -59,7 +59,7 @@ export class NoteModel {
       tree: this.tree,
       person: this.person,
       comment: this.comment,
-      picture: this.comment.toString(),
+      picture: this.images.toString(),
       rate: this.rate,
       amount: amount,
       proper: proper,
@@ -127,7 +127,7 @@ export class NoteModel {
   isEditable() {
     if (AuthStore.getState().auth.isManager())
       return true;
-    if (AuthStore.getState().auth.id == this.person) {
+    if (AuthStore.getState().auth.id != 0 && this.person != 0 && AuthStore.getState().auth.id == this.person) {
       return true;
     }
     return false;

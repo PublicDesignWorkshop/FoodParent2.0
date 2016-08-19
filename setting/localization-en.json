@@ -1,6 +1,8 @@
 {
   "0": "Please check your internet connection.",
 
+  "69": "No photos.",
+  "70": "Photos",
   "71": "Pick Time",
   "72": "CLOSE",
   "73": "Note Type",
@@ -35,6 +37,8 @@
   "332": "Geolocation permission is denied.",
 
   "404": "Page Not Found...",
+
+  "506": "Please upload an image file.",
 
   "601": "Enter a comment...",
   "602": "Please use a positive number.",

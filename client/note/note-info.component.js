@@ -13,6 +13,7 @@ import NoteComment from './note-comment.component';
 import NoteDate from './note-date.component';
 import NoteAmount from './note-amount.component';
 import NoteProper from './note-proper.component';
+import NoteImage from './note-image.component';
 
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
@@ -114,6 +115,7 @@ export default class NoteInfo extends React.Component {
       return (
         <div className={"note-info-wrapper" + style}>
           <NoteType note={this.props.note} editing={this.state.editing} />
+          <NoteImage note={this.props.note} editing={this.state.editing} />
           <NoteRate note={this.props.note} editing={this.state.editing} />
           <NoteComment note={this.props.note} editing={this.state.editing} />
           <NoteDate note={this.props.note} editing={this.state.editing} />
@@ -124,6 +126,7 @@ export default class NoteInfo extends React.Component {
       return (
         <div className={"note-info-wrapper" + style}>
           <NoteType note={this.props.note} editing={this.state.editing} />
+          <NoteImage note={this.props.note} editing={this.state.editing} />
           <NoteAmount note={this.props.note} editing={this.state.editing} />
           <NoteProper note={this.props.note} editing={this.state.editing} />
           <NoteComment note={this.props.note} editing={this.state.editing} />

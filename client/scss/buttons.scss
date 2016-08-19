@@ -1,0 +1,126 @@
+.solid-button-group {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  padding: 8px 8px;
+
+  &.no-left-right-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &.double-left-right-padding {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .solid-button {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+
+    -webkit-flex-grow: 1;
+            flex-grow: 1;
+    padding: 4px;
+    text-align: center;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: $font-size-medium-small;
+    font-family: $font-main;
+    text-transform: uppercase;
+  }
+  .solid-button-green {
+    color: $green;
+    border: 2px solid $green;
+    border-right-width: 0;
+    &.disabled {
+      &.active, &:active, &:hover {
+        color: $green;
+        border: 2px solid $green;
+        background-color: transparent;
+        &:first-child {
+          border-right-width: 0;
+        }
+      }
+    }
+    &.active, &:active {
+      color: $white;
+      border-color: $green;
+      background-color: $green;
+    }
+    &:hover {
+      @include respond-to(wide-screens) {
+        color: $white;
+        border-color: $green;
+        background-color: $green;
+      }
+    }
+    &:last-child {
+      border-right-width: 2px;
+    }
+  }
+  .solid-button-brown {
+    color: $brown;
+    border: 2px solid $brown;
+    border-right-width: 0;
+    &.disabled {
+      &.active, &:active, &:hover {
+        color: $brown;
+        border: 2px solid $brown;
+        background-color: transparent;
+        &:first-child {
+          border-right-width: 0;
+        }
+      }
+    }
+    &.active, &:active {
+      color: $white;
+      border-color: $brown;
+      background-color: $brown;
+    }
+    &:hover {
+      @include respond-to(wide-screens) {
+        color: $white;
+        border-color: $brown;
+        background-color: $brown;
+      }
+    }
+    &:last-child {
+      border-right-width: 2px;
+    }
+  }
+  .solid-button-red {
+    color: $red;
+    border: 2px solid $red;
+    border-right-width: 0;
+    &.disabled {
+      &.active, &:active, &:hover {
+        color: $red;
+        border: 2px solid $red;
+        background-color: transparent;
+        &:first-child {
+          border-right-width: 0;
+        }
+      }
+    }
+    &.active, &:active {
+      color: $white;
+      border-color: $red;
+      background-color: $red;
+    }
+    &:hover {
+      @include respond-to(wide-screens) {
+        color: $white;
+        border-color: $red;
+        background-color: $red;
+      }
+    }
+    &:last-child {
+      border-right-width: 2px;
+    }
+  }
+}

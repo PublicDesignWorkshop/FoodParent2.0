@@ -44,7 +44,7 @@
       width: 0;
       font-size: $font-size-medium;
       &:focus {
-        outline: none;
+        outline: 2px solid $brown;
       }
       &:first-child {
         margin: 0 0 0 18px;

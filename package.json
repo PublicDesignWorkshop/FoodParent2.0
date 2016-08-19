@@ -47,6 +47,7 @@
     "webpack-uglify-js-plugin": "1.1.8"
   },
   "dependencies": {
+    "blueimp-load-image": "2.6.1",
     "jquery": "3.1.0",
     "leaflet-plugins": "1.8.0",
     "leaflet.markercluster": "0.5.0",

@@ -5,11 +5,15 @@
 @import "./scss/variables.scss";
 @import "./scss/mixin.scss";
 
+@import "./scss/buttons.scss";
+@import "./scss/gallery.scss";
+
 // Import css libraries
 @import "./../node_modules/react-select/scss/components.scss";
 @import "./../node_modules/font-awesome/scss/font-awesome.scss";
 @import "./../node_modules/leaflet/dist/leaflet.css";
 @import "./../node_modules/react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.css";
+@import "./../node_modules/react-image-gallery/src/image-gallery";
 
 
 * {
@@ -96,81 +100,7 @@ html, body, #app {
     font-family: $font-narrow;
   }
 }
-.solid-button-group {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
 
-  padding: 8px 8px;
-
-  &.no-left-right-padding {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  &.double-left-right-padding {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .solid-button {
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
-
-    -webkit-flex-grow: 1;
-            flex-grow: 1;
-    padding: 4px;
-    text-align: center;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: $font-size-medium-small;
-    font-family: $font-main;
-    text-transform: uppercase;
-  }
-  .solid-button-green {
-    color: $green;
-    border: 2px solid $green;
-    border-right-width: 0;
-    &:hover, &.active {
-      color: $white;
-      border-color: $green;
-      background-color: $green;
-    }
-    &:last-child {
-      border-right-width: 2px;
-    }
-  }
-  .solid-button-brown {
-    color: $brown;
-    border: 2px solid $brown;
-    border-right-width: 0;
-    &:hover, &.active {
-      color: $white;
-      border-color: $brown;
-      background-color: $brown;
-    }
-    &:last-child {
-      border-right-width: 2px;
-    }
-  }
-  .solid-button-red {
-    color: $red;
-    border: 2px solid $red;
-    border-right-width: 0;
-    &:hover, &.active {
-      color: $white;
-      border-color: $red;
-      background-color: $red;
-    }
-    &:last-child {
-      border-right-width: 2px;
-    }
-  }
-}
 
 .danger-zone {
   font-size: $font-size-small;
@@ -239,7 +169,7 @@ html, body, #app {
             }
           }
           .Select-value-label {
-            padding: 4px 6px;
+            padding: 4px 6px 4px 8px;
             .tree-flag-name {
               vertical-align: bottom;
               font-size: $font-size-medium;
@@ -374,7 +304,7 @@ html, body, #app {
             }
           }
           .Select-value-label {
-            padding: 4px 6px;
+            padding: 4px 6px 4px 8px;
             .tree-flag-name {
               vertical-align: bottom;
               font-size: $font-size-medium;

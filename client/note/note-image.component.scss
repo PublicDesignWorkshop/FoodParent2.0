@@ -1,0 +1,47 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.note-image-wrapper {
+  padding: 4px 8px;
+  font-family: $font-main;
+  color: $green;
+  font-size: $font-size-medium;
+
+  .image-gallery-thumbnail.active img {
+    border: 4px solid $green;
+  }
+  &.note-image-brown {
+    color: $brown;
+    .image-gallery-thumbnail.active img {
+      border: 4px solid $brown;
+    }
+  }
+
+  .note-image-label {
+    font-weight: 700;
+    padding: 4px 0;
+    .fa.fa-file-photo-o {
+      margin-left: 2px;
+      margin-right: 4px;
+    }
+  }
+
+  .note-image-data {
+    .image-gallery-image {
+      background-color: $white;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: auto;
+        cursor: pointer;
+      }
+    }
+
+    .no-image {
+      padding-left: 20px;
+    }
+    .image-upload {
+      margin-bottom: 8px;
+    }
+  }
+}

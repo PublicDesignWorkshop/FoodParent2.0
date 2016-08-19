@@ -37,7 +37,11 @@ var vendorList = [
   "moment",
   "react-fontawesome",
   "react-tooltip",
-  "react-select"
+  "react-select",
+  "react-textarea-autosize",
+  "react-tooltip",
+  "react-image-gallery",
+  "iscroll"
 ];
 
 var corePluginList = [
@@ -45,6 +49,7 @@ var corePluginList = [
   new webpack.ProvidePlugin({
     'googletile': 'imports?this=>global!exports?googletile!googletile',
     'leaflet-canvas-marker': 'imports?this=>global!exports?leaflet-canvas-marker!leaflet-canvas-marker',
+    'iscroll': 'imports?this=>global!exports?iscroll!iscroll',
     // 'createjs': 'imports?this=>global!exports?createjs!createjs',
   }),
   new CopyWebpackPlugin([

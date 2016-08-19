@@ -12,6 +12,9 @@
   // -webkit-flex-grow: 1;           /* NEW - Chrome */
   // flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
 
+  .Select-control {
+    z-index: 1000;
+  }
   &.disabled {
     .Select-control {
     	&:hover {

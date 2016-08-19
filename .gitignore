@@ -5,6 +5,7 @@ node_modules/*
 !node_modules/leaflet
 !node_modules/image-preloader-promise
 !node_modules/react-select
+!node_modules/react-image-gallery
 
 server/database.php
 server/dbpass.php

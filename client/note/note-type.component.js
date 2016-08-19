@@ -42,8 +42,10 @@ export default class NoteType extends React.Component {
   render () {
     let actions;
     let style = "";
+    let disabled = "";
     if (!this.props.editing) {
       style = " no-pointer";
+      disabled = " disabled";
     }
     switch(this.props.note.type) {
       case NOTETYPE.UPDATE:
@@ -51,7 +53,7 @@ export default class NoteType extends React.Component {
           <div className={"solid-button solid-button-green active" + style}>
             {localization(74)}
           </div>
-          <div className={"solid-button solid-button-green" + style} onClick={() => {
+          <div className={"solid-button solid-button-green" + style + disabled} onClick={() => {
             this.updateAttribute(NOTETYPE.PICKUP)
           }}>
             {localization(75)}
@@ -60,7 +62,7 @@ export default class NoteType extends React.Component {
         break;
       case NOTETYPE.PICKUP:
         actions = <div className="solid-button-group">
-          <div className={"solid-button solid-button-brown" + style} onClick={() => {
+          <div className={"solid-button solid-button-brown" + style + disabled} onClick={() => {
             this.updateAttribute(NOTETYPE.UPDATE)
           }}>
             {localization(74)}

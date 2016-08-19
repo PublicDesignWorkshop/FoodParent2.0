@@ -65,7 +65,7 @@ export default class NoteRate extends React.Component {
   renderOptionValue(option) {
     let stars = [];
     if (option.value == 0) {
-      stars.push(<FontAwesome key={"star 0"} className='' name='star-o' />);
+      stars.push(<FontAwesome key={"star 0"} className='' name='star' />);
     } else {
       for (let i=0; i<5; i++) {
         if (i >= option.value) {
@@ -92,7 +92,7 @@ export default class NoteRate extends React.Component {
       return (
         <div className="note-rate-wrapper">
           <div className="note-rate-label">
-            <FontAwesome className='' name='star' />{localization(670)}
+            <FontAwesome className='' name='star-half-o' />{localization(670)}
           </div>
           <div className="note-rate-data active">
             <div className="green-medium-single">
@@ -105,7 +105,7 @@ export default class NoteRate extends React.Component {
       return (
         <div className="note-rate-wrapper">
           <div className="note-rate-label">
-            <FontAwesome className='' name='star' />{localization(670)}
+            <FontAwesome className='' name='star-half-o' />{localization(670)}
           </div>
           <div className="note-rate-data">
             <div className="green-medium-single">
