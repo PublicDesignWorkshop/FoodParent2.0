@@ -89,7 +89,7 @@ $select-menu-zindex:               1000 !default;
 $select-menu-max-height:           204px !default;
 
 $select-option-color:              lighten($select-text-color, 10%) !default;
-$select-option-bg:                 $select-input-bg !default;
+$select-option-bg:                 $white !default;
 $select-option-focused-color:      $white !default;
 $select-option-focused-bg:         $brown !default; // pale blue
 $select-option-selected-color:     $select-text-color !default;

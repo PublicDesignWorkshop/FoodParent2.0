@@ -4,8 +4,11 @@
 .note-date-wrapper {
   padding: 4px 8px;
   font-family: $font-main;
-  color: $white;
+  color: $green;
   font-size: $font-size-medium;
+  &.note-comment-brown {
+    color: $brown;
+  }
 
   > .note-date-label {
     font-weight: 700;

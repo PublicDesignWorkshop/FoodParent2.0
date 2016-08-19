@@ -1,22 +1,21 @@
 @import "./../scss/variables.scss";
 @import "./../scss/mixin.scss";
+.note-rate-wrapper{
+  padding: 4px 4px;
+  .note-rate-label {
+    color: $green;
+    font-weight: 700;
+    font-size: $font-size-medium;
+    padding: 4px 0;
 
-.note-rate-label {
-  color: $white;
-  font-weight: 700;
-  font-size: $font-size-medium;
-  padding: 4px 0;
-
-  .fa.fa-star {
-    margin-left: 4px;
-    margin-right: 8px;
+    .fa.fa-star {
+      margin-left: 4px;
+      margin-right: 8px;
+    }
   }
-}
 
-.note-rate-data {
-  padding-left: 18px;
-}
+  .note-rate-data {
+    padding-left: 12px;
+  }
 
-.note-rate-data2 {
-  padding-left: 12px;
 }

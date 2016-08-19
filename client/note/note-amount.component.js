@@ -8,7 +8,6 @@ require('./note-amount.component.scss');
 var FontAwesome = require('react-fontawesome');
 let ServerSetting = require('./../../setting/server.json');
 let MapSetting = require('./../../setting/map.json');
-
 import { localization } from './../utils/localization';
 let NoteStore = require('./../stores/note.store');
 let NoteActions = require('./../actions/note.actions');
@@ -80,9 +79,13 @@ export default class NoteAmount extends React.Component {
     this.setState({selected: selected});
   }
   render () {
+    let style = "";
+    if (this.props.note.type == NOTETYPE.PICKUP) {
+      style = " note-comment-brown";
+    }
     if (this.props.editing) {
       return (
-        <div className="note-amount-wrapper">
+        <div className={"note-amount-wrapper" + style}>
           <div className="note-amount-label">
             <FontAwesome className='' name='shopping-basket' />{localization(998)}
           </div>
@@ -120,7 +123,7 @@ export default class NoteAmount extends React.Component {
           break;
       }
       return (
-        <div className="note-amount-wrapper">
+        <div className={"note-amount-wrapper" + style}>
           <div className="note-amount-label">
             <FontAwesome className='' name='shopping-basket' />{localization(998)}
           </div>

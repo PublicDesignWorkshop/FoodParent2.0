@@ -130,20 +130,28 @@ html, body, #app {
     font-size: $font-size-medium-small;
     font-family: $font-main;
     text-transform: uppercase;
-
-    &.active {
-      border: 2px solid $white;
-    }
-
   }
   .solid-button-green {
     color: $green;
     border: 2px solid $green;
     border-right-width: 0;
-    &:hover {
+    &:hover, &.active {
       color: $white;
       border-color: $green;
       background-color: $green;
+    }
+    &:last-child {
+      border-right-width: 2px;
+    }
+  }
+  .solid-button-brown {
+    color: $brown;
+    border: 2px solid $brown;
+    border-right-width: 0;
+    &:hover, &.active {
+      color: $white;
+      border-color: $brown;
+      background-color: $brown;
     }
     &:last-child {
       border-right-width: 2px;
@@ -153,7 +161,7 @@ html, body, #app {
     color: $red;
     border: 2px solid $red;
     border-right-width: 0;
-    &:hover {
+    &:hover, &.active {
       color: $white;
       border-color: $red;
       background-color: $red;
@@ -164,64 +172,6 @@ html, body, #app {
   }
 }
 
-.static-button-group {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-
-  padding: 8px 8px;
-
-  &.same-border-color-padding {
-    padding: 8px 6px;
-  }
-
-  &.no-left-right-padding {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  &.double-left-right-padding {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .static-button {
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
-
-    -webkit-flex-grow: 1;
-            flex-grow: 1;
-    padding: 4px;
-    text-align: center;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: $font-size-medium-small;
-    font-family: $font-main;
-    text-transform: uppercase;
-  }
-  .static-button-green {
-    background-color: $light;
-    color: $green;
-    border: 2px solid $green;
-    border-right-width: 0;
-  }
-  .static-button-red {
-    background-color: $red;
-    color: $white;
-    border-right-width: 0;
-  }
-  .static-button-brown {
-    background-color: $light;
-    color: $brown;
-    border: 2px solid $brown;
-    border-right-width: 0;
-  }
-}
-
 .danger-zone {
   font-size: $font-size-small;
   font-family: $font-main;
@@ -229,10 +179,6 @@ html, body, #app {
   font-weight: 700;
   color: $red;
   text-align: center;
-
-  &.danger-with-background {
-    color: $white;
-  }
 }
 
 .error-text {
@@ -500,9 +446,10 @@ html, body, #app {
     }
 
     > .Select-control {
-      border: 2px solid $white;
+      background: $white;
+      border-color: transparent;
       &:hover {
-        border-color: $white;
+        border-color: transparent;
       }
       .Select-multi-value-wrapper {
         width: 100%;
@@ -523,7 +470,7 @@ html, body, #app {
           }
           .Select-value-label {
             padding: 4px 6px;
-            .note-rate-name {
+            .tree-flag-name {
               vertical-align: bottom;
               font-size: $font-size-medium;
               font-weight: 400;
@@ -537,17 +484,13 @@ html, body, #app {
 
     &.is-disabled {
       .Select-control {
-        border: 2px solid $green;
-        background-color: $green !important;
+        background-color: $light;
         &:hover {
-          border-color: $green;
+          border-color: transparent;
         }
       }
       .Select-value {
-        background-color: $green !important;
-        .note-rate-name {
-          color: $white !important;
-        }
+        background-color: $light !important;
       }
       .Select-arrow-zone {
         display: none !important;

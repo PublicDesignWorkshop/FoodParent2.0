@@ -2,22 +2,23 @@
 @import "./../scss/mixin.scss";
 
 .note-info-wrapper {
+  margin: 4px 0;
   padding: 4px 8px;
   font-family: $font-main;
   font-size: $font-size-medium;
 
-  &.note-info-light {
-    background-color: $grey;
-    color: $white;
+  &.note-info-grey {
+    border: 2px solid $grey;
+    color: $grey;
   }
 
   &.note-info-green {
-    background-color: $green;
-    color: $white;
+    border: 2px solid $green;
+    color: $green;
   }
 
   &.note-info-brown {
-    background-color: $brown;
-    color: $white;
+    border: 2px solid $brown;
+    color: $brown;
   }
 }

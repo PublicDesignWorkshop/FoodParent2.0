@@ -34,6 +34,9 @@ export class NoteModel {
       case NOTETYPE.PICKUP:
         type = 3;
         break;
+      default:
+        type = 2;
+        break;
     }
     let proper;
     switch(this.proper) {
@@ -45,6 +48,9 @@ export class NoteModel {
         break;
       case PICKUPTIME.LATE:
         proper = 3;
+        break;
+      default:
+        proper = 0;
         break;
     }
     return {

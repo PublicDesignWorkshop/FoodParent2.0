@@ -48,10 +48,10 @@ export default class NoteType extends React.Component {
     switch(this.props.note.type) {
       case NOTETYPE.UPDATE:
         actions = <div className="solid-button-group">
-          <div className={"solid-button active" + style}>
+          <div className={"solid-button solid-button-green active" + style}>
             {localization(74)}
           </div>
-          <div className={"solid-button" + style} onClick={() => {
+          <div className={"solid-button solid-button-green" + style} onClick={() => {
             this.updateAttribute(NOTETYPE.PICKUP)
           }}>
             {localization(75)}
@@ -60,12 +60,12 @@ export default class NoteType extends React.Component {
         break;
       case NOTETYPE.PICKUP:
         actions = <div className="solid-button-group">
-          <div className={"solid-button" + style} onClick={() => {
+          <div className={"solid-button solid-button-brown" + style} onClick={() => {
             this.updateAttribute(NOTETYPE.UPDATE)
           }}>
             {localization(74)}
           </div>
-          <div className={"solid-button active" + style}>
+          <div className={"solid-button solid-button-brown active" + style}>
             {localization(75)}
           </div>
         </div>;

@@ -90,7 +90,7 @@ export default class NoteRate extends React.Component {
   render () {
     if (this.props.editing) {
       return (
-        <div className="tree-filter-wrapper">
+        <div className="note-rate-wrapper">
           <div className="note-rate-label">
             <FontAwesome className='' name='star' />{localization(670)}
           </div>
@@ -103,11 +103,11 @@ export default class NoteRate extends React.Component {
       );
     } else {
       return (
-        <div className="tree-filter-wrapper disabled">
+        <div className="note-rate-wrapper">
           <div className="note-rate-label">
             <FontAwesome className='' name='star' />{localization(670)}
           </div>
-          <div className="note-rate-data2">
+          <div className="note-rate-data">
             <div className="green-medium-single">
               <Select name="rate-select" disabled multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(671)} backspaceToRemoveMessage="" />
             </div>

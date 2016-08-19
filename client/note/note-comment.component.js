@@ -12,6 +12,7 @@ let ServerSetting = require('./../../setting/server.json');
 let MapSetting = require('./../../setting/map.json');
 
 import { localization } from './../utils/localization';
+import { NOTETYPE, AMOUNTTYPE, PICKUPTIME } from './../utils/enum';
 let NoteStore = require('./../stores/note.store');
 let NoteActions = require('./../actions/note.actions');
 
@@ -58,9 +59,13 @@ export default class NoteComment extends React.Component {
     }
   }
   render () {
+    let style = "";
+    if (this.props.note.type == NOTETYPE.PICKUP) {
+      style = " note-comment-brown";
+    }
     if (this.props.editing) {
       return (
-        <div className="note-comment-wrapper">
+        <div className={"note-comment-wrapper" + style}>
           <div className="note-comment-label">
             <FontAwesome className='' name='comment-o' />{localization(968)}
           </div>
@@ -83,7 +88,7 @@ export default class NoteComment extends React.Component {
       );
     } else {
       return (
-        <div className="note-comment-wrapper">
+        <div className={"note-comment-wrapper" + style}>
           <div className="note-comment-label">
             <FontAwesome className='' name='comment-o' />{localization(968)}
           </div>

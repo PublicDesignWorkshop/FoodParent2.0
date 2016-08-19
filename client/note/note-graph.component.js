@@ -33,7 +33,7 @@ export default class NoteGraph extends React.Component {
   }
   updateCanvasSize() {
     let wrapper = ReactDOM.findDOMNode(this.refs['wrapper']);
-    this.setState({width: wrapper.clientWidth, height: 100});
+    this.setState({width: wrapper.clientWidth, height: 75});
   }
   render () {
     let canvasStyle = {width: this.state.width, height: this.state.height};

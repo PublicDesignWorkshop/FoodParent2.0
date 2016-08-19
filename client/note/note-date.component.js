@@ -9,7 +9,7 @@ require('./note-date.component.scss');
 
 var FontAwesome = require('react-fontawesome');
 let ServerSetting = require('./../../setting/server.json');
-
+import { NOTETYPE, AMOUNTTYPE, PICKUPTIME } from './../utils/enum';
 import { localization } from './../utils/localization';
 let NoteStore = require('./../stores/note.store');
 let NoteActions = require('./../actions/note.actions');
@@ -39,9 +39,13 @@ export default class NoteDate extends React.Component {
     }
   }
   render () {
+    let style = "";
+    if (this.props.note.type == NOTETYPE.PICKUP) {
+      style = " note-comment-brown";
+    }
     if (this.props.editing) {
       return (
-        <div className="note-date-wrapper">
+        <div className={"note-date-wrapper" + style}>
           <div className="note-date-label">
             <FontAwesome className='' name='calendar-o' />{localization(935)}
           </div>
@@ -56,7 +60,7 @@ export default class NoteDate extends React.Component {
       );
     } else {
       return (
-        <div className="note-date-wrapper">
+        <div className={"note-date-wrapper" + style}>
           <div className="note-date-label">
             <FontAwesome className='' name='calendar-o' />{localization(935)}
           </div>
