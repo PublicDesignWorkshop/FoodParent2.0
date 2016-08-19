@@ -103,7 +103,7 @@ export default class TreeRate extends React.Component {
         <div className="filter-label">
           <FontAwesome className='' name='star' />{localization(670)}
         </div>
-        <div className="brown-medium-multi">
+        <div className="filter-data brown-medium-multi">
           <Select name="food-select" multi={true} clearable={true} searchable={true} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(671)} backspaceToRemoveMessage="" />
         </div>
       </div>

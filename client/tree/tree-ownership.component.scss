@@ -26,5 +26,8 @@
 
   > .tree-ownership-data {
     margin: 0 0 0 8px;
+    &.active {
+      margin: 0 0 0 20px;
+    }
   }
 }

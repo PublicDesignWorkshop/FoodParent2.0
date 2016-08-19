@@ -59,7 +59,7 @@ export default class TreeFilterPanel extends React.Component {
     // Body
     body = <TreeFilter />;
     return (
-      <div className={"tree-add-panel-wrapper" + open}>
+      <div className={"tree-filter-panel-wrapper" + open}>
         <div className="left">
           <TreeControl />
         </div>

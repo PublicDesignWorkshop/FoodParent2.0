@@ -78,7 +78,7 @@ export default class TreeAdopt extends React.Component {
         <div className="filter-label">
           <FontAwesome className='' name='chain' />{localization(632)}
         </div>
-        <div className="brown-medium-single">
+        <div className="filter-data brown-medium-single">
           <Select name="food-select" multi={false} clearable={true} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(627)} backspaceToRemoveMessage="" />
         </div>
       </div>

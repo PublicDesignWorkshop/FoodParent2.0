@@ -343,6 +343,7 @@ html, body, #app {
     > .Select-control, .Select-input {
       height: 32px;
       .Select-placeholder {
+        line-height: 22px;
         padding: 4px 6px;
         font-family: $font-main;
         font-size: $font-size-medium;

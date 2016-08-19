@@ -94,7 +94,7 @@ export default class NoteRate extends React.Component {
           <div className="note-rate-label">
             <FontAwesome className='' name='star' />{localization(670)}
           </div>
-          <div className="note-rate-data">
+          <div className="note-rate-data active">
             <div className="green-medium-single">
               <Select name="rate-select" multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(671)} backspaceToRemoveMessage="" />
             </div>

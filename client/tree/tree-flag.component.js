@@ -68,8 +68,8 @@ export default class TreeFlag extends React.Component {
           <div className="tree-flag-label">
             <FontAwesome className='' name='tag' />{localization(969)}
           </div>
-          <div className="tree-flag-data brown-medium-multi">
-            <Select name="flag-select" multi={true} backspaceToRemoveMessage="" clearable={true} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(970)} />
+          <div className="tree-flag-data brown-medium-single active">
+            <Select name="flag-select" multi={true} clearable={true} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(970)} backspaceToRemoveMessage="" />
           </div>
         </div>
       );
@@ -79,8 +79,8 @@ export default class TreeFlag extends React.Component {
           <div className="tree-flag-label">
             <FontAwesome className='' name='tag' />{localization(969)}
           </div>
-          <div className="tree-flag-data brown-medium-multi">
-            <Select name="flag-select" multi={true} backspaceToRemoveMessage="" clearable={true} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(76)} disabled />
+          <div className="tree-flag-data brown-medium-single">
+            <Select name="flag-select" multi={true} clearable={true} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(76)} backspaceToRemoveMessage="" disabled />
           </div>
         </div>
       );

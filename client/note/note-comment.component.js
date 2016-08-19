@@ -67,10 +67,10 @@ export default class NoteComment extends React.Component {
       return (
         <div className={"note-comment-wrapper" + style}>
           <div className="note-comment-label">
-            <FontAwesome className='' name='comment-o' />{localization(968)}
+            <FontAwesome className='' name='comment-o' />{localization(999)}
           </div>
           <div className="note-comment-data">
-            <Textarea type="text" className="note-comment-input" placeholder={localization(973)}
+            <Textarea type="text" className="note-comment-input" placeholder={localization(601)}
               value={this.state.comment}
               onChange={(event: any)=> {
                 this.setState({comment: event.target.value});
@@ -90,7 +90,7 @@ export default class NoteComment extends React.Component {
       return (
         <div className={"note-comment-wrapper" + style}>
           <div className="note-comment-label">
-            <FontAwesome className='' name='comment-o' />{localization(968)}
+            <FontAwesome className='' name='comment-o' />{localization(999)}
           </div>
           <div className="note-comment-data">
             <div className="note-comment-text">
