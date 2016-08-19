@@ -94,7 +94,7 @@ export default class NoteImage extends React.Component {
       let images = this.props.note.images.map(function(image, index) {
         return {
           // imageId: "gallery-image-" + image.replace(".jpeg", "").split('_').join('-'),
-          original: ServerSetting.uBase + ServerSetting.uContentImage + image.replace("_thumb", "_dest"),
+          original: ServerSetting.uBase + ServerSetting.uContentImage + image,
           thumbnail: ServerSetting.uBase + ServerSetting.uContentImage + image,
           originalSize: [this.state.width, this.state.height],
           thumbnailSize: [Math.floor(this.state.width * 0.2), Math.floor(this.state.height * 0.25)],
