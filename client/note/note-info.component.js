@@ -27,7 +27,11 @@ export default class NoteInfo extends React.Component {
     super(props, context);
   }
   componentWillMount() {
-    this.setState({editing: false});
+    let editing = false;
+    if (this.props.editing) {
+      editing = this.props.editing;
+    }
+    this.setState({editing: editing, remove: false});
   }
   componentDidMount () {
   }
@@ -39,101 +43,143 @@ export default class NoteInfo extends React.Component {
   }
   render () {
     let style = "";
-    switch(this.props.note.type) {
-      case NOTETYPE.CHANGE:
-        style = " note-info-light";
-        break;
-      case NOTETYPE.UPDATE:
-        style = " note-info-green";
-        break;
-      case NOTETYPE.PICKUP:
-        style = " note-info-brown";
-      break;
-    }
-
     let actions;
+    let popup;
     let buttonStyle;
-    switch(this.props.note.type) {
-      case NOTETYPE.UPDATE:
-        buttonStyle = " solid-button-green";
+    if (this.props.note) {
+      switch(this.props.note.type) {
+        case NOTETYPE.CHANGE:
+          style = " note-info-light";
+          break;
+        case NOTETYPE.UPDATE:
+          style = " note-info-green";
+          break;
+        case NOTETYPE.PICKUP:
+          style = " note-info-brown";
         break;
-      case NOTETYPE.PICKUP:
-        buttonStyle = " solid-button-brown";
-        break;
+      }
+      if (this.props.note.id == 0) {
+        style += " scrollable";
+      }
+      switch(this.props.note.type) {
+        case NOTETYPE.UPDATE:
+          buttonStyle = " solid-button-green";
+          break;
+        case NOTETYPE.PICKUP:
+          buttonStyle = " solid-button-brown";
+          break;
+      }
     }
-    if (this.state.editing) {
-      actions = <div>
-        <div className="solid-button-group same-border-color-padding">
-          <div className={"solid-button" + buttonStyle} onClick={() => {
-            this.setState({editing: false});
-            NoteActions.updateNote(NoteStore.getState().temp);
-          }}>
-            {localization(930) /* SAVE */}
+    if (this.props.note) {
+      if (this.state.editing && this.props.note.id) {
+        actions = <div>
+          <div className="solid-button-group same-border-color-padding">
+            <div className={"solid-button" + buttonStyle} onClick={() => {
+              this.setState({editing: false, remove: false});
+              NoteActions.updateNote(NoteStore.getState().temp);
+            }}>
+              {localization(930) /* SAVE */}
+            </div>
+            <div className={"solid-button" + buttonStyle} onClick={() => {
+              this.setState({editing: false, remove: false});
+              NoteActions.setSelected(this.props.note.id);
+            }}>
+              {localization(933) /* CANCEL */}
+            </div>
           </div>
-          <div className={"solid-button" + buttonStyle} onClick={() => {
-            this.setState({editing: false});
-            NoteActions.setSelected(this.props.note.id);
-          }}>
-            {localization(933) /* CANCEL */}
+          <div className="danger-zone">{localization(927) /* DELETE THIS NOTE */}</div>
+          <div className="solid-button-group">
+            <div className="solid-button solid-button-red" onClick={() => {
+              this.setState({remove: true});
+              // this.context.router.push({pathname: window.location.pathname, hash: "#delete"});
+            }}>
+              {localization(931) /* DELETE THIS TREE */}
+            </div>
           </div>
-        </div>
-        <div className="danger-zone">{localization(927) /* DELETE THIS TREE */}</div>
-        <div className="solid-button-group">
-          <div className="solid-button solid-button-red" onClick={() => {
-            this.context.router.push({pathname: window.location.pathname, hash: "#delete"});
-          }}>
-            {localization(931) /* DELETE THIS TREE */}
-          </div>
-        </div>
-      </div>;
-    } else {
-      if (this.props.note.isEditable()) {
-        actions = <div className="solid-button-group same-border-color-padding">
-          <div className={"solid-button" + buttonStyle} onClick={() => {
-            this.setState({editing: true});
-          }}>
-            {localization(928) /* EDIT */}
-          </div>
-          <div className={"solid-button" + buttonStyle} onClick={() => {
-            NoteActions.setSelected(null);
-          }}>
-            {localization(72) /* CLOSE */}
+        </div>;
+      } else if (this.state.editing && this.props.note.id == 0) { // Create a new note.
+        actions = <div>
+          <div className="solid-button-group same-border-color-padding">
+            <div className={"solid-button" + buttonStyle} onClick={() => {
+              this.setState({editing: false, remove: false});
+              NoteActions.createNote.defer(NoteStore.getState().temp);
+            }}>
+              {localization(930) /* SAVE */}
+            </div>
           </div>
         </div>;
       } else {
-        actions = <div className="solid-button-group same-border-color-padding">
-          <div className={"solid-button" + buttonStyle} onClick={() => {
-            NoteActions.setSelected(null);
-          }}>
-            {localization(72) /* CLOSE */}
-          </div>
-        </div>;
+        if (this.props.note.isEditable()) {
+          actions = <div className="solid-button-group same-border-color-padding">
+            <div className={"solid-button" + buttonStyle} onClick={() => {
+              this.setState({editing: true});
+            }}>
+              {localization(928) /* EDIT */}
+            </div>
+            <div className={"solid-button" + buttonStyle} onClick={() => {
+              NoteActions.setSelected(null);
+            }}>
+              {localization(72) /* CLOSE */}
+            </div>
+          </div>;
+        } else {
+          actions = <div className="solid-button-group same-border-color-padding">
+            <div className={"solid-button" + buttonStyle} onClick={() => {
+              NoteActions.setSelected(null);
+            }}>
+              {localization(72) /* CLOSE */}
+            </div>
+          </div>;
+        }
       }
     }
-
-    if (this.props.note.type == NOTETYPE.UPDATE) {
-      return (
-        <div className={"note-info-wrapper" + style}>
-          <NoteType note={this.props.note} editing={this.state.editing} />
-          <NoteImage note={this.props.note} editing={this.state.editing} />
-          <NoteRate note={this.props.note} editing={this.state.editing} />
-          <NoteComment note={this.props.note} editing={this.state.editing} />
-          <NoteDate note={this.props.note} editing={this.state.editing} />
-          {actions}
+    if (this.state.remove) {
+      popup = <div className="popup-wrapper popup-red open">
+        <div className="popup-message">
+          <span dangerouslySetInnerHTML={{__html: localization(606)}} />
+          <span className="popup-button" onClick={()=> {
+            NoteActions.deleteNote(NoteStore.getState().temp);
+          }}>
+            {localization(931)}
+          </span>
+          <span className="popup-button" onClick={()=> {
+            this.setState({remove: false});
+          }}>
+            {localization(933)}
+          </span>
         </div>
-      );
-    } else {
-      return (
-        <div className={"note-info-wrapper" + style}>
-          <NoteType note={this.props.note} editing={this.state.editing} />
-          <NoteImage note={this.props.note} editing={this.state.editing} />
-          <NoteAmount note={this.props.note} editing={this.state.editing} />
-          <NoteProper note={this.props.note} editing={this.state.editing} />
-          <NoteComment note={this.props.note} editing={this.state.editing} />
-          <NoteDate note={this.props.note} editing={this.state.editing} />
-          {actions}
-        </div>
-      );
+      </div>;
     }
+    if (this.props.note) {
+      if (this.props.note.type == NOTETYPE.UPDATE) {
+        return (
+          <div className={"note-info-wrapper" + style}>
+            <NoteType note={this.props.note} editing={this.state.editing} />
+            <NoteImage note={this.props.note} editing={this.state.editing} />
+            <NoteRate note={this.props.note} editing={this.state.editing} />
+            <NoteComment note={this.props.note} editing={this.state.editing} />
+            <NoteDate note={this.props.note} editing={this.state.editing} />
+            {actions}
+            {popup}
+          </div>
+        );
+      } else {
+        return (
+          <div className={"note-info-wrapper" + style}>
+            <NoteType note={this.props.note} editing={this.state.editing} />
+            <NoteImage note={this.props.note} editing={this.state.editing} />
+            <NoteAmount note={this.props.note} editing={this.state.editing} />
+            <NoteProper note={this.props.note} editing={this.state.editing} />
+            <NoteComment note={this.props.note} editing={this.state.editing} />
+            <NoteDate note={this.props.note} editing={this.state.editing} />
+            {actions}
+            {popup}
+          </div>
+        );
+      }
+    } else {
+      return (<div></div>);
+    }
+
   }
 }

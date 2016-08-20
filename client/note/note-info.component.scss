@@ -7,6 +7,11 @@
   font-family: $font-main;
   font-size: $font-size-medium;
 
+  &.scrollable {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
   &.note-info-grey {
     border: 2px solid $grey;
     color: $grey;

@@ -29,13 +29,15 @@ export default class NoteList extends React.Component {
   }
   render () {
     let notes = [];
-    this.props.notes.forEach((note) => {
-      if (this.props.note && note.id == this.props.note.id) {
-        notes.push(<NoteInfo key={"note" + note.id} note={this.props.note} />);
-      } else {
-        notes.push(<NoteLine key={"note" + note.id} note={note} />);
-      }
-    });
+    if (this.props.notes && this.props.notes.length > 0) {
+      this.props.notes.forEach((note) => {
+        if (this.props.note && note.id == this.props.note.id) {
+          notes.push(<NoteInfo key={"note" + note.id} note={this.props.note} />);
+        } else {
+          notes.push(<NoteLine key={"note" + note.id} note={note} />);
+        }
+      });
+    }
     return (
       <div className="note-list-wrapper">
         {notes}

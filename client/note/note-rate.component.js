@@ -65,7 +65,7 @@ export default class NoteRate extends React.Component {
   renderOptionValue(option) {
     let stars = [];
     if (option.value == 0) {
-      stars.push(<FontAwesome key={"star 0"} className='' name='star' />);
+      stars.push(<FontAwesome key={"star 0"} className='' name='star-o' />);
     } else {
       for (let i=0; i<5; i++) {
         if (i >= option.value) {

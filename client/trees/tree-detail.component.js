@@ -62,7 +62,7 @@ export default class TreeDetail extends React.Component {
     if (this.state.remove) {
       action = <div className="popup-wrapper popup-red open">
         <div className="popup-message">
-          <span dangerouslySetInnerHTML={{__html: localization(606)}} />
+          <span dangerouslySetInnerHTML={{__html: localization(636)}} />
           <span className="popup-button" onClick={()=> {
             TreeActions.deleteTree(TreeStore.getState().temp);
           }}>

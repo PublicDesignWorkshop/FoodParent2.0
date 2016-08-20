@@ -151,8 +151,8 @@ export default class NoteImage extends React.Component {
       imageZoom = <ImageZoom image={ServerSetting.uBase + ServerSetting.uContentImage + this.state.zoomImage.replace("_thumb", "_dest")} onZoomClose={this.handleZoomClose} />;
     }
     let imageRemove;
-    if (this.props.editing) {
-      imageRemove = <div className="solid-button-group">
+    if (this.props.editing && this.props.note.images && this.props.note.images.length > 0) {
+      imageRemove = <div className="solid-button-group no-left-right-padding">
         <div className="solid-button solid-button-red" onClick={() => {
           this.props.note.removeImage(this.props.note.images[this._imageGallery.getCurrentIndex()]);
           if (this._imageGallery) {

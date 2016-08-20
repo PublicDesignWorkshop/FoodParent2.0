@@ -8,8 +8,8 @@
   display: -webkit-flex;          /* NEW - Chrome */
   display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
 
-  position: absolute;
-  bottom: 0;
+  position: fixed;
+  bottom: -2px;
   left: 0;
   width: 100%;
   transition: 0.15s;
@@ -23,6 +23,7 @@
   font-family: $font-narrow;
 
   height: 0;
+  z-index: 9995;
 
   &.open {
     height: 56px;

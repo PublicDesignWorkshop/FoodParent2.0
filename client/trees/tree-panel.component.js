@@ -15,6 +15,7 @@ let NoteStore = require('./../stores/note.store');
 import TreeControl from './tree-control.component';
 import TreeInfo from './../tree/tree-info.component';
 import TreeHistory from './../tree/tree-history.component';
+import NoteAdd from './../note/note-add.component';
 
 export default class TreePanel extends React.Component {
   constructor() {
@@ -140,6 +141,19 @@ export default class TreePanel extends React.Component {
           Post
         </span>
       </div>;
+      // Body
+      body = <AltContainer stores={
+        {
+          tree: function(props) {
+            return {
+              store: TreeStore,
+              value: TreeStore.getState().temp
+            }
+          }
+        }
+      }>
+        <NoteAdd />
+      </AltContainer>;
     }
     if (this.props.mode == TREEDETAILMODE.PARENT) {
       // Parent
