@@ -95,8 +95,8 @@ export default class TreeControl extends React.Component {
         <div className="control-button" onClick={this.handleFilter} data-for="tooltip-tree-control" data-tip={localization(84)}>
           <FontAwesome name='sliders'/>
         </div>
-        {add}
         <ReactTooltip id="tooltip-tree-control" effect="solid" place="left" />
+        {add}
       </div>
     );
   }

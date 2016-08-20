@@ -34,7 +34,6 @@ export default class NoteImage extends React.Component {
   }
   componentDidMount () {
     this.updatePros(this.props);
-    this.handlePlay();
   }
   componentWillReceiveProps(nextProps) {
     this.updatePros(nextProps);
@@ -44,7 +43,11 @@ export default class NoteImage extends React.Component {
     if (rWrapper) {
       this.setState({width: rWrapper.clientWidth, height: Math.floor(rWrapper.clientWidth * 9 / 16)});
     }
-
+    if (props.editing) {
+      this.handlePause();
+    } else {
+      this.handlePlay();
+    }
   }
   handleImageLoad(event) {
     // console.log('Image loaded ', event.target);
@@ -55,8 +58,9 @@ export default class NoteImage extends React.Component {
       this._imageGallery.play();
   }
   handlePause() {
-    if (this._imageGallery)
+    if (this._imageGallery) {
       this._imageGallery.pause();
+    }
   }
   handleFullScreen() {
     if (this._imageGallery)
@@ -84,7 +88,6 @@ export default class NoteImage extends React.Component {
 
   }
   render () {
-    console.log(this.state.zoomImage);
     let style = "";
     if (this.props.note.type == NOTETYPE.PICKUP) {
       style = " note-image-brown";
@@ -105,7 +108,9 @@ export default class NoteImage extends React.Component {
         //   </div>
         // );
       }.bind(this));
-      gallery = <ImageGallery ref={i => this._imageGallery = i} items={images} slideInterval={ServerSetting.iGallerySlideInterval} onImageLoad={this.handleImageLoad} onDoubleClick={this.handleDoubleClick} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} />
+      gallery = <div data-for="tooltip-note-image" data-tip={localization(68)}>
+        <ImageGallery ref={i => this._imageGallery = i} items={images} slideInterval={ServerSetting.iGallerySlideInterval} onImageLoad={this.handleImageLoad} onDoubleClick={this.handleDoubleClick} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} />
+      </div>
 
       // gallery = this.props.note.images.map(function(image, index) {
       //   return (
@@ -157,6 +162,7 @@ export default class NoteImage extends React.Component {
           {gallery}
         </div>
         {imageZoom}
+        <ReactTooltip id="tooltip-note-image" effect="solid" place="top" />
       </div>
     );
   }

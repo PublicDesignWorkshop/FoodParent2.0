@@ -2,7 +2,10 @@
 @import "./../scss/mixin.scss";
 
 .tree-food-wrapper {
-  flex: 0 0 auto;
+  height: 48px;
+  -webkit-flex: 0 0 auto; /* Safari 6.1+ */
+      -ms-flex: 0 0 auto; /* IE 10 */
+          flex: 0 0 auto;
   // display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
   // display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
   // display: -ms-flexbox;           /* TWEENER - IE 10 */
