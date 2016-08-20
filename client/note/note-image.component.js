@@ -145,12 +145,24 @@ export default class NoteImage extends React.Component {
           }.bind(this));
         }
       }} />
-    } else {
-
     }
     let imageZoom;
     if (this.state.zoomImage && this.state.zoomImage != "") {
       imageZoom = <ImageZoom image={ServerSetting.uBase + ServerSetting.uContentImage + this.state.zoomImage.replace("_thumb", "_dest")} onZoomClose={this.handleZoomClose} />;
+    }
+    let imageRemove;
+    if (this.props.editing) {
+      imageRemove = <div className="solid-button-group">
+        <div className="solid-button solid-button-red" onClick={() => {
+          this.props.note.removeImage(this.props.note.images[this._imageGallery.getCurrentIndex()]);
+          if (this._imageGallery) {
+            this._imageGallery.slideToIndex(Math.max(0, this._imageGallery.getCurrentIndex()-1));
+          }
+          NoteActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
+        }}>
+          {localization(67) /* DELETE SELECTED IMAGE */}
+        </div>
+      </div>
     }
     return (
       <div ref="wrapper" className={"note-image-wrapper" + style}>
@@ -160,6 +172,7 @@ export default class NoteImage extends React.Component {
         <div className="note-image-data">
           {imageUpload}
           {gallery}
+          {imageRemove}
         </div>
         {imageZoom}
         <ReactTooltip id="tooltip-note-image" effect="solid" place="top" />
