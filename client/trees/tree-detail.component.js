@@ -6,6 +6,7 @@ require('./tree-detail.component.scss');
 let MapStore = require('./../stores/map.store');
 let TreeStore = require('./../stores/tree.store');
 let TreeActions = require('./../actions/tree.actions');
+let NoteActions = require('./../actions/note.actions');
 import { TREEDETAILMODE } from './../utils/enum';
 import { localization } from './../utils/localization';
 
@@ -36,6 +37,7 @@ export default class TreeDetail extends React.Component {
     let mode;
     let remove = false;
     TreeActions.fetchTree.defer(parseInt(props.params.treeId));
+    NoteActions.fetchRecentNotesFromTreeId.defer(parseInt(props.params.treeId));
     // Instead of changing url, change # hashtag to remove extra rendering process.
     switch(props.location.hash.replace('#', '')) {
       case "":

@@ -2,7 +2,7 @@
 @import "./../scss/mixin.scss";
 
 .tree-recent-post-wrapper {
-  padding: 4px 8px;
+  padding: 0 16px;
   font-family: $font-main;
   color: $brown;
   font-size: $font-size-medium;
@@ -27,23 +27,9 @@
     margin: 4px 0;
 
     > .tree-recent-post-text {
-      &:first-child {
-        margin: 0 0 0 20px;
-      }
-    }
-
-    > .tree-recent-post-input {
-      border-radius: 0;
-      -webkit-flex-grow: 1;           /* NEW - Chrome */
-              flex-grow: 1;           /* NEW, Spec - Opera 12.1, Firefox 20+ */
-      padding: 4px 6px;
-      width: 0;
-      font-size: $font-size-medium;
-      &:focus {
-        outline: 2px solid $brown;
-      }
-      &:first-child {
-        margin: 0 0 0 20px;
+      margin: 0 0 0 12px;
+      > .tree-recent-post-text-sub {
+        margin: 0 0 0 8px;
       }
     }
   }

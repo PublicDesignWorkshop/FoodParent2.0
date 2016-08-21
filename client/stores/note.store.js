@@ -50,7 +50,9 @@ class NoteStore {
   handleFetchedNotes(props) {
     this.notes = [];
     props.forEach((props) => {
-      this.notes.push(new NoteModel(props));
+      if (props != false) {
+        this.notes.push(new NoteModel(props));
+      }
     });
     this.code = 200;
   }

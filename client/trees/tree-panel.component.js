@@ -135,7 +135,18 @@ export default class TreePanel extends React.Component {
         }>
           <TreeInfo />
         </AltContainer>
-        <TreeRecentPost />
+        <AltContainer stores={
+          {
+            notes: function(props) {
+              return {
+                store: NoteStore,
+                value: NoteStore.getState().notes
+              }
+            }
+          }
+        }>
+          <TreeRecentPost />
+        </AltContainer>
       </div>;
     }
     if (this.props.mode == TREEDETAILMODE.POST) {

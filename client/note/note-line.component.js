@@ -33,6 +33,7 @@ export default class NoteLine extends React.Component {
   }
   selectNote() {
     NoteActions.setSelected(this.props.note.id);
+    this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + TreeStore.getState().selected, hash: "#history"});
   }
   render () {
     let style = "";
@@ -40,59 +41,65 @@ export default class NoteLine extends React.Component {
     let comment;
     let amount;
     let proper;
-    switch(this.props.note.type) {
-      case NOTETYPE.CHANGE:
-        style = " note-line-light";
-        break;
-      case NOTETYPE.UPDATE:
-        style = " note-line-green";
-        if (this.props.note.rate == 0) {
-          stars.push(<FontAwesome key={"star 0"} className='' name='star-o' />);
-        } else {
-          for (let i=0; i<5; i++) {
-            if (i < this.props.note.rate) {
-              stars.push(<FontAwesome key={"star" + i} className='' name='star' />);
+    if (this.props.note) {
+      switch(this.props.note.type) {
+        case NOTETYPE.CHANGE:
+          style = " note-line-light";
+          break;
+        case NOTETYPE.UPDATE:
+          style = " note-line-green";
+          if (this.props.note.rate == 0) {
+            stars.push(<FontAwesome key={"star 0"} className='' name='star-o' />);
+          } else {
+            for (let i=0; i<5; i++) {
+              if (i < this.props.note.rate) {
+                stars.push(<FontAwesome key={"star" + i} className='' name='star' />);
+              }
             }
           }
-        }
-        stars = <span className="tag tag-green">{stars}</span>;
-        comment = this.props.note.comment.trim();
+          stars = <span className="tag tag-green">{stars}</span>;
+          comment = this.props.note.comment.trim();
+          break;
+        case NOTETYPE.PICKUP:
+          style = " note-line-brown";
+          comment = this.props.note.comment.trim();
+          switch(this.props.note.amountType) {
+            case AMOUNTTYPE.LBS:
+              amount = "(" + this.props.note.amount.toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
+              break;
+            case AMOUNTTYPE.KG:
+              amount = "(" + (this.props.note.amount * ServerSetting.fKGToG * ServerSetting.fGToLBS).toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
+              break;
+            case AMOUNTTYPE.G:
+              amount = "(" + (this.props.note.amount * ServerSetting.fGToLBS).toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
+              break;
+          }
+          switch(this.props.note.proper) {
+            case PICKUPTIME.EARLY:
+              proper = <span className="tag tag-brown">{localization(988)}</span>;
+              break;
+            case PICKUPTIME.PROPER:
+              proper = <span className="tag tag-brown">{localization(989)}</span>;
+              break;
+            case PICKUPTIME.LATE:
+              proper = <span className="tag tag-brown">{localization(990)}</span>;
+              break;
+          }
         break;
-      case NOTETYPE.PICKUP:
-        style = " note-line-brown";
-        comment = this.props.note.comment.trim();
-        switch(this.props.note.amountType) {
-          case AMOUNTTYPE.LBS:
-            amount = "(" + this.props.note.amount.toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
-            break;
-          case AMOUNTTYPE.KG:
-            amount = "(" + (this.props.note.amount * ServerSetting.fKGToG * ServerSetting.fGToLBS).toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
-            break;
-          case AMOUNTTYPE.G:
-            amount = "(" + (this.props.note.amount * ServerSetting.fGToLBS).toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
-            break;
-        }
-        switch(this.props.note.proper) {
-          case PICKUPTIME.EARLY:
-            proper = <span className="tag tag-brown">{localization(988)}</span>;
-            break;
-          case PICKUPTIME.PROPER:
-            proper = <span className="tag tag-brown">{localization(989)}</span>;
-            break;
-          case PICKUPTIME.LATE:
-            proper = <span className="tag tag-brown">{localization(990)}</span>;
-            break;
-        }
-      break;
+      }
+      return (
+        <div className={"note-line-wrapper" + style} onClick={this.selectNote}>
+          {this.props.note.getFormattedDate()}&nbsp;-&nbsp;
+          {comment}&nbsp;
+          {stars}{amount}&nbsp;
+          {proper}
+        </div>
+      );
+    } else {
+      return (<div></div>);
     }
-
-    return (
-      <div className={"note-line-wrapper" + style} onClick={this.selectNote}>
-        {this.props.note.getFormattedDate()}&nbsp;-&nbsp;
-        {comment}&nbsp;
-        {stars}{amount}&nbsp;
-        {proper}
-      </div>
-    );
   }
+}
+NoteLine.contextTypes = {
+    router: React.PropTypes.object.isRequired
 }

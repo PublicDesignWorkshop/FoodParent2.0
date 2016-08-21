@@ -14,12 +14,13 @@ import { reverseGeocoding } from './../utils/geocoding';
 let TreeStore = require('./../stores/tree.store');
 let TreeActions = require('./../actions/tree.actions');
 import { isLatLng } from './../utils/validation';
+import NoteLine from './../note/note-line.component';
+import { NOTETYPE } from './../utils/enum';
 
 
 export default class TreeRecentPost extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.updateAttribute = this.updateAttribute.bind(this);
   }
   componentWillMount() {
     this.updateProps(this.props);
@@ -31,33 +32,26 @@ export default class TreeRecentPost extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
-    // if (props.tree != null) {
-    //   if (props.tree.description && props.tree.description.trim() != "") {
-    //     this.setState({description: props.tree.description});
-    //   } else {
-    //     if (props.editing) {
-    //       this.setState({description: ""});
-    //     } else {
-    //       this.setState({description: localization(95)});
-    //     }
-    //   }
-    // } else {
-    //   this.setState({description: localization(95)});
-    // }
-  }
-  updateAttribute() {
-    // let prevDescription = this.props.tree.description;
-    // if (this.state.description && this.state.description.trim() != "") {
-    //   this.props.tree.description = this.state.description.trim();
-    //   this.setState({description: this.props.tree.description});
-    // } else {
-    //   this.setState({description: ""});
-    // }
-    // if (prevDescription != this.state.description) {
-    //   TreeActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
-    // }
+    if (props.notes != null && TreeStore.getState().temp != null) {
+      let bFound = false;
+      props.notes.forEach((note) => {
+        if (note.type == NOTETYPE.UPDATE && note.tree == TreeStore.getState().temp.id) {
+          bFound = true;
+          this.setState({note: note});
+        }
+      });
+      if (!bFound) {
+        this.setState({note: null});
+      }
+    } else {
+      this.setState({note: null});
+    }
   }
   render () {
+    let nopost;
+    if (this.state.note == null) {
+      nopost = <div className="tree-recent-post-text-sub">{localization(59)}</div>;
+    }
     return (
       <div className="tree-recent-post-wrapper">
         <div className="tree-recent-post-label">
@@ -65,7 +59,8 @@ export default class TreeRecentPost extends React.Component {
         </div>
         <div className="tree-recent-post-data">
           <div className="tree-recent-post-text">
-            TEXT
+            <NoteLine note={this.state.note} />
+            {nopost}
           </div>
         </div>
       </div>
