@@ -18,6 +18,9 @@ import TreeHistory from './../tree/tree-history.component';
 import NoteAdd from './../note/note-add.component';
 
 import TreeRecentPost from './../tree/tree-recent-post.component';
+import TreeRecentPickup from './../tree/tree-recent-pickup.component';
+import TreeParentSummary from './../tree/tree-parent-summary.component';
+import TreeAdopt from './../tree/tree-adopt.component';
 
 export default class TreePanel extends React.Component {
   constructor() {
@@ -127,7 +130,7 @@ export default class TreePanel extends React.Component {
         </span>
       </div>;
       // Body
-      body = <div>
+      body = <div className="body-scroll">
         <AltContainer stores={
           {
             TreeStore: TreeStore,
@@ -146,6 +149,20 @@ export default class TreePanel extends React.Component {
           }
         }>
           <TreeRecentPost />
+          <TreeRecentPickup />
+        </AltContainer>
+        <AltContainer stores={
+          {
+            tree: function(props) {
+              return {
+                store: TreeStore,
+                value: TreeStore.getState().temp
+              }
+            }
+          }
+        }>
+          <TreeParentSummary />
+          <TreeAdopt />
         </AltContainer>
       </div>;
     }

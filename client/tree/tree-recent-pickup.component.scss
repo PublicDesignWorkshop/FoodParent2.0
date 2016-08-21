@@ -1,13 +1,13 @@
 @import "./../scss/variables.scss";
 @import "./../scss/mixin.scss";
 
-.tree-recent-post-wrapper {
+.tree-recent-pickup-wrapper {
   padding: 4px 16px;
   font-family: $font-main;
   color: $brown;
   font-size: $font-size-medium;
 
-  > .tree-recent-post-label {
+  > .tree-recent-pickup-label {
     font-weight: 700;
     margin: 4px 0 0 0;
     .fa.fa-sticky-note {
@@ -16,11 +16,11 @@
     }
   }
 
-  > .tree-recent-post-data {
+  > .tree-recent-pickup-data {
     width: 100%;
-    > .tree-recent-post-text {
+    > .tree-recent-pickup-text {
       margin: 0 0 0 12px;
-      > .tree-recent-post-text-sub {
+      > .tree-recent-pickup-text-sub {
         margin: 0 0 0 8px;
       }
     }

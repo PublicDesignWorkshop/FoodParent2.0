@@ -43,10 +43,6 @@ export default class TreeHistory extends React.Component {
     this.forceUpdate();
   }
   render () {
-    let graph;
-    if (NoteStore.getState().temp == null) {
-      graph = <NoteGraph />;
-    }
     return (
       <div className="tree-history-wrapper">
         <AltContainer stores={
@@ -61,7 +57,7 @@ export default class TreeHistory extends React.Component {
         }>
           <TreeFood editing={false} />
         </AltContainer>
-        {graph}
+        <NoteGraph />
         <AltContainer stores={
           {
             notes: function(props) {
