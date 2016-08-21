@@ -28,6 +28,7 @@ export class TreeModel {
       description: this.description,
       address: this.address,
       public: this.ownership,
+      // dead: this.dead, dead boolean value will be setup in tree.php.
       owner: this.owner,
       parent: this.parents.toString(),
       rate: this.rate,
@@ -40,8 +41,9 @@ export class TreeModel {
     this.food = parseInt(props.food);
     this.description = props.description;
     this.address = props.address;
-    this.ownership = parseInt(props.public);
-    this.owner = parseInt(props.owner);
+    this.ownership = parseInt(props.public);  // ownership (public or private).
+    this.dead = parseInt(props.dead);         // 1: dead, 0: alive.
+    this.owner = parseInt(props.owner);       // id of the person who creates this tree.
     this.updated = moment(props.updated);
     this.flags = props.flag.split(',').map((flag: string) => {
       return parseInt(flag);
@@ -62,13 +64,19 @@ export class TreeModel {
   getParents() {
     return _.without(this.parents, 0);
   }
-  addParent(id): void {
+  addParent(id) {
     if (this.parents.indexOf(id) == -1) {
       this.parents.push(id);
     }
   }
-  removeParent(id): void {
+  removeParent(id) {
     this.parents = _.without(this.parents, id);
+  }
+  isDead() {
+    if (this.dead) {
+      return true;
+    }
+    return false;
   }
 }
 

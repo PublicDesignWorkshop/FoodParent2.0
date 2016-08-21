@@ -47,36 +47,36 @@
   function read() {
     sec_session_continue(); // Our custom secure way of starting a PHP session.
     $extra = 0;
-    if(isset($_GET['id'])) {
-      $public = "0,1";
-      $_SESSION['public'] = $public;
-      $flags = getDefaultFlags();
-      $_SESSION['flag_ids'] = $flags;
-      $foods = calcSeasonFoods(0);
-      $_SESSION['food_ids'] = $foods;
-      $adopt = "0";
-      $_SESSION['adopt'] = $adopt;
-      $rates = "-1,0,1,2,3,4,5";
-      $_SESSION['rates'] = $rates;
-
-      $sql = "SELECT `food` FROM `tree` WHERE `id` = ". $_GET['id'];
-      try {
-        $pdo = getConnection();
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        $pdo = null;
-        if (sizeof($result)) {
-          $extra = $result[0]['food'];
-        }
-      } catch(PDOException $e) {
-        $json = array(
-          "code" => $e->getCode(),
-          "message" => $e->getMessage(),
-        );
-        echo json_encode($json);
-      }
-    }
+    // if(isset($_GET['id'])) {
+    //   // $public = "0,1";
+    //   // $_SESSION['public'] = $public;
+    //   // $flags = getDefaultFlags();
+    //   // $_SESSION['flag_ids'] = $flags;
+    //   // $foods = calcSeasonFoods(0);
+    //   // $_SESSION['food_ids'] = $foods;
+    //   // $adopt = "0";
+    //   // $_SESSION['adopt'] = $adopt;
+    //   // $rates = "-1,0,1,2,3,4,5";
+    //   // $_SESSION['rates'] = $rates;
+    //
+    //   $sql = "SELECT `food` FROM `tree` WHERE `id` = ". $_GET['id'];
+    //   try {
+    //     $pdo = getConnection();
+    //     $stmt = $pdo->prepare($sql);
+    //     $stmt->execute();
+    //     $result = $stmt->fetchAll();
+    //     $pdo = null;
+    //     if (sizeof($result)) {
+    //       $extra = $result[0]['food'];
+    //     }
+    //   } catch(PDOException $e) {
+    //     $json = array(
+    //       "code" => $e->getCode(),
+    //       "message" => $e->getMessage(),
+    //     );
+    //     echo json_encode($json);
+    //   }
+    // }
 
 
 

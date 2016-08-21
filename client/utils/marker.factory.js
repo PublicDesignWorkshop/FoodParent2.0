@@ -122,7 +122,7 @@ export function createSVGTreeMarker(tree, movable) {
     html: '<img class="shadow" src="' + ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker + '"/><img class="icon" src="' + iconUrl + '" />'
   });
   let template;
-  if (food) {
+  if (food && tree.id != 0) {
     template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">' + food.name + '</span>#<span class="marker-tree">' + tree.id + '</span></div><div class="marker-right"></div>';
   } else {
     template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">' + localization(692) + '</span></div><div class="marker-right"></div>';

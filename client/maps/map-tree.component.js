@@ -144,6 +144,9 @@ export default class MapTree extends React.Component {
       this.renderMarkers(props.trees, props.selected);
     } else if (TreeStore.getState().code == 200 && temp && (temp.editing != null || !temp.editing)) {
       this.renderActiveMarker(temp);
+      if (TreeStore.getState().code == 200 && temp && temp.id == 0) {
+        this.renderMarkers(props.trees, props.selected);
+      }
     }
   }
   renderPopup(tree) {
@@ -178,7 +181,7 @@ export default class MapTree extends React.Component {
     let bFound = false;
     for (let i = 0; i < markers.length && !bFound; i++) {
       if (tree.editing) {
-        if (tree && markers[i].options.id == tree.id && tree.editing != markers[i].options.draggable) {
+        if (tree && markers[i].options.id == tree.id) {
         // if (tree && markers[i].options.id == tree.id) {
           this.removeMarker(markers[i], this.markersLayer);
           markers = _.without(markers, markers[i]);
@@ -211,11 +214,13 @@ export default class MapTree extends React.Component {
         //point.y += this.map.getSize().y * 0.15;
       }
       let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, zoom);
-      setTimeout(function() {
-        this.map.setView(location, zoom, {animate: MapStore.getLoaded(MapSetting.sTreeMapId)});
-        // if (!MapStore.getLoaded(MapSetting.sTreeMapId))
-        //   MapActions.setLoaded.defer(MapSetting.sTreeMapId, true);
-      }.bind(this), 250);
+      if (tree.id != 0) {
+        setTimeout(function() {
+          this.map.setView(location, zoom, {animate: MapStore.getLoaded(MapSetting.sTreeMapId)});
+          // if (!MapStore.getLoaded(MapSetting.sTreeMapId))
+          //   MapActions.setLoaded.defer(MapSetting.sTreeMapId, true);
+        }.bind(this), 250);
+      }
     }
   }
   renderMarkers(trees, selected) {

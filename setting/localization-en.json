@@ -1,6 +1,8 @@
 {
   "0": "Please check your internet connection.",
 
+  "65": "Tree doesn't exist or access is restricted.",
+  "66": "*Unkown",
   "67": "DELETE SELECTED PHOTO",
   "68": "Double click for full screen mode.",
   "69": "No photos.",

@@ -3,6 +3,8 @@
   header("Cache-Control: post-check=0, pre-check=0", false);
   header("Pragma: no-cache");
 
+
+
   include_once 'functions.php';
   sec_session_continue(); // Our custom secure way of starting a PHP session.
 
@@ -33,7 +35,17 @@
         "id" => $_GET['id'],
       );
     }
+    $check = admin_check();
+    if (!$check) {
+      $public = "1";
+      $dead = "0";
+    } else {
+      $public = "0,1";
+      $dead = "0,1";
+    }
     $sql = "SELECT * FROM `tree` WHERE (`id` = :id)";
+    $sql .= "AND `public` IN (".$public.") ";
+    $sql .= "AND `dead` IN (".$dead.") ";
 
     try {
       $pdo = getConnection();
@@ -59,6 +71,12 @@
     $data = json_decode(file_get_contents('php://input'));
     $params = null;
     if ($data != null) {
+      $serverSetting = json_decode(file_get_contents("../dist/setting/server.json"), true);
+      $flags = split(",", $data->{'flag'});
+      $dead = 0;
+      if (in_array(strval($serverSetting["iDeadFlagId"]), $flags)) {
+        $dead = 1;
+      }
       $params = array(
         "id" => $data->{'id'},
         "lat" => $data->{'lat'},
@@ -68,13 +86,14 @@
         "description" => $data->{'description'},
         "address" => $data->{'address'},
         "public" => $data->{'public'},
+        "dead" => $dead,
         "owner" => $data->{'owner'},
         "parent" => $data->{'parent'},
         "rate" => $data->{'rate'},
         "updated" => date("Y-m-d H:i:s"),
       );
     }
-    $sql = "UPDATE `tree` SET `lat` = :lat, `lng` = :lng, `food` = :food, `flag` = :flag, `public` = :public, `parent` = :parent, `rate` = :rate, `owner` = :owner, `description` = :description, `address` = :address, `updated` = :updated WHERE (`id` = :id)";
+    $sql = "UPDATE `tree` SET `lat` = :lat, `lng` = :lng, `food` = :food, `flag` = :flag, `public` = :public, `dead` = :dead, `parent` = :parent, `rate` = :rate, `owner` = :owner, `description` = :description, `address` = :address, `updated` = :updated WHERE (`id` = :id)";
 
     try {
       $pdo = getConnection();
@@ -114,12 +133,17 @@
   }
 
   function create() {
+    $data = json_decode(file_get_contents('php://input'));
     $owner = 0;
     if (isset($_SESSION['user_id'])) {
       $owner = intval($_SESSION['user_id']);;
     }
-
-    $data = json_decode(file_get_contents('php://input'));
+    $serverSetting = json_decode(file_get_contents("../dist/setting/server.json"), true);
+    $flags = split(",", $data->{'flag'});
+    $dead = 0;
+    if (in_array(strval($serverSetting["iDeadFlagId"]), $flags)) {
+      $dead = 1;
+    }
     $params = array(
       "lat" => $data->{'lat'},
       "lng" => $data->{'lng'},
@@ -129,11 +153,12 @@
       "description" => $data->{'description'},
       "address" => $data->{'address'},
       "public" => $data->{'public'},
+      "dead" => $dead,
       "parent" => $data->{'parent'},
       "rate" => $data->{'rate'},
       "updated" => date("Y-m-d H:i:s"),
     );
-    $sql = "INSERT INTO `tree` VALUES ( NULL, :lat, :lng, :food, :flag, :owner, :description, :address, :public, :parent, :rate, :updated )";
+    $sql = "INSERT INTO `tree` VALUES ( NULL, :lat, :lng, :food, :flag, :owner, :description, :address, :public, :dead, :parent, :rate, :updated )";
 
     try {
       $pdo = getConnection();

@@ -10,6 +10,8 @@ import TreeFood from './tree-food.component';
 import TreeLocation from './tree-location.component';
 import TreeAddress from './tree-address.component';
 import TreeDescription from './tree-description.component';
+import TreeFlag from './tree-flag.component';
+import TreeOwnership from './tree-ownership.component';
 
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
@@ -67,6 +69,8 @@ export default class TreeAddInfo extends React.Component {
           <TreeLocation editing={true} />
           <TreeAddress editing={true} />
           <TreeDescription editing={true} />
+          <TreeFlag editing={true} />
+          <TreeOwnership editing={true} />
         </AltContainer>
         {actions}
       </div>

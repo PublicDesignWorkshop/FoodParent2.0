@@ -39,9 +39,13 @@ export default class TreeFlag extends React.Component {
     if (props.tree != null) {
       let flags = FlagStore.getState().flags;
       flags.forEach(flag => {
-        options.push({value: flag.id, label: flag.name});
-        if ($.inArray(flag.id, props.tree.flags) != -1) {
-          selected.push({value: flag.id, label: flag.name});
+        if (ServerSetting.iDeadFlagId == flag.id && props.tree.id == 0) {
+          // Dead flag should not be added for a new tree.
+        } else {
+          options.push({value: flag.id, label: flag.name});
+          if ($.inArray(flag.id, props.tree.flags) != -1) {
+            selected.push({value: flag.id, label: flag.name});
+          }
         }
       });
     }

@@ -9,6 +9,8 @@ require('./tree-food.component.scss');
 var FontAwesome = require('react-fontawesome');
 let ServerSetting = require('./../../setting/server.json');
 let MapSetting = require('./../../setting/map.json');
+import { readFilter, updateFilter } from './../utils/filter';
+import { FITERMODE } from './../utils/enum';
 
 import { localization } from './../utils/localization';
 let FoodStore = require('./../stores/food.store');
@@ -91,6 +93,23 @@ export default class TreeFood extends React.Component {
       TreeActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
     }
     this.props.tree.food = foodId;
+    // Add food type to filter so that other same type of trees can be revealed on the map.
+    readFilter(function(response) { // Resolve callback.
+      let foods = response.foods.split(",").map(function(food) {
+        return parseInt(food);
+      });
+      if ($.inArray(foodId, foods) == -1) {
+        foods.push(foodId);
+      }
+      console.log(foods);
+      updateFilter(FITERMODE.FOOD, foods, function(response) {  // Resolve
+        TreeActions.fetchTrees();
+      }, function(response) { // Reject
+
+      });
+    }.bind(this), function(response) {  // Reject callback.
+
+    }.bind(this));
     this.setState({selected: selected});
   }
   render () {

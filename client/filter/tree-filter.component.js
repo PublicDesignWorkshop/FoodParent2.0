@@ -14,6 +14,8 @@ let AuthStore = require('./../stores/auth.store');
 import TreeFood from './tree-food.component';
 import TreeRate from './tree-rate.component';
 import TreeAdopt from './tree-adopt.component';
+import TreeFlag from './tree-flag.component';
+import TreeOwnership from './tree-ownership.component';
 
 
 export default class TreeFilter extends React.Component {
@@ -21,8 +23,17 @@ export default class TreeFilter extends React.Component {
     super(props, context);
   }
   componentWillMount() {
-    TreeActions.setSelected(null);
     this.setState({adopts: [], flags: [], foods: [], ownerships: [], rates: []});
+    this.updateProps(this.props);
+  }
+  componentDidMount () {
+
+  }
+  componentWillReceiveProps(nextProps) {
+    this.updateProps(nextProps);
+  }
+  updateProps(props) {
+    TreeActions.setSelected(null);
     readFilter(function(response) { // Resolve callback.
       let adopts;
       if (response.adopt) {
@@ -47,20 +58,26 @@ export default class TreeFilter extends React.Component {
 
     }.bind(this));
   }
-  componentDidMount () {
-
-  }
-  componentWillReceiveProps(nextProps) {
-
-  }
   render () {
-    return (
-      <div>
-        <TreeFood foods={this.state.foods} />
-        <TreeRate rates={this.state.rates} />
-        <TreeAdopt adopts={this.state.adopts} />
-      </div>
-    );
+    if (AuthStore.getState().auth.isManager()) {
+      return (
+        <div>
+          <TreeFood foods={this.state.foods} />
+          <TreeRate rates={this.state.rates} />
+          <TreeAdopt adopts={this.state.adopts} />
+          <TreeFlag flags={this.state.flags} />
+          <TreeOwnership ownerships={this.state.ownerships} />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <TreeFood foods={this.state.foods} />
+          <TreeRate rates={this.state.rates} />
+          <TreeAdopt adopts={this.state.adopts} />
+        </div>
+      );
+    }
   }
 }
 

@@ -5,7 +5,7 @@ import Select from 'react-select';
 import $ from 'jquery';
 
 
-require('./tree-adopt.component.scss');
+require('./tree-ownership.component.scss');
 var FontAwesome = require('react-fontawesome');
 let ServerSetting = require('./../../setting/server.json');
 let MapSetting = require('./../../setting/map.json');
@@ -16,12 +16,12 @@ import { updateFilter } from './../utils/filter';
 
 let FoodStore = require('./../stores/food.store');
 let FlagStore = require('./../stores/flag.store');
-let AuthStore = require('./../stores/auth.store');
+
 let TreeStore = require('./../stores/tree.store');
 let TreeActions = require('./../actions/tree.actions');
 
 
-export default class TreeAdopt extends React.Component {
+export default class TreeOwnership extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.updateAttribute = this.updateAttribute.bind(this);
@@ -38,27 +38,15 @@ export default class TreeAdopt extends React.Component {
   }
   updateProps(props) {
     let options = [];
-    let selected = null;
-
-    options.push({value: 0, label: localization(631)});
-    if (AuthStore.getState().auth.id != 0) {
-      options.push({value: 1, label: localization(630)});
-    }
-    options.push({value: 2, label: localization(629)});
-    options.push({value: 3, label: localization(628)});
-
-    if (props.adopts) {
-      props.adopts.forEach(adopt => {
-        if (adopt == 0) {
-          selected = {value: 0, label: localization(631)};
-        } else if (adopt == 1 && AuthStore.getState().auth.id != 0) {
-          selected ={value: 1, label: localization(630)};
-        } else if (adopt == 2) {
-          selected = {value: 2, label: localization(629)};
-        } else if (adopt == 3) {
-          selected = {value: 3, label: localization(628)};
-        }
-      });
+    let selected = [];
+    if (props.ownerships != null) {
+      options.push({value: 0, label: localization(974)});
+      options.push({value: 1, label: localization(975)});
+      if (props.ownerships == 0) {
+        selected.push(options[0]);
+      } else {
+        selected.push(options[1]);
+      }
     }
     this.setState({options: options, selected: selected});
   }
@@ -66,8 +54,13 @@ export default class TreeAdopt extends React.Component {
     return <span className="tree-flag-name">{option.label}</span>;
   }
   updateAttribute(selected) {
-    let adopts = parseInt(selected.value);
-    updateFilter(FITERMODE.ADOPT, adopts, function(response) {  // Resolve
+    var ownerships = [];
+    if (selected) {
+      selected.forEach(option => {
+        ownerships.push(parseInt(option.value));
+      });
+    }
+    updateFilter(FITERMODE.OWNERSHIP, ownerships, function(response) {  // Resolve
       TreeActions.fetchTrees();
     }, function(response) { // Reject
 
@@ -78,10 +71,10 @@ export default class TreeAdopt extends React.Component {
     return (
       <div className="tree-filter-wrapper">
         <div className="filter-label">
-          <FontAwesome className='' name='chain' />{localization(632)}
+          <FontAwesome className='' name='home' />{localization(977)}
         </div>
-        <div className="filter-data brown-medium-single">
-          <Select name="food-select" multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(627)} backspaceToRemoveMessage="" />
+        <div className="filter-data brown-medium-single active">
+          <Select name="flag-select" multi={true} clearable={true} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(970)} backspaceToRemoveMessage="" />
         </div>
       </div>
     );

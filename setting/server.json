@@ -13,10 +13,12 @@
   "sUIDateFormat": "MM/DD/YY",
 
   "iGallerySlideInterval": 7500,
-  
+
   "fKGToG": 1000,
   "fLBSTOG": 453.592,
   "fGToLBS": 0.00220463,
-  "iAmountPrecision": 2
+  "iAmountPrecision": 2,
+
+  "iDeadFlagId": 1
 
 }

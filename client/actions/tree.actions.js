@@ -26,6 +26,9 @@ class TreeActions {
       dispatch();
       this.setCode(90); // check the 'errorlist.xlsx' to find the code list.
       TreeSource.fetchTree(id).then((response) => {
+        if (response === false) {
+          displayFailMessage(localization(65));
+        }
         this.fetchedTree(response);
       }).catch((code) => {
         displayFailMessage(localization(code));

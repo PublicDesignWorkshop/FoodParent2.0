@@ -15,15 +15,22 @@ import TreePanel from './tree-panel.component';
 export default class TreeDetail extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.updateNoteStore = this.updateNoteStore.bind(this);
   }
   componentWillMount() {
     this.updateProps(this.props);
   }
   componentDidMount () {
-
+    TreeStore.listen(this.updateNoteStore);
   }
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);
+  }
+  componentWillUnmount() {
+    TreeStore.unlisten(this.updateNoteStore);
+  }
+  updateNoteStore() {
+    this.forceUpdate();
   }
   updateProps(props) {
     let mode;
@@ -76,6 +83,10 @@ export default class TreeDetail extends React.Component {
         </div>
       </div>;
     }
+    let open = false;
+    if (TreeStore.getState().temp != null) {
+      open = true;
+    }
     return (
       <div className="tree-map-wrapper">
         <AltContainer stores={
@@ -102,7 +113,7 @@ export default class TreeDetail extends React.Component {
         }>
           <MapTree />
         </AltContainer>
-        <TreePanel open={true} mode={this.state.mode} />
+        <TreePanel open={open} mode={this.state.mode} />
         {action}
       </div>
     );
