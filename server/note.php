@@ -11,7 +11,7 @@
       create();
       break;
     case 'GET':
-      //read();
+      read();
       break;
     case 'PUT':
       update();
@@ -21,30 +21,52 @@
       break;
   }
 
-  // function read() {
-  //   $data = json_decode(file_get_contents('php://input'));
-  //   $params = null;
-  //   if ($data != null) {
-  //     $params = array(
-  //     "id" => $data->{'id'},
-  //     );
-  //   } else {
-  //     $params = array(
-  //       "id" => $_GET['id'],
-  //     );
-  //   }
-  //   $sql = "SELECT * FROM `tree` WHERE (`id` = :id)";
-  //   try {
-  //     $pdo = getConnection();
-  //     $stmt = $pdo->prepare($sql);
-  //     $stmt->execute($params);
-  //     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-  //     $pdo = null;
-  //     echo json_encode($result);
-  //   } catch(PDOException $e) {
-  //     echo '{"error":{"text":'. $e->getMessage() .'}}';
-  //   }
-  // }
+  // Read the most recent post and pickup data.
+  function read() {
+    $data = json_decode(file_get_contents('php://input'));
+    $params = null;
+    if ($data != null) {
+      $params = array(
+      "treeId" => $data->{'treeId'},
+      );
+    } else {
+      $params = array(
+        "treeId" => $_GET['treeId'],
+      );
+    }
+    $sql = "SELECT * FROM `note` WHERE (`tree` = :treeId) AND `type` = 2 ORDER BY `date` DESC LIMIT 1";
+    try {
+      $pdo = getConnection();
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute($params);
+      $result = $stmt->fetch(PDO::FETCH_OBJ);
+      $pdo = null;
+      // echo json_encode($result);
+    } catch(PDOException $e) {
+      echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+
+    $sql = "SELECT * FROM `note` WHERE (`tree` = :treeId) AND `type` = 3 ORDER BY `date` DESC LIMIT 1";
+    try {
+      $pdo = getConnection();
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute($params);
+      $result2 = $stmt->fetch(PDO::FETCH_OBJ);
+      $pdo = null;
+
+    } catch(PDOException $e) {
+      echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+
+    $notes = [];
+    array_push($notes, $result, $result2);
+
+    $json = array(
+      "notes" => $notes,
+      "code" => 200,
+    );
+    echo json_encode($json);
+  }
 
   function update() {
     $data = json_decode(file_get_contents('php://input'));

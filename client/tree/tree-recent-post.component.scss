@@ -1,0 +1,50 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.tree-recent-post-wrapper {
+  padding: 4px 8px;
+  font-family: $font-main;
+  color: $brown;
+  font-size: $font-size-medium;
+
+  > .tree-recent-post-label {
+    font-weight: 700;
+    margin: 4px 0;
+    .fa.fa-sticky-note {
+      margin-left: 2px;
+      margin-right: 4px;
+    }
+  }
+
+  > .tree-recent-post-data {
+    width: 100%;
+    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;           /* TWEENER - IE 10 */
+    display: -webkit-flex;          /* NEW - Chrome */
+    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    margin: 4px 0;
+
+    > .tree-recent-post-text {
+      &:first-child {
+        margin: 0 0 0 20px;
+      }
+    }
+
+    > .tree-recent-post-input {
+      border-radius: 0;
+      -webkit-flex-grow: 1;           /* NEW - Chrome */
+              flex-grow: 1;           /* NEW, Spec - Opera 12.1, Firefox 20+ */
+      padding: 4px 6px;
+      width: 0;
+      font-size: $font-size-medium;
+      &:focus {
+        outline: 2px solid $brown;
+      }
+      &:first-child {
+        margin: 0 0 0 20px;
+      }
+    }
+  }
+}

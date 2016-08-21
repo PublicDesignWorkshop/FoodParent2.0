@@ -17,6 +17,8 @@ import TreeInfo from './../tree/tree-info.component';
 import TreeHistory from './../tree/tree-history.component';
 import NoteAdd from './../note/note-add.component';
 
+import TreeRecentPost from './../tree/tree-recent-post.component';
+
 export default class TreePanel extends React.Component {
   constructor() {
     super();
@@ -125,13 +127,16 @@ export default class TreePanel extends React.Component {
         </span>
       </div>;
       // Body
-      body = <AltContainer stores={
-        {
-          TreeStore: TreeStore,
-        }
-      }>
-        <TreeInfo />
-      </AltContainer>;
+      body = <div>
+        <AltContainer stores={
+          {
+            TreeStore: TreeStore,
+          }
+        }>
+          <TreeInfo />
+        </AltContainer>
+        <TreeRecentPost />
+      </div>;
     }
     if (this.props.mode == TREEDETAILMODE.POST) {
       // Post

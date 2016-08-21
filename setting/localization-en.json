@@ -1,6 +1,9 @@
 {
   "0": "Please check your internet connection.",
 
+  "60": "Recent Donation",
+  "61": "Recent Pickup",
+  "62": "Recent Post",
   "63": "Anonymous",
   "64": "Author (E-mail)",
   "65": "Tree doesn't exist or access is restricted.",

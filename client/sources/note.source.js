@@ -32,6 +32,34 @@ const NoteSource = {
       });
     });
   },
+  fetchRecentNotesFromTreeId(id) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        url: ServerSetting.uBase + ServerSetting.uServer + "note.php",
+        type: 'GET',
+        data: {
+          treeId: id,
+        },
+        dataType: "json",
+        success: function(response) {
+          if (response.code == 200) {
+            resolve(response.notes);
+          } else {
+            if (__DEV__) {
+              console.error(response.message);
+            }
+            reject(response.code);
+          }
+        },
+        error: function(response) {
+          if (__DEV__) {
+            console.error(response.statusText);
+          }
+          reject(response.status);
+        }
+      });
+    });
+  },
   updateNote(note) {
     let temp = new NoteModel(note.toJSON());
     switch(temp.amountType) {
