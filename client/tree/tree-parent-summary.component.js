@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import AltContainer from 'alt-container';
@@ -12,6 +13,7 @@ let MapSetting = require('./../../setting/map.json');
 import { localization } from './../utils/localization';
 import { reverseGeocoding } from './../utils/geocoding';
 let TreeStore = require('./../stores/tree.store');
+let AuthStore = require('./../stores/auth.store');
 let TreeActions = require('./../actions/tree.actions');
 import { isLatLng } from './../utils/validation';
 import NoteLine from './../note/note-line.component';
@@ -40,9 +42,22 @@ export default class TreeParentSummary extends React.Component {
       let parents = this.props.tree.getParents();
       if (parents != null && parents.length > 0) {
         if (parents.length == 1) {
-          overview = <div className="tree-parent-summary-text">{parents.length + " " + localization(982)}</div>;
+          if (AuthStore.getState().auth.id != 0 && this.props.tree && $.inArray(AuthStore.getState().auth.id, this.props.tree.getParents()) != -1) {  // You are the only person who adopted this tree.
+            overview = <div className="tree-parent-summary-text">{localization(56)}</div>;
+          } else {
+            overview = <div className="tree-parent-summary-text">{parents.length + " " + localization(982)}</div>;
+          }
         } else {
-          overview = <div className="tree-parent-summary-text">{parents.length + " " + localization(983)}</div>;
+          if (AuthStore.getState().auth.id != 0 && this.props.tree && $.inArray(AuthStore.getState().auth.id, this.props.tree.getParents()) != -1) {
+            if ((parents.length - 1) == 1) {
+              overview = <div className="tree-parent-summary-text">{localization(55) + " " + (parents.length - 1) + " " + localization(982)}</div>;
+            } else {
+              overview = <div className="tree-parent-summary-text">{localization(55) + " " + (parents.length - 1) + " " + localization(983)}</div>;
+            }
+          } else {
+            overview = <div className="tree-parent-summary-text">{parents.length + " " + localization(983)}</div>;
+          }
+
         }
       } else {
         overview = <div className="tree-parent-summary-text">{localization(981)}</div>;
