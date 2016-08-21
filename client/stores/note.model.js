@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import moment from 'moment';
 import * as _ from 'underscore';
 
@@ -80,7 +81,7 @@ export class NoteModel {
         break;
     }
     this.tree = parseInt(props.tree);
-    this.person = parseInt(props.person);
+    this.person = props.person;
     this.comment = props.comment;
     this.rate = parseInt(props.rate);
     this.amountType = AMOUNTTYPE.LBS;
@@ -127,7 +128,10 @@ export class NoteModel {
   isEditable() {
     if (AuthStore.getState().auth.isManager())
       return true;
-    if (AuthStore.getState().auth.id != 0 && this.person != 0 && AuthStore.getState().auth.id == this.person) {
+    if (AuthStore.getState().auth.contact != "" && this.person != "" && AuthStore.getState().auth.contact == this.person) {
+      return true;
+    }
+    if ($.inArray(this.id, AuthStore.getState().auth.notes) > -1) {
       return true;
     }
     return false;

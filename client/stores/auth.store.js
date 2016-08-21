@@ -37,6 +37,7 @@ export class AuthModel {
       contact: this.contact,
       auth: auth,
       trees: this.trees,
+      notes: this.notes,
     }
   }
   update(props) {
@@ -60,6 +61,12 @@ export class AuthModel {
     if (props.trees) {
       this.trees = props.trees.split(',').map((tree) => {
         return parseInt(tree);
+      });
+    }
+    this.notes = [];
+    if (props.notes) {
+      this.notes = props.notes.split(',').map((note) => {
+        return parseInt(note);
       });
     }
   }

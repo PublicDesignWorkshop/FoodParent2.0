@@ -102,10 +102,11 @@
   }
 
   function create() {
-    $owner = 0;
-    if (isset($_SESSION['user_id'])) {
-      $owner = intval($_SESSION['user_id']);
-    }
+    // Getting author contact from a client.
+    // $owner = 0;
+    // if (isset($_SESSION['user_id'])) {
+    //   $owner = intval($_SESSION['user_id']);
+    // }
 
     $data = json_decode(file_get_contents('php://input'));
     $type = $data->{'type'};  // 1: CHANGE, 2: POST, 3: PICKUP
@@ -118,7 +119,7 @@
     $params = array(
       "type" => $type,
       "tree" => $data->{'tree'},
-      "person" => $owner,
+      "person" => $data->{'person'},
       "comment" => $data->{'comment'},
       "picture" => $data->{'picture'},
       "rate" => $data->{'rate'},
@@ -137,6 +138,17 @@
       $params = array(
         "id" => $pdo->lastInsertId(),
       );
+
+      // Store newly added note into a cookie so that users can edit before cookie being expired.
+      if (isset($_SESSION['temp_notes']) && $_SESSION['temp_notes'] != null) {
+        $temp_notes = explode(",", $_SESSION['temp_notes']);
+        array_push($temp_notes, $params['id']);
+        $_SESSION['temp_notes'] = implode(',', $temp_notes);
+      } else {
+        $_SESSION['temp_notes'] = $params['id'];
+      }
+      $_SESSION['LAST_CREATE'] = $_SERVER['REQUEST_TIME'];
+
       try {
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);

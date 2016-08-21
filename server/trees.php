@@ -85,7 +85,9 @@
 
     if (!$check) {
       $public = "1";
+      $dead = "0";
     } else {
+      $dead = "0,1";
       if (isset($_SESSION['public'])) {
         $public  = $_SESSION['public'];
       } else {
@@ -93,6 +95,9 @@
       }
     }
     $sql .= "`public` IN (".$public.") ";
+
+    $sql .= "AND `dead` IN (".$dead.") ";
+    
     // Food basic filtering
     if (isset($_SESSION['food_ids'])) {
       $foodList = split(",", $_SESSION['food_ids']);

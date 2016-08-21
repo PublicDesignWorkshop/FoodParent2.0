@@ -79,6 +79,7 @@ class TreeActions {
       dispatch();
     }
   }
+  // Create a new tree item in the database, and add the tree id in a browser cookie so that user can edit for 15 minues after adding a tree.
   createTree(tree) {
     if (tree.food == 0) {
       displayFailMessage(localization(643));

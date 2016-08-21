@@ -101,7 +101,6 @@ export default class TreeFood extends React.Component {
       if ($.inArray(foodId, foods) == -1) {
         foods.push(foodId);
       }
-      console.log(foods);
       updateFilter(FITERMODE.FOOD, foods, function(response) {  // Resolve
         TreeActions.fetchTrees();
       }, function(response) { // Reject

@@ -14,6 +14,7 @@ import NoteDate from './note-date.component';
 import NoteAmount from './note-amount.component';
 import NoteProper from './note-proper.component';
 import NoteImage from './note-image.component';
+import NoteAuthor from './note-author.component';
 
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
@@ -150,6 +151,13 @@ export default class NoteInfo extends React.Component {
         </div>
       </div>;
     }
+    let authorEditing = false;
+    if (this.props.note && this.props.note.id == 0 && AuthStore.getState().auth.id == 0 && AuthStore.getState().auth.contact == "") {
+      authorEditing = true;
+    }
+    if (this.props.note && this.state.editing && this.props.note.isEditable() && AuthStore.getState().auth.id == 0 && AuthStore.getState().auth.contact == "") {
+      authorEditing = true;
+    }
     if (this.props.note) {
       if (this.props.note.type == NOTETYPE.UPDATE) {
         return (
@@ -159,6 +167,7 @@ export default class NoteInfo extends React.Component {
             <NoteRate note={this.props.note} editing={this.state.editing} />
             <NoteComment note={this.props.note} editing={this.state.editing} />
             <NoteDate note={this.props.note} editing={this.state.editing} />
+            <NoteAuthor note={this.props.note} editing={authorEditing} />
             {actions}
             {popup}
           </div>
@@ -172,6 +181,7 @@ export default class NoteInfo extends React.Component {
             <NoteProper note={this.props.note} editing={this.state.editing} />
             <NoteComment note={this.props.note} editing={this.state.editing} />
             <NoteDate note={this.props.note} editing={this.state.editing} />
+            <NoteAuthor note={this.props.note} editing={authorEditing} />
             {actions}
             {popup}
           </div>

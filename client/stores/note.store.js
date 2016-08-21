@@ -63,7 +63,7 @@ class NoteStore {
       id: "0",
       type: "2",
       tree: treeId,
-      person: AuthStore.getState().auth.id,
+      person: AuthStore.getState().auth.contact,
       comment: "",
       picture: "",
       rate: "0",
@@ -98,18 +98,19 @@ class NoteStore {
       // this.temp = new NoteModel(notes[0].toJSON());
     } else {
       this.notes.push(new NoteModel(props));
-      this.temp = new NoteModel(props);
     }
+    this.temp = new NoteModel(props);
     this.notes = this.notes.sort(sortNoteByDateDESC);
     setTimeout(function() {
+      AuthActions.fetchAuth.defer();
       browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + props.tree, hash: "#history"});
     },0);
     this.code = 200;
   }
   handleDeletedNote(props) {
     let i = -1;
-    for(let j = 0; j < this.notes.length && i!=-1; j++) {
-      if(this.notes[j].getId() === parseInt(props.id)) {
+    for(let j = 0; j < this.notes.length && i==-1; j++) {
+      if(this.notes[j].id === parseInt(props.id)) {
         i = j;
       }
     }

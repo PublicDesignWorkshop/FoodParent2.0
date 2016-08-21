@@ -11,7 +11,7 @@ const AuthSource = {
         dataType: "json",
         success: function(response) {
           if (response.code == 200) {
-            resolve({id: response.id, contact: response.contact, auth: response.auth, trees: response.trees});
+            resolve({id: response.id, contact: response.contact, auth: response.auth, trees: response.trees, notes: response.notes});
           } else {
             if (__DEV__) {
               console.error(response.message);
