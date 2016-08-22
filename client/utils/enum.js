@@ -13,5 +13,5 @@ export const LOGINMODE = Enum("PARENT", "MANAGER");
 
 export const FITERMODE = Enum("FOOD", "FLAG", "OWNERSHIP", "ADOPT", "RATE");
 export const AMOUNTTYPE = Enum("LBS", "KG", "G");
-export const NOTETYPE = Enum("CHANGE", "UPDATE", "PICKUP");
+export const NOTETYPE = Enum("CHANGE", "UPDATE", "PICKUP", "DONATE");
 export const PICKUPTIME = Enum("EARLY", "PROPER", "LATE");
