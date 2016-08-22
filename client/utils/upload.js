@@ -18,7 +18,6 @@ export function uploadImage(file, prefix, resolve, reject) {
             canvas.toBlob(
               function (blob) {
                 // let url = window.URL.createObjectURL(blob);
-                console.log(blob);
                 let data = new FormData();
                 data.append('file', blob);
                 data.append('prefix', prefix);
@@ -32,7 +31,6 @@ export function uploadImage(file, prefix, resolve, reject) {
                   contentType: false, // Set content type to false as jQuery will tell the server its a query string request
                   dataType: "json",
                   success: function(response) {
-                    console.log(response);
                     if (response.code == 200) {
                       if (resolve)
                         resolve(response.files[0].replace(ServerSetting.uRelativeImageUpload, ""), datetime);

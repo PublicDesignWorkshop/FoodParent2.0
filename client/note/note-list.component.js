@@ -25,7 +25,6 @@ export default class NoteList extends React.Component {
   componentDidMount () {
     setTimeout(function() {
       if (this.props.note && this.props.note.id != 0) {
-        console.log("1");
         $('.tree-history-wrapper').animate({ scrollTop: $('#note' + this.props.note.id).offset().top - 96 }, 0);
       }
     }.bind(this), 250);

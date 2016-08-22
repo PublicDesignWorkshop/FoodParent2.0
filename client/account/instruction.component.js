@@ -27,7 +27,7 @@ export default class Instruction extends React.Component {
   render () {
     return (
       <div className="instruction-wrapper">
-        Instruction
+        
       </div>
     );
   }

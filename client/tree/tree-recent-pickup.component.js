@@ -55,7 +55,7 @@ export default class TreeRecentPickup extends React.Component {
     return (
       <div className="tree-recent-pickup-wrapper">
         <div className="tree-recent-pickup-label">
-          <FontAwesome className='' name='sticky-note' />{localization(62)}
+          <FontAwesome className='' name='shopping-basket' />{localization(61)}
         </div>
         <div className="tree-recent-pickup-data">
           <div className="tree-recent-pickup-text">
