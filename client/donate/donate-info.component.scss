@@ -1,0 +1,29 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.donate-info-wrapper {
+  margin: 4px 0;
+  padding: 4px 8px;
+  font-family: $font-main;
+  font-size: $font-size-medium;
+
+  &.scrollable {
+    // overflow-x: hidden;
+    // overflow-y: scroll;
+  }
+
+  &.donate-info-grey {
+    border: 2px solid $grey;
+    color: $grey;
+  }
+
+  &.donate-info-green {
+    border: 2px solid $green;
+    color: $green;
+  }
+
+  &.donate-info-brown {
+    border: 2px solid $brown;
+    color: $brown;
+  }
+}

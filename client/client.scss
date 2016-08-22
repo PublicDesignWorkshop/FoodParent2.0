@@ -313,6 +313,24 @@ html, body, #app {
               font-family: $font-main;
             }
           }
+          // for food icon
+          .tree-food {
+            height: 48px;
+            .tree-food-icon {
+              width: 10px;
+              height: 16px;
+              margin-bottom: 0;
+              margin-right: 8px;
+              margin-left: 4px;
+            }
+            .tree-food-name {
+              vertical-align: top;
+              font-size: $font-size-medium;
+              font-weight: 700;
+              color: $brown;
+              font-family: $font-main;
+            }
+          }
         }
       }
     }
@@ -344,6 +362,22 @@ html, body, #app {
       .tree-flag-name {
         font-size: $font-size-medium;
         font-weight: 400;
+        font-family: $font-main;
+      }
+
+      // For food icon
+      .tree-food-icon {
+        width: 10px;
+        height: 16px;
+        margin-left: 8px;
+        margin-right: 8px;
+        margin-top: 2px;
+        margin-bottom: 0;
+      }
+      .tree-food-name {
+        vertical-align: top;
+        font-size: $font-size-medium;
+        font-weight: 700;
         font-family: $font-main;
       }
 

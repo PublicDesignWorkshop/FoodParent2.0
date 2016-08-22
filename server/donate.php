@@ -11,7 +11,7 @@
       create();
       break;
     case 'GET':
-      //read();
+      read();
       break;
     case 'PUT':
       update();
@@ -21,30 +21,36 @@
       break;
   }
 
-  // function read() {
-  //   $data = json_decode(file_get_contents('php://input'));
-  //   $params = null;
-  //   if ($data != null) {
-  //     $params = array(
-  //     "id" => $data->{'id'},
-  //     );
-  //   } else {
-  //     $params = array(
-  //       "id" => $_GET['id'],
-  //     );
-  //   }
-  //   $sql = "SELECT * FROM `tree` WHERE (`id` = :id)";
-  //   try {
-  //     $pdo = getConnection();
-  //     $stmt = $pdo->prepare($sql);
-  //     $stmt->execute($params);
-  //     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-  //     $pdo = null;
-  //     echo json_encode($result);
-  //   } catch(PDOException $e) {
-  //     echo '{"error":{"text":'. $e->getMessage() .'}}';
-  //   }
-  // }
+  // Read the most recent 5 donate data.
+  function read() {
+    $data = json_decode(file_get_contents('php://input'));
+    $params = null;
+    if ($data != null) {
+      $params = array(
+      "locationId" => $data->{'locationId'},
+      );
+    } else {
+      $params = array(
+        "locationId" => $_GET['locationId'],
+      );
+    }
+    $sql = "SELECT * FROM `donate` WHERE (`location` = :locationId) AND `type` = 4 ORDER BY `date` DESC LIMIT 5";
+    try {
+      $pdo = getConnection();
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute($params);
+      $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+      $pdo = null;
+      $json = array(
+        "code" => 200,
+        "donates" => $result,
+      );
+      echo json_encode($json);
+      // echo json_encode($result);
+    } catch(PDOException $e) {
+      echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+  }
 
   function update() {
     $data = json_decode(file_get_contents('php://input'));

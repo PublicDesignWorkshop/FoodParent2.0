@@ -1,0 +1,30 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.donate-food-wrapper {
+  padding: 4px 8px;
+
+  &.disabled {
+    .Select-control {
+    	&:hover {
+    		border-color: transparent;
+    	}
+    }
+  }
+
+  border-radius: 2px;
+
+  > .donate-food-label {
+    color: $brown;
+    font-weight: 700;
+    margin: 4px 0;
+    .fa.fa-apple {
+      margin-left: 2px;
+      margin-right: 4px;
+    }
+  }
+
+  > .donate-food-data {
+
+  }
+}

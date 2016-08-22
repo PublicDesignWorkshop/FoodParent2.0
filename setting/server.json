@@ -19,6 +19,9 @@
   "fGToLBS": 0.00220463,
   "iAmountPrecision": 2,
 
-  "iDeadFlagId": 1
+  "iDeadFlagId": 1,
+
+  "sNoteImagePrefix": "note_",
+  "sDonateImagePrefix": "donate_"
 
 }

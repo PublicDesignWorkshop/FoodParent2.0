@@ -1,0 +1,33 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.donate-source-wrapper {
+  padding: 4px 8px;
+
+  &.disabled {
+    .Select-control {
+    	&:hover {
+    		border-color: transparent;
+    	}
+    }
+  }
+
+  border-radius: 2px;
+
+  > .donate-source-label {
+    color: $brown;
+    font-weight: 700;
+    margin: 4px 0;
+    .fa.fa-tag {
+      margin-left: 2px;
+      margin-right: 3px;
+    }
+  }
+
+  > .donate-source-data {
+    margin: 0 0 0 12px;
+    &.active {
+      margin: 0 0 0 20px;
+    }
+  }
+}

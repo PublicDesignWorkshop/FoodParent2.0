@@ -14,7 +14,7 @@ let NoteStore = require('./../stores/note.store');
 
 import DonationControl from './donation-control.component';
 import LocationInfo from './../location/location-info.component';
-// import TreeHistory from './../tree/tree-history.component';
+import DonateHistory from './../donate/donate-history.component';
 // import NoteAdd from './../note/note-add.component';
 //
 // import TreeRecentPost from './../tree/tree-recent-post.component';
@@ -149,28 +149,6 @@ export default class DonationPanel extends React.Component {
           Post
         </span>
       </div>;
-      // Body
-      body = <AltContainer stores={
-        {
-          location: function(props) {
-            return {
-              store: LocationStore,
-              value: LocationStore.getState().temp
-            }
-          }
-        }
-      }>
-        <NoteAdd />
-      </AltContainer>;
-    }
-    if (this.props.mode == DONATIONDETAILMODE.HISTORY) {
-      // History
-      history = <div className="icon-group active">
-        <FontAwesome className="icon icon-line-chart" name='line-chart' />
-        <span className="icon-text">
-          History
-        </span>
-      </div>;
       // // Body
       // body = <AltContainer stores={
       //   {
@@ -182,8 +160,30 @@ export default class DonationPanel extends React.Component {
       //     }
       //   }
       // }>
-      //   <TreeHistory />
+      //   <NoteAdd />
       // </AltContainer>;
+    }
+    if (this.props.mode == DONATIONDETAILMODE.HISTORY) {
+      // History
+      history = <div className="icon-group active">
+        <FontAwesome className="icon icon-line-chart" name='line-chart' />
+        <span className="icon-text">
+          History
+        </span>
+      </div>;
+      // Body
+      body = <AltContainer stores={
+        {
+          location: function(props) {
+            return {
+              store: LocationStore,
+              value: LocationStore.getState().temp
+            }
+          }
+        }
+      }>
+        <DonateHistory />
+      </AltContainer>;
     }
     return (
       <div className={"donation-panel-wrapper" + open + wide}>

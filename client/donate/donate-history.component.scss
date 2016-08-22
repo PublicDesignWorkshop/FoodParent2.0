@@ -1,0 +1,20 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.donate-history-wrapper {
+  -webkit-flex-grow: 1;
+          flex-grow: 1;
+
+  padding: 8px;
+
+  // display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+  // display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+  // display: -ms-flexbox;           /* TWEENER - IE 10 */
+  // display: -webkit-flex;          /* NEW - Chrome */
+  // display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  //
+  // -webkit-flex-direction: column;    /* Safari 6.1+ */
+  //         flex-direction: column;    /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+  overflow-y: scroll;
+}

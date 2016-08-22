@@ -83,6 +83,7 @@ export class DonateModel {
     } else {
       this.images = [];
     }
+    this.amountType = AMOUNTTYPE.LBS;
     this.amount = parseFloat(props.amount) * ServerSetting.fGToLBS;
     this.date = moment(props.date);
   }
