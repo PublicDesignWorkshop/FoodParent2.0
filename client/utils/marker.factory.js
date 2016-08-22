@@ -6,6 +6,7 @@ let ServerSetting = require('./../../setting/server.json');
 let MapSetting = require('./../../setting/map.json');
 let MapActions = require('./../actions/map.actions');
 let TreeActions = require('./../actions/tree.actions');
+let LocationActions = require('./../actions/location.actions');
 
 let FoodStore = require('./../stores/food.store');
 let FlagStore = require('./../stores/flag.store');
@@ -33,6 +34,28 @@ export function createFocusMarker(location) {
   // Add zoom-in event listener
   marker.on('dblclick', function() {
     MapActions.moveToLocationWithMarker(MapSetting.sTreeMapId, location, MapSetting.iFocusZoom);
+  });
+  return marker;
+}
+
+export function createFocusMarkerLocation(location) {
+  // Create marker icon.
+  let icon = new L.Icon({
+    iconUrl: ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uPinIcon,
+    iconSize: new L.Point(32, 32),
+    iconAnchor: new L.Point(16, 32),
+    shadowUrl: ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker,
+    shadowAnchor: new L.Point(11, 32),
+  });
+  // Create marker.
+  let marker = new L.Marker(location, {
+    icon: icon,
+    type: "svg",
+    draggable: false
+  });
+  // Add zoom-in event listener
+  marker.on('dblclick', function() {
+    MapActions.moveToLocationWithMarker(MapSetting.sRecipeintMapId, location, MapSetting.iFocusZoom);
   });
   return marker;
 }
@@ -158,5 +181,57 @@ export function createSVGTreeMarker(tree, movable) {
   //   console.log(ServerSetting.uBase + '/tree/' + tree.id);
   //   browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + tree.id});
   // });
+  return marker;
+}
+
+
+export function createSVGLocationMarker(location, movable) {
+  let iconUrl = ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uRecipientMarkerIcon;
+  let classname = "leaflet-marker-location ";
+  let icon = new L.divIcon({
+    iconUrl: iconUrl,
+    iconSize: new L.Point(20, 32),
+    iconAnchor: new L.Point(10, 32),
+    popupAnchor: new L.Point(-1, -30),
+    shadowUrl: ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker,
+    shadowAnchor: new L.Point(4, 32),
+    className: classname,
+    html: '<img class="shadow" src="' + ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker + '"/><img class="icon" src="' + iconUrl + '" />'
+  });
+  let template;
+  if (location.id != 0) {
+    template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">' + location.name + '</span></div><div class="marker-right"></div>';
+  } else {
+    template = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">' + localization(693) + '</span></div><div class="marker-right"></div>';
+  }
+
+
+  let marker = new L.Marker(new L.LatLng(location.lat, location.lng), {
+    id: location.id,
+    type: "svg",
+    icon: icon,
+    draggable: movable,
+    riseOnHover: true,
+  }).bindPopup(template, {
+    autoPan: false,
+    closeButton: false,
+    closeOnClick: false,
+  });
+  // Add zoom-in event listener
+  marker.on('dblclick', function() {
+    MapActions.moveToLocation(MapSetting.sRecipeintMapId, new L.LatLng(location.lat, location.lng), MapSetting.iFocusZoom);
+  });
+
+  if (movable) {
+    marker.on('dragend', function() {
+      location.lat = parseFloat(parseFloat(marker.getLatLng().lat).toFixed(MapSetting.iMarkerPrecision));
+      location.lng = parseFloat(parseFloat(marker.getLatLng().lng).toFixed(MapSetting.iMarkerPrecision));
+      LocationActions.setCode(94);  // 94: Unsaved change.
+      marker.openPopup();
+    });
+  }
+  marker.on('click', function() {
+    browserHistory.push({pathname: ServerSetting.uBase + '/recipient/' + location.id});
+  });
   return marker;
 }

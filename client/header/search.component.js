@@ -57,6 +57,8 @@ export default class Search extends React.Component {
           let location;
           if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
             location = MapStore.getMapModel(MapSetting.sTreeMapId).getCenter();
+          } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
+            location = MapStore.getMapModel(MapSetting.sRecipeintMapId).getCenter();
           }
           geocoding(searchText, new L.LatLng(location.lat, location.lng), function(response) {
             MapActions.moveToLocationWithMarker(MapSetting.sTreeMapId, new L.LatLng(response.lat.toFixed(MapSetting.iMarkerPrecision), response.lng.toFixed(MapSetting.iMarkerPrecision)), MapSetting.iFocusZoom);

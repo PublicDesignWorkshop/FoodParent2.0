@@ -9,6 +9,7 @@ let MapActions = require('./../actions/map.actions');
 let TreeActions = require('./../actions/tree.actions');
 let MapSetting = require('./../../setting/map.json');
 let MapStore = require('./../stores/map.store');
+let AuthStore = require('./../stores/auth.store');
 import { MAPTILE, MAPTYPE } from './../utils/enum';
 import { localization } from './../utils/localization';
 
@@ -78,6 +79,20 @@ export default class TreeControl extends React.Component {
         <FontAwesome name="minus-square" />
       </div>;
     }
+    let donation, notify;
+    if (AuthStore.getState().auth.isManager()) {
+      notify = <div className="control-button" onClick={()=> {
+
+      }} data-for="tooltip-tree-control" data-tip={localization(54)}>
+        <FontAwesome name="paper-plane-o" />
+      </div>;
+      donation = <div className="control-button" onClick={()=> {
+        // location.replace(ServerSetting.uBase + '/recipients');
+        this.context.router.push({pathname: ServerSetting.uBase + '/recipients'});
+      }} data-for="tooltip-tree-control" data-tip={localization(53)}>
+        <FontAwesome name="sitemap" />
+      </div>;
+    }
     return (
       <div className="tree-control-wrapper">
         <div className="control-button" onClick={this.handleMoveToUserLocation} data-for="tooltip-tree-control" data-tip={localization(80)}>
@@ -97,6 +112,8 @@ export default class TreeControl extends React.Component {
         </div>
         <ReactTooltip id="tooltip-tree-control" effect="solid" place="left" />
         {add}
+        {notify}
+        {donation}
       </div>
     );
   }

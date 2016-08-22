@@ -130,5 +130,19 @@
     height: 32px;
   }
 }
+.leaflet-marker-location {
+  position: relative;
+  > .shadow {
+    position: absolute;
+    pointer-events: none;
+  }
+  > .icon {
+    position: absolute;
+    width: 20px;
+    height: 32px;
+    top: 6px;
+    left: -2px;
+  }
+}
 
 /* Please define flag class properties here */

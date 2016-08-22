@@ -13,6 +13,8 @@ import { localization } from './../utils/localization';
 import { MAPTYPE, AUTHTYPE } from './../utils/enum';
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
+let LocationActions = require('./../actions/location.actions');
+let LocationStore = require('./../stores/location.store');
 let AuthStore = require('./../stores/auth.store');
 
 
@@ -75,13 +77,18 @@ export default class Header extends React.Component {
           } else {
             if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
               TreeActions.setCode(0);
-              if (TreeStore.getState().selected) {
+              if (TreeStore.getState().selected > 0) {
                 this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + TreeStore.getState().selected});
               } else {
                 this.context.router.push({pathname: ServerSetting.uBase + '/'});
               }
               // this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
             } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
+              if (LocationStore.getState().selected > 0) {
+                this.context.router.push({pathname: ServerSetting.uBase + '/recipient/' + LocationStore.getState().selected});
+              } else {
+                this.context.router.push({pathname: ServerSetting.uBase + '/recipients'});
+              }
               // this.context.router.push({pathname: ServerSetting.uBase + "/donations"});
             }
           }

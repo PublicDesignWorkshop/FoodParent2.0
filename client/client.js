@@ -23,6 +23,9 @@ import Register from './account/register.component';
 import Splash from './message/splash.component';
 import Popup from './message/popup.component';
 
+import RecipientMap from './recipients/recipient-map.component';
+import RecipientDetail from './recipients/recipient-detail.component';
+
 let MapSetting = require('./../setting/map.json');
 import { localization } from './utils/localization';
 
@@ -114,6 +117,8 @@ render((
       <Route path="account" component={Account} />
       <Route path="register" component={Register} />
       <Route path="filter" component={TreeFilter} />
+      <Route path="recipients" component={RecipientMap} />
+      <Route path="recipient/:recipientId" component={RecipientDetail} />
     </Route>
   </Router>
 ), document.getElementById('app'));

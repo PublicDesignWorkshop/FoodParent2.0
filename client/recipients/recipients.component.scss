@@ -1,0 +1,14 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.recipient-map-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding-top: $header-height;
+  overflow: hidden;
+
+  pointer-events: none;
+}

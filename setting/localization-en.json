@@ -1,6 +1,10 @@
 {
   "0": "Please check your internet connection.",
 
+  "51": "Add a new recipient.",
+  "52": "Swtich to tree mode.",
+  "53": "Switch to donation mode.",
+  "54": "Send notification e-mails to managers or parents.",
   "55": "You and",
   "56": "You have adopted this tree.",
   "57": "No recent donate.",
@@ -124,7 +128,7 @@
   "690": "Manager Password",
   "691": "Enter a password...",
   "692": "NEW&nbsp;&nbsp;TREE",
-  "693": "NEW&nbsp;&nbsp;PLACE",
+  "693": "NEW&nbsp;&nbsp;RECIPIENT",
 
   "706": "Press the button to <strong>delete</strong> this donation.",
 
