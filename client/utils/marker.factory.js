@@ -190,13 +190,13 @@ export function createSVGLocationMarker(location, movable) {
   let classname = "leaflet-marker-location ";
   let icon = new L.divIcon({
     iconUrl: iconUrl,
-    iconSize: new L.Point(20, 32),
-    iconAnchor: new L.Point(10, 32),
+    iconSize: new L.Point(32, 32),
+    iconAnchor: new L.Point(16, 32),
     popupAnchor: new L.Point(-1, -30),
     shadowUrl: ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker,
     shadowAnchor: new L.Point(4, 32),
     className: classname,
-    html: '<img class="shadow" src="' + ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker + '"/><img class="icon" src="' + iconUrl + '" />'
+    html: '<img class="icon" src="' + iconUrl + '" />'
   });
   let template;
   if (location.id != 0) {

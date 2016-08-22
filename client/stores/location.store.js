@@ -41,6 +41,9 @@ export class LocationModel {
   getLocation() {
     return new L.LatLng(this.lat, this.lng);
   }
+  getName() {
+    return this.name + " #" + this.id;
+  }
 }
 
 class LocationStore {

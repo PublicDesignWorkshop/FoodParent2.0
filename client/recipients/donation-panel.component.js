@@ -13,7 +13,7 @@ let LocationStore = require('./../stores/location.store');
 let NoteStore = require('./../stores/note.store');
 
 import DonationControl from './donation-control.component';
-// import TreeInfo from './../tree/tree-info.component';
+import LocationInfo from './../location/location-info.component';
 // import TreeHistory from './../tree/tree-history.component';
 // import NoteAdd from './../note/note-add.component';
 //
@@ -95,14 +95,23 @@ export default class DonationPanel extends React.Component {
           Info
         </span>
       </div>;
-      // // Body
+      // Body
+      body = <div className="body-scroll">
+        <AltContainer stores={
+          {
+            LocationStore: LocationStore,
+          }
+        }>
+          <LocationInfo />
+        </AltContainer>
+      </div>;
       // body = <div className="body-scroll">
       //   // <AltContainer stores={
       //   //   {
       //   //     LocationStore: LocationStore,
       //   //   }
       //   // }>
-      //   //   <TreeInfo />
+      //   //   <LocationInfo />
       //   // </AltContainer>
       //   // <AltContainer stores={
       //   //   {

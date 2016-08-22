@@ -1,0 +1,58 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.location-name-wrapper {
+  height: 44px;
+  font-family: $font-main;
+  color: $brown;
+  font-size: $font-size-medium;
+
+  -webkit-flex: 0 0 auto; /* Safari 6.1+ */
+      -ms-flex: 0 0 auto; /* IE 10 */
+          flex: 0 0 auto;
+
+  display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;           /* TWEENER - IE 10 */
+  display: -webkit-flex;          /* NEW - Chrome */
+  display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+  -webkit-flex-direction: row;    /* Safari 6.1+ */
+          flex-direction: row;    /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+  -webkit-justify-content: space-between; /* Safari 6.1+ */
+          justify-content: space-between;
+
+  > .location-name-label {
+    padding: 8px;
+    > img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  > .location-name-data {
+    vertical-align: bottom;
+    font-size: $font-size-large;
+    font-weight: 700;
+    color: $brown;
+    font-family: $font-main;
+
+    -webkit-flex-grow: 1;
+            flex-grow: 1;
+    > .location-name-input {
+      border-radius: 0;
+      -webkit-flex-grow: 1;           /* NEW - Chrome */
+              flex-grow: 1;           /* NEW, Spec - Opera 12.1, Firefox 20+ */
+      padding: 4px 6px 5px 6px;
+      &:focus {
+        outline: 2px solid $brown;
+      }
+    }
+
+    > .location-name-text {
+      padding: 8px 4px;
+    }
+  }
+
+}

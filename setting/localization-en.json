@@ -1,7 +1,8 @@
 {
   "0": "Please check your internet connection.",
 
-  "51": "Add a new recipient.",
+  "50": "No name.",
+  "51": "Add a new place.",
   "52": "Swtich to tree mode.",
   "53": "Switch to donation mode.",
   "54": "Send notification e-mails to managers or parents.",
