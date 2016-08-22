@@ -7,9 +7,9 @@ let ServerSetting = require('./../../setting/server.json');
 
 import { localization } from './../utils/localization';
 import LocationName from './location-name.component';
-// import TreeLocation from './tree-location.component';
-// import TreeAddress from './tree-address.component';
-// import TreeDescription from './tree-description.component';
+import LocationLocation from './location-location.component';
+import LocationAddress from './location-address.component';
+import LocationDescription from './location-description.component';
 // import TreeFlag from './tree-flag.component';
 // import TreeOwnership from './tree-ownership.component';
 
@@ -86,7 +86,9 @@ export default class LocationInfo extends React.Component {
         }
       }>
         <LocationName editing={this.state.editing} />
-
+        <LocationLocation editing={this.state.editing} />
+        <LocationAddress editing={this.state.editing} />
+        <LocationDescription editing={this.state.editing} />
       </AltContainer>
     } else {
       info = <AltContainer stores={
@@ -100,7 +102,9 @@ export default class LocationInfo extends React.Component {
         }
       }>
         <LocationName editing={false} />
-
+        <LocationLocation editing={false} />
+        <LocationAddress editing={false} />
+        <LocationDescription editing={false} />
       </AltContainer>
     }
     return (
@@ -115,13 +119,3 @@ export default class LocationInfo extends React.Component {
 LocationInfo.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
-
-// <TreeLocation editing={this.state.editing} />
-// <TreeAddress editing={this.state.editing} />
-// <TreeDescription editing={this.state.editing} />
-// <TreeFlag editing={this.state.editing} />
-// <TreeOwnership editing={this.state.editing} />
-
-// <TreeLocation editing={false} />
-// <TreeAddress editing={false} />
-// <TreeDescription editing={false} />

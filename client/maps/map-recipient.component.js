@@ -196,7 +196,6 @@ export default class MapRecipient extends React.Component {
       bFound = true;
     }
     if (bFound) {
-      console.log("render active marker");
       let marker = this.addMarker(location, location.id, location.editing);
       location.marker = marker;
       marker.openPopup();
