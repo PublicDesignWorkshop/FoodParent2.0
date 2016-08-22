@@ -23,7 +23,7 @@ export default class TreeHistory extends React.Component {
     this.updateNoteStore = this.updateNoteStore.bind(this);
   }
   componentWillMount() {
-
+    this.updateProps(this.props);
   }
   componentDidMount () {
     NoteStore.listen(this.updateNoteStore);

@@ -59,7 +59,7 @@ export default class TreeRecentPost extends React.Component {
         </div>
         <div className="tree-recent-post-data">
           <div className="tree-recent-post-text">
-            <NoteLine note={this.state.note} />
+            <NoteLine note={this.state.note} link={true} />
             {nopost}
           </div>
         </div>

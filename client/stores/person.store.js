@@ -140,7 +140,7 @@ class PersonStore {
     if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
       if (TreeStore.getState().selected) {
         setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
-          if (this.auth.auth == AUTHTYPE.PARENT) {
+          if (this.auth && this.auth.auth == AUTHTYPE.PARENT) {
             browserHistory.replace({pathname: ServerSetting.uBase + '/tree/' + TreeStore.getState().selected});
           } else {
             TreeActions.fetchTrees();

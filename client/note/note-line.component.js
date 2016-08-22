@@ -33,7 +33,9 @@ export default class NoteLine extends React.Component {
   }
   selectNote() {
     NoteActions.setSelected(this.props.note.id);
-    this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + TreeStore.getState().selected, hash: "#history"});
+    if (this.props.link) {
+      this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + TreeStore.getState().selected, hash: "#history"});
+    }
   }
   render () {
     let style = "";

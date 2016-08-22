@@ -38,7 +38,7 @@ export default class NoteAdd extends React.Component {
   }
   componentWillUnmount() {
     NoteStore.unlisten(this.updateNoteStore);
-    NoteActions.setSelected(null);
+    // NoteActions.setSelected(null);
   }
   updateNoteStore() {
     this.forceUpdate();

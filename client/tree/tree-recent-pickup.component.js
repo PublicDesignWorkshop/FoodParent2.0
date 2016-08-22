@@ -59,7 +59,7 @@ export default class TreeRecentPickup extends React.Component {
         </div>
         <div className="tree-recent-pickup-data">
           <div className="tree-recent-pickup-text">
-            <NoteLine note={this.state.note} />
+            <NoteLine note={this.state.note} link={true} />
             {nopickup}
           </div>
         </div>

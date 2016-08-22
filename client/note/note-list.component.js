@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import React from 'react';
 import AltContainer from 'alt-container';
 
@@ -22,7 +23,12 @@ export default class NoteList extends React.Component {
 
   }
   componentDidMount () {
-
+    setTimeout(function() {
+      if (this.props.note && this.props.note.id != 0) {
+        console.log("1");
+        $('.tree-history-wrapper').animate({ scrollTop: $('#note' + this.props.note.id).offset().top - 96 }, 0);
+      }
+    }.bind(this), 250);
   }
   componentWillReceiveProps(nextProps) {
 
@@ -32,7 +38,7 @@ export default class NoteList extends React.Component {
     if (this.props.notes && this.props.notes.length > 0) {
       this.props.notes.forEach((note) => {
         if (this.props.note && note.id == this.props.note.id) {
-          notes.push(<NoteInfo key={"note" + note.id} note={this.props.note} />);
+          notes.push(<div id={"note" + note.id} key={"note" + note.id}><NoteInfo note={this.props.note} /></div>);
         } else {
           notes.push(<NoteLine key={"note" + note.id} note={note} />);
         }

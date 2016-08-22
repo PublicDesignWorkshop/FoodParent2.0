@@ -103,11 +103,12 @@ class NoteStore {
     }
     this.temp = new NoteModel(props);
     this.notes = this.notes.sort(sortNoteByDateDESC);
+    this.code = 200;
     setTimeout(function() {
       AuthActions.fetchAuth.defer();
       browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + props.tree, hash: "#history"});
-    },0);
-    this.code = 200;
+    }.bind(this),0);
+
   }
   handleDeletedNote(props) {
     let i = -1;

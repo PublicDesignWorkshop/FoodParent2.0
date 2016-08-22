@@ -49,15 +49,6 @@
 
 
     > .body-scroll {
-      -webkit-flex-grow: 1;
-              flex-grow: 1;
-      display: -webkit-box;
-      display: -moz-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      -webkit-flex-direction: column;
-      flex-direction: column;
       overflow-y: scroll;
     }
 
@@ -93,7 +84,7 @@
                   flex-grow: 1;
         }
         &.close {
-          padding: 7px 8px 4px 12px;
+          padding: 7px 12px 4px 12px;
         }
         &:not(.active):not(.close) {
           background-color: $brown;
