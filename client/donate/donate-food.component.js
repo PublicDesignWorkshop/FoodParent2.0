@@ -65,6 +65,7 @@ export default class DonateFood extends React.Component {
       this.props.donate.food = selected.value;
     }
     if (prevFood != selected.value) {
+      this.props.donate.trees = [];
       DonateActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
     }
     updateFilter(FITERMODE.FOOD, [selected.value], function(response) {  // Resolve

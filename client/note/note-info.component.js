@@ -190,6 +190,5 @@ export default class NoteInfo extends React.Component {
     } else {
       return (<div></div>);
     }
-
   }
 }

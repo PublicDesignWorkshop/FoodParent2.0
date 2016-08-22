@@ -54,11 +54,13 @@ export default class TreeControl extends React.Component {
     MapActions.setZoom.defer(MapSetting.sTreeMapId, zoom);
   }
   handleFilter() {
-    if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
-      TreeActions.setCode(0); // set TreeAction code as 0 so that map component can wait rendering map after trees are updated.
-      this.context.router.push({pathname: ServerSetting.uBase + '/filter'});
-      // this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
-    }
+    TreeActions.setCode(0); // set TreeAction code as 0 so that map component can wait rendering map after trees are updated.
+    this.context.router.push({pathname: ServerSetting.uBase + '/filter'});
+    // if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
+    //   TreeActions.setCode(0); // set TreeAction code as 0 so that map component can wait rendering map after trees are updated.
+    //   this.context.router.push({pathname: ServerSetting.uBase + '/filter'});
+    //   // this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
+    // }
   }
   render () {
     let add = <div className="control-button" onClick={()=> {
@@ -68,13 +70,15 @@ export default class TreeControl extends React.Component {
     </div>;
     if (this.props.adding) {
       add = <div className="control-button" onClick={()=> {
-        if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
-          TreeActions.setCode(0); // set TreeAction code as 0 so that map component can wait rendering map after trees are updated.
-          this.context.router.push({pathname: ServerSetting.uBase + '/'});
-          // this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
-        } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
-          // this.context.router.push({pathname: ServerSetting.uBase + "/donations"});
-        }
+        TreeActions.setCode(0); // set TreeAction code as 0 so that map component can wait rendering map after trees are updated.
+        this.context.router.push({pathname: ServerSetting.uBase + '/'});
+        // if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
+        //   TreeActions.setCode(0); // set TreeAction code as 0 so that map component can wait rendering map after trees are updated.
+        //   this.context.router.push({pathname: ServerSetting.uBase + '/'});
+        //   // this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
+        // } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
+        //   // this.context.router.push({pathname: ServerSetting.uBase + "/donations"});
+        // }
       }} data-for="tooltip-tree-control" data-tip={localization(79)}>
         <FontAwesome name="minus-square" />
       </div>;

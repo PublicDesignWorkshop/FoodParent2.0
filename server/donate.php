@@ -58,6 +58,7 @@
     if ($data != null) {
       $params = array(
         "id" => $data->{'id'},
+        "type" => 4,  // Type for donation is 4.
         "location" => $data->{'location'},
         "food" => $data->{'food'},
         "tree" => $data->{'tree'},
@@ -68,7 +69,7 @@
         "date" => $data->{'date'},
       );
     }
-    $sql = "UPDATE `donate` SET `location` = :location, `food` = :food, `tree` = :tree, `person` = :person, `comment` = :comment, `picture` = :picture, `amount` = :amount, `date` = :date WHERE (`id` = :id)";
+    $sql = "UPDATE `donate` SET `type` = :type, `location` = :location, `food` = :food, `tree` = :tree, `person` = :person, `comment` = :comment, `picture` = :picture, `amount` = :amount, `date` = :date WHERE (`id` = :id)";
 
     try {
       $pdo = getConnection();
@@ -107,23 +108,24 @@
   }
 
   function create() {
-    $owner = 0;
-    if (isset($_SESSION['user_id'])) {
-      $owner = intval($_SESSION['user_id']);
-    }
+    // $owner = 0;
+    // if (isset($_SESSION['user_id'])) {
+    //   $owner = intval($_SESSION['user_id']);
+    // }
 
     $data = json_decode(file_get_contents('php://input'));
     $params = array(
+      "type" => 4,  // Type for donation is 4.
       "location" => $data->{'location'},
       "food" => $data->{'food'},
       "tree" => $data->{'tree'},
-      "person" => $owner,
+      "person" => $data->{'person'},
       "comment" => $data->{'comment'},
       "picture" => $data->{'picture'},
       "amount" => $data->{'amount'},
       "date" => $data->{'date'},
       );
-    $sql = "INSERT INTO `donate` VALUES ( NULL, :location, :food, :tree, :person, :comment, :picture, :amount, :date )";
+    $sql = "INSERT INTO `donate` VALUES ( NULL, :type, :location, :food, :tree, :person, :comment, :picture, :amount, :date )";
 
     try {
       $pdo = getConnection();

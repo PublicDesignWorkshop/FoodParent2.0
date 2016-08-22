@@ -1,10 +1,13 @@
+import $ from 'jquery';
 import React from 'react';
 import AltContainer from 'alt-container';
 
 require('./recipient-detail.component.scss');
-
+let TreeActions = require('./../actions/tree.actions');
 let MapStore = require('./../stores/map.store');
+let TreeStore = require('./../stores/tree.store');
 let LocationStore = require('./../stores/location.store');
+let DonateStore = require('./../stores/donate.store');
 let LocationActions = require('./../actions/location.actions');
 // let NoteActions = require('./../actions/note.actions');
 import { DONATIONDETAILMODE } from './../utils/enum';
@@ -19,11 +22,12 @@ export default class RecipientDetail extends React.Component {
     this.updateNoteStore = this.updateNoteStore.bind(this);
   }
   componentWillMount() {
-
+    TreeActions.reset();
     this.updateProps(this.props);
   }
   componentDidMount () {
     LocationStore.listen(this.updateNoteStore);
+    // DonateStore.listen(this.updateNoteStore);
   }
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);
@@ -31,11 +35,13 @@ export default class RecipientDetail extends React.Component {
   }
   componentWillUnmount() {
     LocationStore.unlisten(this.updateNoteStore);
+    // DonateStore.unlisten(this.updateNoteStore);
   }
   updateNoteStore() {
     this.forceUpdate();
   }
   updateProps(props) {
+    $('.donation-panel-wrapper').removeClass('close');
     let mode;
     let remove = false;
     LocationActions.fetchLocations(parseInt(props.params.recipientId));
@@ -104,6 +110,12 @@ export default class RecipientDetail extends React.Component {
               return {
                 store: LocationStore,
                 value: LocationStore.getState().selected
+              }
+            },
+            trees: function(props) {
+              return {
+                store: TreeStore,
+                value: TreeStore.getState().trees
               }
             }
           }

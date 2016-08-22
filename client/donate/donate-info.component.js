@@ -30,6 +30,7 @@ export default class DonateInfo extends React.Component {
     super(props, context);
   }
   componentWillMount() {
+    TreeActions.reset();
     let editing = false;
     if (this.props.editing) {
       editing = this.props.editing;
@@ -43,6 +44,9 @@ export default class DonateInfo extends React.Component {
   }
   updateProps(props) {
 
+  }
+  componentWillUnmount() {
+    this.props.donate.editing = false;
   }
   render () {
     let style = "";
@@ -70,6 +74,7 @@ export default class DonateInfo extends React.Component {
           <div className="solid-button-group same-border-color-padding">
             <div className={"solid-button" + buttonStyle} onClick={() => {
               this.setState({editing: false, remove: false});
+              this.props.donate.editing = false;
               DonateActions.updateDonate(DonateStore.getState().temp);
             }}>
               {localization(930) /* SAVE */}
@@ -77,6 +82,7 @@ export default class DonateInfo extends React.Component {
             <div className={"solid-button" + buttonStyle} onClick={() => {
               this.setState({editing: false, remove: false});
               DonateActions.setSelected(this.props.donate.id);
+              this.props.donate.editing = false;
             }}>
               {localization(933) /* CANCEL */}
             </div>
@@ -96,6 +102,7 @@ export default class DonateInfo extends React.Component {
           <div className="solid-button-group same-border-color-padding">
             <div className={"solid-button" + buttonStyle} onClick={() => {
               this.setState({editing: false, remove: false});
+              this.props.donate.editing = false;
               DonateActions.createDonate.defer(DonateStore.getState().temp);
             }}>
               {localization(930) /* SAVE */}
@@ -107,11 +114,13 @@ export default class DonateInfo extends React.Component {
           actions = <div className="solid-button-group same-border-color-padding">
             <div className={"solid-button" + buttonStyle} onClick={() => {
               this.setState({editing: true});
+              this.props.donate.editing = true;
             }}>
               {localization(928) /* EDIT */}
             </div>
             <div className={"solid-button" + buttonStyle} onClick={() => {
               DonateActions.setSelected(null);
+              this.props.donate.editing = false;
             }}>
               {localization(72) /* CLOSE */}
             </div>
@@ -120,6 +129,7 @@ export default class DonateInfo extends React.Component {
           actions = <div className="solid-button-group same-border-color-padding">
             <div className={"solid-button" + buttonStyle} onClick={() => {
               DonateActions.setSelected(null);
+              this.props.donate.editing = false;
             }}>
               {localization(72) /* CLOSE */}
             </div>

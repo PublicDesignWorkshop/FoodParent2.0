@@ -98,6 +98,7 @@ class TreeStore {
       handleCreatedTree: TreeActions.CREATED_TREE,
       handleUpdatedTree: TreeActions.UPDATED_TREE,
       handleDeletedTree: TreeActions.DELETED_TREE,
+      handleReset: TreeActions.RESET,
     });
     // Expose public methods.
     this.exportPublicMethods({
@@ -228,6 +229,12 @@ class TreeStore {
     this.temp = null;
     this.code = 200;
     browserHistory.push({pathname: ServerSetting.uBase + '/'});
+  }
+  handleReset() {
+    this.selected = null;
+    this.temp = null;
+    this.trees = [];
+    this.code = 200;
   }
 }
 

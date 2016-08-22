@@ -5,6 +5,8 @@ require('./recipient-map.component.scss');
 
 let MapStore = require('./../stores/map.store');
 let LocationStore = require('./../stores/location.store');
+let TreeActions = require('./../actions/tree.actions');
+let TreeStore = require('./../stores/tree.store');
 let LocationActions = require('./../actions/location.actions');
 
 
@@ -17,6 +19,7 @@ export default class RecipientMap extends React.Component {
     super(props, context);
   }
   componentWillMount() {
+    TreeActions.reset();
     this.updateProps(this.props);
   }
   componentDidMount () {
@@ -44,6 +47,12 @@ export default class RecipientMap extends React.Component {
               return {
                 store: LocationStore,
                 value: LocationStore.getState().locations
+              }
+            },
+            trees: function(props) {
+              return {
+                store: TreeStore,
+                value: TreeStore.getState().trees
               }
             }
           }

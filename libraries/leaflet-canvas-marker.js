@@ -23,6 +23,7 @@ L.CanvasMarker = L.Circle.extend({
 
     this._image = this.options.image;
     this._shadow = this.options.shadow;
+    this._checked = this.options.checked;
 	},
 
   // initialize: function (latlng, options) {
@@ -45,6 +46,9 @@ L.CanvasMarker = L.Circle.extend({
       this._ctx.drawImage(this._shadow, p.x - height * 0.5 + Math.floor(this._ctx.globalAlpha * 10), p.y - height, height, height);
       this._ctx.restore();
       this._ctx.drawImage(this._image, p.x - width * 0.5, p.y - height, width, height);
+      if (this._checked) {
+        this._ctx.drawImage(this._checked, p.x - width * 0.5, p.y - height, width, height);
+      }
     }
 	},
 

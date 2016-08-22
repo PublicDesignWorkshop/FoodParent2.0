@@ -18,16 +18,13 @@
     color: $brown;
     font-weight: 700;
     margin: 4px 0;
-    .fa.fa-tag {
+    .fa.fa-mail-forward {
       margin-left: 2px;
       margin-right: 3px;
     }
   }
 
   > .donate-source-data {
-    margin: 0 0 0 12px;
-    &.active {
-      margin: 0 0 0 20px;
-    }
+    margin: 0 0 0 8px;
   }
 }

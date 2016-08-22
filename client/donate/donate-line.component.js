@@ -68,7 +68,11 @@ export default class DonateLine extends React.Component {
       }
       if (this.props.donate.trees) {
         this.props.donate.trees.forEach((tree) => {
-          source.push(<span className="tree-link" key={"treesource" + tree}>{"#" + tree}</span>)
+          if (tree == 0) {
+            source.push(<span className="tree-link" key={"treesource" + tree}>{localization(48)}</span>);
+          } else {
+            source.push(<span className="tree-link" key={"treesource" + tree}>{"#" + tree}</span>);
+          }
         });
       }
       return (

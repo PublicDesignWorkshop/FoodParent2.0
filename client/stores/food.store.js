@@ -59,7 +59,7 @@ class FoodStore {
     return null;
   }
   getFoodIcons() {
-    let result = [ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker];
+    let result = [ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker, ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uCheckMarkerIcon];
     let flags = FlagStore.getState().flags;
     this.getState().foods.forEach((food) => {
       for (let i = 0; i < flags.length; i++) {
@@ -81,15 +81,16 @@ class FoodStore {
   handleRegisterIcons(props) {
     if (props[0].state == "fulfilled") {
       this.shadowImage = props[0].value;
+      this.checkImage = props[1].value;
     }
     let flags = FlagStore.getState().flags;
     for (let i = 0; i < this.foods.length; i++) {
-      if (props[flags.length * i + 1].state == "fulfilled") {
+      if (props[flags.length * i + 2].state == "fulfilled") {
         this.foods[i].images = [];
         this.foods[i].icons = [];
         for (let j = 0; j < flags.length; j++) {
-          this.foods[i].icons[flags[j].name] = props[flags.length * i + j + 1].value.src;
-          this.foods[i].images[flags[j].name] = props[flags.length * i + j + 1].value;
+          this.foods[i].icons[flags[j].name] = props[flags.length * i + j + 2].value.src;
+          this.foods[i].images[flags[j].name] = props[flags.length * i + j + 2].value;
         }
       }
     }

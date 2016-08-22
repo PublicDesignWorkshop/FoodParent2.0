@@ -86,6 +86,8 @@ export class DonateModel {
     this.amountType = AMOUNTTYPE.LBS;
     this.amount = parseFloat(props.amount) * ServerSetting.fGToLBS;
     this.date = moment(props.date);
+    this.editing = false;
+    this.selectmode = false;
   }
   addImage(filename) {
     this.images.push(filename);
@@ -106,5 +108,10 @@ export class DonateModel {
       return true;
     }
     return false;
+  }
+  addSource(treeId) {
+    if (this.editing && $.inArray(treeId, this.trees) == -1) {
+      this.trees.push(treeId);
+    }
   }
 }

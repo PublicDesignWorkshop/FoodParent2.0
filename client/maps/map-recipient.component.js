@@ -17,7 +17,7 @@ let LocationActions = require('./../actions/location.actions');
 let LocationStore = require('./../stores/location.store');
 
 import { MAPTILE, MAPTYPE } from './../utils/enum';
-import { createFocusMarkerLocation, createSVGLocationMarker } from './../utils/marker.factory';
+import { createCanvasTreeSourceMarker, createFocusMarkerLocation, createSVGLocationMarker } from './../utils/marker.factory';
 
 
 export default class MapRecipient extends React.Component {
@@ -30,6 +30,7 @@ export default class MapRecipient extends React.Component {
   }
   componentDidMount () {
     // Intialize leaflet only if not initialized.
+
     if (!MapStore.isMapExist(MapSetting.sRecipeintMapId)) {
       this.map = L.map(MapSetting.sRecipeintMapId, {
           zoomControl: MapSetting.bZoomControl,
@@ -138,11 +139,15 @@ export default class MapRecipient extends React.Component {
     let temp = LocationStore.getState().temp;
     if (LocationStore.getState().code == 200 && (props.selected == null || props.selected != this.props.selected)) {
       this.renderMarkers(props.locations, props.selected);
+
     } else if (LocationStore.getState().code == 200 && temp && (temp.editing != null || !temp.editing)) {
       this.renderActiveMarker(temp);
       if (LocationStore.getState().code == 200 && temp && temp.id == 0) {
         this.renderMarkers(props.locations, props.selected);
       }
+    }
+    if (props.trees) {
+      this.renderTreeMarkers(props.trees);
     }
   }
   renderPopup(location) {
@@ -221,7 +226,7 @@ export default class MapRecipient extends React.Component {
   }
   renderMarkers(locations, selected) {
     if (__DEV__) {
-      console.log(`map-location.component - renderMarkers() with ${locations.length} locations`);
+      console.log(`map-recipient.component - renderMarkers() with ${locations.length} locations`);
     }
     var markers = this.markersLayer.getLayers();
     //this.markersLayer._featureGroup._layers
@@ -278,6 +283,57 @@ export default class MapRecipient extends React.Component {
   removeMarker(marker, layer) {
     marker.off('click');
     layer.removeLayer(marker);
+  }
+  // Add tree source markers to select donate source.
+  renderTreeMarkers(trees) {
+    if (__DEV__) {
+      console.log(`map-recipient.component - renderTreeMarkers() with ${trees.length} trees`);
+    }
+    var markers = this.markersLayer.getLayers();
+    //this.markersLayer._featureGroup._layers
+    //this.focusLayer._layers
+
+    // Remove unnecessary markers.
+    for (let i = 0; i < markers.length;) {
+      let bFound = false;
+      // trees.forEach((tree) => {
+      //   if (tree.id == markers[i].options.id && tree.food == markers[i].options.food && markers[i].getLatLng().lat == tree.lat && markers[i].getLatLng().lng == tree.lng) {
+      //     bFound = true;
+      //   }
+      // });
+      if (markers[i].options.type == "svg") {
+        bFound = true;
+      }
+      if (markers[i].options.type == "canvas") {
+        bFound = false;
+      }
+      if (!bFound) {
+        this.removeMarker(markers[i], this.markersLayer);
+        markers = _.without(markers, markers[i]);
+        i--;
+      }
+      i++;
+    }
+
+    // Add new markers.
+    trees.forEach((tree) => {
+      let bFound = false;
+      for (let i = 0; i < markers.length && !bFound; i++) {
+        if (tree.id == markers[i].options.id) {
+          bFound = true;
+        }
+      }
+      if (tree.id != 0 && !bFound) {
+        this.addTreeMarker(tree);
+      }
+    });
+  }
+  addTreeMarker(tree) {
+    let marker = createCanvasTreeSourceMarker(tree);
+    if (marker) {
+      this.markersLayer.addLayer(marker);
+    }
+    return marker;
   }
   render () {
     return (

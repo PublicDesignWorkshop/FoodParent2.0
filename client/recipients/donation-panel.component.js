@@ -15,7 +15,7 @@ let NoteStore = require('./../stores/note.store');
 import DonationControl from './donation-control.component';
 import LocationInfo from './../location/location-info.component';
 import DonateHistory from './../donate/donate-history.component';
-// import NoteAdd from './../note/note-add.component';
+import DonateAdd from './../donate/donate-add.component';
 //
 // import TreeRecentPost from './../tree/tree-recent-post.component';
 // import TreeRecentPickup from './../tree/tree-recent-pickup.component';
@@ -149,19 +149,19 @@ export default class DonationPanel extends React.Component {
           Post
         </span>
       </div>;
-      // // Body
-      // body = <AltContainer stores={
-      //   {
-      //     location: function(props) {
-      //       return {
-      //         store: LocationStore,
-      //         value: LocationStore.getState().temp
-      //       }
-      //     }
-      //   }
-      // }>
-      //   <NoteAdd />
-      // </AltContainer>;
+      // Body
+      body = <AltContainer stores={
+        {
+          location: function(props) {
+            return {
+              store: LocationStore,
+              value: LocationStore.getState().temp
+            }
+          }
+        }
+      }>
+        <DonateAdd />
+      </AltContainer>;
     }
     if (this.props.mode == DONATIONDETAILMODE.HISTORY) {
       // History

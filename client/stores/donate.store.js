@@ -73,6 +73,7 @@ class DonateStore {
       amount: "0",
       date: moment(new Date()).format(ServerSetting.sServerDateFormat),
     });
+    this.temp.editing = true;
     this.code = 200;
   }
   handleSetSelected(id) {

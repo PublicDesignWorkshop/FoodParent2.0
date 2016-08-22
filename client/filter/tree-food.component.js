@@ -41,12 +41,14 @@ export default class TreeFood extends React.Component {
     let selected = null;
     let foods = FoodStore.getState().foods;
     foods.forEach(food => {
-      options.push({value: food.id, label: food.name});
-      if ($.inArray(food.id, props.foods) > -1) {
-        if (selected == null) {
-          selected = [];
+      if (!food.farm) {
+        options.push({value: food.id, label: food.name});
+        if ($.inArray(food.id, props.foods) > -1) {
+          if (selected == null) {
+            selected = [];
+          }
+          selected.push({value: food.id, label: food.name});
         }
-        selected.push({value: food.id, label: food.name});
       }
     });
     this.setState({options: options, selected: selected});

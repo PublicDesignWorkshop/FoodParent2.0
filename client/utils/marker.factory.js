@@ -10,6 +10,9 @@ let LocationActions = require('./../actions/location.actions');
 
 let FoodStore = require('./../stores/food.store');
 let FlagStore = require('./../stores/flag.store');
+let DonateStore = require('./../stores/donate.store');
+let DonateActions = require('./../actions/donate.actions');
+import { displaySuccessMessage, displayFailMessage } from './../message/popup.component';
 import { localization } from './../utils/localization';
 
 
@@ -234,4 +237,52 @@ export function createSVGLocationMarker(location, movable) {
     browserHistory.push({pathname: ServerSetting.uBase + '/recipient/' + location.id});
   });
   return marker;
+}
+
+export function createCanvasTreeSourceMarker(tree) {
+  let food = FoodStore.getFood(tree.food);
+  if (food != null) {
+    let flags = FlagStore.getState().flags;
+    let bFound = false;
+    let image;
+    for (let i = 0; i < flags.length && !bFound; i++) {
+      if ($.inArray(flags[i].id, tree.flags) > -1) {
+        image = food.images[flags[i].name];
+        bFound = true;
+      }
+    }
+    if (image == null) {
+      image = food.images['verified'];
+    }
+    let checked;
+    if (tree.checked) {
+      checked = FoodStore.getState().checkImage;
+    }
+    // let popup = '<div class="marker-left"></div><div class="marker-name"><span class="marker-food">' + food.name + '</span>#<span class="marker-tree">' + tree.id + '</span></div><div class="marker-right"></div>';
+    let marker = new L.CanvasMarker(
+      new L.LatLng(tree.lat, tree.lng), 5, {
+        id: tree.id,
+        food: tree.food,
+        type: "canvas",
+        image: image,
+        shadow: FoodStore.getState().shadowImage,
+        checked: checked,
+      });
+    //   .bindPopup(popup, {
+    //   popupAnchor: new L.Point(0, -18),
+    //   closeButton: false,
+    //   closeOnClick: false,
+    // });
+    marker.on('click', function() {
+      if (DonateStore.getState().temp) {
+        tree.checked = true;
+        TreeActions.setCode(200);
+        DonateStore.getState().temp.addSource(tree.id);
+        DonateActions.setCode(94);
+      }
+    });
+
+    return marker;
+  }
+  return null;
 }
