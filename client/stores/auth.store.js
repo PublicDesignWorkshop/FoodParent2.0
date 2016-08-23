@@ -84,6 +84,20 @@ export class AuthModel {
         return false;
     }
   }
+  isAdmin() {
+    switch(this.auth) {
+      case AUTHTYPE.ADMIN:
+        return true;
+      case AUTHTYPE.MANAGER:
+        return false;
+      case AUTHTYPE.PARENT:
+        return false;
+      case AUTHTYPE.GUEST:
+        return false;
+      default:
+        return false;
+    }
+  }
   isRecentlyAddedByUser(treeId) {
     if ($.inArray(treeId, this.trees) > -1) {
       return true;

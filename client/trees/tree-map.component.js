@@ -6,10 +6,12 @@ require('./tree-map.component.scss');
 let MapStore = require('./../stores/map.store');
 let TreeStore = require('./../stores/tree.store');
 let TreeActions = require('./../actions/tree.actions');
+let FoodActions = require('./../actions/food.actions');
 
 
 import MapTree from './../maps/map-tree.component';
 import TreePanel from './tree-panel.component';
+import { MAPTYPE } from './../utils/enum';
 
 
 export default class TreeMap extends React.Component {
@@ -17,7 +19,9 @@ export default class TreeMap extends React.Component {
     super(props, context);
   }
   componentWillMount() {
-    TreeActions.fetchTrees();
+    if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
+      TreeActions.fetchTrees();
+    }
     this.updateProps(this.props);
   }
   componentDidMount () {

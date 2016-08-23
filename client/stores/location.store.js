@@ -89,7 +89,11 @@ class LocationStore {
       this.temp = new LocationModel(locations[0].toJSON());
       this.temp.editing = null;
     } else {
-      this.temp = null;
+      if (props.id == 0) {
+        this.handleCreateTempLocation();
+      } else {
+        this.temp = null;
+      }
     }
     this.code = 200;
   }
@@ -122,9 +126,11 @@ class LocationStore {
     this.code = 200;
   }
   handleCreateTempLocation() { // id = 0 for new location.
-    let locations = this.loations.filter(location => location.id == 0);
-    if (locations.length > 0) {
-      this.locations = _.without(this.locations, ...locations);
+    if (this.loations) {
+      let locations = this.loations.filter(location => location.id == 0);
+      if (locations.length > 0) {
+        this.locations = _.without(this.locations, ...locations);
+      }
     }
     let location = new L.LatLng(MapSetting.vPosition.x, MapSetting.vPosition.y);
     if (MapStore.getMapModel(MapSetting.sRecipeintMapId)) {
@@ -157,8 +163,10 @@ class LocationStore {
   handleCreatedLocation(props) {
     this.locations.push(new LocationModel(props));
     this.code = 200;
-    AuthActions.fetchAuth.defer();
-    browserHistory.push({pathname: ServerSetting.uBase + '/recipient/' + props.id});
+    setTimeout(function() {
+      AuthActions.fetchAuth.defer();
+      browserHistory.push({pathname: ServerSetting.uBase + '/recipient/' + props.id});
+    }, 0);
   }
   handleUpdatedLocation(props) {
     let locations = this.locations.filter(location => location.id == parseInt(props.id));
@@ -181,7 +189,9 @@ class LocationStore {
     }
     this.temp = null;
     this.code = 200;
-    browserHistory.push({pathname: ServerSetting.uBase + '/recipients'});
+    setTimeout(function() {
+      browserHistory.push({pathname: ServerSetting.uBase + '/recipients'});
+    }, 0);
   }
 }
 

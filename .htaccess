@@ -9,3 +9,9 @@
     # Rewrite everything else to index.html to allow html5 state links
     RewriteRule ^ index.html [L]
 </IfModule>
+
+<IfModule mod_php5.c>
+#Session timeout
+php_value session.cookie_lifetime 2592000
+php_value session.gc_maxlifetime 2592000
+</IfModule>

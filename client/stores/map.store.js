@@ -42,6 +42,7 @@ class MapStore {
       handleSetLoaded: MapActions.SET_LOADED,
       handleMoveToLocation: MapActions.MOVE_TO_LOCATION,
       handleMoveToLocationWithMarker: MapActions.MOVE_TO_LOCATION_WITH_MARKER,
+      handleSetMapType: MapActions.SET_MAP_TYPE,
     });
     // Expose public methods.
     this.exportPublicMethods({
@@ -138,6 +139,9 @@ class MapStore {
     if (maps.length == 1) {
       maps[0].loaded = props.loaded;
     }
+  }
+  handleSetMapType(props) {
+    this.latestMapType = props.type;
   }
   handleMoveToLocation(props) {
     let maps = this.maps.filter(map => map.id == props.id);

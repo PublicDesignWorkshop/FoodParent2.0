@@ -49,9 +49,11 @@ export default class DonateSource extends React.Component {
         props.donate.trees = [-1];
       } else {
         props.trees.forEach(tree => {
-          options.push({value: tree.id, label: tree.getName()});
-          if ($.inArray(tree.id, props.donate.trees) > -1) {
-            selected.push({value: tree.id, label: tree.getName()});
+          if (tree.id > 0) {
+            options.push({value: tree.id, label: tree.getName()});
+            if ($.inArray(tree.id, props.donate.trees) > -1) {
+              selected.push({value: tree.id, label: tree.getName()});
+            }
           }
         });
       }

@@ -34,7 +34,7 @@
         "locationId" => $_GET['locationId'],
       );
     }
-    $sql = "SELECT * FROM `donate` WHERE (`location` = :locationId) AND `type` = 4 ORDER BY `date` DESC LIMIT 5";
+    $sql = "SELECT * FROM `donate` WHERE (`location` = :locationId) AND `type` = 4 ORDER BY `date` DESC LIMIT 1";
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);

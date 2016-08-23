@@ -12,8 +12,8 @@ let MapSetting = require('./../../setting/map.json');
 
 import { localization } from './../utils/localization';
 import { reverseGeocoding } from './../utils/geocoding';
-let TreeStore = require('./../stores/tree.store');
-let TreeActions = require('./../actions/tree.actions');
+let LocationStore = require('./../stores/location.store');
+let LocationActions = require('./../actions/location.actions');
 import { isLatLng } from './../utils/validation';
 
 

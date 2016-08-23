@@ -6,6 +6,7 @@ require('./recipient-map.component.scss');
 let MapStore = require('./../stores/map.store');
 let LocationStore = require('./../stores/location.store');
 let TreeActions = require('./../actions/tree.actions');
+let FoodActions = require('./../actions/food.actions');
 let TreeStore = require('./../stores/tree.store');
 let LocationActions = require('./../actions/location.actions');
 

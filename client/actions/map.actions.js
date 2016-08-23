@@ -19,6 +19,9 @@ class MapActions {
   setLoaded(id, loaded) {
     return {id, loaded};
   }
+  setMapType(type) {
+    return {type};
+  }
   moveToUserLocation(id) {
     return (dispatch) => {
       if (navigator.geolocation) {

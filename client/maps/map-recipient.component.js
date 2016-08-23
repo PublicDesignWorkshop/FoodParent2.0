@@ -45,6 +45,7 @@ export default class MapRecipient extends React.Component {
       this.map.invalidateSize(false);
       this.map.whenReady(this.afterRenderMap);
     } else {
+      MapActions.setMapType(MAPTYPE.DONATION);
       this.map = MapStore.getMapModel(MapSetting.sRecipeintMapId).map;
       this.flatTileLayer = MapStore.getMapModel(MapSetting.sRecipeintMapId).flatTileLayer;
       this.satTileLayer = MapStore.getMapModel(MapSetting.sRecipeintMapId).satTileLayer;
@@ -226,7 +227,7 @@ export default class MapRecipient extends React.Component {
   }
   renderMarkers(locations, selected) {
     if (__DEV__) {
-      console.log(`map-recipient.component - renderMarkers() with ${locations.length} locations`);
+      console.log(`Map - renderLocMarkers() with ${locations.length} locations`);
     }
     var markers = this.markersLayer.getLayers();
     //this.markersLayer._featureGroup._layers
@@ -287,7 +288,7 @@ export default class MapRecipient extends React.Component {
   // Add tree source markers to select donate source.
   renderTreeMarkers(trees) {
     if (__DEV__) {
-      console.log(`map-recipient.component - renderTreeMarkers() with ${trees.length} trees`);
+      console.log(`Map - renderTreeMarkers() with ${trees.length} trees`);
     }
     var markers = this.markersLayer.getLayers();
     //this.markersLayer._featureGroup._layers

@@ -1,0 +1,129 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+@import "./recipients.component.scss";
+
+.recipient-add-panel-wrapper {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  padding: $header-height 0 0 0;
+  pointer-events: all;
+
+  // transition: 0.15s;
+
+  @include respond-to(handhelds) {
+    right: -100%;
+    width: 100%;
+  }
+  @include respond-to(wide-screens) {
+    right: -30%;
+    width: 30%;
+  }
+
+  > .left {
+    position: absolute;
+    top: $panel-control-width + $panel-control-width;
+    left: -$panel-control-width;
+    width: $panel-control-width;
+  }
+
+  > .right {
+    width: 100%;
+    height: 100%;
+    background-color: $light;
+    -webkit-box-shadow: 0px 0px 1px 1px $black-quarter;
+    -moz-box-shadow: 0px 0px 1px 1px $black-quarter;
+    box-shadow: 0px 0px 1px 1px $black-quarter;
+    overflow-y: scroll;
+    // -webkit-overflow-scrolling: touch;
+
+
+    > .menu {
+      -webkit-flex: 0 0 auto; /* Safari 6.1+ */
+          -ms-flex: 0 0 auto; /* IE 10 */
+              flex: 0 0 auto;
+
+      display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+      display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+      display: -ms-flexbox;           /* TWEENER - IE 10 */
+      display: -webkit-flex;          /* NEW - Chrome */
+      display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+      -webkit-flex-direction: row;    /* Safari 6.1+ */
+              flex-direction: row;    /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+      -webkit-justify-content: space-between; /* Safari 6.1+ */
+              justify-content: space-between;
+      font-size: $font-size-large;
+      color: $brown;
+
+      > .icon-group {
+        text-align: left;
+        cursor: pointer;
+        padding: 8px 4px;
+        display: inline-block;
+        white-space:nowrap;
+        &:first-child {
+          padding-left: 12px;
+        }
+        &:not(.close) {
+          -webkit-flex-grow: 1;
+                  flex-grow: 1;
+        }
+        &.close {
+          padding: 7px 8px 4px 12px;
+        }
+
+        &.active {
+          color: $brown;
+          border-bottom-left-radius: 4px;
+          border-bottom-right-radius: 4px;
+          cursor: default;
+        }
+
+        > .icon-text {
+          display: inline-block;
+          font-family: $font-narrow;
+          font-size: $font-size-small;
+          margin: 0 4px 0 8px;
+          font-weight: 700;
+          vertical-align: top;
+          text-transform: uppercase;
+          overflow:hidden;
+
+          &.visible {
+            width: auto;
+          }
+        }
+        // &:hover .icon-text {
+        //   display: inline-block;
+        //   width: auto;
+        // }
+      }
+
+      > .wide-landscape {
+        @include respond-to(handhelds) {
+          display: none;
+        }
+        // > .text {
+        //   font-family: $font-narrow;
+        //   font-size: $font-size-small;
+        //   padding: 0 4px;
+        //   font-weight: 700;
+        //   vertical-align: top;
+        //   text-transform: uppercase;
+        // }
+      }
+    }
+  }
+  &.open {
+    right: 0;
+  }
+
+  &.wide {
+    right: 0;
+    width: 100% !important;
+    // transition: 0.15s;
+  }
+}

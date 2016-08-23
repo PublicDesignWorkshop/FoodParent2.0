@@ -48,30 +48,49 @@ export default class LocationInfo extends React.Component {
       </div>;
     }
     if (this.state.editing) {
-      actions = <div>
-        <div className="solid-button-group">
-          <div className="solid-button solid-button-green" onClick={() => {
-            LocationActions.updateLocation(LocationStore.getState().temp);
-            this.setState({editing: false});
-          }}>
-            {localization(930) /* SAVE */}
+      if (AuthStore.getState().auth.isAdmin()) {
+        actions = <div>
+          <div className="solid-button-group">
+            <div className="solid-button solid-button-green" onClick={() => {
+              LocationActions.updateLocation(LocationStore.getState().temp);
+              this.setState({editing: false});
+            }}>
+              {localization(930) /* SAVE */}
+            </div>
+            <div className="solid-button solid-button-green" onClick={() => {
+              LocationActions.setSelected(LocationStore.getState().selected);
+              this.setState({editing: false});
+            }}>
+              {localization(933) /* CANCEL */}
+            </div>
           </div>
-          <div className="solid-button solid-button-green" onClick={() => {
-            LocationActions.setSelected(LocationStore.getState().selected);
-            this.setState({editing: false});
-          }}>
-            {localization(933) /* CANCEL */}
+          <div className="danger-zone">{localization(927) /*DANGER ZONE */}</div>
+          <div className="solid-button-group">
+            <div className="solid-button solid-button-red" onClick={() => {
+              this.context.router.push({pathname: window.location.pathname, hash: "#delete"});
+            }}>
+              {localization(966) /* DELETE THIS LOCATION */}
+            </div>
           </div>
-        </div>
-        <div className="danger-zone">{localization(927) /*DANGER ZONE */}</div>
-        <div className="solid-button-group">
-          <div className="solid-button solid-button-red" onClick={() => {
-            this.context.router.push({pathname: window.location.pathname, hash: "#delete"});
-          }}>
-            {localization(966) /* DELETE THIS LOCATION */}
+        </div>;
+      } else {
+        actions = <div>
+          <div className="solid-button-group">
+            <div className="solid-button solid-button-green" onClick={() => {
+              LocationActions.updateLocation(LocationStore.getState().temp);
+              this.setState({editing: false});
+            }}>
+              {localization(930) /* SAVE */}
+            </div>
+            <div className="solid-button solid-button-green" onClick={() => {
+              LocationActions.setSelected(LocationStore.getState().selected);
+              this.setState({editing: false});
+            }}>
+              {localization(933) /* CANCEL */}
+            </div>
           </div>
-        </div>
-      </div>;
+        </div>;
+      }
     }
     let info;
     if (this.state.editable) {

@@ -9,7 +9,8 @@ let TreeStore = require('./../stores/tree.store');
 let LocationStore = require('./../stores/location.store');
 let DonateStore = require('./../stores/donate.store');
 let LocationActions = require('./../actions/location.actions');
-// let NoteActions = require('./../actions/note.actions');
+let DonateActions = require('./../actions/donate.actions');
+
 import { DONATIONDETAILMODE } from './../utils/enum';
 import { localization } from './../utils/localization';
 
@@ -45,6 +46,7 @@ export default class RecipientDetail extends React.Component {
     let mode;
     let remove = false;
     LocationActions.fetchLocations(parseInt(props.params.recipientId));
+    DonateActions.fetchRecentDonatesFromLocationId.defer(parseInt(props.params.recipientId));
     // NoteActions.fetchRecentNotesFromTreeId.defer(parseInt(props.params.treeId));
     // Instead of changing url, change # hashtag to remove extra rendering process.
     switch(props.location.hash.replace('#', '')) {

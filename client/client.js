@@ -25,6 +25,8 @@ import Popup from './message/popup.component';
 
 import RecipientMap from './recipients/recipient-map.component';
 import RecipientDetail from './recipients/recipient-detail.component';
+import RecipientAdd from './recipients/recipient-add.component';
+
 
 let MapSetting = require('./../setting/map.json');
 import { localization } from './utils/localization';
@@ -118,6 +120,7 @@ render((
       <Route path="register" component={Register} />
       <Route path="filter" component={TreeFilter} />
       <Route path="recipients" component={RecipientMap} />
+      <Route path="addrecipient" component={RecipientAdd} />
       <Route path="recipient/:recipientId" component={RecipientDetail} />
     </Route>
   </Router>

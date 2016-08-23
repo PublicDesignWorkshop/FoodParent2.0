@@ -7,6 +7,8 @@ export const MESSAGETYPE = Enum("SUCCESS", "FAIL", "NORMAL");
 export const TREEDETAILMODE = Enum("INFO", "POST", "PARENT", "HISTORY", "ALL");
 export const DONATIONDETAILMODE = Enum("INFO", "POST", "HISTORY");
 export const TREEADDMODE = Enum("MARKER", "INFO");
+export const DONATIONADDMODE = Enum("MARKER", "INFO");
+
 
 export const AUTHTYPE = Enum("ADMIN", "MANAGER", "PARENT", "GUEST");
 export const LOGINMODE = Enum("PARENT", "MANAGER");

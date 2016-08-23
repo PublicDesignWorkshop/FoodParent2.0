@@ -10,12 +10,13 @@ import { DONATIONDETAILMODE } from './../utils/enum';
 let LocationActions = require('./../actions/location.actions');
 let AuthStore = require('./../stores/auth.store');
 let LocationStore = require('./../stores/location.store');
-let NoteStore = require('./../stores/note.store');
+let DonateStore = require('./../stores/donate.store');
 
 import DonationControl from './donation-control.component';
 import LocationInfo from './../location/location-info.component';
 import DonateHistory from './../donate/donate-history.component';
 import DonateAdd from './../donate/donate-add.component';
+import RecipientRecentDonate from './recipient-recent-donate.component';
 //
 // import TreeRecentPost from './../tree/tree-recent-post.component';
 // import TreeRecentPickup from './../tree/tree-recent-pickup.component';
@@ -103,6 +104,18 @@ export default class DonationPanel extends React.Component {
           }
         }>
           <LocationInfo />
+        </AltContainer>
+        <AltContainer stores={
+          {
+            donates: function(props) {
+              return {
+                store: DonateStore,
+                value: DonateStore.getState().donates
+              }
+            }
+          }
+        }>
+          <RecipientRecentDonate />
         </AltContainer>
       </div>;
       // body = <div className="body-scroll">

@@ -48,6 +48,7 @@ export default class MapTree extends React.Component {
       this.map.invalidateSize(false);
       this.map.whenReady(this.afterRenderMap);
     } else {
+      MapActions.setMapType(MAPTYPE.TREE);
       this.map = MapStore.getMapModel(MapSetting.sTreeMapId).map;
       this.flatTileLayer = MapStore.getMapModel(MapSetting.sTreeMapId).flatTileLayer;
       this.satTileLayer = MapStore.getMapModel(MapSetting.sTreeMapId).satTileLayer;
@@ -225,7 +226,7 @@ export default class MapTree extends React.Component {
   }
   renderMarkers(trees, selected) {
     if (__DEV__) {
-      console.log(`map-tree.component - renderMarkers() with ${trees.length} trees`);
+      console.log(`Map - renderMarkers() with ${trees.length} trees`);
     }
     var markers = this.markersLayer.getLayers();
     //this.markersLayer._featureGroup._layers

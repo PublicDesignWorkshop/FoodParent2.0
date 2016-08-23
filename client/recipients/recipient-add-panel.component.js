@@ -3,16 +3,16 @@ import $ from 'jquery';
 
 
 let ServerSetting = require('./../../setting/server.json');
-require('./tree-add-panel.component.scss');
+require('./recipient-add-panel.component.scss');
 require('./../message/popup.component.scss');
 var FontAwesome = require('react-fontawesome');
-import { TREEADDMODE } from './../utils/enum';
-let TreeActions = require('./../actions/tree.actions');
+import { DONATIONADDMODE } from './../utils/enum';
+let LocationActions = require('./../actions/location.actions');
 import { localization } from './../utils/localization';
-import TreeAddInfo from './../tree/tree-add-info.component';
-import TreeControl from './tree-control.component';
+import LocationAddInfo from './../location/location-add-info.component';
+import DonationControl from './donation-control.component';
 
-export default class TreeAddPanel extends React.Component {
+export default class RecipientAddPanel extends React.Component {
   constructor() {
     super();
   }
@@ -44,34 +44,34 @@ export default class TreeAddPanel extends React.Component {
     let info, close, body;
     // Close
     close = <div className="icon-group close" onClick={() => {
-      TreeActions.setCode(0);
-      this.context.router.push({pathname: ServerSetting.uBase + '/'});
+      LocationActions.setCode(0);
+      this.context.router.push({pathname: ServerSetting.uBase + '/recipients'});
     }}>
       <FontAwesome className="icon" name='close' />
     </div>;
     // Info
     info = <div className="icon-group" onClick={() => {
-      this.context.router.push({pathname: ServerSetting.uBase + '/addtree', hash: "#info"});
+      this.context.router.push({pathname: ServerSetting.uBase + '/addrecipient', hash: "#info"});
     }}>
       <FontAwesome className="icon icon-info-circle" name='info-circle' />
       <span className="icon-text">
         Info
       </span>
     </div>;
-    if (this.props.mode == TREEADDMODE.INFO) {
+    if (this.props.mode == DONATIONADDMODE.INFO) {
       // Info
       info = <div className="icon-group active">
         <FontAwesome className="icon icon-info-circle" name='info-circle' />
         <span className="icon-text">
-          {localization(43)}
+          {localization(44)}
         </span>
       </div>;
-      body = <TreeAddInfo />;
+      body = <LocationAddInfo />;
     }
     return (
-      <div className={"tree-add-panel-wrapper" + open}>
+      <div className={"recipient-add-panel-wrapper" + open}>
         <div className="left">
-          <TreeControl adding={true} />
+          <DonationControl adding={true} />
         </div>
         <div className="right">
           <div className="menu">
@@ -84,6 +84,6 @@ export default class TreeAddPanel extends React.Component {
     );
   }
 }
-TreeAddPanel.contextTypes = {
+RecipientAddPanel.contextTypes = {
     router: React.PropTypes.object.isRequired
 }

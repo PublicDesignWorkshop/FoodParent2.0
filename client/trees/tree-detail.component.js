@@ -6,6 +6,7 @@ require('./tree-detail.component.scss');
 let MapStore = require('./../stores/map.store');
 let TreeStore = require('./../stores/tree.store');
 let TreeActions = require('./../actions/tree.actions');
+let FoodActions = require('./../actions/food.actions');
 let NoteActions = require('./../actions/note.actions');
 import { TREEDETAILMODE } from './../utils/enum';
 import { localization } from './../utils/localization';

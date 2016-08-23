@@ -57,20 +57,25 @@ class LocationActions {
     }
   }
   createLocation(location) {
-    return (dispatch) => {
-      // we dispatch an event here so we can have "loading" state.
-      dispatch();
-      this.setCode(92);
-      LocationSource.createLocation(location).then((response) => {
-        displaySuccessMessage(localization(635));
-        this.createdLocation(response);
-      }).catch((code) => {
-        displayFailMessage(localization(code));
-        if (__DEV__) {
-          console.error(localization(code));
-        }
-        this.setCode(code);
-      });
+    if (location.name == null || location.name.trim() == "") {
+      displayFailMessage(localization(668));
+      this.setCode(643);
+    } else {
+      return (dispatch) => {
+        // we dispatch an event here so we can have "loading" state.
+        dispatch();
+        this.setCode(92);
+        LocationSource.createLocation(location).then((response) => {
+          displaySuccessMessage(localization(665));
+          this.createdLocation(response);
+        }).catch((code) => {
+          displayFailMessage(localization(code));
+          if (__DEV__) {
+            console.error(localization(code));
+          }
+          this.setCode(code);
+        });
+      }
     }
   }
   createdLocation(props) {
@@ -84,7 +89,7 @@ class LocationActions {
       dispatch();
       this.setCode(92);
       LocationSource.updateLocation(location).then((response) => {
-        displaySuccessMessage(localization(634));
+        displaySuccessMessage(localization(664));
         this.updatedLocation(response);
       }).catch((code) => {
         displayFailMessage(localization(code));
@@ -105,7 +110,7 @@ class LocationActions {
       dispatch();
       this.setCode(91);
       LocationSource.deleteLocation(location).then((response) => {
-        displayFailMessage(localization(637));
+        displayFailMessage(localization(667));
         this.deletedLocation(location.toJSON());
       }).catch((code) => {
         displayFailMessage(localization(code));
