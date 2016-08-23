@@ -1,13 +1,13 @@
 @import "./../scss/variables.scss";
 @import "./../scss/mixin.scss";
 
-.recipient-recent-donate-wrapper {
+.tree-recent-donate-wrapper {
   padding: 4px 16px;
   font-family: $font-main;
   color: $brown;
   font-size: $font-size-medium;
 
-  > .recipient-recent-donate-label {
+  > .tree-recent-donate-label {
     font-weight: 700;
     margin: 4px 0 0 0;
     .fa.fa-shopping-bag {
@@ -16,11 +16,11 @@
     }
   }
 
-  > .recipient-recent-donate-data {
+  > .tree-recent-donate-data {
     width: 100%;
-    > .recipient-recent-donate-text {
+    > .tree-recent-donate-text {
       margin: 0 0 0 12px;
-      > .recipient-recent-donate-text-sub {
+      > .tree-recent-donate-text-sub {
         margin: 4px 0 4px 8px;
       }
     }

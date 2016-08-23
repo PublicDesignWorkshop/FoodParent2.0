@@ -1,7 +1,7 @@
 import React from 'react';
 import AltContainer from 'alt-container';
 
-require('./donate-line.component.scss');
+require('./donatefromtree-line.component.scss');
 var FontAwesome = require('react-fontawesome');
 let ServerSetting = require('./../../setting/server.json');
 
@@ -16,10 +16,9 @@ let AuthStore = require('./../stores/auth.store');
 let FoodStore = require('./../stores/food.store');
 
 
-export default class DonateLine extends React.Component {
+export default class DonateFromTreeLine extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.selectDonate = this.selectDonate.bind(this);
   }
   componentWillMount() {
 
@@ -32,18 +31,12 @@ export default class DonateLine extends React.Component {
   updateProps(props) {
 
   }
-  selectDonate() {
-    DonateActions.setSelected(this.props.donate.id);
-    if (this.props.link && LocationStore.getState().selected) {
-      this.context.router.push({pathname: ServerSetting.uBase + '/recipient/' + LocationStore.getState().selected, hash: "#history"});
-    }
-  }
   render () {
     let style = "";
     let comment;
     let amount;
     let food;
-    let source = [];
+    let dest = [];
     if (this.props.donate) {
       switch(this.props.donate.type) {
         case NOTETYPE.DONATE:
@@ -66,22 +59,18 @@ export default class DonateLine extends React.Component {
       if (temp) {
         food = temp.name;
       }
-      if (this.props.donate.trees) {
-        this.props.donate.trees.forEach((tree) => {
-          if (tree == -1) { // In case of Doghead farm.
-            source.push(<span className="tree-link" key={"treesource" + tree}>{localization(48)}</span>);
-          } else {
-            source.push(<span className="tree-link" key={"treesource" + tree}>{"#" + tree}</span>);
-          }
-        });
+      let location = LocationStore.getLocation(this.props.donate.location);
+      if (location) {
+        dest = <span className="location-link">{location.name + " #" + location.id}</span>;
+      } else {
+        dest = <span className="location-link">{localization(40)}</span>;
       }
       return (
-        <div className={"donate-line-wrapper" + style} onClick={this.selectDonate}>
+        <div className={"donatefromtree-line-wrapper" + style}>
           {this.props.donate.getFormattedDate()}&nbsp;-&nbsp;
           {amount}&nbsp;
-          {localization(49)}&nbsp;
-          {food}&nbsp;
-          {source}
+          {localization(41)}&nbsp;
+          {dest}
         </div>
       );
     } else {
@@ -89,6 +78,6 @@ export default class DonateLine extends React.Component {
     }
   }
 }
-DonateLine.contextTypes = {
+DonateFromTreeLine.contextTypes = {
     router: React.PropTypes.object.isRequired
 }

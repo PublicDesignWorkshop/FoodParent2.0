@@ -14,7 +14,8 @@ let TreeSource = require('./../sources/tree.source');
 let TreeActions = require('./../actions/tree.actions');
 let AuthSource = require('./../sources/auth.source');
 let AuthActions = require('./../actions/auth.actions');
-
+let LocationSource = require('./../sources/location.source');
+let LocationActions = require('./../actions/location.actions');
 import { MESSAGETYPE } from './../utils/enum';
 
 class InitActions {
@@ -55,6 +56,7 @@ class InitActions {
             updateSeason()
             .then(function(response) {
               // Fetch trees.
+              LocationActions.fetchLocations();
               self.setMessage(MESSAGETYPE.SUCCESS, "Importing Tree Data...");
               TreeSource.fetchTrees(id)
               .then((response) => {
@@ -191,7 +193,7 @@ class InitActions {
       dispatch(code);
     }
   }
-  setMessage(type, value) { 
+  setMessage(type, value) {
     return (dispatch) => {
       dispatch({type: type, value: value});
     }

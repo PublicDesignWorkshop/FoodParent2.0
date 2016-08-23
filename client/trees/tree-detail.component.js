@@ -8,6 +8,7 @@ let TreeStore = require('./../stores/tree.store');
 let TreeActions = require('./../actions/tree.actions');
 let FoodActions = require('./../actions/food.actions');
 let NoteActions = require('./../actions/note.actions');
+let DonateActions = require('./../actions/donate.actions');
 import { TREEDETAILMODE } from './../utils/enum';
 import { localization } from './../utils/localization';
 
@@ -39,6 +40,7 @@ export default class TreeDetail extends React.Component {
     let remove = false;
     TreeActions.fetchTree.defer(parseInt(props.params.treeId));
     NoteActions.fetchRecentNotesFromTreeId.defer(parseInt(props.params.treeId));
+    DonateActions.fetchRecentDonatesFromTreeId.defer(parseInt(props.params.treeId));
     // Instead of changing url, change # hashtag to remove extra rendering process.
     switch(props.location.hash.replace('#', '')) {
       case "":

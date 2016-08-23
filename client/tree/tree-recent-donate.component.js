@@ -2,8 +2,9 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import AltContainer from 'alt-container';
 import Select from 'react-select';
+import $ from 'jquery';
 
-require('./recipient-recent-donate.component.scss');
+require('./tree-recent-donate.component.scss');
 
 var FontAwesome = require('react-fontawesome');
 let ServerSetting = require('./../../setting/server.json');
@@ -11,14 +12,14 @@ let MapSetting = require('./../../setting/map.json');
 
 import { localization } from './../utils/localization';
 import { reverseGeocoding } from './../utils/geocoding';
-let LocationStore = require('./../stores/location.store');
-let LocationActions = require('./../actions/location.actions');
+let TreeStore = require('./../stores/tree.store');
+let TreeActions = require('./../actions/tree.actions');
 import { isLatLng } from './../utils/validation';
-import DonateLine from './../donate/donate-line.component';
+import DonateFromTreeLine from './../donate/donatefromtree-line.component';
 import { NOTETYPE } from './../utils/enum';
 
 
-export default class RecipientRecentDonate extends React.Component {
+export default class TreeRecentDonate extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
@@ -32,10 +33,10 @@ export default class RecipientRecentDonate extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
-    if (props.donates != null && LocationStore.getState().temp != null) {
+    if (props.donates != null && TreeStore.getState().temp != null) {
       let bFound = false;
       props.donates.forEach((donate) => {
-        if (donate.type == NOTETYPE.DONATE && donate.location == LocationStore.getState().temp.id) {
+        if (donate.type == NOTETYPE.DONATE && $.inArray(TreeStore.getState().temp.id, donate.trees) != -1) {
           bFound = true;
           this.setState({donate: donate});
         }
@@ -50,16 +51,16 @@ export default class RecipientRecentDonate extends React.Component {
   render () {
     let nodonate;
     if (this.state.donate == null) {
-      nodonate = <div className="recipient-recent-donate-text-sub">{localization(57)}</div>;
+      nodonate = <div className="tree-recent-donate-text-sub">{localization(57)}</div>;
     }
     return (
-      <div className="recipient-recent-donate-wrapper">
-        <div className="recipient-recent-donate-label">
+      <div className="tree-recent-donate-wrapper">
+        <div className="tree-recent-donate-label">
           <FontAwesome className='' name='shopping-bag' />{localization(60)}
         </div>
-        <div className="recipient-recent-donate-data">
-          <div className="recipient-recent-donate-text">
-            <DonateLine donate={this.state.donate} link={true} />
+        <div className="tree-recent-donate-data">
+          <div className="tree-recent-donate-text">
+            <DonateFromTreeLine donate={this.state.donate} link={false} />
             {nodonate}
           </div>
         </div>

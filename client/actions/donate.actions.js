@@ -57,6 +57,24 @@ class DonateActions {
     }
     return null;
   }
+  fetchRecentDonatesFromTreeId(id) {
+    if (id != null) {
+      return (dispatch) => {
+        dispatch();
+        this.setCode(90);
+        DonateSource.fetchRecentDonatesFromTreeId(id).then((response) => {
+          this.fetchedDonates(response);
+        }).catch((code) => {
+          displayFailMessage(localization(code));
+          if (__DEV__) {
+            console.error(localization(code));
+          }
+          this.setCode(code);
+        });
+      }
+    }
+    return null;
+  }
   fetchedDonates(props) {
     return (dispatch) => {
       dispatch(props);

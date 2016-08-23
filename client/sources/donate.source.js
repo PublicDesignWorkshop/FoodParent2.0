@@ -60,6 +60,34 @@ const DonateSource = {
       });
     });
   },
+  fetchRecentDonatesFromTreeId(id) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        url: ServerSetting.uBase + ServerSetting.uServer + "donatefromtree.php",
+        type: 'GET',
+        data: {
+          treeId: id,
+        },
+        dataType: "json",
+        success: function(response) {
+          if (response.code == 200) {
+            resolve(response.donates);
+          } else {
+            if (__DEV__) {
+              console.error(response.message);
+            }
+            reject(response.code);
+          }
+        },
+        error: function(response) {
+          if (__DEV__) {
+            console.error(response.statusText);
+          }
+          reject(response.status);
+        }
+      });
+    });
+  },
   updateDonate(donate) {
     let temp = new DonateModel(donate.toJSON());
     switch(temp.amountType) {

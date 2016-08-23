@@ -1,0 +1,47 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.donatefromtree-line-wrapper {
+  padding: 4px 8px;
+  font-family: $font-main;
+  font-size: $font-size-medium;
+  cursor: default;;
+  font-weight: 400;
+
+  .location-link {
+    margin: 0 2px;
+    padding: 1px 4px;
+    background-color: $brown;
+    border-radius: 2px;
+    color: $white;
+    font-size: $font-size-medium-small;
+  }
+
+  .tag {
+    font-size: $font-size-medium-small;
+    border-radius: 2px;
+    padding: 2px 4px;
+    vertical-align: middle;
+    font-weight: 400;
+    &.tag-brown {
+      background-color: $brown;
+      color: $white;
+    }
+    &.tag-green {
+      background-color: $green;
+      color: $white;
+    }
+  }
+
+  &.donatefromtree-line-light {
+    color: $grey;
+  }
+
+  &.donatefromtree-line-green {
+    color: $green;
+  }
+
+  &.donatefromtree-line-brown {
+    color: $brown;
+  }
+}
