@@ -36,6 +36,7 @@
   "uTemporaryMarkerIcon": "Marker_Unknown_verified.png",
   "uRecipientMarkerIcon": "Marker_Recipient.png",
   "uCheckMarkerIcon": "Marker_Checked.png",
+  "uFarmMarkerIcon": "Marker_Farm.png",
 
   "uReverseGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA",
   "uGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA"

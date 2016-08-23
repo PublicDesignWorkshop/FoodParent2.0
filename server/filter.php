@@ -52,6 +52,27 @@
       }
     }
 
+    if (!isset($_SESSION['public'])) {
+      $public = "0,1";
+      $_SESSION['public'] = $public;
+    }
+    if (!isset($_SESSION['flag_ids'])) {
+      $flags = getDefaultFlags();
+      $_SESSION['flag_ids'] = $flags;
+    }
+    if (!isset($_SESSION['adopt'])) {
+      $adopt = "0";
+      $_SESSION['adopt'] = $adopt;
+    }
+    if (!isset($_SESSION['rates'])) {
+      $rates = "-1,0,1,2,3,4,5";
+      $_SESSION['rates'] = $rates;
+    }
+    if (!isset($_SESSION['food_ids'])) {
+      $foods = calcSeasonFoods(0);
+      $_SESSION['food_ids'] = $foods;
+    }
+
     $params = array(
       "code" => 200,
       "ownerships" => $_SESSION['public'],

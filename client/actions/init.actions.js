@@ -191,7 +191,7 @@ class InitActions {
       dispatch(code);
     }
   }
-  setMessage(type, value) {
+  setMessage(type, value) { 
     return (dispatch) => {
       dispatch({type: type, value: value});
     }

@@ -39,25 +39,29 @@ export default class TreeFood extends React.Component {
     let options = [];
     let selected = null;
     if (props.tree != null) {
-      let foods = FoodStore.getState().foods;
-      options.push({value: 0, label: localization(642), disabled: true });
-      foods.forEach(food => {
-        if (!food.farm) { // Food type marked as a farm shouldn't be added on the map as a tree.
-          if (props.tree.id == 0) {  //  == 0: new tree.
-            options.push({value: food.id, label: food.name});
-          } else {
-            options.push({value: food.id, label: food.name + props.tree.getName() });
-          }
-          if (props.tree.food == food.id) {
-            if (props.tree.id == 0) {  // food.id == 0: new tree.
-              selected = {value: food.id, label: food.name};
+      if (props.tree.id == -1) {  // Doghead farm.
+        options.push({value: -1, label: localization(48)});
+        selected = {value: -1, label: localization(48) };
+      } else {
+        let foods = FoodStore.getState().foods;
+        options.push({value: 0, label: localization(642), disabled: true });
+        foods.forEach(food => {
+          if (!food.farm) { // Food type marked as a farm shouldn't be added on the map as a tree.
+            if (props.tree.id == 0) {  //  == 0: new tree.
+              options.push({value: food.id, label: food.name});
             } else {
-              selected = {value: food.id, label: food.name + props.tree.getName()};
+              options.push({value: food.id, label: food.name + props.tree.getName() });
+            }
+            if (props.tree.food == food.id) {
+              if (props.tree.id == 0) {  // food.id == 0: new tree.
+                selected = {value: food.id, label: food.name};
+              } else {
+                selected = {value: food.id, label: food.name + props.tree.getName()};
+              }
             }
           }
-        }
-      });
-
+        });
+      }
       if (selected == null) {
         selected = {value: 0, label: localization(642), disabled: true };
       }
@@ -82,7 +86,11 @@ export default class TreeFood extends React.Component {
       }
       label = <span><img className="tree-food-icon" src={iconUrl} /><span className="tree-food-name">{option.label}</span></span>;
     } else {
-      label = <span><img className="tree-food-icon" src={ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon} /><span className="tree-food-name">{option.label}</span></span>;
+      if (parseInt(option.value) == -1) {
+        label = <span><img className="tree-food-icon" src={ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uFarmMarkerIcon} /><span className="tree-food-name">{option.label}</span></span>;
+      } else {
+        label = <span><img className="tree-food-icon" src={ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon} /><span className="tree-food-name">{option.label}</span></span>;
+      }
     }
     return label;
   }

@@ -23,14 +23,13 @@ let DonateActions = require('./../actions/donate.actions');
 let DonateStore = require('./../stores/donate.store');
 let AuthStore = require('./../stores/auth.store');
 let TreeStore = require('./../stores/tree.store');
-
+let TreeActions = require('./../actions/tree.actions');
 
 export default class DonateInfo extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
   componentWillMount() {
-    TreeActions.reset();
     let editing = false;
     if (this.props.editing) {
       editing = this.props.editing;
@@ -38,6 +37,7 @@ export default class DonateInfo extends React.Component {
     this.setState({editing: editing, remove: false});
   }
   componentDidMount () {
+
   }
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);

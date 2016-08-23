@@ -44,6 +44,12 @@ export default class DonateFood extends React.Component {
       options.push({value: food.id, label: food.name});
       if (food.id == props.donate.food) {
         selected = {value: food.id, label: food.name};
+
+        updateFilter(FITERMODE.FOOD, [selected.value], function(response) {  // Resolve
+          TreeActions.fetchTrees();
+        }, function(response) { // Reject
+
+        });
       }
     });
     this.setState({options: options, selected: selected});

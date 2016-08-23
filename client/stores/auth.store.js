@@ -4,9 +4,9 @@ import $ from 'jquery';
 import moment from 'moment';
 
 let ServerSetting = require('./../../setting/server.json');
+
 let AuthActions = require('./../actions/auth.actions');
 import { AUTHTYPE, MAPTYPE } from './../utils/enum';
-let TreeStore = require('./../stores/tree.store');
 let TreeActions = require('./../actions/tree.actions');
 let MapActions = require('./../actions/map.actions');
 let MapStore = require('./../stores/map.store');
@@ -128,31 +128,15 @@ class AuthStore {
     this.code = 200;
   }
   handleProcessedLogin(props) {
-    this.auth = new AuthModel(props);
-    if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
-      if (TreeStore.getState().selected) {
-        setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
-          if (this.auth.auth == AUTHTYPE.PARENT) {
-            browserHistory.replace({pathname: ServerSetting.uBase + '/tree/' + TreeStore.getState().selected});
-          } else {
-            TreeActions.fetchTrees();
-            browserHistory.replace({pathname: ServerSetting.uBase + '/'});
-          }
-        }.bind(this), 1);
-      } else {
-        setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
-          TreeActions.fetchTrees();
-          browserHistory.replace({pathname: ServerSetting.uBase + '/'});
-        }, 1);
-      }
-    } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
-      // this.context.router.push({pathname: ServerSetting.uBase + '/recipient/' + parseInt(searchText)});
-    } else {
-      setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
-        TreeActions.fetchTrees();
+    this.auth = new AuthModel(props.response);
+    setTimeout(function() {
+      TreeActions.fetchTrees.defer();
+      if (props.selected == null || isNaN(props.selected)) {
         browserHistory.replace({pathname: ServerSetting.uBase + '/'});
-      }, 1);
-    }
+      } else {
+        browserHistory.replace({pathname: ServerSetting.uBase + '/tree/' + props.selected});
+      }
+    }.bind(this),0);
     this.code = 200;
   }
 }

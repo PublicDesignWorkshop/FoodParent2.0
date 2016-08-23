@@ -17,6 +17,7 @@ export default class TreeMap extends React.Component {
     super(props, context);
   }
   componentWillMount() {
+    TreeActions.fetchTrees();
     this.updateProps(this.props);
   }
   componentDidMount () {

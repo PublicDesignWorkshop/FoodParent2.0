@@ -97,7 +97,7 @@
     $sql .= "`public` IN (".$public.") ";
 
     $sql .= "AND `dead` IN (".$dead.") ";
-    
+
     // Food basic filtering
     if (isset($_SESSION['food_ids'])) {
       $foodList = split(",", $_SESSION['food_ids']);
@@ -150,6 +150,9 @@
 
     if (isset($_SESSION['temp_trees']) && $_SESSION['temp_trees'] != null) {
       $sql .= "OR `id` IN (" . $_SESSION['temp_trees'] . ") ";
+    }
+    if ($check) {
+      $sql .= "OR `id` = -1";
     }
 
     try {

@@ -62,13 +62,13 @@ class AuthActions {
       TreeActions.fetchTrees();
     }
   }
-  processLogin(contact, password) {
+  processLogin(contact, password, selected) {
     return (dispatch) => {
       // we dispatch an event here so we can have "loading" state.
       dispatch();
       this.setCode(90);
       AuthSource.processLogin(contact, password).then((response) => {
-        this.processedLogin(response);
+        this.processedLogin({response: response, selected: selected});
       }).catch((code) => {
         displayFailMessage(localization(code));
         if (__DEV__) {
@@ -78,7 +78,7 @@ class AuthActions {
       });
     }
   }
-  processedLogin(props: IAuthProps) {
+  processedLogin(props) {
     return (dispatch) => {
       dispatch(props);
     }

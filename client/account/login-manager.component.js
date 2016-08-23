@@ -11,7 +11,7 @@ import { displaySuccessMessage, displayFailMessage } from './../message/popup.co
 
 import Instruction from './instruction.component';
 let AuthActions = require('./../actions/auth.actions');
-
+let TreeStore = require('./../stores/tree.store');
 
 export default class LoginManager extends React.Component {
   constructor(props, context) {
@@ -31,7 +31,7 @@ export default class LoginManager extends React.Component {
     let error: any = null;
     try {
       isValidEmailAddress(this.state.contact.trim());
-      AuthActions.processLogin(this.state.contact.trim(), this.state.password);
+      AuthActions.processLogin(this.state.contact.trim(), this.state.password, TreeStore.getState().selected);
     } catch(e) {
       displayFailMessage(localization(e.message));
       if (__DEV__) {

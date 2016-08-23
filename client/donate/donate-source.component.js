@@ -43,10 +43,10 @@ export default class DonateSource extends React.Component {
     if (props.donate && props.trees) {
       let food = FoodStore.getFood(props.donate.food);
       if (food && food.farm) {
-        // value: 0 for doghead farm.
-        options.push({value: 0, label: localization(48)});
-        selected.push({value: 0, label: localization(48)});
-        props.donate.trees = [0];
+        // value: -1 for doghead farm.
+        options.push({value: -1, label: localization(48)});
+        selected.push({value: -1, label: localization(48)});
+        props.donate.trees = [-1];
       } else {
         props.trees.forEach(tree => {
           options.push({value: tree.id, label: tree.getName()});
@@ -81,7 +81,7 @@ export default class DonateSource extends React.Component {
     if (this.props.donate && trees.length == 0) {
       let food = FoodStore.getFood(this.props.donate.food);
       if (food && food.farm) {
-        this.props.donate.trees = [0];
+        this.props.donate.trees = [-1]; // -1 for Doghead farm.
       }
     }
     this.props.donate.trees = trees;

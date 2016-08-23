@@ -40,6 +40,7 @@ export default class DonateAdd extends React.Component {
     }
   }
   componentWillUnmount() {
+    TreeActions.reset();
     DonateStore.unlisten(this.updateDonateStore);
   }
   updateDonateStore() {
