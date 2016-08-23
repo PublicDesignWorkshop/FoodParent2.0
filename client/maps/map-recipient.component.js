@@ -227,7 +227,7 @@ export default class MapRecipient extends React.Component {
   }
   renderMarkers(locations, selected) {
     if (__DEV__) {
-      console.log(`Map - renderLocMarkers() with ${locations.length} locations`);
+      console.log(`Map - renderMarkers() with ${locations.length} locations`);
     }
     var markers = this.markersLayer.getLayers();
     //this.markersLayer._featureGroup._layers
@@ -287,9 +287,6 @@ export default class MapRecipient extends React.Component {
   }
   // Add tree source markers to select donate source.
   renderTreeMarkers(trees) {
-    if (__DEV__) {
-      console.log(`Map - renderTreeMarkers() with ${trees.length} trees`);
-    }
     var markers = this.markersLayer.getLayers();
     //this.markersLayer._featureGroup._layers
     //this.focusLayer._layers

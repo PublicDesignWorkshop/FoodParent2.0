@@ -2,8 +2,6 @@ import $ from 'jquery';
 let ServerSetting = require('./../../setting/server.json');
 import { FITERMODE } from './../utils/enum';
 
-export let resetFilterPromise;
-
 export function readFilter(resolve, reject) {
   // Create promise for importing the json file only one time over the program.
   let readFilterPromise = $.ajax({
@@ -85,7 +83,7 @@ export function updateFilter(mode, ids, resolve, reject) {
 
 export function resetFilter() {
   // Create promise for importing the json file only one time over the program.
-  resetFilterPromise = resetFilterPromise || $.ajax({
+  let resetFilterPromise = $.ajax({
     url: ServerSetting.uBase + ServerSetting.uServer + "filter.php",
     type: 'PUT',
     data: {},

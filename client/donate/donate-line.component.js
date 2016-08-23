@@ -68,7 +68,7 @@ export default class DonateLine extends React.Component {
       }
       if (this.props.donate.trees) {
         this.props.donate.trees.forEach((tree) => {
-          if (tree == 0) {
+          if (tree == -1) { // In case of Doghead farm.
             source.push(<span className="tree-link" key={"treesource" + tree}>{localization(48)}</span>);
           } else {
             source.push(<span className="tree-link" key={"treesource" + tree}>{"#" + tree}</span>);

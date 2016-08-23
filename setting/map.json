@@ -9,7 +9,7 @@
   "sGoogleMapTileType": "HYBRID",
   "iDefaultZoom": 14,
   "iMaxZoom": 20,
-  "iMinZoom": 1,
+  "iMinZoom": 5,
   "iFocusZoom": 17,
   "iScreenshotZoom": 18,
 

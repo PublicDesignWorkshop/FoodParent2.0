@@ -12,7 +12,7 @@ let MapSetting = require('./../../setting/map.json');
 
 import { localization } from './../utils/localization';
 import { FITERMODE } from './../utils/enum';
-import { updateFilter } from './../utils/filter';
+import { updateFilter, resetFilter } from './../utils/filter';
 
 let FoodStore = require('./../stores/food.store');
 let FlagStore = require('./../stores/flag.store');
@@ -86,6 +86,34 @@ export default class TreeFood extends React.Component {
         </div>
         <div className="filter-data brown-medium-multi">
           <Select name="food-select" multi={true} clearable={true} searchable={true} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(642)} backspaceToRemoveMessage="" />
+        </div>
+        <div className="solid-button-group">
+          <div className="solid-button solid-button-green" onClick={() => {
+            resetFilter().then(function(response) {
+              if (response.code == 200) {
+                TreeActions.fetchTrees();
+                let foods = response.foods.split(',').map((food) => {
+                  return parseInt(food);
+                });
+                let props = {
+                  foods: foods,
+                };
+                this.updateProps(props);
+              } else {
+                if (__DEV__)
+                  console.error(response.message);
+                if (reject)
+                  reject(response.code);
+              }
+            }.bind(this)).catch(function(response) { // Error catch for calcSeason().
+              if (__DEV__)
+                console.error(response.statusText);
+              if (reject)
+                reject(response.status);
+            });
+          }}>
+            {localization(42) /* SAVE */}
+          </div>
         </div>
       </div>
     );
