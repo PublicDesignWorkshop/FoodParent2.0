@@ -60,7 +60,7 @@ export default class TreeRecentDonate extends React.Component {
         </div>
         <div className="tree-recent-donate-data">
           <div className="tree-recent-donate-text">
-            <DonateFromTreeLine donate={this.state.donate} link={false} />
+            <DonateFromTreeLine donate={this.state.donate} link={true} />
             {nodonate}
           </div>
         </div>

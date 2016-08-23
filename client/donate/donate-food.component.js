@@ -31,7 +31,21 @@ export default class DonateFood extends React.Component {
     this.setState({options: null, selected: null});
   }
   componentDidMount () {
-    this.updateProps(this.props);
+    let options = [];
+    let selected = null;
+    let foods = FoodStore.getState().foods;
+    foods.forEach(food => {
+      options.push({value: food.id, label: food.name});
+      if (food.id == this.props.donate.food) {
+        selected = {value: food.id, label: food.name};
+        updateFilter(FITERMODE.FOOD, [selected.value], function(response) {  // Resolve
+          TreeActions.fetchTrees();
+        }, function(response) { // Reject
+
+        });
+      }
+    });
+    this.setState({options: options, selected: selected});
   }
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);
@@ -44,12 +58,13 @@ export default class DonateFood extends React.Component {
       options.push({value: food.id, label: food.name});
       if (food.id == props.donate.food) {
         selected = {value: food.id, label: food.name};
+        if (props.donate.food != this.props.donate.food) {
+          updateFilter(FITERMODE.FOOD, [selected.value], function(response) {  // Resolve
+            TreeActions.fetchTrees();
+          }, function(response) { // Reject
 
-        updateFilter(FITERMODE.FOOD, [selected.value], function(response) {  // Resolve
-          TreeActions.fetchTrees();
-        }, function(response) { // Reject
-
-        });
+          });
+        }
       }
     });
     this.setState({options: options, selected: selected});

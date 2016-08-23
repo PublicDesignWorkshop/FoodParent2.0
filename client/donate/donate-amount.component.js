@@ -93,7 +93,9 @@ export default class DonateAmount extends React.Component {
             <input type="text" className="donate-amount-input" placeholder={localization(673)}
               value={this.state.amount}
               onChange={(event: any)=> {
-                this.setState({amount: event.target.value});
+                if (!isNaN(event.target.value)) {
+                  this.setState({amount: event.target.value});
+                }
               }}
               onKeyPress={(event)=> {
                 if (event.key == 'Enter') {

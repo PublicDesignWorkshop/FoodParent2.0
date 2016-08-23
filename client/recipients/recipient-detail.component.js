@@ -46,18 +46,19 @@ export default class RecipientDetail extends React.Component {
     let mode;
     let remove = false;
     LocationActions.fetchLocations(parseInt(props.params.recipientId));
-    DonateActions.fetchRecentDonatesFromLocationId.defer(parseInt(props.params.recipientId));
     // NoteActions.fetchRecentNotesFromTreeId.defer(parseInt(props.params.treeId));
     // Instead of changing url, change # hashtag to remove extra rendering process.
     switch(props.location.hash.replace('#', '')) {
       case "":
         mode = DONATIONDETAILMODE.INFO;
+        DonateActions.fetchRecentDonatesFromLocationId.defer(parseInt(props.params.recipientId));
         break;
       case "post":
         mode = DONATIONDETAILMODE.POST;
         break;
       case "history":
         mode = DONATIONDETAILMODE.HISTORY;
+        DonateActions.fetchDonatesFromLocationIds.defer(parseInt(props.params.recipientId));
         break;
       case "delete":
         remove = true;

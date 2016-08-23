@@ -14,6 +14,8 @@ let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
 let NoteActions = require('./../actions/note.actions');
 let NoteStore = require('./../stores/note.store');
+let DonateActions = require('./../actions/donate.actions');
+let DonateStore = require('./../stores/donate.store');
 let AuthStore = require('./../stores/auth.store');
 
 
@@ -32,8 +34,11 @@ export default class TreeHistory extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
-    if (props.tree)
-      NoteActions.fetchNotesFromTreeIds.defer(props.tree.id);
+    // if (props.tree) {
+    //   NoteActions.fetchNotesFromTreeIds.defer(props.tree.id);
+    //   DonateActions.fetchDonatesFromTreeId.defer(props.tree.id);
+    // }
+
   }
   componentWillUnmount() {
     NoteStore.unlisten(this.updateNoteStore);
@@ -60,6 +65,12 @@ export default class TreeHistory extends React.Component {
         <NoteGraph />
         <AltContainer stores={
           {
+            donates: function(props) {
+              return {
+                store: DonateStore,
+                value: DonateStore.getState().donates
+              }
+            },
             notes: function(props) {
               return {
                 store: NoteStore,

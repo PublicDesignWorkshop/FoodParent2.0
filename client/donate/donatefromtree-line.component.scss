@@ -5,13 +5,38 @@
   padding: 4px 8px;
   font-family: $font-main;
   font-size: $font-size-medium;
-  cursor: default;;
+  cursor: auto;
   font-weight: 400;
+  color: $red;
+
+  &.clickable {
+    cursor: pointer;
+    &:hover {
+      @include respond-to(handhelds) {
+        background-color: transparent;
+        color: $red;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $red;
+        color: $white;
+      }
+    }
+    &:active, &.active {
+      @include respond-to(handhelds) {
+        background-color: $red;
+        color: $white;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $red;
+        color: $white;
+      }
+    }
+  }
 
   .location-link {
     margin: 0 2px;
     padding: 1px 4px;
-    background-color: $brown;
+    background-color: $red;
     border-radius: 2px;
     color: $white;
     font-size: $font-size-medium-small;
@@ -23,6 +48,10 @@
     padding: 2px 4px;
     vertical-align: middle;
     font-weight: 400;
+    &.tag-red {
+      background-color: $red;
+      color: $white;
+    }
     &.tag-brown {
       background-color: $brown;
       color: $white;
@@ -31,17 +60,5 @@
       background-color: $green;
       color: $white;
     }
-  }
-
-  &.donatefromtree-line-light {
-    color: $grey;
-  }
-
-  &.donatefromtree-line-green {
-    color: $green;
-  }
-
-  &.donatefromtree-line-brown {
-    color: $brown;
   }
 }

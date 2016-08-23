@@ -1,11 +1,13 @@
 import React from 'react';
 import AltContainer from 'alt-container';
+import * as _ from 'underscore';
 
 require('./donate-info.component.scss');
 var FontAwesome = require('react-fontawesome');
 let ServerSetting = require('./../../setting/server.json');
 
 import { localization } from './../utils/localization';
+import { displaySuccessMessage, displayFailMessage } from './../message/popup.component';
 import { NOTETYPE, AMOUNTTYPE, PICKUPTIME } from './../utils/enum';
 // import NoteType from './note-type.component';
 // import NoteRate from './note-rate.component';
@@ -73,6 +75,17 @@ export default class DonateInfo extends React.Component {
         actions = <div>
           <div className="solid-button-group same-border-color-padding">
             <div className={"solid-button" + buttonStyle} onClick={() => {
+              let trees = _.without(this.props.donate.trees, 0);
+              if (trees.length == 0) {
+                displayFailMessage(localization(39));
+                DonateActions.setCode(39);
+                return;
+              }
+              if (parseFloat(this.props.donate.amount).toFixed(ServerSetting.iAmountPrecision) <= 0) {
+                displayFailMessage(localization(602));
+                DonateActions.setCode(602);
+                return;
+              }
               this.setState({editing: false, remove: false});
               this.props.donate.editing = false;
               DonateActions.updateDonate(DonateStore.getState().temp);
@@ -101,6 +114,17 @@ export default class DonateInfo extends React.Component {
         actions = <div>
           <div className="solid-button-group same-border-color-padding">
             <div className={"solid-button" + buttonStyle} onClick={() => {
+              let trees = _.without(this.props.donate.trees, 0);
+              if (trees.length == 0) {
+                displayFailMessage(localization(39));
+                DonateActions.setCode(39);
+                return;
+              }
+              if (parseFloat(this.props.donate.amount).toFixed(ServerSetting.iAmountPrecision) <= 0) {
+                displayFailMessage(localization(602));
+                DonateActions.setCode(602);
+                return;
+              }
               this.setState({editing: false, remove: false});
               this.props.donate.editing = false;
               DonateActions.createDonate.defer(DonateStore.getState().temp);

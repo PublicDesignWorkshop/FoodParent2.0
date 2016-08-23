@@ -1,4 +1,5 @@
 let alt = require('../alt');
+import * as _ from 'underscore';
 
 let DonateSource = require('./../sources/donate.source');
 import { displaySuccessMessage, displayFailMessage } from './../message/popup.component';
@@ -57,6 +58,24 @@ class DonateActions {
     }
     return null;
   }
+  fetchDonatesFromTreeId(id) {
+    if (id != null) {
+      return (dispatch) => {
+        dispatch();
+        this.setCode(90);
+        DonateSource.fetchDonatesFromTreeId(id).then((response) => {
+          this.fetchedDonates(response);
+        }).catch((code) => {
+          displayFailMessage(localization(code));
+          if (__DEV__) {
+            console.error(localization(code));
+          }
+          this.setCode(code);
+        });
+      }
+    }
+    return null;
+  }
   fetchRecentDonatesFromTreeId(id) {
     if (id != null) {
       return (dispatch) => {
@@ -81,19 +100,26 @@ class DonateActions {
     }
   }
   updateDonate(donate) {
-    return (dispatch) => {
-      dispatch();
-      this.setCode(92);
-      DonateSource.updateDonate(donate).then((response) => {
-        displaySuccessMessage(localization(604));
-        this.updatedDonate(response);
-      }).catch((code) => {
-        displayFailMessage(localization(code));
-        if (__DEV__) {
-          console.error(localization(code));
-        }
-        this.setCode(code);
-      });
+    let trees = _.without(donate.trees, 0);
+    if (trees.length == 0) {
+      displayFailMessage(localization(39));
+      this.setCode(39);
+      return;
+    } else {
+      return (dispatch) => {
+        dispatch();
+        this.setCode(92);
+        DonateSource.updateDonate(donate).then((response) => {
+          displaySuccessMessage(localization(604));
+          this.updatedDonate(response);
+        }).catch((code) => {
+          displayFailMessage(localization(code));
+          if (__DEV__) {
+            console.error(localization(code));
+          }
+          this.setCode(code);
+        });
+      }
     }
   }
   updatedDonate(props) {
@@ -102,20 +128,28 @@ class DonateActions {
     }
   }
   createDonate(donate) {
-    return (dispatch) => {
-      dispatch();
-      this.setCode(93);
-      DonateSource.createDonate(donate).then((response) => {
-        displaySuccessMessage(localization(605));
-        this.createdDonate(response);
-      }).catch((code) => {
-        displayFailMessage(localization(code));
-        if (__DEV__) {
-          console.error(localization(code));
-        }
-        this.setCode(code);
-      });
+    let trees = _.without(donate.trees, 0);
+    if (trees.length == 0) {
+      displayFailMessage(localization(39));
+      this.setCode(39);
+      return;
+    } else {
+      return (dispatch) => {
+        dispatch();
+        this.setCode(93);
+        DonateSource.createDonate(donate).then((response) => {
+          displaySuccessMessage(localization(605));
+          this.createdDonate(response);
+        }).catch((code) => {
+          displayFailMessage(localization(code));
+          if (__DEV__) {
+            console.error(localization(code));
+          }
+          this.setCode(code);
+        });
+      }
     }
+
   }
   createdDonate(props) {
     return (dispatch) => {

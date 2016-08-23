@@ -23,7 +23,7 @@ export default class DonateHistory extends React.Component {
     this.updateDonateStore = this.updateDonateStore.bind(this);
   }
   componentWillMount() {
-    this.updateProps(this.props);
+    // this.updateProps(this.props);
   }
   componentDidMount () {
     DonateStore.listen(this.updateDonateStore);
@@ -32,8 +32,9 @@ export default class DonateHistory extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
-    if (props.location)
-      DonateActions.fetchDonatesFromLocationIds.defer(props.location.id);
+    // if (props.location) {
+    //   DonateActions.fetchDonatesFromLocationIds.defer(props.location.id);
+    // }
   }
   componentWillUnmount() {
     DonateStore.unlisten(this.updateDonateStore);

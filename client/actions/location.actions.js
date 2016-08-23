@@ -59,7 +59,7 @@ class LocationActions {
   createLocation(location) {
     if (location.name == null || location.name.trim() == "") {
       displayFailMessage(localization(668));
-      this.setCode(643);
+      this.setCode(668);
     } else {
       return (dispatch) => {
         // we dispatch an event here so we can have "loading" state.

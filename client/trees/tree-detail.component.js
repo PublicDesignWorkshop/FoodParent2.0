@@ -39,12 +39,12 @@ export default class TreeDetail extends React.Component {
     let mode;
     let remove = false;
     TreeActions.fetchTree.defer(parseInt(props.params.treeId));
-    NoteActions.fetchRecentNotesFromTreeId.defer(parseInt(props.params.treeId));
-    DonateActions.fetchRecentDonatesFromTreeId.defer(parseInt(props.params.treeId));
     // Instead of changing url, change # hashtag to remove extra rendering process.
     switch(props.location.hash.replace('#', '')) {
       case "":
         mode = TREEDETAILMODE.INFO;
+        NoteActions.fetchRecentNotesFromTreeId.defer(parseInt(props.params.treeId));
+        DonateActions.fetchRecentDonatesFromTreeId.defer(parseInt(props.params.treeId));
         break;
       case "post":
         mode = TREEDETAILMODE.POST;
@@ -54,6 +54,8 @@ export default class TreeDetail extends React.Component {
         break;
       case "history":
         mode = TREEDETAILMODE.HISTORY;
+        NoteActions.fetchNotesFromTreeIds.defer(parseInt(props.params.treeId));
+        DonateActions.fetchDonatesFromTreeId.defer(parseInt(props.params.treeId));
         break;
       case "all":
         mode = TREEDETAILMODE.ALL;

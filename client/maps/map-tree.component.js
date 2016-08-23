@@ -226,7 +226,7 @@ export default class MapTree extends React.Component {
   }
   renderMarkers(trees, selected) {
     if (__DEV__) {
-      console.log(`Map - renderMarkers() with ${trees.length} trees`);
+      console.log(`Map Tree - renderMarkers() with ${trees.length} trees`);
     }
     var markers = this.markersLayer.getLayers();
     //this.markersLayer._featureGroup._layers

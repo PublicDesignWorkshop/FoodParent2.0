@@ -51,6 +51,12 @@ export default class MapRecipient extends React.Component {
       this.satTileLayer = MapStore.getMapModel(MapSetting.sRecipeintMapId).satTileLayer;
       this.focusLayer = MapStore.getMapModel(MapSetting.sRecipeintMapId).focusLayer;
       this.markersLayer = MapStore.getMapModel(MapSetting.sRecipeintMapId).markersLayer;
+      this.renderMarkers(this.props.locations, this.props.selected);
+      let temp = LocationStore.getState().temp;
+      this.renderActiveMarker(temp);
+      setTimeout(function() {
+        this.renderPopup(LocationStore.getLocation(this.props.selected));
+      }.bind(this), 100);
     }
     this.updateProps(this.props);
     this.map.closePopup();
@@ -140,7 +146,6 @@ export default class MapRecipient extends React.Component {
     let temp = LocationStore.getState().temp;
     if (LocationStore.getState().code == 200 && (props.selected == null || props.selected != this.props.selected)) {
       this.renderMarkers(props.locations, props.selected);
-
     } else if (LocationStore.getState().code == 200 && temp && (temp.editing != null || !temp.editing)) {
       this.renderActiveMarker(temp);
       if (LocationStore.getState().code == 200 && temp && temp.id == 0) {
@@ -179,6 +184,9 @@ export default class MapRecipient extends React.Component {
     }
   }
   renderActiveMarker(location) {  // location in this case = LocationStore.getState().temp
+    if (location == null) {
+      return;
+    }
     var markers = this.markersLayer.getLayers();
     let bFound = false;
     for (let i = 0; i < markers.length && !bFound; i++) {
@@ -227,7 +235,7 @@ export default class MapRecipient extends React.Component {
   }
   renderMarkers(locations, selected) {
     if (__DEV__) {
-      console.log(`Map - renderMarkers() with ${locations.length} locations`);
+      console.log(`Map Recipient - renderMarkers() with ${locations.length} locations`);
     }
     var markers = this.markersLayer.getLayers();
     //this.markersLayer._featureGroup._layers

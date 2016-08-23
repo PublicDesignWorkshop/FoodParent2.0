@@ -19,6 +19,7 @@ let FoodStore = require('./../stores/food.store');
 export default class DonateFromTreeLine extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.selectDonate = this.selectDonate.bind(this);
   }
   componentWillMount() {
 
@@ -31,16 +32,25 @@ export default class DonateFromTreeLine extends React.Component {
   updateProps(props) {
 
   }
+  selectDonate() {
+    DonateActions.setSelected(this.props.donate.id);
+    // LocationActions.setSelected(this.props.donate.location);
+    if (AuthStore.getState().auth.isManager() && this.props.link && this.props.donate.location) {
+      this.context.router.push({pathname: ServerSetting.uBase + '/recipient/' + this.props.donate.location, hash: "#history"});
+    }
+  }
   render () {
     let style = "";
     let comment;
     let amount;
     let food;
     let dest = [];
+    if (AuthStore.getState().auth.isManager()) {
+      style = " clickable";
+    }
     if (this.props.donate) {
       switch(this.props.donate.type) {
         case NOTETYPE.DONATE:
-          style = " donate-line-brown";
           // comment = this.props.donate.comment.trim();
           switch(this.props.donate.amountType) {
             case AMOUNTTYPE.LBS:
@@ -66,7 +76,7 @@ export default class DonateFromTreeLine extends React.Component {
         dest = <span className="location-link">{localization(40)}</span>;
       }
       return (
-        <div className={"donatefromtree-line-wrapper" + style}>
+        <div className={"donatefromtree-line-wrapper" + style} onClick={this.selectDonate}>
           {this.props.donate.getFormattedDate()}&nbsp;-&nbsp;
           {amount}&nbsp;
           {localization(41)}&nbsp;
