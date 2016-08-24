@@ -130,33 +130,19 @@ class PersonStore {
   }
   handleCreatedPerson(props) {
     console.log(props);
-    if (props.length > 0) {
-      this.user = new PersonModel(props);
+    if (props.response.length > 0) {
+      this.user = new PersonModel(props.response);
     }
-    this.temp = new PersonModel(props);
+    this.temp = new PersonModel(props.response);
     setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
       AuthActions.fetchAuth();
-    }, 1);
-    if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
-      if (TreeStore.getState().selected) {
-        setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
-          if (this.auth && this.auth.auth == AUTHTYPE.PARENT) {
-            browserHistory.replace({pathname: ServerSetting.uBase + '/tree/' + TreeStore.getState().selected});
-          } else {
-            TreeActions.fetchTrees();
-            browserHistory.replace({pathname: ServerSetting.uBase + '/'});
-          }
-        }.bind(this), 1);
-      } else {
-        setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
-          browserHistory.replace({pathname: ServerSetting.uBase + '/'});
-        }, 1);
-      }
-    } else {
-      setTimeout(function() { // Process router on a separate thread because FLUX action shouldn't evoke another action.
+      TreeActions.fetchTrees.defer();
+      if (props.selected == null || isNaN(props.selected)) {
         browserHistory.replace({pathname: ServerSetting.uBase + '/'});
-      }, 1);
-    }
+      } else {
+        browserHistory.replace({pathname: ServerSetting.uBase + '/tree/' + props.selected});
+      }
+    }.bind(this), 0);
     this.code = 200;
   }
 }

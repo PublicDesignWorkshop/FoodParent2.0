@@ -1,6 +1,9 @@
 {
   "e0": "인터넷 연결을 확인해주세요.",
 
+  "36": "Rating Update Graph",
+  "37": "Pickup Amount Graph (accum. / year)",
+  "38": "Donation Amount Graph (accum. / year)",
   "39": "Please choose at least one tree source.",
   "40": "Unknown recipient",
   "41": "to",

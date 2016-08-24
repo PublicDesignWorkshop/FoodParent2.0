@@ -9,6 +9,7 @@ let ServerSetting = require('./../../setting/server.json');
 import { localization } from './../utils/localization';
 import DonateLine from './../donate/donate-line.component';
 import DonateInfo from './../donate/donate-info.component';
+import { sortNoteByDateDESC } from './../utils/sort';
 
 
 export default class DonateList extends React.Component {
@@ -32,7 +33,8 @@ export default class DonateList extends React.Component {
   render () {
     let donates = [];
     if (this.props.donates && this.props.donates.length > 0) {
-      this.props.donates.forEach((donate) => {
+      let list = this.props.donates.sort(sortNoteByDateDESC);
+      list.forEach((donate) => {
         if (this.props.donate && donate.id == this.props.donate.id) {
           donates.push(<div id={"donate" + donate.id} key={"donate" + donate.id}><DonateInfo donate={this.props.donate} /></div>);
         } else {

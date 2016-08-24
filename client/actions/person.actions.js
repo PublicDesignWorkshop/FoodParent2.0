@@ -53,13 +53,13 @@ class PersonActions {
       dispatch();
     }
   }
-  createPerson(person) {
+  createPerson(person, selected) {
     return (dispatch) => {
       dispatch();
       this.setCode(93);
       PersonSource.createPerson(person).then((response) => {
         displaySuccessMessage(localization(905));
-        this.createdPerson(response);
+        this.createdPerson({response: response, selected: selected});
       }).catch((code) => {
         displayFailMessage(localization(code));
         if (__DEV__) {

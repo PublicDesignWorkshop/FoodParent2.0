@@ -23,4 +23,5 @@ content/images/*
 !content/images/blank.jpg
 
 serverconfig/~$errorlist.xlsx
+npm-debug.log
 npm-debug.log.*

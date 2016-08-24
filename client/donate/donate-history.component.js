@@ -8,7 +8,7 @@ let ServerSetting = require('./../../setting/server.json');
 import { localization } from './../utils/localization';
 import LocationName from './../location/location-name.component';
 import DonateList from './../donate/donate-list.component';
-// import NoteGraph from './../note/note-graph.component';
+import DonateGraph from './../donate/donate-graph.component';
 
 let LocationActions = require('./../actions/location.actions');
 let LocationStore = require('./../stores/location.store');
@@ -74,6 +74,7 @@ export default class DonateHistory extends React.Component {
             },
           }
         }>
+          <DonateGraph />
           <DonateList />
         </AltContainer>
       </div>

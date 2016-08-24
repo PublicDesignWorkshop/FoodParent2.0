@@ -145,8 +145,11 @@ class TreeStore {
   handleCreatedTree(props) {
     this.trees.push(new TreeModel(props));
     this.code = 200;
-    AuthActions.fetchAuth.defer();
-    browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + props.id});
+    setTimeout(function() {
+      AuthActions.fetchAuth.defer();
+      browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + props.id});
+    }.bind(this), 0);
+
   }
   handleUpdatedTree(props) {
     let trees = this.trees.filter(tree => tree.id == parseInt(props.id));
@@ -169,7 +172,9 @@ class TreeStore {
     }
     this.temp = null;
     this.code = 200;
-    browserHistory.push({pathname: ServerSetting.uBase + '/'});
+    setTimeout(function() {
+      browserHistory.push({pathname: ServerSetting.uBase + '/'});
+    }, 0);
   }
   handleReset() {
     this.selected = null;

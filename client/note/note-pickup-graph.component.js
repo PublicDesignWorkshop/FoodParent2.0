@@ -18,7 +18,7 @@ let AuthStore = require('./../stores/auth.store');
 import { google10Color } from './../utils/color';
 
 
-export default class NoteUpdateGraph extends React.Component {
+export default class NotePickupGraph extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.notes = [];
@@ -62,7 +62,7 @@ export default class NoteUpdateGraph extends React.Component {
       } else {
         let bFound = false;
         for (let i = 0; i < props.notes.length && !bFound; i++) {
-          if (this.notes[i].id != props.notes[i].id || this.notes[i].rate != props.notes[i].rate) {
+          if (this.notes[i].id != props.notes[i].id || this.notes[i].amount != props.notes[i].amount) {
             bFound = true;
           }
         }
@@ -72,9 +72,8 @@ export default class NoteUpdateGraph extends React.Component {
       }
       this.notes = props.notes.slice();
       if ((first || rendering) && props.notes) {
-        console.log("Drawing an update chart.");
-        this.ready = false; // set ready flag as false so that it doesn't render twice.
-        let rCanvas = ReactDOM.findDOMNode(this.refs['canvas-update']);
+        console.log("Drawing an pickup chart.");
+        let rCanvas = ReactDOM.findDOMNode(this.refs['canvas-pickup']);
         let ctx = rCanvas.getContext("2d");
 
         let lists = [[]];
@@ -93,11 +92,15 @@ export default class NoteUpdateGraph extends React.Component {
           for (let j = 0; j < notes.length; j++) {
             for (let i = earlestYear; i <= latestYear; i++) {
               if (notes[j].date.year() == i) {
-                if (notes[j].type == NOTETYPE.UPDATE && notes[j].rate >= 3) {
+                if (notes[j].type == NOTETYPE.PICKUP) {
                   if (lists[i - earlestYear] == null) {
                     lists[i - earlestYear] = [];
                   }
-                  lists[i - earlestYear].push({x: moment(notes[j].date).year(currentYear).toDate(), y: notes[j].rate, r: 1});
+                  let accum = 0;
+                  if (lists[i - earlestYear].length > 0) {
+                    accum = parseFloat(lists[i - earlestYear][lists[i - earlestYear].length - 1].y);
+                  }
+                  lists[i - earlestYear].push({x: moment(notes[j].date).year(currentYear).toDate(), y: (notes[j].amount + accum).toFixed(ServerSetting.iAmountPrecision), r: 1});
                 }
               }
             }
@@ -118,24 +121,16 @@ export default class NoteUpdateGraph extends React.Component {
   				scaleShowHorizontalLines: true,
   				scaleShowLabels: true,
   				scaleType: "date",
-          scaleLabel: "<% if (value <= 5) { %>★x<%=value%><% } %>",
-          // Boolean - If we want to override with a hard coded y scale
-          scaleOverride: true,
-          // ** Required if scaleOverride is true **
-          // Number - The number of steps in a hard coded y scale
-          scaleSteps: 2,
-          // Number - The value jump in the hard coded y scale
-          scaleStepWidth: 1,
-          // Number - The y scale starting value
-          scaleStartValue: 3,
-          // Interpolated JS string - can access point fields:
-          // argLabel, valueLabel, arg, value, datasetLabel, size
-          scaleDateTimeFormat: "mmm dd, ",
-          tooltipTemplate: "<%=argLabel%><%if (datasetLabel){%><%=datasetLabel%><%}%>: <%=valueLabel%>",
+          scaleLabel: "<%=value%> lbs.",
 
           // Interpolated JS string - can access point fields:
           // argLabel, valueLabel, arg, value, datasetLabel, size
-          multiTooltipTemplate: "<%=argLabel%><%if (datasetLabel){%><%=datasetLabel%><%}%>: <%=valueLabel%>",
+          scaleDateTimeFormat: "mmm dd, ",
+          tooltipTemplate: "<%=argLabel%><%if (datasetLabel){%><%=datasetLabel%><%}%>: <%=valueLabel%> (accum)",
+
+          // Interpolated JS string - can access point fields:
+          // argLabel, valueLabel, arg, value, datasetLabel, size
+          multiTooltipTemplate: "<%=argLabel%><%if (datasetLabel){%><%=datasetLabel%><%}%>: <%=valueLabel%> (accum)",
 
           // Interpolated JS string - can access all chart fields
           legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><%for(var i=0;i<datasets.length;i++){%><li><span class=\"<%=name.toLowerCase()%>-legend-marker\" style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%=datasets[i].label%></li><%}%></ul>"
@@ -148,8 +143,8 @@ export default class NoteUpdateGraph extends React.Component {
     let canvasStyle = {width: this.state.width, height: this.state.height};
     return (
       <div ref="wrapper" className="note-graph-wrapper">
-        <div className="note-graph-label"><FontAwesome className='' name='star' /> {localization(36)}</div>
-        <canvas ref="canvas-update" className="update-graph-canvas" style={canvasStyle} />
+        <div className="note-graph-label">{localization(37)}</div>
+        <canvas ref="canvas-pickup" className="pickup-graph-canvas" style={canvasStyle} />
       </div>
     );
   }

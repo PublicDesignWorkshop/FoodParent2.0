@@ -9,6 +9,8 @@ import { localization } from './../utils/localization';
 import TreeFood from './tree-food.component';
 import NoteList from './../note/note-list.component';
 import NoteUpdateGraph from './../note/note-update-graph.component';
+import NotePickupGraph from './../note/note-pickup-graph.component';
+import NoteDonateGraph from './../note/note-donate-graph.component';
 
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
@@ -85,6 +87,8 @@ export default class TreeHistory extends React.Component {
           }
         }>
           <NoteUpdateGraph />
+          <NotePickupGraph />
+          <NoteDonateGraph />
           <NoteList />
         </AltContainer>
       </div>

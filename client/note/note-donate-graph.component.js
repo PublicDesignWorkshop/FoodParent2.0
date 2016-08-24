@@ -18,10 +18,10 @@ let AuthStore = require('./../stores/auth.store');
 import { google10Color } from './../utils/color';
 
 
-export default class NoteUpdateGraph extends React.Component {
+export default class NoteDonateGraph extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.notes = [];
+    this.donates = [];
     this.drawTimer;
   }
   componentWillMount() {
@@ -55,14 +55,14 @@ export default class NoteUpdateGraph extends React.Component {
     }
     this.drawTimer = setTimeout(function() {
       let rendering = false;
-      if (this.notes && this.notes.length == 0) {
+      if (this.donates && this.donates.length == 0) {
         rendering = true;
-      } else if (this.notes.length != props.notes.length) {
+      } else if (this.donates.length != props.donates.length) {
         rendering = true;
       } else {
         let bFound = false;
-        for (let i = 0; i < props.notes.length && !bFound; i++) {
-          if (this.notes[i].id != props.notes[i].id || this.notes[i].rate != props.notes[i].rate) {
+        for (let i = 0; i < props.donates.length && !bFound; i++) {
+          if (this.donates[i].id != props.donates[i].id || this.donates[i].amount != props.donates[i].amount) {
             bFound = true;
           }
         }
@@ -70,34 +70,38 @@ export default class NoteUpdateGraph extends React.Component {
           rendering = true;
         }
       }
-      this.notes = props.notes.slice();
-      if ((first || rendering) && props.notes) {
-        console.log("Drawing an update chart.");
-        this.ready = false; // set ready flag as false so that it doesn't render twice.
-        let rCanvas = ReactDOM.findDOMNode(this.refs['canvas-update']);
+      this.donates = props.donates.slice();
+      if ((first || rendering) && props.donates) {
+        console.log("Drawing an donate chart.");
+        this.ready = false;
+        let rCanvas = ReactDOM.findDOMNode(this.refs['canvas-donate']);
         let ctx = rCanvas.getContext("2d");
 
         let lists = [[]];
-        let notes = props.notes.sort(sortNoteByDateASC);
+        let donates = props.donates.sort(sortNoteByDateASC);
         let currentYear = moment(new Date()).year();
         let earlestYear;
         let latestYear;
         let max;
         let min;
-        if (notes.length == 0) {
+        if (donates.length == 0) {
           earlestYear = currentYear;
           latestYear = currentYear;
         } else {
-          earlestYear = moment(notes[0].date).year();
-          latestYear = moment(notes[notes.length - 1].date).year();
-          for (let j = 0; j < notes.length; j++) {
+          earlestYear = moment(donates[0].date).year();
+          latestYear = moment(donates[donates.length - 1].date).year();
+          for (let j = 0; j < donates.length; j++) {
             for (let i = earlestYear; i <= latestYear; i++) {
-              if (notes[j].date.year() == i) {
-                if (notes[j].type == NOTETYPE.UPDATE && notes[j].rate >= 3) {
+              if (donates[j].date.year() == i) {
+                if (donates[j].type == NOTETYPE.DONATE) {
                   if (lists[i - earlestYear] == null) {
                     lists[i - earlestYear] = [];
                   }
-                  lists[i - earlestYear].push({x: moment(notes[j].date).year(currentYear).toDate(), y: notes[j].rate, r: 1});
+                  let accum = 0;
+                  if (lists[i - earlestYear].length > 0) {
+                    accum = parseFloat(lists[i - earlestYear][lists[i - earlestYear].length - 1].y);
+                  }
+                  lists[i - earlestYear].push({x: moment(donates[j].date).year(currentYear).toDate(), y: (donates[j].amount + accum).toFixed(ServerSetting.iAmountPrecision), r: 1});
                 }
               }
             }
@@ -111,6 +115,7 @@ export default class NoteUpdateGraph extends React.Component {
     				data: lists[i] != null ? lists[i] : [],
           });
         }
+        console.log(data);
         let chart = new Chart(ctx).Scatter(data, {
           bezierCurve: false,
           bezierCurveTension: 0.3,
@@ -118,24 +123,16 @@ export default class NoteUpdateGraph extends React.Component {
   				scaleShowHorizontalLines: true,
   				scaleShowLabels: true,
   				scaleType: "date",
-          scaleLabel: "<% if (value <= 5) { %>★x<%=value%><% } %>",
-          // Boolean - If we want to override with a hard coded y scale
-          scaleOverride: true,
-          // ** Required if scaleOverride is true **
-          // Number - The number of steps in a hard coded y scale
-          scaleSteps: 2,
-          // Number - The value jump in the hard coded y scale
-          scaleStepWidth: 1,
-          // Number - The y scale starting value
-          scaleStartValue: 3,
-          // Interpolated JS string - can access point fields:
-          // argLabel, valueLabel, arg, value, datasetLabel, size
-          scaleDateTimeFormat: "mmm dd, ",
-          tooltipTemplate: "<%=argLabel%><%if (datasetLabel){%><%=datasetLabel%><%}%>: <%=valueLabel%>",
+          scaleLabel: "<%=value%> lbs.",
 
           // Interpolated JS string - can access point fields:
           // argLabel, valueLabel, arg, value, datasetLabel, size
-          multiTooltipTemplate: "<%=argLabel%><%if (datasetLabel){%><%=datasetLabel%><%}%>: <%=valueLabel%>",
+          scaleDateTimeFormat: "mmm dd, ",
+          tooltipTemplate: "<%=argLabel%><%if (datasetLabel){%><%=datasetLabel%><%}%>: <%=valueLabel%>  (accum)",
+
+          // Interpolated JS string - can access point fields:
+          // argLabel, valueLabel, arg, value, datasetLabel, size
+          multiTooltipTemplate: "<%=argLabel%><%if (datasetLabel){%><%=datasetLabel%><%}%>: <%=valueLabel%> (accum)",
 
           // Interpolated JS string - can access all chart fields
           legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><%for(var i=0;i<datasets.length;i++){%><li><span class=\"<%=name.toLowerCase()%>-legend-marker\" style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%=datasets[i].label%></li><%}%></ul>"
@@ -148,8 +145,8 @@ export default class NoteUpdateGraph extends React.Component {
     let canvasStyle = {width: this.state.width, height: this.state.height};
     return (
       <div ref="wrapper" className="note-graph-wrapper">
-        <div className="note-graph-label"><FontAwesome className='' name='star' /> {localization(36)}</div>
-        <canvas ref="canvas-update" className="update-graph-canvas" style={canvasStyle} />
+        <div className="note-graph-label">{localization(38)}</div>
+        <canvas ref="canvas-donate" className="donate-graph-canvas" style={canvasStyle} />
       </div>
     );
   }

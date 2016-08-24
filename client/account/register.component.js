@@ -13,6 +13,8 @@ import Instruction from './instruction.component';
 let PersonActions = require('./../actions/person.actions');
 let PersonStore = require('./../stores/person.store');
 let AuthActions = require('./../actions/auth.actions');
+let TreeStore = require('./../stores/tree.store');
+
 import ParentContact from './../parent/parent-contact.component';
 import ParentName from './../parent/parent-name.component';
 import ParentAddress from './../parent/parent-address.component';
@@ -37,7 +39,7 @@ export default class Register extends React.Component {
     let error: any = null;
     try {
       isValidEmailAddress(PersonStore.getState().temp.contact);
-      PersonActions.createPerson(PersonStore.getState().temp);
+      PersonActions.createPerson(PersonStore.getState().temp, TreeStore.getState().selected);
     } catch(e) {
       displayFailMessage(localization(e.message));
       if (__DEV__) {

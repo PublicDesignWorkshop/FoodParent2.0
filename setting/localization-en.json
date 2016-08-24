@@ -1,7 +1,9 @@
 {
   "0": "Please check your internet connection.",
 
-
+  "36": "Rating Update Graph",
+  "37": "Pickup Amount Graph (accum. / year)",
+  "38": "Donation Amount Graph (accum. / year)",
   "39": "Please choose at least one tree source.",
   "40": "Unknown recipient",
   "41": "to",
