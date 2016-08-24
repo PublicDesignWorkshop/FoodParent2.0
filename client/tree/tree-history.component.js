@@ -62,7 +62,6 @@ export default class TreeHistory extends React.Component {
         }>
           <TreeFood editing={false} />
         </AltContainer>
-        <NoteUpdateGraph />
         <AltContainer stores={
           {
             donates: function(props) {
@@ -85,6 +84,7 @@ export default class TreeHistory extends React.Component {
             },
           }
         }>
+          <NoteUpdateGraph />
           <NoteList />
         </AltContainer>
       </div>
