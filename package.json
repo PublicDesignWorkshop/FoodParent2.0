@@ -48,6 +48,8 @@
   },
   "dependencies": {
     "blueimp-load-image": "2.6.1",
+    "chart.js": "2.2.1",
+    "chart.js-scatter": "1.1.4",
     "jquery": "3.1.0",
     "leaflet-plugins": "1.8.0",
     "leaflet.markercluster": "0.5.0",

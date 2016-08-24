@@ -11,6 +11,7 @@ var BUILD_DIR = path.resolve(__dirname, './dist');
 var SEVER_DIR = path.resolve(__dirname, './server');
 var CLIENT_DIR = path.resolve(__dirname, './client');
 var SETTING_DIR = path.resolve(__dirname, './setting');
+var LIBRARIES_DIR = path.resolve(__dirname, './libraries');
 var MODULES_DIR = path.resolve(__dirname, './node_modules');
 
 var devDefinePlugin = new webpack.DefinePlugin({
@@ -50,10 +51,13 @@ var corePluginList = [
     'googletile': 'imports?this=>global!exports?googletile!googletile',
     'leaflet-canvas-marker': 'imports?this=>global!exports?leaflet-canvas-marker!leaflet-canvas-marker',
     'iscroll': 'imports?this=>global!exports?iscroll!iscroll',
+    // 'chartjs': 'imports?this=>global!exports?chartjs!chartjs',
     // 'createjs': 'imports?this=>global!exports?createjs!createjs',
   }),
   new CopyWebpackPlugin([
     { from: SETTING_DIR, to: path.join(BUILD_DIR, "./setting/") },
+    { from: path.join(LIBRARIES_DIR, "./chart-core.js"), to: path.join(BUILD_DIR, "./js/chart-core.js") },
+    { from: path.join(LIBRARIES_DIR, "./chart-scatter.js"), to: path.join(BUILD_DIR, "./js/chart-scatter.js") },
   ])
 ];
 

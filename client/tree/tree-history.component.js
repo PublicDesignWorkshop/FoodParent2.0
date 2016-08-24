@@ -8,7 +8,7 @@ let ServerSetting = require('./../../setting/server.json');
 import { localization } from './../utils/localization';
 import TreeFood from './tree-food.component';
 import NoteList from './../note/note-list.component';
-import NoteGraph from './../note/note-graph.component';
+import NoteUpdateGraph from './../note/note-update-graph.component';
 
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
@@ -62,7 +62,7 @@ export default class TreeHistory extends React.Component {
         }>
           <TreeFood editing={false} />
         </AltContainer>
-        <NoteGraph />
+        <NoteUpdateGraph />
         <AltContainer stores={
           {
             donates: function(props) {

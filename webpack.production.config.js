@@ -22,7 +22,7 @@ var config = {
   },
   output: {
     path: path.join(BUILD_DIR, "./js/"),
-    filename: '[name]-bundle.js'
+    filename: '[name]-bundle.js',
   },
   plugins: configs.corePluginList.concat(configs.productionPluginList),
   resolve: {
@@ -35,6 +35,7 @@ var config = {
       'googletile' : path.join(__dirname, './node_modules/leaflet-plugins/layer/tile/Google.js'),
       'leaflet-canvas-marker' : path.join(__dirname, './libraries/leaflet-canvas-marker.js'),
       'iscroll' : path.join(__dirname, './libraries/iscroll-zoom.js'),
+      // 'chartjs' : path.join(__dirname, './libraries/Chart.Core.js'),
       // 'createjs' : path.join(__dirname, './libraries/createjs.js')
     }
   },

@@ -8,7 +8,7 @@ let ServerSetting = require('./../../setting/server.json');
 import { localization } from './../utils/localization';
 import TreeFood from './../tree/tree-food.component';
 import NoteInfo from './../note/note-info.component';
-import NoteGraph from './../note/note-graph.component';
+
 
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
