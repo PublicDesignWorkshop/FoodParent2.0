@@ -1,0 +1,107 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.notify-line-wrapper {
+  padding: 4px 8px;
+  font-family: $font-main;
+  font-size: $font-size-medium;
+  cursor: pointer;
+  font-weight: 400;
+
+  .tag {
+    font-size: $font-size-medium-small;
+    border-radius: 2px;
+    padding: 2px 4px;
+    vertical-align: middle;
+    font-weight: 400;
+    &.tag-brown {
+      background-color: $brown;
+      color: $white;
+    }
+    &.tag-green {
+      background-color: $green;
+      color: $white;
+    }
+  }
+
+  .icon {
+    &.fa-check-square-o {
+      padding-right: 2px;
+    }
+    &.fa-square-o {
+      padding-right: 4px;
+    }
+  }
+
+  &.notify-line-light {
+    color: $grey;
+    &:hover {
+      @include respond-to(handhelds) {
+        background-color: transparent;
+        color: $grey;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $grey;
+        color: $white;
+      }
+    }
+    &:active, &.active {
+      @include respond-to(handhelds) {
+        background-color: $grey;
+        color: $white;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $grey;
+        color: $white;
+      }
+    }
+  }
+
+  &.notify-line-green {
+    color: $green;
+    &:hover {
+      @include respond-to(handhelds) {
+        background-color: transparent;
+        color: $green;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $green;
+        color: $white;
+      }
+    }
+    &:active, &.active {
+      @include respond-to(handhelds) {
+        background-color: $green;
+        color: $white;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $green;
+        color: $white;
+      }
+    }
+  }
+
+  &.notify-line-brown {
+    color: $brown;
+    &:hover {
+      @include respond-to(handhelds) {
+        background-color: transparent;
+        color: $brown;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $brown;
+        color: $white;
+      }
+    }
+    &:active, &.active {
+      @include respond-to(handhelds) {
+        background-color: $brown;
+        color: $white;
+      }
+      @include respond-to(wide-screens) {
+        background-color: $brown;
+        color: $white;
+      }
+    }
+  }
+}

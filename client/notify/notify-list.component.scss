@@ -1,0 +1,27 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.notify-list-wrapper {
+  padding: 8px;
+
+  > .notify-list-label {
+    padding: 8px 2px 4px 2px;
+    font-family: $font-main;
+    color: $brown;
+    font-size: $font-size-medium;
+    font-weight: 700;
+
+    &.label-green {
+      color: $green;
+    }
+  }
+
+  > .notify-list-data {
+
+  }
+  // -webkit-flex-grow: 1;
+  //         flex-grow: 1;
+  //
+  // overflow-x: hidden;
+  // overflow-y: scroll;
+}

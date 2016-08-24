@@ -1,6 +1,15 @@
 {
   "e0": "인터넷 연결을 확인해주세요.",
 
+  "27": "Server internal error. Please try again.",
+  "28": "Failed to send a notification to managers.",
+  "29": "Failed to send a notification to parents.",
+  "30": "Notification has sent successfully.",
+  "31": "Notify Checked Trees to Parents",
+  "32": "Notify Checked Trees to Managers",
+  "33": "Upcoming Trees",
+  "34": "Past Pick-ups",
+  "35": "NOTIFICATION",
   "36": "Rating Update Graph",
   "37": "Pickup Amount Graph (accum. / year)",
   "38": "Donation Amount Graph (accum. / year)",

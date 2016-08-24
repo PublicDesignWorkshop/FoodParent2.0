@@ -14,6 +14,7 @@ let AuthStore = require('./stores/auth.store');
 
 import Header from './header/header.component';
 import TreeMap from './trees/tree-map.component';
+import TreeNotify from './trees/tree-notify.component';
 import TreeDetail from './trees/tree-detail.component';
 import TreeAdd from './trees/tree-add.component';
 import TreeFilter from './trees/tree-filter.component';
@@ -122,6 +123,7 @@ render((
       <Route path="recipients" component={RecipientMap} />
       <Route path="addrecipient" component={RecipientAdd} />
       <Route path="recipient/:recipientId" component={RecipientDetail} />
+      <Route path="notify" component={TreeNotify} />
     </Route>
   </Router>
 ), document.getElementById('app'));

@@ -86,7 +86,7 @@ export default class TreeControl extends React.Component {
     let donation, notify;
     if (AuthStore.getState().auth.isManager()) {
       notify = <div className="control-button" onClick={()=> {
-
+        this.context.router.push({pathname: ServerSetting.uBase + '/notify'});
       }} data-for="tooltip-tree-control" data-tip={localization(54)}>
         <FontAwesome name="paper-plane-o" />
       </div>;
