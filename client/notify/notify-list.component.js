@@ -29,7 +29,6 @@ export default class NotifyList extends React.Component {
   componentDidMount () {
     setTimeout(function() {
       fetchNotify(function (response) {
-        console.log(response);
         this.setState({pastpickups: response.pastpickups, upcomings: response.upcomings});
       }.bind(this), function(fail) {
 

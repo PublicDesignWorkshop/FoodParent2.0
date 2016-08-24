@@ -1,11 +1,10 @@
 {
-  "ssltype": "https://",
+  "ssltype": "http://",
+  "bTestMail": true,
+
   "host": "www.concrete-jungle.org",
   "uBase": "/FoodParent2.0",
   "uBaseForRouter": "/FoodParent2.0/",
-  "bTestMail": true,
-
-
 
   "uServer": "/server/",
   "uDist": "/dist/",
@@ -23,7 +22,7 @@
   "fKGToG": 1000,
   "fLBSTOG": 453.592,
   "fGToLBS": 0.00220462,
-  "iAmountPrecision": 2,
+  "iAmountPrecision": 1,
 
   "iDeadFlagId": 1,
 
