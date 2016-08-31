@@ -32,7 +32,7 @@
         "treeIds" => $_GET['treeIds'],
       );
     }
-    $sql = "SELECT * FROM `note` WHERE (`tree` IN (".$params["treeIds"].")) ORDER BY `date` DESC";
+    $sql = "SELECT * FROM `note` WHERE (`tree` IN (".$params["treeIds"].")) AND type = 2 ORDER BY `date` DESC";
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);
