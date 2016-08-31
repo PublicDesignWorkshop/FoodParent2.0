@@ -11,7 +11,8 @@
   pointer-events: all;
 
   // transition: 0.15s;
-
+  right: -30%;
+  width: 30%;
   @include respond-to(handhelds) {
     right: -100%;
     width: 100%;
@@ -22,6 +23,7 @@
   }
 
   > .left {
+    height: 100%;
     position: absolute;
     top: $panel-control-width + $panel-control-width;
     left: -$panel-control-width;
@@ -31,6 +33,9 @@
   > .right {
     width: 100%;
     height: 100%;
+    > div:last-child {
+      padding-bottom: 54px;
+    }
     background-color: $light;
     -webkit-box-shadow: 0px 0px 1px 1px $black-quarter;
     -moz-box-shadow: 0px 0px 1px 1px $black-quarter;

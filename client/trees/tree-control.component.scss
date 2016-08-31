@@ -4,7 +4,10 @@
 @import "./trees.component.scss";
 
 .tree-control-wrapper {
-  height: 100%;
+  height: -webkit-calc(100% - 96px);
+  height:    -moz-calc(100% - 96px);
+  height:         calc(100% - 96px);
+  overflow-y: auto;
 
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -12,6 +15,19 @@
           user-select: none;
 
   color: $white;
+
+  /* Scroll bar style */
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: $brown;
+  }
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: $brown;
+  }
 
   .control-button {
     &:first-child {
