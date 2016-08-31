@@ -53,10 +53,10 @@ export default class NoteInfo extends React.Component {
           style = " note-info-light";
           break;
         case NOTETYPE.UPDATE:
-          style = " note-info-green";
+          style = " note-info-brown";
           break;
         case NOTETYPE.PICKUP:
-          style = " note-info-brown";
+          style = " note-info-green";
         break;
       }
       if (this.props.note.id == 0) {
@@ -64,10 +64,10 @@ export default class NoteInfo extends React.Component {
       }
       switch(this.props.note.type) {
         case NOTETYPE.UPDATE:
-          buttonStyle = " solid-button-green";
+          buttonStyle = " solid-button-brown";
           break;
         case NOTETYPE.PICKUP:
-          buttonStyle = " solid-button-brown";
+          buttonStyle = " solid-button-green";
           break;
       }
     }
@@ -162,7 +162,6 @@ export default class NoteInfo extends React.Component {
       if (this.props.note.type == NOTETYPE.UPDATE) {
         return (
           <div className={"note-info-wrapper" + style}>
-            <NoteType note={this.props.note} editing={this.state.editing} />
             <NoteImage note={this.props.note} editing={this.state.editing} />
             <NoteRate note={this.props.note} editing={this.state.editing} />
             <NoteComment note={this.props.note} editing={this.state.editing} />
@@ -175,7 +174,6 @@ export default class NoteInfo extends React.Component {
       } else {
         return (
           <div className={"note-info-wrapper" + style}>
-            <NoteType note={this.props.note} editing={this.state.editing} />
             <NoteImage note={this.props.note} editing={this.state.editing} />
             <NoteAmount note={this.props.note} editing={this.state.editing} />
             <NoteProper note={this.props.note} editing={this.state.editing} />
@@ -192,3 +190,5 @@ export default class NoteInfo extends React.Component {
     }
   }
 }
+// In case of adding a pickup note option.
+// <NoteType note={this.props.note} editing={this.state.editing} />

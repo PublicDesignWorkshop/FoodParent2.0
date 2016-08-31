@@ -49,7 +49,7 @@ export default class NoteLine extends React.Component {
           style = " note-line-light";
           break;
         case NOTETYPE.UPDATE:
-          style = " note-line-green";
+          style = " note-line-brown";
           if (this.props.note.rate == 0) {
             stars.push(<FontAwesome key={"star 0"} className='' name='star-o' />);
           } else {
@@ -59,11 +59,11 @@ export default class NoteLine extends React.Component {
               }
             }
           }
-          stars = <span className="tag tag-green">{stars}</span>;
+          stars = <span className="tag tag-brown">{stars}</span>;
           comment = this.props.note.comment.trim();
           break;
         case NOTETYPE.PICKUP:
-          style = " note-line-brown";
+          style = " note-line-green";
           comment = this.props.note.comment.trim();
           switch(this.props.note.amountType) {
             case AMOUNTTYPE.LBS:
@@ -78,13 +78,13 @@ export default class NoteLine extends React.Component {
           }
           switch(this.props.note.proper) {
             case PICKUPTIME.EARLY:
-              proper = <span className="tag tag-brown">{localization(988)}</span>;
+              proper = <span className="tag tag-green">{localization(988)}</span>;
               break;
             case PICKUPTIME.PROPER:
-              proper = <span className="tag tag-brown">{localization(989)}</span>;
+              proper = <span className="tag tag-green">{localization(989)}</span>;
               break;
             case PICKUPTIME.LATE:
-              proper = <span className="tag tag-brown">{localization(990)}</span>;
+              proper = <span className="tag tag-green">{localization(990)}</span>;
               break;
           }
         break;

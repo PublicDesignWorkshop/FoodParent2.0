@@ -19,7 +19,7 @@ import TreeHistory from './../tree/tree-history.component';
 import NoteAdd from './../note/note-add.component';
 
 import TreeRecentPost from './../tree/tree-recent-post.component';
-import TreeRecentPickup from './../tree/tree-recent-pickup.component';
+// import TreeRecentPickup from './../tree/tree-recent-pickup.component';
 import TreeRecentDonate from './../tree/tree-recent-donate.component';
 import TreeParentSummary from './../tree/tree-parent-summary.component';
 import TreeAdopt from './../tree/tree-adopt.component';
@@ -151,7 +151,6 @@ export default class TreePanel extends React.Component {
           }
         }>
           <TreeRecentPost />
-          <TreeRecentPickup />
         </AltContainer>
         <AltContainer stores={
           {

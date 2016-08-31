@@ -23,11 +23,8 @@ import ImageZoom from './../image/image-zoom.component';
 export default class NoteImage extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.handleDoubleClick = this.handleDoubleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.handleZoomClose = this.handleZoomClose.bind(this);
-    this.handleTouchStart = this.handleTouchStart.bind(this);
-    this.handleTouchEnd = this.handleTouchEnd.bind(this);
-    this.touchTimeout = null;
   }
   componentWillMount() {
     this.setState({uploading: false, width: 0, height: 0, zoomImage: ""});
@@ -66,7 +63,7 @@ export default class NoteImage extends React.Component {
     if (this._imageGallery)
       this._imageGallery.fullScreen();
   }
-  handleDoubleClick() {
+  handleClick() {
     if (this._imageGallery) {
       this.setState({zoomImage: this.props.note.images[this._imageGallery.getCurrentIndex()]});
       // console.log(this._imageGallery.getCurrentIndex());
@@ -75,21 +72,9 @@ export default class NoteImage extends React.Component {
   handleZoomClose() {
     this.setState({zoomImage: ""});
   }
-  handleTouchStart() {
-    if (this.touchTimeout) {
-      clearTimeout(this.touchTimeout);
-      this.setState({zoomImage: this.props.note.images[this._imageGallery.getCurrentIndex()]});
-    }
-    this.touchTimeout = setTimeout(function() {
-      this.touchTimeout = null;
-    }.bind(this), 250);
-  }
-  handleTouchEnd() {
-
-  }
   render () {
     let style = "";
-    if (this.props.note.type == NOTETYPE.PICKUP) {
+    if (this.props.note.type == NOTETYPE.UPDATE) {
       style = " note-image-brown";
     }
     let gallery;
@@ -109,7 +94,7 @@ export default class NoteImage extends React.Component {
         // );
       }.bind(this));
       gallery = <div data-for="tooltip-note-image" data-tip={localization(68)}>
-        <ImageGallery ref={i => this._imageGallery = i} items={images} slideInterval={ServerSetting.iGallerySlideInterval} onImageLoad={this.handleImageLoad} onDoubleClick={this.handleDoubleClick} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} />
+        <ImageGallery ref={i => this._imageGallery = i} items={images} slideInterval={ServerSetting.iGallerySlideInterval} onImageLoad={this.handleImageLoad} onClick={this.handleClick} />
       </div>
 
       // gallery = this.props.note.images.map(function(image, index) {

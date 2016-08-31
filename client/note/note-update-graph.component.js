@@ -44,7 +44,7 @@ export default class NoteUpdateGraph extends React.Component {
   }
   updateCanvasSize(first) {
     let wrapper = ReactDOM.findDOMNode(this.refs['wrapper']);
-    this.setState({width: wrapper.clientWidth, height: 100});
+    this.setState({width: wrapper.clientWidth, height: ServerSetting.iTreeRatingGraphHeight});
     setTimeout(function() {
       this.renderGraph(this.props, first);
     }.bind(this));

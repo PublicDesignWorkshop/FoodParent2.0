@@ -87,7 +87,7 @@ export default class TreeHistory extends React.Component {
           }
         }>
           <NoteUpdateGraph />
-          <NotePickupGraph />
+
           <NoteDonateGraph />
           <NoteList />
         </AltContainer>
@@ -99,3 +99,6 @@ export default class TreeHistory extends React.Component {
 TreeHistory.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
+
+// In case of adding a pickup data graph.
+// <NotePickupGraph />

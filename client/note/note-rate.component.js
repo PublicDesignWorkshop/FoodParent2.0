@@ -95,7 +95,7 @@ export default class NoteRate extends React.Component {
             <FontAwesome className='' name='star-half-o' />{localization(670)}
           </div>
           <div className="note-rate-data active">
-            <div className="green-medium-single">
+            <div className="brown-medium-single">
               <Select name="rate-select" multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(671)} backspaceToRemoveMessage="" />
             </div>
           </div>
@@ -108,7 +108,7 @@ export default class NoteRate extends React.Component {
             <FontAwesome className='' name='star-half-o' />{localization(670)}
           </div>
           <div className="note-rate-data">
-            <div className="green-medium-single">
+            <div className="brown-medium-single">
               <Select name="rate-select" disabled multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(671)} backspaceToRemoveMessage="" />
             </div>
           </div>

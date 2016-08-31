@@ -28,6 +28,9 @@
   "iAmountPrecision": 1,
 
   "iDeadFlagId": 1,
+  "iTreeRatingGraphHeight": 120,
+  "iTreeDonationGraphHeight": 180,
+  "iRecipientDonationGraphHeight": 300,
 
   "sNoteImagePrefix": "note_",
   "sDonateImagePrefix": "donate_"

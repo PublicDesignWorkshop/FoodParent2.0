@@ -44,7 +44,7 @@ export default class DonateGraph extends React.Component {
   }
   updateCanvasSize(first) {
     let wrapper = ReactDOM.findDOMNode(this.refs['wrapper']);
-    this.setState({width: wrapper.clientWidth, height: 300});
+    this.setState({width: wrapper.clientWidth, height: ServerSetting.iRecipientDonationGraphHeight});
     setTimeout(function() {
       this.renderGraph(this.props, first);
     }.bind(this));
@@ -127,11 +127,11 @@ export default class DonateGraph extends React.Component {
           // Interpolated JS string - can access point fields:
           // argLabel, valueLabel, arg, value, datasetLabel, size
           scaleDateTimeFormat: "mmm dd, ",
-          tooltipTemplate: "<%=argLabel%><%if (datasetLabel){%><%=datasetLabel%><%}%>: <%=valueLabel%>  (accum)",
+          tooltipTemplate: "<%=argLabel%><%if (datasetLabel){%><%=datasetLabel%><%}%>: <%=valueLabel%>",
 
           // Interpolated JS string - can access point fields:
           // argLabel, valueLabel, arg, value, datasetLabel, size
-          multiTooltipTemplate: "<%=argLabel%><%if (datasetLabel){%><%=datasetLabel%><%}%>: <%=valueLabel%> (accum)",
+          multiTooltipTemplate: "<%=argLabel%><%if (datasetLabel){%><%=datasetLabel%><%}%>: <%=valueLabel%>",
 
           // Interpolated JS string - can access all chart fields
           legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><%for(var i=0;i<datasets.length;i++){%><li><span class=\"<%=name.toLowerCase()%>-legend-marker\" style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%=datasets[i].label%></li><%}%></ul>"

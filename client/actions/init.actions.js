@@ -34,6 +34,7 @@ class InitActions {
       getLocalization(window.navigator.userLanguage || window.navigator.language).then(function(response) {
         setLocalization(response);
       });
+      LocationActions.fetchLocations();
       AuthActions.fetchAuth();
       TreeActions.fetchTrees();
       FoodSource.fetchFoods().then((response) => {

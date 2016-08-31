@@ -60,7 +60,7 @@ export default class NoteComment extends React.Component {
   }
   render () {
     let style = "";
-    if (this.props.note.type == NOTETYPE.PICKUP) {
+    if (this.props.note.type == NOTETYPE.UPDATE) {
       style = " note-comment-brown";
     }
     if (this.props.editing) {
