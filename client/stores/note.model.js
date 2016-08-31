@@ -98,6 +98,9 @@ export class NoteModel {
         break;
     }
     this.date = moment(props.date);
+    if (!this.date.isValid()) {
+      this.date = moment(new Date());
+    }
     if (props.picture && props.picture != "") {
       this.images = props.picture.split(',').map((image) => {
         return image;

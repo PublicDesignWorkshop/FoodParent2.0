@@ -70,21 +70,23 @@
 
   function update() {
     $data = json_decode(file_get_contents('php://input'));
-    $params = null;
-    if ($data != null) {
-      $params = array(
-        "id" => $data->{'id'},
-        "type" => $data->{'type'},
-        "tree" => $data->{'tree'},
-        "person" => $data->{'person'},
-        "comment" => $data->{'comment'},
-        "picture" => $data->{'picture'},
-        "rate" => $data->{'rate'},
-        "amount" => $data->{'amount'},
-        "proper" => $data->{'proper'},
-        "date" => $data->{'date'},
-      );
+    if (validateDate($data->{'date'})) {
+      $date = $data->{'date'};
+    } else {
+      $date = date('Y-m-d H:i:s', time());
     }
+    $params = array(
+      "id" => $data->{'id'},
+      "type" => $data->{'type'},
+      "tree" => $data->{'tree'},
+      "person" => $data->{'person'},
+      "comment" => $data->{'comment'},
+      "picture" => $data->{'picture'},
+      "rate" => $data->{'rate'},
+      "amount" => $data->{'amount'},
+      "proper" => $data->{'proper'},
+      "date" => $date,
+    );
     $sql = "UPDATE `note` SET `type` = :type, `tree` = :tree, `person` = :person, `comment` = :comment, `picture` = :picture, `rate` = :rate, `amount` = :amount, `proper` = :proper, `date` = :date WHERE (`id` = :id)";
 
     try {
@@ -138,6 +140,11 @@
     } else {
       $proper = 0;
     }
+    if (validateDate($data->{'date'})) {
+      $date = $data->{'date'};
+    } else {
+      $date = date('Y-m-d H:i:s', time());
+    }
     $params = array(
       "type" => $type,
       "tree" => $data->{'tree'},
@@ -147,7 +154,7 @@
       "rate" => $data->{'rate'},
       "amount" => $data->{'amount'},
       "proper" => $proper,
-      "date" => $data->{'date'},
+      "date" => $date,
       );
     $sql = "INSERT INTO `note` VALUES ( NULL, :type, :tree, :person, :comment, :picture, :rate, :amount, :proper, :date )";
 

@@ -86,6 +86,9 @@ export class DonateModel {
     this.amountType = AMOUNTTYPE.LBS;
     this.amount = parseFloat(props.amount) * ServerSetting.fGToLBS;
     this.date = moment(props.date);
+    if (!this.date.isValid()) {
+      this.date = moment(new Date());
+    }
     this.editing = false;
     this.selectmode = false;
   }

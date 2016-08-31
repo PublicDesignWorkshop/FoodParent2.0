@@ -32,7 +32,7 @@
   "iTreeDonationGraphHeight": 180,
   "iRecipientDonationGraphHeight": 300,
 
-  "sNoteImagePrefix": "note_",
+  "sNoteImagePrefix": "",
   "sDonateImagePrefix": "donate_"
 
 }

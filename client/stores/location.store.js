@@ -35,6 +35,9 @@ export class LocationModel {
     this.description = props.description;
     this.address = props.address;
     this.updated = moment(props.updated);
+    if (!this.updated.isValid()) {
+      this.updated = moment(new Date());
+    }
     // Editing value will decide to what kind of marker to put on the map.
     this.editing = null;
   }

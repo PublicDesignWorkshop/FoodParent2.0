@@ -28,6 +28,9 @@ export class FoodModel {
     this.icon = props.icon;
     this.description = props.description;
     this.updated = moment(props.updated);
+    if (!this.updated.isValid()) {
+      this.updated = moment(new Date());
+    }
     this.adopt = props.adopt == "1" ? true : false;
     this.farm = props.farm == "1" ? true : false;
   }

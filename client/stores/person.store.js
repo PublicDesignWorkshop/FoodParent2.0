@@ -61,6 +61,9 @@ export class PersonModel {
     this.contact = props.contact;
     this.neighborhood = props.neighborhood;
     this.updated = moment(props.updated);
+    if (!this.updated.isValid()) {
+      this.updated = moment(new Date());
+    }
   }
   getFormattedAuth() {
     switch(this.auth) {

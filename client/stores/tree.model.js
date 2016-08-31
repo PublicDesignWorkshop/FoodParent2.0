@@ -39,6 +39,9 @@ export class TreeModel {
     this.dead = parseInt(props.dead);         // 1: dead, 0: alive.
     this.owner = parseInt(props.owner);       // id of the person who creates this tree.
     this.updated = moment(props.updated);
+    if (!this.updated.isValid()) {
+      this.updated = moment(new Date());
+    }
     this.flags = props.flag.split(',').map((flag: string) => {
       return parseInt(flag);
     });
