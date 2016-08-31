@@ -14,7 +14,6 @@ import { FITERMODE } from './../utils/enum';
 
 import { localization } from './../utils/localization';
 let FoodStore = require('./../stores/food.store');
-let FlagStore = require('./../stores/flag.store');
 
 let TreeStore = require('./../stores/tree.store');
 let TreeActions = require('./../actions/tree.actions');
@@ -69,30 +68,18 @@ export default class TreeFood extends React.Component {
     this.setState({options: options, selected: selected});
   }
   renderOptionValue(option) {
+    let icon;
     let food = FoodStore.getFood(option.value);
-    let flags = FlagStore.getState().flags;
-    let iconUrl;
-    let bFound = false;
-    let label;
     if (food) {
-      for (let i = 0; i < flags.length && !bFound; i++) {
-        if ($.inArray(flags[i].id, this.props.tree.flags) > -1) {
-          iconUrl = food.icons[flags[i].name];
-          bFound = true;
-        }
-      }
-      if (iconUrl == null) {
-        iconUrl = food.icons['verified'];
-      }
-      label = <span><img className="tree-food-icon" src={iconUrl} /><span className="tree-food-name">{option.label}</span></span>;
+      icon = ServerSetting.uBase + ServerSetting.uStaticImage + food.icon;
     } else {
       if (parseInt(option.value) == -1) {
-        label = <span><img className="tree-food-icon" src={ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uFarmMarkerIcon} /><span className="tree-food-name">{option.label}</span></span>;
+        icon = ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uFarmMarkerIcon;
       } else {
-        label = <span><img className="tree-food-icon" src={ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon} /><span className="tree-food-name">{option.label}</span></span>;
+        icon = ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon;
       }
     }
-    return label;
+    return <span><img className="tree-food-icon" src={icon} /><span className="tree-food-name">{option.label}</span></span>;
   }
   updateAttribute(selected) {
     var foodId = 0;

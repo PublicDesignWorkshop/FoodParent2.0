@@ -23,6 +23,7 @@ L.CanvasMarker = L.Circle.extend({
 
     this._image = this.options.image;
     this._shadow = this.options.shadow;
+    this._checkMode = this.options.checkMode;
     this._checked = this.options.checked;
 	},
 
@@ -45,9 +46,22 @@ L.CanvasMarker = L.Circle.extend({
       this._ctx.globalAlpha = this._map.getZoom() / 28;
       this._ctx.drawImage(this._shadow, p.x - height * 0.5 + Math.floor(this._ctx.globalAlpha * 10), p.y - height, height, height);
       this._ctx.restore();
-      this._ctx.drawImage(this._image, p.x - width * 0.5, p.y - height, width, height);
-      if (this._checked) {
-        this._ctx.drawImage(this._checked, p.x - width * 0.5, p.y - height, width, height);
+      if (this._checkMode) {
+
+        if (this._checked) {
+          this._ctx.save();
+          this._ctx.globalAlpha = 1;
+          this._ctx.drawImage(this._image, p.x - width * 0.5, p.y - height, width, height);
+          this._ctx.restore();
+          this._ctx.drawImage(this._checked, p.x - width * 0.5, p.y - height, width, height);
+        } else {
+          this._ctx.save();
+          this._ctx.globalAlpha = 0.5;
+          this._ctx.drawImage(this._image, p.x - width * 0.5, p.y - height, width, height);
+          this._ctx.restore();
+        }
+      } else {
+        this._ctx.drawImage(this._image, p.x - width * 0.5, p.y - height, width, height);
       }
     }
 	},
@@ -55,7 +69,7 @@ L.CanvasMarker = L.Circle.extend({
   _containsPoint: function (p) {
     if (this._map == null) {
       return null;
-      // this._map = MapStore.getMapModel(MapSetting.sTreeMapId).map;
+      // this._map = MapStore.getMapModel(MapSetting.sMapId).map;
     }
 
 		var center = new L.Point(this._point.x, this._point.y - this._map.getZoom()),

@@ -43,7 +43,7 @@ export function setLocalization(data) {
 // }
 
 export function localization(code) {
-  if (localizationData[code]) {
+  if (localizationData && localizationData[code]) {
     return localizationData[code];
   }
   return "Error Code: " + code;

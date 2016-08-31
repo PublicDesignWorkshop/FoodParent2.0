@@ -121,11 +121,15 @@
 .leaflet-marker-tree {
   position: relative;
   > .shadow {
+    top: -24px;
+    left: -4px;
     position: absolute;
     pointer-events: none;
   }
   > .icon {
     position: absolute;
+    top: -24px;
+    left: -4px;
     width: 20px;
     height: 32px;
   }
@@ -140,8 +144,8 @@
     position: absolute;
     width: 32px;
     height: 32px;
-    top: 6px;
-    left: -2px;
+    top: -24px;
+    left: -12px;
   }
 }
 

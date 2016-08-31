@@ -48,7 +48,7 @@ export function displaySuccessMessage(message) {
   messageTimer = setTimeout(function () {
     $('#popup .popup-message').html("");
     $('#popup').removeClass('open popup-green');
-  }, 1500);
+  }, ServerSetting.iSuccessMessageDiplayTimeout);
 }
 
 export function displayFailMessage(message) {
@@ -60,5 +60,5 @@ export function displayFailMessage(message) {
   messageTimer = setTimeout(function () {
     $('#popup .popup-message').html("");
     $('#popup').removeClass('open popup-red');
-  }, 1500);
+  }, ServerSetting.iFailMessageDiplayTimeout);
 }

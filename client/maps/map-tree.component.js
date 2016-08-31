@@ -34,8 +34,8 @@ export default class MapTree extends React.Component {
   }
   componentDidMount () {
     // Intialize leaflet only if not initialized.
-    if (!MapStore.isMapExist(MapSetting.sTreeMapId)) {
-      this.map = L.map(MapSetting.sTreeMapId, {
+    if (!MapStore.isMapExist(MapSetting.sMapId)) {
+      this.map = L.map(MapSetting.sMapId, {
           zoomControl: MapSetting.bZoomControl,
           closePopupOnClick: MapSetting.bClosePopupOnClick,
           doubleClickZoom: MapSetting.bDoubleClickZoom,
@@ -49,11 +49,11 @@ export default class MapTree extends React.Component {
       this.map.whenReady(this.afterRenderMap);
     } else {
       MapActions.setMapType(MAPTYPE.TREE);
-      this.map = MapStore.getMapModel(MapSetting.sTreeMapId).map;
-      this.flatTileLayer = MapStore.getMapModel(MapSetting.sTreeMapId).flatTileLayer;
-      this.satTileLayer = MapStore.getMapModel(MapSetting.sTreeMapId).satTileLayer;
-      this.focusLayer = MapStore.getMapModel(MapSetting.sTreeMapId).focusLayer;
-      this.markersLayer = MapStore.getMapModel(MapSetting.sTreeMapId).markersLayer;
+      this.map = MapStore.getMapModel(MapSetting.sMapId).map;
+      this.flatTileLayer = MapStore.getMapModel(MapSetting.sMapId).flatTileLayer;
+      this.satTileLayer = MapStore.getMapModel(MapSetting.sMapId).satTileLayer;
+      this.focusLayer = MapStore.getMapModel(MapSetting.sMapId).focusLayer;
+      this.markersLayer = MapStore.getMapModel(MapSetting.sMapId).markersLayer;
     }
     this.updateProps(this.props);
     // this.map.closePopup();
@@ -61,34 +61,34 @@ export default class MapTree extends React.Component {
 
   afterRenderMap() {
     // Register map to Flux structure to synchronize React and Leaflet together.
-    MapActions.addMap(MapSetting.sTreeMapId, this.map, MAPTYPE.TREE);
+    MapActions.addMap(MapSetting.sMapId, this.map, MAPTYPE.TREE);
     // Define tile maps and store into the MapModel.
-    if (!MapStore.getMapModel(MapSetting.sTreeMapId).flatTileLayer) {
-      MapStore.getMapModel(MapSetting.sTreeMapId).flatTileLayer = this.flatTileLayer = L.tileLayer(MapSetting.uGrayTileMap + MapSetting.sMapboxAccessToken, {
+    if (!MapStore.getMapModel(MapSetting.sMapId).flatTileLayer) {
+      MapStore.getMapModel(MapSetting.sMapId).flatTileLayer = this.flatTileLayer = L.tileLayer(MapSetting.uGrayTileMap + MapSetting.sMapboxAccessToken, {
           minZoom: MapSetting.iMinZoom,
           maxZoom: MapSetting.iMaxZoom,
       });
     }
-    if (!MapStore.getMapModel(MapSetting.sTreeMapId).satTileLayer) {
+    if (!MapStore.getMapModel(MapSetting.sMapId).satTileLayer) {
       // Optional tile map address (Mapbox).
-      // MapStore.getMapModel(MapSetting.sTreeMapId).satTileLayer = this.satTileLayer = L.tileLayer(MapSetting.uSatTileMap + MapSetting.sMapboxAccessToken, {
+      // MapStore.getMapModel(MapSetting.sMapId).satTileLayer = this.satTileLayer = L.tileLayer(MapSetting.uSatTileMap + MapSetting.sMapboxAccessToken, {
       //     minZoom: MapSetting.iMinZoom,
       //     maxZoom: MapSetting.iMaxZoom,
       // });
-      MapStore.getMapModel(MapSetting.sTreeMapId).satTileLayer = this.satTileLayer = new L.Google(MapSetting.sGoogleMapTileType, {
+      MapStore.getMapModel(MapSetting.sMapId).satTileLayer = this.satTileLayer = new L.Google(MapSetting.sGoogleMapTileType, {
         minZoom: MapSetting.iMinZoom,
         maxZoom: MapSetting.iMaxZoom,
       });
     }
     // Add a layer to show the focused area.
-    if (!MapStore.getMapModel(MapSetting.sTreeMapId).focusLayer) {
-      MapStore.getMapModel(MapSetting.sTreeMapId).focusLayer = this.focusLayer = L.layerGroup();
+    if (!MapStore.getMapModel(MapSetting.sMapId).focusLayer) {
+      MapStore.getMapModel(MapSetting.sMapId).focusLayer = this.focusLayer = L.layerGroup();
       this.focusLayer.addTo(this.map);
     }
     // Add a layer for rendering actual markers.
-    if (!MapStore.getMapModel(MapSetting.sTreeMapId).markersLayer) {
+    if (!MapStore.getMapModel(MapSetting.sMapId).markersLayer) {
       // Code Snipet for MarkerClusterGroup
-      // MapStore.getMapModel(MapSetting.sTreeMapId).markersLayer = this.markersLayer = new L.MarkerClusterGroup();
+      // MapStore.getMapModel(MapSetting.sMapId).markersLayer = this.markersLayer = new L.MarkerClusterGroup();
       // this.markersLayer.initialize({
       //   spiderfyOnMaxZoom: MapSetting.bSpiderfyOnMaxZoom,
       //   showCoverageOnHover: MapSetting.bShowCoverageOnHover,
@@ -97,19 +97,19 @@ export default class MapTree extends React.Component {
       //   maxClusterRadius: MapSetting.iMaxClusterRadius,
       //   disableClusteringAtZoom: MapSetting.iDisableClusteringAtZoom
       // });
-      MapStore.getMapModel(MapSetting.sTreeMapId).markersLayer = this.markersLayer = new L.layerGroup();
+      MapStore.getMapModel(MapSetting.sMapId).markersLayer = this.markersLayer = new L.layerGroup();
       this.markersLayer.addTo(this.map);
     }
     // Add leaflet map event listeners.
   }
   renderMapTile() {
     // Choose the right map tile
-    if (MapStore.getMapTile(MapSetting.sTreeMapId) == MAPTILE.FLAT) {
+    if (MapStore.getMapTile(MapSetting.sMapId) == MAPTILE.FLAT) {
       if (!this.map.hasLayer(this.flatTileLayer)) {
         this.flatTileLayer.addTo(this.map);
         this.map.removeLayer(this.satTileLayer);
       }
-    } else if (MapStore.getMapTile(MapSetting.sTreeMapId) == MAPTILE.SATELLITE) {
+    } else if (MapStore.getMapTile(MapSetting.sMapId) == MAPTILE.SATELLITE) {
       if (!this.map.hasLayer(this.satTileLayer)) {
         this.map.addLayer(this.satTileLayer);
         this.map.removeLayer(this.flatTileLayer);
@@ -159,10 +159,10 @@ export default class MapTree extends React.Component {
         if (markers[i].options.id == tree.id) {
           bFound = true;
           markers[i].openPopup();
-          let zoom = Math.max(this.map.getZoom(), MapSetting.iFocusZoom);
+          let zoom = Math.max(this.map.getZoom(), this.map.getZoom());
           // Move the map slight off from the center using CRS projection
           let point: L.Point = L.CRS.EPSG3857.latLngToPoint(new L.LatLng(tree.lat, tree.lng), zoom);
-          let rMap = document.getElementById(MapSetting.sTreeMapId);
+          let rMap = document.getElementById(MapSetting.sMapId);
           if (rMap.clientWidth > rMap.clientHeight) {
             point.x += this.map.getSize().x * 0.15;
           } else {
@@ -170,8 +170,8 @@ export default class MapTree extends React.Component {
           }
           let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, zoom);
           setTimeout(function() {
-            this.map.setView(location, zoom, {animate: MapStore.getLoaded(MapSetting.sTreeMapId)});
-            MapActions.setLoaded.defer(MapSetting.sTreeMapId, true);
+            this.map.setView(location, zoom, {animate: MapStore.getLoaded(MapSetting.sMapId)});
+            MapActions.setLoaded.defer(MapSetting.sMapId, true);
           }.bind(this), 250);
         }
       }
@@ -205,10 +205,10 @@ export default class MapTree extends React.Component {
       tree.marker = marker;
       marker.openPopup();
 
-      let zoom = Math.max(this.map.getZoom(), MapSetting.iFocusZoom);
+      let zoom = Math.max(this.map.getZoom(), this.map.getZoom());
       // Move the map slight off from the center using CRS projection
       let point: L.Point = L.CRS.EPSG3857.latLngToPoint(new L.LatLng(tree.lat, tree.lng), zoom);
-      let rMap = document.getElementById(MapSetting.sTreeMapId);
+      let rMap = document.getElementById(MapSetting.sMapId);
       if (rMap.clientWidth > rMap.clientHeight) {
         point.x += this.map.getSize().x * 0.15;
       } else {
@@ -217,9 +217,9 @@ export default class MapTree extends React.Component {
       let location: L.LatLng = L.CRS.EPSG3857.pointToLatLng(point, zoom);
       if (tree.id != 0) {
         setTimeout(function() {
-          this.map.setView(location, zoom, {animate: MapStore.getLoaded(MapSetting.sTreeMapId)});
-          // if (!MapStore.getLoaded(MapSetting.sTreeMapId))
-          //   MapActions.setLoaded.defer(MapSetting.sTreeMapId, true);
+          this.map.setView(location, zoom, {animate: MapStore.getLoaded(MapSetting.sMapId)});
+          // if (!MapStore.getLoaded(MapSetting.sMapId))
+          //   MapActions.setLoaded.defer(MapSetting.sMapId, true);
         }.bind(this), 250);
       }
     }

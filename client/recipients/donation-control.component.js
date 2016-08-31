@@ -6,6 +6,7 @@ let ServerSetting = require('./../../setting/server.json');
 
 var FontAwesome = require('react-fontawesome');
 let MapActions = require('./../actions/map.actions');
+let TreeActions = require('./../actions/tree.actions');
 let LocationActions = require('./../actions/location.actions');
 let MapSetting = require('./../../setting/map.json');
 let MapStore = require('./../stores/map.store');
@@ -26,31 +27,31 @@ export default class DonationControl extends React.Component {
 
   }
   componentWillReceiveProps() {
-    if (MapStore.getMapTile(MapSetting.sRecipeintMapId) == MAPTILE.FLAT) {
+    if (MapStore.getMapTile(MapSetting.sMapId) == MAPTILE.FLAT) {
       this.setState({tile: "map-o"});
     } else {
       this.setState({tile: "map"});
     }
   }
   handleMoveToUserLocation() {
-    MapActions.moveToUserLocation.defer(MapSetting.sRecipeintMapId);
+    MapActions.moveToUserLocation.defer(MapSetting.sMapId);
   }
   handleToggleMapTile() {
-    if (MapStore.getMapTile(MapSetting.sRecipeintMapId) == MAPTILE.FLAT) {
-      MapActions.setTile.defer(MapSetting.sRecipeintMapId, MAPTILE.SATELLITE);
+    if (MapStore.getMapTile(MapSetting.sMapId) == MAPTILE.FLAT) {
+      MapActions.setTile.defer(MapSetting.sMapId, MAPTILE.SATELLITE);
       this.setState({tile: "map"});
     } else {
-      MapActions.setTile.defer(MapSetting.sRecipeintMapId, MAPTILE.FLAT);
+      MapActions.setTile.defer(MapSetting.sMapId, MAPTILE.FLAT);
       this.setState({tile: "map-o"});
     }
   }
   handleZoomIn() {
-    let zoom = Math.min(MapSetting.iMaxZoom, MapStore.getZoom(MapSetting.sRecipeintMapId) + 1);
-    MapActions.setZoom.defer(MapSetting.sRecipeintMapId, zoom);
+    let zoom = Math.min(MapSetting.iMaxZoom, MapStore.getZoom(MapSetting.sMapId) + 1);
+    MapActions.setZoom.defer(MapSetting.sMapId, zoom);
   }
   handleZoomOut() {
-    let zoom = Math.min(MapSetting.iMaxZoom, MapStore.getZoom(MapSetting.sRecipeintMapId) - 1);
-    MapActions.setZoom.defer(MapSetting.sRecipeintMapId, zoom);
+    let zoom = Math.min(MapSetting.iMaxZoom, MapStore.getZoom(MapSetting.sMapId) - 1);
+    MapActions.setZoom.defer(MapSetting.sMapId, zoom);
   }
   // handleFilter() {
   //   if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
@@ -81,7 +82,7 @@ export default class DonationControl extends React.Component {
     let tree;
     if (AuthStore.getState().auth.isManager()) {
       tree = <div className="control-button" onClick={()=> {
-        // location.replace(ServerSetting.uBase + '/');
+        TreeActions.fetchTrees();
         this.context.router.push({pathname: ServerSetting.uBase + '/'});
       }} data-for="tooltip-donation-control" data-tip={localization(52)}>
         <FontAwesome name="apple" />

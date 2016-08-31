@@ -71,14 +71,13 @@ export default class DonateFood extends React.Component {
   }
   renderOptionValue(option) {
     let food = FoodStore.getFood(option.value);
-    let label;
+    let icon;
     if (food) {
-      let iconUrl = food.icons['verified'];
-      label = <span className="tree-food"><img className="tree-food-icon" src={iconUrl} /><span className="tree-food-name">{option.label}</span></span>;
+      icon = ServerSetting.uBase + ServerSetting.uStaticImage + food.icon;
     } else {
-      label = <span className="tree-food"><img className="tree-food-icon" src={ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon} /><span className="tree-food-name">{option.label}</span></span>;
+      icon = ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon;
     }
-    return label;
+    return <span className="tree-food"><img className="tree-food-icon" src={icon} /><span className="tree-food-name">{option.label}</span></span>;
   }
   updateAttribute(selected) {
     let prevFood = this.props.donate.food;
@@ -120,6 +119,5 @@ export default class DonateFood extends React.Component {
         </div>
       );
     }
-
   }
 }

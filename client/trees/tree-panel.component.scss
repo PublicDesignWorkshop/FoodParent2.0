@@ -57,7 +57,7 @@
          -moz-user-select: none;
           -ms-user-select: none;
               user-select: none;
-              
+
       -webkit-flex: 0 0 auto; /* Safari 6.1+ */
           -ms-flex: 0 0 auto; /* IE 10 */
               flex: 0 0 auto;
@@ -94,6 +94,22 @@
         &:not(.active):not(.close) {
           background-color: $brown;
           color: $light;
+        }
+
+
+        @include respond-to(mid-screens) {
+          &:not(.active) {
+            > .icon-text {
+              display: none;
+            }
+          }
+        }
+        @include respond-to(handhelds) {
+          &:not(.active) {
+            > .icon-text {
+              display: inline-block;
+            }
+          }
         }
 
         &.active {

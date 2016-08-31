@@ -32,14 +32,14 @@ export default class DonationPanel extends React.Component {
   }
   componentDidMount () {
     this.updateProps(this.props);
-    // $(document).on('keyup',function(event) {
-    //   if (event.keyCode == 27) {
-    //     this.context.router.push({pathname: ServerSetting.uBase + '/'});
-    //   }
-    // }.bind(this));
+    $(document).on('keyup',function(event) {
+      if (event.keyCode == 27) {
+        this.context.router.push({pathname: ServerSetting.uBase + '/recipients'});
+      }
+    }.bind(this));
   }
   componentWillUnmount() {
-    // $(document).off('keyup');
+    $(document).off('keyup');
   }
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);

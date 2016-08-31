@@ -29,11 +29,10 @@
 
   "iMarkerPrecision": 5,
 
-  "sTreeMapId": "map-tree",
-  "sRecipeintMapId": "map-tree",
+  "sMapId": "map-tree",
   "uPinIcon": "Marker_Pin.svg",
   "uShadowMarker" : "Marker_Shadow.png",
-  "uTemporaryMarkerIcon": "Marker_Unknown_verified.png",
+  "uTemporaryMarkerIcon": "Marker_Unknown.svg",
   "uRecipientMarkerIcon": "Marker_Recipient.png",
   "uCheckMarkerIcon": "Marker_Checked.png",
   "uFarmMarkerIcon": "Marker_Farm.png",

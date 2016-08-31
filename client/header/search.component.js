@@ -50,18 +50,18 @@ export default class Search extends React.Component {
         let lng = parseFloat(latlng[1]);
         if (isLatLng(lat, lng)) {
           if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
-            MapActions.moveToLocationWithMarker(MapSetting.sTreeMapId, new L.LatLng(lat, lng), MapSetting.iFocusZoom);
+            MapActions.moveToLocationWithMarker(MapSetting.sMapId, new L.LatLng(lat, lng), MapSetting.iFocusZoom);
           }
         } else {
           // Pure string value -> search via Google Geolocation API.
           let location;
           if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
-            location = MapStore.getMapModel(MapSetting.sTreeMapId).getCenter();
+            location = MapStore.getMapModel(MapSetting.sMapId).getCenter();
           } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
-            location = MapStore.getMapModel(MapSetting.sRecipeintMapId).getCenter();
+            location = MapStore.getMapModel(MapSetting.sMapId).getCenter();
           }
           geocoding(searchText, new L.LatLng(location.lat, location.lng), function(response) {
-            MapActions.moveToLocationWithMarker(MapSetting.sTreeMapId, new L.LatLng(response.lat.toFixed(MapSetting.iMarkerPrecision), response.lng.toFixed(MapSetting.iMarkerPrecision)), MapSetting.iFocusZoom);
+            MapActions.moveToLocationWithMarker(MapSetting.sMapId, new L.LatLng(response.lat.toFixed(MapSetting.iMarkerPrecision), response.lng.toFixed(MapSetting.iMarkerPrecision)), MapSetting.iFocusZoom);
           }, function() {
 
           });

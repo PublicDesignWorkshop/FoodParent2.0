@@ -133,12 +133,12 @@ class LocationStore {
       }
     }
     let location = new L.LatLng(MapSetting.vPosition.x, MapSetting.vPosition.y);
-    if (MapStore.getMapModel(MapSetting.sRecipeintMapId)) {
-      let map = MapStore.getMapModel(MapSetting.sRecipeintMapId).map;
+    if (MapStore.getMapModel(MapSetting.sMapId)) {
+      let map = MapStore.getMapModel(MapSetting.sMapId).map;
       let zoom = map.getZoom();
       let center = new L.LatLng(map.getCenter().lat, map.getCenter().lng);
       let point = L.CRS.EPSG3857.latLngToPoint(center, zoom);
-      let rMap = document.getElementById(MapSetting.sRecipeintMapId);
+      let rMap = document.getElementById(MapSetting.sMapId);
       if (rMap.clientWidth > rMap.clientHeight) {
         point.x -= map.getSize().x * 0.15;
       } else {

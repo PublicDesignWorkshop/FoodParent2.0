@@ -28,7 +28,6 @@ import RecipientMap from './recipients/recipient-map.component';
 import RecipientDetail from './recipients/recipient-detail.component';
 import RecipientAdd from './recipients/recipient-add.component';
 
-
 let MapSetting = require('./../setting/map.json');
 import { localization } from './utils/localization';
 
@@ -58,7 +57,7 @@ class App extends React.Component {
     let loaded = InitStore.getState().loaded;
     setTimeout(function() {
       this.setState({loaded: loaded});
-    }.bind(this), 1);
+    }.bind(this), 0);
   }
   render () {
     let splash = <AltContainer stores={
@@ -94,7 +93,7 @@ class App extends React.Component {
           }>
             <Header location={this.props.location}/>
           </AltContainer>;
-          <div className="map"><div id={MapSetting.sTreeMapId} ref={MapSetting.sTreeMapId}></div></div>
+          <div className="map"><div id={MapSetting.sMapId} ref={MapSetting.sMapId}></div></div>
           {this.props.children}
           <Popup />
           {splash}

@@ -19,13 +19,10 @@ export default class TreeMap extends React.Component {
     super(props, context);
   }
   componentWillMount() {
-    if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
-      TreeActions.fetchTrees();
-    }
     this.updateProps(this.props);
   }
   componentDidMount () {
-
+    
   }
   componentWillReceiveProps(nextProps) {
     this.updateProps(nextProps);

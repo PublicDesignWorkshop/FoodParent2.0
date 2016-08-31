@@ -37,6 +37,9 @@ class FoodStore {
   constructor() {
     this.foods = [];
     this.shadowImage = null;
+    this.checkImage = null;
+    this.farmImage = null;
+    this.tempImage = null;
     this.code = 200;
     // Bind action methods to store.
     this.bindListeners({
@@ -59,12 +62,9 @@ class FoodStore {
     return null;
   }
   getFoodIcons() {
-    let result = [ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker, ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uCheckMarkerIcon, ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uFarmMarkerIcon];
-    let flags = FlagStore.getState().flags;
+    let result = [ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uShadowMarker, ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uCheckMarkerIcon, ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uFarmMarkerIcon, ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon];
     this.getState().foods.forEach((food) => {
-      for (let i = 0; i < flags.length; i++) {
-        result.push(ServerSetting.uBase + ServerSetting.uStaticImage + food.icon.replace(".png", "").replace(".svg", "") + "_" + flags[i].name + ".png");
-      }
+      result.push(ServerSetting.uBase + ServerSetting.uStaticImage + food.icon);
     });
     return result;
   }
@@ -79,25 +79,20 @@ class FoodStore {
     this.code = code;
   }
   handleRegisterIcons(props) {
-    if (props[0].state == "fulfilled") {
+    if (props[0].state == "fulfilled") {  // image[0]: marker shadow image
       this.shadowImage = props[0].value;
     }
-    if (props[1].state == "fulfilled") {
+    if (props[1].state == "fulfilled") {  // image[1]: marker check image
       this.checkImage = props[1].value;
     }
-    if (props[2].state == "fulfilled") {
+    if (props[2].state == "fulfilled") {  // image[2]: farm image
       this.farmImage = props[2].value;
     }
-    let flags = FlagStore.getState().flags;
+    if (props[3].state == "fulfilled") {  // image[3]: temp marker
+      this.tempImage = props[3].value;
+    }
     for (let i = 0; i < this.foods.length; i++) {
-      if (props[flags.length * i + 3].state == "fulfilled") {
-        this.foods[i].images = [];
-        this.foods[i].icons = [];
-        for (let j = 0; j < flags.length; j++) {
-          this.foods[i].icons[flags[j].name] = props[flags.length * i + j + 3].value.src;
-          this.foods[i].images[flags[j].name] = props[flags.length * i + j + 3].value;
-        }
-      }
+      this.foods[i].image = props[i + 4].value;
     }
     this.code = 200;
   }

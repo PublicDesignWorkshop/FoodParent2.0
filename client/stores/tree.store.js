@@ -110,12 +110,12 @@ class TreeStore {
       this.trees = _.without(this.trees, ...trees);
     }
     let location = new L.LatLng(MapSetting.vPosition.x, MapSetting.vPosition.y);
-    if (MapStore.getMapModel(MapSetting.sTreeMapId)) {
-      let map = MapStore.getMapModel(MapSetting.sTreeMapId).map;
+    if (MapStore.getMapModel(MapSetting.sMapId)) {
+      let map = MapStore.getMapModel(MapSetting.sMapId).map;
       let zoom = map.getZoom();
       let center = new L.LatLng(map.getCenter().lat, map.getCenter().lng);
       let point = L.CRS.EPSG3857.latLngToPoint(center, zoom);
-      let rMap = document.getElementById(MapSetting.sTreeMapId);
+      let rMap = document.getElementById(MapSetting.sMapId);
       if (rMap.clientWidth > rMap.clientHeight) {
         point.x -= map.getSize().x * 0.15;
       } else {
