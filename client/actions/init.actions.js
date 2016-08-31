@@ -34,34 +34,38 @@ class InitActions {
       getLocalization(window.navigator.userLanguage || window.navigator.language).then(function(response) {
         setLocalization(response);
       });
-      LocationActions.fetchLocations();
-      AuthActions.fetchAuth();
-      TreeActions.fetchTrees();
-      FoodSource.fetchFoods().then((response) => {
-        FoodActions.fetchedFoods(response);
-      }).then(() => { // Import foods first and then import image assets.
-        let icons = FoodStore.getFoodIcons();
-        ImagePreloader.preloadImages(icons).then(function (data) {
-          if (icons.length != data.length) { // Error catch for preloadImages.
-            displayFailMessage("One or more of food icons are missing. Please check the image files.");
-            if (__DEV__) {
-              console.error("One or more of food icons are missing. Please check the image files.");
+      setTimeout(function() {
+        LocationActions.fetchLocations();
+        AuthActions.fetchAuth();
+        TreeActions.fetchTrees();
+      }, 250);
+      setTimeout(function() {
+        FoodSource.fetchFoods().then((response) => {
+          FoodActions.fetchedFoods(response);
+        }).then(() => { // Import foods first and then import image assets.
+          let icons = FoodStore.getFoodIcons();
+          ImagePreloader.preloadImages(icons).then(function (data) {
+            if (icons.length != data.length) { // Error catch for preloadImages.
+              displayFailMessage("One or more of food icons are missing. Please check the image files.");
+              if (__DEV__) {
+                console.error("One or more of food icons are missing. Please check the image files.");
+              }
             }
+            FoodActions.registerIcons(data);
+            this.setCode(200);
+            this.loaded();
+            setTimeout(function() {
+              this.hideSplashPage();
+            }.bind(this), ServerSetting.iSplashDisplayTimeout);
+          }.bind(this));
+        }).catch(function (code) { // Error catch for preloadImages.
+          this.setMessage(MESSAGETYPE.FAIL, code);
+          displayFailMessage(`Failed to import image assets. Error code: ${code}`);
+          if (__DEV__) {
+            console.error(`Failed to import image assets. Error code: ${code}`);
           }
-          FoodActions.registerIcons(data);
-          this.setCode(200);
-          this.loaded();
-          setTimeout(function() {
-            this.hideSplashPage();
-          }.bind(this), ServerSetting.iSplashDisplayTimeout);
-        }.bind(this));
-      }).catch(function (code) { // Error catch for preloadImages.
-        this.setMessage(MESSAGETYPE.FAIL, code);
-        displayFailMessage(`Failed to import image assets. Error code: ${code}`);
-        if (__DEV__) {
-          console.error(`Failed to import image assets. Error code: ${code}`);
-        }
-      });
+        });
+      }.bind(this), 500);
     }
   }
   setCode(code) {

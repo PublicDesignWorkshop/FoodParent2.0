@@ -29,7 +29,12 @@
 		$dest = imagecreatetruecolor($newWidth, $newHeight);
 		$source = imagecreatefromjpeg($_FILES['file']['tmp_name']);
 		// Orientation
-		$exif = exif_read_data($_FILES['file']['tmp_name']);
+		try {
+			$exif = @exif_read_data($_FILES['file']['tmp_name']);
+		}
+		catch (Exception $exp) {
+			$exif = false;
+		}
 		if (!empty($exif['Orientation'])) {
 			switch ($exif['Orientation']) {
 				case 3:
@@ -44,11 +49,12 @@
 				}
 		}
 		// Resize
-		imagecopyresized($dest, $source, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
+		// imagecopyresized($dest, $source, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
 		imagecopyresized($thumb, $source, 0, 0, 0, 0, $thumbWidth, $thumbHeight, $origWidth, $origHeight);
 		// Save
 		$error = false;
-		if (imagejpeg($dest, $uploaddir.$destName, 75) && imagejpeg($thumb, $uploaddir.$thumbName, 75)) {
+		// if (imagejpeg($dest, $uploaddir.$destName, 75) && imagejpeg($thumb, $uploaddir.$thumbName, 75)) {
+		if (move_uploaded_file($_FILES['file']['tmp_name'], $uploaddir.$destName) && imagejpeg($thumb, $uploaddir.$thumbName, 75)) {
 			$files[] = $uploaddir.$thumbName;
 		} else {
 			$error = true;

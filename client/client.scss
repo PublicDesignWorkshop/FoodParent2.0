@@ -114,6 +114,15 @@ html, body, #app {
   text-align: center;
 }
 
+.loading-text {
+  font-size: $font-size-medium;
+  font-family: $font-main;
+  margin: 4px 0 8px 20px;
+  font-weight: 700;
+  color: $red;
+  text-align: left;
+}
+
 .error-text {
   font-size: $font-size-small;
   font-family: $font-main;

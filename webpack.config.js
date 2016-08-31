@@ -58,6 +58,8 @@ var corePluginList = [
     { from: SETTING_DIR, to: path.join(BUILD_DIR, "./setting/") },
     { from: path.join(LIBRARIES_DIR, "./chart-core.js"), to: path.join(BUILD_DIR, "./js/chart-core.js") },
     { from: path.join(LIBRARIES_DIR, "./chart-scatter.js"), to: path.join(BUILD_DIR, "./js/chart-scatter.js") },
+    { from: path.join(LIBRARIES_DIR, "./ExifRestorer.js"), to: path.join(BUILD_DIR, "./js/exif-restorer.js") },
+    { from: path.join(LIBRARIES_DIR, "./canvas-to-blob.min.js"), to: path.join(BUILD_DIR, "./js/canvas-to-blob.js") },
   ])
 ];
 

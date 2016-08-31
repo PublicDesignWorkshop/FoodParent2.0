@@ -108,7 +108,9 @@ export default class NoteImage extends React.Component {
       gallery = <div className="no-image">{localization(69) /* No photos. */}</div>
     }
     let imageUpload;
-    if (this.props.editing) {
+    if (this.state.uploading) {
+      imageUpload = <div className="loading-text">{localization(23)}</div>;
+    } else if (this.props.editing) {
       imageUpload = <input className="image-upload" type="file" accept="image/*" capture="camera" onChange={(event)=> {
         if (event.target.files[0] != null) {
           this.setState({uploading: true});
