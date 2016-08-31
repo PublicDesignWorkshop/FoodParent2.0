@@ -56,7 +56,7 @@ L.CanvasMarker = L.Circle.extend({
           this._ctx.drawImage(this._checked, p.x - width * 0.5, p.y - height, width, height);
         } else {
           this._ctx.save();
-          this._ctx.globalAlpha = 0.5;
+          this._ctx.globalAlpha = 0.25;
           this._ctx.drawImage(this._image, p.x - width * 0.5, p.y - height, width, height);
           this._ctx.restore();
         }
