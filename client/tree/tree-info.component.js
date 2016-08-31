@@ -55,30 +55,49 @@ export default class TreeInfo extends React.Component {
       </div>;
     }
     if (this.state.editing) {
-      actions = <div>
-        <div className="solid-button-group">
-          <div className="solid-button solid-button-green" onClick={() => {
-            TreeActions.updateTree(TreeStore.getState().temp);
-            this.setState({editing: false});
-          }}>
-            {localization(930) /* SAVE */}
+      if (AuthStore.getState().auth.isRecentlyAddedByUser(this.state.selected)) {  // Delete option is only available for a newly added tree.
+        actions = <div>
+          <div className="solid-button-group">
+            <div className="solid-button solid-button-green" onClick={() => {
+              TreeActions.updateTree(TreeStore.getState().temp);
+              this.setState({editing: false});
+            }}>
+              {localization(930) /* SAVE */}
+            </div>
+            <div className="solid-button solid-button-green" onClick={() => {
+              TreeActions.setSelected(TreeStore.getState().selected);
+              this.setState({editing: false});
+            }}>
+              {localization(933) /* CANCEL */}
+            </div>
           </div>
-          <div className="solid-button solid-button-green" onClick={() => {
-            TreeActions.setSelected(TreeStore.getState().selected);
-            this.setState({editing: false});
-          }}>
-            {localization(933) /* CANCEL */}
+          <div className="danger-zone">{localization(927) /* DELETE THIS TREE */}</div>
+          <div className="solid-button-group">
+            <div className="solid-button solid-button-red" onClick={() => {
+              this.context.router.push({pathname: window.location.pathname, hash: "#delete"});
+            }}>
+              {localization(965) /* DELETE THIS TREE */}
+            </div>
           </div>
-        </div>
-        <div className="danger-zone">{localization(927) /* DELETE THIS TREE */}</div>
-        <div className="solid-button-group">
-          <div className="solid-button solid-button-red" onClick={() => {
-            this.context.router.push({pathname: window.location.pathname, hash: "#delete"});
-          }}>
-            {localization(965) /* DELETE THIS TREE */}
+        </div>;
+      } else {
+        actions = <div>
+          <div className="solid-button-group">
+            <div className="solid-button solid-button-green" onClick={() => {
+              TreeActions.updateTree(TreeStore.getState().temp);
+              this.setState({editing: false});
+            }}>
+              {localization(930) /* SAVE */}
+            </div>
+            <div className="solid-button solid-button-green" onClick={() => {
+              TreeActions.setSelected(TreeStore.getState().selected);
+              this.setState({editing: false});
+            }}>
+              {localization(933) /* CANCEL */}
+            </div>
           </div>
-        </div>
-      </div>;
+        </div>;
+      }
     }
     let info;
     if (this.state.editable) {

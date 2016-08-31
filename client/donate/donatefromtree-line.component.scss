@@ -7,27 +7,27 @@
   font-size: $font-size-medium;
   cursor: auto;
   font-weight: 400;
-  color: $red;
+  color: $brown;
 
   &.clickable {
     cursor: pointer;
     &:hover {
       @include respond-to(handhelds) {
         background-color: transparent;
-        color: $red;
+        color: $brown;
       }
       @include respond-to(wide-screens) {
-        background-color: $red;
+        background-color: $brown;
         color: $white;
       }
     }
     &:active, &.active {
       @include respond-to(handhelds) {
-        background-color: $red;
+        background-color: $brown;
         color: $white;
       }
       @include respond-to(wide-screens) {
-        background-color: $red;
+        background-color: $brown;
         color: $white;
       }
     }

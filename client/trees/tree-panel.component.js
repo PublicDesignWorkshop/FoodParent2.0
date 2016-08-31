@@ -12,6 +12,8 @@ let AuthStore = require('./../stores/auth.store');
 let TreeStore = require('./../stores/tree.store');
 let NoteStore = require('./../stores/note.store');
 let DonateStore = require('./../stores/donate.store');
+let FoodStore = require('./../stores/food.store');
+
 
 import TreeControl from './tree-control.component';
 import TreeInfo from './../tree/tree-info.component';
@@ -171,7 +173,8 @@ export default class TreePanel extends React.Component {
                 store: TreeStore,
                 value: TreeStore.getState().temp
               }
-            }
+            },
+            FoodStore: FoodStore,
           }
         }>
           <TreeParentSummary />

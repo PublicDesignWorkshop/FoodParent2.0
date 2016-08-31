@@ -84,33 +84,33 @@ const LocationSource = {
       });
     })
   },
-  deleteLocation(location) {
-    return new Promise(function (resolve, reject) {
-      $.ajax({
-        url: ServerSetting.uBase + ServerSetting.uServer + "location.php",
-        type: 'DELETE',
-        contentType: 'application/json',
-        data: JSON.stringify(location.toJSON()),
-        dataType: "json",
-        success: function(response) {
-          if (response.code == 200) {
-            resolve(response.location[0]);
-          } else {
-            if (__DEV__) {
-              console.error(response.message);
-            }
-            reject(response.code);
-          }
-        },
-        error: function(response) {
-          if (__DEV__) {
-            console.error(response.statusText);
-          }
-          reject(response.status);
-        }
-      });
-    })
-  },
+  // deleteLocation(location) {
+  //   return new Promise(function (resolve, reject) {
+  //     $.ajax({
+  //       url: ServerSetting.uBase + ServerSetting.uServer + "location.php",
+  //       type: 'DELETE',
+  //       contentType: 'application/json',
+  //       data: JSON.stringify(location.toJSON()),
+  //       dataType: "json",
+  //       success: function(response) {
+  //         if (response.code == 200) {
+  //           resolve(response.location[0]);
+  //         } else {
+  //           if (__DEV__) {
+  //             console.error(response.message);
+  //           }
+  //           reject(response.code);
+  //         }
+  //       },
+  //       error: function(response) {
+  //         if (__DEV__) {
+  //           console.error(response.statusText);
+  //         }
+  //         reject(response.status);
+  //       }
+  //     });
+  //   })
+  // },
 };
 
 module.exports = LocationSource;

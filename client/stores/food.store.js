@@ -49,6 +49,7 @@ class FoodStore {
       handleFetchedFoods: FoodActions.FETCHED_FOODS,
       handleSetCode: FoodActions.SET_CODE,
       handleRegisterIcons: FoodActions.REGISTER_ICONS,
+      handleUpdatedFood: FoodActions.UPDATED_FOOD,
     });
     // Expose public methods.
     this.exportPublicMethods({
@@ -96,6 +97,13 @@ class FoodStore {
     }
     for (let i = 0; i < this.foods.length; i++) {
       this.foods[i].image = props[i + 4].value;
+    }
+    this.code = 200;
+  }
+  handleUpdatedFood(props) {
+    let foods = this.foods.filter(food => food.id == parseInt(props.id));
+    if (foods.length == 1) {
+      foods[0].update(props);
     }
     this.code = 200;
   }

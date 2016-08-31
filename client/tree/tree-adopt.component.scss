@@ -6,5 +6,13 @@
   font-family: $font-main;
   color: $brown;
   font-size: $font-size-medium;
-  
+
+  > .message {
+    font-size: $font-size-medium;
+    font-family: $font-main;
+    margin: 0 0 8px 16px;
+    font-weight: 700;
+    color: $red;
+    text-align: left;
+  }
 }

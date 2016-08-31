@@ -37,6 +37,28 @@ class FoodActions {
       dispatch(props);
     }
   }
+  updateFood(food) {
+    return (dispatch) => {
+      // we dispatch an event here so we can have "loading" state.
+      dispatch();
+      this.setCode(92);
+      FoodSource.updateFood(food).then((response) => {
+        displaySuccessMessage(localization(634));
+        this.updatedFood(response);
+      }).catch((code) => {
+        displayFailMessage(localization(code));
+        if (__DEV__) {
+          console.error(localization(code));
+        }
+        this.setCode(code);
+      });
+    }
+  }
+  updatedFood(props) {
+    return (dispatch) => {
+      dispatch(props);
+    }
+  }
 }
 
 module.exports = alt.createActions(FoodActions);

@@ -13,6 +13,8 @@ let MapSetting = require('./../../setting/map.json');
 import { localization } from './../utils/localization';
 import { reverseGeocoding } from './../utils/geocoding';
 let TreeStore = require('./../stores/tree.store');
+let FoodActions = require('./../actions/food.actions');
+let FoodStore = require('./../stores/food.store');
 let AuthStore = require('./../stores/auth.store');
 let TreeActions = require('./../actions/tree.actions');
 import { isLatLng } from './../utils/validation';
@@ -37,15 +39,45 @@ export default class TreeAdopt extends React.Component {
 
   }
   render () {
-    let actions;
+    let food, actions, message, manageractions;
+    if (TreeStore.getState().temp) {
+      food = FoodStore.getFood(TreeStore.getState().temp.food);
+    }
+    if (food && food.adopt) {
+      if (AuthStore.getState().auth.isManager()) {
+        manageractions = <div className="solid-button-group">
+          <div className="solid-button solid-button-green" onClick={() => {
+            food.adopt = false;
+            FoodActions.updateFood(food);
+          }}>
+            {localization(625) /* Currnetly Adoptable  (Click to change) */}
+          </div>
+        </div>;
+      }
+    } else if (food && !food.adopt) {
+      if (AuthStore.getState().auth.isManager()) {
+        manageractions = <div className="solid-button-group">
+          <div className="solid-button solid-button-green" onClick={() => {
+            food.adopt = true;
+            FoodActions.updateFood(food);
+          }}>
+            {localization(624) /* Currnetly Unadoptable  (Click to change) */}
+          </div>
+        </div>;
+      } else {
+        message = <div className="message">{localization(626)}</div>;
+      }
+    }
     if (AuthStore.getState().auth.id == 0) {  // Not logged on.
-      actions = <div className="solid-button-group">
-        <div className="solid-button solid-button-green" onClick={() => {
-          this.context.router.push({pathname: ServerSetting.uBase + '/register'});
-        }}>
-          {localization(987) /* BECEOME A PARENT */}
-        </div>
-      </div>;
+      if (food && food.adopt) {
+        actions = <div className="solid-button-group">
+          <div className="solid-button solid-button-green" onClick={() => {
+            this.context.router.push({pathname: ServerSetting.uBase + '/register'});
+          }}>
+            {localization(987) /* BECEOME A PARENT */}
+          </div>
+        </div>;
+      }
     } else {
       if (AuthStore.getState().auth.id != 0 && this.props.tree && $.inArray(AuthStore.getState().auth.id, this.props.tree.getParents()) != -1) {
         actions = <div className="solid-button-group">
@@ -57,19 +89,23 @@ export default class TreeAdopt extends React.Component {
           </div>
         </div>;
       } else {
-        actions = <div className="solid-button-group">
-          <div className="solid-button solid-button-green" onClick={() => {
-            this.props.tree.addParent(AuthStore.getState().auth.id);
-            TreeActions.updateTree(this.props.tree);
-          }}>
-            {localization(985) /* ADOPT */}
-          </div>
-        </div>;
+        if (food && food.adopt) {
+          actions = <div className="solid-button-group">
+            <div className="solid-button solid-button-green" onClick={() => {
+              this.props.tree.addParent(AuthStore.getState().auth.id);
+              TreeActions.updateTree(this.props.tree);
+            }}>
+              {localization(985) /* ADOPT */}
+            </div>
+          </div>;
+        }
       }
     }
     return (
       <div className="tree-adopt-wrapper">
         {actions}
+        {manageractions}
+        {message}
       </div>
     );
   }
