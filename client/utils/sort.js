@@ -12,6 +12,11 @@ export function sortNoteByDateDESC(a, b) {
   } else if (a.date.valueOf() < b.date.valueOf()) {
     return 1;
   } else {
+    if (a.amount > b.amount) {
+      return -1;
+    } else if (a.amount < b.amount) {
+      return 1;
+    }
     return 0;
   }
 }
@@ -22,6 +27,11 @@ export function sortNoteByDateASC(a, b) {
   } else if (a.date.valueOf() < b.date.valueOf()) {
     return -1;
   } else {
+    if (a.amount > b.amount) {
+      return 1;
+    } else if (a.amount < b.amount) {
+      return -1;
+    }
     return 0;
   }
 }

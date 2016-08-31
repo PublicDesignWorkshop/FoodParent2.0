@@ -101,7 +101,11 @@ export default class NoteDonateGraph extends React.Component {
                   if (lists[i - earlestYear].length > 0) {
                     accum = parseFloat(lists[i - earlestYear][lists[i - earlestYear].length - 1].y);
                   }
-                  lists[i - earlestYear].push({x: moment(donates[j].date).year(currentYear).toDate(), y: (donates[j].amount + accum).toFixed(ServerSetting.iAmountPrecision), r: 1});
+                  let amount = parseFloat(donates[j].amount);
+                  if (donates[j].trees && donates[j].trees.length > 0) {
+                    amount = amount / donates[j].trees.length;
+                  }
+                  lists[i - earlestYear].push({x: moment(donates[j].date).year(currentYear).toDate(), y: (amount + accum).toFixed(ServerSetting.iAmountPrecision), r: 1});
                 }
               }
             }

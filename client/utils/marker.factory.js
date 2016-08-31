@@ -198,7 +198,7 @@ export function createCanvasTreeSourceMarker(tree) {
       checked: checkImage,
     });
   marker.on('click', function() {
-    if (DonateStore.getState().temp) {
+    if (DonateStore.getState().temp && DonateStore.getState().temp.editing) {
       // Click event for adding a tree item as a source of the current donation.
       if (tree.checked) {
         tree.checked = false;
