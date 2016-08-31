@@ -1,7 +1,7 @@
 @import "./../scss/variables.scss";
 @import "./../scss/mixin.scss";
 
-.notify-line-wrapper {
+.notify-link-wrapper {
   padding: 4px 8px 4px 24px;
   font-family: $font-main;
   font-size: $font-size-medium;
@@ -33,7 +33,7 @@
     }
   }
 
-  &.notify-line-light {
+  &.notify-link-light {
     color: $grey;
     &:hover {
       @include respond-to(handhelds) {
@@ -57,7 +57,7 @@
     }
   }
 
-  &.notify-line-green {
+  &.notify-link-green {
     color: $green;
     &:hover {
       @include respond-to(handhelds) {
@@ -81,7 +81,7 @@
     }
   }
 
-  &.notify-line-brown {
+  &.notify-link-brown {
     color: $brown;
     &:hover {
       @include respond-to(handhelds) {

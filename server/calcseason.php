@@ -35,7 +35,7 @@
         $result1 = $stmt->fetchAll();
         foreach ($result1 as $tree) {
           // echo nl2br("- calculating for " . $tree["id"] ."\n");
-          $sql = "SELECT `rate` FROM `note` WHERE (`type` IN (2,3)) AND (`tree` = " . $tree["id"] . ") AND ( (`date` BETWEEN '" . $startthisyear->format('Y-m-d') . "' AND '" . $endthisyear->format('Y-m-d') . "') OR (`date` BETWEEN '" . $startlastyear->format('Y-m-d') . "' AND '" . $endlastyear->format('Y-m-d') . "')  OR (`date` BETWEEN '" . $start2lastyear->format('Y-m-d') . "' AND '" . $end2lastyear->format('Y-m-d') . "') )ORDER BY `date` DESC LIMIT 1";
+          $sql = "SELECT `rate` FROM `note` WHERE `type` = 2 AND (`tree` = " . $tree["id"] . ") AND ( (`date` BETWEEN '" . $startthisyear->format('Y-m-d') . "' AND '" . $endthisyear->format('Y-m-d') . "') OR (`date` BETWEEN '" . $startlastyear->format('Y-m-d') . "' AND '" . $endlastyear->format('Y-m-d') . "')  OR (`date` BETWEEN '" . $start2lastyear->format('Y-m-d') . "' AND '" . $end2lastyear->format('Y-m-d') . "') )ORDER BY `date` DESC LIMIT 1";
           try {
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
@@ -62,7 +62,7 @@
     }
 
     // $sql = "SELECT DISTINCT tree.food from note join tree on note.tree = tree.id WHERE note.rate > 3 and datediff(note.date,CURRENT_DATE) < 30";
-    $sql = "SELECT DISTINCT tree.food from note join tree on note.tree = tree.id WHERE note.rate > 3 and ABS(MOD(datediff(note.date,CURRENT_DATE),365)) < 20";
+    $sql = "SELECT DISTINCT tree.food from note join tree on note.tree = tree.id WHERE note.type = 2 AND note.rate > 3 AND ABS(MOD(datediff(note.date,CURRENT_DATE),365)) < 20";
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);

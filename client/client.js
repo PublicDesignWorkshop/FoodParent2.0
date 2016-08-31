@@ -123,6 +123,7 @@ render((
       <Route path="addrecipient" component={RecipientAdd} />
       <Route path="recipient/:recipientId" component={RecipientDetail} />
       <Route path="notify" component={TreeNotify} />
+      <Route path="notify/:treeId" component={TreeNotify} />
     </Route>
   </Router>
 ), document.getElementById('app'));

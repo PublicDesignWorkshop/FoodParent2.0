@@ -143,7 +143,7 @@ export default class DonateSource extends React.Component {
             <FontAwesome className='' name='tag' />{localization(610)}
           </div>
           <div className="donate-source-data brown-medium-single">
-            <Select name="tree-select" multi={true} clearable={true} searchable={true} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(76)} backspaceToRemoveMessage="" disabled />
+            <Select name="tree-select" multi={true} clearable={true} searchable={true} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(26)} backspaceToRemoveMessage="" disabled />
           </div>
         </div>
       );

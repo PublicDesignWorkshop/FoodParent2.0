@@ -1,6 +1,9 @@
 {
   "e0": "인터넷 연결을 확인해주세요.",
 
+  "24": "alive",
+  "25": "dead",
+  "26": "No source tree.",
   "27": "Server internal error. Please try again.",
   "28": "Failed to send a notification to managers.",
   "29": "Failed to send a notification to parents.",

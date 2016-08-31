@@ -46,7 +46,7 @@ export default class NoteInfo extends React.Component {
     let style = "";
     let actions;
     let popup;
-    let buttonStyle;
+    // let buttonStyle;
     if (this.props.note) {
       switch(this.props.note.type) {
         case NOTETYPE.CHANGE:
@@ -62,26 +62,26 @@ export default class NoteInfo extends React.Component {
       if (this.props.note.id == 0) {
         style += " scrollable";
       }
-      switch(this.props.note.type) {
-        case NOTETYPE.UPDATE:
-          buttonStyle = " solid-button-brown";
-          break;
-        case NOTETYPE.PICKUP:
-          buttonStyle = " solid-button-green";
-          break;
-      }
+      // switch(this.props.note.type) {
+      //   case NOTETYPE.UPDATE:
+      //     buttonStyle = " solid-button-brown";
+      //     break;
+      //   case NOTETYPE.PICKUP:
+      //     buttonStyle = " solid-button-green";
+      //     break;
+      // }
     }
     if (this.props.note) {
       if (this.state.editing && this.props.note.id) {
         actions = <div>
           <div className="solid-button-group same-border-color-padding">
-            <div className={"solid-button" + buttonStyle} onClick={() => {
+            <div className={"solid-button solid-button-green"} onClick={() => {
               this.setState({editing: false, remove: false});
               NoteActions.updateNote(NoteStore.getState().temp);
             }}>
               {localization(930) /* SAVE */}
             </div>
-            <div className={"solid-button" + buttonStyle} onClick={() => {
+            <div className={"solid-button solid-button-green"} onClick={() => {
               this.setState({editing: false, remove: false});
               NoteActions.setSelected(this.props.note.id);
             }}>
@@ -94,14 +94,14 @@ export default class NoteInfo extends React.Component {
               this.setState({remove: true});
               // this.context.router.push({pathname: window.location.pathname, hash: "#delete"});
             }}>
-              {localization(931) /* DELETE THIS TREE */}
+              {localization(931) /* DELETE THIS NOTE */}
             </div>
           </div>
         </div>;
       } else if (this.state.editing && this.props.note.id == 0) { // Create a new note.
         actions = <div>
           <div className="solid-button-group same-border-color-padding">
-            <div className={"solid-button" + buttonStyle} onClick={() => {
+            <div className={"solid-button solid-button-green"} onClick={() => {
               this.setState({editing: false, remove: false});
               NoteActions.createNote.defer(NoteStore.getState().temp);
             }}>
@@ -112,12 +112,12 @@ export default class NoteInfo extends React.Component {
       } else {
         if (this.props.note.isEditable()) {
           actions = <div className="solid-button-group same-border-color-padding">
-            <div className={"solid-button" + buttonStyle} onClick={() => {
+            <div className={"solid-button solid-button-green"} onClick={() => {
               this.setState({editing: true});
             }}>
               {localization(928) /* EDIT */}
             </div>
-            <div className={"solid-button" + buttonStyle} onClick={() => {
+            <div className={"solid-button solid-button-green"} onClick={() => {
               NoteActions.setSelected(null);
             }}>
               {localization(72) /* CLOSE */}
@@ -125,7 +125,7 @@ export default class NoteInfo extends React.Component {
           </div>;
         } else {
           actions = <div className="solid-button-group same-border-color-padding">
-            <div className={"solid-button" + buttonStyle} onClick={() => {
+            <div className={"solid-button solid-button-green"} onClick={() => {
               NoteActions.setSelected(null);
             }}>
               {localization(72) /* CLOSE */}

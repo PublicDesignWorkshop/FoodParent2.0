@@ -115,7 +115,6 @@ export default class NoteDonateGraph extends React.Component {
     				data: lists[i] != null ? lists[i] : [],
           });
         }
-        console.log(data);
         let chart = new Chart(ctx).Scatter(data, {
           bezierCurve: false,
           bezierCurveTension: 0.3,

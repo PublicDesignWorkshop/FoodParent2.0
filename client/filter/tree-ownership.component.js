@@ -42,11 +42,15 @@ export default class TreeOwnership extends React.Component {
     if (props.ownerships != null) {
       options.push({value: 0, label: localization(974)});
       options.push({value: 1, label: localization(975)});
-      if (props.ownerships == 0) {
-        selected.push(options[0]);
-      } else {
-        selected.push(options[1]);
-      }
+
+      props.ownerships.forEach((ownership) => {
+        if (ownership == 0) {
+          selected.push(options[0]);
+        } else {
+          selected.push(options[1]);
+        }
+      })
+
     }
     this.setState({options: options, selected: selected});
   }

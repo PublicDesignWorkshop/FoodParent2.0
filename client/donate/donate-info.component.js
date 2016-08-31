@@ -16,7 +16,7 @@ import DonateDate from './donate-date.component';
 import DonateAmount from './donate-amount.component';
 import DonateFood from './donate-food.component';
 import DonateSource from './donate-source.component';
-import DonateImage from './donate-image.component';
+// import DonateImage from './donate-image.component';
 import DonateAuthor from './donate-author.component';
 
 let LocationActions = require('./../actions/location.actions');
@@ -66,7 +66,7 @@ export default class DonateInfo extends React.Component {
       }
       switch(this.props.donate.type) {
         case NOTETYPE.DONATE:
-          buttonStyle = " solid-button-brown";
+          buttonStyle = " solid-button-green";
           break;
       }
     }
@@ -188,7 +188,7 @@ export default class DonateInfo extends React.Component {
     if (this.props.donate) {
       return (
         <div className={"donate-info-wrapper" + style}>
-          <DonateImage donate={this.props.donate} editing={this.state.editing} />
+
           <DonateFood donate={this.props.donate} editing={this.state.editing} />
           <AltContainer stores={
             {
@@ -215,3 +215,6 @@ export default class DonateInfo extends React.Component {
     }
   }
 }
+
+// In case of adding image view for donation.
+// <DonateImage donate={this.props.donate} editing={this.state.editing} />

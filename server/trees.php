@@ -87,7 +87,11 @@
       $public = "1";
       $dead = "0";
     } else {
-      $dead = "0,1";
+      if (isset($_SESSION['dead'])) {
+        $dead = $_SESSION['dead'];
+      } else {
+        $dead = "0";
+      }
       if (isset($_SESSION['public'])) {
         $public  = $_SESSION['public'];
       } else {
@@ -112,15 +116,15 @@
       $sql .= "AND `food` IN (" . $foods . ") ";
     }
     // Flag basic filtering
-    $flagsize = getFlagSize();
-    $flags = getDefaultFlags();
-    for ($i = 1; $i <= $flagsize; $i++) {
-      if (isset($_SESSION['flag_ids'])) {
-        $sql .= "AND SUBSTRING_INDEX(`flag`, ',', " . $i . ") IN (" . $_SESSION['flag_ids'] . ") ";
-      } else {
-        $sql .= "AND SUBSTRING_INDEX(`flag`, ',', " . $i . ") IN (" . $flags . ") ";
-      }
-    }
+    // $flagsize = getFlagSize();
+    // $flags = "0";
+    // for ($i = 1; $i <= $flagsize; $i++) {
+    //   if (isset($_SESSION['flag_ids'])) {
+    //     $sql .= "AND SUBSTRING_INDEX(`flag`, ',', " . $i . ") IN (" . $_SESSION['flag_ids'] . ") ";
+    //   } else {
+    //     $sql .= "AND SUBSTRING_INDEX(`flag`, ',', " . $i . ") IN (" . $flags . ") ";
+    //   }
+    // }
     if (isset($_SESSION['adopt'])) {
       if (isset($_SESSION['user_id'])) {
         $userId = intval($_SESSION['user_id']);

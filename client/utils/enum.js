@@ -13,7 +13,7 @@ export const DONATIONADDMODE = Enum("MARKER", "INFO");
 export const AUTHTYPE = Enum("ADMIN", "MANAGER", "PARENT", "GUEST");
 export const LOGINMODE = Enum("PARENT", "MANAGER");
 
-export const FITERMODE = Enum("FOOD", "FLAG", "OWNERSHIP", "ADOPT", "RATE");
+export const FITERMODE = Enum("FOOD", "DEAD", "OWNERSHIP", "ADOPT", "RATE");
 export const AMOUNTTYPE = Enum("LBS", "KG", "G");
 export const NOTETYPE = Enum("CHANGE", "UPDATE", "PICKUP", "DONATE");
 export const PICKUPTIME = Enum("EARLY", "PROPER", "LATE");

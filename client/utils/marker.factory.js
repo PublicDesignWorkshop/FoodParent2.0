@@ -107,6 +107,9 @@ export function createSVGTreeMarker(tree, movable) {
     closeButton: false,
     closeOnClick: false,
   });
+  marker.on('click', function() {
+    browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + tree.id});
+  });
   // Add zoom-in event listener
   marker.on('dblclick', function() {
     MapActions.moveToLocation(MapSetting.sMapId, new L.LatLng(tree.lat, tree.lng), MapSetting.iFocusZoom);
@@ -194,7 +197,12 @@ export function createCanvasTreeSourceMarker(tree) {
     });
   marker.on('click', function() {
     if (DonateStore.getState().temp) {
-      tree.checked = true;
+      // Click event for adding a tree item as a source of the current donation.
+      if (tree.checked) {
+        tree.checked = false;
+      } else {
+        tree.checked = true;
+      }
       TreeActions.setCode(200);
       DonateStore.getState().temp.addSource(tree.id);
       DonateActions.setCode(94);

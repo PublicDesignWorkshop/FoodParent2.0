@@ -37,7 +37,7 @@ export function updateFilter(mode, ids, resolve, reject) {
       mode = 1;
       ids.unshift(-1);  // Fake id to handle when there is no item in ids.
       break;
-    case FITERMODE.FLAG:
+    case FITERMODE.DEAD:
       mode = 2;
       ids.unshift(-1);  // Fake id to handle when there is no item in ids.
       break;

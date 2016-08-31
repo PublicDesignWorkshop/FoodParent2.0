@@ -22,7 +22,7 @@ export class TreeModel {
       description: this.description,
       address: this.address,
       public: this.ownership,
-      // dead: this.dead, dead boolean value will be setup in tree.php.
+      dead: this.dead,
       owner: this.owner,
       parent: this.parents.toString(),
       rate: this.rate,

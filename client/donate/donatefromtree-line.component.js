@@ -54,13 +54,13 @@ export default class DonateFromTreeLine extends React.Component {
           // comment = this.props.donate.comment.trim();
           switch(this.props.donate.amountType) {
             case AMOUNTTYPE.LBS:
-              amount = "(" + this.props.donate.amount.toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
+              amount = "(" + (this.props.donate.amount / this.props.donate.trees.length).toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
               break;
             case AMOUNTTYPE.KG:
-              amount = "(" + (this.props.donate.amount * ServerSetting.fKGToG * ServerSetting.fGToLBS).toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
+              amount = "(" + ((this.props.donate.amount / this.props.donate.trees.length) * ServerSetting.fKGToG * ServerSetting.fGToLBS).toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
               break;
             case AMOUNTTYPE.G:
-              amount = "(" + (this.props.donate.amount * ServerSetting.fGToLBS).toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
+              amount = "(" + ((this.props.donate.amount / this.props.donate.trees.length) * ServerSetting.fGToLBS).toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
               break;
           }
         break;

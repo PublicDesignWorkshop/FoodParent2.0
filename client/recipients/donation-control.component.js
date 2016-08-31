@@ -13,6 +13,7 @@ let MapStore = require('./../stores/map.store');
 let AuthStore = require('./../stores/auth.store');
 import { MAPTILE, MAPTYPE } from './../utils/enum';
 import { localization } from './../utils/localization';
+import { resetFilter } from './../utils/filter';
 
 
 export default class DonationControl extends React.Component {
@@ -82,7 +83,9 @@ export default class DonationControl extends React.Component {
     let tree;
     if (AuthStore.getState().auth.isManager()) {
       tree = <div className="control-button" onClick={()=> {
-        TreeActions.fetchTrees();
+        resetFilter().then(() => {
+          TreeActions.fetchTrees();
+        });
         this.context.router.push({pathname: ServerSetting.uBase + '/'});
       }} data-for="tooltip-donation-control" data-tip={localization(52)}>
         <FontAwesome name="apple" />

@@ -49,6 +49,12 @@ export default class TreeNotify extends React.Component {
                 store: TreeStore,
                 value: TreeStore.getState().trees
               }
+            },
+            selected: function(props) {
+              return {
+                store: TreeStore,
+                value: TreeStore.getState().selected
+              }
             }
           }
         }>

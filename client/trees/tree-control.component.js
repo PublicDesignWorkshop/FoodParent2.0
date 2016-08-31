@@ -88,7 +88,7 @@ export default class TreeControl extends React.Component {
       notify = <div className="control-button" onClick={()=> {
         this.context.router.push({pathname: ServerSetting.uBase + '/notify'});
       }} data-for="tooltip-tree-control" data-tip={localization(54)}>
-        <FontAwesome name="paper-plane-o" />
+        <FontAwesome name="clock-o" />
       </div>;
       donation = <div className="control-button" onClick={()=> {
         this.context.router.push({pathname: ServerSetting.uBase + '/recipients'});

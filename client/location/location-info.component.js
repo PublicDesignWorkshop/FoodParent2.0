@@ -64,14 +64,7 @@ export default class LocationInfo extends React.Component {
               {localization(933) /* CANCEL */}
             </div>
           </div>
-          <div className="danger-zone">{localization(927) /*DANGER ZONE */}</div>
-          <div className="solid-button-group">
-            <div className="solid-button solid-button-red" onClick={() => {
-              this.context.router.push({pathname: window.location.pathname, hash: "#delete"});
-            }}>
-              {localization(966) /* DELETE THIS LOCATION */}
-            </div>
-          </div>
+
         </div>;
       } else {
         actions = <div>
@@ -138,3 +131,12 @@ export default class LocationInfo extends React.Component {
 LocationInfo.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
+
+// <div className="danger-zone">{localization(927) /*DANGER ZONE */}</div>
+// <div className="solid-button-group">
+//   <div className="solid-button solid-button-red" onClick={() => {
+//     this.context.router.push({pathname: window.location.pathname, hash: "#delete"});
+//   }}>
+//     {localization(966) /* DELETE THIS LOCATION */}
+//   </div>
+// </div>

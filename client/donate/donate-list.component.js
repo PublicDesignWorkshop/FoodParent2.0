@@ -23,7 +23,7 @@ export default class DonateList extends React.Component {
     // Scroll to the top postion of selected donate.
     setTimeout(function() {
       if (this.props.donate && this.props.donate.id != 0) {
-        $('.tree-history-wrapper').animate({ scrollTop: $('#donate' + this.props.donate.id).offset().top - 96 }, 0);
+        $('.donate-history-wrapper').animate({ scrollTop: $('#donate' + this.props.donate.id).offset().top - 96 }, 0);
       }
     }.bind(this), 250);
   }

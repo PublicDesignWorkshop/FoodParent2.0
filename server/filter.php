@@ -17,7 +17,7 @@
   }
 
   function update() {
-    // mode: 1 - FOOD, 2 - FLAG, 3 - OWNERSHIP, 4 - ADOPT
+    // mode: 1 - FOOD, 2 - DEAD, 3 - OWNERSHIP, 4 - ADOPT
     sec_session_continue(); // Our custom secure way of starting a PHP session.
     $check = admin_check();
     if ($_POST['mode'] == 1) {
@@ -28,9 +28,9 @@
       }
     } else if ($_POST['mode'] == 2) {
       if ($_POST['ids'] != "") {
-        $_SESSION['flag_ids'] = $_POST['ids'];
+        $_SESSION['dead'] = $_POST['ids'];
       } else {
-        $_SESSION['flag_ids'] = null;
+        $_SESSION['dead'] = null;
       }
     } else if ($_POST['mode'] == 3) {
       if ($_POST['ids'] != "") {
@@ -56,9 +56,9 @@
       $public = "0,1";
       $_SESSION['public'] = $public;
     }
-    if (!isset($_SESSION['flag_ids'])) {
-      $flags = getDefaultFlags();
-      $_SESSION['flag_ids'] = $flags;
+    if (!isset($_SESSION['dead'])) {
+      $dead = "0";
+      $_SESSION['dead'] = $dead;
     }
     if (!isset($_SESSION['adopt'])) {
       $adopt = "0";
@@ -77,7 +77,7 @@
       "code" => 200,
       "ownerships" => $_SESSION['public'],
       "foods" => $_SESSION['food_ids'],
-      "flags" => $_SESSION['flag_ids'],
+      "dead" => $_SESSION['dead'],
       "adopt" => $_SESSION['adopt'],
       "rates" => $_SESSION['rates'],
     );
@@ -89,7 +89,7 @@
     $check = admin_check();
     $public = null;
     $foods = null;
-    $flags = null;
+    $dead = null;
     $adopt = null;
     $rates = null;
     if (isset($_SESSION['public'])) {
@@ -98,11 +98,11 @@
       $public = "0,1";
       $_SESSION['public'] = $public;
     }
-    if (isset($_SESSION['flag_ids'])) {
-      $flags = $_SESSION['flag_ids'];
+    if (isset($_SESSION['dead'])) {
+      $dead = $_SESSION['dead'];
     } else {
-      $flags = getDefaultFlags();
-      $_SESSION['flag_ids'] = $flags;
+      $dead = "0";
+      $_SESSION['dead'] = $dead;
     }
     if (isset($_SESSION['adopt'])) {
       $adopt = $_SESSION['adopt'];
@@ -126,7 +126,7 @@
       "code" => 200,
       "ownerships" => $public,
       "foods" => $foods,
-      "flags" => $flags,
+      "dead" => $dead,
       "adopt" => $adopt,
       "rates" => $rates,
     );
@@ -138,14 +138,14 @@
     $check = admin_check();
     $public = null;
     $foods = null;
-    $flags = null;
+    $dead = null;
     $adopt = null;
     $rates = null;
 
     $public = "0,1";
     $_SESSION['public'] = $public;
-    $flags = getDefaultFlags();
-    $_SESSION['flag_ids'] = $flags;
+    $dead = "0";
+    $_SESSION['dead'] = $dead;
     $foods = calcSeasonFoods(0);
     $_SESSION['food_ids'] = $foods;
     $adopt = "0";
@@ -156,7 +156,7 @@
       "code" => 200,
       "ownerships" => $public,
       "foods" => $foods,
-      "flags" => $flags,
+      "dead" => $dead,
       "adopt" => $adopt,
       "rates" => $rates,
     );
@@ -168,14 +168,14 @@
     $check = admin_check();
     $public = null;
     $foods = null;
-    $flags = null;
+    $dead = null;
     $adopt = null;
     $rates = null;
 
     $public = "0,1";
     $_SESSION['public'] = $public;
-    $flags = "0," . getAllFlags();
-    $_SESSION['flag_ids'] = $flags;
+    $dead = "0";
+    $_SESSION['dead'] = $dead;
     // $foods = calcSeasonFoods();
     // $_SESSION['food_ids'] = $foods;
     $adopt = "0";
@@ -186,7 +186,7 @@
       "code" => 200,
       "ownerships" => $public,
       "foods" => $_SESSION['food_ids'],
-      "flags" => $flags,
+      "dead" => $dead,
       "adopt" => $adopt,
       "rates" => $rates,
     );

@@ -35,19 +35,15 @@ export default class TreeFlag extends React.Component {
   }
   updateProps(props) {
     let options = [];
-    let selected = [];
+    let selected = null;
     if (props.tree != null) {
-      let flags = FlagStore.getState().flags;
-      flags.forEach(flag => {
-        if (ServerSetting.iDeadFlagId == flag.id && props.tree.id == 0) {
-          // Dead flag should not be added for a new tree.
-        } else {
-          options.push({value: flag.id, label: flag.name});
-          if ($.inArray(flag.id, props.tree.flags) != -1) {
-            selected.push({value: flag.id, label: flag.name});
-          }
-        }
-      });
+      options.push({value: 0, label: localization(24)});  // alive
+      options.push({value: 1, label: localization(25)});  // dead
+      if (props.tree.dead == 1) { // dead
+        selected = options[1];
+      } else {
+        selected = options[0];
+      }
     }
     this.setState({options: options, selected: selected});
   }
@@ -55,14 +51,8 @@ export default class TreeFlag extends React.Component {
     return <span className="tree-flag-name">{option.label}</span>;
   }
   updateAttribute(selected) {
-    let flags = [];
-    if (selected) {
-      selected.forEach(option => {
-        flags.push(parseInt(option.value));
-      });
-    }
     TreeActions.setCode(94);
-    this.props.tree.flags = flags;
+    this.props.tree.dead = parseInt(selected.value);
     this.setState({selected: selected});
   }
   render () {
@@ -73,7 +63,7 @@ export default class TreeFlag extends React.Component {
             <FontAwesome className='' name='tag' />{localization(969)}
           </div>
           <div className="tree-flag-data brown-medium-single active">
-            <Select name="flag-select" multi={true} clearable={true} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(970)} backspaceToRemoveMessage="" />
+            <Select name="flag-select" multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(970)} backspaceToRemoveMessage="" />
           </div>
         </div>
       );
@@ -84,7 +74,7 @@ export default class TreeFlag extends React.Component {
             <FontAwesome className='' name='tag' />{localization(969)}
           </div>
           <div className="tree-flag-data brown-medium-single">
-            <Select name="flag-select" multi={true} clearable={true} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(76)} backspaceToRemoveMessage="" disabled />
+            <Select name="flag-select" multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(76)} backspaceToRemoveMessage="" disabled />
           </div>
         </div>
       );

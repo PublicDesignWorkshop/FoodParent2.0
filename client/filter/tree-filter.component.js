@@ -41,9 +41,7 @@ export default class TreeFilter extends React.Component {
           return parseInt(adopt);
         });
       }
-      let flags = response.flags.split(",").map(function(flag) {
-        return parseInt(flag);
-      });
+      let dead = parseInt(response.dead);
       let foods = response.foods.split(",").map(function(food) {
         return parseInt(food);
       });
@@ -53,7 +51,7 @@ export default class TreeFilter extends React.Component {
       let rates = response.rates.split(",").map(function(rate) {
         return parseInt(rate);
       });
-      this.setState({adopts: adopts, flags: flags, foods: foods, ownerships: ownerships, rates: rates});
+      this.setState({adopts: adopts, dead: dead, foods: foods, ownerships: ownerships, rates: rates});
     }.bind(this), function(response) {  // Reject callback.
 
     }.bind(this));
@@ -65,7 +63,7 @@ export default class TreeFilter extends React.Component {
           <TreeFood foods={this.state.foods} />
           <TreeRate rates={this.state.rates} />
           <TreeAdopt adopts={this.state.adopts} />
-          <TreeFlag flags={this.state.flags} />
+          <TreeFlag dead={this.state.dead} />
           <TreeOwnership ownerships={this.state.ownerships} />
         </div>
       );

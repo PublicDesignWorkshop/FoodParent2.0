@@ -17,6 +17,7 @@ let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
 let AuthStore = require('./../stores/auth.store');
 import NotifyLine from './notify-line.component';
+import NotifyLink from './notify-link.component';
 
 
 export default class NotifyList extends React.Component {
@@ -44,7 +45,7 @@ export default class NotifyList extends React.Component {
     let pastpickups = [];
     if (this.state.pastpickups) {
       this.state.pastpickups.forEach((item) => {
-        pastpickups.push(<NotifyLine key={"notify-pickup-" + item.id} item={item} type={NOTETYPE.PICKUP} />);
+        pastpickups.push(<NotifyLink key={"notify-pickup-" + item.id} item={item} type={NOTETYPE.PICKUP} />);
       });
     }
     let upcomings = [];
@@ -79,30 +80,8 @@ export default class NotifyList extends React.Component {
         <div className="notify-list-data">
           {pastpickups}
         </div>
-        <div className="notify-list-action">
-          <div className="solid-button-group no-left-right-padding">
-            <div className="solid-button solid-button-brown" onClick={() => {
-              let treeIds = [];
-              this.state.pastpickups.forEach((item) => {
-                if (!item.disabled) {
-                  treeIds.push(item.id);
-                }
-              });
-              if (treeIds.length == 0) {
-                displayFailMessage(localization(39));
-              } else {
-                notifyToManagers(treeIds.toString(), function(resolve) {
-                  displaySuccessMessage(localization(30));
-                }, function(reject) {
-                  displayFailMessage(localization(28));
-                });
-              }
-            }}>
-              {localization(32) /* NOTIFY TO MANAGERS */}
-            </div>
-          </div>
-        </div>
-        <div className="notify-list-label label-green">
+        <br />
+        <div className="notify-list-label label-brown">
           <FontAwesome className='' name='shopping-bag' /> {localization(33) /* UPCOMING TREES */}
         </div>
         <div className="notify-list-data">

@@ -38,19 +38,13 @@ export default class TreeRate extends React.Component {
   }
   updateProps(props) {
     let options = [];
-    let selected = [];
-    if (props.flags != null) {
-      let flags = FlagStore.getState().flags;
-      options.push({value: 0, label: localization(66)});
-      if ($.inArray(0, props.flags) != -1) {
-        selected.push({value: 0, label: localization(66)});
-      }
-      flags.forEach(flag => {
-        options.push({value: flag.id, label: flag.name});
-        if ($.inArray(flag.id, props.flags) != -1) {
-          selected.push({value: flag.id, label: flag.name});
-        }
-      });
+    let selected = null;
+    options.push({value: 0, label: localization(24)});  // alive
+    options.push({value: 1, label: localization(25)});  // dead
+    if (props.dead == 1) { // dead
+      selected = options[1];
+    } else {
+      selected = options[0];
     }
     this.setState({options: options, selected: selected});
   }
@@ -58,13 +52,7 @@ export default class TreeRate extends React.Component {
     return <span className="tree-flag-name">{option.label}</span>;
   }
   updateAttribute(selected) {
-    var flags = [];
-    if (selected) {
-      selected.forEach(option => {
-        flags.push(parseInt(option.value));
-      });
-    }
-    updateFilter(FITERMODE.FLAG, flags, function(response) {  // Resolve
+    updateFilter(FITERMODE.DEAD, [parseInt(selected.value)], function(response) {  // Resolve
       TreeActions.fetchTrees();
     }, function(response) { // Reject
 
@@ -78,7 +66,7 @@ export default class TreeRate extends React.Component {
           <FontAwesome className='' name='tag' />{localization(969)}
         </div>
         <div className="filter-data brown-medium-single active">
-          <Select name="flag-select" multi={true} clearable={true} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(970)} backspaceToRemoveMessage="" />
+          <Select name="flag-select" multi={false} clearable={false} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(970)} backspaceToRemoveMessage="" />
         </div>
       </div>
     );

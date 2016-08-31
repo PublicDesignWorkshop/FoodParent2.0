@@ -10,6 +10,7 @@ let MapStore = require('./../stores/map.store');
 
 var FontAwesome = require('react-fontawesome');
 import { localization } from './../utils/localization';
+import { resetFilter } from './../utils/filter';
 import { MAPTYPE, AUTHTYPE } from './../utils/enum';
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
@@ -52,6 +53,9 @@ export default class Header extends React.Component {
     return (
       <div className={"header" + active}>
         <div className="left" onClick={()=> {
+          resetFilter().then(() => {
+            TreeActions.fetchTrees();
+          });
           this.context.router.push({pathname: ServerSetting.uBase + "/"});
         }}>
           <div className="logo"></div>
