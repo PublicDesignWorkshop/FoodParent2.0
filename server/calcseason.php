@@ -62,7 +62,9 @@
     }
 
     // $sql = "SELECT DISTINCT tree.food from note join tree on note.tree = tree.id WHERE note.rate > 3 and datediff(note.date,CURRENT_DATE) < 30";
-    $sql = "SELECT DISTINCT tree.food from note join tree on note.tree = tree.id WHERE note.type = 2 AND note.rate > 3 AND ABS(MOD(datediff(note.date,CURRENT_DATE),365)) < 20";
+    // $sql = "SELECT DISTINCT tree.food from note join tree on note.tree = tree.id WHERE note.type = 2 AND note.rate > 3 AND ABS(MOD(datediff(note.date,CURRENT_DATE),365)) < 20";
+
+    $sql = "SELECT tree.food FROM donate INNER JOIN tree on FIND_IN_SET(tree.id, donate.tree) INNER JOIN food on tree.food = food.id WHERE ABS(MOD(datediff(CURRENT_DATE, donate.date), 365)) >= 351 GROUP BY tree.id ORDER BY ABS(MOD(datediff(CURRENT_DATE, donate.date), 365)) DESC";
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);

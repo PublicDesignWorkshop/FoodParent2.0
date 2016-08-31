@@ -100,7 +100,7 @@ export function createSVGTreeMarker(tree, movable) {
     food: tree.food,
     type: "svg",
     icon: icon,
-    draggable: false,
+    draggable: movable,
     riseOnHover: true,
   }).bindPopup(template, {
     autoPan: false,
@@ -108,7 +108,9 @@ export function createSVGTreeMarker(tree, movable) {
     closeOnClick: false,
   });
   marker.on('click', function() {
-    browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + tree.id});
+    if (tree.id > 0) {
+      browserHistory.push({pathname: ServerSetting.uBase + '/tree/' + tree.id});
+    }
   });
   // Add zoom-in event listener
   marker.on('dblclick', function() {

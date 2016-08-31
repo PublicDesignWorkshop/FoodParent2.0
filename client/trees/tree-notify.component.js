@@ -31,7 +31,9 @@ export default class TreeNotify extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
-    TreeActions.setSelected.defer(parseInt(props.params.treeId));
+    if (parseInt(props.params.treeId) > 0) {
+      TreeActions.fetchTree.defer(parseInt(props.params.treeId));
+    }
   }
   render () {
     return (

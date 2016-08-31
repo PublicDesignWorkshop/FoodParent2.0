@@ -130,6 +130,7 @@ class TreeStore {
       food: "0",
       flag: "0",
       public: "1",
+      dead: "0",
       description: "",
       address: "",
       owner: "0",
