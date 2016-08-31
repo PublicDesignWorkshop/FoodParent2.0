@@ -202,11 +202,13 @@ export function createCanvasTreeSourceMarker(tree) {
       // Click event for adding a tree item as a source of the current donation.
       if (tree.checked) {
         tree.checked = false;
+        DonateStore.getState().temp.removeSource(tree.id);
       } else {
         tree.checked = true;
+        DonateStore.getState().temp.addSource(tree.id);
       }
       TreeActions.setCode(200);
-      DonateStore.getState().temp.addSource(tree.id);
+
       DonateActions.setCode(94);
     }
   });

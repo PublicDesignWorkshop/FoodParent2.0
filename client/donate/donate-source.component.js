@@ -14,7 +14,8 @@ import { localization } from './../utils/localization';
 let FoodStore = require('./../stores/food.store');
 let TreeStore = require('./../stores/tree.store');
 let TreeActions = require('./../actions/tree.actions');
-
+let MapActions = require('./../actions/map.actions');
+let MapStore = require('./../stores/map.store');
 let DonateStore = require('./../stores/donate.store');
 let DonateActions = require('./../actions/donate.actions');
 
@@ -61,7 +62,12 @@ export default class DonateSource extends React.Component {
     this.setState({options: options, selected: selected});
   }
   renderOptionValue(option) {
-    return <span className="tree-flag-name">{option.label}</span>;
+    return <span className="tree-flag-name tree-source-link" onClick={() => {
+      let tree = TreeStore.getTree(option.value);
+      if (tree) {
+        MapActions.moveToLocation(MapSetting.sMapId, new L.LatLng(tree.lat, tree.lng));
+      }
+    }}>{option.label}</span>;
   }
   updateAttribute(selected) {
     let trees = [];

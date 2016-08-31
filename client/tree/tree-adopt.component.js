@@ -103,8 +103,8 @@ export default class TreeAdopt extends React.Component {
     }
     return (
       <div className="tree-adopt-wrapper">
-        {actions}
         {manageractions}
+        {actions}
         {message}
       </div>
     );

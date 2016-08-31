@@ -43,7 +43,7 @@ class FoodActions {
       dispatch();
       this.setCode(92);
       FoodSource.updateFood(food).then((response) => {
-        displaySuccessMessage(localization(634));
+        displaySuccessMessage(localization(22));
         this.updatedFood(response);
       }).catch((code) => {
         displayFailMessage(localization(code));

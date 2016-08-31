@@ -63,7 +63,7 @@
         font-weight: 700;
         font-size: $font-size-large;
         text-align: center;
-        padding: 4% 0 12% 0;
+        padding: 4% 0 4% 0;
 
         @include respond-to(handhelds) {
           font-size: $font-size-medium;

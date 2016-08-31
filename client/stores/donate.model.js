@@ -117,4 +117,7 @@ export class DonateModel {
       this.trees.push(treeId);
     }
   }
+  removeSource(treeId) {
+    this.trees = _.without(this.trees, treeId);
+  }
 }

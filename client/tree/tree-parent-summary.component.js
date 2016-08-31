@@ -50,7 +50,7 @@ export default class TreeParentSummary extends React.Component {
         } else {
           if (AuthStore.getState().auth.id != 0 && this.props.tree && $.inArray(AuthStore.getState().auth.id, this.props.tree.getParents()) != -1) {
             if ((parents.length - 1) == 1) {
-              overview = <div className="tree-parent-summary-text">{localization(55) + " " + (parents.length - 1) + " " + localization(982)}</div>;
+              overview = <div className="tree-parent-summary-text">{localization(55) + " " + (parents.length - 1) + " " + localization(21)}</div>;
             } else {
               overview = <div className="tree-parent-summary-text">{localization(55) + " " + (parents.length - 1) + " " + localization(983)}</div>;
             }

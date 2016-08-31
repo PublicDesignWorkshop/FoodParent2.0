@@ -146,7 +146,12 @@ class MapStore {
   handleMoveToLocation(props) {
     let maps = this.maps.filter(map => map.id == props.id);
     if (maps.length == 1) {
-      let zoom = Math.max(maps[0].map.getZoom(), props.zoom);
+      let zoom;
+      if (props.zoom) {
+        zoom = Math.max(maps[0].map.getZoom(), props.zoom);
+      } else {
+        zoom = maps[0].map.getZoom();
+      }
       let location: L.LatLng = new L.LatLng(props.location.lat, props.location.lng);
       let point: L.Point = L.CRS.EPSG3857.latLngToPoint(location, zoom);
       let rMap = document.getElementById(props.id);
