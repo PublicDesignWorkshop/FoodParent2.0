@@ -44,7 +44,9 @@ export default class TreeDetail extends React.Component {
       case "":
         mode = TREEDETAILMODE.INFO;
         NoteActions.fetchRecentNotesFromTreeId.defer(parseInt(props.params.treeId));
-        DonateActions.fetchRecentDonatesFromTreeId.defer(parseInt(props.params.treeId));
+        setTimeout(function() {
+          DonateActions.fetchRecentDonatesFromTreeId(parseInt(props.params.treeId));
+        }, 250);
         break;
       case "post":
         mode = TREEDETAILMODE.POST;
@@ -55,7 +57,9 @@ export default class TreeDetail extends React.Component {
       case "history":
         mode = TREEDETAILMODE.HISTORY;
         NoteActions.fetchNotesFromTreeIds.defer(parseInt(props.params.treeId));
-        DonateActions.fetchDonatesFromTreeId.defer(parseInt(props.params.treeId));
+        setTimeout(function() {
+          DonateActions.fetchDonatesFromTreeId(parseInt(props.params.treeId));
+        }, 250);
         break;
       case "all":
         mode = TREEDETAILMODE.ALL;

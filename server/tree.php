@@ -50,7 +50,7 @@
       $sql .= "OR `id` IN (" . $_SESSION['temp_trees'] . ") ";
     }
     if ($check) {
-      $sql .= "OR `id` = -1 ";
+      
     } else {
       $sql .= "AND `id` != -1 ";
     }
