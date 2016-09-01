@@ -84,9 +84,9 @@ export default class LocationName extends React.Component {
       );
     } else {
       let name = this.state.name;
-      if (this.props.location && this.props.location.id) {
-        name = this.state.name + " #" + this.props.location.id;
-      }
+      // if (this.props.location && this.props.location.id) {
+      //   name = this.state.name + " #" + this.props.location.id;
+      // }
       return (
         <div className="location-name-wrapper">
           <div className="location-name-label">

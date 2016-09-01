@@ -71,7 +71,8 @@ export default class DonateFromTreeLine extends React.Component {
       }
       let location = LocationStore.getLocation(this.props.donate.location);
       if (location) {
-        dest = <span className="location-link">{location.name + " #" + location.id}</span>;
+        // dest = <span className="location-link">{location.name + " #" + location.id}</span>;
+        dest = <span className="location-link">{location.name}</span>;
       } else {
         dest = <span className="location-link">{localization(40)}</span>;
       }
