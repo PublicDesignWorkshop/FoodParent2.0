@@ -63,7 +63,6 @@ export default class TreeFilter extends React.Component {
           <TreeFood foods={this.state.foods} />
           <TreeRate rates={this.state.rates} />
           <TreeAdopt adopts={this.state.adopts} />
-          <TreeFlag dead={this.state.dead} />
           <TreeOwnership ownerships={this.state.ownerships} />
         </div>
       );
@@ -82,3 +81,5 @@ export default class TreeFilter extends React.Component {
 TreeFilter.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
+
+// <TreeFlag dead={this.state.dead} />

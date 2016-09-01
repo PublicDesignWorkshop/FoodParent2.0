@@ -5,15 +5,18 @@ require('./tree-detail.component.scss');
 
 let MapStore = require('./../stores/map.store');
 let TreeStore = require('./../stores/tree.store');
+let AuthStore = require('./../stores/auth.store');
 let TreeActions = require('./../actions/tree.actions');
 let FoodActions = require('./../actions/food.actions');
 let NoteActions = require('./../actions/note.actions');
 let DonateActions = require('./../actions/donate.actions');
+let PersonActions = require('./../actions/person.actions');
 import { TREEDETAILMODE } from './../utils/enum';
 import { localization } from './../utils/localization';
 
 import MapTree from './../maps/map-tree.component';
 import TreePanel from './tree-panel.component';
+let ServerSetting = require('./../../setting/server.json');
 
 export default class TreeDetail extends React.Component {
   constructor(props, context) {
@@ -38,6 +41,7 @@ export default class TreeDetail extends React.Component {
   updateProps(props) {
     let mode;
     let remove = false;
+    let dead = false;
     TreeActions.fetchTree.defer(parseInt(props.params.treeId));
     // Instead of changing url, change # hashtag to remove extra rendering process.
     switch(props.location.hash.replace('#', '')) {
@@ -47,6 +51,13 @@ export default class TreeDetail extends React.Component {
         setTimeout(function() {
           DonateActions.fetchRecentDonatesFromTreeId(parseInt(props.params.treeId));
         }, 250);
+        let tree = TreeStore.getState().temp;
+        if (AuthStore.getState().auth.isManager() && tree) {
+          let parents = tree.getParents();
+          if (parents) {
+            PersonActions.fetchPersons.defer(parents);
+          }
+        }
         break;
       case "post":
         mode = TREEDETAILMODE.POST;
@@ -67,19 +78,14 @@ export default class TreeDetail extends React.Component {
       case "delete":
         remove = true;
         mode = TREEDETAILMODE.INFO;
-        let tree = TreeStore.getState().temp;
-        if (AuthStore.getState().auth.isManager() && tree) {
-          let parents = tree.getParents();
-          if (parents) {
-            PersonActions.fetchPersons.defer(parents);
-          }
-        }
-        break;
+      case "dead":
+        dead = true;
+        mode = TREEDETAILMODE.INFO;
       default:
         mode = TREEDETAILMODE.INFO;
         break;
     }
-    this.setState({mode: mode, remove: remove});
+    this.setState({mode: mode, remove: remove, dead: dead});
   }
   render () {
     let action;
@@ -91,6 +97,30 @@ export default class TreeDetail extends React.Component {
             TreeActions.deleteTree(TreeStore.getState().temp);
           }}>
             {localization(931)}
+          </span>
+          <span className="popup-button" onClick={()=> {
+            this.context.router.push({pathname: window.location.pathname});
+          }}>
+            {localization(933)}
+          </span>
+        </div>
+      </div>;
+    } else if (this.state.dead) {
+      action = <div className="popup-wrapper popup-red open">
+        <div className="popup-message">
+          <span dangerouslySetInnerHTML={{__html: localization(1002)}} />
+          <span className="popup-button" onClick={()=> {
+            let tree = TreeStore.getState().temp;
+            if (AuthStore.getState().auth.isManager() && tree) {
+              tree.dead = 1;
+              TreeActions.updateTree(tree);
+            }
+            setTimeout(function() {
+              TreeActions.fetchTrees();
+              this.context.router.push({pathname: ServerSetting.uBase + '/'});
+            }.bind(this), 250);
+          }}>
+            {localization(1003)}
           </span>
           <span className="popup-button" onClick={()=> {
             this.context.router.push({pathname: window.location.pathname});

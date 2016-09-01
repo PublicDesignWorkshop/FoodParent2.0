@@ -116,9 +116,34 @@ export default class TreeFood extends React.Component {
         </div>
       );
     } else {
+      let ownership, icon;
+      let name = "";
+      if (this.props.tree) {
+        if (!this.props.tree.ownership) {
+          ownership = <span className="tree-ownership-static">{"(" + localization(974) + ")"}</span>;
+        }
+        let food = FoodStore.getFood(this.props.tree.food);
+        if (food) {
+          icon = ServerSetting.uBase + ServerSetting.uStaticImage + food.icon;
+          if (this.props.tree.id == 0) {  //  == 0: new tree.
+            name = food.name;
+          } else {
+            name = food.name + this.props.tree.getName();
+          }
+        } else {
+          if (parseInt(this.props.tree.food) == -1) {
+            icon = ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uFarmMarkerIcon;
+          } else {
+            icon = ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon;
+          }
+        }
+      }
       return (
         <div className="tree-food-wrapper disabled">
-          <Select name="food-select" multi={false} clearable={false} searchable={true} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder="" disabled />
+          <img className="tree-food-icon-static" src={icon} />
+          <span className="tree-food-name-static">{name}</span>
+          &nbsp;
+          {ownership}
         </div>
       );
     }

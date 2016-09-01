@@ -15,6 +15,43 @@
   // -webkit-flex-grow: 1;           /* NEW - Chrome */
   // flex-grow: 1;                   /* NEW, Spec - Opera 12.1, Firefox 20+ */
 
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+
+
+  .tree-food-icon-static {
+    vertical-align: middle;
+    width: 20px;
+    height: 32px;
+    margin-bottom: 4px;
+    margin-right: 12px;
+    margin-left: 14px;
+    margin-top: 10px;
+  }
+
+  .tree-food-name-static {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: $font-size-large;
+    margin-top: 2px;
+    font-weight: 700;
+    color: $brown;
+    font-family: $font-narrow;
+  }
+
+  .tree-ownership-static {
+    display: inline-block;
+    margin-top: 2px;
+    vertical-align: middle;
+    font-size: $font-size-large;
+    font-weight: 700;
+    color: $brown;
+    font-family: $font-narrow;
+  }
+
   .Select-control {
     z-index: 1000;
   }
@@ -41,7 +78,7 @@
       font-size: $font-size-large;
       font-weight: 700;
       color: $brown;
-      font-family: $font-main;
+      font-family: $font-narrow;
     }
   }
 
@@ -67,7 +104,7 @@
       vertical-align: bottom;
       font-size: $font-size-medium;
       font-weight: 700;
-      font-family: $font-main;
+      font-family: $font-narrow;
     }
 
   	&.is-selected {

@@ -71,14 +71,7 @@ export default class TreeOwnership extends React.Component {
       );
     } else {
       return (
-        <div className="tree-ownership-wrapper">
-          <div className="tree-ownership-label">
-            <FontAwesome className='' name='home' />{localization(977)}
-          </div>
-          <div className="tree-ownership-data brown-medium-single">
-            <Select name="ownership-select" multi={false} backspaceToRemoveMessage="" clearable={false} searchable={false} scrollMenuIntoView={false} options={this.state.options} value={this.state.selected} valueRenderer={this.renderOptionValue} optionRenderer={this.renderOptionValue} onChange={this.updateAttribute} placeholder={localization(76)} disabled />
-          </div>
-        </div>
+        <div></div>
       );
     }
   }

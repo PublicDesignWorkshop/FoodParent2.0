@@ -118,15 +118,22 @@
         $sql .= "AND SUBSTRING_INDEX(`rate`, ',', " . $i . ") IN (" . $_SESSION['rates'] . ") ";
       }
     }
+    // Don't fetch any dead tree.
+    $sql .= "AND `dead` = 0 ";
+
     // show recently added tree always without being affected by filtering.
     if (isset($_SESSION['temp_trees']) && $_SESSION['temp_trees'] != null) {
       $sql .= "OR `id` IN (" . $_SESSION['temp_trees'] . ") ";
     }
+
+    // Only manager level can fetch Doghead farm.
     if ($check) {
       $sql .= "OR `id` = -1 ";
     } else {
       $sql .= "AND `id` != -1 ";
     }
+
+
 
     try {
       $pdo = getConnection();

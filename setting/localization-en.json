@@ -236,6 +236,9 @@
   "999": "Comment",
 
   "1000": "Please use a JPEG/JPG image file.",
+  "1001": "THIS TREE IS DEAD",
+  "1002": "Press the button to set this tree as dead.",
+  "1003": "DEAD",
 
   "42S22": "Unknown column exists in a database table."
 }

@@ -46,14 +46,19 @@
     $sql = "SELECT * FROM `tree` WHERE (`id` = :id)";
     $sql .= "AND `public` IN (".$public.") ";
     $sql .= "AND `dead` IN (".$dead.") ";
+
+    // On;y manager level can fetch Doghead farm.
+    if (!$check) {
+      $sql .= "AND `id` != -1 ";
+    }
+    // Don't fetch any dead tree.
+    $sql .= "AND `dead` = 0 ";
+
+
     if (isset($_SESSION['temp_trees']) && $_SESSION['temp_trees'] != null) {
       $sql .= "OR `id` IN (" . $_SESSION['temp_trees'] . ") ";
     }
-    if ($check) {
-      
-    } else {
-      $sql .= "AND `id` != -1 ";
-    }
+
 
     try {
       $pdo = getConnection();

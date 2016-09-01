@@ -96,6 +96,14 @@ export default class TreeInfo extends React.Component {
               {localization(933) /* CANCEL */}
             </div>
           </div>
+          <div className="danger-zone">{localization(927) /* THIS TREE IS DEAD */}</div>
+          <div className="solid-button-group">
+            <div className="solid-button solid-button-red" onClick={() => {
+              this.context.router.push({pathname: window.location.pathname, hash: "#dead"});
+            }}>
+              {localization(1001) /* THIS TREE IS DEAD */}
+            </div>
+          </div>
         </div>;
       }
     }
@@ -115,8 +123,8 @@ export default class TreeInfo extends React.Component {
         <TreeLocation editing={this.state.editing} />
         <TreeAddress editing={this.state.editing} />
         <TreeDescription editing={this.state.editing} />
-        <TreeFlag editing={this.state.editing} />
         <TreeOwnership editing={this.state.editing} />
+
       </AltContainer>
     } else {
       info = <AltContainer stores={
@@ -147,3 +155,4 @@ export default class TreeInfo extends React.Component {
 TreeInfo.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
+// <TreeFlag editing={this.state.editing} />
