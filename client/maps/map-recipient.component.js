@@ -17,7 +17,7 @@ let LocationActions = require('./../actions/location.actions');
 let LocationStore = require('./../stores/location.store');
 
 import { MAPTILE, MAPTYPE } from './../utils/enum';
-import { createCanvasTreeSourceMarker, createFocusMarkerLocation, createSVGLocationMarker } from './../utils/marker.factory';
+import { createCanvasTreeSourceMarker, createFocusMarker, createSVGLocationMarker } from './../utils/marker.factory';
 
 
 export default class MapRecipient extends React.Component {

@@ -41,7 +41,7 @@ export default class Search extends React.Component {
         if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
           this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
         } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
-          this.context.router.push({pathname: ServerSetting.uBase + '/recipient/' + parseInt(searchText)});
+          this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
         }
       } else {
         // Check the searchText value is a Lat & Lng value.
