@@ -17,7 +17,6 @@
 
   function toparents() {
     $recipients = array();
-
     $config = new mailconfig();
 
     # Instantiate the client.
@@ -30,9 +29,11 @@
     $treesurl = $baseurl . "tree/";
     $gtolib = floatval($settings['fGToLBS']);
 
-    $sql = "SELECT tree.id, tree.parent, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id ";
-    $sql .= "WHERE tree.public = 1 AND note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 335 AND tree.id IN (" . $_POST['treeIds'] . ") ";
-    $sql .= "GROUP BY tree.id ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
+    // $sql = "SELECT tree.id, tree.parent, food.name, note.date, note.amount FROM note INNER JOIN tree on note.tree = tree.id INNER JOIN food on tree.food = food.id ";
+    // $sql .= "WHERE tree.public = 1 AND note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 335 AND tree.id IN (" . $_POST['treeIds'] . ") ";
+    // $sql .= "GROUP BY tree.id ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
+
+    $sql = "SELECT tree.id, food.name, donate.date, donate.amount, donate.tree FROM donate INNER JOIN tree on FIND_IN_SET(tree.id, donate.tree) INNER JOIN food on tree.food = food.id WHERE ABS(MOD(datediff(CURRENT_DATE, donate.date), 365)) >= 335  AND tree.id IN (" . $_POST['treeIds'] . ") GROUP BY tree.id ORDER BY ABS(MOD(datediff(CURRENT_DATE, donate.date), 365)) DESC";
 
     try {
       $pdo = getConnection();

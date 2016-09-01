@@ -2,7 +2,8 @@
   "ssltype": "http://",
   "bTestMail": true,
 
-  "host": "www.concrete-jungle.org",
+  "host": "localhost",
+
   "uBase": "/FoodParent2.0",
   "uBaseForRouter": "/FoodParent2.0/",
 
@@ -33,6 +34,8 @@
   "iRecipientDonationGraphHeight": 300,
 
   "sNoteImagePrefix": "",
-  "sDonateImagePrefix": "donate_"
+  "sDonateImagePrefix": "donate_",
+
+  "iPhantomjsRenderTime": 10000
 
 }

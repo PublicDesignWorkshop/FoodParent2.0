@@ -23,6 +23,7 @@ import Account from './account/account.component';
 import Register from './account/register.component';
 import Splash from './message/splash.component';
 import Popup from './message/popup.component';
+import Screenshot from './screenshot/screenshot.component';
 
 import RecipientMap from './recipients/recipient-map.component';
 import RecipientDetail from './recipients/recipient-detail.component';
@@ -79,6 +80,10 @@ class App extends React.Component {
       <Splash />
     </AltContainer>;
     if (this.state.loaded) {
+      let mapclassname = "map";
+      if (this.props.location.pathname.indexOf("/screenshot") > -1) {
+        mapclassname = "map-screenshot";
+      }
       return (
         <div>
           <AltContainer stores={
@@ -93,7 +98,7 @@ class App extends React.Component {
           }>
             <Header location={this.props.location}/>
           </AltContainer>;
-          <div className="map"><div id={MapSetting.sMapId} ref={MapSetting.sMapId}></div></div>
+          <div className={mapclassname}><div id={MapSetting.sMapId} ref={MapSetting.sMapId}></div></div>
           {this.props.children}
           <Popup />
           {splash}
@@ -124,6 +129,7 @@ render((
       <Route path="recipient/:recipientId" component={RecipientDetail} />
       <Route path="notify" component={TreeNotify} />
       <Route path="notify/:treeId" component={TreeNotify} />
+      <Route path="screenshot/:treeId" component={Screenshot} />
     </Route>
   </Router>
 ), document.getElementById('app'));

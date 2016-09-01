@@ -45,6 +45,10 @@ export default class Header extends React.Component {
     }
   }
   render () {
+    // Hide header for screenshot.
+    if (this.props.location.pathname.indexOf("/screenshot") > -1) {
+      return (<div></div>);
+    }
     let active = "";
     if (this.props.location.pathname == ServerSetting.uBase + "/login" || this.props.location.pathname == ServerSetting.uBase + "/register" || this.props.location.pathname == ServerSetting.uBase + "/account") {
       active = " active";

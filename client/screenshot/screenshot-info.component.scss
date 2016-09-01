@@ -1,0 +1,48 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.screenshot-info-wrapper {
+  display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;           /* TWEENER - IE 10 */
+  display: -webkit-flex;          /* NEW - Chrome */
+  display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: $brown;
+  padding: 2px 4px;
+  text-align: center;
+  background-color: $white;
+  pointer-events: all;
+  font-family: $font-narrow;
+
+  height: 48px;
+  z-index: 9995;
+
+  border-left: 2px solid $brown;
+  border-right: 2px solid $brown;
+  border-bottom: 2px solid $brown;
+
+  > .screenshot-info-message {
+    font-family: $font-narrow;
+    margin: auto;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    > img {
+      height: 20px;
+      width: auto;
+      vertical-align: middle;
+    }
+
+    > span {
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+  }
+}

@@ -20,7 +20,9 @@ src/**/*.css.d.ts
 
 
 content/images/*
+content/maps/*
 !content/images/blank.jpg
+!content/maps/blank.jpg
 
 serverconfig/~$errorlist.xlsx
 npm-debug.log
