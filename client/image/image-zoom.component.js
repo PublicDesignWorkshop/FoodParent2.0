@@ -44,14 +44,14 @@ export default class Login extends React.Component {
                 scrollX: true,
                 scrollY: true,
                 mouseWheel: true,
-                wheelAction: "zoom"
+                wheelAction: "zoom",
               });
             },
             {
                 canvas: true,
                 orientation: orientation,
                 // maxWidth: wrapper.clientWidth,
-                maxHeight: wrapper.clientHeight,
+                maxHeight: wrapper.clientHeight - 24,
             }
           );
         },
