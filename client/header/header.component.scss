@@ -137,7 +137,7 @@
 
 
     > .login-portrait {
-      margin: auto;
+      margin: 10px 0;
       padding: 0 4px;
       font-size: $font-size-large;
       @include respond-to(handhelds) {
@@ -151,7 +151,7 @@
     > .login-landscape {
       width: 100%;
       text-align: center;
-      margin: auto;
+      margin: 11px 0;
       cursor: pointer;
       word-break: break-all;
       @include respond-to(handhelds) {

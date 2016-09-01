@@ -42,3 +42,12 @@ export function checkValidDonateAmountNumber(value: number) {
     throw new Error("602");
   }
 };
+
+export function checkValidImageFile(filename) {
+  let ext = filename.split('.').pop();
+  if (ext.toUpperCase() == "JPEG" || ext.toUpperCase() == "JPG") {
+
+  } else {
+    throw new Error("1000");
+  }
+}

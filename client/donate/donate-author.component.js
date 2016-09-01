@@ -38,7 +38,7 @@ export default class DonateAuthor extends React.Component {
 
   }
   updateAttribute() {
-    let error: any = null;
+    let error = null;
     try {
       isValidEmailAddressOrBlank(this.state.author.trim());
       let prevAuthor = this.props.donate.person;

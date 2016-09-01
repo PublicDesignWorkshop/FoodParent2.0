@@ -67,6 +67,22 @@
 
   .control-button .fa {
     margin: auto;
+
+    &.fa-location-arrow {
+      margin: 12px 14px;
+    }
+    &.fa-map-o {
+      margin: 12px 9px;
+    }
+    &.fa-search-plus, &.fa-search-minus {
+      margin: 12px 12px;
+    }
+    &.fa-sliders, &.fa-plus-square, &.fa-clock-o {
+      margin: 12px 13px;
+    }
+    &.fa-sitemap {
+      margin: 12px 11px;
+    }
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
 

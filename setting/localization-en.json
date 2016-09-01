@@ -234,5 +234,7 @@
   "998": "Pick Amount",
   "999": "Comment",
 
+  "1000": "Please use a JPEG/JPG image file.",
+
   "42S22": "Unknown column exists in a database table."
 }

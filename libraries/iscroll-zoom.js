@@ -1764,7 +1764,6 @@ IScroll.prototype = {
 			case 'MSPointerDown':
 			case 'mousedown':
 				this._start(e);
-				console.log(this.options.zoom);
 				if ( this.options.zoom && e.touches && e.touches.length > 1 ) {
 					this._zoomStart(e);
 				}
@@ -1808,7 +1807,7 @@ IScroll.prototype = {
 			case 'mousewheel':
 				if ( this.options.wheelAction == 'zoom' ) {
 					this._wheelZoom(e);
-					return;	
+					return;
 				}
 				this._wheel(e);
 				break;

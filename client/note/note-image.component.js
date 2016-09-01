@@ -11,6 +11,7 @@ require('./note-image.component.scss');
 var FontAwesome = require('react-fontawesome');
 let ServerSetting = require('./../../setting/server.json');
 import { NOTETYPE, AMOUNTTYPE, PICKUPTIME } from './../utils/enum';
+import { checkValidImageFile } from './../utils/validation';
 import { uploadImage } from './../utils/upload';
 import { localization } from './../utils/localization';
 import { displaySuccessMessage, displayFailMessage } from './../message/popup.component';
@@ -111,25 +112,37 @@ export default class NoteImage extends React.Component {
     if (this.state.uploading) {
       imageUpload = <div className="loading-text">{localization(23)}</div>;
     } else if (this.props.editing) {
-      imageUpload = <input className="image-upload" type="file" accept="image/*" capture="camera" onChange={(event)=> {
+      imageUpload = <input id="image-upload" className="image-upload" type="file" accept="image/jpeg" capture="camera" onChange={(event)=> {
         if (event.target.files[0] != null) {
-          this.setState({uploading: true});
-          uploadImage(event.target.files[0], ServerSetting.sNoteImagePrefix + TreeStore.getState().selected, function(filename, datetime) {  // Resolve
-            if (__DEV__)
-              console.log(`Image file uploaded: ${filename}`);
-            if (datetime) {
-              let date = moment(datetime, ServerSetting.sEXIFDateFormat);
-              if (date.isValid()) {
-                this.props.note.date = date;
-                NoteActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
-                displaySuccessMessage(localization(674) + " <strong>" + date.format(ServerSetting.sUIDateFormat) + "</stong>");
+          let error = null;
+          try {
+            checkValidImageFile(event.target.files[0].name);
+            this.setState({uploading: true});
+            uploadImage(event.target.files[0], ServerSetting.sNoteImagePrefix + TreeStore.getState().selected, function(filename, datetime) {  // Resolve
+              if (__DEV__)
+                console.log(`Image file uploaded: ${filename}`);
+              if (datetime) {
+                let date = moment(datetime, ServerSetting.sEXIFDateFormat);
+                if (date.isValid()) {
+                  this.props.note.date = date;
+                  NoteActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
+                  displaySuccessMessage(localization(674) + " <strong>" + date.format(ServerSetting.sUIDateFormat) + "</stong>");
+                }
               }
-            }
-            this.props.note.addImage(filename);
+              this.props.note.addImage(filename);
+              this.setState({uploading: false});
+            }.bind(this), function(response) { // Reject.
+              displayFailMessage(localization(response));
+            }.bind(this));
+          } catch(e) {
+            document.getElementById("image-upload").value = "";
             this.setState({uploading: false});
-          }.bind(this), function(response) { // Reject.
-            displayFailMessage(localization(response));
-          }.bind(this));
+            displayFailMessage(localization(e.message));
+            if (__DEV__) {
+              console.error(localization(e.message));
+            }
+            error = e.message;
+          }
         }
       }} />
     }

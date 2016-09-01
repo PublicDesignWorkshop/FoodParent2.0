@@ -17,7 +17,7 @@
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-          
+
   font-family: $font-narrow;
   width: 100%;
   padding: 1px 6px;
@@ -26,5 +26,8 @@
   cursor: text;
   overflow: hidden;
   min-height: 24px;
-  margin: auto;
+  margin: 12px 0;
+  @include respond-to(handhelds) {
+    margin: auto;
+  }
 }

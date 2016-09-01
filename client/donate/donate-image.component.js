@@ -18,6 +18,7 @@ let DonateStore = require('./../stores/donate.store');
 let LocationStore = require('./../stores/location.store');
 let DonateActions = require('./../actions/donate.actions');
 import ImageZoom from './../image/image-zoom.component';
+import { checkValidImageFile } from './../utils/validation';
 
 
 export default class DonateImage extends React.Component {
@@ -124,26 +125,38 @@ export default class DonateImage extends React.Component {
     }
     let imageUpload;
     if (this.props.editing) {
-      imageUpload = <input className="image-upload" type="file" accept="image/*" capture="camera" onChange={(event)=> {
+      imageUpload = <input id="image-upload" className="image-upload" type="file" accept="image/jpeg" capture="camera" onChange={(event)=> {
         if (event.target.files[0] != null) {
-          this.setState({uploading: true});
-          // Donate image has a prefix to distinguish from note images.
-          uploadImage(event.target.files[0], ServerSetting.sDonateImagePrefix + LocationStore.getState().selected, function(filename, datetime) {  // Resolve
-            if (__DEV__)
-              console.log(`Image file uploaded: ${filename}`);
-            if (datetime) {
-              let date = moment(datetime, ServerSetting.sEXIFDateFormat);
-              if (date.isValid()) {
-                this.props.donate.date = date;
-                DonateActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
-                displaySuccessMessage(localization(674) + " <strong>" + date.format(ServerSetting.sUIDateFormat) + "</stong>");
+          let error = null;
+          try {
+            checkValidImageFile(event.target.files[0].name);
+            this.setState({uploading: true});
+            // Donate image has a prefix to distinguish from note images.
+            uploadImage(event.target.files[0], ServerSetting.sDonateImagePrefix + LocationStore.getState().selected, function(filename, datetime) {  // Resolve
+              if (__DEV__)
+                console.log(`Image file uploaded: ${filename}`);
+              if (datetime) {
+                let date = moment(datetime, ServerSetting.sEXIFDateFormat);
+                if (date.isValid()) {
+                  this.props.donate.date = date;
+                  DonateActions.setCode(94);  // Unsaved change code (see errorlist.xlsx for more detail).
+                  displaySuccessMessage(localization(674) + " <strong>" + date.format(ServerSetting.sUIDateFormat) + "</stong>");
+                }
               }
-            }
-            this.props.donate.addImage(filename);
+              this.props.donate.addImage(filename);
+              this.setState({uploading: false});
+            }.bind(this), function(response) { // Reject.
+              displayFailMessage(localization(response));
+            }.bind(this));
+          } catch(e) {
             this.setState({uploading: false});
-          }.bind(this), function(response) { // Reject.
-            displayFailMessage(localization(response));
-          }.bind(this));
+            document.getElementById("image-upload").value = "";
+            displayFailMessage(localization(e.message));
+            if (__DEV__) {
+              console.error(localization(e.message));
+            }
+            error = e.message;
+          }
         }
       }} />
     }
