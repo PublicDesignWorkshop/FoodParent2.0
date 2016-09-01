@@ -13,6 +13,7 @@ let TreeStore = require('./../stores/tree.store');
 let NoteStore = require('./../stores/note.store');
 let DonateStore = require('./../stores/donate.store');
 let FoodStore = require('./../stores/food.store');
+let PersonStore = require('./../stores/person.store');
 
 
 import TreeControl from './tree-control.component';
@@ -24,6 +25,7 @@ import TreeRecentPost from './../tree/tree-recent-post.component';
 // import TreeRecentPickup from './../tree/tree-recent-pickup.component';
 import TreeRecentDonate from './../tree/tree-recent-donate.component';
 import TreeParentSummary from './../tree/tree-parent-summary.component';
+import TreeParentDetail from './../tree/tree-parent-detail.component';
 import TreeAdopt from './../tree/tree-adopt.component';
 
 export default class TreePanel extends React.Component {
@@ -133,6 +135,24 @@ export default class TreePanel extends React.Component {
           Info
         </span>
       </div>;
+      // Parents info
+      let parentinfo;
+      if (AuthStore.getState().auth.isManager()) {
+        parentinfo = <AltContainer stores={
+          {
+            parents: function(props) {
+              return {
+                store: PersonStore,
+                value: PersonStore.getState().persons
+              }
+            }
+          }
+        }>
+          <TreeParentDetail />
+        </AltContainer>;
+      } else {
+        parentinfo = <TreeParentSummary />;
+      }
       // Body
       body = <div className="body-scroll">
         <AltContainer stores={
@@ -177,7 +197,7 @@ export default class TreePanel extends React.Component {
             FoodStore: FoodStore,
           }
         }>
-          <TreeParentSummary />
+          {parentinfo}
           <TreeAdopt />
         </AltContainer>
       </div>;

@@ -24,10 +24,9 @@
 		$newHeight = intval($newWidth * $origHeight / $origWidth);
 		$thumbWidth = 320;
 		$thumbHeight = intval($thumbWidth * $origHeight / $origWidth);
-		// Load
-		$thumb = imagecreatetruecolor($thumbWidth, $thumbHeight);
-		$dest = imagecreatetruecolor($newWidth, $newHeight);
+
 		$source = imagecreatefromjpeg($_FILES['file']['tmp_name']);
+
 		// Orientation
 		try {
 			$exif = @exif_read_data($_FILES['file']['tmp_name']);
@@ -42,12 +41,29 @@
 					break;
 				case 6:
 					$source = imagerotate($source, -90, 0);
+					$temp = $thumbHeight;
+					$thumbHeight = $thumbWidth;
+					$thumbWidth = $temp;
+					$temp = $origHeight;
+					$origHeight = $origWidth;
+					$origWidth = $temp;
 					break;
 				case 8:
 					$source = imagerotate($source, 90, 0);
+					$temp = $thumbHeight;
+					$thumbHeight = $thumbWidth;
+					$thumbWidth = $temp;
+					$temp = $origHeight;
+					$origHeight = $origWidth;
+					$origWidth = $temp;
 					break;
 				}
 		}
+
+		// Load
+		$thumb = imagecreatetruecolor($thumbWidth, $thumbHeight);
+		$dest = imagecreatetruecolor($newWidth, $newHeight);
+
 		// Resize
 		// imagecopyresized($dest, $source, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
 		imagecopyresized($thumb, $source, 0, 0, 0, 0, $thumbWidth, $thumbHeight, $origWidth, $origHeight);

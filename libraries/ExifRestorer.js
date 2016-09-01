@@ -3,9 +3,9 @@
 
 var ExifRestorer = (function()
 {
-   
+
 	var ExifRestorer = {};
-	 
+
     ExifRestorer.KEY_STR = "ABCDEFGHIJKLMNOP" +
                          "QRSTUVWXYZabcdef" +
                          "ghijklmnopqrstuv" +
@@ -46,28 +46,28 @@ var ExifRestorer = (function()
 
         return output;
     };
-    
+
     ExifRestorer.restore = function(origFileBase64, resizedFileBase64)
-    {    	
+    {
         if (!origFileBase64.match("data:image/jpeg;base64,"))
         {
         	return resizedFileBase64;
-        }       
-        
+        }
+
         var rawImage = this.decode64(origFileBase64.replace("data:image/jpeg;base64,", ""));
         var segments = this.slice2Segments(rawImage);
-                
+
         var image = this.exifManipulation(resizedFileBase64, segments);
-        
+
         return this.encode64(image);
-        
+
     };
 
 
     ExifRestorer.exifManipulation = function(resizedFileBase64, segments)
     {
-            var exifArray = this.getExifArray(segments),
-                newImageArray = this.insertExif(resizedFileBase64, exifArray),
+            var exifArray = this.getExifArray(segments);
+            var newImageArray = this.insertExif(resizedFileBase64, exifArray),
                 aBuffer = new Uint8Array(newImageArray);
 
             return aBuffer;
@@ -104,7 +104,7 @@ var ExifRestorer = (function()
     };
 
 
-    
+
     ExifRestorer.slice2Segments = function(rawImageArray)
     {
         var head = 0,
@@ -132,8 +132,8 @@ var ExifRestorer = (function()
     };
 
 
-    
-    ExifRestorer.decode64 = function(input) 
+
+    ExifRestorer.decode64 = function(input)
     {
         var output = "",
             chr1, chr2, chr3 = "",
@@ -177,6 +177,6 @@ var ExifRestorer = (function()
         return buf;
     };
 
-    
+
     return ExifRestorer;
 })();

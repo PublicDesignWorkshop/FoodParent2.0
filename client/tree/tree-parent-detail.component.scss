@@ -1,0 +1,45 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.tree-parent-detail-wrapper {
+  padding: 4px 16px;
+  font-family: $font-main;
+  color: $brown;
+  font-size: $font-size-medium;
+
+
+
+  > .tree-parent-detail-label {
+    font-weight: 700;
+    margin: 4px 0;
+    .fa.fa-users {
+      margin-left: 1px;
+      margin-right: 3px;
+    }
+
+    .total-parent-icon {
+      display: inline-block;
+      padding: 2px 4px;
+      background-color: $brown;
+      border-radius: 4px;
+      color: $white;
+      font-weight: 700;
+      font-size: $font-size-small;
+    }
+  }
+
+  > .tree-parent-detail-data {
+    width: 100%;
+    display: -webkit-box;           /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;              /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;           /* TWEENER - IE 10 */
+    display: -webkit-flex;          /* NEW - Chrome */
+    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+    margin: 4px 0;
+
+    > .tree-parent-detail-text {
+      margin: 0 0 0 20px;
+    }
+  }
+}

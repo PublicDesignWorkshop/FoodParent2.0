@@ -40,6 +40,10 @@ html, body, #app {
   overflow: hidden;
 }
 
+img {
+  image-orientation: from-image;
+}
+
 /* Scroll bar style */
 ::-webkit-scrollbar {
   width: 4px;

@@ -38,7 +38,7 @@ export default class NoteImage extends React.Component {
   updatePros(props) {
     let rWrapper = ReactDOM.findDOMNode(this.refs['wrapper']);
     if (rWrapper) {
-      this.setState({width: rWrapper.clientWidth, height: Math.floor(rWrapper.clientWidth * 9 / 16)});
+      this.setState({width: rWrapper.clientWidth, height: Math.floor(rWrapper.clientWidth * 10 / 16)});
     }
     if (props.editing) {
       this.handlePause();

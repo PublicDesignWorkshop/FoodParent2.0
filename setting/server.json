@@ -17,7 +17,7 @@
   "sEXIFDateFormat": "YYYY-MM-DD HH-mm-ss",
   "sUIDateFormat": "MM/DD/YY",
 
-  "iGallerySlideInterval": 1000,
+  "iGallerySlideInterval": 10000,
   "iSuccessMessageDiplayTimeout": 2500,
   "iFailMessageDiplayTimeout": 7500,
   "iSplashDisplayTimeout": 500,

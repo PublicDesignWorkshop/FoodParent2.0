@@ -186,7 +186,7 @@ export function uploadImage(file, prefix, resolve, reject) {
           maxWidth: 1600,
           maxHeight: 900,
           canvas: true,
-          orientation: orientation,
+          // orientation: orientation,
         }
       );
     },
