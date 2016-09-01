@@ -74,6 +74,28 @@ class PersonActions {
       dispatch(props);
     }
   }
+  updatePerson(person) {
+    return (dispatch) => {
+      // we dispatch an event here so we can have "loading" state.
+      dispatch();
+      this.setCode(92);
+      PersonSource.updatePerson(person).then((response) => {
+        displaySuccessMessage(localization(20));
+        this.updatedPerson(response);
+      }).catch((code) => {
+        displayFailMessage(localization(code));
+        if (__DEV__) {
+          console.error(localization(code));
+        }
+        this.setCode(code);
+      });
+    }
+  }
+  updatedPerson(props) {
+    return (dispatch) => {
+      dispatch(props);
+    }
+  }
 }
 
 module.exports = alt.createActions(PersonActions);

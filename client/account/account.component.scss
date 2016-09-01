@@ -81,10 +81,15 @@
         }
 
         > .icon-text {
+          -webkit-user-select: none;
+             -moz-user-select: none;
+              -ms-user-select: none;
+                  user-select: none;
+                  
           display: inline-block;
           font-family: $font-narrow;
           font-size: $font-size-small;
-          margin: 0 4px 0 8px;
+          margin: 2px 4px 0 8px;
           font-weight: 700;
           vertical-align: top;
           text-transform: uppercase;

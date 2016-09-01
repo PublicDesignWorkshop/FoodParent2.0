@@ -49,6 +49,7 @@ export default class ParentInfo extends React.Component {
         <div className="solid-button-group">
           <div className="solid-button solid-button-green" onClick={() => {
             this.setState({editing: false});
+            PersonActions.updatePerson(PersonStore.getState().temp);
           }}>
             {localization(930) /* SAVE */}
           </div>

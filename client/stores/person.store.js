@@ -96,6 +96,7 @@ class PersonStore {
       handleFetchedPersons: PersonActions.FETCHED_PERSONS,
       handleCreateTempPerson: PersonActions.CREATE_TEMP_PERSON,
       handleCreatedPerson: PersonActions.CREATED_PERSON,
+      handleUpdatedPerson: PersonActions.UPDATED_PERSON,
       handleSetCode: PersonActions.SET_CODE,
     });
     // Expose public methods.
@@ -146,6 +147,15 @@ class PersonStore {
         browserHistory.replace({pathname: ServerSetting.uBase + '/tree/' + props.selected});
       }
     }.bind(this), 0);
+    this.code = 200;
+  }
+  handleUpdatedPerson(props) {
+    let persons = this.persons.filter(person => person.id == parseInt(props.id));
+    if (persons.length == 1) {
+      persons[0].update(props);
+      this.temp = new PersonModel(persons[0].toJSON());
+      this.temp.editing = false;
+    }
     this.code = 200;
   }
 }

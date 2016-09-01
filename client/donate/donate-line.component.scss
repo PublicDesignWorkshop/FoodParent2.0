@@ -83,8 +83,6 @@
   }
 
   &.donate-line-brown {
-    word-wrap: break-word;
-    word-break: break-all;
     color: $brown;
     &:hover {
       @include respond-to(handhelds) {

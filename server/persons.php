@@ -57,7 +57,7 @@
       if ($params["ids"] == "") {
         $params["ids"] = "-1";
       }
-      $sql = "SELECT `id`, `auth`, `name`, `contact`, `neighborhood`, `updated` FROM `person` WHERE (`id` IN (" . $params["ids"] . ") AND `active` = 1)";
+      $sql = "SELECT `id`, `auth`, `name`, `contact`, `neighborhood`, `updated` FROM `person` WHERE (`id` IN (" . $params["ids"] . ") AND `active` = 1) ORDER BY `name` ASC ";
       try {
         $pdo = getConnection();
         $stmt = $pdo->prepare($sql);
