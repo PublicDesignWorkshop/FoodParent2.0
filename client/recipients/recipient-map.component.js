@@ -4,11 +4,13 @@ import AltContainer from 'alt-container';
 require('./recipient-map.component.scss');
 
 let MapStore = require('./../stores/map.store');
+let AuthStore = require('./../stores/auth.store');
 let LocationStore = require('./../stores/location.store');
 let TreeActions = require('./../actions/tree.actions');
 let FoodActions = require('./../actions/food.actions');
 let TreeStore = require('./../stores/tree.store');
 let LocationActions = require('./../actions/location.actions');
+let ServerSetting = require('./../../setting/server.json');
 
 
 import MapRecipient from './../maps/map-recipient.component';
@@ -20,6 +22,10 @@ export default class RecipientMap extends React.Component {
     super(props, context);
   }
   componentWillMount() {
+    if (!AuthStore.getState().auth.isManager()) {
+      this.context.router.replace({pathname: ServerSetting.uBase + '/'});
+      return;
+    }
     TreeActions.reset();
     this.updateProps(this.props);
   }
@@ -34,6 +40,9 @@ export default class RecipientMap extends React.Component {
     // TreeActions.setSelected.defer(parseInt(props.params.treeId));
   }
   render () {
+    if (!this.state) {
+      return <div></div>;
+    }
     return (
       <div className="recipient-map-wrapper">
         <AltContainer stores={
@@ -64,4 +73,7 @@ export default class RecipientMap extends React.Component {
       </div>
     );
   }
+}
+RecipientMap.contextTypes = {
+    router: React.PropTypes.object.isRequired
 }

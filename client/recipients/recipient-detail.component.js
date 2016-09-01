@@ -10,6 +10,9 @@ let LocationStore = require('./../stores/location.store');
 let DonateStore = require('./../stores/donate.store');
 let LocationActions = require('./../actions/location.actions');
 let DonateActions = require('./../actions/donate.actions');
+let AuthStore = require('./../stores/auth.store');
+let ServerSetting = require('./../../setting/server.json');
+
 
 import { DONATIONDETAILMODE } from './../utils/enum';
 import { localization } from './../utils/localization';
@@ -23,6 +26,10 @@ export default class RecipientDetail extends React.Component {
     this.updateNoteStore = this.updateNoteStore.bind(this);
   }
   componentWillMount() {
+    if (!AuthStore.getState().auth.isManager()) {
+      this.context.router.replace({pathname: ServerSetting.uBase + '/'});
+      return;
+    }
     TreeActions.reset();
     this.updateProps(this.props);
   }
@@ -72,6 +79,9 @@ export default class RecipientDetail extends React.Component {
   }
   render () {
     let action;
+    if (!this.state) {
+      return <div></div>;
+    }
     if (this.state.remove) {
       action = <div className="popup-wrapper popup-red open">
         <div className="popup-message">

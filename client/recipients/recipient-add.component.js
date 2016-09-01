@@ -11,6 +11,7 @@ import { DONATIONADDMODE } from './../utils/enum';
 let MapStore = require('./../stores/map.store');
 let LocationStore = require('./../stores/location.store');
 let LocationActions = require('./../actions/location.actions');
+let AuthStore = require('./../stores/auth.store');
 
 
 export default class RecipientAdd extends React.Component {
@@ -18,8 +19,13 @@ export default class RecipientAdd extends React.Component {
     super();
   }
   componentWillMount() {
+    if (!AuthStore.getState().auth.isManager()) {
+      this.context.router.replace({pathname: ServerSetting.uBase + '/'});
+      return;
+    }
     LocationActions.fetchLocations(0);
     this.updateProps(this.props);
+
   }
   componentDidMount () {
 
@@ -48,6 +54,9 @@ export default class RecipientAdd extends React.Component {
     this.setState({mode: mode, open: open});
   }
   render () {
+    if (!this.state) {
+      return <div></div>;
+    }
     let action = <div className="popup-message">
       <span dangerouslySetInnerHTML={{__html: localization(662)}} />
       <span className="popup-button" onClick={()=> {
