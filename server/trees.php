@@ -6,42 +6,9 @@
   include_once 'functions.php';
 
   switch($_SERVER['REQUEST_METHOD']){
-    case 'POST':
-      //update();
-      break;
     case 'GET':
-      // readAll();
       read();
       break;
-    case 'PUT':
-      //update();
-      break;
-    case 'DELETE':
-      //delete();
-      break;
-  }
-
-  function readAll() {
-    sec_session_continue(); // Our custom secure way of starting a PHP session.
-    $sql = "SELECT * FROM `tree` ";
-    try {
-      $pdo = getConnection();
-      $stmt = $pdo->prepare($sql);
-      $stmt->execute();
-      $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-      $pdo = null;
-      $params = array(
-        "code" => 200,
-        "trees" => $result,
-      );
-      echo json_encode($params);
-    } catch(PDOException $e) {
-      $json = array(
-        "code" => $e->getCode(),
-        "message" => $e->getMessage(),
-      );
-      echo json_encode($json);
-    }
   }
 
   function read() {
@@ -156,7 +123,9 @@
       $sql .= "OR `id` IN (" . $_SESSION['temp_trees'] . ") ";
     }
     if ($check) {
-      $sql .= "OR `id` = -1";
+      $sql .= "OR `id` = -1 ";
+    } else {
+      $sql .= "AND `id` != -1 ";
     }
 
     try {

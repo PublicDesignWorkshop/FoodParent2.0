@@ -52,6 +52,8 @@ export default class Search extends React.Component {
           if (MapStore.getState().latestMapType == MAPTYPE.TREE) {
             MapActions.moveToLocationWithMarker(MapSetting.sMapId, new L.LatLng(lat, lng), MapSetting.iFocusZoom);
           }
+        } else if (searchText.toUpperCase().indexOf("DOGHEAD") > -1 || searchText.toUpperCase().indexOf("DOGHEAD FARM") > -1) {
+          this.context.router.push({pathname: ServerSetting.uBase + '/tree/-1'});
         } else {
           // Pure string value -> search via Google Geolocation API.
           let location;
