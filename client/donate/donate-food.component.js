@@ -73,7 +73,11 @@ export default class DonateFood extends React.Component {
     let food = FoodStore.getFood(option.value);
     let icon;
     if (food) {
-      icon = ServerSetting.uBase + ServerSetting.uStaticImage + food.icon;
+      if (food.icon == "") {
+        icon = ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uFarmMarkerIcon;
+      } else {
+        icon = ServerSetting.uBase + ServerSetting.uStaticImage + food.icon;
+      }
     } else {
       icon = ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon;
     }
