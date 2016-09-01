@@ -55,7 +55,7 @@ export default class TreeRecentPost extends React.Component {
     return (
       <div className="tree-recent-post-wrapper">
         <div className="tree-recent-post-label">
-          <FontAwesome className='' name='sticky-note' />{localization(62)}
+          <FontAwesome className='' name='pencil-square' />{localization(62)}
         </div>
         <div className="tree-recent-post-data">
           <div className="tree-recent-post-text">

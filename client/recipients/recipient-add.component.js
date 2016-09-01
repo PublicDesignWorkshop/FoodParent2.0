@@ -54,7 +54,7 @@ export default class RecipientAdd extends React.Component {
     this.setState({mode: mode, open: open});
   }
   render () {
-    if (!this.state) {
+    if (!AuthStore.getState().auth.isManager()) {
       return <div></div>;
     }
     let action = <div className="popup-message">

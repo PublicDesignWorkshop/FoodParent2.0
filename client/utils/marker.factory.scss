@@ -95,14 +95,18 @@
 // }
 
 .marker-name {
-  padding: 8px 8px 8px 8px;
+  width: 100%;
+  text-align: center;
+  padding: 8px 8px;
 }
 .marker-left {
+  display: none;
   padding: 8px 4px 8px 4px;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
 }
 .marker-right {
+  display: none;
   padding: 8px 4px 6px 4px;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;

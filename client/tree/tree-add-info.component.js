@@ -69,7 +69,6 @@ export default class TreeAddInfo extends React.Component {
           <TreeLocation editing={true} />
           <TreeAddress editing={true} />
           <TreeDescription editing={true} />
-          <TreeFlag editing={true} />
           <TreeOwnership editing={true} />
         </AltContainer>
         {actions}

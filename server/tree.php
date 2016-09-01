@@ -46,6 +46,9 @@
     $sql = "SELECT * FROM `tree` WHERE (`id` = :id)";
     $sql .= "AND `public` IN (".$public.") ";
     $sql .= "AND `dead` IN (".$dead.") ";
+    if (isset($_SESSION['temp_trees']) && $_SESSION['temp_trees'] != null) {
+      $sql .= "OR `id` IN (" . $_SESSION['temp_trees'] . ") ";
+    }
 
     try {
       $pdo = getConnection();

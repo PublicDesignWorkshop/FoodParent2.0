@@ -151,7 +151,7 @@
         $sql .= "AND SUBSTRING_INDEX(`rate`, ',', " . $i . ") IN (" . $_SESSION['rates'] . ") ";
       }
     }
-
+    // show recently added tree always without being affected by filtering.
     if (isset($_SESSION['temp_trees']) && $_SESSION['temp_trees'] != null) {
       $sql .= "OR `id` IN (" . $_SESSION['temp_trees'] . ") ";
     }

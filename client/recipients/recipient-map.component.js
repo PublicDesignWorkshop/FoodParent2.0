@@ -40,7 +40,7 @@ export default class RecipientMap extends React.Component {
     // TreeActions.setSelected.defer(parseInt(props.params.treeId));
   }
   render () {
-    if (!this.state) {
+    if (!AuthStore.getState().auth.isManager()) {
       return <div></div>;
     }
     return (

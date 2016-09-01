@@ -78,10 +78,10 @@ export default class RecipientDetail extends React.Component {
     this.setState({mode: mode, remove: remove});
   }
   render () {
-    let action;
-    if (!this.state) {
+    if (!AuthStore.getState().auth.isManager()) {
       return <div></div>;
     }
+    let action;
     if (this.state.remove) {
       action = <div className="popup-wrapper popup-red open">
         <div className="popup-message">
