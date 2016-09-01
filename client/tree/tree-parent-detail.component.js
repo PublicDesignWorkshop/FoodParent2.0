@@ -35,22 +35,20 @@ export default class TreeParentDetail extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
-    if (props.tree) {
-      let parents = this.props.tree.getParents();
-      if (parents) {
-        PersonActions.fetchPersons(parents);
-      }
-    }
-
   }
   render () {
     let total;
-    if (this.props.tree) {
-      let parents = this.props.tree.getParents();
-      if (parents) {
-        total = <span className="total-parent-icon">{parents.length}</span>;
-      }
+    let parents = [];
+    if (this.props.persons) {
+      this.props.persons.forEach((person) => {
+        if (person.name.trim() != "") {
+          parents.push(<div className="tree-parent-detail-text" key={"parent" + person.id}>{person.name + " (" + person.contact + ")"}</div>);
+        } else {
+          parents.push(<div className="tree-parent-detail-text" key={"parent" + person.id}>{person.contact}</div>);
+        }
+      });
     }
+    total = <span className="total-parent-icon">{parents.length}</span>;
 
     return (
       <div className="tree-parent-detail-wrapper">
@@ -58,7 +56,7 @@ export default class TreeParentDetail extends React.Component {
           <FontAwesome className='' name='users' />{localization(984)} {total}
         </div>
         <div className="tree-parent-detail-data">
-
+          {parents}
         </div>
       </div>
     );

@@ -8,6 +8,7 @@ require('./tree-panel.component.scss');
 var FontAwesome = require('react-fontawesome');
 import { TREEDETAILMODE } from './../utils/enum';
 let TreeActions = require('./../actions/tree.actions');
+let PersonActions = require('./../actions/person.actions');
 let AuthStore = require('./../stores/auth.store');
 let TreeStore = require('./../stores/tree.store');
 let NoteStore = require('./../stores/note.store');
@@ -51,6 +52,15 @@ export default class TreePanel extends React.Component {
   }
   updateProps(props) {
     this.setState({open: props.open});
+    let tree = TreeStore.getState().temp;
+    if (AuthStore.getState().auth.isManager() && tree) {
+      let parents = tree.getParents();
+      if (parents) {
+        setTimeout(function() {
+          PersonActions.fetchPersons(parents);
+        }, 0);
+      }
+    }
   }
   render () {
     let open = "";
@@ -140,7 +150,13 @@ export default class TreePanel extends React.Component {
       if (AuthStore.getState().auth.isManager()) {
         parentinfo = <AltContainer stores={
           {
-            parents: function(props) {
+            tree: function(props) {
+              return {
+                store: TreeStore,
+                value: TreeStore.getState().temp
+              }
+            },
+            persons: function(props) {
               return {
                 store: PersonStore,
                 value: PersonStore.getState().persons
