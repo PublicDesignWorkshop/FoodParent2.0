@@ -13,6 +13,7 @@ import { MAPTYPE, AUTHTYPE } from './../utils/enum';
 let MapStore = require('./../stores/map.store');
 let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
+let LocationStore = require('./../stores/location.store');
 
 
 
@@ -45,7 +46,11 @@ export default class Account extends React.Component {
         }
         // this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
       } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
-        // this.context.router.push({pathname: ServerSetting.uBase + "/donations"});
+        if (LocationStore.getState().selected > 0) {
+          this.context.router.push({pathname: ServerSetting.uBase + '/recipient/' + LocationStore.getState().selected});
+        } else {
+          this.context.router.push({pathname: ServerSetting.uBase + '/recipients'});
+        }
       }
     }}>
       <FontAwesome className="icon" name='close' />

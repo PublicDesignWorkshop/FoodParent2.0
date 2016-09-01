@@ -122,17 +122,18 @@ export default class TreeFood extends React.Component {
         if (!this.props.tree.ownership) {
           ownership = <span className="tree-ownership-static">{"(" + localization(974) + ")"}</span>;
         }
-        let food = FoodStore.getFood(this.props.tree.food);
-        if (food) {
-          icon = ServerSetting.uBase + ServerSetting.uStaticImage + food.icon;
-          if (this.props.tree.id == 0) {  //  == 0: new tree.
-            name = food.name;
-          } else {
-            name = food.name + this.props.tree.getName();
-          }
+        if (this.props.tree.id == -1) {  // Doghead farm.
+          name = localization(48);
+          icon = ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uFarmMarkerIcon;
         } else {
-          if (parseInt(this.props.tree.food) == -1) {
-            icon = ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uFarmMarkerIcon;
+          let food = FoodStore.getFood(this.props.tree.food);
+          if (food) {
+            icon = ServerSetting.uBase + ServerSetting.uStaticImage + food.icon;
+            if (this.props.tree.id == 0) {  //  == 0: new tree.
+              name = food.name;
+            } else {
+              name = food.name + this.props.tree.getName();
+            }
           } else {
             icon = ServerSetting.uBase + ServerSetting.uStaticImage + MapSetting.uTemporaryMarkerIcon;
           }
