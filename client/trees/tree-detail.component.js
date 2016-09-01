@@ -63,13 +63,19 @@ export default class TreeDetail extends React.Component {
       case "delete":
         remove = true;
         mode = TREEDETAILMODE.INFO;
+        let tree = TreeStore.getState().temp;
+        if (AuthStore.getState().auth.isManager() && tree) {
+          let parents = tree.getParents();
+          if (parents) {
+            PersonActions.fetchPersons.defer(parents);
+          }
+        }
         break;
       default:
         mode = TREEDETAILMODE.INFO;
         break;
     }
     this.setState({mode: mode, remove: remove});
-    // TreeActions.setSelected(parseInt(props.params.treeId));
   }
   render () {
     let action;

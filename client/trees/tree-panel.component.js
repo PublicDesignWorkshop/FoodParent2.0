@@ -52,15 +52,6 @@ export default class TreePanel extends React.Component {
   }
   updateProps(props) {
     this.setState({open: props.open});
-    let tree = TreeStore.getState().temp;
-    if (AuthStore.getState().auth.isManager() && tree) {
-      let parents = tree.getParents();
-      if (parents) {
-        setTimeout(function() {
-          PersonActions.fetchPersons(parents);
-        }, 0);
-      }
-    }
   }
   render () {
     let open = "";
