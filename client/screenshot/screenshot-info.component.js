@@ -44,10 +44,12 @@ export default class ScreenshotInfo extends React.Component {
     return (
       <div className="screenshot-info-wrapper">
         <div className="screenshot-info-message">
-          <img src={ServerSetting.uBase + ServerSetting.uStaticImage + "splash.png"} />
+          <img src={ServerSetting.uBase + ServerSetting.uStaticImage + "logo-concretejungle.png"} />
           <span>{this.state.address}</span>
         </div>
       </div>
     )
   }
 }
+
+// <img src={ServerSetting.uBase + ServerSetting.uStaticImage + "splash.png"} />

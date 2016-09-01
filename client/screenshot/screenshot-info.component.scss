@@ -28,14 +28,15 @@
 
   > .screenshot-info-message {
     font-family: $font-narrow;
-    margin: auto;
+    margin: auto 0;
     font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-align: left;
 
     > img {
-      height: 20px;
+      height: 34px;
       width: auto;
       vertical-align: middle;
     }
