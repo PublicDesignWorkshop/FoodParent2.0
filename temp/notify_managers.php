@@ -77,7 +77,6 @@
       } else {
         foreach ($result as $item) {
           // $text .= round(floatval($item['amount']) * $gtolib, 3) . " lbs. of " . $item['name'] . " was picked up on " . $item['date'] . " from #" . $item['id'] .= " - " . $treesurl . $item['id'] . "?mode=graph\n";
-
           $html .= "<div style='font-family:sans-serif;margin-bottom:8px;'>" . round(floatval($item['amount']) * $gtolib, 3) . " lbs. of " . $item['name'] . " was picked up on " . $item['date'] . " from #" . $item['id'] .= " - <a href='" . $treesurl . $item['id'] . "?mode=graph'>Check out #" . $item['id'] . "</a></div><img style='max-width: 100%; height:auto;' src='" . $baseurl . "dist/map/" . $item['id'] . "_map.png'><br/><hr />";
         }
         // Send message.
@@ -96,7 +95,6 @@
                                                   // 'text'    => "FoodParent " . date("F j, Y") . " Report\n\n" . $text,
                                                 ));
         }
-
         $params = array(
           "code" => 200,
         );

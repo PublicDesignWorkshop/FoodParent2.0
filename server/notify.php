@@ -77,7 +77,7 @@
     // $sql .= "WHERE tree.public = 1 AND note.type = 3 AND ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) >= 335 AND tree.id IN (" . $_POST['treeIds'] . ") ";
     // $sql .= "GROUP BY tree.id ORDER BY ABS(MOD(datediff(CURRENT_DATE, note.date), 365)) DESC";
 
-    $sql = "SELECT tree.id, food.name, donate.date, donate.amount, donate.tree FROM donate INNER JOIN tree on FIND_IN_SET(tree.id, donate.tree) INNER JOIN food on tree.food = food.id WHERE `public` = 1 AND ABS(MOD(datediff(CURRENT_DATE, donate.date), 365)) >= 335  AND tree.id IN (" . $_POST['treeIds'] . ") GROUP BY tree.id ORDER BY ABS(MOD(datediff(CURRENT_DATE, donate.date), 365)) DESC";
+    $sql = "SELECT tree.id, tree.parent, food.name, donate.date, donate.amount, donate.tree FROM donate INNER JOIN tree on FIND_IN_SET(tree.id, donate.tree) INNER JOIN food on tree.food = food.id WHERE `public` = 1 AND ABS(MOD(datediff(CURRENT_DATE, donate.date), 365)) >= 335  AND tree.id IN (" . $_POST['treeIds'] . ") GROUP BY tree.id ORDER BY ABS(MOD(datediff(CURRENT_DATE, donate.date), 365)) DESC";
 
     try {
       $pdo = getConnection();
@@ -102,7 +102,7 @@
           if (in_array($uparent, $parents)) {
             // $text .= "Please update " . $item['name'] . " #" . $item['id'] .= " - " . $treesurl . $item['id'] . "\n";
 
-            $html .= "<div style='font-family:sans-serif;margin-bottom:8px;'>Please update " . $item['name'] . " #" . $item['id'] .= " - <a href='" . $treesurl . $item['id'] . "'>Post a new note for " . $item['name'] . " #" . $item['id'] . "</a></div><img style='max-width: 100%; height:auto;' src='" . $baseurl . "dist/map/" . $item['id'] . "_map.png'><br/><hr />";
+            $html .= "<div style='font-family:sans-serif;margin-bottom:8px;'>Please update " . $item['name'] . " #" . $item['id'] .= " - <a href='" . $treesurl . $item['id'] . "'>Post a new note for " . $item['name'] . " #" . $item['id'] . "</a></div><img style='max-width: 100%; height:auto;' src='" . $baseurl . "content/maps/" . $item['id'] . "_map.jpg'><br/><hr />";
           }
         }
 
