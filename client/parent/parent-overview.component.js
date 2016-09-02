@@ -28,8 +28,12 @@ export default class ParentOverview extends React.Component {
     super(props, context);
   }
   componentWillMount() {
-    NoteActions.fetchNotesFromParentContact.defer(AuthStore.getState().auth.contact);
-    TreeActions.fetchTreesFromContact.defer(AuthStore.getState().auth.id);
+    setTimeout(function() {
+      NoteActions.fetchNotesFromParentContact.defer(AuthStore.getState().auth.contact);
+    }, 100);
+    setTimeout(function() {
+      TreeActions.fetchTreesFromContact.defer(AuthStore.getState().auth.id);
+    }, 200);
     this.setState({editing: false});
   }
   componentDidMount () {

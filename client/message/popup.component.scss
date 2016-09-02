@@ -8,7 +8,15 @@
   display: -webkit-flex;          /* NEW - Chrome */
   display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
 
-  position: fixed;
+  position: absolute;
+  // @include respond-to(handhelds) {
+  //   position: absolute;
+  // }
+  // @include respond-to(wide-screens) {
+  //   position: absolute;
+  // }
+
+
   bottom: -2px;
   left: 0;
   width: 100%;

@@ -50,21 +50,27 @@ export default class TreeAdd extends React.Component {
     // TreeActions.setSelected(parseInt(props.params.treeId));
   }
   render () {
-    let action = <div className="popup-message">
-      <span dangerouslySetInnerHTML={{__html: localization(640)}} />
-      <span className="popup-button" onClick={()=> {
-        this.context.router.push({pathname: ServerSetting.uBase + '/addtree', hash: '#info'});
-        // self.context.router.replace({pathname: Settings.uBaseName + '/tree/add', query: { mode: "info" }});
-      }}>
-        {localization(929)}
-      </span>
-    </div>;
-
-    if (this.state.mode == TREEADDMODE.INFO) {
-      action = <div className="popup-message">
-        <span dangerouslySetInnerHTML={{__html: localization(641)}} />
+    let action;
+    if (this.state.mode == TREEADDMODE.MARKER) {
+      action = <div className="popup-wrapper popup-green open">
+        <div className="popup-message">
+          <span dangerouslySetInnerHTML={{__html: localization(640)}} />
+          <span className="popup-button" onClick={()=> {
+            this.context.router.push({pathname: ServerSetting.uBase + '/addtree', hash: '#info'});
+            // self.context.router.replace({pathname: Settings.uBaseName + '/tree/add', query: { mode: "info" }});
+          }}>
+            {localization(929)}
+          </span>
+        </div>
       </div>;
     }
+
+    // Remove this popup since Android device keyboard popup make the windows smaller and this popup covered the text input area.
+    // if (this.state.mode == TREEADDMODE.INFO) {
+    //   action = <div className="popup-message">
+    //     <span dangerouslySetInnerHTML={{__html: localization(641)}} />
+    //   </div>;
+    // }
 
     return (
       <div className="tree-map-wrapper">
@@ -93,9 +99,7 @@ export default class TreeAdd extends React.Component {
           <MapTree />
         </AltContainer>
         <TreeAddPanel open={this.state.open} mode={this.state.mode} />
-        <div className="popup-wrapper popup-green open">
-          {action}
-        </div>
+        {action}
       </div>
     );
   }

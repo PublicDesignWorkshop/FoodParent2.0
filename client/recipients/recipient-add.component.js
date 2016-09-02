@@ -54,23 +54,29 @@ export default class RecipientAdd extends React.Component {
     this.setState({mode: mode, open: open});
   }
   render () {
+    let action;
     if (!AuthStore.getState().auth.isManager()) {
       return <div></div>;
     }
-    let action = <div className="popup-message">
-      <span dangerouslySetInnerHTML={{__html: localization(662)}} />
-      <span className="popup-button" onClick={()=> {
-        this.context.router.push({pathname: ServerSetting.uBase + '/addrecipient', hash: '#info'});
-      }}>
-        {localization(929)}
-      </span>
-    </div>;
-
-    if (this.state.mode == DONATIONADDMODE.INFO) {
-      action = <div className="popup-message">
-        <span dangerouslySetInnerHTML={{__html: localization(641)}} />
+    if (this.state.mode == DONATIONADDMODE.MARKER) {
+      action = <div className="popup-wrapper popup-green open">
+        <div className="popup-message">
+          <span dangerouslySetInnerHTML={{__html: localization(662)}} />
+          <span className="popup-button" onClick={()=> {
+            this.context.router.push({pathname: ServerSetting.uBase + '/addrecipient', hash: '#info'});
+          }}>
+            {localization(929)}
+          </span>
+        </div>
       </div>;
     }
+
+
+    // if (this.state.mode == DONATIONADDMODE.INFO) {
+    //   action = <div className="popup-message">
+    //     <span dangerouslySetInnerHTML={{__html: localization(641)}} />
+    //   </div>;
+    // }
 
     return (
       <div className="recipient-map-wrapper">
@@ -99,9 +105,7 @@ export default class RecipientAdd extends React.Component {
           <MapRecipient />
         </AltContainer>
         <RecipientAddPanel open={this.state.open} mode={this.state.mode} />
-        <div className="popup-wrapper popup-green open">
-          {action}
-        </div>
+        {action}
       </div>
     );
   }
