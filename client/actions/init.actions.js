@@ -34,9 +34,13 @@ class InitActions {
       getLocalization(window.navigator.userLanguage || window.navigator.language).then(function(response) {
         setLocalization(response);
       });
+
+      setTimeout(function() {
+        AuthActions.fetchAuth();
+      }, 100);
       setTimeout(function() {
         LocationActions.fetchLocations();
-        AuthActions.fetchAuth();
+
         TreeActions.fetchTrees();
       }, 250);
       setTimeout(function() {
