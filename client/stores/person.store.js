@@ -32,13 +32,31 @@ export class PersonModel {
         auth = 4;
         break;
     }
-    return {
-      id: this.id,
-      auth: auth,
-      name: this.name,
-      contact: this.contact,
-      neighborhood: this.neighborhood,
-      updated: this.updated.format(ServerSetting.sServerDateFormat),
+    switch(this.auth) {
+      case AUTHTYPE.ADMIN:
+      case AUTHTYPE.MANAGER:
+        return {
+          id: this.id,
+          auth: auth,
+          name: this.name,
+          contact: this.contact,
+          password: this.password,
+          neighborhood: this.neighborhood,
+          updated: this.updated.format(ServerSetting.sServerDateFormat),
+        }
+        break;
+      case AUTHTYPE.PARENT:
+      case AUTHTYPE.GUEST:
+        return {
+          id: this.id,
+          auth: auth,
+          name: this.name,
+          contact: this.contact,
+          password: "",
+          neighborhood: this.neighborhood,
+          updated: this.updated.format(ServerSetting.sServerDateFormat),
+        }
+        break;
     }
   }
   update(props) {
@@ -59,6 +77,8 @@ export class PersonModel {
     }
     this.name = props.name;
     this.contact = props.contact;
+    this.password = "";
+    this.password2 = "";
     this.neighborhood = props.neighborhood;
     this.updated = moment(props.updated);
     if (!this.updated.isValid()) {

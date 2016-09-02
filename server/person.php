@@ -81,18 +81,9 @@
       $userauth = intval($_SESSION['user_auth']);
     }
     $data = json_decode(file_get_contents('php://input'));
-    $params = null;
-    if ($data != null) {
-      $params = array(
-        "id" => $data->{'id'},
-        "auth" => $data->{'auth'},
-        "name" => $data->{'name'},
-        "contact" => $data->{'contact'},
-        "neighborhood" => $data->{'neighborhood'},
-        "active" => 1,
-        "updated" => date("Y-m-d H:i:s"),
-      );
-    }
+    $params = array(
+      "id" => $data->{'id'},
+    );
 
     if (($userauth != 1 && $userauth != 2) && $userid != intval($params['id'])) {
       $json = array(
@@ -101,26 +92,43 @@
       );
       echo json_encode($json);
     } else {
-      $sql = "UPDATE `person` SET `auth` = :auth, `name` = :name, `contact` = :contact, `neighborhood` = :neighborhood, `active` = :active, `updated` = :updated WHERE (`id` = :id)";
-      try {
-        $pdo = getConnection();
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute($params);
-
-        $sql = "SELECT `id`, `auth`, `name`, `contact`, `neighborhood`, `updated` FROM `person` WHERE (`id` = :id)";
+      if (trim($data->{'password'}) == "") {  // Not changing password.
         $params = array(
           "id" => $data->{'id'},
+          "auth" => $data->{'auth'},
+          "name" => $data->{'name'},
+          "contact" => $data->{'contact'},
+          "neighborhood" => $data->{'neighborhood'},
+          "active" => 1,
+          "updated" => date("Y-m-d H:i:s"),
         );
+        $sql = "UPDATE `person` SET `auth` = :auth, `name` = :name, `contact` = :contact, `neighborhood` = :neighborhood, `active` = :active, `updated` = :updated WHERE (`id` = :id)";
         try {
+          $pdo = getConnection();
           $stmt = $pdo->prepare($sql);
           $stmt->execute($params);
-          $result = $stmt->fetch();
-          $pdo = null;
+
+          $sql = "SELECT `id`, `auth`, `name`, `contact`, `neighborhood`, `updated` FROM `person` WHERE (`id` = :id)";
           $params = array(
-            "code" => 200,
-            "person" => $result,
+            "id" => $data->{'id'},
           );
-          echo json_encode($params);
+          try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            $result = $stmt->fetch();
+            $pdo = null;
+            $params = array(
+              "code" => 200,
+              "person" => $result,
+            );
+            echo json_encode($params);
+          } catch(PDOException $e) {
+            $json = array(
+              "code" => $e->getCode(),
+              "message" => $e->getMessage(),
+            );
+            echo json_encode($json);
+          }
         } catch(PDOException $e) {
           $json = array(
             "code" => $e->getCode(),
@@ -128,12 +136,56 @@
           );
           echo json_encode($json);
         }
-      } catch(PDOException $e) {
-        $json = array(
-          "code" => $e->getCode(),
-          "message" => $e->getMessage(),
+      } else {  // Changing password.
+        // generate salt.
+        $salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
+        // Create salted password.
+        $password = hash('sha512', $data->{'password'} . $salt);
+        $params = array(
+          "id" => $data->{'id'},
+          "auth" => $data->{'auth'},
+          "name" => filter_var($data->{'name'}, FILTER_SANITIZE_STRING),
+          "contact" => filter_var($data->{'contact'}, FILTER_SANITIZE_STRING),
+          "password" => $password,
+          "salt" => $salt,
+          "neighborhood" => filter_var($data->{'neighborhood'}, FILTER_SANITIZE_STRING),
+          "active" => 1,
+          "updated" => date("Y-m-d"),
         );
-        echo json_encode($json);
+        $sql = "UPDATE `person` SET `auth` = :auth, `name` = :name, `contact` = :contact, `password` = :password, `salt` = :salt, `neighborhood` = :neighborhood, `active` = :active, `updated` = :updated WHERE (`id` = :id)";
+        try {
+          $pdo = getConnection();
+          $stmt = $pdo->prepare($sql);
+          $stmt->execute($params);
+
+          $sql = "SELECT `id`, `auth`, `name`, `contact`, `neighborhood`, `updated` FROM `person` WHERE (`id` = :id)";
+          $params = array(
+            "id" => $data->{'id'},
+          );
+          try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            $result = $stmt->fetch();
+            $pdo = null;
+            $params = array(
+              "code" => 200,
+              "person" => $result,
+            );
+            echo json_encode($params);
+          } catch(PDOException $e) {
+            $json = array(
+              "code" => $e->getCode(),
+              "message" => $e->getMessage(),
+            );
+            echo json_encode($json);
+          }
+        } catch(PDOException $e) {
+          $json = array(
+            "code" => $e->getCode(),
+            "message" => $e->getMessage(),
+          );
+          echo json_encode($json);
+        }
       }
     }
   }

@@ -18,6 +18,8 @@ import ParentContact from './parent-contact.component';
 import ParentName from './parent-name.component';
 import ParentAddress from './parent-address.component';
 import ParentAuth from './parent-auth.component';
+import ParentPassword from './parent-password.component';
+import { displaySuccessMessage, displayFailMessage } from './../message/popup.component';
 
 
 export default class ParentInfo extends React.Component {
@@ -48,8 +50,18 @@ export default class ParentInfo extends React.Component {
       actions = <div>
         <div className="solid-button-group">
           <div className="solid-button solid-button-green" onClick={() => {
-            this.setState({editing: false});
-            PersonActions.updatePerson(PersonStore.getState().temp);
+            let person = PersonStore.getState().temp;
+            if (person.password == "" && person.password2 == "") {
+              this.setState({editing: false});
+              PersonActions.updatePerson(PersonStore.getState().temp);
+            } else if (person.password.length < 5) {
+              displayFailMessage(localization(1006));
+            } else if (person.password != person.password2) {
+              displayFailMessage(localization(1005));
+            } else {
+              this.setState({editing: false});
+              PersonActions.updatePerson(PersonStore.getState().temp);
+            }
           }}>
             {localization(930) /* SAVE */}
           </div>
@@ -62,26 +74,50 @@ export default class ParentInfo extends React.Component {
         </div>
       </div>;
     }
-    return (
-      <div className="parent-info-wrapper">
-        <AltContainer stores={
-          {
-            parent: function(props) {
-              return {
-                store: PersonStore,
-                value: PersonStore.getState().temp
+    if (AuthStore.getState().auth.isManager()) {
+      return (
+        <div className="parent-info-wrapper">
+          <AltContainer stores={
+            {
+              parent: function(props) {
+                return {
+                  store: PersonStore,
+                  value: PersonStore.getState().temp
+                }
               }
             }
-          }
-        }>
-          <ParentContact editing={this.state.editing} />
-          <ParentName editing={this.state.editing} />
-          <ParentAddress editing={this.state.editing} />
-          <ParentAuth editing={this.state.editing} />
-        </AltContainer>
-        {actions}
-      </div>
-    );
+          }>
+            <ParentContact editing={this.state.editing} />
+            <ParentName editing={this.state.editing} />
+            <ParentAddress editing={this.state.editing} />
+            <ParentPassword editing={this.state.editing} />
+            <ParentAuth editing={this.state.editing} />
+          </AltContainer>
+          {actions}
+        </div>
+      );
+    } else {
+      return (
+        <div className="parent-info-wrapper">
+          <AltContainer stores={
+            {
+              parent: function(props) {
+                return {
+                  store: PersonStore,
+                  value: PersonStore.getState().temp
+                }
+              }
+            }
+          }>
+            <ParentContact editing={this.state.editing} />
+            <ParentName editing={this.state.editing} />
+            <ParentAddress editing={this.state.editing} />
+            <ParentAuth editing={this.state.editing} />
+          </AltContainer>
+          {actions}
+        </div>
+      );
+    }
   }
 }
 

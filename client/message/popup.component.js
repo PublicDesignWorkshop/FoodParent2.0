@@ -41,6 +41,7 @@ let messageTimer;
 
 export function displaySuccessMessage(message) {
   $('#popup .popup-message').html(message);
+  $('#popup').removeClass('popup-red');
   $('#popup').addClass('open popup-green');
   if (messageTimer) {
     clearTimeout(messageTimer);
@@ -53,6 +54,7 @@ export function displaySuccessMessage(message) {
 
 export function displayFailMessage(message) {
   $('#popup .popup-message').html(message);
+  $('#popup').removeClass('popup-green');
   $('#popup').addClass('open popup-red');
   if (messageTimer) {
     clearTimeout(messageTimer);

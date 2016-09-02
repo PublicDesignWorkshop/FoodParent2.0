@@ -239,6 +239,9 @@
   "1001": "THIS TREE IS DEAD",
   "1002": "Press the button to set this tree as dead.",
   "1003": "DEAD",
+  "1004": "Confirm the password...",
+  "1005": "* Passwords don't match.",
+  "1006": "* Password has to be longer than 5 characters.",
 
   "42S22": "Unknown column exists in a database table."
 }
