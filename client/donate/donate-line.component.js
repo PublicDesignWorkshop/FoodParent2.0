@@ -77,10 +77,10 @@ export default class DonateLine extends React.Component {
       }
       return (
         <div className={"donate-line-wrapper" + style} onClick={this.selectDonate}>
-          {this.props.donate.getFormattedDate()}&nbsp;-&nbsp;
-          {amount}&nbsp;
-          {localization(49)}&nbsp;
-          {food}&nbsp;
+          <span>{this.props.donate.getFormattedDate()}</span>&nbsp;-&nbsp;
+          <span>{amount}</span>&nbsp;
+          <span>{localization(49)}</span>&nbsp;
+          <span>{food}</span>&nbsp;
           {source}
         </div>
       );

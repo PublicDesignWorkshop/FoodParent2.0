@@ -101,6 +101,7 @@ export class NoteModel {
     if (!this.date.isValid()) {
       this.date = moment(new Date());
     }
+    this.food = props.food;
     if (props.picture && props.picture != "") {
       this.images = props.picture.split(',').map((image) => {
         return image;

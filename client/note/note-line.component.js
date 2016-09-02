@@ -13,6 +13,7 @@ let TreeStore = require('./../stores/tree.store');
 let NoteActions = require('./../actions/note.actions');
 let NoteStore = require('./../stores/note.store');
 let AuthStore = require('./../stores/auth.store');
+let FoodStore = require('./../stores/food.store');
 
 
 export default class NoteLine extends React.Component {
@@ -34,7 +35,7 @@ export default class NoteLine extends React.Component {
   selectNote() {
     NoteActions.setSelected(this.props.note.id);
     if (this.props.link) {
-      this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + TreeStore.getState().selected, hash: "#history"});
+      this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + this.props.note.tree, hash: "#history"});
     }
   }
   render () {
@@ -43,7 +44,15 @@ export default class NoteLine extends React.Component {
     let comment;
     let amount;
     let proper;
+    let treename;
     if (this.props.note) {
+      if (this.props.full) {
+        let food = FoodStore.getFood(this.props.note.food);
+        if (food) {
+          treename = <span className="tag tag-green">{food.name + " #" + this.props.note.tree}</span>;
+        }
+      }
+
       switch(this.props.note.type) {
         case NOTETYPE.CHANGE:
           style = " note-line-light";
@@ -60,20 +69,20 @@ export default class NoteLine extends React.Component {
             }
           }
           stars = <span className="tag tag-brown">{stars}</span>;
-          comment = this.props.note.comment.trim();
+          comment = <span>{this.props.note.comment.trim()}</span>;
           break;
         case NOTETYPE.PICKUP:
           style = " note-line-green";
           comment = this.props.note.comment.trim();
           switch(this.props.note.amountType) {
             case AMOUNTTYPE.LBS:
-              amount = "(" + this.props.note.amount.toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
+              amount = <span>{"(" + this.props.note.amount.toFixed(ServerSetting.iAmountPrecision) + " lbs.)"}</span>;
               break;
             case AMOUNTTYPE.KG:
-              amount = "(" + (this.props.note.amount * ServerSetting.fKGToG * ServerSetting.fGToLBS).toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
+              amount = <span>{"(" + (this.props.note.amount * ServerSetting.fKGToG * ServerSetting.fGToLBS).toFixed(ServerSetting.iAmountPrecision) + " lbs.)"}</span>;
               break;
             case AMOUNTTYPE.G:
-              amount = "(" + (this.props.note.amount * ServerSetting.fGToLBS).toFixed(ServerSetting.iAmountPrecision) + " lbs.)";
+              amount = <span>{"(" + (this.props.note.amount * ServerSetting.fGToLBS).toFixed(ServerSetting.iAmountPrecision) + " lbs.)"}</span>;
               break;
           }
           switch(this.props.note.proper) {
@@ -91,7 +100,8 @@ export default class NoteLine extends React.Component {
       }
       return (
         <div className={"note-line-wrapper" + style} onClick={this.selectNote}>
-          {this.props.note.getFormattedDate()}&nbsp;-&nbsp;
+          <span>{this.props.note.getFormattedDate()}</span>&nbsp;-&nbsp;
+          {treename}&nbsp;
           {comment}&nbsp;
           {stars}{amount}&nbsp;
           {proper}

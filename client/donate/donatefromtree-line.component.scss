@@ -2,12 +2,16 @@
 @import "./../scss/mixin.scss";
 
 .donatefromtree-line-wrapper {
-  padding: 4px 8px;
+  padding: 4px 8px 6px 8px;
   font-family: $font-main;
   font-size: $font-size-medium;
   cursor: auto;
   font-weight: 400;
   color: $brown;
+
+  > span {
+    vertical-align: middle;
+  }
 
   &.clickable {
     cursor: pointer;

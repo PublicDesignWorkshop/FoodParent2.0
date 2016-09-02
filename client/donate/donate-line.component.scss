@@ -2,11 +2,12 @@
 @import "./../scss/mixin.scss";
 
 .donate-line-wrapper {
-  padding: 4px 8px;
+  padding: 4px 8px 6px 8px;
   font-family: $font-main;
   font-size: $font-size-medium;
   cursor: pointer;
   font-weight: 400;
+  vertical-align: middle;
 
   .tree-link {
     display: inline-block;
@@ -16,6 +17,10 @@
     border-radius: 2px;
     color: $white;
     font-size: $font-size-medium-small;
+  }
+
+  > span {
+    vertical-align: middle;
   }
 
   .tag {

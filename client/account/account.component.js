@@ -15,6 +15,7 @@ let TreeActions = require('./../actions/tree.actions');
 let TreeStore = require('./../stores/tree.store');
 let LocationStore = require('./../stores/location.store');
 
+import ParentOverview from './../parent/parent-overview.component';
 
 
 export default class Account extends React.Component {
@@ -82,6 +83,7 @@ export default class Account extends React.Component {
           </div>
         </div>
         <div className="left">
+          <ParentOverview />
         </div>
       </div>
     );

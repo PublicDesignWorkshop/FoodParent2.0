@@ -1,0 +1,59 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.parent-overview-wrapper {
+  padding: 8px;
+  > .parent-overview-title {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    padding: 4px 4px 8px 4px;
+    font-family: $font-narrow;
+    font-size: $font-size-large;
+    font-weight: 700;
+    color: $brown;
+
+    > .fa.fa-heartbeat {
+      vertical-align: middle;
+      font-size: $font-size-large;
+      margin-left: 4px;
+      margin-right: 8px;
+    }
+    > .icon-text {
+      vertical-align: middle;
+    }
+  }
+}
+
+.parent-overview-content {
+  padding: 4px 0;
+  font-family: $font-main;
+  color: $brown;
+  font-size: $font-size-medium;
+
+  > .parent-overview-label {
+    font-weight: 700;
+    margin: 4px 8px;
+    .fa.fa-user {
+      margin-left: 2px;
+      margin-right: 6px;
+    }
+    .fa.fa-microphone {
+      margin-left: 3px;
+      margin-right: 7px;
+    }
+    .fa.fa-certificate {
+      margin-left: 2px;
+      margin-right: 4px;
+    }
+    .fa.fa-map-marker {
+      margin-left: 2px;
+      margin-right: 4px;
+    }
+    .fa.fa-lock {
+      margin-left: 4px;
+      margin-right: 6px;
+    }
+  }
+}

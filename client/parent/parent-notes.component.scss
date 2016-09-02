@@ -1,0 +1,42 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.parent-notes-wrapper {
+  > .parent-notes-title {
+    padding-left: 4px;
+    font-weight: 700;
+    > .parent-total-number {
+      font-size: $font-size-large;
+    }
+    > .parent-total-text {
+      font-size: $font-size-medium;
+    }
+  }
+
+  .parent-notes-content {
+    padding: 4px 0;
+    font-family: $font-main;
+    color: $brown;
+    font-size: $font-size-medium;
+
+    > .parent-recent-post-label {
+      font-weight: 700;
+      margin: 4px 4px;
+      .fa.fa-pencil-square {
+        margin-left: 2px;
+        margin-right: 4px;
+      }
+    }
+
+    > .parent-recent-post-data {
+      width: 100%;
+      > .parent-recent-post-text {
+        margin: 0 0 0 0;
+        > .parent-recent-post-text-sub {
+          margin: 4px 0 4px 8px;
+        }
+      }
+    }
+  }
+
+}

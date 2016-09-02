@@ -30,6 +30,7 @@
   background-color: $light;
 
   > .right {
+    padding-bottom: 24px;
     @include respond-to(handhelds) {
       width: 100%;
     }
@@ -57,6 +58,7 @@
       color: $brown;
 
       > .icon-group {
+        vertical-align: middle;
         text-align: left;
         cursor: pointer;
         padding: 8px 4px;
@@ -80,18 +82,22 @@
           cursor: default;
         }
 
+        > .fa.fa-info-circle, .fa.fa-close {
+          vertical-align: middle;
+          font-size: $font-size-large;
+        }
+
         > .icon-text {
           -webkit-user-select: none;
              -moz-user-select: none;
               -ms-user-select: none;
                   user-select: none;
-                  
+          vertical-align: middle;
           display: inline-block;
           font-family: $font-narrow;
-          font-size: $font-size-small;
-          margin: 2px 4px 0 8px;
+          font-size: $font-size-medium;
+          margin: 0 4px 0 8px;
           font-weight: 700;
-          vertical-align: top;
           text-transform: uppercase;
           overflow:hidden;
 

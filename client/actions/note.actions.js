@@ -57,6 +57,24 @@ class NoteActions {
     }
     return null;
   }
+  fetchNotesFromParentContact(contact) {
+    if (contact != null) {
+      return (dispatch) => {
+        dispatch();
+        this.setCode(90);
+        NoteSource.fetchNotesFromParentContact(contact).then((response) => {
+          this.fetchedNotes(response);
+        }).catch((code) => {
+          displayFailMessage(localization(code));
+          if (__DEV__) {
+            console.error(localization(code));
+          }
+          this.setCode(code);
+        });
+      }
+    }
+    return null;
+  }
   fetchedNotes(props) {
     return (dispatch) => {
       dispatch(props);

@@ -242,6 +242,11 @@
   "1004": "Confirm the password...",
   "1005": "* Passwords don't match.",
   "1006": "* Password has to be longer than 5 characters.",
+  "1007": "PARENT ACTIVITIES",
+  "1008": "cotribution(s)",
+  "1009": "Total",
+  "1010": "since",
+  "1011": "Recent 10 Posts",
 
   "42S22": "Unknown column exists in a database table."
 }

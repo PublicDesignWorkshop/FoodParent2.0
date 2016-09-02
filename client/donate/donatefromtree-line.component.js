@@ -78,9 +78,9 @@ export default class DonateFromTreeLine extends React.Component {
       }
       return (
         <div className={"donatefromtree-line-wrapper" + style} onClick={this.selectDonate}>
-          {this.props.donate.getFormattedDate()}&nbsp;-&nbsp;
-          {amount}&nbsp;
-          {localization(41)}&nbsp;
+          <span>{this.props.donate.getFormattedDate()}</span>&nbsp;-&nbsp;
+          <span>{amount}</span>&nbsp;
+          <span>{localization(41)}</span>&nbsp;
           {dest}
         </div>
       );
