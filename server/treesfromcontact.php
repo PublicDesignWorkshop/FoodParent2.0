@@ -25,7 +25,7 @@
         "personId" => $_GET['personId'],
       );
     }
-    $sql = "SELECT tree.id, tree.food, food.season FROM tree INNER JOIN food WHERE FIND_IN_SET(:personId, `parent`) AND tree.food = food.id GROUP BY tree.id ORDER BY tree.food ASC, food.season DESC, food.name ASC";
+    $sql = "SELECT tree.id, tree.food, food.season FROM tree INNER JOIN food WHERE FIND_IN_SET(:personId, `parent`) AND tree.food = food.id GROUP BY tree.id ORDER BY food.name ASC, tree.id ASC, food.season DESC";
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);
