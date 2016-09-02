@@ -243,10 +243,14 @@
   "1005": "* Passwords don't match.",
   "1006": "* Password has to be longer than 5 characters.",
   "1007": "PARENT ACTIVITIES",
-  "1008": "cotribution(s)",
+  "1008": "post(s) has/have been created by you",
   "1009": "Total",
   "1010": "since",
-  "1011": "Recent 10 Posts",
+  "1011": "Your Recent 10 Posts",
+  "1012": "tree(s) is/are currently adopted by you.",
+  "1013": "No trees are under your watch.",
+  "1014": "Season Trees",
+  "1015": "Non-Season Trees",
 
   "42S22": "Unknown column exists in a database table."
 }

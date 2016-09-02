@@ -2,6 +2,7 @@
 @import "./../scss/mixin.scss";
 
 .parent-notes-wrapper {
+  padding: 8px 0;
   > .parent-notes-title {
     padding-left: 4px;
     font-weight: 700;

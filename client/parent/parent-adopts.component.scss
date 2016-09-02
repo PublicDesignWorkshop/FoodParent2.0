@@ -1,0 +1,56 @@
+@import "./../scss/variables.scss";
+@import "./../scss/mixin.scss";
+
+.parent-adopts-wrapper {
+  padding: 8px 0;
+  > .parent-adopts-title {
+    padding-left: 4px;
+    font-weight: 700;
+    > .parent-total-number {
+      font-size: $font-size-large;
+    }
+    > .parent-total-text {
+      font-size: $font-size-medium;
+    }
+  }
+
+  .parent-adopts-content {
+    padding: 4px 0;
+    font-family: $font-main;
+    color: $brown;
+    font-size: $font-size-medium;
+
+    > .parent-adopts-label {
+      font-weight: 700;
+      margin: 4px 4px;
+      .fa.fa-apple {
+        margin-left: 2px;
+        margin-right: 4px;
+      }
+      .fa.fa-leaf {
+        margin-left: 1px;
+        margin-right: 3px;
+      }
+    }
+
+    .tag {
+      cursor: pointer;
+      display: inline-block;
+      margin: 4px;
+      font-size: $font-size-medium-small;
+      border-radius: 2px;
+      padding: 2px 8px 2px 8px;
+      vertical-align: middle;
+      font-weight: 400;
+      line-height: 1.75;
+      &.tag-brown {
+        background-color: $brown;
+        color: $white;
+      }
+      &.tag-green {
+        background-color: $green;
+        color: $white;
+      }
+    }
+  }
+}

@@ -2,13 +2,15 @@
 @import "./../scss/mixin.scss";
 
 .parent-overview-wrapper {
+  
+
   padding: 8px;
   > .parent-overview-title {
     -webkit-user-select: none;
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
-    padding: 4px 4px 8px 4px;
+    padding: 4px 4px 4px 4px;
     font-family: $font-narrow;
     font-size: $font-size-large;
     font-weight: 700;

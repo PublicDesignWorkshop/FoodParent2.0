@@ -64,6 +64,31 @@ class TreeActions {
       dispatch(props);
     }
   }
+
+
+  fetchTreesFromContact(personId) {
+    return (dispatch) => {
+      dispatch();
+      this.setCode(90);
+      TreeSource.fetchTreesFromContact(personId).then((response) => {
+        this.fetchedTreesFromContact(response);
+      }).catch((code) => {
+        displayFailMessage(localization(code));
+        if (__DEV__) {
+          console.error(localization(code));
+        }
+        this.setCode(code);
+      });
+    }
+  }
+  fetchedTreesFromContact(props) {
+    return (dispatch) => {
+      dispatch(props);
+    }
+  }
+
+
+
   setSelected(id) {
     return (dispatch) => {
       dispatch(id);

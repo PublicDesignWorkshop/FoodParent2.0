@@ -28,7 +28,6 @@
   "fGToLBS": 0.00220462,
   "iAmountPrecision": 1,
 
-  "iDeadFlagId": 1,
   "iTreeRatingGraphHeight": 120,
   "iTreeDonationGraphHeight": 180,
   "iRecipientDonationGraphHeight": 300,

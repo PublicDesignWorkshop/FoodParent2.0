@@ -146,7 +146,7 @@ class AuthStore {
     setTimeout(function() {
       TreeActions.fetchTrees.defer();
       if (props.selected == null || isNaN(props.selected)) {
-        browserHistory.replace({pathname: ServerSetting.uBase + '/'});
+        browserHistory.replace({pathname: ServerSetting.uBase + '/account'});
       } else {
         browserHistory.replace({pathname: ServerSetting.uBase + '/tree/' + props.selected});
       }

@@ -17,7 +17,6 @@ export class FoodModel {
       id: this.id,
       name: this.name,
       icon: this.icon,
-      description: this.description,
       adopt: this.adopt == true ? "1" : "0",
       farm: this.farm == true ? "1" : "0"
     }
@@ -26,7 +25,6 @@ export class FoodModel {
     this.id = parseInt(props.id);
     this.name = props.name;
     this.icon = props.icon;
-    this.description = props.description;
     this.updated = moment(props.updated);
     if (!this.updated.isValid()) {
       this.updated = moment(new Date());

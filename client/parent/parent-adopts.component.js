@@ -1,7 +1,7 @@
 import React from 'react';
 import AltContainer from 'alt-container';
 
-require('./parent-notes.component.scss');
+require('./parent-adopts.component.scss');
 var FontAwesome = require('react-fontawesome');
 let ServerSetting = require('./../../setting/server.json');
 
@@ -20,15 +20,15 @@ import ParentAddress from './parent-address.component';
 import ParentAuth from './parent-auth.component';
 import ParentPassword from './parent-password.component';
 import { displaySuccessMessage, displayFailMessage } from './../message/popup.component';
-import NoteLine from './../note/note-line.component';
+let FoodStore = require('./../stores/food.store');
 
 
-export default class ParentNotes extends React.Component {
+export default class ParentAdopts extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
   componentWillMount() {
-    this.setState({total: 0, since: ""});
+    this.setState({total: 0});
   }
   componentDidMount () {
 
@@ -37,27 +37,32 @@ export default class ParentNotes extends React.Component {
     this.updateProps(nextProps);
   }
   updateProps(props) {
-    if (props.notes && props.notes.length > 0) {
-      this.setState({total: props.notes.length, since: props.notes[props.notes.length-1].date.format(ServerSetting.sUIDateFormat)});
+    if (props.trees && props.trees.length > 0) {
+      this.setState({total: props.trees.length});
     }
   }
   render () {
-    let nopost;
-    if (this.props.notes == null || this.props.notes.length == 0) {
-      nopost = <div className="parent-recent-post-text-sub">{localization(59)}</div>;
-    }
-    let notes = [];
-    let list = this.props.notes;
-    if (list && list.length > 0) {
-      list.forEach((note) => {
-        notes.push(<NoteLine key={"note" + note.id} note={note} link={true} full={true} />);
+    let seasontrees = [];
+    let nonseasontrees = [];
+    if (this.props.trees) {
+      this.props.trees.forEach((tree) => {
+        let food = FoodStore.getFood(tree.food);
+        if (food) {
+          if (tree.season) {
+            seasontrees.push(<span key={"adopted-tree-" + tree.id} className="tag tag-green" onClick={() => {
+              this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + tree.id});
+            }}>{food.name + " #" + tree.id}</span>);
+          } else {
+            nonseasontrees.push(<span key={"adopted-tree-" + tree.id} className="tag tag-green" onClick={() => {
+              this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + tree.id});
+            }}>{food.name + " #" + tree.id}</span>);
+          }
+        }
       });
     }
-
-
     return (
-      <div className="parent-notes-wrapper">
-        <div className="parent-notes-title">
+      <div className="parent-adopts-wrapper">
+        <div className="parent-adopts-title">
           <span className="parent-total-text">
             {localization(1009) /* TOTAL */}
           </span>
@@ -67,31 +72,25 @@ export default class ParentNotes extends React.Component {
           </span>
           &nbsp;
           <span className="parent-total-text">
-            {localization(1008) /* CONTRIBUTIONS */}
-            &nbsp;
-            {localization(1010) /* SINCE */}
-            &nbsp;
-            {this.state.since}
-            .
+            {localization(1012) /* CONTRIBUTIONS */}
           </span>
         </div>
-        <div className="parent-notes-content">
-          <div className="parent-recent-post-label">
-            <FontAwesome className='' name='pencil-square' />{localization(1011)}
+        <div className="parent-adopts-content">
+          <div className="parent-adopts-label">
+            <FontAwesome className='' name='apple' />{localization(1014)}
           </div>
-          <div className="parent-recent-post-data">
-            <div className="parent-recent-post-text">
-              {notes}
-              {nopost}
-            </div>
+          {seasontrees}
+          <div className="parent-adopts-label">
+            <FontAwesome className='' name='leaf' />{localization(1015)}
           </div>
+          {nonseasontrees}
         </div>
       </div>
     );
   }
 }
 
-ParentNotes.contextTypes = {
+ParentAdopts.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
 

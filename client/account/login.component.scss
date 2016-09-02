@@ -30,6 +30,7 @@
 
   > .right {
     padding: 8px;
+    padding-bottom: 24px;
     @include respond-to(handhelds) {
       width: 100%;
     }

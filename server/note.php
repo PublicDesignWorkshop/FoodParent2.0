@@ -46,20 +46,21 @@
       echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
 
-    $sql = "SELECT * FROM `note` WHERE (`tree` = :treeId) AND `type` = 3 ORDER BY `date` DESC LIMIT 1";
-    try {
-      $pdo = getConnection();
-      $stmt = $pdo->prepare($sql);
-      $stmt->execute($params);
-      $result2 = $stmt->fetch(PDO::FETCH_OBJ);
-      $pdo = null;
-
-    } catch(PDOException $e) {
-      echo '{"error":{"text":'. $e->getMessage() .'}}';
-    }
+    // $sql = "SELECT * FROM `note` WHERE (`tree` = :treeId) AND `type` = 3 ORDER BY `date` DESC LIMIT 1";
+    // try {
+    //   $pdo = getConnection();
+    //   $stmt = $pdo->prepare($sql);
+    //   $stmt->execute($params);
+    //   $result2 = $stmt->fetch(PDO::FETCH_OBJ);
+    //   $pdo = null;
+    //
+    // } catch(PDOException $e) {
+    //   echo '{"error":{"text":'. $e->getMessage() .'}}';
+    // }
 
     $notes = [];
-    array_push($notes, $result, $result2);
+    // array_push($notes, $result, $result2);
+    array_push($notes, $result);
 
     $json = array(
       "notes" => $notes,

@@ -8,7 +8,6 @@ import { browserHistory } from 'react-router';
 let MapSetting = require('./../../setting/map.json');
 let ServerSetting = require('./../../setting/server.json');
 let TreeActions = require('./../actions/tree.actions');
-let FlagStore = require('./../stores/flag.store');
 let MapStore = require('./../stores/map.store');
 let DonateStore = require('./../stores/donate.store');
 let AuthActions = require('./../actions/auth.actions');
@@ -21,6 +20,7 @@ class TreeStore {
     this.temp = null;
     this.trees = [];
     this.code = 0;
+    this.adopts = [];
     // Bind action methods to store.
     this.bindListeners({
       handleFetchedTree: TreeActions.FETCHED_TREE,
@@ -33,6 +33,7 @@ class TreeStore {
       handleCreatedTree: TreeActions.CREATED_TREE,
       handleUpdatedTree: TreeActions.UPDATED_TREE,
       handleDeletedTree: TreeActions.DELETED_TREE,
+      handleFetchedTreesFromContact: TreeActions.FETCHED_TREES_FROM_CONTACT,
       handleReset: TreeActions.RESET,
     });
     // Expose public methods.
@@ -72,6 +73,16 @@ class TreeStore {
           }
         }
         this.trees.push(tree);
+      });
+    }
+    this.code = 200;
+  }
+  handleFetchedTreesFromContact(props) {
+    if (props) {
+      this.adopts = [];
+      props.forEach((props) => {
+        let tree = new TreeModel(props);
+        this.adopts.push(tree);
       });
     }
     this.code = 200;
@@ -128,7 +139,6 @@ class TreeStore {
       lat: location.lat,
       lng: location.lng,
       food: "0",
-      flag: "0",
       public: "1",
       dead: "0",
       description: "",

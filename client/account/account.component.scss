@@ -120,8 +120,20 @@
   }
 
   > .left {
+    -webkit-flex: 0 0 auto; /* Safari 6.1+ */
+        -ms-flex: 0 0 auto; /* IE 10 */
+            flex: 0 0 auto;
+
     -webkit-flex-grow: 1;
             flex-grow: 1;
+
+    max-width: 70%;
+    @include respond-to(handhelds) {
+      max-width: 100%;
+    }
+    @include respond-to(wide-screens) {
+      max-width: 70%;
+    }
   }
 
   .or {

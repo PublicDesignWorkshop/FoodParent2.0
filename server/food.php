@@ -58,12 +58,11 @@
         "id" => $data->{'id'},
         "name" => $data->{'name'},
         "icon" => $data->{'icon'},
-        "description" => $data->{'description'},
         "adopt" => $data->{'adopt'},
         "updated" => date("Y-m-d H:i:s"),
       );
     }
-    $sql = "UPDATE `food` SET `id` = :id, `name` = :name, `icon` = :icon, `description` = :description, `adopt` = :adopt, `updated` = :updated WHERE (`id` = :id)";
+    $sql = "UPDATE `food` SET `id` = :id, `name` = :name, `icon` = :icon, `adopt` = :adopt, `updated` = :updated WHERE (`id` = :id)";
     try {
       $pdo = getConnection();
       $stmt = $pdo->prepare($sql);

@@ -18,7 +18,6 @@ export class TreeModel {
       lat: this.lat,
       lng: this.lng,
       food: this.food,
-      flag: this.flags.toString(),
       description: this.description,
       address: this.address,
       public: this.ownership,
@@ -42,13 +41,15 @@ export class TreeModel {
     if (!this.updated.isValid()) {
       this.updated = moment(new Date());
     }
-    this.flags = props.flag.split(',').map((flag: string) => {
-      return parseInt(flag);
-    });
-    this.parents = props.parent.split(',').map((flag: string) => {
-      return parseInt(flag);
-    });
+    if (props.parent) {
+      this.parents = props.parent.split(',').map((parent) => {
+        return parseInt(parent);
+      });
+    } else {
+      this.parents = [];
+    }
     this.rate = parseInt(props.rate);
+    this.season = parseInt(props.season) == 1 ? true : null;
     this.editing = null;
   }
   getLocation() {

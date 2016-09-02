@@ -15,17 +15,21 @@ let NoteActions = require('./../actions/note.actions');
 let NoteStore = require('./../stores/note.store');
 let PersonActions = require('./../actions/person.actions');
 let PersonStore = require('./../stores/person.store');
+let TreeActions = require('./../actions/tree.actions');
+let TreeStore = require('./../stores/tree.store');
 let AuthStore = require('./../stores/auth.store');
 import { displaySuccessMessage, displayFailMessage } from './../message/popup.component';
 
 import ParentNotes from './parent-notes.component';
+import ParentAdopts from './parent-adopts.component';
 
 export default class ParentOverview extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
   componentWillMount() {
-    NoteActions.fetchNotesFromParentContact(AuthStore.getState().auth.contact);
+    NoteActions.fetchNotesFromParentContact.defer(AuthStore.getState().auth.contact);
+    TreeActions.fetchTreesFromContact.defer(AuthStore.getState().auth.id);
     this.setState({editing: false});
   }
   componentDidMount () {
@@ -55,6 +59,18 @@ export default class ParentOverview extends React.Component {
             }
           }>
             <ParentNotes />
+          </AltContainer>
+          <AltContainer stores={
+            {
+              trees: function(props) {
+                return {
+                  store: TreeStore,
+                  value: TreeStore.getState().adopts
+                }
+              }
+            }
+          }>
+            <ParentAdopts />
           </AltContainer>
         </div>
       </div>

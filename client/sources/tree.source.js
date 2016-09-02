@@ -56,6 +56,34 @@ const TreeSource = {
       });
     });
   },
+  fetchTreesFromContact(personId) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        url: ServerSetting.uBase + ServerSetting.uServer + "treesfromcontact.php",
+        type: 'GET',
+        data: {
+          personId: personId,
+        },
+        dataType: "json",
+        success: function(response) {
+          if (response.code == 200) {
+            resolve(response.trees);
+          } else {
+            if (__DEV__) {
+              console.error(response.message);
+            }
+            reject(response.code);
+          }
+        },
+        error: function(response) {
+          if (__DEV__) {
+            console.error(response.statusText);
+          }
+          reject(response.status);
+        }
+      });
+    });
+  },
   createTree(tree) {
     return new Promise(function (resolve, reject) {
       $.ajax({

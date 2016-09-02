@@ -84,18 +84,11 @@
     $data = json_decode(file_get_contents('php://input'));
     $params = null;
     if ($data != null) {
-      $serverSetting = json_decode(file_get_contents("../dist/setting/server.json"), true);
-      $flags = split(",", $data->{'flag'});
-      $dead = 0;
-      if (in_array(strval($serverSetting["iDeadFlagId"]), $flags)) {
-        $dead = 1;
-      }
       $params = array(
         "id" => $data->{'id'},
         "lat" => $data->{'lat'},
         "lng" => $data->{'lng'},
         "food" => $data->{'food'},
-        "flag" => $data->{'flag'},
         "description" => $data->{'description'},
         "address" => $data->{'address'},
         "public" => $data->{'public'},
@@ -106,7 +99,7 @@
         "updated" => date("Y-m-d H:i:s"),
       );
     }
-    $sql = "UPDATE `tree` SET `lat` = :lat, `lng` = :lng, `food` = :food, `flag` = :flag, `public` = :public, `dead` = :dead, `parent` = :parent, `rate` = :rate, `owner` = :owner, `description` = :description, `address` = :address, `updated` = :updated WHERE (`id` = :id)";
+    $sql = "UPDATE `tree` SET `lat` = :lat, `lng` = :lng, `food` = :food, `public` = :public, `dead` = :dead, `parent` = :parent, `rate` = :rate, `owner` = :owner, `description` = :description, `address` = :address, `updated` = :updated WHERE (`id` = :id)";
 
     try {
       $pdo = getConnection();
@@ -151,17 +144,10 @@
     if (isset($_SESSION['user_id'])) {
       $owner = intval($_SESSION['user_id']);;
     }
-    $serverSetting = json_decode(file_get_contents("../dist/setting/server.json"), true);
-    $flags = split(",", $data->{'flag'});
-    $dead = 0;
-    if (in_array(strval($serverSetting["iDeadFlagId"]), $flags)) {
-      $dead = 1;
-    }
     $params = array(
       "lat" => $data->{'lat'},
       "lng" => $data->{'lng'},
       "food" => $data->{'food'},
-      "flag" => $data->{'flag'},
       "owner" => $owner,
       "description" => $data->{'description'},
       "address" => $data->{'address'},
@@ -171,7 +157,7 @@
       "rate" => $data->{'rate'},
       "updated" => date("Y-m-d H:i:s"),
     );
-    $sql = "INSERT INTO `tree` VALUES ( NULL, :lat, :lng, :food, :flag, :owner, :description, :address, :public, :dead, :parent, :rate, :updated )";
+    $sql = "INSERT INTO `tree` VALUES ( NULL, :lat, :lng, :food, :owner, :description, :address, :public, :dead, :parent, :rate, :updated )";
 
     try {
       $pdo = getConnection();
