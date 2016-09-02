@@ -17,6 +17,7 @@ let FoodActions = require('./../actions/food.actions');
 let FoodStore = require('./../stores/food.store');
 let AuthStore = require('./../stores/auth.store');
 let TreeActions = require('./../actions/tree.actions');
+let PersonActions = require('./../actions/person.actions');
 import { isLatLng } from './../utils/validation';
 import NoteLine from './../note/note-line.component';
 import { NOTETYPE } from './../utils/enum';
@@ -84,6 +85,13 @@ export default class TreeAdopt extends React.Component {
           <div className="solid-button solid-button-red" onClick={() => {
             this.props.tree.removeParent(AuthStore.getState().auth.id);
             TreeActions.updateTree(this.props.tree);
+            let tree = TreeStore.getState().temp;
+            if (AuthStore.getState().auth.isManager() && tree) {
+              let parents = tree.getParents();
+              if (parents) {
+                PersonActions.fetchPersons.defer(parents);
+              }
+            }
           }}>
             {localization(986) /* UN-ADOPT */}
           </div>
@@ -94,6 +102,13 @@ export default class TreeAdopt extends React.Component {
             <div className="solid-button solid-button-green" onClick={() => {
               this.props.tree.addParent(AuthStore.getState().auth.id);
               TreeActions.updateTree(this.props.tree);
+              let tree = TreeStore.getState().temp;
+              if (AuthStore.getState().auth.isManager() && tree) {
+                let parents = tree.getParents();
+                if (parents) {
+                  PersonActions.fetchPersons.defer(parents);
+                }
+              }
             }}>
               {localization(985) /* ADOPT */}
             </div>
