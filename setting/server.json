@@ -1,11 +1,11 @@
 {
-  "ssltype": "http://",
+  "ssltype": "https://",
   "bTestMail": true,
 
-  "host": "localhost",
+  "host": "www.concrete-jungle.org",
 
-  "uBase": "/FoodParent2.0",
-  "uBaseForRouter": "/FoodParent2.0/",
+  "uBase": "/food-map",
+  "uBaseForRouter": "/food-map/",
 
   "uServer": "/server/",
   "uDist": "/dist/",

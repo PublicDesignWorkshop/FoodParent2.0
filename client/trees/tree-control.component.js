@@ -1,4 +1,5 @@
 import React from 'react';
+import {findDOMNode} from 'react-dom'
 import ReactTooltip from 'react-tooltip';
 
 require('./tree-control.component.scss');
@@ -10,6 +11,7 @@ let TreeActions = require('./../actions/tree.actions');
 let MapSetting = require('./../../setting/map.json');
 let MapStore = require('./../stores/map.store');
 let AuthStore = require('./../stores/auth.store');
+let TreeStore = require('./../stores/tree.store');
 import { MAPTILE, MAPTYPE } from './../utils/enum';
 import { localization } from './../utils/localization';
 
@@ -24,7 +26,6 @@ export default class TreeControl extends React.Component {
     this.setState({tile: "map-o"});
   }
   componentDidMount () {
-
   }
   componentWillReceiveProps() {
     if (MapStore.getMapTile(MapSetting.sMapId) == MAPTILE.FLAT) {
@@ -68,6 +69,12 @@ export default class TreeControl extends React.Component {
     }} data-for="tooltip-tree-control" data-tip={localization(85)}>
       <FontAwesome name="plus-square" />
     </div>;
+
+    let help = <div className="control-button" onClick={
+    } data-for="tooltip-tree-control" data-tip={localization(89)}>
+      <FontAwesome name="question" />
+    </div>;
+
     if (this.props.adding) {
       add = <div className="control-button" onClick={()=> {
         TreeActions.setCode(0); // set TreeAction code as 0 so that map component can wait rendering map after trees are updated.
@@ -83,7 +90,7 @@ export default class TreeControl extends React.Component {
         <FontAwesome name="minus-square" />
       </div>;
     }
-    let donation, notify;
+    let donation, notify, emptyFilter = localization(84);
     if (AuthStore.getState().auth.isManager()) {
       notify = <div className="control-button" onClick={()=> {
         this.context.router.push({pathname: ServerSetting.uBase + '/notify'});
@@ -95,6 +102,10 @@ export default class TreeControl extends React.Component {
       }} data-for="tooltip-tree-control" data-tip={localization(53)}>
         <FontAwesome name="sitemap" />
       </div>;
+    }
+    if (!TreeStore.getState().trees.length) {
+      emptyFilter = localization(88);
+      ReactTooltip.show(findDOMNode(this.refs.filter));
     }
     return (
       <div className="tree-control-wrapper">
@@ -110,13 +121,14 @@ export default class TreeControl extends React.Component {
         <div className="control-button" onClick={this.handleZoomOut} data-for="tooltip-tree-control" data-tip={localization(83)}>
           <FontAwesome name='search-minus' />
         </div>
-        <div className="control-button" onClick={this.handleFilter} data-for="tooltip-tree-control" data-tip={localization(84)}>
+        <div className="control-button" onClick={this.handleFilter} data-for="tooltip-tree-control" data-tip={emptyFilter} ref="filter">
           <FontAwesome name='sliders'/>
         </div>
         <ReactTooltip id="tooltip-tree-control" effect="solid" place="left" />
         {add}
         {notify}
         {donation}
+        {help}
       </div>
     );
   }

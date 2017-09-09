@@ -55,9 +55,9 @@
     $sql .= "AND `dead` = 0 ";
 
 
-    if (isset($_SESSION['temp_trees']) && $_SESSION['temp_trees'] != null) {
-      $sql .= "OR `id` IN (" . $_SESSION['temp_trees'] . ") ";
-    }
+    // if (isset($_SESSION['temp_trees']) && $_SESSION['temp_trees'] != null) {
+    //   $sql .= "OR `id` IN (" . $_SESSION['temp_trees'] . ") ";
+    // }
 
 
     try {

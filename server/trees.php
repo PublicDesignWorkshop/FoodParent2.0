@@ -71,7 +71,7 @@
 
     // Food basic filtering
     if (isset($_SESSION['food_ids'])) {
-      $foodList = split(",", $_SESSION['food_ids']);
+      $foodList = explode(",", $_SESSION['food_ids']);
       if (!in_array(strval($extra), $foodList)) {
         array_push($foodList, strval($extra));
       }

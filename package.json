@@ -47,16 +47,26 @@
     "webpack-uglify-js-plugin": "1.1.8"
   },
   "dependencies": {
+    "blacklist": "1.1.4",
     "blueimp-load-image": "2.6.1",
     "chart.js": "2.2.1",
     "chart.js-scatter": "1.1.4",
+    "classnames": "2.2.5",
+    "intro.js": "2.7.0",
+    "intro.js-react": "0.1.5",
     "jquery": "3.1.0",
     "leaflet-plugins": "1.8.0",
     "leaflet.markercluster": "0.5.0",
+    "lodash": "4.15.0",
     "moment": "2.14.1",
+    "prop-types": "15.5.10",
+    "q": "1.4.1",
     "react-fontawesome": "1.1.0",
+    "react-input-autosize": "1.1.0",
+    "react-swipeable": "3.6.0",
     "react-textarea-autosize": "4.0.4",
     "react-tooltip": "3.1.5",
-    "underscore": "1.8.3"
+    "underscore": "1.8.3",
+    "webpack": "1.13.2"
   }
 }
