@@ -1,0 +1,21 @@
+@import "./scss/variables.scss";
+@import "./scss/mixin.scss";
+
+.introjs-searchbar {
+  @include respond-to(handhelds) {
+    top: 112px !important;
+  }
+}
+
+.introjs-searchbar .introjs-arrow {
+  top: -10px;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: white;
+  border-left-color: transparent;
+  display: block !important;
+}
+
+.introjs-tooltiptext {
+  text-align: center;
+}
