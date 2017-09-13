@@ -64,7 +64,7 @@ export default class Header extends React.Component {
         }}>
           <div className="logo"></div>
         </div>
-        <div className={"center" + active} data-for="tooltip-header" data-tip={localization(87)}>
+        <div className={"center" + active} data-for="tooltip-header" data-tip={localization(87)} data-step="1" data-intro="Search your location.">
           <AltContainer stores={
             {
               maps: MapStore,
@@ -102,7 +102,7 @@ export default class Header extends React.Component {
               // this.context.router.push({pathname: ServerSetting.uBase + "/donations"});
             }
           }
-        }} data-for="tooltip-header" data-tip={this.state.loginToolTip}>
+        }} data-for="tooltip-header" data-tip={this.state.loginToolTip} data-step="2" data-intro="Become a food parent.">
           <div className="login-portrait">
             <FontAwesome className="icon" name='user' />
           </div>
