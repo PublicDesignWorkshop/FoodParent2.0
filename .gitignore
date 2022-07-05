@@ -1,3 +1,4 @@
+.DS_store
 node_modules/*
 !node_modules/react-bootstrap-datetimepicker
 !node_modules/react-pinch-zoom-pan
