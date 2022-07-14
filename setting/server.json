@@ -4,8 +4,8 @@
 
   "host": "www.concrete-jungle.org",
 
-  "uBase": "/food-map",
-  "uBaseForRouter": "/food-map/",
+  "uBase": "",
+  "uBaseForRouter": "/",
 
   "uServer": "/server/",
   "uDist": "/dist/",
