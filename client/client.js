@@ -5,7 +5,7 @@ import AltContainer from 'alt-container';
 
 import "babel-polyfill";
 
-require('./client.scss');
+// require('./client.scss');
 
 let ServerSetting = require('./../setting/server.json');
 let InitActions = require('./actions/init.actions');
