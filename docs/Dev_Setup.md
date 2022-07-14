@@ -43,6 +43,20 @@ client.js:8 Uncaught Error: Cannot find module "./client.scss"
 
 This seems like webpack's css loader is not able to find the module to inline. 
 Perhaps the relative url "./client.scss" is a problem?
+- changing this url generates an error in shell that module cant be found
+- but the url as its written appears to be found by webpack
+
+If I comment out the call into client.css the app loads further showing the concrete-jungle logo
+and these errors in console:
+
+```
+client.js:44 DEV mod is active.
+
+jquery.js:9392          PUT http://localhost:3000/server/filter.php 405 (Method Not Allowed)
+
+Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'setMessage')
+    at init.actions.js:66:16
+```
 
 
 ## Local Server
