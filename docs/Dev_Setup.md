@@ -58,6 +58,17 @@ Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 's
     at init.actions.js:66:16
 ```
 
+Furthermore, the splash page that appears shows styling applied from the css bundle, so its effectively being applied.
+Is the require statement even necessary?
+Webpack does not appear to be appending a hash to the classnames, so they dont seem to be local by default as
+is the case with CSSModules.
+
+Although package.json depends on style-loader/sass-loader/css-loader, webpack does not use them.
+Perhaps these dependencies are not needed.
+
+Webpack is only using [ExtractText plugin which seems to be deprecated after v1](https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/webpack-1/README.md)
+
+
 
 ## Local Server
 

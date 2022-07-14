@@ -82,7 +82,7 @@ var devPluginList = [
 
 var productionPluginList = [
   productionDefinePlugin,
-  new ExtractTextPlugin('./../css/broken-bundle.css', {
+  new ExtractTextPlugin('./../css/broken-bundle.css', { //odd name, is this why production appears to use a dev build?
     allChunks: true
   }),
   new webpack.optimize.DedupePlugin(),
