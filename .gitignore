@@ -1,12 +1,5 @@
 .DS_store
-node_modules/*
-!node_modules/react-bootstrap-datetimepicker
-!node_modules/react-pinch-zoom-pan
-!node_modules/font-awesome
-!node_modules/leaflet
-!node_modules/image-preloader-promise
-!node_modules/react-select
-!node_modules/react-image-gallery
+node_modules
 
 server/database.php
 server/dbpass.php
