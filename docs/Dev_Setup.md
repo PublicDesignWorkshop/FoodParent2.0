@@ -1,7 +1,23 @@
 # Dev Setup
 
-## Build Tooling
+## Local Setup
 
+Steps taken on macOS 12.4 intel
+- install node v6
+- npm install
+
+Get ssh access to the development server: `nate`
+- `ssh <your_user>_nate@ssh.phx.nearlyfreespeech.net`
+
+
+Make a change to the js, then:
+- `npm run publish`
+- `rsync -azP ./dist/js/ <your_user>_nate@ssh.phx.nearlyfreespeech.net:/home/public/food-map/dist/js`
+- visit [nate.nfshost.com to see changes](https://nate.nfshost.com/food-map/)
+
+# Setup Notes
+
+## Log
 - node v6, webpack v1
 - [Node v6 to v8 Breaking Changes](https://github.com/nodejs/wiki-archive/blob/master/Breaking-changes-between-v6-LTS-and-v8-LTS.md)
 - [Webpack v1 documentation](https://github.com/webpack/docs/wiki/contents)
@@ -68,9 +84,28 @@ Perhaps these dependencies are not needed.
 
 Webpack is only using [ExtractText plugin which seems to be deprecated after v1](https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/webpack-1/README.md)
 
+Skipping the require css import error, the next problem is the PUT .../filter.php 405 response
+I cannot simply add a print stmt to the php, it will not get written anywhere i can see it.
+`❯ tail -f /usr/local/var/log/httpd/access_log` simply reflects the same fact, a 405 is returned
+ 
+Set up a new private nfs host and copied over the code from production, created a dump of the database and set it up on the new host.
+Update the dbpass.php file, settings/server.json and a few other files to reflect the new host.
+Kept the same dir structure, so the index.html references a /food-map
 
+There is an undefined this error, caused by executing an error block that executed without a defined this value.
+This was updated and then the error block surfaced a parseerror introduced by leaving off a semi-colon when updating the dbpass.php file.
 
-## Local Server
+After this was resolved the map loaded without any tiles, it was still using mapbox street v4 (prod uses v11, but that
+change was not in the codebase). To fix this the url base variable "uGrayTiles" was updated to match the structure of
+the prod url.
+
+Also I downloaded a copy of production code and the editor highlighted a number of changes in production files that were not
+tracked. I updated the code to include those changes.
+
+This worked and loads the map with streets, however the tree markers do not appear, though they are successfully loaded in the network panel.
+
+At this point the map loads. It is now possible to make changes locally, 
+then "npm run publish" and then rsync the js files to the server.
 
 ### Setup PHP
 
