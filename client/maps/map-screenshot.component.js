@@ -61,14 +61,14 @@ export default class MapTree extends React.Component {
     MapActions.addMap(MapSetting.sMapId, this.map, MAPTYPE.TREE);
     if (!MapStore.getMapModel(MapSetting.sMapId).satTileLayer) {
       // Optional tile map address (Mapbox).
-      // MapStore.getMapModel(MapSetting.sMapId).satTileLayer = this.satTileLayer = L.tileLayer(MapSetting.uSatTileMap + MapSetting.sMapboxAccessToken, {
-      //     minZoom: MapSetting.iMinZoom,
-      //     maxZoom: MapSetting.iMaxZoom,
-      // });
-      MapStore.getMapModel(MapSetting.sMapId).satTileLayer = this.satTileLayer = new L.Google(MapSetting.sGoogleMapTileType, {
-        minZoom: MapSetting.iMinZoom,
-        maxZoom: MapSetting.iMaxZoom,
+      MapStore.getMapModel(MapSetting.sMapId).satTileLayer = this.satTileLayer = L.tileLayer(MapSetting.uSatTileMap + MapSetting.sMapboxAccessToken, {
+          minZoom: MapSetting.iMinZoom,
+          maxZoom: MapSetting.iMaxZoom,
       });
+      // MapStore.getMapModel(MapSetting.sMapId).satTileLayer = this.satTileLayer = new L.Google(MapSetting.sGoogleMapTileType, {
+      //   minZoom: MapSetting.iMinZoom,
+      //   maxZoom: MapSetting.iMaxZoom,
+      // });
     }
     // Add a layer for rendering actual markers.
     if (!MapStore.getMapModel(MapSetting.sMapId).markersLayer) {

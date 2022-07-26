@@ -37,6 +37,6 @@
   "uCheckMarkerIcon": "Marker_Checked.png",
   "uFarmMarkerIcon": "Marker_Farm.png",
 
-  "uReverseGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA",
-  "uGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyC_hS-uyoQ91rKsKm5mFlwurnxzXImfcQA"
+  "uReverseGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBA23qwkxtHI8nuM2yqbrW2bk_5BstefQc",
+  "uGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBA23qwkxtHI8nuM2yqbrW2bk_5BstefQc"
 }

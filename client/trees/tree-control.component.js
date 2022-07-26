@@ -25,10 +25,13 @@ export default class TreeControl extends React.Component {
     super(props, context);
     this.handleToggleMapTile = this.handleToggleMapTile.bind(this);
     this.handleFilter = this.handleFilter.bind(this);
+    this.onExit = this.onExit.bind(this);
+    this.onBeforeChange = this.onBeforeChange.bind(this);
   }
   componentWillMount() {
     this.setState({
-      tile: "map-o"
+      tile: "map-o",
+      tutorial: false
     });
   }
   componentDidMount () {
@@ -69,18 +72,104 @@ export default class TreeControl extends React.Component {
     //   // this.context.router.push({pathname: ServerSetting.uBase + '/tree/' + parseInt(searchText)});
     // }
   }
+  onExit() {
+    this.setState({
+      tutorial: false
+    })
+  }
+  onBeforeChange(nextStep) {
+    if (nextStep == 5) {
+      console.log("OBC:", this);
+      this.handleFilter();
+      this.step.updateStepElement(nextStep);
+    }
+  }
   render () {
+    let steps = [
+      {
+        element: '.center',
+        intro: 'Search your location.',
+        position: 'bottom',
+        tooltipClass: 'introjs-searchbar',
+        // highlightClass: 'myHighlightClass',
+      },
+      {
+        element: '.right',
+        intro: 'Become a food parent.',
+        position: 'bottom',
+      },
+      {
+        element: '.intro-location',
+        intro: 'Find your location.',
+        position: 'left',
+      },
+      {
+        element: '.intro-filter',
+        intro: 'Select food type.',
+        position: 'left',
+      },
+      {
+        element: '.intro-add',
+        intro: 'Add a new food.',
+        position: 'left',
+      },
+      {
+        element: '.Select--multi',
+        intro: 'Choose types of visible trees',
+        position: 'left',
+      }
+    ];
+
+    if (this.props.adding) {
+      steps = [
+        {
+          element: '.center',
+          intro: 'Search your location.',
+          position: 'bottom',
+          tooltipClass: 'introjs-searchbar',
+          highlightClass: 'myHighlightClass',
+        },
+        {
+          element: '.right',
+          intro: 'Become a food parent.',
+          position: 'bottom',
+        },
+        {
+          element: '.intro-location',
+          intro: 'Find your location.',
+          position: 'left',
+        },
+        {
+          element: '.intro-filter',
+          intro: 'Select food type.',
+          position: 'left',
+        },
+        {
+          element: '.intro-add',
+          intro: 'Cancel adding a new food.',
+          position: 'left',
+        }
+      ];
+    }
+
+    const intro = <Steps
+      enabled={this.state.tutorial}
+      steps={steps}
+      initialStep={0}
+      onExit={this.onExit}
+      onBeforeChange={this.onBeforeChange}
+    />
+    console.log("intro: ", intro);
+
     let add = <div className="control-button intro-add" onClick={()=> {
       this.context.router.push({pathname: ServerSetting.uBase + '/addtree'});
-    }} data-for="tooltip-tree-control" data-tip={localization(85)} data-step="5" data-position="left" data-intro="Add a new tree.">
+    }} data-for="tooltip-tree-control" data-tip={localization(85)}>
       <FontAwesome name="plus-square" />
     </div>;
 
-    const that = this;
-
     let help = <div className="control-button" data-for="tooltip-tree-control" data-tip={localization(89)}
       onClick={() => {
-        introJs().start();
+        this.setState({tutorial: true});
       }}
     >
       <FontAwesome name="question" />
@@ -97,7 +186,7 @@ export default class TreeControl extends React.Component {
         // } else if (MapStore.getState().latestMapType == MAPTYPE.DONATION) {
         //   // this.context.router.push({pathname: ServerSetting.uBase + "/donations"});
         // }
-      }} data-for="tooltip-tree-control" data-tip={localization(79)} data-step="5" data-position="left" data-intro="Cancel adding a new tree.">
+      }} data-for="tooltip-tree-control" data-tip={localization(79)}>
         <FontAwesome name="minus-square" />
       </div>;
     }
@@ -120,7 +209,7 @@ export default class TreeControl extends React.Component {
     }
     return (
       <div className="tree-control-wrapper">
-        <div className="control-button intro-location" onClick={this.handleMoveToUserLocation} data-for="tooltip-tree-control" data-tip={localization(80)} data-step="3" data-position="left" data-intro="Find your location.">
+        <div className="control-button intro-location" onClick={this.handleMoveToUserLocation} data-for="tooltip-tree-control" data-tip={localization(80)}>
           <FontAwesome name='location-arrow' />
         </div>
         <div className="control-button" onClick={this.handleToggleMapTile} data-for="tooltip-tree-control" data-tip={localization(81)}>
@@ -132,7 +221,7 @@ export default class TreeControl extends React.Component {
         <div className="control-button" onClick={this.handleZoomOut} data-for="tooltip-tree-control" data-tip={localization(83)}>
           <FontAwesome name='search-minus' />
         </div>
-        <div className="control-button intro-filter" onClick={this.handleFilter} data-for="tooltip-tree-control" data-tip={emptyFilter} ref="filter" data-step="4" data-position="left" data-intro="Select food type">
+        <div className="control-button intro-filter" onClick={this.handleFilter} data-for="tooltip-tree-control" data-tip={emptyFilter} ref="filter">
           <FontAwesome name='sliders'/>
         </div>
         <ReactTooltip id="tooltip-tree-control" effect="solid" place="left" />
@@ -140,6 +229,7 @@ export default class TreeControl extends React.Component {
         {notify}
         {donation}
         {help}
+        {intro}
       </div>
     );
   }
@@ -148,3 +238,4 @@ export default class TreeControl extends React.Component {
 TreeControl.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
+
