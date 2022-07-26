@@ -91,9 +91,8 @@ export function resetFilter() {
     dataType: "json"
   });
   return resetFilterPromise.then(function(response) {
-    console.log('resetFilter response', response);
     return response;
   }, function(error) {
-    console.log('resetFilter error', error);
+    console.error('resetFilter error', error.message);
   });
 }
