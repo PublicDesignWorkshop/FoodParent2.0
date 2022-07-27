@@ -26,6 +26,7 @@ export default class TreeControl extends React.Component {
     this.handleToggleMapTile = this.handleToggleMapTile.bind(this);
     this.handleFilter = this.handleFilter.bind(this);
     this.onExit = this.onExit.bind(this);
+    this.onBeforeChange = this.onBeforeChange.bind(this);
   }
   componentWillMount() {
     this.setState({
@@ -76,6 +77,13 @@ export default class TreeControl extends React.Component {
       tutorial: false
     })
   }
+  onBeforeChange(nextStep) {
+    if (nextStep == 5) {
+      console.log("OBC:", this);
+      this.handleFilter();
+      this.step.updateStepElement(nextStep);
+    }
+  }
   render () {
     let steps = [
       {
@@ -105,6 +113,11 @@ export default class TreeControl extends React.Component {
         intro: 'Add a new food.',
         position: 'left',
       },
+      {
+        element: '.Select--multi',
+        intro: 'Choose types of visible trees',
+        position: 'left',
+      }
     ];
 
     if (this.props.adding) {
@@ -144,7 +157,9 @@ export default class TreeControl extends React.Component {
       steps={steps}
       initialStep={0}
       onExit={this.onExit}
+      onBeforeChange={this.onBeforeChange}
     />
+    console.log("intro: ", intro);
 
     let add = <div className="control-button intro-add" onClick={()=> {
       this.context.router.push({pathname: ServerSetting.uBase + '/addtree'});

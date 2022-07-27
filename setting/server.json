@@ -2,7 +2,7 @@
   "ssltype": "https://",
   "bTestMail": true,
 
-  "host": "www.concrete-jungle.org",
+  "host": "nate.nfshost.com",
 
   "uBase": "/food-map",
   "uBaseForRouter": "/food-map/",
