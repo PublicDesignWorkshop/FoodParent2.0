@@ -15,9 +15,20 @@ Make a change to the js, then:
 - `rsync -azP ./dist/js/ <your_user>_nate@ssh.phx.nearlyfreespeech.net:/home/public/food-map/dist/js`
 - visit [nate.nfshost.com to see changes](https://nate.nfshost.com/food-map/)
 
+Note: Google API key is hardcoded in a couple files
+- index.html: `<script src="https://maps.googleapis.com/maps/api/js?key=`
+- settings/map.json: `"uReverseGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=`
+- settings/map.json: `"uGeoCoding": "https://maps.googleapis.com/maps/api/geocode/json?key=`
+To prevent alerts a member of the team with google admin access to the key needs to add restrictions to how the key can be used
+The key is used by the users browser. It is bundled in the client-bundle.js. Deploying a new key will require changing
+these values in the source code and then creating a new dist/js/client-bundle.
+
+Note: MapBox API key is also exposed
+- map.json: `"sMapboxAccessToken": "..."`
+
 # Setup Notes
 
-## Log
+## Work Log
 - node v6, webpack v1
 - [Node v6 to v8 Breaking Changes](https://github.com/nodejs/wiki-archive/blob/master/Breaking-changes-between-v6-LTS-and-v8-LTS.md)
 - [Webpack v1 documentation](https://github.com/webpack/docs/wiki/contents)
@@ -101,11 +112,37 @@ the prod url.
 
 Also I downloaded a copy of production code and the editor highlighted a number of changes in production files that were not
 tracked. I updated the code to include those changes.
+- Production code is on the `scss` branch with a number of file changes that are not tracked
+- Github's `master` branch has 1 commit ahead of the `scss` branch where the intro-js code was removed
 
 This worked and loads the map with streets, however the tree markers do not appear, though they are successfully loaded in the network panel.
+If I copy over the contents of the dist folder from prod to the nfshost, the site loads as expected.
 
-At this point the map loads. It is now possible to make changes locally, 
-then "npm run publish" and then rsync the js files to the server.
+If I `npm run publish` in the...
+prod_site scss branch OR
+prod_site updated master branch,
+then rsync the /js dir, the site fails with:
+
+```
+Uncaught Error: Cannot find module "image-preloader-promise"
+    at vendor-bundle.js:1:1267
+
+Uncaught Error: Cannot find module "./search.component.scss"
+    at client-bundle.js:14:9908
+```
+
+If I `npm run publish` in the...
+fork's master branch,
+then copy over the /js dir, the site renders the map without tree markers.
+
+I can reset the code to the production server state by switching to the copy downloaded earlier and `rsync` the /js dir.
+Why the difference in the original `/dist` folder and the `/dist` folder after I re-run npm publish?
+Could the node modules be a different version than the ones used to create original js?
+Running `git diff --stat` on the package-lock.json file shows over 30k changed lines `1 file changed, 15001 insertions(+), 15847 deletions(-)`
+
+Fist, I need a reliable way to generate a bundle of js that is safe to deploy.
+Then, I need to be able to deploy the bundled .css and any other assets.
+
 
 ### Setup PHP
 
