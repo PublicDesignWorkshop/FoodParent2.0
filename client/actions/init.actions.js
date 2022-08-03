@@ -68,7 +68,7 @@ class InitActions {
           if (__DEV__) {
             console.error(`Failed to import image assets. Error code: ${code}`);
           }
-        });
+        }.bind(this));
       }.bind(this), 500);
     }
   }
