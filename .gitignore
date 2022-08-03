@@ -7,6 +7,7 @@ server/config.php
 server/mailconfig.php
 
 dist/*
+docs/Roadmap.md
 
 src/**/*.js
 src/**/*.js.map
