@@ -137,11 +137,71 @@ then copy over the /js dir, the site renders the map without tree markers.
 
 I can reset the code to the production server state by switching to the copy downloaded earlier and `rsync` the /js dir.
 Why the difference in the original `/dist` folder and the `/dist` folder after I re-run npm publish?
+
 Could the node modules be a different version than the ones used to create original js?
 Running `git diff --stat` on the package-lock.json file shows over 30k changed lines `1 file changed, 15001 insertions(+), 15847 deletions(-)`
 
 Fist, I need a reliable way to generate a bundle of js that is safe to deploy.
 Then, I need to be able to deploy the bundled .css and any other assets.
+
+Why doesn't the package-lock file restore the correct version of node_modules?
+- looks like I am missing some dependencies. /searching package-lock.json reveals that pinch-zoom and react-select for example are not present
+- these were stored in the git repo, perhaps that is related. using github to save the exact version instead of package-lock file
+- also the version of npm i was using (v3) does not read or write to package-lock
+
+How do I install npm v6 or later?
+- oddly when I run `npm install -g npm@latest`, zsh complains the `npm` command is not longer found
+- use n to switch to node v16, npm install latest and then `npm install --package-lock-only`
+- this created a new package-lock file with npm v8. it contains the dependencies for the app
+- the original is a list of both deps and dev-deps mixed together and still missing many deps like image-preloader-promise
+- switch node version back to node v6
+- npm run publish 
+- excellent now I have only one error generated 
+
+```
+ERROR in ./client/client.scss
+Module build failed: ModuleNotFoundError: Module not found: Error: Cannot resolve 'file' or 'directory' ../fonts/fontawesome-webfont.eot in /Users/natobyte/Programming/data/FoodParent_Prod/orig_site copy/food-map/client
+```
+- fontawesome-webfont does exist in orig github node_modules/font-awesome/fonts dir
+- rg `font-aweseome-webfont` does not appear in the repo (so this is likely in node_modules since rg ignores that dir)
+- fontawesome-webfont does exist in our copy of node_modules/font-awesome/fonts ... so why cant webpack find it?
+- ill try the same technique from previous attempt and comment out the require(client.scss) in client.js
+- now webpack runs without errors, deploying
+- now the map loads without tree-markers like my own personal branch, however this doesn't log `DEV mod is active.` like my branch and production do.
+
+Why are the tree-markers missing?
+- most likely its from removing require(client.scss) in client.js
+  - can i just ignore the webpack error and deploy anyway?
+  - no, throws an error
+
+```
+Uncaught Error: Cannot find module "./client.scss"
+    at client-bundle.js:1:1311
+```
+  - seems that perhaps a relative url `../fonts/` is confusing webpack, also webpack creates a `dist/font/` dir that is singular.
+  - also the dev build creates a client-bundle and the prod build creates a broken.css bundle.
+
+```
+var devPluginList = [
+  new ExtractTextPlugin('./../css/client-bundle.css', {
+    allChunks: true
+  }),
+ 
+var productionPluginList = [
+  new ExtractTextPlugin('./../css/broken-bundle.css', {
+    allChunks: true
+  }),
+```
+  - try changing config to say client-bundle.css same as dev
+    - this simply changed the emmitted file, same error
+  - try running dev, 
+    - same error
+  - try just moving the fonts into /client where webpack is expecting them, then publish
+    - error still occurs even though the fonts now exist under `/client/fonts/fontawesome-webfont` as the error wants
+
+- but wrt to the console.log Dev mode comment missing, perhaps i should run the `npm run dev` command
+- - does this generate a different bundle?
+
 
 
 ### Setup PHP
