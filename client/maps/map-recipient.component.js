@@ -74,14 +74,14 @@ export default class MapRecipient extends React.Component {
     }
     if (!MapStore.getMapModel(MapSetting.sMapId).satTileLayer) {
       // Optional tile map address (Mapbox).
-      MapStore.getMapModel(MapSetting.sMapId).satTileLayer = this.satTileLayer = L.tileLayer(MapSetting.uSatTileMap + MapSetting.sMapboxAccessToken, {
-         minZoom: MapSetting.iMinZoom,
-         maxZoom: MapSetting.iMaxZoom,
-      });
-      // MapStore.getMapModel(MapSetting.sMapId).satTileLayer = this.satTileLayer = new L.Google(MapSetting.sGoogleMapTileType, {
-      //   minZoom: MapSetting.iMinZoom,
-      //   maxZoom: MapSetting.iMaxZoom,
+      // MapStore.getMapModel(MapSetting.sMapId).satTileLayer = this.satTileLayer = L.tileLayer(MapSetting.uSatTileMap + MapSetting.sMapboxAccessToken, {
+      //    minZoom: MapSetting.iMinZoom,
+      //    maxZoom: MapSetting.iMaxZoom,
       // });
+      MapStore.getMapModel(MapSetting.sMapId).satTileLayer = this.satTileLayer = new L.Google(MapSetting.sGoogleMapTileType, {
+        minZoom: MapSetting.iMinZoom,
+        maxZoom: MapSetting.iMaxZoom,
+      });
     }
     // Add a layer to show the focused area.
     if (!MapStore.getMapModel(MapSetting.sMapId).focusLayer) {
