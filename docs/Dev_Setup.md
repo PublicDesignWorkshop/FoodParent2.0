@@ -198,9 +198,47 @@ var productionPluginList = [
     - same error
   - try just moving the fonts into /client where webpack is expecting them, then publish
     - error still occurs even though the fonts now exist under `/client/fonts/fontawesome-webfont` as the error wants
+  - following an [SO article](https://stackoverflow.com/questions/33649761/how-do-i-load-font-awesome-using-scss-sass-in-webpack-using-relative-paths)
+    - editing the path in client.scss loading /scss/font-awesome.scss seems to call a file that then calls a relative url
+    - from node_modules/font-awesome/scss/_variables `$fa-font-path: "../fonts" !default;`
+    - this works, no errors. but its going to get overwritten when node_modules reinstalled
+    - rsync to server, no change in map, still loads blue dots for tree markers
 
 - but wrt to the console.log Dev mode comment missing, perhaps i should run the `npm run dev` command
-- - does this generate a different bundle?
+  - dev is not using the uglify script, this might not matter, hard to know for sure
+  - deployed the dev mode bundle and now get the same log statements PLUS these "intro: " logs wrt to recent changes
+  - so I thought those changes to the intro step were running in prod, but since nothing is logged this is probably not true 
+  - still the tree markers do not render!
+
+- trace the code that creates the markers:
+  - cant find anything from greping the code for gingko, or background-image, or url(
+  - craig says leaflet probably loads the custom markers, seems helpful but looking at code I cant quickly tell what type of data is stored in a var
+  - unable to add breakpoints to look around in the code because i cant get it running locally and have to create a bundle and deploy it to see what is logged
+  - this takes too long. its time to fix the problem with the code locally so I can debug it.
+  - how do i debug production code
+  - - add debugger stmts and deploy them, slow iteration ~4 min
+  - TODO: setup local devlopment with a full mysql db to get this working
+
+- try reversing those changes to the map and tree components found in code deployed to prod but not in the bundle
+  - then run the dev mode, now the log stmts match prod exactly, but still no tree-markers
+
+- check prod site orig for changes to fontawesome node_modules
+  - looks like it was edited, from node_modules in git origin/scss node_modules/font-awesome/scss/font-awesome.scss
+
+```
+$fa-font-path:        "./../node_modules/font-awesome/fonts" !default;
+```
+
+  - here is the expected value when running npm install
+
+```
+$fa-font-path: "../fonts" !default;
+```
+
+
+add debbuger stmt and deploy
+build locally
+
 
 
 
