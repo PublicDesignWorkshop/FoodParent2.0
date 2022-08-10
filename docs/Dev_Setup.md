@@ -106,6 +106,7 @@ Skipping the require css import error, the next problem is the PUT .../filter.ph
 I cannot simply add a print stmt to the php, it will not get written anywhere i can see it.
 `❯ tail -f /usr/local/var/log/httpd/access_log` simply reflects the same fact, a 405 is returned
  
+---
 Set up a new private nfs host and copied over the code from production, created a dump of the database and set it up on the new host.
 Update the dbpass.php file, settings/server.json and a few other files to reflect the new host.
 Kept the same dir structure, so the index.html references a /food-map
