@@ -1,10 +1,9 @@
 .DS_store
 node_modules
 
-server/database.php
-server/dbpass.php
-server/config.php
-server/mailconfig.php
+serverconfig/database.php
+serverconfig/dbpass.php
+serverconfig/mailconfig.php
 
 dist/*
 docs/Roadmap.md

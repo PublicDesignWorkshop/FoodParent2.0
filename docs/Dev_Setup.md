@@ -9,6 +9,11 @@ Steps taken on macOS 12.4 intel
 Get ssh access to the development server: `nate`
 - `ssh <your_user>_nate@ssh.phx.nearlyfreespeech.net`
 
+Why node v6?
+- If you see errors when building that node-sass does not yet support your runtime environment, the version of node-sass used here
+  - only supports up to node v7
+  - However, if you need to run 'npm install' then be careful, node v6 ships with npm v3 which does not read the package-lock file
+  - The lock file is needed to ensure the exact same dependencies are installed
 
 Make a change to the js, then:
 - `npm run publish`
@@ -217,7 +222,19 @@ var productionPluginList = [
   - this takes too long. its time to fix the problem with the code locally so I can debug it.
   - how do i debug production code
   - - add debugger stmts and deploy them, slow iteration ~4 min
-  - TODO: setup local devlopment with a full mysql db to get this working
+
+- Setup local devlopment with a full mysql db to get this working
+  - `brew install mysql@5.7`
+  - `brew link --force mysql@5.7`
+  - `mysql_secure_installation`
+  - `mysql -u root -p`
+  - GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'my_user'@'localhost' WITH GRANT OPTION;
+  - SHOW GRANTS FOR 'my_user'@'localhost';
+  - CREATE DATABASE tree_parent
+  - `head -n 5 tree_parent.dump`
+  - `mysql -u username -p tree_parent < tree_parent.dump`
+  - login and > USE tree_parent; SHOW TABLES;
+
 
 - try reversing those changes to the map and tree components found in code deployed to prod but not in the bundle
   - then run the dev mode, now the log stmts match prod exactly, but still no tree-markers
@@ -249,7 +266,11 @@ macOS
 - brew link php@7.4
 - php -v
 
-### Setup Apache on MacOS 12.0 Monterrey (Intel Based)
+Note: If you have already done this before but notice php is pointing to v8 check that the sym links were not overwritten.
+- `brew link --overwrite --dry-run php@7.4`
+- if you see links to another version such as `/usr/local/bin/pear -> /usr/local/Cellar/php/8.1.8/bin/pear` then overwrite
+
+### Setup Apache on MacOS 12.0 Monterrey (Intel Basedql
 
 Note: Apple silicon (M1+) computers may store files in a different location.
 
@@ -273,3 +294,16 @@ Make changes to the conf file already used by MacOS.
 
 In the `extras/vhosts` file remove dummy vhosts and create a new one
 
+### Setup the database
+
+- `brew install mysql@5.7`
+- `brew link --force mysql@5.7`
+
+Note: If you make a mistake you can remove and reinstall
+- `brew uninstall mysql@5.7`
+- `rm -rf /usr/local/var/mysql`
+- `rm /usr/local/etc/my.cnf`
+- you may need to edit your PATH var if a 2nd version of mysql installed that is hidden by PATH export
+- source
+- check: `mysql --version`
+- `brew uninstall mysql`
