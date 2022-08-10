@@ -38,7 +38,7 @@ Note: MapBox API key is also exposed
 - [Node v6 to v8 Breaking Changes](https://github.com/nodejs/wiki-archive/blob/master/Breaking-changes-between-v6-LTS-and-v8-LTS.md)
 - [Webpack v1 documentation](https://github.com/webpack/docs/wiki/contents)
 
-Steps taken on macOS 12.4 intel
+Steps taken on macOS 12.4 intel, personal fork of repo, master branch
 - install node v6
 - npm install
 - npm install -g webpack-dev-server@1
@@ -59,6 +59,8 @@ Then the hrefs dont need to change in the index.html file.
 
 However I chose to load the bundle by removing the `/food-map` string in each script in the index.html
 Also changed the uBase from `"/food-map"` to `""` in server/settings.json
+- If you forget to change this then you will see this error in the console:
+- `Warning: [react-router] Location "/" did not match any routes`
 
 Now when I `npm run dev` and start `webpack-dev-server --port 3000` I see an error in console about missing dependencies
 I look up the version in the commit history that was the original target then add the dependency to package.json
@@ -253,10 +255,21 @@ $fa-font-path: "../fonts" !default;
 ```
 
 
-add debbuger stmt and deploy
-build locally
+- Add debbuger stmt and deploy
+  - webpack config needs to be set to stop dropping the debugger statements
+  - this is slow
 
+- Build locally
+  - add the users pw to dbpass.php, remove "food-map" from the server/config uBase for react-router to stop throwing that error
+  - `brew services start mysql` & `httpd`
+  - `npm run dev`
+  - http://localhost:3000/
 
+```
+PUT http://localhost:3000/server/filter.php 405 (Method Not Allowed)
+```
+
+- TODO: maybe something wrong with server setup, is it possible to setup phpmyadmin as a test?
 
 
 ### Setup PHP
@@ -293,6 +306,9 @@ Make changes to the conf file already used by MacOS.
 - Change the user/group to your username/staff
 
 In the `extras/vhosts` file remove dummy vhosts and create a new one
+
+Remember to start this service
+- `brew services start httpd`
 
 ### Setup the database
 
