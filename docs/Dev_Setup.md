@@ -271,6 +271,35 @@ PUT http://localhost:3000/server/filter.php 405 (Method Not Allowed)
 ```
 
 - TODO: maybe something wrong with server setup, is it possible to setup phpmyadmin as a test?
+- TODO: check which version of leaflet.js prod code is bundled with and compare to whats in node_modules
+
+---
+
+- Change the php server code to read write from airtable
+  - Learn how to update restart php
+    - rsync files and they will immediately take effect, or edit on the server
+    - vim provides syntax highlighting so editing on the server is not too bad there just is not git versioning that way
+  - TODO: view an error thrown in php
+    - wrote an error 2 ways, using `error_log()` and `throw new Exception("Testing server updates", 1);`
+    - the error_log() function should log to apache logs by default, it doesn't seem configured to log esleswhere with a directive
+      - however there is nothing displayed in the /home/logs/error_log which I presume apache was configured to use
+      - becuase by default 'On an Apache server this will add a new line to /var/log/apache2/error.log', but file does not exist
+    - the browser displays a parse error, but no more help - not a surprise
+    - checking `/home/logs/error_log` looks to only show apache errors.
+    - learning more about php logging, there are some directives i could try turning on
+      - this can be done in the code or directly in the relevant `php.ini` file
+      - looking at phpmyadmin, it appears the site is using php 8.1.6
+      - the relevant file is `/usr/local/php/8.1.6-nfsn1/etc`
+      - this file is owned by root, i can not edit it
+      - tried: `trigger_error('Testing stuff', E_USER_WARNING);` ... I see no log of it
+      - add `ini_set(‘display_errors’, false);` and  `ini_set(‘error_log’, ‘/home/tmp/php.log’);`
+      - nothing logged with `error_log()` function
+  - What is entry point for server code... which file loads first?
+    - idk, doesn't really matter
+  - What is the package manager?
+    - `/vendor/composer` handles dependency management with a installed.json file to list them out
+      - only a few dependencies
+
 
 
 ### Setup PHP
