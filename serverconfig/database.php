@@ -1,4 +1,9 @@
 <?php
+
+  ##########################################
+  # TODO: delete this file if not being used
+  ##########################################
+
   date_default_timezone_set('America/New_York');
 
   require_once("dbpass.php");
