@@ -114,9 +114,7 @@
       }
     }
     if (isset($_SESSION['rates'])) {
-      for ($i = 1; $i <= 6; $i++) {
-        $sql .= "AND SUBSTRING_INDEX(`rate`, ',', " . $i . ") IN (" . $_SESSION['rates'] . ") ";
-      }
+      $sql .= "AND `rate` IN (" . $_SESSION['rates'] . ") ";
     }
     // Don't fetch any dead tree.
     $sql .= "AND `dead` = 0 ";
